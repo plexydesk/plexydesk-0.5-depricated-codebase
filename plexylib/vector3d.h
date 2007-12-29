@@ -36,17 +36,18 @@ namespace Plexy{
 	{
 	public:
 		
-		Vector3D() {		//Default constructor. Creates Null Vector
-			x = 0;
-			y = 0;
-			z = 0;
-		}
+		/**
+		 * Initialize the vector class, X , Y , and Z is set to 0.0 by default
+		 */
+		Vector3D():x(0.0f),y(0.0f),z(0.0f) {}
 	
-		Vector3D(float a, float b, float c) {		//Constructor to create vector with componenets a,b,c
-			x = a;
-			y = b;
-			z = c;
-		}
+		/**
+		 * Create a user defined Vector
+		 * @param X X Value of the Vector 
+		 * @param Y Y Valule of the Vector
+		 * @param Z Z Value of the Vector
+		 */
+		Vector3D(float X, float Y, float Z):x(a),y(b),z(c) {}
 
 		Vector3D add (Vector3D) ;
 
@@ -60,6 +61,12 @@ namespace Plexy{
 
 		Vector3D unitVector3D();
 
+                /**
+                 * Over loads the - operator there for it lets you subsctract two vectors, as if you are working with 
+		 * any pre-defined data type such as a float, example a = b -c , where a , b , and c are vector objects.
+                 * @param vector 
+                 * @return 
+                 */
                 Vector3D operator-(const Vector3D& vector) const
                 {
                     return Vector3D(x-vector.x,y-vector.y,z-vector.z);
