@@ -47,7 +47,7 @@ namespace Plexy{
 		 * @param Y Y Valule of the Vector
 		 * @param Z Z Value of the Vector
 		 */
-		Vector3D(float X, float Y, float Z):x(a),y(b),z(c) {}
+		Vector3D(float X, float Y, float Z):x(X),y(Y),z(Z) {}
 
 		Vector3D add (Vector3D) ;
 
