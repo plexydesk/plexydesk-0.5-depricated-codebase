@@ -43,6 +43,15 @@
 
 //TODO
 //add dllexport for windows
+/*
+ * this  provides a helper macro for exporting plugin Classes
+ * example usage  PLUGIN_EXPORT(libmyone,ClassName)
+ * you will find many example usages as we include them in this
+ * source distrubution.
+ * */
+
+#define PLUGIN_EXPORT(name,sym)\
+    extern "C" { void *setup_##name(){return new sym;}}
 
 
 namespace Plexy

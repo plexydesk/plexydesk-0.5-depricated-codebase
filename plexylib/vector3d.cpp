@@ -26,6 +26,8 @@
 
 #include <math.h>
 #include "vector3d.h"
+
+
 namespace Plexy
 {
 	Vector3D Vector3D::add (Vector3D v) {		//adds v to "this"
