@@ -5,7 +5,7 @@
  *
  * Authored By Siraj Razick <siraj@kde.org>
  *
- * Copyright (C) 2006 OpenedHand
+ * Copyright (C) 2006 PlexyDeskTeam 
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
