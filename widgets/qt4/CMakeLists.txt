@@ -1,0 +1,20 @@
+
+SET (qtvizsrc 	
+	baserender.cpp 
+		)
+
+add_library (qtviz SHARED ${qtvizsrc})
+QT4_AUTOMOC( ${qtvizsrc}) 
+#SET_TARGET_PROPERTIES(plexy
+#
+#	·       ·       PROPERTIES
+	#	#	·       ·       COMPILE_FLAGS ${CMAKE_SHARED_LIBRARY_CXX_FLAGS})
+#
+
+TARGET_LINK_LIBRARIES(
+	       qtviz
+	       ${QT_QTOPENGL_LIBRARY}
+	       ${KDE4_KDEUI_LIBS}
+       )
+
+INSTALL(TARGETS qtviz DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/)

@@ -16,6 +16,8 @@ public:
     
     virtual ~BaseRender();
 
+    void setWallpaper(const QPixmap& wallpaper);
+
 protected:
     
     void initializeGL();
@@ -23,6 +25,8 @@ protected:
     void resizeGL(int width, int height);
 
     void paintGL();
+
+    void paintEvent(QPaintEvent *);
 };
 
 } // namespace #ifndef
