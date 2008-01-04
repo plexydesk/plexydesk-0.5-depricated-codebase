@@ -31,6 +31,20 @@ find_package(PkgConfig)
 pkg_check_modules(GTKMM gtkmm-2.4)
 pkg_check_modules(CLUTTER clutter-0.5)
 
+INCLUDE_DIRECTORIES(
+    ${CMAKE_BINARY_DIR}
+    ${CMAKE_BINARY_DIR}/plexylib
+    ${CMAKE_BINARY_DIR}/widgets/qt4
+    ${CMAKE_BINARY_DIR}/widgets/gtk
+    ${CMAKE_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}/plexylib
+    ${CMAKE_SOURCE_DIR}/widgets/qt4
+    ${CMAKE_SOURCE_DIR}/widgets/gtk
+)
+
+
+
 add_subdirectory(plexylib)
 add_subdirectory(widgets/qt4/)
+add_subdirectory(runner)
 

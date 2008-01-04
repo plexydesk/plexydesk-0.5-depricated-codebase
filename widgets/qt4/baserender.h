@@ -1,12 +1,13 @@
 #ifndef PLEXY_DESK_BASE_RENDER_H
 #define PLEXY_DESK_BASE_RENDER_H
 
+#include <plexy.h>
 #include <QGLWidget>
 
 namespace PlexyDesk
 {
 
-class BaseRender:public QGLWidget
+class VISIBLE_SYM BaseRender:public QGLWidget
 {
     Q_OBJECT
  
