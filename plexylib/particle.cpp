@@ -4,7 +4,7 @@
  * Sci-Fi Desktop for the Hurd
  *
  * Authored By Siraj Razick <siraj@kde.org>
- * Authored By Mani Shankar <da.sharp.17@gmail.com>
+ * Authored By Mani Shankar <da.sharp.17@gmail.com> 
  *
  * Copyright (C) 2008 PlexyDeskTeam
  *
