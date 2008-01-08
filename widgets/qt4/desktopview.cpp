@@ -21,7 +21,6 @@ DesktopView::~DesktopView()
 
 void DesktopView::addWallpaper(const QString& path)
 {
-
 }
 
 }

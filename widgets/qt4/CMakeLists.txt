@@ -2,6 +2,7 @@
 SET (qtvizsrc 	
 	baserender.cpp 
 	desktopview.cpp
+	netwm.cpp
 		)
 
 add_library (qtviz SHARED ${qtvizsrc})
