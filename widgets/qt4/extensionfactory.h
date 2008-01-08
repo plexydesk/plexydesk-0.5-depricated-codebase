@@ -14,7 +14,7 @@ template <class T>
         virtual  AbstractPluginLoader * createObject();
     };
 
-    class ExtenstionFactory
+    class VISIBLE_SYM ExtenstionFactory
     {
         public:
                 virtual  AbstractPluginLoader * instance() = 0;
