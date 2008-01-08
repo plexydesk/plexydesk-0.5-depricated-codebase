@@ -19,9 +19,6 @@ DesktopView::~DesktopView()
     delete d;
 }
 
-void DesktopView::addWallpaper(const QString& path)
-{
-}
 
 }
 #include "desktopview.moc"
