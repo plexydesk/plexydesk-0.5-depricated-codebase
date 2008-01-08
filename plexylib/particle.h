@@ -48,7 +48,7 @@ namespace Plexy{
          */
         Particle(Vector3D pos, Vector3D vel,float m):position(pos),Velocity(vel),mass(m) {}
 
-        void updateDynamics() ;
+       virtual void updateDynamics() = 0 ;
 
     private:
         Vector3D position;

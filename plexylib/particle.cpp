@@ -32,8 +32,9 @@ namespace Plexy{
      * current time. We shall defince the
      * function in further inherited objects
      * cause update will be different for 
-     * different type of objects
-     */
-    virtual void updateDynamics() =0;
+     * different type of objects*/
+    //FIXME
+    //don't do this, compiler error
+    //virtual void updateDynamics() =0;
 
 } //  namespace plexy
