@@ -13,6 +13,10 @@ QT4_AUTOMOC( ${qtvizsrc})
 
 TARGET_LINK_LIBRARIES(
 	       qtviz
+	       GL
+	       ${OPENGL_LIBRARIES}
+	       ${QT_QTCORE_LIBRARY}
+	       ${QT_AND_KDECORE_LIBS}
 	       ${QT_QTOPENGL_LIBRARY}
 	       ${KDE4_KDEUI_LIBS}
        )

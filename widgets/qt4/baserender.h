@@ -3,6 +3,11 @@
 
 #include <plexy.h>
 #include <QGLWidget>
+#include <QtCore>
+#include <QImage>
+#include <GL/gl.h>
+#include <GL/glu.h>
+
 
 namespace PlexyDesk
 {
@@ -12,12 +17,15 @@ class VISIBLE_SYM BaseRender:public QGLWidget
     Q_OBJECT
  
 public:
+    typedef QMap<QString,QPixmap*> CacheDict;
 
     BaseRender(QWidget * parent = 0, const QGLWidget * shareWidget = 0, Qt::WindowFlags f = 0);
-    
+
     virtual ~BaseRender();
 
-    void setWallpaper(const QPixmap& wallpaper);
+    void resetViewport (int width, int height);
+
+    void resetOverlay  (int width, int height);
 
 protected:
     
@@ -25,9 +33,14 @@ protected:
 
     void resizeGL(int width, int height);
 
-    void paintGL();
+//    void paintGL();
 
     void paintEvent(QPaintEvent *);
+
+    void drawWallpaper(){};
+private:
+    class Private;
+    Private * const d ;
 };
 
 } // namespace #ifndef
