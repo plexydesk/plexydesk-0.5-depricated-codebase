@@ -4,7 +4,7 @@
  * Sci-Fi Desktop for the Hurd
  *
  * Authored By Siraj Razick <siraj@kde.org>
- * Authored By Mani Shankar <da.sharp.17@gmail.com> 
+ * Authored By Mani Shankar <da.sharp.17@gmail.com>
  *
  * Copyright (C) 2008 PlexyDeskTeam
  *
@@ -32,22 +32,31 @@
 
 namespace Plexy{
 
-	class VISIBLE_SYM Particle {
+    class VISIBLE_SYM Particle {
 
-	public:
+    public:
 
-		Particle() {		// Default Constructor
-			Vector3D position;
-			Vector3D velocity;
-			mass =1;
-		}
+        Particlcle() {        // Default Constructor
+            Vector3D position;
+            Vector3D velocity;
+            mass  =1;
+        }
 
-		void update () ;
+        /*
+         * Constructor which is used to create an object of mass m
+         * at the location pos in space with some velocity vel.
+         */
+        Particle(Vector3D pos, Vector3D vel,float m):position(pos),Velocity(vel),mass(m) {}
 
-	private:
-		Vector3D position;
-		Vector3D velocity;
-		float mass;
-	} ; // End Class Particle
+        void updateDynamics() ;
+
+    private:
+        Vector3D position;
+        Vector3D velocity;
+        float mass;
+
+    } ; // End Class Particle
 
 #endif
+
+

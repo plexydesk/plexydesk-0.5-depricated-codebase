@@ -27,8 +27,13 @@
 
 namespace Plexy{
 
-		void update() {		//Updates the data of the particle to current time
-			
-		} //End update
+    /*
+     * Updates the data of the particle to
+     * current time. We shall defince the
+     * function in further inherited objects
+     * cause update will be different for 
+     * different type of objects
+     */
+    virtual void updateDynamics() =0;
 
 } //  namespace plexy
