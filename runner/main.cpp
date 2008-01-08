@@ -8,31 +8,27 @@
 #include <signal.h>
 #include <unistd.h>
 #include <X11/Xlib.h>
-#include <fixx11h.h>
+//#include <fixx11h.h>
 #include <QtDBus/QtDBus>
-#include <kdeversion.h>
-#include <klocale.h>
-#include <kcmdlineargs.h>
-#include <kdebug.h>
-#include <kaboutdata.h>
-#include <kconfig.h>
-
+#include <QtWebKit/QWebView>
 
 //plexy
 #include <plexy.h>
 #include <baserender.h>
+#include <desktopview.h>
 
-static const char description[] =
-        I18N_NOOP("Kandy Panel For KDE");
 
 int main( int argc, char ** argv )
 {
 QApplication app(argc,argv);
 
-PlexyDesk::BaseRender * r = new PlexyDesk::BaseRender(0);
-r->resize(640,480);
-r->show();
-
+QWebView *view = new QWebView(0);
+view->load(QUrl("http://www.google.com/"));
+view->show();
+/*
+PlexyDesk::DesktopView * view = new PlexyDesk::DesktopView();
+view->show();
+*/
 
 return app.exec();
 

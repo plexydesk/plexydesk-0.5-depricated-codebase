@@ -53,6 +53,7 @@
 #define PLUGIN_EXPORT(name,sym)\
     extern "C" { void *setup_##name(){return new sym;}}
 
+#define  Q_UINT32 unsigned int 
 
 namespace Plexy
 {

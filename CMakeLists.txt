@@ -2,11 +2,11 @@ PROJECT(PlexyDesktop)
 #siraj@kde.org
 #LGPL2
 
-FIND_PACKAGE(KDE4 REQUIRED)
+FIND_PACKAGE(Qt4 REQUIRED)
 #FIND_PACKAGE(Strigi REQUIRED)
 #FIND_PACKAGE(Plasma REQUIRED)
-INCLUDE (KDE4Defaults)
-INCLUDE (MacroLibrary)
+#INCLUDE (KDE4Defaults)
+#INCLUDE (MacroLibrary)
 
 SET(LIB_MAJOR 0)
 SET(LIB_MINOR 1)
@@ -40,6 +40,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}/plexylib
     ${CMAKE_SOURCE_DIR}/widgets/qt4
     ${CMAKE_SOURCE_DIR}/widgets/gtk
+    ${QT_INCLUDE_DIR}
 )
 
 

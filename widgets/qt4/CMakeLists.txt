@@ -1,4 +1,16 @@
 
+set(QT_USE_OPENGL TRUE)
+# -> this will cause cmake to include and link against the OpenGL module
+include(${QT_USE_FILE})
+
+INCLUDE_DIRECTORIES(
+	   ${QT_INCLUDES}
+	   ${QT_QTOPENGL_INCLUDE_DIR}
+	   ${QT_QTNETWORK_INCLUDE_DIR}
+	   ${QT_QTTEST_INCLUDE_DIR}
+		 )
+
+
 SET (qtvizsrc 	
 	baserender.cpp 
 	desktopview.cpp
@@ -7,6 +19,7 @@ SET (qtvizsrc
 
 add_library (qtviz SHARED ${qtvizsrc})
 QT4_AUTOMOC( ${qtvizsrc}) 
+
 #SET_TARGET_PROPERTIES(plexy
 #
 #	·       ·       PROPERTIES
@@ -18,9 +31,7 @@ TARGET_LINK_LIBRARIES(
 	       GL
 	       ${OPENGL_LIBRARIES}
 	       ${QT_QTCORE_LIBRARY}
-	       ${QT_AND_KDECORE_LIBS}
 	       ${QT_QTOPENGL_LIBRARY}
-	       ${KDE4_KDEUI_LIBS}
        )
 
 INSTALL(TARGETS qtviz DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/)
