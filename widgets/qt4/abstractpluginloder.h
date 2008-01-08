@@ -3,7 +3,7 @@
 
 
 #include <plexy.h>
-#include <QtCore.h>
+#include <QtCore>
 
 namespace PlexyDesk
 {
@@ -11,12 +11,10 @@ namespace PlexyDesk
     {
 
         public:
-            void init() = 0;
+           virtual void init() = 0;
 
-            void getInstance() = 0;
-
-        private:
-            AbstractPluginLoader(){}
 
     };
 } // namespace PlexyDesk
+
+#endif
