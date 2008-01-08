@@ -1,6 +1,7 @@
 
 SET (qtvizsrc 	
 	baserender.cpp 
+	desktopview.cpp
 		)
 
 add_library (qtviz SHARED ${qtvizsrc})

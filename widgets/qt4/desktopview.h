@@ -6,14 +6,14 @@
 #include <plexy.h>
 
 
-namespace
+namespace PlexyDesk
 {
 
 class VISIBLE_SYM  DesktopView : public QGraphicsView
 {
     Q_OBJECT
     public:
-        DesktopView ( QGraphicsScene * scene, QWidget * parent = 0 );
+        DesktopView ( QGraphicsScene * scene = new QGraphicsScene(), QWidget * parent = 0 );
         virtual ~DesktopView();
 
         void addWallpaper(const QString& path);
