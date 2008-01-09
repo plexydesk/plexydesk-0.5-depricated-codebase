@@ -18,6 +18,9 @@
 #include <desktopview.h>
 #include <backdropfactory.h>
 
+#include <QX11Info>
+#include <netwm.h>
+
 int main( int argc, char ** argv )
 {
 QApplication app(argc,argv);
@@ -42,8 +45,14 @@ qDebug()<< "plugin After "<<bg<<endl;
 
 using namespace PlexyDesk;
 QGraphicsScene scene;
+
 DesktopView * view = new DesktopView(&scene);
 scene.addItem(bgfact->instance()->backdrop());
+
+NETWinInfo info( QX11Info::display(), view->winId(), QX11Info::appRootWindow(), NET::WMDesktop );
+info.setDesktop( NETWinInfo::OnAllDesktops );
+info.setWindowType(NET::Desktop);
+
 view->show();
 
 
