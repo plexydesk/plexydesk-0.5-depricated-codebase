@@ -17,7 +17,7 @@ class WidgetFactory::Private
 
 WidgetFactory::WidgetFactory(QObject * parent):QObject(parent),d(new Private)
 {
-    QPluginLoader loader ("/usr/local/lib/plexyext/widgets/libclassicbackdrop.so");
+    QPluginLoader loader ("/usr/local/lib/plexyext/widgets/libwidgetdemo.so");
     QObject * plugin =  loader.instance();
     if (plugin) {
         d->currentDrop = qobject_cast<WidgetInterface*>(plugin);

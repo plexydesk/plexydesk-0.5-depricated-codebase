@@ -17,6 +17,7 @@
 #include <baserender.h>
 #include <desktopview.h>
 #include <backdropfactory.h>
+#include <widgetfactory.h>
 
 #include <QX11Info>
 #include <netwm.h>
@@ -32,8 +33,10 @@ view->show();
 */
 
 PlexyDesk::BackdropInterface * bg = 0;
+PlexyDesk::WidgetInterface * widget = 0;
 
 PlexyDesk::BackdropFactory * bgfact = new PlexyDesk::BackdropFactory(0);
+PlexyDesk::WidgetFactory * widgetfact = new PlexyDesk::WidgetFactory(0);
 
 qDebug()<<"Plugin Before Address"<<bg<<endl;
 
@@ -47,14 +50,15 @@ using namespace PlexyDesk;
 QGraphicsScene scene;
 
 QPushButton * btn= new QPushButton("ClickME");;
-scene.addItem(new QGraphicsPixmapItem(QPixmap("/home/siraj/.kde/share/icons/Crystal Clear/128x128/filesystems/folder_home.png")));
 DesktopView * view = new DesktopView(&scene);
 
 NETWinInfo info( QX11Info::display(), view->winId(), QX11Info::appRootWindow(), NET::WMDesktop );
 info.setDesktop( NETWinInfo::OnAllDesktops );
 info.setWindowType(NET::Desktop);
 
-scene.addItem(bgfact->instance()->backdrop());
+///scene.addItem(bgfact->instance()->backdrop());
+scene.addItem(widgetfact->instance()->backdrop());
+widgetfact->instance()->backdrop()->setZValue(-100);
 view->show();
 
 

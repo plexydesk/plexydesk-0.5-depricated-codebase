@@ -35,6 +35,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/widgets/qt4
     ${CMAKE_BINARY_DIR}/widgets/gtk
     ${CMAKE_BINARY_DIR}/extensions/backdrop/classicdrop
+    ${CMAKE_BINARY_DIR}/extensions/widgets/demowidget
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_SOURCE_DIR}/plexylib
     ${CMAKE_SOURCE_DIR}/widgets/qt4
@@ -47,5 +48,6 @@ INCLUDE_DIRECTORIES(
 add_subdirectory(plexylib)
 add_subdirectory(widgets/qt4/)
 add_subdirectory(extensions/backdrop/classicdrop)
+add_subdirectory(extensions/widgets/demowidget)
 add_subdirectory(runner)
 

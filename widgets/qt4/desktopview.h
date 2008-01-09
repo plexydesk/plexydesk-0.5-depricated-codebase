@@ -24,6 +24,9 @@ class VISIBLE_SYM  DesktopView : public QGraphicsView
 
         void addDesktopItem (QGraphicsItem * item);
 
+    protected:
+        void drawBackground ( QPainter * painter, const QRectF & rect );
+
     private:
             class Private;
             Private * const d ;

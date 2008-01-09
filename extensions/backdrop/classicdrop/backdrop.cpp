@@ -4,7 +4,7 @@
 
 ClassicBackdrop::ClassicBackdrop(QObject * object):QObject(object)
 {
-
+    bg = QPixmap("/home/siraj/downloads-torrents/wallpaper/Indiana+Summer.jpg");
 }
 
 ClassicBackdrop::~ClassicBackdrop()
@@ -15,6 +15,11 @@ ClassicBackdrop::~ClassicBackdrop()
 QGraphicsItem * ClassicBackdrop::backdrop()
 {
 return new  PlexyDesk::BackdropItem(QRectF(0,0,200,200));//QGraphicsPixmapItem(QPixmap("/home/siraj/downloads-torrents/wallpaper/water.png"));
+}
+
+void ClassicBackdrop::render(QPainter *p)
+{
+    p->drawPixmap(QDesktopWidget().screenGeometry() ,bg);
 }
 
 Q_EXPORT_PLUGIN2(ClassicBackdrop,ClassicBackdrop)
