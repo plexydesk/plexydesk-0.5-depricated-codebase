@@ -1,14 +1,12 @@
 #include "extensionfactory.h"
 
-
-namespace PlexyDesk
-{
-template <class T>
-    AbstractPluginLoader * ExtensionProducer<T>::createObject()
+/*
+namespace PlexyDesk{
+template  <class Ext>
+Ext * ExtensionProducer<Ext>::createObject()
     {
-        return new T;
+        return new Ext;
     }
 
 }
-
-
+*/
