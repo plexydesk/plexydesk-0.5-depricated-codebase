@@ -12,7 +12,7 @@ namespace PlexyDesk
         public:
             BackdropInterface(){}
             ~BackdropInterface(){}
-            QGraphicsItem * backdrop();
+           virtual  QGraphicsItem * backdrop() = 0;
     };
 } // namespace PlexyDesk
 

@@ -16,20 +16,36 @@
 #include <plexy.h>
 #include <baserender.h>
 #include <desktopview.h>
-
+#include <backdropfactory.h>
 
 int main( int argc, char ** argv )
 {
 QApplication app(argc,argv);
 
+/*
 QWebView *view = new QWebView(0);
 view->load(QUrl("http://www.google.com/ig"));
 view->show();
-
-/*
-PlexyDesk::DesktopView * view = new PlexyDesk::DesktopView();
-view->show();
 */
+
+PlexyDesk::BackdropInterface * bg = 0;
+
+PlexyDesk::BackdropFactory * bgfact = new PlexyDesk::BackdropFactory(0);
+
+qDebug()<<"Plugin Before Address"<<bg<<endl;
+
+bg = bgfact->instance(); 
+
+qDebug()<< "plugin After "<<bg<<endl;
+
+
+
+using namespace PlexyDesk;
+QGraphicsScene scene;
+DesktopView * view = new DesktopView(&scene);
+scene.addItem(bgfact->instance()->backdrop());
+view->show();
+
 
 return app.exec();
 

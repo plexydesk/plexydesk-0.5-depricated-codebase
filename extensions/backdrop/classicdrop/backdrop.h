@@ -6,7 +6,7 @@
 #include <backdropinterface.h>
 
 
-class ClassicBackdrop : public QObject , public PlexyDesk::BackdropInterface
+class VISIBLE_SYM ClassicBackdrop : public QObject , public PlexyDesk::BackdropInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::BackdropInterface)
@@ -14,8 +14,7 @@ class ClassicBackdrop : public QObject , public PlexyDesk::BackdropInterface
     public:
     ClassicBackdrop(QObject * object = 0);
     virtual ~ClassicBackdrop();
-    virtual QGraphicsItem * backdrop();
-
+    virtual QGraphicsItem * backdrop();// {};
 };
 
 

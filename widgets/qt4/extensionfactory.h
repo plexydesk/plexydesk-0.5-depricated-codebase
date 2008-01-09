@@ -30,7 +30,7 @@ class ExtensionProducer
     class VISIBLE_SYM ExtensionFactory
     {
         public:
-                virtual  void * instance() = 0;
+                virtual  BackdropInterface * instance() = 0;
     };
 } // namespace PlexyDesk
 

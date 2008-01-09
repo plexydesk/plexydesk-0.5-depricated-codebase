@@ -18,12 +18,8 @@ class VISIBLE_SYM BackdropFactory : public QObject, public ExtensionFactory
         BackdropFactory(QObject * object = 0);
         virtual ~BackdropFactory();
 
-       virtual void * instance()
-        {
-           ExtensionProducer<BackdropInterface> obj;
-          return obj.createObject();
-        }
-    private:
+       virtual BackdropInterface * instance();
+     private:
     //   class Private;
      //  Private * const d;
     
