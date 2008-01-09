@@ -27,7 +27,7 @@ class ExtensionProducer
     }
     */
 
-    class VISIBLE_SYM ExtenstionFactory
+    class VISIBLE_SYM ExtensionFactory
     {
         public:
                 virtual  void * instance() = 0;

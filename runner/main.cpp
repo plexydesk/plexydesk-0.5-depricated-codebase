@@ -21,15 +21,15 @@
 int main( int argc, char ** argv )
 {
 QApplication app(argc,argv);
-/*
-QWebView *view = new QWebView(0);
-view->load(QUrl("http://www.google.com/"));
-view->show();
-*/
 
+QWebView *view = new QWebView(0);
+view->load(QUrl("http://www.google.com/ig"));
+view->show();
+
+/*
 PlexyDesk::DesktopView * view = new PlexyDesk::DesktopView();
 view->show();
-
+*/
 
 return app.exec();
 

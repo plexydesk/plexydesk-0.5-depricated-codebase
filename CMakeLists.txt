@@ -16,7 +16,7 @@ SET(APPLICATION_INTERNAL_VERSION "20071216")
 SET(APPLICATION_DATE "2008-01-01")
 
 
-ADD_DEFINITIONS (${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
+ADD_DEFINITIONS (${QT_DEFINITIONS})
 INCLUDE_DIRECTORIES (
         ${CMAKE_SOURCE_DIR}
         ${CMAKE_BINARY_DIR}
@@ -28,14 +28,15 @@ SET(APPLICATION_MAIN_VERSION "0.${LIB_MAJOR}.${LIB_MINOR}.${LIB_RELEASE}")
 
 find_package(PkgConfig)
 
-pkg_check_modules(GTKMM gtkmm-2.4)
-pkg_check_modules(CLUTTER clutter-0.5)
+#pkg_check_modules(GTKMM gtkmm-2.4)
+#pkg_check_modules(CLUTTER clutter-0.5)
 
 INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}
     ${CMAKE_BINARY_DIR}/plexylib
     ${CMAKE_BINARY_DIR}/widgets/qt4
     ${CMAKE_BINARY_DIR}/widgets/gtk
+    ${CMAKE_BINARY_DIR}/extensions/backdrop/classicdrop
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_SOURCE_DIR}/plexylib
     ${CMAKE_SOURCE_DIR}/widgets/qt4
@@ -47,5 +48,6 @@ INCLUDE_DIRECTORIES(
 
 add_subdirectory(plexylib)
 add_subdirectory(widgets/qt4/)
+add_subdirectory(extensions/backdrop/classicdrop)
 add_subdirectory(runner)
 

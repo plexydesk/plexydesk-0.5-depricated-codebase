@@ -16,4 +16,5 @@ namespace PlexyDesk
     };
 } // namespace PlexyDesk
 
+Q_DECLARE_INTERFACE(PlexyDesk::BackdropInterface, "org.plexydesk.BackdropInterface")
 #endif
