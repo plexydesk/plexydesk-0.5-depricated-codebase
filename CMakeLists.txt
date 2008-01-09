@@ -26,8 +26,6 @@ INCLUDE_DIRECTORIES (
 SET(APPLICATION_NAME "${PROJECT_NAME}")
 SET(APPLICATION_MAIN_VERSION "0.${LIB_MAJOR}.${LIB_MINOR}.${LIB_RELEASE}")
 
-find_package(PkgConfig)
-
 #pkg_check_modules(GTKMM gtkmm-2.4)
 #pkg_check_modules(CLUTTER clutter-0.5)
 
