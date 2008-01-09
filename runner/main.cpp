@@ -46,13 +46,15 @@ qDebug()<< "plugin After "<<bg<<endl;
 using namespace PlexyDesk;
 QGraphicsScene scene;
 
+QPushButton * btn= new QPushButton("ClickME");;
+scene.addItem(new QGraphicsPixmapItem(QPixmap("/home/siraj/.kde/share/icons/Crystal Clear/128x128/filesystems/folder_home.png")));
 DesktopView * view = new DesktopView(&scene);
-scene.addItem(bgfact->instance()->backdrop());
 
 NETWinInfo info( QX11Info::display(), view->winId(), QX11Info::appRootWindow(), NET::WMDesktop );
 info.setDesktop( NETWinInfo::OnAllDesktops );
 info.setWindowType(NET::Desktop);
 
+scene.addItem(bgfact->instance()->backdrop());
 view->show();
 
 

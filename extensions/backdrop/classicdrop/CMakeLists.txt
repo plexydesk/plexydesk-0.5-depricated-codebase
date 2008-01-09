@@ -13,6 +13,7 @@ INCLUDE_DIRECTORIES(
 
 SET (classicbackdropsrc 	
 	backdrop.cpp
+	backdropitem.cpp
 		)
 
 add_library (classicbackdrop SHARED ${classicbackdropsrc})

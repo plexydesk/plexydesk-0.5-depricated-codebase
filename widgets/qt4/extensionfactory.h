@@ -4,11 +4,12 @@
 #define PLEXY_EXTENION_FACTORY_H
 #include  <abstractpluginloder.h>
 #include <backdropinterface.h>
+#include <widgetinterface.h>
 
 
 namespace PlexyDesk
 {
-  
+//USAGE OF TEMPLATE DISABLED FOR NOW  
 template <class Ext>
 class ExtensionProducer
     {
@@ -32,6 +33,16 @@ class ExtensionProducer
         public:
                 virtual  BackdropInterface * instance() = 0;
     };
+    //PROTOTYPE HACK
+
+    class VISIBLE_SYM WidgetExtensionFactory
+    {
+        public:
+                virtual WidgetInterface * instance() = 0;
+    };
+
+
+
 } // namespace PlexyDesk
 
 #endif

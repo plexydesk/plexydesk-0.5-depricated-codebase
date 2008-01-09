@@ -17,6 +17,7 @@ SET (qtvizsrc
 	netwm.cpp
 	extensionfactory.cpp
 	backdropfactory.cpp
+	widgetfactory.cpp
 		)
 
 add_library (qtviz SHARED ${qtvizsrc})
