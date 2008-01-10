@@ -50,4 +50,6 @@ add_subdirectory(widgets/qt4/)
 add_subdirectory(extensions/backdrop/classicdrop)
 add_subdirectory(extensions/widgets/demowidget)
 add_subdirectory(runner)
+add_subdirectory(artwork)
+add_subdirectory(artwork/buttons)
 

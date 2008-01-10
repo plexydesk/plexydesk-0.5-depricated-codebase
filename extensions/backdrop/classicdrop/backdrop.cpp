@@ -4,7 +4,7 @@
 
 ClassicBackdrop::ClassicBackdrop(QObject * object):QObject(object)
 {
-    bg = QPixmap("/home/siraj/downloads-torrents/wallpaper/Indiana+Summer.jpg");
+    bg = QPixmap("/usr/share/plexy/skins/default/default.png");
 }
 
 ClassicBackdrop::~ClassicBackdrop()

@@ -4,7 +4,7 @@ namespace PlexyDesk
 {
     BackdropItem::BackdropItem(const QRectF &rect):QGraphicsRectItem(rect)
     {
-    bg = QPixmap("/home/siraj/downloads-torrents/wallpaper/water.png"); 
+    bg = QPixmap("/usr/share/plexy/skins/default/default.png"); 
     }
     
     BackdropItem::~BackdropItem()
