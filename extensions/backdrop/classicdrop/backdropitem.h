@@ -5,22 +5,21 @@
 #include <QtGui>
 #include <plexy.h>
 
-#include "customproxy.h"
 
 namespace PlexyDesk
 {
 
-    class WidgetItem: public QObject, public QGraphicsRectItem
+    class BackdropItem: public QObject, public QGraphicsRectItem
     {
 
     Q_OBJECT
         public:
-        WidgetItem(const QRectF &rect, QWidget *embeddedWidget = 0);
-        virtual ~WidgetItem();
+        BackdropItem(const QRectF &rect);
+        virtual ~BackdropItem();
         void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
         QRectF boundingRect() const;
         private:
-        CustomProxy *proxyWidget;
+        QPixmap bg;
 
     };
 

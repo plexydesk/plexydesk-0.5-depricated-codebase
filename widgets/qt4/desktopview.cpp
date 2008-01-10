@@ -1,5 +1,6 @@
 #include "desktopview.h"
 #include <backdropfactory.h>
+#include <QGLWidget>
 
 
 namespace PlexyDesk
@@ -15,6 +16,7 @@ class  DesktopView::Private
 
 DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsView(scene,parent),d(new Private)
 {
+//        setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers)));
         setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
        setCacheMode(QGraphicsView::CacheBackground);
@@ -29,6 +31,7 @@ DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsV
        d->bIface  = 0;
        d->bgfact = new BackdropFactory(0);
        d->bIface = d->bgfact->instance();
+   //    fitInView(QDesktopWidget().screenGeometry());
        setInteractive(true);
 }
 
@@ -39,7 +42,8 @@ DesktopView::~DesktopView()
 
 void DesktopView::drawBackground ( QPainter * painter, const QRectF & rect )
 {
-    d->bIface->render(painter);
+    qDebug()<<rect<<endl;
+    d->bIface->render(painter,QRectF(rect.x(),rect.y(),rect.width(),rect.height()));
 }
 
 }
