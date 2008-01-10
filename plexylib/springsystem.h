@@ -10,9 +10,9 @@ namespace Plexy
     {
         private:
             /*
-             * it owuld be a data structure,
-             * Which we haven't yet Implemeted
-             * First have to make an algorithm
+             * it would be a data structure,
+             * which we haven't yet implemeted
+             * first, have to make an algorithm
              * on how to create a network as
              * described in the doc, then will
              * add the DS and the constructor
@@ -25,11 +25,11 @@ namespace Plexy
         public:
 
             void dragSystem();
-            
+
             void dragCaught();
 
 
     };
-} // namespace plexy{
+} // namespace plexy
 
 #endif

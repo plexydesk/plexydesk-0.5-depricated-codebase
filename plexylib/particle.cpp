@@ -28,13 +28,29 @@
 namespace Plexy{
 
     /*
-     * Updates the data of the particle to
-     * current time. We shall defince the
-     * function in further inherited objects
-     * cause update will be different for 
-     * different type of objects*/
-    //FIXME
-    //don't do this, compiler error
-    //virtual void updateDynamics() =0;
+     * this fucntion is called on a particle
+     * which is not caught and free, the
+     * purpose of this fucntion is it hit the
+     * particle on which it is called and updates
+     * its data
+     */
+
+    /*
+   void Particle::hit() {
+       Vector3D temp;
+       float temp1;
+
+       temp = getVelocity();    //return the velocity of the caught particle
+       temp1 = getMass();       //returns the mass of the caught particle
+
+
+       if (velocity==NULL) {
+           velocity = temp.mult(temp1/mass);
+       }
+
+   }
+
+   */
+
 
 } //  namespace plexy

@@ -75,4 +75,13 @@ namespace Plexy
 		return result;
 	} //End unitVector3D
 
+        Vector3D Vector3D::mult(float scalar) {         //multiplication with a scalar
+            x = x*scalar;
+            y = y*scalar;
+            z = z*scalar;
+
+            return Vector3D(x,y,z);
+        } //end mult
+
+
 } //namespace Plexy

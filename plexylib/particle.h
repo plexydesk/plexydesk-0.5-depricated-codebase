@@ -48,12 +48,23 @@ namespace Plexy{
          */
         Particle(Vector3D pos, Vector3D vel,float m):position(pos),Velocity(vel),mass(m) {}
 
-       virtual void updateDynamics() = 0 ;
+  /*
+   * Updates the data of the particle
+   * current time. We shall defince the
+   * function in further inherited objects
+   * cause update will be different for·
+   * different type of objects
+   */
+        virtual void updateDynamics() = 0 ;
+
+        void hit();
 
     private:
         Vector3D position;
         Vector3D velocity;
         float mass;
+        int isCaught;
+        int isSpringed;
 
     } ; // End Class Particle
 
