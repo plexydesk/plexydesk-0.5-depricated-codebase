@@ -51,7 +51,7 @@ QGraphicsScene scene;
 
 QPushButton * btn= new QPushButton("ClickME");;
 DesktopView * view = new DesktopView(&scene);
-
+view->resize( QDesktopWidget().screenGeometry().size());
 NETWinInfo info( QX11Info::display(), view->winId(), QX11Info::appRootWindow(), NET::WMDesktop );
 info.setDesktop( NETWinInfo::OnAllDesktops );
 info.setWindowType(NET::Desktop);

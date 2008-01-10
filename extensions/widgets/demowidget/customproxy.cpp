@@ -15,7 +15,6 @@ CustomProxy::CustomProxy(QGraphicsItem *parent, Qt::WindowFlags wFlags)
     setTransform(QTransform().rotate( 30, Qt::XAxis)
                  .rotate( 10, Qt::YAxis)
                  .rotate( 10, Qt::ZAxis));
- 
 }
 
 QRectF CustomProxy::boundingRect() const
