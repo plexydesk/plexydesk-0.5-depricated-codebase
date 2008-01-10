@@ -14,6 +14,8 @@ INCLUDE_DIRECTORIES(
 SET (classicbackdropsrc 	
 	backdrop.cpp
 	backdropitem.cpp
+	pictureflow.cpp
+	customproxy.cpp
 		)
 
 add_library (classicbackdrop SHARED ${classicbackdropsrc})

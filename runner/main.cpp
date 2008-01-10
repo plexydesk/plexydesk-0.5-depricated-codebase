@@ -56,7 +56,7 @@ NETWinInfo info( QX11Info::display(), view->winId(), QX11Info::appRootWindow(), 
 info.setDesktop( NETWinInfo::OnAllDesktops );
 info.setWindowType(NET::Desktop);
 
-///scene.addItem(bgfact->instance()->backdrop());
+scene.addItem(bgfact->instance()->backdrop());
 scene.addItem(widgetfact->instance()->backdrop());
 widgetfact->instance()->backdrop()->setZValue(-100);
 view->show();
