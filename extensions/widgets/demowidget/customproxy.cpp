@@ -20,7 +20,7 @@ CustomProxy::CustomProxy(QGraphicsItem *parent, Qt::WindowFlags wFlags)
 
 QRectF CustomProxy::boundingRect() const
 {
-    return QGraphicsProxyWidget::boundingRect().adjusted(0, 0, 10, 10);
+    return QGraphicsProxyWidget::boundingRect().adjusted(0, 0, 0, 0);
 }
 
 void CustomProxy::paintWindowFrame(QPainter *painter, const QStyleOptionGraphicsItem *option,
@@ -29,10 +29,7 @@ void CustomProxy::paintWindowFrame(QPainter *painter, const QStyleOptionGraphics
     QRectF br = boundingRect();
     painter->setPen(Qt::NoPen);
     painter->setBrush(QColor(0, 0, 0, 64));
-//    painter->drawPolygon(QPolygonF(br.adjusted(10, 10, 10, 10))
-//			 .intersected(br));
     painter->drawRect(boundingRect());
- //   QGraphicsProxyWidget::paintWindowFrame(painter, option, widget);
     
 }
 
@@ -58,11 +55,13 @@ void CustomProxy::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 void CustomProxy::updateStep(qreal step)
 {
     QRectF r = boundingRect();
-   
+  /* 
     setTransform(QTransform().rotate(step * 30, Qt::XAxis)
                  .rotate(step * 10, Qt::YAxis)
                  .rotate(step * 10, Qt::ZAxis));
-                 
+   /              */
+
+   setTransform(QTransform().rotate(step * 30, Qt::XAxis));
 }
 
 void CustomProxy::stateChanged(QTimeLine::State state)
