@@ -10,6 +10,12 @@ CustomProxy::CustomProxy(QGraphicsItem *parent, Qt::WindowFlags wFlags)
             this, SLOT(updateStep(qreal)));
     connect(timeLine, SIGNAL(stateChanged(QTimeLine::State)),
             this, SLOT(stateChanged(QTimeLine::State)));
+
+
+    setTransform(QTransform().rotate( 30, Qt::XAxis)
+                 .rotate( 10, Qt::YAxis)
+                 .rotate( 10, Qt::ZAxis));
+ 
 }
 
 QRectF CustomProxy::boundingRect() const
