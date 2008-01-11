@@ -571,7 +571,7 @@ QImage* PictureFlowSoftwareRenderer::surface(int slideIndex)
   QString key = QString::number(slideIndex);
 #endif
 
-  QRgb bg = state->backgroundColor;
+  QRgb bg = Qt::transparent;//state->backgroundColor;
 
   QImage* img = state->slideImages[slideIndex];
   bool empty = (!img) ? true : img->isNull();
@@ -586,8 +586,12 @@ QImage* PictureFlowSoftwareRenderer::surface(int slideIndex)
 
 #ifdef PICTUREFLOW_QT4
       QImage img = QImage(sw, sh, QImage::Format_RGB32);
-
+   
       QPainter painter(&img);
+      painter.setCompositionMode(QPainter::CompositionMode_Source);
+      painter.fillRect(QRect(0, 0, sw, sh), Qt::transparent);
+      painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+
       QPoint p1(sw*4/10, 0);
       QPoint p2(sw*6/10, sh);
       QLinearGradient linearGrad(p1, p2);
@@ -635,7 +639,7 @@ QRect PictureFlowSoftwareRenderer::renderSlide(const SlideInfo &slide, int col1,
   if(!blend)
     return QRect();
 
-  QRgb bg = state->backgroundColor;
+  QRgb bg = Qt::transparent;//state->backgroundColor;
 
   QRect rect(0, 0, 0, 0);  
   
@@ -746,7 +750,8 @@ QRect PictureFlowSoftwareRenderer::renderSlide(const SlideInfo &slide, int col1,
 // Render the slides. Updates only the offscreen buffer.
 void PictureFlowSoftwareRenderer::render()
 {
-  buffer.fill(state->backgroundColor);
+
+  buffer.fill(Qt::transparent);
 
   int nleft = state->leftSlides.count();
   int nright = state->rightSlides.count();
@@ -803,9 +808,9 @@ PictureFlow::PictureFlow(QWidget* parent): QWidget(parent)
   QObject::connect(&d->triggerTimer, SIGNAL(timeout()), this, SLOT(render()));
 
 #ifdef PICTUREFLOW_QT4
-  setAttribute(Qt::WA_StaticContents, true);
-  setAttribute(Qt::WA_OpaquePaintEvent, true);
-  setAttribute(Qt::WA_NoSystemBackground, true);
+//  setAttribute(Qt::WA_StaticContents, true);
+//  setAttribute(Qt::WA_OpaquePaintEvent, true);
+//  setAttribute(Qt::WA_NoSystemBackground, true);
   setWindowTitle("PictureFlow");
 #endif
 #ifdef PICTUREFLOW_QT3

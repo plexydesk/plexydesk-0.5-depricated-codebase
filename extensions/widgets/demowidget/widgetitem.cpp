@@ -9,11 +9,13 @@ namespace PlexyDesk
     {
                 if (widget) {
                     proxyWidget = new CustomProxy(this,Qt::Window);
-              //      proxyWidget->setFocusPolicy(Qt::StrongFocus);
+                    proxyWidget->setFocusPolicy(Qt::StrongFocus);
+    
                     proxyWidget->setWidget(widget);
-                    proxyWidget->setGeometry(boundingRect().adjusted(25, 25, -25, -25));
-                    proxyWidget->setCacheMode(QGraphicsItem::DeviceCoordinateCache);
-                   // proxyWidget->setFlag(QGraphicsItem::ItemIsMovable,true);
+             proxyWidget->setGeometry(boundingRect().adjusted(25, 25, -25, -25));
+               //     proxyWidget->setCacheMode(QGraphicsItem::DeviceCoordinateCache);
+
+                    proxyWidget->setFlag(QGraphicsItem::ItemIsMovable,true);
                 }
 
                 setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
@@ -37,7 +39,6 @@ namespace PlexyDesk
         if (proxyWidget && !proxyWidget->isVisible()) {
                proxyWidget->show();
                        proxyWidget->setFocus();
-                       qDebug("Shwoing");
         }
         if (proxyWidget && proxyWidget->pos() != QPoint()) {
             proxyWidget->setGeometry(boundingRect().adjusted(25, 25, -25, -25));

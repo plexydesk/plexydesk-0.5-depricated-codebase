@@ -1,5 +1,5 @@
 PROJECT(PlexyDesktop)
 
-FILE(GLOB PNGFILES *.png)
+FILE(GLOB PNGFILES *.png )
 
 INSTALL(FILES ${PNGFILES}  DESTINATION /usr/share/plexy/skins/default/buttons/)

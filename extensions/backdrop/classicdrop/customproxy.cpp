@@ -16,7 +16,7 @@ CustomProxy::CustomProxy(QGraphicsItem *parent, Qt::WindowFlags wFlags)
 
 QRectF CustomProxy::boundingRect() const
 {
-    return QGraphicsProxyWidget::boundingRect().adjusted(0, 0, 0, 0);
+    return QRectF(0,0,QDesktopWidget().screenGeometry().width() ,240); //QGraphicsProxyWidget::boundingRect().adjusted(0, 0, 0, 0);
 }
 
 void CustomProxy::paintWindowFrame(QPainter *painter, const QStyleOptionGraphicsItem *option,
@@ -25,7 +25,7 @@ void CustomProxy::paintWindowFrame(QPainter *painter, const QStyleOptionGraphics
     QRectF br = boundingRect();
     painter->setPen(Qt::NoPen);
     painter->setBrush(QColor(0, 0, 0, 64));
-    painter->drawRect(boundingRect());
+//    painter->drawRect(boundingRect());
     
 }
 

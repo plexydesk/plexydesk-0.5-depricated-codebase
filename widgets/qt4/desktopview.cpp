@@ -17,22 +17,23 @@ class  DesktopView::Private
 DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsView(scene,parent),d(new Private)
 {
 //        setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers)));
-        setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+       setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+       setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
        setCacheMode(QGraphicsView::CacheBackground);
-       setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
+       setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
        setRenderHint(QPainter::Antialiasing);
-       //setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+       setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
      //  centerOn(0,0);
      //
        setOptimizationFlag(QGraphicsView::DontClipPainter,true);
-       setOptimizationFlag(QGraphicsView::DontSavePainterState,true);
+       setOptimizationFlag(QGraphicsView::DontSavePainterState,false);
        setAlignment(Qt::AlignLeft | Qt::AlignTop);
        d->bIface  = 0;
        d->bgfact = new BackdropFactory(0);
        d->bIface = d->bgfact->instance();
    //    fitInView(QDesktopWidget().screenGeometry());
        setInteractive(true);
+     //  scale(2,2);
 }
 
 DesktopView::~DesktopView()
