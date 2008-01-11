@@ -43,8 +43,11 @@ DesktopView::~DesktopView()
 
 void DesktopView::drawBackground ( QPainter * painter, const QRectF & rect )
 {
-    qDebug()<<rect<<endl;
+    //qDebug()<<rect<<endl;
+    painter->save();
+    painter->setBrushOrigin(0, 0);
     d->bIface->render(painter,QRectF(rect.x(),rect.y(),rect.width(),rect.height()));
+    painter->restore();
 }
 
 }

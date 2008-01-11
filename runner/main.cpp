@@ -48,6 +48,7 @@ qDebug()<< "plugin After "<<bg<<endl;
 
 using namespace PlexyDesk;
 QGraphicsScene scene;
+scene.setBackgroundBrush(Qt::NoBrush);
 scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 QPushButton * btn= new QPushButton("ClickME");;
 DesktopView * view = new DesktopView(&scene);

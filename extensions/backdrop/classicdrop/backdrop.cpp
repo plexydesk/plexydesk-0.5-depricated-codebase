@@ -5,6 +5,7 @@
 ClassicBackdrop::ClassicBackdrop(QObject * object):QObject(object)
 {
     bg = QPixmap("/usr/share/plexy/skins/default/default.png");
+    paint.setTexture(bg);
 }
 
 ClassicBackdrop::~ClassicBackdrop()
@@ -19,7 +20,8 @@ return new  PlexyDesk::BackdropItem(QRectF(0,0,200,200));//QGraphicsPixmapItem(Q
 
 void ClassicBackdrop::render(QPainter *p,QRectF r)
 {
-    p->drawPixmap(r.x(),r.y(),r.width(),r.height(),bg);
+    p->fillRect(r.x(),r.y(),r.width(),r.height(),paint);
+    
 }
 
 Q_EXPORT_PLUGIN2(ClassicBackdrop,ClassicBackdrop)
