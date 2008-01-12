@@ -21,12 +21,12 @@ DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsV
        setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
        setCacheMode(QGraphicsView::CacheBackground);
        setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
-       setRenderHint(QPainter::Antialiasing);
-       setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+      // setRenderHint(QPainter::Antialiasing);
+       setRenderHints(QPainter::HighQualityAntialiasing);
      //  centerOn(0,0);
      //
        setOptimizationFlag(QGraphicsView::DontClipPainter,true);
-       setOptimizationFlag(QGraphicsView::DontSavePainterState,false);
+       setOptimizationFlag(QGraphicsView::DontSavePainterState,true);
        setAlignment(Qt::AlignLeft | Qt::AlignTop);
        d->bIface  = 0;
        d->bgfact = new BackdropFactory(0);
@@ -43,9 +43,9 @@ DesktopView::~DesktopView()
 
 void DesktopView::drawBackground ( QPainter * painter, const QRectF & rect )
 {
-    //qDebug()<<rect<<endl;
+    qDebug()<<rect<<endl;
     painter->save();
-    painter->setBrushOrigin(0, 0);
+//    painter->setBrushOrigin(0, 0);
     d->bIface->render(painter,QRectF(rect.x(),rect.y(),rect.width(),rect.height()));
     painter->restore();
 }

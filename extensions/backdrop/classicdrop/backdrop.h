@@ -19,6 +19,8 @@ class VISIBLE_SYM ClassicBackdrop : public QObject , public PlexyDesk::BackdropI
     private:
     QPixmap bg;
     QBrush paint;
+    int width;
+    int height;
 };
 
 
