@@ -18,6 +18,7 @@ SET (qtvizsrc
 	extensionfactory.cpp
 	backdropfactory.cpp
 	widgetfactory.cpp
+	desktopwidget.cpp
 		)
 
 add_library (qtviz SHARED ${qtvizsrc})
