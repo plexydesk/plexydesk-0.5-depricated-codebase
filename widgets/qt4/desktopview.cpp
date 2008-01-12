@@ -19,8 +19,9 @@ DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsV
 //        setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers)));
        setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
        setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-       setCacheMode(QGraphicsView::CacheBackground);
+     //  setCacheMode(QGraphicsView::CacheBackground);
        setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
+       //setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
       // setRenderHint(QPainter::Antialiasing);
        setRenderHints(QPainter::HighQualityAntialiasing);
      //  centerOn(0,0);
@@ -33,7 +34,6 @@ DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsV
        d->bIface = d->bgfact->instance();
    //    fitInView(QDesktopWidget().screenGeometry());
        setInteractive(true);
-     //  scale(2,2);
 }
 
 DesktopView::~DesktopView()

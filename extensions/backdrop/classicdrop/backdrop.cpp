@@ -30,7 +30,8 @@ return new  PlexyDesk::BackdropItem(QRectF(0,0,200,200));//QGraphicsPixmapItem(Q
 
 void ClassicBackdrop::render(QPainter *p,QRectF r)
 {
-    p->fillRect(r.x(),r.y(),width,height,paint);
+    QRect er = p->matrix().inverted().mapRect(QRect(r.x(),r.y(),r.width(),r.height())).adjusted(-1, -1, 1, 1);
+    p->fillRect(er.x(),er.y(),er.width(),er.height(),paint);
 }
 
 Q_EXPORT_PLUGIN2(ClassicBackdrop,ClassicBackdrop)
