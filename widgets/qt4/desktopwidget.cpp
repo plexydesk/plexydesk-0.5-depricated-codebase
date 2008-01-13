@@ -16,6 +16,7 @@ class DesktopWidget::Private
 	QPixmap back;
 	QPixmap dock;
 	int angle;
+	int angleHide;
 	QGraphicsProxyWidget * proxyWidget;	
 	double opacity;
 	//bool hindding;
@@ -46,7 +47,7 @@ class DesktopWidget::Private
 
 		d->s = NORMALSIDE;
 		d->angle = 0;
-	
+		d->angleHide = 0;
 		d->timer  = new QTimer(this);
 		connect (d->timer , SIGNAL(timeout()),this, SLOT(animate()));
 	
@@ -78,6 +79,7 @@ void DesktopWidget::mouseReleaseEvent ( QGraphicsSceneMouseEvent * event )
 {
 	QGraphicsRectItem::mouseReleaseEvent(event);
 	//d->hideTimer->start(50);
+	hideWidget();
 }
 
 
@@ -110,8 +112,8 @@ void DesktopWidget::animate()
 	{
 		setState(NORMALSIDE);
 	}
-		d->timer->stop();
-		d->angle = 0;
+		d->hideTimer->stop();
+		d->angleHide = 0;
 		setCacheMode(DeviceCoordinateCache);
 		update();
 	}
@@ -120,16 +122,34 @@ void DesktopWidget::animate()
 
 void DesktopWidget::animateHide()
 {
- if (d->opacity <= 0.0)
-   {
+if (d->opacity <= 0.0)
+{
 	this->hide();
 	return;
-   }
+}
+
+setCacheMode(NoCache);
+    QPointF center = this->boundingRect().center();
+  d->angleHide += 15;
+ QTransform mat = QTransform();//this->transform();
+    mat.translate(center.x(),center.y());
+    mat.rotate(d->angleHide,Qt::XAxis);
+    mat.translate(-center.x(),-center.y());
+    this->setTransform(mat);
+
+if ( d->angle == 360)
+{
+		d->timer->stop();
+		d->angle = 0;
+		setCacheMode(DeviceCoordinateCache);
+}
+
 if(d->proxyWidget)
 {
 	d->proxyWidget->hide();
 }
- d->opacity-=0.1;
+
+d->opacity-=0.1;
 update();
 
 }
