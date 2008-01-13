@@ -29,8 +29,8 @@ class DesktopWidget::Private
 		d->dock = QPixmap ("/usr/share/plexy/skins/widgets/widget01/rIcon.png");
 
 		//setRect(QRect(0,0,d->panel.width(),d->panel.height()));
-		//setCacheMode (QGraphicsItem::ItemCoordinateCache,d->panel.size());
-		//setCacheMode(DeviceCoordinateCache);
+		setCacheMode (QGraphicsItem::ItemCoordinateCache,d->panel.size());
+		setCacheMode(DeviceCoordinateCache);
 		setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
 		setFlag(QGraphicsItem::ItemIsMovable,true);
 
@@ -47,15 +47,18 @@ class DesktopWidget::Private
 	}
 	
 
+void DesktopWidget::spin()
+{ 
+   d->timer->start(5);
+}
+
 void DesktopWidget::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
 }
 
 void DesktopWidget::mouseReleaseEvent ( QGraphicsSceneMouseEvent * event )
 {
-	qDebug("Pressed");
 	QGraphicsRectItem::mouseReleaseEvent(event);
-	d->timer->start(5);
 }
 
 
@@ -67,7 +70,7 @@ QRectF DesktopWidget::boundingRect() const
 void DesktopWidget::animate()
 {
 
-	d->angle += 15;
+    d->angle += 15;
     setCacheMode(NoCache);
     QPointF center = this->boundingRect().center();
     //resetMatrix();
@@ -153,9 +156,6 @@ void DesktopWidget::paint(QPainter * painter, const QStyleOptionGraphicsItem * o
 	paintDockView (painter,option->exposedRect);
 	this->paintExtDockFace(painter,option,widget);
 	}
-	
-	
-
 	painter->setRenderHints(QPainter::TextAntialiasing);
 	painter->setPen(Qt::white);
      	painter->setFont(QFont("Arial", 10));

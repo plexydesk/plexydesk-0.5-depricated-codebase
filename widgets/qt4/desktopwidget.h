@@ -22,6 +22,7 @@ namespace PlexyDesk
 		virtual void paintViewSide (QPainter * painter,const QRectF& rect);
 		virtual void paintDockView (QPainter * painter,const QRectF& rect); 
 		virtual void setState(State s);
+		virtual void spin();
 		virtual QRectF boundingRect() const;
 		virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
 		virtual void paintExtFace(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0){}
