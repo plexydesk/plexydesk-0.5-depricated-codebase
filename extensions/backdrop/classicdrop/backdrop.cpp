@@ -1,5 +1,6 @@
 #include "backdrop.h"
 #include "backdropitem.h"
+#include <desktopwidget.h>
 
 
 ClassicBackdrop::ClassicBackdrop(QObject * object):QObject(object)
@@ -9,7 +10,7 @@ ClassicBackdrop::ClassicBackdrop(QObject * object):QObject(object)
     width = QDesktopWidget().availableGeometry().width();
     height = QDesktopWidget().availableGeometry().height();
     
-    QImage img(width,height,QImage::Format_ARGB32_Premultiplied);
+    img = QImage(width,height,QImage::Format_ARGB32_Premultiplied);
     QPainter p;
     p.begin(&img);
     p.drawPixmap(QRect(0,0,width,height),bg);
@@ -25,13 +26,20 @@ ClassicBackdrop::~ClassicBackdrop()
 
 QGraphicsItem * ClassicBackdrop::backdrop()
 {
-return new  PlexyDesk::BackdropItem(QRectF(0,0,200,200));//QGraphicsPixmapItem(QPixmap("/home/siraj/downloads-torrents/wallpaper/water.png"));
+
+QPushButton * btn = new QPushButton("hi");
+
+return new PlexyDesk::DesktopWidget(QRect(0,0,200,200),btn);
+
+//return new  PlexyDesk::BackdropItem(QRectF(0,0,200,200));//QGraphicsPixmapItem(QPixmap("/home/siraj/downloads-torrents/wallpaper/water.png"));
 }
 
 void ClassicBackdrop::render(QPainter *p,QRectF r)
 {
-    QRect er = p->matrix().inverted().mapRect(QRect(r.x(),r.y(),r.width(),r.height())).adjusted(-1, -1, 1, 1);
-    p->fillRect(er.x(),er.y(),er.width(),er.height(),paint);
+   // QRect er = p->matrix().inverted().mapRect(QRect(r.x(),r.y(),r.width(),r.height())).adjusted(-1, -1, 1, 1);
+    p->fillRect(r.x(),r.y(),r.width(),r.height(),paint);
+//	p->drawImage(r,img);
+	//p->drawPixmap(r.x(),r.y(),r.width(),r.height(),bg);
 }
 
 Q_EXPORT_PLUGIN2(ClassicBackdrop,ClassicBackdrop)

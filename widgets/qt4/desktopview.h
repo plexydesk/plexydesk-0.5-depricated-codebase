@@ -26,6 +26,7 @@ class VISIBLE_SYM  DesktopView : public QGraphicsView
 
     protected:
         void drawBackground ( QPainter * painter, const QRectF & rect );
+	//void paintEvent(QPaintEvent * event);
 
     private:
             class Private;
