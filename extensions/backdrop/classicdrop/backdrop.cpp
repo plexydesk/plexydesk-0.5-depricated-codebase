@@ -1,7 +1,7 @@
 #include "backdrop.h"
 #include "backdropitem.h"
 #include <desktopwidget.h>
-
+#include "pictureflow.h"
 
 ClassicBackdrop::ClassicBackdrop(QObject * object):QObject(object)
 {
@@ -28,8 +28,13 @@ QGraphicsItem * ClassicBackdrop::backdrop()
 {
 
 QPushButton * btn = new QPushButton("hi");
+PictureFlow* w = new PictureFlow; 
+w->setSlideSize(QSize(50, 50));
+w->resize(300,150);
+w->setBackgroundColor(Qt::white);
 
-return new PlexyDesk::DesktopWidget(QRect(0,0,200,200),btn);
+
+return new PlexyDesk::DesktopWidget(QRect(0,0,200,200),w);
 
 //return new  PlexyDesk::BackdropItem(QRectF(0,0,200,200));//QGraphicsPixmapItem(QPixmap("/home/siraj/downloads-torrents/wallpaper/water.png"));
 }

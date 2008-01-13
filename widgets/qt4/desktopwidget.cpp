@@ -14,6 +14,7 @@ class DesktopWidget::Private
 	QPixmap back;
 	QPixmap dock;
 	int angle;
+	QGraphicsProxyWidget * proxyWidget;
 };
 	DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget):
 	QGraphicsRectItem(rect),d(new Private)
@@ -21,7 +22,11 @@ class DesktopWidget::Private
 
 		if (widget)
 		{
-			
+			d->proxyWidget = new QGraphicsProxyWidget (this);
+			d->proxyWidget->setFocusPolicy(Qt::StrongFocus);
+			d->proxyWidget->setWidget(widget);
+			//d->proxyWidget->setGeometry(re);	
+			d->proxyWidget->show();
 		}
 
 		d->panel = QPixmap("/usr/share/plexy/skins/widgets/widget01/Panel.png");
