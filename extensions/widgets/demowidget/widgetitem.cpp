@@ -4,9 +4,9 @@
 
 namespace PlexyDesk
 {
-    WidgetItem::WidgetItem(const QRectF &rect, QWidget *widget ):DesktopWidget(rect)
+    WidgetItem::WidgetItem(const QRectF &rect, QWidget *widget ):DesktopWidget(rect,widget)
     {
-		dateImg = QImage(160,160,QImage::Format_ARGB32_Premultiplied);
+		dateImg = QImage(rect.width(),rect.height(),QImage::Format_ARGB32_Premultiplied);
 		dateImg.fill(Qt::transparent);
 		QPainter p;
 		p.begin(&dateImg);
@@ -26,9 +26,9 @@ namespace PlexyDesk
 
     void WidgetItem::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
     {
+	
 		p->setRenderHints(QPainter::SmoothPixmapTransform |QPainter::Antialiasing |QPainter::HighQualityAntialiasing);
-		p->drawImage(e->exposedRect,dateImg);
-
+		p->drawImage(e->exposedRect.adjusted(2,2,2,2),dateImg);
     }
 
 

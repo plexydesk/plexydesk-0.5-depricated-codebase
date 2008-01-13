@@ -25,7 +25,7 @@ view->resize(200,500);
 //    date->setWindowOpacity(0.2);
 //    date->resize(300,200);
 
-return new  PlexyDesk::WidgetItem(QRectF(0,0,240,260),0);
+return new  PlexyDesk::WidgetItem(QRectF(0,0,128,128),0);
 }
 
 Q_EXPORT_PLUGIN2(WidgetDemo,WidgetDemo)
