@@ -5,7 +5,6 @@
 #include <QtGui>
 #include <plexy.h>
 #include <desktopwidget.h>
-#include "customproxy.h"
 
 namespace PlexyDesk
 {
@@ -20,7 +19,6 @@ namespace PlexyDesk
         void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
         QRectF boundingRect() const;
         private:
-        CustomProxy *proxyWidget;
 	QImage dateImg;
 
     };

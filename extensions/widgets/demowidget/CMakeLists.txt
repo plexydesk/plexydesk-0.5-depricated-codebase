@@ -14,7 +14,6 @@ INCLUDE_DIRECTORIES(
 SET (widgetdemosrc 	
 	widget.cpp
 	widgetitem.cpp
-	customproxy.cpp
 		)
 
 add_library (widgetdemo SHARED ${widgetdemosrc})

@@ -1,7 +1,6 @@
 #include "widgetitem.h"
 #include <QtCore>
 #include <QtGui>
-#include "customproxy.h"
 
 namespace PlexyDesk
 {
