@@ -17,6 +17,7 @@ namespace PlexyDesk
         WidgetItem(const QRectF &rect, QWidget *embeddedWidget = 0);
         virtual ~WidgetItem();
         void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
+        void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
         QRectF boundingRect() const;
         private:
 	QImage dateImg;

@@ -23,6 +23,7 @@ class DesktopWidget::Private
 	QRectF saveRect;
 	int scale;
 	 QPointF clickPos;
+	bool backdrop;
 	//bool hindding;
 };
 	DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget):
@@ -37,6 +38,7 @@ class DesktopWidget::Private
 			//d->proxyWidget->setGeometry(re);	
 			d->proxyWidget->show();
 		}
+		d->backdrop = true;
 		d->opacity = 1.0;
 		//d->hidding = false;
 		d->panel = QPixmap("/usr/share/plexy/skins/widgets/widget01/Panel.png");
@@ -121,12 +123,9 @@ void DesktopWidget::updateStep(int frame)
 
 
     QPointF center = boundingRect().center();
-    //resetMatrix();
     QTransform mat = QTransform();
     mat.translate(center.x(), center.y());
-   mat.scale(1 - frame / 150.0, 1 - frame / 150.0);
-  // mat.rotate(frame/8.0,Qt::XAxis);
-  //  rotate(frame / 8.0);
+    mat.scale(1 - frame / 150.0, 1 - frame / 150.0);
     mat.translate(-center.x(), -center.y());
     setTransform(mat);
        
@@ -216,7 +215,15 @@ void DesktopWidget::animate()
 
 
 
+void DesktopWidget::drawBackdrop(bool b)
+{
+d->backdrop = b;
+}
 
+DesktopWidget::State DesktopWidget::state()
+{
+return d->s ;
+}
 
 
 void DesktopWidget::setState(DesktopWidget::State s)
@@ -225,6 +232,7 @@ d->s = s;
 }
 void DesktopWidget::paintBackSide (QPainter * p,const QRectF& rect)
 {
+     
 	p->save();
 	p->setRenderHints( QPainter::SmoothPixmapTransform);
 	p->drawPixmap(QRect(0,0,rect.width(),rect.height()),d->back);
@@ -233,6 +241,8 @@ void DesktopWidget::paintBackSide (QPainter * p,const QRectF& rect)
 
 void DesktopWidget::paintViewSide (QPainter * p,const QRectF& rect)
 {
+        if(!d->backdrop)
+                return;
 	p->save();
 	p->setRenderHints(QPainter::SmoothPixmapTransform );
 	p->drawPixmap(QRect(0,0,rect.width(),rect.height()),d->panel);
@@ -252,8 +262,9 @@ void DesktopWidget::paintDockView (QPainter * p,const QRectF& rect)
 void DesktopWidget::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
 {
 	
-	 if (isObscured())
+	if (isObscured())
           return;
+          
 	painter->setOpacity(d->opacity);
 	painter->setClipRect(option->exposedRect);
 	if (d->s == NORMALSIDE)
@@ -273,8 +284,8 @@ void DesktopWidget::paint(QPainter * painter, const QStyleOptionGraphicsItem * o
 	}
 	painter->setRenderHints(QPainter::TextAntialiasing);
 	painter->setPen(Qt::white);
-     	painter->setFont(QFont("Arial", 10));
-	painter->drawText(QRectF(rect().width()-45,rect().height()-45,30,30), Qt::AlignCenter, "+");
+     	painter->setFont(QFont("Bitstream Charter", 10));
+	painter->drawText(QRectF(rect().width()-25,rect().height()-25,30,30), Qt::AlignCenter, "+");
 }
 
 };//
