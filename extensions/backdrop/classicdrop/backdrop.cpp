@@ -37,7 +37,7 @@ for (int i = 0; i < 10 ; i++) {
       }
         w->setCenterIndex(w->slideCount()/2);
 	w->move(40,40);
-return new PlexyDesk::DesktopWidget(QRect(200,200,380,240),w);
+return new PlexyDesk::DesktopWidget(QRect(0,0,380,240),w);
 
 //return new  PlexyDesk::BackdropItem(QRectF(0,0,200,200));//QGraphicsPixmapItem(QPixmap("/home/siraj/downloads-torrents/wallpaper/water.png"));
 }
