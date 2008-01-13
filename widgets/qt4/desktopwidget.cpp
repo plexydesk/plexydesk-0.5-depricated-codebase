@@ -141,16 +141,21 @@ void DesktopWidget::paint(QPainter * painter, const QStyleOptionGraphicsItem * o
 	if (d->s == NORMALSIDE)
 	{
 	paintViewSide (painter,option->exposedRect);
+	this->paintExtFace(painter,option,widget);
 	}
 	else if ( d->s == BACKSIDE)
 	{
 	paintBackSide (painter,option->exposedRect);
-
+	this->paintExtBackFace(painter,option,widget);
 	}
 	else if ( d->s == DOCK)
 	{
 	paintDockView (painter,option->exposedRect);
+	this->paintExtDockFace(painter,option,widget);
 	}
+	
+	
+
 	painter->setRenderHints(QPainter::TextAntialiasing);
 	painter->setPen(Qt::white);
      	painter->setFont(QFont("Arial", 10));

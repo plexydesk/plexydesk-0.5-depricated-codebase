@@ -5,19 +5,19 @@
 
 namespace PlexyDesk
 {
-    WidgetItem::WidgetItem(const QRectF &rect, QWidget *widget ):QGraphicsRectItem(rect)
+    WidgetItem::WidgetItem(const QRectF &rect, QWidget *widget ):DesktopWidget(rect)
     {
-                if (widget) {
-                    proxyWidget = new CustomProxy(this,Qt::Window);
-                    proxyWidget->setFocusPolicy(Qt::StrongFocus);
-                    proxyWidget->setWidget(widget);
-             	    proxyWidget->setGeometry(boundingRect().adjusted(25, 25, -25, -25));
-                    proxyWidget->setCacheMode(QGraphicsItem::DeviceCoordinateCache);
-                }
-
-                setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
-                setFlag(QGraphicsItem::ItemIsMovable,true);
- 
+		dateImg = QImage(160,160,QImage::Format_ARGB32_Premultiplied);
+		dateImg.fill(Qt::transparent);
+		QPainter p;
+		p.begin(&dateImg);
+		p.setPen(QColor(215,255,98));
+		p.setFont(QFont("Bitstream Charter",20));
+		p.drawText(QRect(20,20,160,160), Qt::AlignTop ,QDate::longDayName(QDate::currentDate().dayOfWeek ())  ) ;
+		p.setFont(QFont("Bitstream Charter",50));
+		p.drawText(QRect(40,40,160,160), Qt::AlignTop ,QString("%1").arg(QDate::currentDate().day() )  )  ;
+		p.end();
+	
     }
     
     WidgetItem::~WidgetItem()
@@ -25,23 +25,17 @@ namespace PlexyDesk
 
     }
 
-    void WidgetItem::paint(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
+    void WidgetItem::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
     {
-        if (proxyWidget && !proxyWidget->isVisible()) {
-               proxyWidget->show();
-                       proxyWidget->setFocus();
-        }
-        if (proxyWidget && proxyWidget->pos() != QPoint()) {
-            proxyWidget->setGeometry(boundingRect().adjusted(25, 25, -25, -25));
-            }
+		p->setRenderHints(QPainter::SmoothPixmapTransform |QPainter::Antialiasing |QPainter::HighQualityAntialiasing);
+		p->drawImage(e->exposedRect,dateImg);
+
     }
 
 
     QRectF WidgetItem::boundingRect() const
     {
-        qreal penW = 0.5;
-        qreal shadowW = 2.0;
-        return rect().adjusted(-penW, -penW, penW + shadowW, penW + shadowW);
+        return rect();
     }
 
 } // namespace PlexyDesk

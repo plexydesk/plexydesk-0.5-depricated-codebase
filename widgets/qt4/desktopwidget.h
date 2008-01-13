@@ -24,6 +24,10 @@ namespace PlexyDesk
 		virtual void setState(State s);
 		virtual QRectF boundingRect() const;
 		virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+		virtual void paintExtFace(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0){}
+		virtual void paintExtBackFace(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0){}
+
+		virtual void paintExtDockFace(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0){}
 		//virtual void setOpacity(double op);
 		//virtual double opacity();
 		

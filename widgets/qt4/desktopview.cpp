@@ -19,7 +19,7 @@ DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsV
        setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
        setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-       //setCacheMode(QGraphicsView::CacheBackground);
+       setCacheMode(QGraphicsView::CacheBackground);
        setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
 
       // setRenderHints(QPainter::HighQualityAntialiasing);
