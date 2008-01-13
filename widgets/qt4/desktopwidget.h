@@ -22,7 +22,6 @@ namespace PlexyDesk
 		virtual void paintViewSide (QPainter * painter,const QRectF& rect);
 		virtual void paintDockView (QPainter * painter,const QRectF& rect); 
 		virtual void setState(State s);
-		virtual void spin();
 		virtual QRectF boundingRect() const;
 		virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
 		virtual void paintExtFace(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0){}
@@ -37,6 +36,9 @@ namespace PlexyDesk
 				void updateStep(qreal);
 				void stateChanged(QTimeLine::State);
 				void animate();
+				void hideWidget();
+				virtual void spin();
+				virtual void animateHide();
 				
 	protected:
 		virtual void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0); 

@@ -9,17 +9,21 @@ class DesktopWidget::Private
 		Private(){}
 		~ Private(){}
 	QTimer * timer;
+	QTimer * hideTimer;
+	QTimer * showTimer;
 	State s;
 	QPixmap panel;
 	QPixmap back;
 	QPixmap dock;
 	int angle;
-	QGraphicsProxyWidget * proxyWidget;
+	QGraphicsProxyWidget * proxyWidget;	
+	double opacity;
+	//bool hindding;
 };
 	DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget):
 	QGraphicsRectItem(rect),d(new Private)
 	{	
-
+		d->proxyWidget = 0;
 		if (widget)
 		{
 			d->proxyWidget = new QGraphicsProxyWidget (this);
@@ -28,7 +32,8 @@ class DesktopWidget::Private
 			//d->proxyWidget->setGeometry(re);	
 			d->proxyWidget->show();
 		}
-
+		d->opacity = 1.0;
+		//d->hidding = false;
 		d->panel = QPixmap("/usr/share/plexy/skins/widgets/widget01/Panel.png");
 		d->back = QPixmap("/usr/share/plexy/skins/widgets/widget01/reverse.png");
 		d->dock = QPixmap ("/usr/share/plexy/skins/widgets/widget01/rIcon.png");
@@ -41,9 +46,13 @@ class DesktopWidget::Private
 
 		d->s = NORMALSIDE;
 		d->angle = 0;
+	
 		d->timer  = new QTimer(this);
 		connect (d->timer , SIGNAL(timeout()),this, SLOT(animate()));
-		
+	
+		d->hideTimer  = new QTimer(this);
+		connect (d->hideTimer , SIGNAL(timeout()),this, SLOT(animateHide()));	
+	
 	}
 
 	DesktopWidget::~DesktopWidget()
@@ -57,6 +66,10 @@ void DesktopWidget::spin()
    d->timer->start(5);
 }
 
+void DesktopWidget::hideWidget()
+{ 
+   d->hideTimer->start(25);
+}
 void DesktopWidget::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
 }
@@ -64,6 +77,7 @@ void DesktopWidget::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 void DesktopWidget::mouseReleaseEvent ( QGraphicsSceneMouseEvent * event )
 {
 	QGraphicsRectItem::mouseReleaseEvent(event);
+	//d->hideTimer->start(50);
 }
 
 
@@ -85,7 +99,6 @@ void DesktopWidget::animate()
     mat.translate(-center.x(),-center.y());
     this->setTransform(mat);
 
-
 	if ( d->angle == 360)
 	{
 
@@ -105,6 +118,23 @@ void DesktopWidget::animate()
 
 }
 
+void DesktopWidget::animateHide()
+{
+ if (d->opacity <= 0.0)
+   {
+	this->hide();
+	return;
+   }
+if(d->proxyWidget)
+{
+	d->proxyWidget->hide();
+}
+ d->opacity-=0.1;
+update();
+
+}
+
+
 void DesktopWidget::stateChanged(QTimeLine::State state)
 {
 }
@@ -122,7 +152,6 @@ void DesktopWidget::paintBackSide (QPainter * p,const QRectF& rect)
 	p->save();
 	p->setRenderHints( QPainter::SmoothPixmapTransform);
 	p->drawPixmap(QRect(0,0,rect.width(),rect.height()),d->back);
-//->fillRect(rect,QColor(255,0,0));
 	p->restore();
 }
 
@@ -145,6 +174,7 @@ void DesktopWidget::paintDockView (QPainter * p,const QRectF& rect)
 void DesktopWidget::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
 {
 
+	painter->setOpacity(d->opacity);
 	painter->setClipRect(option->exposedRect);
 	if (d->s == NORMALSIDE)
 	{
@@ -165,7 +195,6 @@ void DesktopWidget::paint(QPainter * painter, const QStyleOptionGraphicsItem * o
 	painter->setPen(Qt::white);
      	painter->setFont(QFont("Arial", 10));
 	painter->drawText(QRectF(rect().width()-45,rect().height()-45,30,30), Qt::AlignCenter, "+");
-
 }
 
 };//
