@@ -24,6 +24,7 @@ namespace PlexyDesk
 		virtual void setState(State s);
 		virtual QRectF boundingRect() const;
 		virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+		virtual void mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event );
 		virtual void paintExtFace(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0){}
 		virtual void paintExtBackFace(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0){}
 
@@ -33,12 +34,12 @@ namespace PlexyDesk
 		
 	
 	public slots:
-				void updateStep(qreal);
+				void updateStep(int);
 				void stateChanged(QTimeLine::State);
 				void animate();
 				void hideWidget();
 				virtual void spin();
-				virtual void animateHide();
+				//virtual void animateHide();
 				
 	protected:
 		virtual void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0); 
