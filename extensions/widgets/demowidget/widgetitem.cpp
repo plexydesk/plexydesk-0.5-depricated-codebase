@@ -12,7 +12,7 @@ namespace PlexyDesk
 		p.begin(&dateImg);
 		p.setPen(QColor(215,255,98));
 		p.setFont(QFont("Bitstream Charter",20));
-		p.drawText(QRect(20,20,160,160), Qt::AlignTop ,QDate::longDayName(QDate::currentDate().dayOfWeek ())  ) ;
+		p.drawText(QRect(10,10,160,160), Qt::AlignTop ,QDate::longDayName(QDate::currentDate().dayOfWeek ())  ) ;
 		p.setFont(QFont("Bitstream Charter",50));
 		p.drawText(QRect(40,40,160,160), Qt::AlignTop ,QString("%1").arg(QDate::currentDate().day() )  )  ;
 		p.end();
