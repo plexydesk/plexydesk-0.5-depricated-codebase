@@ -24,6 +24,9 @@ namespace PlexyDesk
 		virtual void setState(State s);
 		virtual QRectF boundingRect() const;
 		virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+		//virtual void setOpacity(double op);
+		//virtual double opacity();
+		
 	
 	public slots:
 				void updateStep(qreal);

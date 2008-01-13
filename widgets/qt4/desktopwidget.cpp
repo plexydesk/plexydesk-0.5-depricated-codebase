@@ -26,6 +26,7 @@ class DesktopWidget::Private
 
 		d->panel = QPixmap("/usr/share/plexy/skins/widgets/widget01/Panel.png");
 		d->back = QPixmap("/usr/share/plexy/skins/widgets/widget01/reverse.png");
+		d->dock = QPixmap ("/usr/share/plexy/skins/widgets/widget01/rIcon.png");
 
 		//setRect(QRect(0,0,d->panel.width(),d->panel.height()));
 		//setCacheMode (QGraphicsItem::ItemCoordinateCache,d->panel.size());
