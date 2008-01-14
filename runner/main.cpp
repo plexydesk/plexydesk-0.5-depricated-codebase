@@ -42,11 +42,22 @@ qDebug()<<"Plugin Before Address"<<bg<<endl;
 
 bg = bgfact->instance(); 
 
-qDebug()<< "plugin After "<<bg<<endl;
-
-
-
 using namespace PlexyDesk;
+qDebug()<< "plugin After "<<bg<<endl;
+ WidgetInterface * currentDrop=0;
+
+ QPluginLoader loader ("/usr/local/lib/plexyext/widgets/libvideowidget.so");
+ QObject * plugin =  loader.instance();
+    if (plugin) {
+       currentDrop = qobject_cast<WidgetInterface*>(plugin);
+    }else {
+        qDebug()<<loader.errorString()<<endl;;
+        currentDrop = 0;
+    }
+
+
+
+
 QGraphicsScene scene;
 scene.setSceneRect(QDesktopWidget().availableGeometry());
 scene.setBackgroundBrush(Qt::NoBrush);
@@ -60,6 +71,8 @@ info.setWindowType(NET::Desktop);
 
 scene.addItem(bgfact->instance()->backdrop());
 scene.addItem(widgetfact->instance()->backdrop());
+scene.addItem(currentDrop->backdrop());
+
 widgetfact->instance()->backdrop()->setZValue(-100);
 view->show();
 

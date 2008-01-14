@@ -20,7 +20,6 @@ namespace PlexyDesk
         }
         w->setCenterIndex(w->slideCount()/2);
         w->show();
-
     }
     
     BackdropItem::~BackdropItem()

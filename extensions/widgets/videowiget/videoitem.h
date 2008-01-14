@@ -5,22 +5,34 @@
 #include <QtGui>
 #include <plexy.h>
 #include <desktopwidget.h>
+#include "vplayer.h"
 
 namespace PlexyDesk
 {
 
-    class WidgetItem: public DesktopWidget
+    class VideoItem: public DesktopWidget
     {
 
     Q_OBJECT
         public:
-        WidgetItem(const QRectF &rect, QWidget *embeddedWidget = 0);
-        virtual ~WidgetItem();
+        VideoItem(const QRectF &rect, QWidget *embeddedWidget = 0);
+        virtual ~VideoItem();
         void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
         void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
+        virtual void mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event );
         QRectF boundingRect() const;
+public slots:
+    void getImage(QImage & img);
+    void loop();
+    
         private:
 	QImage dateImg;
+	VPlayer *vid;
+	QImage *vidsurf;
+	QBrush brush;
+        QPixmap snap;
+        int frameno;
+        bool snapped;
 
     };
 

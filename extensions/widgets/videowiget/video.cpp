@@ -16,7 +16,7 @@ VideoWidget::~VideoWidget()
 QGraphicsItem * VideoWidget::backdrop()
 {
 
-return new  PlexyDesk::WidgetItem(QRectF(0,0,128,128),0);
+return new  PlexyDesk::VideoItem(QRectF(0,0,380,300),0);
 }
 
 Q_EXPORT_PLUGIN2(VideoWidget,VideoWidget)

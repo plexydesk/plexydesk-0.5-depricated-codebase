@@ -27,7 +27,6 @@ ClassicBackdrop::~ClassicBackdrop()
 QGraphicsItem * ClassicBackdrop::backdrop()
 {
 
-QPushButton * btn = new QPushButton("hi");
 PictureFlow* w = new PictureFlow; 
 w->setSlideSize(QSize(320/4, 240/4));
 w->resize(300,150);
@@ -37,7 +36,11 @@ for (int i = 0; i < 10 ; i++) {
       }
         w->setCenterIndex(w->slideCount()/2);
 	w->move(40,40);
-return new PlexyDesk::DesktopWidget(QRect(0,0,380,240),w);
+        PlexyDesk::DesktopWidget * wid = new PlexyDesk::DesktopWidget(QRect(0,0,380,240),w);
+        wid->setDockImage(QPixmap("/usr/share/plexy/skins/widgets/widget01/pila.png"));
+        wid->setFaceImage(QPixmap("/usr/share/plexy/skins/widgets/widget01/pila.png"));
+
+return wid;
 
 //return new  PlexyDesk::BackdropItem(QRectF(0,0,200,200));//QGraphicsPixmapItem(QPixmap("/home/siraj/downloads-torrents/wallpaper/water.png"));
 }

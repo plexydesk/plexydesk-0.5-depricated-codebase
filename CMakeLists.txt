@@ -36,6 +36,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/widgets/gtk
     ${CMAKE_BINARY_DIR}/extensions/backdrop/classicdrop
     ${CMAKE_BINARY_DIR}/extensions/widgets/demowidget
+    ${CMAKE_BINARY_DIR}/extensions/widgets/videowiget
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_SOURCE_DIR}/plexylib
     ${CMAKE_SOURCE_DIR}/widgets/qt4
@@ -52,4 +53,5 @@ add_subdirectory(extensions/widgets/demowidget)
 add_subdirectory(runner)
 add_subdirectory(artwork)
 add_subdirectory(artwork/buttons)
+add_subdirectory(extensions/widgets/videowiget)
 

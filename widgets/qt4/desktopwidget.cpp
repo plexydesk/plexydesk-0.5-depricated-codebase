@@ -141,6 +141,7 @@ void DesktopWidget::updateStep(int frame)
     mat.translate(center.x(), center.y());
     mat.scale(1 - frame / 150.0, 1 - frame / 150.0);
     mat.translate(-center.x(), -center.y());
+    //mat.shear( frame/1500.0,frame/1500.0);
     setTransform(mat);
        
                 if( d->opacity >= 0.0)

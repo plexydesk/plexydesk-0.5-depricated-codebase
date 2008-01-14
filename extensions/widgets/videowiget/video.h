@@ -15,6 +15,8 @@ class VISIBLE_SYM VideoWidget : public QObject , public PlexyDesk::WidgetInterfa
     VideoWidget(QObject * object = 0);
     virtual ~VideoWidget();
     virtual QGraphicsItem * backdrop();// {};
+
+
 };
 
 
