@@ -79,6 +79,20 @@ QRectF DesktopWidget::boundingRect() const
        return rect();//QRect(0,0,d->panel.width(),d->panel.height());	
 }	
 
+void DesktopWidget::setDockImage(QPixmap img)
+{
+    d->dock  = img;
+}
+
+void DesktopWidget::setFaceImage(QPixmap img)
+{
+d->panel = img;
+}
+
+void DesktopWidget::setBackFaceImage(QPixmap img)
+{
+    d->back = img;
+}
 
 void DesktopWidget::spin()
 { 
@@ -246,7 +260,6 @@ void DesktopWidget::paintViewSide (QPainter * p,const QRectF& rect)
 	p->save();
 	p->setRenderHints(QPainter::SmoothPixmapTransform );
 	p->drawPixmap(QRect(0,0,rect.width(),rect.height()),d->panel);
-	//p->fillRect(rect,QColor(0,222,0));
 	p->restore();
 }
 
@@ -255,7 +268,6 @@ void DesktopWidget::paintDockView (QPainter * p,const QRectF& rect)
 	p->save();
 	p->setRenderHints(QPainter::SmoothPixmapTransform );
 	p->drawPixmap(QRect(0,0,rect.width(),rect.height()),d->dock);
-	//p->fillRect(rect,QColor(0,222,0));
 	p->restore();
 }
 
@@ -282,10 +294,12 @@ void DesktopWidget::paint(QPainter * painter, const QStyleOptionGraphicsItem * o
 	paintDockView (painter,option->exposedRect);
 	this->paintExtDockFace(painter,option,widget);
 	}
+        /*
 	painter->setRenderHints(QPainter::TextAntialiasing);
 	painter->setPen(Qt::white);
      	painter->setFont(QFont("Bitstream Charter", 10));
 	painter->drawText(QRectF(rect().width()-25,rect().height()-25,30,30), Qt::AlignCenter, "+");
+        */
 }
 
 };//
