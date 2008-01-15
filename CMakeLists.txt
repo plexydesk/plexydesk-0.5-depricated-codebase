@@ -54,6 +54,6 @@ add_subdirectory(extensions/widgets/demowidget)
 add_subdirectory(runner)
 add_subdirectory(artwork)
 add_subdirectory(artwork/buttons)
-add_subdirectory(extensions/widgets/videowiget)
+#add_subdirectory(extensions/widgets/videowiget)
 add_subdirectory(extensions/widgets/clock)
 
