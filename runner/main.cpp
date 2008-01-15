@@ -67,6 +67,17 @@ WidgetInterface * clock=0;
         clock = 0;
     }
 
+WidgetInterface * cpu=0;
+
+ QPluginLoader loaderCpu ("/usr/local/lib/plexyext/widgets/libplexycpu.so");
+ QObject * pluginCpu =  loaderCpu.instance();
+    if (pluginCpu) {
+       cpu = qobject_cast<WidgetInterface*>(pluginCpu);
+    }else {
+        qDebug()<<loaderCpu.errorString()<<endl;;
+        cpu = 0;
+    }
+
 
 
 
@@ -85,6 +96,7 @@ scene.addItem(bgfact->instance()->backdrop());
 scene.addItem(widgetfact->instance()->backdrop());
 //scene.addItem(currentDrop->backdrop());
 scene.addItem(clock->backdrop());
+scene.addItem(cpu->backdrop());
 
 widgetfact->instance()->backdrop()->setZValue(-100);
 view->show();
