@@ -50,7 +50,7 @@ namespace PlexyDesk
 				
 	protected:
 		virtual void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0); 
-		virtual void mouseReleaseEvent ( QGraphicsSceneMouseEvent * event );
+		virtual void mousePressEvent ( QGraphicsSceneMouseEvent * event );
 	private:
 		class Private ;
 		Private * const d;

@@ -57,6 +57,7 @@ class DesktopWidget::Private
 		d->angleHide = 0;
 		d->timer  = new QTimer(this);
 		connect (d->timer , SIGNAL(timeout()),this, SLOT(animate()));
+
 		d->hideTimer  = new QTimer(this);
 		connect (d->hideTimer , SIGNAL(timeout()),this, SLOT(animateHide()));	
 	
@@ -189,22 +190,33 @@ else
 QGraphicsRectItem::mouseDoubleClickEvent(event);
 }
 
-void DesktopWidget::mouseReleaseEvent ( QGraphicsSceneMouseEvent * event )
+void DesktopWidget::mousePressEvent ( QGraphicsSceneMouseEvent * event )
 {
-	QGraphicsRectItem::mouseReleaseEvent(event);
+        if ( event->buttons() == Qt::RightButton) {
+            spin();
+        } else {
+
+        qDebug()<<"Not doing any thing "<<endl;
+        }
+
+
+
+//	QGraphicsRectItem::mouseReleaseEvent(event);
 }
 
 
 void DesktopWidget::animate()
 {
 
-    d->angle += 15;
+    d->angle += 36;
     setCacheMode(NoCache);
     QPointF center = this->boundingRect().center();
     //resetMatrix();
     QTransform mat = QTransform();//this->transform();
     mat.translate(center.x(),center.y());
+    mat.scale(0.5,0.5);
     mat.rotate(d->angle,Qt::YAxis);
+    mat.scale(2.0,2.0);
     mat.translate(-center.x(),-center.y());
     this->setTransform(mat);
 
@@ -218,12 +230,18 @@ void DesktopWidget::animate()
 	else if ( d->s == BACKSIDE)
 	{
 		setState(NORMALSIDE);
-	}
-		d->hideTimer->stop();
-		d->angleHide = 0;
+	} else {
+
+        }
+		d->timer->stop();
+		d->angle = 0;
 		setCacheMode(DeviceCoordinateCache);
+                d->opacity = 1.0;
 		update();
 	}
+
+        d->opacity -= 0.1;
+
 
 }
 
@@ -249,6 +267,7 @@ void DesktopWidget::paintBackSide (QPainter * p,const QRectF& rect)
 {
      
 	p->save();
+        p->setOpacity(0.8);
 	p->setRenderHints( QPainter::SmoothPixmapTransform);
 	p->drawPixmap(QRect(0,0,rect.width(),rect.height()),d->back);
 	p->restore();
@@ -259,6 +278,7 @@ void DesktopWidget::paintViewSide (QPainter * p,const QRectF& rect)
         if(!d->backdrop)
                 return;
 	p->save();
+        p->setOpacity(0.8);
 	p->setRenderHints(QPainter::SmoothPixmapTransform );
 	p->drawPixmap(QRect(0,0,rect.width(),rect.height()),d->panel);
 	p->restore();

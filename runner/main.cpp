@@ -55,6 +55,17 @@ qDebug()<< "plugin After "<<bg<<endl;
         currentDrop = 0;
     }
 
+WidgetInterface * clock=0;
+
+ QPluginLoader loaderClock ("/usr/local/lib/plexyext/widgets/libplexyclock.so");
+ QObject * pluginClock =  loaderClock.instance();
+    if (pluginClock) {
+       clock = qobject_cast<WidgetInterface*>(pluginClock);
+    }else {
+        qDebug()<<loaderClock.errorString()<<endl;;
+        clock = 0;
+    }
+
 
 
 
@@ -72,6 +83,7 @@ info.setWindowType(NET::Desktop);
 scene.addItem(bgfact->instance()->backdrop());
 scene.addItem(widgetfact->instance()->backdrop());
 scene.addItem(currentDrop->backdrop());
+scene.addItem(clock->backdrop());
 
 widgetfact->instance()->backdrop()->setZValue(-100);
 view->show();

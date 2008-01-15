@@ -31,6 +31,7 @@ SET(APPLICATION_MAIN_VERSION "0.${LIB_MAJOR}.${LIB_MINOR}.${LIB_RELEASE}")
 
 INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}
+    ${CMAKE_BINARY_DIR}/extensions/widgets/clock
     ${CMAKE_BINARY_DIR}/plexylib
     ${CMAKE_BINARY_DIR}/widgets/qt4
     ${CMAKE_BINARY_DIR}/widgets/gtk
@@ -54,4 +55,5 @@ add_subdirectory(runner)
 add_subdirectory(artwork)
 add_subdirectory(artwork/buttons)
 add_subdirectory(extensions/widgets/videowiget)
+add_subdirectory(extensions/widgets/clock)
 
