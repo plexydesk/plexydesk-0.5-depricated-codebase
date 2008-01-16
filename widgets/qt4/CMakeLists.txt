@@ -19,6 +19,7 @@ SET (qtvizsrc
 	backdropfactory.cpp
 	widgetfactory.cpp
 	desktopwidget.cpp
+	plexyconfig.cpp
 		)
 
 add_library (qtviz SHARED ${qtvizsrc})
