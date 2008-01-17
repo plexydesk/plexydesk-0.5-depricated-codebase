@@ -134,7 +134,6 @@ FriendsWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem * e 
 	  i.next();
 	  (i.value())->hide();
 	}
-	update();
 }
 
 void
@@ -145,7 +144,6 @@ FriendsWidget::paintExtBackFace(QPainter *p, const QStyleOptionGraphicsItem * e 
 	  i.next();
 	  (i.value())->hide();
 	}
-	update();
 }
 
 } // namespace PlexyDesk
