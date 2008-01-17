@@ -45,7 +45,7 @@ namespace PlexyDesk
 				void stateChanged(QTimeLine::State);
 				void animate();
 				void hideWidget();
-				virtual void spin();
+				void spin();
 				//virtual void animateHide();
 				
 	protected:
