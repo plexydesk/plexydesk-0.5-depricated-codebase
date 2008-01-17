@@ -20,7 +20,6 @@
 
 #include <plexy.h>
 #include "friendswidget.h"
-#include "frienditem.h"
 #include <QPixmap>
 #include <QPaintEvent>
 #include <QBitmap>
@@ -31,7 +30,7 @@ namespace PlexyDesk
 FriendsWidget::FriendsWidget (const QRectF &rect, QWidget *widget):
 DesktopWidget(rect,widget)
 {
-  shade == 0;
+  shade = 0;
 
   setPath("/usr/share/plexy/skins/default/friendswidget/");
   setDockImage(QPixmap(prefix + "icon.png"));
@@ -48,9 +47,33 @@ FriendsWidget::drawFriendsWidget()
 {
 
    FriendItem* fitem = new FriendItem(this);
-   fitem->setPos(18,20);
+   fitem->setPos(18,50);
+   fitem->setName("Siraj");
+   //fitem->setIcon
 
-  _main_bg = QImage (prefix + "default.png");
+   connect(fitem, SIGNAL (clicked()), this, SLOT (spin()));
+
+   items[fitem->getName()] = fitem;
+
+   fitem = new FriendItem(this);
+   fitem->setPos(18,100);
+   fitem->setName("Lahiru");
+   //fitem->setIcon
+
+   connect(fitem, SIGNAL (clicked()), this, SLOT (spin()));
+
+   items[fitem->getName()] = fitem;
+
+   fitem = new FriendItem(this);
+   fitem->setPos(18,150);
+   fitem->setName("Bud");
+   //fitem->setIcon
+
+   connect(fitem, SIGNAL (clicked()), this, SLOT (spin()));
+
+   items[fitem->getName()] = fitem;
+
+   _main_bg = QImage (prefix + "default.png");
 }
 
 FriendsWidget::~FriendsWidget ()
@@ -87,7 +110,13 @@ FriendsWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QW
 
   p->setPen(QColor(255,255,255));
   p->setFont(QFont("Bitstream Charter",10,QFont::Bold));
-  p->drawText(QRect(70,130,64,64), Qt::AlignCenter ,"Friends" );
+  p->drawText(QRect(60,5,100,64), Qt::AlignCenter ,"Plexy-Friends" );
+
+  QMapIterator<QString, QGraphicsItem*> i(items);
+  while (i.hasNext()) {
+     i.next();
+     (i.value())->show();
+  }
 }
 
 
@@ -99,6 +128,24 @@ FriendsWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem * e 
 	p->setPen(QColor(255,255,255));
 	p->setFont(QFont("Bitstream Charter",15));
 	p->drawText(QRect(8,5,64,64), Qt::AlignCenter ,"Cpu\n"+QString("%1").arg(percen)+"%" );*/
+
+	QMapIterator<QString, QGraphicsItem*> i(items);
+	while (i.hasNext()) {
+	  i.next();
+	  (i.value())->hide();
+	}
+	update();
+}
+
+void
+FriendsWidget::paintExtBackFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget *)
+{
+	QMapIterator<QString, QGraphicsItem*> i(items);
+	while (i.hasNext()) {
+	  i.next();
+	  (i.value())->hide();
+	}
+	update();
 }
 
 } // namespace PlexyDesk

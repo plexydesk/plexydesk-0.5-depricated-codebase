@@ -21,6 +21,7 @@
 #ifndef FRIENDS_WIDGET_H
 #define FRIENDS_WIDGET_H
 
+#include "frienditem.h"
 #include <desktopwidget.h>
 #include <QImage>
 #include <QPaintDevice>
@@ -39,6 +40,7 @@
 #include <QX11Info>
 #include <QWidget>
 #include <QColor>
+#include <QMap>
 
 class QTimer;
 
@@ -55,7 +57,8 @@ class FriendsWidget:public DesktopWidget
 	FriendsWidget(const QRectF &rect, QWidget *widget = 0);
 	virtual ~FriendsWidget();
 	virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem * e, QWidget *);
-	void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
+	virtual void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
+	virtual void paintExtBackFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget *);
 	void setPath(QString);
 	void drawFriendsWidget();
         /*
@@ -76,6 +79,12 @@ class FriendsWidget:public DesktopWidget
 	public slots:
 	
 	private:
+
+	QMap<QString, QGraphicsItem*> items;
+
+	FriendItem* fitem1;
+	FriendItem* fitem2;
+	FriendItem* fitem3;
 
 	int shade;
 
