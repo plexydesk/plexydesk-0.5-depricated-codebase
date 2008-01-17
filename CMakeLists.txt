@@ -39,6 +39,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/extensions/widgets/demowidget
     ${CMAKE_BINARY_DIR}/extensions/widgets/videowiget
     ${CMAKE_BINARY_DIR}/extensions/widgets/cpu
+    ${CMAKE_BINARY_DIR}/extensions/widgets/friendswidget
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_SOURCE_DIR}/plexylib
     ${CMAKE_SOURCE_DIR}/widgets/qt4
@@ -58,4 +59,5 @@ add_subdirectory(artwork/buttons)
 #add_subdirectory(extensions/widgets/videowiget)
 add_subdirectory(extensions/widgets/clock)
 add_subdirectory(extensions/widgets/cpu)
+add_subdirectory(extensions/widgets/friendswidget)
 

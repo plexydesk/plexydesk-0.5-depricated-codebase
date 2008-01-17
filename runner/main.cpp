@@ -43,9 +43,8 @@ qDebug()<<"Plugin Before Address"<<bg<<endl;
 bg = bgfact->instance(); 
 
 using namespace PlexyDesk;
-/*
 qDebug()<< "plugin After "<<bg<<endl;
- WidgetInterface * currentDrop=0;
+/*WidgetInterface * currentDrop=0;
 
  QPluginLoader loader ("/usr/local/lib/plexyext/widgets/libvideowidget.so");
  QObject * plugin =  loader.instance();
@@ -78,8 +77,16 @@ WidgetInterface * cpu=0;
         cpu = 0;
     }
 
+WidgetInterface * friends=0;
 
-
+ QPluginLoader loaderFriends ("/usr/local/lib/plexyext/widgets/libplexyfriends.so");
+ QObject * pluginFriends =  loaderFriends.instance();
+    if (pluginFriends) {
+        friends = qobject_cast<WidgetInterface*>(pluginFriends);
+    }else {
+        qDebug()<<loaderFriends.errorString()<<endl;;
+        friends = 0;
+    }
 
 QGraphicsScene scene;
 scene.setSceneRect(QDesktopWidget().availableGeometry());
@@ -97,6 +104,7 @@ scene.addItem(widgetfact->instance()->backdrop());
 //scene.addItem(currentDrop->backdrop());
 scene.addItem(clock->backdrop());
 scene.addItem(cpu->backdrop());
+scene.addItem(friends->backdrop());
 
 widgetfact->instance()->backdrop()->setZValue(-100);
 view->show();
