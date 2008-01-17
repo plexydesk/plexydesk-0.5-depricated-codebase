@@ -46,6 +46,7 @@ void
 FriendsWidget::drawFriendsWidget()
 {
 
+//Friends
    FriendItem* fitem = new FriendItem(this);
    fitem->setPos(18,50);
    fitem->setName("Siraj");
@@ -72,6 +73,56 @@ FriendsWidget::drawFriendsWidget()
    connect(fitem, SIGNAL (clicked()), this, SLOT (spin()));
 
    items[fitem->getName()] = fitem;
+
+   fitem = new FriendItem(this);
+   fitem->setPos(18,200);
+   fitem->setName("Mani");
+   //fitem->setIcon
+
+   connect(fitem, SIGNAL (clicked()), this, SLOT (spin()));
+
+   items[fitem->getName()] = fitem;
+
+//Actions
+   FriendItem* action = new FriendItem(this);
+   action->setPos(18,50);
+   action->setName("Chat");
+   action->setIcon(QPixmap("/usr/share/plexy/skins/default/friendswidget/chat.png"));
+   action->hide();
+
+   connect(action, SIGNAL (clicked()), this, SLOT (spin()));
+
+   actions[action->getName()] = action;
+
+   action = new FriendItem(this);
+   action->setPos(18,100);
+   action->setName("Webcam");
+   action->setIcon(QPixmap("/usr/share/plexy/skins/default/friendswidget/webcam.png"));
+   action->hide();
+
+   connect(action, SIGNAL (clicked()), this, SLOT (spin()));
+
+   actions[action->getName()] = action;
+
+   action = new FriendItem(this);
+   action->setPos(18,150);
+   action->setName("Blog");
+   action->setIcon(QPixmap("/usr/share/plexy/skins/default/friendswidget/blog.png"));
+   action->hide();
+
+   connect(action, SIGNAL (clicked()), this, SLOT (spin()));
+
+   actions[action->getName()] = action;
+
+   action = new FriendItem(this);
+   action->setPos(18,200);
+   action->setName("Twitter");
+   action->setIcon(QPixmap("/usr/share/plexy/skins/default/friendswidget/twitter.png"));
+   action->hide();
+
+   connect(action, SIGNAL (clicked()), this, SLOT (spin()));
+
+   actions[action->getName()] = action;
 
    _main_bg = QImage (prefix + "default.png");
 }
@@ -117,6 +168,12 @@ FriendsWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QW
      i.next();
      (i.value())->show();
   }
+
+  QMapIterator<QString, QGraphicsItem*> ix(actions);
+  while (ix.hasNext()) {
+     ix.next();
+     (ix.value())->hide();
+  }
 }
 
 
@@ -134,6 +191,12 @@ FriendsWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem * e 
 	  i.next();
 	  (i.value())->hide();
 	}
+
+	QMapIterator<QString, QGraphicsItem*> ix(actions);
+  	while (ix.hasNext()) {
+          ix.next();
+          (ix.value())->hide();
+        }
 }
 
 void
@@ -144,6 +207,12 @@ FriendsWidget::paintExtBackFace(QPainter *p, const QStyleOptionGraphicsItem * e 
 	  i.next();
 	  (i.value())->hide();
 	}
+
+	QMapIterator<QString, QGraphicsItem*> ix(actions);
+  	while (ix.hasNext()) {
+          ix.next();
+          (ix.value())->show();
+        }
 }
 
 } // namespace PlexyDesk

@@ -81,10 +81,7 @@ class FriendsWidget:public DesktopWidget
 	private:
 
 	QMap<QString, QGraphicsItem*> items;
-
-	FriendItem* fitem1;
-	FriendItem* fitem2;
-	FriendItem* fitem3;
+	QMap<QString, QGraphicsItem*> actions;
 
 	int shade;
 
