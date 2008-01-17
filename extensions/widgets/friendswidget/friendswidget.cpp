@@ -180,12 +180,6 @@ FriendsWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QW
 void
 FriendsWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget *)
 {
- 	/*p->setRenderHints(QPainter::SmoothPixmapTransform |QPainter::Antialiasing |QPainter::HighQualityAntialiasing);
-		
-	p->setPen(QColor(255,255,255));
-	p->setFont(QFont("Bitstream Charter",15));
-	p->drawText(QRect(8,5,64,64), Qt::AlignCenter ,"Cpu\n"+QString("%1").arg(percen)+"%" );*/
-
 	QMapIterator<QString, QGraphicsItem*> i(items);
 	while (i.hasNext()) {
 	  i.next();
@@ -202,6 +196,33 @@ FriendsWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem * e 
 void
 FriendsWidget::paintExtBackFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget *)
 {
+  QRectF r  = e->exposedRect;
+
+  p->setCompositionMode(QPainter::CompositionMode_Source);
+  p->fillRect(rect(), Qt::transparent);
+
+  p->drawImage (QRect(0,0,_main_bg.width(),_main_bg.height()),_main_bg);
+  p->setCompositionMode(QPainter::CompositionMode_SourceOver);
+  p->setBackgroundMode(Qt::TransparentMode);
+  p->save ();
+  p->setRenderHint (QPainter::SmoothPixmapTransform);
+  if (shade == 0)
+    {
+      p->drawPixmap (_main_bg.rect (), QPixmap ().fromImage(_main_bg));
+      shade = 1;
+    }
+  p->restore ();
+
+  p->save ();
+
+  p->restore ();
+
+  p->setRenderHints(QPainter::SmoothPixmapTransform |QPainter::Antialiasing |QPainter::HighQualityAntialiasing);
+
+  p->setPen(QColor(255,255,255));
+  p->setFont(QFont("Bitstream Charter",10,QFont::Bold));
+  p->drawText(QRect(60,5,100,64), Qt::AlignCenter ,"Plexy-Friends" );
+
 	QMapIterator<QString, QGraphicsItem*> i(items);
 	while (i.hasNext()) {
 	  i.next();
