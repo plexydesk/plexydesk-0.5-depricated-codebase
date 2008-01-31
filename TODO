@@ -1,12 +1,53 @@
-physics lib
-===========
+== physics lib ==
 
 
+* Complete the matrix class
+
+* Complete the spring system
+
+* Try to write some test and see if the spring system works
+
+* Write API Doc and examples of how it can be used 
 
 
-OpenGL Canvas
-=============
+== OpenGL Canvas ==
+
+*  Input Proxy for widets
+
+* Mapping Coordniates from view port to scene 
+
+* OpenGL Items, 
 
 
-Framwork 
-=============
+Core
+============
+
+* Refactor the Factory classes, 
+
+* Fix known issues
+
+* Make it More Desktop complient 
+
+* settings backends ( Kconfig / QtConfig / and GConf) 
+
+* See ways to lower CPU
+
+* write Engines 
+
+
+== Desktop View ==
+
+* Icon dock has to be done
+
+* Widget aniimations has to be improved 
+
+* desktop settings
+
+* Handle different view ports 
+
+
+== Framwork  VOIP ==
+
+* Integrate Tapioca VOIP
+
+* Write VOIP Engine for plexy desk
