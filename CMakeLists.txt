@@ -26,6 +26,15 @@ INCLUDE_DIRECTORIES (
 SET(APPLICATION_NAME "${PROJECT_NAME}")
 SET(APPLICATION_MAIN_VERSION "0.${LIB_MAJOR}.${LIB_MINOR}.${LIB_RELEASE}")
 
+CONFIGURE_FILE(
+       "${CMAKE_CURRENT_SOURCE_DIR}/cmakemodules/cmake_uninstall.cmake.in"
+       "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
+       IMMEDIATE @ONLY)
+ADD_CUSTOM_TARGET(uninstall
+       "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
+
+
+
 #pkg_check_modules(GTKMM gtkmm-2.4)
 #pkg_check_modules(CLUTTER clutter-0.5)
 
