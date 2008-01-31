@@ -81,7 +81,7 @@ CpuWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidge
 {
 
   QRectF r  = e->exposedRect;
-
+    p->setOpacity(0.8);
   p->setCompositionMode(QPainter::CompositionMode_Source);
   p->fillRect(rect(), Qt::transparent);
 
