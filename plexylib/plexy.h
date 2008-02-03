@@ -30,16 +30,21 @@
 #ifndef __PLEXY_EXPORTS
 #define __PLEXY_EXPORTS
 
-#ifdef __GNUC_
+
+#ifdef __GNUC__
 #define PACK __attribute__((__packed__))
 #endif 
 
 #define __SYSTEM_HAVE_GCC_VISIBILITY
 
+#if defined(_WIN32) && !defined(__GNUC__)
+#define VISIBLE_SYM __declspec(dllexport)
+#else 
 #ifdef __SYSTEM_HAVE_GCC_VISIBILITY
 #define HIDDEN_SYM __attribute__ ((visibility("hidden")))
 #define VISIBLE_SYM __attribute__ ((visibility("default")))
 #endif
+#endif 
 
 //TODO
 //add dllexport for windows

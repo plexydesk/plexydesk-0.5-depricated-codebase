@@ -4,7 +4,7 @@
 #include <QtCore>
 #include <QtGui>
 
-#ifdef Q_WS_WIN
+#ifdef Q_WS_X11
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
@@ -100,7 +100,7 @@ QPushButton * btn= new QPushButton("ClickME");;
 DesktopView * view = new DesktopView(&scene);
 view->resize( QDesktopWidget().availableGeometry().size());
 
-#ifdef Q_WS_WIN
+#ifdef Q_WS_X11
 NETWinInfo info( QX11Info::display(), view->winId(), QX11Info::appRootWindow(), NET::WMDesktop );
 info.setDesktop( NETWinInfo::OnAllDesktops );
 info.setWindowType(NET::Desktop);
