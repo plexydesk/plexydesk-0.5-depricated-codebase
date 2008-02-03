@@ -3,11 +3,18 @@
 //
 #include <QtCore>
 #include <QtGui>
+
+#ifdef Q_WS_WIN
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
+
 #include <unistd.h>
 #include <X11/Xlib.h>
+#include <QX11Info>
+#include <netwm.h>
+
+#endif
 //#include <fixx11h.h>
 #include <QtDBus/QtDBus>
 #include <QtWebKit/QWebView>
@@ -18,9 +25,6 @@
 #include <desktopview.h>
 #include <backdropfactory.h>
 #include <widgetfactory.h>
-
-#include <QX11Info>
-#include <netwm.h>
 
 int main( int argc, char ** argv )
 {
@@ -95,9 +99,12 @@ scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 QPushButton * btn= new QPushButton("ClickME");;
 DesktopView * view = new DesktopView(&scene);
 view->resize( QDesktopWidget().availableGeometry().size());
+
+#ifdef Q_WS_WIN
 NETWinInfo info( QX11Info::display(), view->winId(), QX11Info::appRootWindow(), NET::WMDesktop );
 info.setDesktop( NETWinInfo::OnAllDesktops );
 info.setWindowType(NET::Desktop);
+#endif
 
 scene.addItem(bgfact->instance()->backdrop());
 scene.addItem(widgetfact->instance()->backdrop());
