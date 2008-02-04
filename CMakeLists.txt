@@ -67,9 +67,9 @@ add_subdirectory(artwork)
 add_subdirectory(artwork/buttons)
 if (UNIX)
 add_subdirectory(extensions/widgets/videowiget)
+add_subdirectory(extensions/widgets/cpu)
 endif(UNIX)
 
 add_subdirectory(extensions/widgets/clock)
-add_subdirectory(extensions/widgets/cpu)
 add_subdirectory(extensions/widgets/friendswidget)
 
