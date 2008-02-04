@@ -49,7 +49,7 @@ bg = bgfact->instance();
 using namespace PlexyDesk;
 qDebug()<< "plugin After "<<bg<<endl;
 WidgetInterface * currentDrop=0;
-
+/*
  QPluginLoader loader ("/usr/local/lib/plexyext/widgets/libvideowidget.so");
  QObject * plugin =  loader.instance();
     if (plugin) {
@@ -58,7 +58,7 @@ WidgetInterface * currentDrop=0;
         qDebug()<<loader.errorString()<<endl;;
         currentDrop = 0;
     }
-
+*/
 WidgetInterface * clock=0;
 
  QPluginLoader loaderClock ("/usr/local/lib/plexyext/widgets/libplexyclock.so");
@@ -108,7 +108,7 @@ info.setWindowType(NET::Desktop);
 
 scene.addItem(bgfact->instance()->backdrop());
 scene.addItem(widgetfact->instance()->backdrop());
-scene.addItem(currentDrop->backdrop());
+//scene.addItem(currentDrop->backdrop());
 scene.addItem(clock->backdrop());
 scene.addItem(cpu->backdrop());
 scene.addItem(friends->backdrop());
