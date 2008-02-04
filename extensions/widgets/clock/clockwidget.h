@@ -35,13 +35,6 @@
 //#include <q3mainwindow.h>
 //Added by qt3to4:
 #include <QPaintEvent>
-#include <X11/Xlib.h>
-#include <X11/extensions/composite.h>
-#include <X11/extensions/Xcomposite.h>
-#include <X11/extensions/Xrender.h>
-#include <X11/extensions/shape.h>
-#include <X11/extensions/Xdamage.h>
-#include <qpainter.h>
 #include <qtimer.h>
 #include <QTime>
 #include <QX11Info>
