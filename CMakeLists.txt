@@ -3,6 +3,7 @@ PROJECT(PlexyDesktop)
 #LGPL2
 
 FIND_PACKAGE(Qt4 REQUIRED)
+FIND_PACKAGE(FFMPEG REQUIRED)
 #FIND_PACKAGE(Strigi REQUIRED)
 #FIND_PACKAGE(Plasma REQUIRED)
 #INCLUDE (KDE4Defaults)
@@ -66,7 +67,9 @@ add_subdirectory(runner)
 add_subdirectory(artwork)
 add_subdirectory(artwork/buttons)
 if (UNIX)
+	if(FFMPEG_FOUND)
 add_subdirectory(extensions/widgets/videowiget)
+	endif(FFMPEG_FOUND)
 add_subdirectory(extensions/widgets/cpu)
 endif(UNIX)
 
