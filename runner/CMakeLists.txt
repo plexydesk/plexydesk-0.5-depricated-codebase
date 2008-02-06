@@ -30,13 +30,13 @@ ADD_EXECUTABLE(kandypanel ${kandypanel_PART_SRCS})
 TARGET_LINK_LIBRARIES(
 	kandypanel 
 	qtviz
-	QtWebKit
-        ${QT_QTCORE_LIBRARY}
-        ${QT_QTOPENGL_LIBRARY}
+	${QT_QTGUI_LIBRARY}
+    ${QT_QTCORE_LIBRARY}
+    ${QT_QTOPENGL_LIBRARY}
 	${QT_AND_KDECORE_LIBS}
 	)
 
 
 ########### install files ###############
-INSTALL(TARGETS kandypanel DESTINATION /usr/loca/bin/)
+INSTALL(TARGETS kandypanel DESTINATION /usr/local/bin/)
 #INSTALL( FILES raptor.desktop  DESTINATION  ${DATA_INSTALL_DIR}/kicker/applets )

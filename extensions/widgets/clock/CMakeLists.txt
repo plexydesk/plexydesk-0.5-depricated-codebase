@@ -28,8 +28,8 @@ QT4_AUTOMOC( ${plexyclocksrc})
 
 TARGET_LINK_LIBRARIES(
 	       plexyclock
-	       GL
-	       QtWebKit
+			qtviz
+		   ${QT_QTGUI_LIBRARY}
 	       ${OPENGL_LIBRARIES}
 	       ${QT_QTCORE_LIBRARY}
 	       ${QT_QTOPENGL_LIBRARY}

@@ -16,7 +16,7 @@
 
 #endif
 //#include <fixx11h.h>
-#include <QtDBus/QtDBus>
+//#include <QtDBus/QtDBus>
 #include <QtWebKit/QWebView>
 
 //plexy
@@ -30,11 +30,16 @@ int main( int argc, char ** argv )
 {
 QApplication app(argc,argv);
 
-/*
-QWebView *view = new QWebView(0);
-view->load(QUrl("http://www.google.com/ig"));
-view->show();
-*/
+
+#ifdef Q_WS_MAC
+QString ext (".dylib");
+#endif 
+
+#ifdef Q_WS_X11
+QString ext(".so");
+#endif
+
+
 
 PlexyDesk::BackdropInterface * bg = 0;
 PlexyDesk::WidgetInterface * widget = 0;
@@ -61,7 +66,7 @@ WidgetInterface * currentDrop=0;
 */
 WidgetInterface * clock=0;
 
- QPluginLoader loaderClock ("/usr/local/lib/plexyext/widgets/libplexyclock.so");
+ QPluginLoader loaderClock ("/usr/local/lib/plexyext/widgets/libplexyclock"+ext);
  QObject * pluginClock =  loaderClock.instance();
     if (pluginClock) {
        clock = qobject_cast<WidgetInterface*>(pluginClock);
@@ -70,9 +75,10 @@ WidgetInterface * clock=0;
         clock = 0;
     }
 
+#ifdef Q_WS_MAC
 WidgetInterface * cpu=0;
 
- QPluginLoader loaderCpu ("/usr/local/lib/plexyext/widgets/libplexycpu.so");
+ QPluginLoader loaderCpu ("/usr/local/lib/plexyext/widgets/libplexycpu"+ext);
  QObject * pluginCpu =  loaderCpu.instance();
     if (pluginCpu) {
        cpu = qobject_cast<WidgetInterface*>(pluginCpu);
@@ -80,10 +86,11 @@ WidgetInterface * cpu=0;
         qDebug()<<loaderCpu.errorString()<<endl;;
         cpu = 0;
     }
+#endif
 
 WidgetInterface * friends=0;
 
- QPluginLoader loaderFriends ("/usr/local/lib/plexyext/widgets/libplexyfriends.so");
+ QPluginLoader loaderFriends ("/usr/local/lib/plexyext/widgets/libplexyfriends"+ext);
  QObject * pluginFriends =  loaderFriends.instance();
     if (pluginFriends) {
         friends = qobject_cast<WidgetInterface*>(pluginFriends);
@@ -110,7 +117,7 @@ scene.addItem(bgfact->instance()->backdrop());
 scene.addItem(widgetfact->instance()->backdrop());
 //scene.addItem(currentDrop->backdrop());
 scene.addItem(clock->backdrop());
-scene.addItem(cpu->backdrop());
+//scene.addItem(cpu->backdrop());
 scene.addItem(friends->backdrop());
 
 widgetfact->instance()->backdrop()->setZValue(-100);

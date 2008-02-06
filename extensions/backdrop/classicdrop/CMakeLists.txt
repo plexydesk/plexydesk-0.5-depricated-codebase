@@ -29,7 +29,8 @@ QT4_AUTOMOC( ${classicbackdropsrc})
 
 TARGET_LINK_LIBRARIES(
 	       classicbackdrop
-	       GL
+	       qtviz
+	       ${QT_QTGUI_LIBRARY}
 	       ${OPENGL_LIBRARIES}
 	       ${QT_QTCORE_LIBRARY}
 	       ${QT_QTOPENGL_LIBRARY}

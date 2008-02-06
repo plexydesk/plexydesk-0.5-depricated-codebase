@@ -27,8 +27,8 @@ QT4_AUTOMOC( ${widgetdemosrc})
 
 TARGET_LINK_LIBRARIES(
 	       widgetdemo
-	       GL
-	       QtWebKit
+     		qtviz
+	       ${QT_QTGUI_LIBRARY}
 	       ${OPENGL_LIBRARIES}
 	       ${QT_QTCORE_LIBRARY}
 	       ${QT_QTOPENGL_LIBRARY}

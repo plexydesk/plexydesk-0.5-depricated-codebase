@@ -25,15 +25,10 @@ SET (qtvizsrc
 add_library (qtviz SHARED ${qtvizsrc})
 QT4_AUTOMOC( ${qtvizsrc}) 
 
-#SET_TARGET_PROPERTIES(plexy
-#
-#	·       ·       PROPERTIES
-	#	#	·       ·       COMPILE_FLAGS ${CMAKE_SHARED_LIBRARY_CXX_FLAGS})
-#
 
 TARGET_LINK_LIBRARIES(
 	       qtviz
-	       GL
+	       ${QT_QTGUI_LIBRARY}
 	       ${OPENGL_LIBRARIES}
 	       ${QT_QTCORE_LIBRARY}
 	       ${QT_QTOPENGL_LIBRARY}

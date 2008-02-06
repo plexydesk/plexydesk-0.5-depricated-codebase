@@ -37,7 +37,9 @@
 #include <QPaintEvent>
 #include <qtimer.h>
 #include <QTime>
+#ifdef Q_WS_X11
 #include <QX11Info>
+#endif
 #include <QWidget>
 #include <QColor>
 

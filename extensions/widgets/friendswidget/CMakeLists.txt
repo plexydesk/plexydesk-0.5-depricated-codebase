@@ -28,8 +28,8 @@ QT4_AUTOMOC( ${plexyfriendssrc})
 
 TARGET_LINK_LIBRARIES(
 	       plexyfriends
-	       GL
-	       QtWebKit
+				qtviz
+			${QT_QTGUI_LIBRARY}
 	       ${OPENGL_LIBRARIES}
 	       ${QT_QTCORE_LIBRARY}
 	       ${QT_QTOPENGL_LIBRARY}
