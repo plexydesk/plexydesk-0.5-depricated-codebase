@@ -1,4 +1,4 @@
-project(kandypanel)
+project(plexydesk)
 
 
 set(QT_USE_OPENGL TRUE)
@@ -16,19 +16,19 @@ INCLUDE_DIRECTORIES(
 include_directories(${CMAKE_SOURCE_DIR}/lib/)
 
 ########### source files ###############
-SET(kandypanel_PART_SRCS
+SET(plexydesk_PART_SRCS
 	main.cpp
 )
 
 
 
 ########### prepare files ###############
-ADD_EXECUTABLE(kandypanel ${kandypanel_PART_SRCS})
-#KDE4_ADD_PLUGIN(kandypanel ${raptor_plasmoid_PART_SRCS})
+ADD_EXECUTABLE(plexydesk ${plexydesk_PART_SRCS})
+#KDE4_ADD_PLUGIN(plexydesk ${raptor_plasmoid_PART_SRCS})
 
 
 TARGET_LINK_LIBRARIES(
-	kandypanel 
+	plexydesk 
 	qtviz
 	${QT_QTGUI_LIBRARY}
     ${QT_QTCORE_LIBRARY}
@@ -38,5 +38,5 @@ TARGET_LINK_LIBRARIES(
 
 
 ########### install files ###############
-INSTALL(TARGETS kandypanel DESTINATION /usr/local/bin/)
+INSTALL(TARGETS plexydesk DESTINATION /usr/local/bin/)
 #INSTALL( FILES raptor.desktop  DESTINATION  ${DATA_INSTALL_DIR}/kicker/applets )
