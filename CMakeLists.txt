@@ -35,6 +35,7 @@ CONFIGURE_FILE(
 ADD_CUSTOM_TARGET(uninstall
        "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
 
+CONFIGURE_FILE(config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h )
 
 
 #pkg_check_modules(GTKMM gtkmm-2.4)

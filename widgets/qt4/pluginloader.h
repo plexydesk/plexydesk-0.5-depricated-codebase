@@ -16,7 +16,7 @@ namespace PlexDesk
         PluginLoader();
         QStringList interfaces(const QString& types);
         AbstractPluginInterface  * load(const QString& name);
-
+        
         virtual ~PluginLoader();
 
     };

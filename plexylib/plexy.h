@@ -30,6 +30,7 @@
 #ifndef __PLEXY_EXPORTS
 #define __PLEXY_EXPORTS
 
+#include <config.h>
 
 #ifdef __GNUC__
 #define PACK __attribute__((__packed__))
