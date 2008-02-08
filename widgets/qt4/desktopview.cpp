@@ -10,7 +10,8 @@ class  DesktopView::Private
     public:
     Private(){}
     ~Private(){}
-    BackdropInterface * bIface;
+//    ExtensionProducer<BackdropFactory> fact;
+    BackdropInterface  * bIface ;
     BackdropFactory * bgfact;
 };
 

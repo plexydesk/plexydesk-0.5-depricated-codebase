@@ -15,7 +15,7 @@ SET (qtvizsrc
 	baserender.cpp 
 	desktopview.cpp
 	netwm.cpp
-	extensionfactory.cpp
+	#	extensionfactory.cpp
 	backdropfactory.cpp
 	widgetfactory.cpp
 	desktopwidget.cpp

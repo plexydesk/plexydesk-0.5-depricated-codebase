@@ -2,23 +2,24 @@
 
 #ifndef PLEXY_EXTENION_FACTORY_H
 #define PLEXY_EXTENION_FACTORY_H
-#include  <abstractpluginloder.h>
 #include <backdropinterface.h>
 #include <widgetinterface.h>
+#include <plexy.h>
 
 
 namespace PlexyDesk
 {
 //USAGE OF TEMPLATE DISABLED FOR NOW  
+
 template <class Ext>
 class ExtensionProducer
-    {
+{
     public:
          Ext * createObject()
          {
              new Ext;
          }
-    };
+};
 
 /*
     template <class ext>

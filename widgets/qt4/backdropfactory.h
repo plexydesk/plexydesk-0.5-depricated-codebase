@@ -9,7 +9,7 @@
 
 namespace PlexyDesk
 {
-class VISIBLE_SYM BackdropFactory : public QObject, public ExtensionFactory 
+class VISIBLE_SYM BackdropFactory : public QObject
 {
 
     Q_OBJECT 
