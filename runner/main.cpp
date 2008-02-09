@@ -30,7 +30,7 @@ int main( int argc, char ** argv )
 {
 QApplication app(argc,argv);
 
-
+/*
 #ifdef Q_WS_MAC
 QString ext (".dylib");
 #endif 
@@ -39,7 +39,8 @@ QString ext (".dylib");
 QString ext(".so");
 #endif
 
-
+#ifdef Q_WS_WIN32
+QString ext(".dll");
 
 PlexyDesk::BackdropInterface * bg = 0;
 PlexyDesk::WidgetInterface * widget = 0;
@@ -54,16 +55,6 @@ bg = bgfact->instance();
 using namespace PlexyDesk;
 qDebug()<< "plugin After "<<bg<<endl;
 WidgetInterface * currentDrop=0;
-/*
- QPluginLoader loader ("/usr/local/lib/plexyext/widgets/libvideowidget.so");
- QObject * plugin =  loader.instance();
-    if (plugin) {
-       currentDrop = qobject_cast<WidgetInterface*>(plugin);
-    }else {
-        qDebug()<<loader.errorString()<<endl;;
-        currentDrop = 0;
-    }
-*/
 WidgetInterface * clock=0;
 
  QPluginLoader loaderClock ("/usr/local/lib/plexyext/widgets/libplexyclock"+ext);
@@ -98,12 +89,13 @@ WidgetInterface * friends=0;
         qDebug()<<loaderFriends.errorString()<<endl;;
         friends = 0;
     }
+*/
 
+using namespace PlexyDesk;
 QGraphicsScene scene;
 scene.setSceneRect(QDesktopWidget().availableGeometry());
 scene.setBackgroundBrush(Qt::NoBrush);
 scene.setItemIndexMethod(QGraphicsScene::NoIndex);
-QPushButton * btn= new QPushButton("ClickME");;
 DesktopView * view = new DesktopView(&scene);
 view->resize( QDesktopWidget().availableGeometry().size());
 
@@ -113,6 +105,7 @@ info.setDesktop( NETWinInfo::OnAllDesktops );
 info.setWindowType(NET::Desktop);
 #endif
 
+/*
 scene.addItem(bgfact->instance()->backdrop());
 scene.addItem(widgetfact->instance()->backdrop());
 //scene.addItem(currentDrop->backdrop());
@@ -121,6 +114,7 @@ scene.addItem(clock->backdrop());
 scene.addItem(friends->backdrop());
 
 widgetfact->instance()->backdrop()->setZValue(-100);
+*/
 view->show();
 
 
