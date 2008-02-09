@@ -13,11 +13,11 @@ namespace PlexDesk
     Q_OBJECT
         public:
         typedef QHash <QString,AbstractPluginInterface*> Interface;
+        typedef QHash <QString,Interface*> Dict;
         PluginLoader();
-        QStringList interfaces(const QString& types);
-        AbstractPluginInterface  * load(const QString& name);
-        
         virtual ~PluginLoader();
+        QStringList interfaces(const QString& types);
+        AbstractPluginInterface  * load(const QString& interface,const QString& widget);
 
     };
 
