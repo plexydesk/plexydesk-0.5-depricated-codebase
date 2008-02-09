@@ -169,7 +169,7 @@ ClockWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWid
   p->translate (_clock_bg.width () / 2, _clock_bg.height () / 2);
   p->rotate (_hour);
   p->drawPixmap (QRect
-		(-(ceil (_hour_hand.width () / 2)),
+		(-(ceil (double(_hour_hand.width ()) / 2)),
 		 -(_hour_hand.height () - 32), _hour_hand.width (),
 		 _hour_hand.height ()), _hour_hand);
   p->restore ();
@@ -183,7 +183,7 @@ ClockWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWid
   p->translate (_clock_bg.width () / 2, _clock_bg.height () / 2);
   p->rotate (_mins);
   p->drawPixmap (QRect
-		(-(ceil (_mins_hand.width () / 2)),
+		(-(ceil (double(_mins_hand.width ()) / 2)),
 		 -(_mins_hand.height () - 16), _mins_hand.width (),
 		 _mins_hand.height ()), _mins_hand);
   p->restore ();
@@ -198,7 +198,7 @@ ClockWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWid
   p->translate (_clock_bg.width () / 2, _clock_bg.width () / 2);
   p->rotate (_secs);
   p->drawPixmap (QRect
-		(-(ceil (_secs_hand.width () / 2)),
+		(-(ceil (double(_secs_hand.width ()) / 2)),
 		 -(_secs_hand.height () - 32), _secs_hand.width (),
 		 _secs_hand.height ()), _secs_hand);
   p->restore ();
