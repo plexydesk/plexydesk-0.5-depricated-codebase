@@ -12,7 +12,7 @@ INCLUDE_DIRECTORIES(
 
 
 SET (qtvizsrc 	
-	baserender.cpp 
+	#	baserender.cpp 
 	desktopview.cpp
 	netwm.cpp
 	#	extensionfactory.cpp

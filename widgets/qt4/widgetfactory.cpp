@@ -20,15 +20,15 @@ WidgetFactory::WidgetFactory(QObject * parent):QObject(parent),d(new Private)
 {
    QString ext(".so");
 #ifdef Q_WS_MAC
-    QPluginLoader loader (QString(PLEXYPREFIX) +"/lib/plexyext/widgets/libwidgetdemo.dylib");
+    QPluginLoader loader (QString(PLEXPREFIX) +"/lib/plexyext/widgets/libwidgetdemo.dylib");
 #endif
 
 #ifdef Q_WS_X11
-    QPluginLoader loader (QString(PLEXYPREFIX) +"/lib/plexyext/widgets/libwidgetdemo.so");
+    QPluginLoader loader (QString(PLEXPREFIX) +"/lib/plexyext/widgets/libwidgetdemo.so");
 #endif
 
 #ifdef Q_WS_WIN32
-    QPluginLoader loader (QString(PLEXYPREFIX) +"\\lib\\plexyext\\widgets\\libwidgetdemo.dll");
+    QPluginLoader loader (QString(PLEXPREFIX) +"\\lib\\plexyext\\widgets\\libwidgetdemo.dll");
 #endif
 
 
