@@ -21,12 +21,18 @@ BackdropFactory::BackdropFactory(QObject * parent):QObject(parent),d(new Private
    
    
 #ifdef Q_WS_MAC
-    QPluginLoader loader ("/usr/local/lib/plexyext/libclassicbackdrop.dylib");
+    QPluginLoader loader (QString(PLEXYPREFIX) +"/lib/plexyext/libclassicbackdrop.dylib");
 #endif    
 
 #ifdef Q_WS_X11
-    QPluginLoader loader ("/usr/local/lib/plexyext/libclassicbackdrop.so");
+    QPluginLoader loader (QString(PLEXYPREFIX) +"/lib/plexyext/libclassicbackdrop.so");
 #endif 
+
+#ifdef Q_WS_WIN32
+    QPluginLoader loader (QString(PLEXYPREFIX) +"\\lib\\plexyext\\libclassicbackdrop.dll");
+#endif 
+
+
     QObject * plugin =  loader.instance();
     if (plugin) {
         d->currentDrop = qobject_cast<BackdropInterface*>(plugin);

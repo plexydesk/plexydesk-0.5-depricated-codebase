@@ -28,7 +28,7 @@ WidgetFactory::WidgetFactory(QObject * parent):QObject(parent),d(new Private)
 #endif
 
 #ifdef Q_WS_WIN32
-    QPluginLoader loader (QString(PLEXYPREFIX) +"lib\\plexyext\\widgets\\libwidgetdemo.dll");
+    QPluginLoader loader (QString(PLEXYPREFIX) +"\\lib\\plexyext\\widgets\\libwidgetdemo.dll");
 #endif
 
 
