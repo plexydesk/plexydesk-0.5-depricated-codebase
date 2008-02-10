@@ -17,8 +17,8 @@ SET (qtvizsrc
 	pluginloader.cpp
 	netwm.cpp
 	#	extensionfactory.cpp
-	backdropfactory.cpp
-	widgetfactory.cpp
+	#	backdropfactory.cpp
+#	widgetfactory.cpp
 	desktopwidget.cpp
 	plexyconfig.cpp
 		)
