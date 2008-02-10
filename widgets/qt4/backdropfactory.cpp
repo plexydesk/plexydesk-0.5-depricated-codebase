@@ -2,6 +2,7 @@
 #include <QtCore>
 #include <QtGui>
 #include <config.h>
+#include <abstractplugininterface.h>
 #include "backdropfactory.h"
 
 namespace PlexyDesk
@@ -12,7 +13,7 @@ class BackdropFactory::Private
     public:
         Private() {}
         ~Private() {}
-        BackdropInterface * currentDrop;
+       AbstractPluginInterface  * currentDrop;
 };
 
 
@@ -35,12 +36,14 @@ BackdropFactory::BackdropFactory(QObject * parent):QObject(parent),d(new Private
 
 
     QObject * plugin =  loader.instance();
+    
     if (plugin) {
-        d->currentDrop = qobject_cast<BackdropInterface*>(plugin);
+        d->currentDrop = qobject_cast<AbstractPluginInterface*>(plugin);
     }else {
         qDebug()<<loader.errorString()<<endl;;
         d->currentDrop = 0;
     }
+   
 }
 
 BackdropFactory::~BackdropFactory()
@@ -48,7 +51,7 @@ BackdropFactory::~BackdropFactory()
     delete d;
 }
 
-BackdropInterface * BackdropFactory::instance ()
+AbstractPluginInterface * BackdropFactory::instance ()
 {
 return d->currentDrop ;
 }

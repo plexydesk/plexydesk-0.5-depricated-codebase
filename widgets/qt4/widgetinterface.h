@@ -7,7 +7,7 @@
 
 namespace PlexyDesk
 {
-    class WidgetInterface
+    class WidgetInterface 
     {
         public:
             WidgetInterface(){}

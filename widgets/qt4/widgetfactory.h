@@ -3,27 +3,30 @@
 #define PLEXY_WIDGET_FACTORY_H
 
 #include <extensionfactory.h>
+#include <abstractplugininterface.h>
 #include <QtCore>
 #include <QtGui>
 #include <plexy.h>
 
 namespace PlexyDesk
 {
-class VISIBLE_SYM WidgetFactory : public QObject, public WidgetExtensionFactory 
-{
+  class VISIBLE_SYM WidgetFactory:public QObject, public AbstractPluginInterface
+  {
 
-    Q_OBJECT 
+  Q_OBJECT
     public:
-        typedef QHash<QString,BackdropInterface*> InterfaceDict;
-        WidgetFactory(QObject * object = 0);
-        virtual ~WidgetFactory();
+    typedef QHash < QString, BackdropInterface * >InterfaceDict;
+     
+    WidgetFactory (QObject * object = 0);
+    
+    virtual ~ WidgetFactory ();
 
-       virtual WidgetInterface * instance();
-     private:
-        class Private;
-        Private * const d ;
+    virtual WidgetInterface *instance ();
+  private:
+      class Private;
+    Private *const d;
 
-};
+  };
 
 }
 #endif

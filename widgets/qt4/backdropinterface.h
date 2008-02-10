@@ -4,16 +4,16 @@
 
 #include <QtCore>
 #include <QtGui>
+#include <abstractplugininterface.h>
 
 namespace PlexyDesk
 {
-    class BackdropInterface
+    class BackdropInterface : public AbstractPluginInterface 
     {
         public:
+            void init(){}
             BackdropInterface(){}
             ~BackdropInterface(){}
-           virtual  QGraphicsItem * backdrop() = 0;
-           virtual  void render(QPainter *p,QRectF r)  = 0;
     };
 } // namespace PlexyDesk
 

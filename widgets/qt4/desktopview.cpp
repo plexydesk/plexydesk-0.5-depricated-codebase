@@ -1,5 +1,6 @@
 #include "desktopview.h"
 #include <backdropfactory.h>
+#include <abstractplugininterface.h>
 #include <QGLWidget>
 
 
@@ -10,8 +11,9 @@ class  DesktopView::Private
     public:
     Private(){}
     ~Private(){}
-//    ExtensionProducer<BackdropFactory> fact;
-    BackdropInterface  * bIface ;
+    ExtensionProducer<BackdropInterface> fact;
+    BackdropInterface * bIface ;
+    
     BackdropFactory * bgfact;
 };
 
@@ -28,9 +30,13 @@ DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsV
       // setOptimizationFlag(QGraphicsView::DontSavePainterState,true);
        setAlignment(Qt::AlignLeft | Qt::AlignTop);
        d->bIface  = 0;
-       d->bgfact = new BackdropFactory(0);
-       d->bIface = d->bgfact->instance();
+//       d->bgfact = new BackdropFactory(0);
+        d->bIface = (BackdropInterface*) d->fact.instance("Desktop");
+        qDebug()<<d->bIface<<endl;
     //   setInteractive(true);
+
+
+
 }
 
 DesktopView::~DesktopView()
@@ -43,7 +49,7 @@ void DesktopView::drawBackground ( QPainter * painter, const QRectF & rect )
 {
     painter->save();
     painter->setClipRect(rect);
-    d->bIface->render(painter,QRectF(rect.x(),rect.y(),rect.width(),rect.height()));
+  d->bIface->render(painter,QRectF(rect.x(),rect.y(),rect.width(),rect.height()));
     painter->restore();
 }
 

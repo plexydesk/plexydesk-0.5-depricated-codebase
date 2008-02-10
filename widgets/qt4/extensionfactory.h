@@ -3,6 +3,7 @@
 #ifndef PLEXY_EXTENION_FACTORY_H
 #define PLEXY_EXTENION_FACTORY_H
 #include <backdropinterface.h>
+#include <pluginloader.h>
 #include <widgetinterface.h>
 #include <plexy.h>
 
@@ -12,10 +13,10 @@ namespace PlexyDesk
 //USAGE OF TEMPLATE DISABLED FOR NOW  
 
 template <class Ext>
-class ExtensionProducer
+class VISIBLE_SYM ExtensionProducer
 {
     public:
-         Ext * createObject()
+         AbstractPluginInterface * instance(const QString& name)
          {
              new Ext;
          }
@@ -28,7 +29,7 @@ class ExtensionProducer
         return new ext;
     }
     */
-
+/*
     class VISIBLE_SYM ExtensionFactory
     {
         public:
@@ -41,7 +42,7 @@ class ExtensionProducer
         public:
                 virtual WidgetInterface * instance() = 0;
     };
-
+*/
 
 
 } // namespace PlexyDesk

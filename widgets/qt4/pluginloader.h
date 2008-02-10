@@ -2,12 +2,14 @@
 #define PLUGIN_LOADER_H
 
 #include <plexy.h>
-#include <abstractplugininterface.h>
+#include "abstractplugininterface.h"
+#include <QtCore>
+#include <QtGui>
 
 
-namespace PlexDesk
+namespace PlexyDesk
 {
-    class PluginLoader:public Object
+    class PluginLoader:public QObject
     {
 
     Q_OBJECT
@@ -17,7 +19,12 @@ namespace PlexDesk
         PluginLoader();
         virtual ~PluginLoader();
         QStringList interfaces(const QString& types);
-        AbstractPluginInterface  * load(const QString& interface,const QString& widget);
+        AbstractPluginInterface * load(const QString& interface,const QString& plugin);
+ 
+        private:
+            class Private;
+            Private * const d ;
+
 
     };
 

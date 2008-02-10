@@ -18,7 +18,7 @@ class VISIBLE_SYM BackdropFactory : public QObject
         BackdropFactory(QObject * object = 0);
         virtual ~BackdropFactory();
 
-       virtual BackdropInterface * instance();
+       virtual AbstractPluginInterface * instance();
      private:
     //   class Private;
      //  Private * const d;

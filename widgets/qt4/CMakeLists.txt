@@ -14,6 +14,7 @@ INCLUDE_DIRECTORIES(
 SET (qtvizsrc 	
 	#	baserender.cpp 
 	desktopview.cpp
+	pluginloader.cpp
 	netwm.cpp
 	#	extensionfactory.cpp
 	backdropfactory.cpp
