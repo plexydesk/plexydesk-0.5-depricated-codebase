@@ -31,8 +31,8 @@ DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsV
        setAlignment(Qt::AlignLeft | Qt::AlignTop);
        d->bIface  = 0;
 //       d->bgfact = new BackdropFactory(0);
-        d->bIface = (BackdropInterface*) d->fact.instance("Desktop");
-        qDebug()<<d->bIface<<endl;
+//        d->bIface = (BackdropInterface*) d->fact.instance("Desktop");
+//        qDebug()<<d->bIface<<endl;
     //   setInteractive(true);
 
 
@@ -49,7 +49,7 @@ void DesktopView::drawBackground ( QPainter * painter, const QRectF & rect )
 {
     painter->save();
     painter->setClipRect(rect);
-  d->bIface->render(painter,QRectF(rect.x(),rect.y(),rect.width(),rect.height()));
+  //d->bIface->render(painter,QRectF(rect.x(),rect.y(),rect.width(),rect.height()));
     painter->restore();
 }
 

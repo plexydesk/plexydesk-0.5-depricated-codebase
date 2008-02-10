@@ -4,16 +4,18 @@
 #include <QtCore>
 #include <plexy.h>
 #include <backdropinterface.h>
+#include <abstractplugininterface.h>
 
 
-class VISIBLE_SYM ClassicBackdrop : public QObject , public PlexyDesk::BackdropInterface
+class VISIBLE_SYM ClassicBackdrop : public QObject , public PlexyDesk::AbstractPluginInterface 
 {
     Q_OBJECT
-    Q_INTERFACES(PlexyDesk::BackdropInterface)
+    Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
     public:
     ClassicBackdrop(QObject * object = 0);
     virtual ~ClassicBackdrop();
+    void init(){}
     virtual QGraphicsItem * backdrop();// {};
     virtual void render(QPainter *p,QRectF r);// {};
     private:

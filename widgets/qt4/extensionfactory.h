@@ -16,9 +16,13 @@ template <class Ext>
 class VISIBLE_SYM ExtensionProducer
 {
     public:
-         AbstractPluginInterface * instance(const QString& name)
+         AbstractPluginInterface * instance(const QString& name,QObject *obj)
          {
-             new Ext;
+             if ( name.contains("Desktop") == true) {
+                 qDebug("Factroy makes a Desktop");
+                    BackdropInterface * backdrop = qobject_cast<BackdropInterface*> (obj);
+                return backdrop;
+             }
          }
 };
 

@@ -19,7 +19,11 @@ namespace PlexyDesk
         PluginLoader();
         virtual ~PluginLoader();
         QStringList interfaces(const QString& types);
-        AbstractPluginInterface * load(const QString& interface,const QString& plugin);
+
+        protected:
+            void scanDisk();
+            void loadDesktop(const QString& path);
+            void  load(const QString& interface,const QString& plugin);
  
         private:
             class Private;

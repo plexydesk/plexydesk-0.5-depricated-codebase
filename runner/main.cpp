@@ -25,10 +25,15 @@
 #include <desktopview.h>
 #include <backdropfactory.h>
 #include <widgetfactory.h>
+#include <pluginloader.h>
 
 int main( int argc, char ** argv )
 {
 QApplication app(argc,argv);
+
+
+
+PlexyDesk::PluginLoader   plug ;//= new PluginLoader::PluginLoader();
 
 /*
 #ifdef Q_WS_MAC
