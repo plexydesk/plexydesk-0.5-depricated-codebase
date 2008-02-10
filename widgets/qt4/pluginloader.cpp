@@ -34,7 +34,14 @@ PluginLoader::PluginLoader ():d (new Private)
   void PluginLoader::load (const QString & interface,
 					       const QString & pluginName)
   {
+  	#ifdef Q_WS_MAC
+    QPluginLoader loader (QString (PLEXPREFIX) + "/lib/plexyext/lib" + pluginName + ".dylib");
+    #endif
+    
+    #ifdef Q_WS_X11
     QPluginLoader loader (QString (PLEXPREFIX) + "/lib/plexyext/lib" + pluginName + ".so");
+    #endif
+    
     QObject *plugin = loader.instance ();
     if (plugin)
       {
