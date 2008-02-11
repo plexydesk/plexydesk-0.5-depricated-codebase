@@ -78,6 +78,8 @@ a:hover {
 }
 
 
+
+
 img { border:0;}
 
 /********* Global Classes *********/
@@ -157,20 +159,22 @@ img { border:0;}
 	text-align: center;
 	list-style-type: none;
 	float: left;
-	width: 970px%;
+	width: 970px;
 	margin: 0;
 	margin-left: 25px;
 	/*margin-bottom: 15px;*/
 	padding: 0;
+	display: inline;
+
 }
 .header a {
 	/*color: #bdbbbb;*/
 	display: block;
 	float: left;
 	width: 114px;
+	height: 100px;
 	padding: 14px 0px 14px 0px;
 	border: none;
-	background: url('../images/blackbutton.png') no-repeat;
 	text-decoration: none;
 	/*border-right:0px solid white;*/
 }
@@ -180,8 +184,95 @@ img { border:0;}
 	background: url('../images/blackbuttonhover.png') no-repeat;
 }
 
-.header li {}
 
+
+
+/********* bugfix *********/
+
+
+ul.menubar,
+.menubar ul{
+	margin: 0;
+	padding: 0;
+	cursor: default;
+	list-style-type: none;
+	display: inline;
+}
+
+ul.menubar{
+	display: table;
+}
+ul.menubar>li{
+	display: table-cell;
+	position: relative;
+	padding: 0px 0px;
+}
+
+
+ul.menubar>li:hover{
+	padding-right: 0px;
+} [*]
+
+ul.menubar li>ul{
+	display: none;
+	position: absolute;
+	
+	margin-left: 0px;
+	margin-top: 0px;
+}
+
+ul.menubar li:hover>ul{
+	display : block;
+}
+
+.menubar ul li a{
+	display: block;
+	padding: 0px 0px;
+
+}
+
+ul.nav,
+.nav ul,
+.nav ul li a{
+	background-color: #fff;
+	color: #369;
+	background: url('../images/blackbuttonhover.png') no-repeat;
+}
+
+
+ul.menubar li {
+	background: url('../images/blackbutton.png') no-repeat;
+}
+
+ul.menubar li:hover,
+.menubar ul li a:hover{
+	background-color: #369;
+	color: #fff;
+	background: url('../images/blackbuttonhover.png') no-repeat;
+}
+
+ul.menubar li:active,
+.menubar ul li a:active{
+	background-color: #036;
+	color: #fff;
+	background: url('../images/blackbuttonhover.png') no-repeat;
+}
+
+ul.menubar,
+.menubar ul{
+	border: 0px solid #369;
+}
+
+.menubar a{
+	text-decoration: none;
+}
+
+
+
+
+
+
+/********* bugfix *********/
 
 /********* Cintent *********/
 
