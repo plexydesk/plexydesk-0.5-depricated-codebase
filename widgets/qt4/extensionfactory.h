@@ -17,9 +17,7 @@ class VISIBLE_SYM ExtensionProducer
     public:
          T * instance(const QString& name,QObject *obj)
          {
-             if ( name.contains("Desktop") == true) {
              return  qobject_cast<T*> (obj);
-             }
          }
 };
 

@@ -4,8 +4,11 @@
 #include "pluginloader.h"
 #include "extensionfactory.h"
 
+
 namespace PlexyDesk
 {
+
+PluginLoader * PluginLoader::mInstance = 0;
 
   class PluginLoader::Private
   {

@@ -33,8 +33,8 @@ QApplication app(argc,argv);
 
 
 
-PlexyDesk::PluginLoader   plug ;//= new PluginLoader::PluginLoader();
-	qDebug()<<plug.listPlugins("Desktop");
+//PlexyDesk::PluginLoader   plug ;//= new PluginLoader::PluginLoader();
+	qDebug()<<PlexyDesk::PluginLoader::getInstance()->listPlugins("Desktop");
 /*
 #ifdef Q_WS_MAC
 QString ext (".dylib");

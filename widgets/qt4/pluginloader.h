@@ -9,7 +9,7 @@
 
 namespace PlexyDesk
 {
-    class PluginLoader:public QObject
+    class VISIBLE_SYM PluginLoader:public QObject
     {
 
     Q_OBJECT
@@ -19,7 +19,15 @@ namespace PlexyDesk
         PluginLoader();
         virtual ~PluginLoader();
         QStringList listPlugins(const QString& types);
-       AbstractPluginInterface * instance(const QString& name);
+        AbstractPluginInterface * instance(const QString& name);
+        static PluginLoader * getInstance()
+        {
+             if (!mInstance) {
+                 mInstance = new PluginLoader();
+             }
+
+            return mInstance;
+        }
 
         protected:
             void scanDisk();
@@ -29,10 +37,12 @@ namespace PlexyDesk
         private:
             class Private;
             Private * const d ;
+            static VISIBLE_SYM PluginLoader * mInstance;
 
 
     };
 
 } // namespace PlexDesk
+
 
 #endif

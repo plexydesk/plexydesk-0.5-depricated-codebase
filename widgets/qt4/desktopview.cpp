@@ -31,9 +31,9 @@ DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsV
        setAlignment(Qt::AlignLeft | Qt::AlignTop);
        d->bIface  = 0;
      
-       PluginLoader loader;
-       QString defaults = loader.listPlugins("Desktop").first();
-       d->bIface = (BackdropInterface*)loader.instance(defaults);
+//       PluginLoader loader;
+       QString defaults = PluginLoader::getInstance()->listPlugins("Desktop").first();
+       d->bIface = (BackdropInterface*)PluginLoader::getInstance()->instance(defaults);
        
        // qDebug()<<d->bIface<<endl;
     //   setInteractive(true);
