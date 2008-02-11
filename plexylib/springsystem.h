@@ -20,7 +20,7 @@ namespace Plexy
 
             float k;
 
-            Particle caught;
+            particle caught;
 
         public:
 

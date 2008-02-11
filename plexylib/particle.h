@@ -24,7 +24,7 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifdef PARTICLE_3D
+#ifndef PARTICLE_3D
 #define PARTICLE_3D
 
 #include "plexy.h"
@@ -36,7 +36,7 @@ namespace Plexy{
 
     public:
 
-        Particlcle() {        // Default Constructor
+        particle() {        // Default Constructor
             Vector3D position;
             Vector3D velocity;
             mass  =1;
@@ -46,7 +46,7 @@ namespace Plexy{
          * Constructor which is used to create an object of mass m
          * at the location pos in space with some velocity vel.
          */
-        Particle(Vector3D pos, Vector3D vel,float m):position(pos),Velocity(vel),mass(m) {}
+        particle(Vector3D pos, Vector3D vel,float m):position(pos),Velocity(vel),mass(m) {}
 
   /*
    * Updates the data of the particle
@@ -58,6 +58,8 @@ namespace Plexy{
         virtual void updateDynamics() = 0 ;
 
         void hit();
+
+        void collide(Particle);
 
     private:
         Vector3D position;

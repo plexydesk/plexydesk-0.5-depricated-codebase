@@ -1,0 +1,323 @@
+/*
+ * Contact Mani Shankar <da.sharp.17@gmail.com>
+ *
+ * This CSS is wrote using VIM
+ *
+ * All regards to my Mother who has been resposinble
+ * for what I am now.
+ *
+ *  Three Cheers to Free Software and RMS
+ */
+
+
+
+html, body {
+	border: 0;
+	margin: 0;
+	padding: 0;
+
+}
+
+body {
+	font: 80%/1 sans-serif, helvetica, sans-serif;
+	line-height: 140%;
+	background: #6f6d6d;
+	width: 100%
+	min-width: 970px;
+}
+
+/********* Comman Formatting *********/
+
+h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+	padding: 0;
+	font-weight: normal;
+
+}
+
+/*Have to Make h1 look metallic, using metallic letters*/
+
+/*
+h1 {
+}
+
+*/
+
+p ul#main_menu, ol#main_menu {
+	margin: 0;
+	/*padding: 0;*/
+}
+
+/********* Links *********/
+
+/*a#main_menu {
+	text-decoration: underline;
+	color: #808080;
+}
+
+a#main_menu:hover {
+	text-decoration: underline;
+	color: #FFFFFF;
+}*/
+
+/********* Tables *********/
+
+table {
+	border:0;
+	padding: 0;
+	/*margin: 0;*/
+
+}
+
+/********* Global Classes *********/
+
+.clear {clear: both;}
+
+.alignleft {float: left;}
+
+.alignright {float: right;}
+
+.text-left {text-align: left;}
+
+.text-right {text-align: right;}
+
+.text-center {text-align: center;}
+
+.text-justify {text-align: justify;}
+
+.bold {font-weight: bold;}
+
+.italic {font-style: italic;}
+
+.underline {font-style: underline;}
+
+.highlight {background: #FFFFCC; }
+
+.img-left {float: left; margin: 4px 0 4px 10px;}
+
+.img-right {float: right;  margin: 4px 10px 4px 0;}
+
+.nopadding {padding: 0;}
+
+.noindent {margin-left: 0; padding-left: 0;}
+
+.nobullet {list-style: none; list-style-image: none}
+
+.noborder {border: none;}
+
+/********* Main Layout *********/
+
+#container {
+	text-align: center;
+	width: 100% ;
+	height: 100%;
+	margin-top: 7px;
+	position: relative;
+	top: -8px;
+	float: left;
+}
+
+#wrapper {
+	background: url('../images/wrap.png') repeat-y center;
+	display: block;
+	width: 970px;
+	text-align: center; /*IE fix to center the page*/
+	margin: 0 auto; /* center the page in firefox */
+
+}
+
+.end {
+	clear: both;
+	background: url('bottom.png') no-repeat center;
+}
+
+/********* Header Menu II *********/
+
+.header {
+	margin : 0;
+	margin-top : 0px;
+	margin-bottom: 15px;
+	padding: 0;
+	width: 970px;
+	text-align: center:
+}
+
+.header ul {
+	text-align: center;
+	list-style-type: none;
+	float: left;
+	width: 970px%;
+	margin: 0;
+	margin-left: 25px;
+	/*margin-bottom: 15px;*/
+	padding: 0;
+}
+.header a {
+	/*color: #bdbbbb;*/
+	display: block;
+	float: left;
+	width: 114px;
+	padding: 14px 0px 14px 0px;
+	border: none;
+	background: url('../images/blackbutton.png') no-repeat;
+	text-decoration: none;
+	/*border-right:0px solid white;*/
+}
+
+.header a:hover {
+	color: "#FFFFFF";
+	background: url('../images/blackbuttonhover.png') no-repeat;
+}
+
+.header li {}
+
+
+/********* Cintent *********/
+
+hr {
+	height: 0px;
+	color: #ededcc;
+	margin: 0;
+	padding: 0;
+
+}
+
+.block_left {
+	float : left;
+	text-align: left;
+	/*position: relative;9*/
+	width : 400px;
+	/*height: 350px;*/
+	margin: 0;
+	margin-left: 50px;
+	margin-right: 10px;
+	color: #ededcc;
+}
+
+.block_right {
+	float: right;
+	text-align: left;
+	width: 400px;
+	/*height: 350px;*/
+	margin: 0;
+	margin-left: 10px;
+	margin-right: 50px;
+	color: #ededcc;
+
+}
+
+
+/*.block_left p {
+	color: "#ededcc";
+	text-align: left;
+}*/
+
+
+.block {
+	width: 470px;
+	float : left;
+	background: url('../images/content_bg1_wrap.png') repeat-y left top;
+	color: #ededcc;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	position: relative;
+	left: 15px;
+
+}
+
+.block p {
+	color: #ededcc;
+	text-align: left;
+	padding: 0px;
+	margin: 0;
+	margin-left: 25px;
+	margin-right: 25px;
+	margin-bottom: 25px;
+}
+
+.write_main {
+	color: #ffffff;
+	text-align : left;
+	padding: 0;
+	margin: 0;
+	margin-left: 55px;
+	margin-right:55px;
+
+}
+
+.img_noborder {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	float: right;
+	margin-right: 50px;
+}
+
+#video {
+	margin: 0;
+	padding: 0;
+	float : right;
+	margin-right: 50px;
+	margin-left: 10px;
+	/*background: url('../images/videobutton.png') no-repeat center;*/
+}
+
+#video a {
+	background: url('../images/videobutton.png') no-repeat center top;
+	display: block;
+	margin: 0;
+	padding: 0;
+	width: 182px;
+	height: 42px;
+	padding-bottom: 11px;
+	padding-top: 11px;
+	font-weight: bold;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+.endvideo {
+	clean: both;
+}
+
+
+.divider {
+	margin: 0;
+	margin-left: 100px;
+	margin-right: 100px;
+	margin-top: 50px;
+	margin-bottom: 50px;
+	padding: 0;
+	color: #6f6d6d;
+	width: 770px;
+
+}
+
+.divider_nomargin {
+	margin: 0;
+	margin-left: 100px;
+	margin-right: 100px;
+	width: 770px;
+	padding: 0;
+	color: #6f6d6d;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
