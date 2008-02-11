@@ -69,6 +69,15 @@ table {
 
 }
 
+a { 
+	color:white; 
+  }
+
+a:hover {
+	color:gray;
+}
+
+
 img { border:0;}
 
 /********* Global Classes *********/
