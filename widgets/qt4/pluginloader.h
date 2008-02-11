@@ -18,7 +18,8 @@ namespace PlexyDesk
         typedef QHash <QString,Interface*> Dict;
         PluginLoader();
         virtual ~PluginLoader();
-        QStringList interfaces(const QString& types);
+        QStringList listPlugins(const QString& types);
+       AbstractPluginInterface * instance(const QString& name);
 
         protected:
             void scanDisk();

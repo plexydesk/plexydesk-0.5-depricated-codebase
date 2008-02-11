@@ -10,44 +10,18 @@
 
 namespace PlexyDesk
 {
-//USAGE OF TEMPLATE DISABLED FOR NOW  
 
-template <class Ext>
+template <class T>
 class VISIBLE_SYM ExtensionProducer
 {
     public:
-         AbstractPluginInterface * instance(const QString& name,QObject *obj)
+         T * instance(const QString& name,QObject *obj)
          {
              if ( name.contains("Desktop") == true) {
-                 qDebug("Factroy makes a Desktop");
-                    BackdropInterface * backdrop = qobject_cast<BackdropInterface*> (obj);
-                return backdrop;
+             return  qobject_cast<T*> (obj);
              }
          }
 };
-
-/*
-    template <class ext>
-    AbstractPluginLoader * ExtensionProducer<ext>::createObject()
-    {
-        return new ext;
-    }
-    */
-/*
-    class VISIBLE_SYM ExtensionFactory
-    {
-        public:
-                virtual  BackdropInterface * instance() = 0;
-    };
-    //PROTOTYPE HACK
-
-    class VISIBLE_SYM WidgetExtensionFactory
-    {
-        public:
-                virtual WidgetInterface * instance() = 0;
-    };
-*/
-
 
 } // namespace PlexyDesk
 

@@ -31,8 +31,16 @@ PluginLoader::PluginLoader ():d (new Private)
     delete d;
   }
 
-  void PluginLoader::load (const QString & interface,
-					       const QString & pluginName)
+	QStringList PluginLoader::listPlugins(const QString& types)	{
+		return d->groups.keys();
+	}
+	
+	AbstractPluginInterface * PluginLoader::instance(const QString& name)
+    {
+    	return d->groups[name ];	
+    }	
+
+  void PluginLoader::load (const QString & interface,const QString & pluginName)
   {
   	#ifdef Q_WS_MAC
     QPluginLoader loader (QString (PLEXPREFIX) + "/lib/plexyext/lib" + pluginName + ".dylib");
@@ -45,9 +53,10 @@ PluginLoader::PluginLoader ():d (new Private)
     QObject *plugin = loader.instance ();
     if (plugin)
       {
-        AbstractPluginInterface * Iface  = 0; //=  qobject_cast<AbstractPluginInterface*> (plugin);
+        AbstractPluginInterface * Iface = 0;
         ExtensionProducer<AbstractPluginInterface> factory;
         Iface = factory.instance(interface,plugin);
+		d->groups[pluginName] = Iface;
       }
     else
       {

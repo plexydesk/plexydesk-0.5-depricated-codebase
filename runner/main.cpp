@@ -34,7 +34,7 @@ QApplication app(argc,argv);
 
 
 PlexyDesk::PluginLoader   plug ;//= new PluginLoader::PluginLoader();
-
+	qDebug()<<plug.listPlugins("Desktop");
 /*
 #ifdef Q_WS_MAC
 QString ext (".dylib");
@@ -103,7 +103,7 @@ scene.setBackgroundBrush(Qt::NoBrush);
 scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 DesktopView * view = new DesktopView(&scene);
 view->resize( QDesktopWidget().availableGeometry().size());
-view->setWindowOpacity(0.1);
+//view->setWindowOpacity(0.1);
 #ifdef Q_WS_X11
 NETWinInfo info( QX11Info::display(), view->winId(), QX11Info::appRootWindow(), NET::WMDesktop );
 info.setDesktop( NETWinInfo::OnAllDesktops );
