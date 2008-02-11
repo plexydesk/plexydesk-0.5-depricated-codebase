@@ -371,7 +371,7 @@ hr {
 	margin: 0;
 	padding: 0;
 	width: 182px;
-	height: 42px;
+	/*height: 42px;*/
 	padding-bottom: 11px;
 	padding-top: 11px;
 	font-weight: bold;
@@ -406,13 +406,44 @@ hr {
 }
 
 
+/********* Spice *********/
 
+.hide_image1 {
+	margin: 0;
+	border: 0;
+	padding: 0;
+	background: url('../images/header.png') no-repeat center;
+	height: 409px;
+}
 
+.hide_image2 {
+	margin: 0;
+	border: 0;
+	padding: 0;
+ 	background: url('../images/bottom.png') no-repeat center;
+	width: 970px;
+	height: 42px;
+}
 
+.hide_image3 {
+	margin: 0;
+	border: 0;
+	padding: 0;
+	background: url('../images/content_bg1_top.png') no-repeat center;
+	width : 470px;
+	height: 114px;
 
+}
 
+.hide_image4 {
+	margin: 0;
+	border: 0;
+	padding: 0;
+	background: url('../images/content_bg1_bottom.png') no-repeat center;
+	width: 470px;
+	height: 18px;
 
-
+}
 
 
 
