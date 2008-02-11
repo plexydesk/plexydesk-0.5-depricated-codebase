@@ -69,6 +69,8 @@ table {
 
 }
 
+img { border:0;}
+
 /********* Global Classes *********/
 
 .clear {clear: both;}
