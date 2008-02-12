@@ -344,6 +344,47 @@ ul.menubar,
 	color: #6f6d6d;
 }
 
+/********* NEWS *********/
+.news {
+	float: left;
+	width: 400px;
+	height: 600px;
+	margin: 0;
+	margin-left: 50px;
+	text-align: left;
+	padding: 0;
+	border: 0;
+	color: #ededcc;
+}
+
+.news p{
+	color: #FFFFFF;
+}
+
+.news ul{
+	margin: 0;
+	margin-left: 25px;
+	padding: 0;
+	border: 0;
+	list-style-image: url('../images/bullet.png');
+}
+
+.news a {
+	color: #ededcc;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.news a:hover {
+	color: #FFFFFF;
+	text-decoration: underline;
+}
+
+/*********  --  *********/
+
 .block_left {
 	float : left;
 	text-align: left;
@@ -381,6 +422,7 @@ ul.menubar,
 	padding: 0;
 	border: 0;
 }
+
 
 .content_list_right {
 	width: 210px;
@@ -430,6 +472,16 @@ ul.menubar,
 	margin-bottom: 25px;
 }
 
+/*.big_block {
+	width: 970px;
+	margin: 0;
+	margin-top: 100px;
+	border: 0;
+	padding: 0;
+	background: url('../images/.png') repeat-y center;
+	text-align: center;
+}*/
+
 
 /********* Spice *********/
 
@@ -470,7 +522,14 @@ ul.menubar,
 
 }
 
-
+.hide_image5 {
+	 margin: 0;
+	 border: 0;
+	 padding: 0;
+	 background: url('../images/top.png') no-repeat center;
+	 width: 970px;
+	 height: 42px;
+}
 
 
 
