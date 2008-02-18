@@ -30,13 +30,13 @@
 #include "plexy.h"
 #include "vector3d.h"
 
-namespace Plexy{
+namespace Plexy {
 
     class VISIBLE_SYM Particle {
 
     public:
 
-        particle() {        // Default Constructor
+        Particle() {        // Default Constructor
             Vector3D position;
             Vector3D velocity;
             mass  =1;
@@ -46,7 +46,7 @@ namespace Plexy{
          * Constructor which is used to create an object of mass m
          * at the location pos in space with some velocity vel.
          */
-        particle(Vector3D pos, Vector3D vel,float m):position(pos),Velocity(vel),mass(m) {}
+        Particle(Vector3D pos, Vector3D vel,float m):position(pos),velocity(vel),mass(m) {}
 
   /*
    * Updates the data of the particle
@@ -59,7 +59,7 @@ namespace Plexy{
 
         void hit();
 
-        void collide(Particle);
+//        void collide(Particle); FIXME - Particle has a pure virtual method above
 
     private:
         Vector3D position;
@@ -69,7 +69,7 @@ namespace Plexy{
         int isSpringed;
 
     } ; // End Class Particle
-
+}; // Namespace
 #endif
 
 
