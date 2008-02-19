@@ -76,5 +76,5 @@ if (UNIX)
 endif(UNIX)
 
 add_subdirectory(extensions/widgets/clock)
-#add_subdirectory(extensions/widgets/friendswidget)
+add_subdirectory(extensions/widgets/friendswidget)
 

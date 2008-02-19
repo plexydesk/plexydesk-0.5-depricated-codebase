@@ -23,15 +23,15 @@
 
 #include <QtCore>
 #include <plexy.h>
-#include <widgetinterface.h>
+#include <abstractplugininterface.h>
 
-
-class VISIBLE_SYM Friends : public QObject , public PlexyDesk::WidgetInterface
+class VISIBLE_SYM Friends : public QObject , public PlexyDesk::AbstractPluginInterface
 {
     Q_OBJECT
-    Q_INTERFACES(PlexyDesk::WidgetInterface)
+    Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
     public:
+    void init(){}
     Friends(QObject * object = 0);
     virtual ~Friends();
     virtual QGraphicsItem * backdrop();// {};

@@ -36,6 +36,6 @@ TARGET_LINK_LIBRARIES(
        )
 
 INSTALL(TARGETS plexyfriends DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext/widgets/)
-
+install(FILES friends.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups/)
 
 add_subdirectory(friends)
