@@ -35,6 +35,7 @@ QApplication app(argc,argv);
 
 //PlexyDesk::PluginLoader   plug ;//= new PluginLoader::PluginLoader();
 	qDebug()<<PlexyDesk::PluginLoader::getInstance()->listPlugins("Desktop");
+	qDebug()<<PlexyDesk::PluginLoader::getInstance()->listPlugins("Media");
 /*
 #ifdef Q_WS_MAC
 QString ext (".dylib");

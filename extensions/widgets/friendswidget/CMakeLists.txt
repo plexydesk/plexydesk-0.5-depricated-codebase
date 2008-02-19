@@ -35,7 +35,7 @@ TARGET_LINK_LIBRARIES(
 	       ${QT_QTOPENGL_LIBRARY}
        )
 
-INSTALL(TARGETS plexyfriends DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext/widgets/)
+INSTALL(TARGETS plexyfriends DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext/)
 install(FILES friends.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups/)
 
 add_subdirectory(friends)
