@@ -6,12 +6,13 @@
 #include <widgetinterface.h>
 
 
-class VISIBLE_SYM Clock : public QObject , public PlexyDesk::WidgetInterface
+class VISIBLE_SYM Clock : public QObject , public PlexyDesk::AbstractPluginInterface
 {
     Q_OBJECT
-    Q_INTERFACES(PlexyDesk::WidgetInterface)
+    Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
     public:
+   void  init() {} 
     Clock(QObject * object = 0);
     virtual ~Clock();
     virtual QGraphicsItem * backdrop();// {};
