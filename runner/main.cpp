@@ -112,8 +112,12 @@ info.setWindowType(NET::Desktop);
 #endif
 
 
-    scene.addItem( (WidgetInterface*)PluginLoader::getInstance()->instance("plexyfriends")->backdrop());
+    WidgetInterface * face ;
+	face = (WidgetInterface*)PluginLoader::getInstance()->instance("plexyfriends");
+   	if(face)
+    scene.addItem(face->backdrop());
     
+        
 /*
 scene.addItem(bgfact->instance()->backdrop());
 scene.addItem(widgetfact->instance()->backdrop());
