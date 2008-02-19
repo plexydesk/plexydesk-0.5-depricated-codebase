@@ -29,7 +29,7 @@
 
 #include "plexy.h"
 
-namespace Plexy{
+namespace PlexyDesk {
 
 
 	class  VISIBLE_SYM Vector3D 
