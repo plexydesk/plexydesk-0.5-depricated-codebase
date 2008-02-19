@@ -38,7 +38,7 @@ PluginLoader::PluginLoader ():d (new Private)
 		return d->groups.keys();
 	}
 	
-	AbstractPluginInterface * PluginLoader::instance(const QString& name)
+    AbstractPluginInterface * PluginLoader::instance(const QString& name)
     {
     	return d->groups[name ];	
     }	

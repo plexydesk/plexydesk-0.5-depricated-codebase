@@ -111,6 +111,9 @@ info.setDesktop( NETWinInfo::OnAllDesktops );
 info.setWindowType(NET::Desktop);
 #endif
 
+
+    scene.addItem( (WidgetInterface*)PluginLoader::getInstance()->instance("plexyfriends")->backdrop());
+    
 /*
 scene.addItem(bgfact->instance()->backdrop());
 scene.addItem(widgetfact->instance()->backdrop());

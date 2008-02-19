@@ -4,12 +4,14 @@
 
 #include <QtCore>
 #include <QtGui>
+#include <abstractplugininterface.h>
 
 namespace PlexyDesk
 {
-    class WidgetInterface 
+    class WidgetInterface : public AbstractPluginInterface 
     {
         public:
+	void init() {}
             WidgetInterface(){}
             ~WidgetInterface(){}
            virtual  QGraphicsItem * backdrop() = 0;
