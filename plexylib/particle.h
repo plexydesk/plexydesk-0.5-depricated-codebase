@@ -30,7 +30,7 @@
 #include "plexy.h"
 #include "vector3d.h"
 
-namespace Plexy {
+namespace PlexyDesk {
 
     class VISIBLE_SYM Particle {
 
