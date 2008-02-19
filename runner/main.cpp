@@ -36,66 +36,7 @@ QApplication app(argc,argv);
 //PlexyDesk::PluginLoader   plug ;//= new PluginLoader::PluginLoader();
 	qDebug()<<PlexyDesk::PluginLoader::getInstance()->listPlugins("Desktop");
 	qDebug()<<PlexyDesk::PluginLoader::getInstance()->listPlugins("Media");
-/*
-#ifdef Q_WS_MAC
-QString ext (".dylib");
-#endif 
 
-#ifdef Q_WS_X11
-QString ext(".so");
-#endif
-
-#ifdef Q_WS_WIN32
-QString ext(".dll");
-
-PlexyDesk::BackdropInterface * bg = 0;
-PlexyDesk::WidgetInterface * widget = 0;
-
-PlexyDesk::BackdropFactory * bgfact = new PlexyDesk::BackdropFactory(0);
-PlexyDesk::WidgetFactory * widgetfact = new PlexyDesk::WidgetFactory(0);
-
-qDebug()<<"Plugin Before Address"<<bg<<endl;
-
-bg = bgfact->instance(); 
-
-using namespace PlexyDesk;
-qDebug()<< "plugin After "<<bg<<endl;
-WidgetInterface * currentDrop=0;
-WidgetInterface * clock=0;
-
- QPluginLoader loaderClock ("/usr/local/lib/plexyext/widgets/libplexyclock"+ext);
- QObject * pluginClock =  loaderClock.instance();
-    if (pluginClock) {
-       clock = qobject_cast<WidgetInterface*>(pluginClock);
-    }else {
-        qDebug()<<loaderClock.errorString()<<endl;;
-        clock = 0;
-    }
-
-#ifdef Q_WS_MAC
-WidgetInterface * cpu=0;
-
- QPluginLoader loaderCpu ("/usr/local/lib/plexyext/widgets/libplexycpu"+ext);
- QObject * pluginCpu =  loaderCpu.instance();
-    if (pluginCpu) {
-       cpu = qobject_cast<WidgetInterface*>(pluginCpu);
-    }else {
-        qDebug()<<loaderCpu.errorString()<<endl;;
-        cpu = 0;
-    }
-#endif
-
-WidgetInterface * friends=0;
-
- QPluginLoader loaderFriends ("/usr/local/lib/plexyext/widgets/libplexyfriends"+ext);
- QObject * pluginFriends =  loaderFriends.instance();
-    if (pluginFriends) {
-        friends = qobject_cast<WidgetInterface*>(pluginFriends);
-    }else {
-        qDebug()<<loaderFriends.errorString()<<endl;;
-        friends = 0;
-    }
-*/
 
 using namespace PlexyDesk;
 QGraphicsScene scene;
@@ -117,6 +58,9 @@ info.setWindowType(NET::Desktop);
    	if(face)
     scene.addItem(face->backdrop());
     
+	face = (WidgetInterface*)PluginLoader::getInstance()->instance("plexyclock");
+   	if(face)
+    scene.addItem(face->backdrop());    
         
 /*
 scene.addItem(bgfact->instance()->backdrop());
