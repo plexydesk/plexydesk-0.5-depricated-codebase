@@ -33,7 +33,7 @@ Friends::~Friends()
 {
 }
 
-QGraphicsItem * Friends::backdrop()
+QGraphicsItem * Friends::item()
 {
     return new PlexyDesk::FriendsWidget(QRectF(0, 0, 220, 290), 0);
 }

@@ -13,7 +13,7 @@ VideoWidget::~VideoWidget()
 
 }
 
-QGraphicsItem * VideoWidget::backdrop()
+QGraphicsItem * VideoWidget::item()
 {
 
 return new  PlexyDesk::VideoItem(QRectF(0,0,380,300),0);

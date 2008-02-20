@@ -51,27 +51,9 @@ int main( int argc, char ** argv )
     info.setWindowType(NET::Desktop);
 #endif
 
-    WidgetInterface * face ;
 
-	face = (WidgetInterface*) PluginLoader::getInstance()->instance("plexyfriends");
-   	if (face)
-        scene.addItem(face->backdrop());
-
-	face = (WidgetInterface*) PluginLoader::getInstance()->instance("plexyclock");
-   	if (face)
-        scene.addItem(face->backdrop());
-
-    /*
-    scene.addItem(bgfact->instance()->backdrop());
-    scene.addItem(widgetfact->instance()->backdrop());
-    scene.addItem(currentDrop->backdrop());
-    scene.addItem(clock->backdrop());
-    scene.addItem(cpu->backdrop());
-    scene.addItem(friends->backdrop());
-
-    widgetfact->instance()->backdrop()->setZValue(-100);
-    */
-
+    view->addExtension("plexyfriends");
+    view->addExtension("plexyclock");
     view->show();
 
     return app.exec();

@@ -24,7 +24,7 @@ ClassicBackdrop::~ClassicBackdrop()
 
 }
 
-QGraphicsItem * ClassicBackdrop::backdrop()
+QGraphicsItem * ClassicBackdrop::item()
 {
 
 PictureFlow* w = new PictureFlow; 

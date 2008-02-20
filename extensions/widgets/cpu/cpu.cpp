@@ -14,7 +14,7 @@ Cpu::~Cpu()
 
 }
 
-QGraphicsItem * Cpu::backdrop()
+QGraphicsItem * Cpu::item()
 {
 return new  PlexyDesk::CpuWidget(QRectF(0,0,340,240),0);
 }

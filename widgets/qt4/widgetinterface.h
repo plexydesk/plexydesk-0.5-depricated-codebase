@@ -14,7 +14,7 @@ namespace PlexyDesk
 	void init() {}
             WidgetInterface(){}
             ~WidgetInterface(){}
-           virtual  QGraphicsItem * backdrop() = 0;
+           virtual  QGraphicsItem * item() = 0;
     };
 } // namespace PlexyDesk
 

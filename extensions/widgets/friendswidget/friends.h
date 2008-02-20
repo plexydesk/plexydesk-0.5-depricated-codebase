@@ -35,7 +35,7 @@ class VISIBLE_SYM Friends : public QObject, public PlexyDesk::AbstractPluginInte
         void init(){}
         Friends(QObject * object = 0);
         virtual ~Friends();
-        virtual QGraphicsItem * backdrop();// {};
+        virtual QGraphicsItem * item();// {};
 };
 
 #endif

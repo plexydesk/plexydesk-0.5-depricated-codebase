@@ -15,7 +15,7 @@ class VISIBLE_SYM Clock : public QObject , public PlexyDesk::AbstractPluginInter
    void  init() {} 
     Clock(QObject * object = 0);
     virtual ~Clock();
-    virtual QGraphicsItem * backdrop();// {};
+    virtual QGraphicsItem * item();// {};
 };
 
 

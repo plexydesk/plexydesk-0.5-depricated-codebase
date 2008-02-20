@@ -13,7 +13,7 @@ class  DesktopView::Private
     ~Private(){}
     ExtensionProducer<BackdropInterface> fact;
     BackdropInterface * bIface ;
-    
+    WidgetInterface * widgets;       
     BackdropFactory * bgfact;
 };
 
@@ -21,25 +21,12 @@ DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsV
 {
        setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
        setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    //setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers)));
-      /// setCacheMode(QGraphicsView::CacheBackground);
        setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
-
-      // setRenderHints(QPainter::HighQualityAntialiasing);
-      // setOptimizationFlag(QGraphicsView::DontClipPainter,false);
-      // setOptimizationFlag(QGraphicsView::DontSavePainterState,true);
        setAlignment(Qt::AlignLeft | Qt::AlignTop);
        d->bIface  = 0;
-     
-//       PluginLoader loader;
+       d->widgets = 0;
        QString defaults = PluginLoader::getInstance()->listPlugins("Desktop").first();
        d->bIface = (BackdropInterface*)PluginLoader::getInstance()->instance(defaults);
-       
-       // qDebug()<<d->bIface<<endl;
-    //   setInteractive(true);
-
-
-
 }
 
 DesktopView::~DesktopView()
@@ -47,6 +34,12 @@ DesktopView::~DesktopView()
     delete d;
 }
 
+void DesktopView::addExtension(const QString& name)
+{
+        d->widgets = (WidgetInterface*) PluginLoader::getInstance()->instance(name);
+        if (d->widgets)
+        scene()->addItem(d->widgets->item());
+}
 
 void DesktopView::drawBackground ( QPainter * painter, const QRectF & rect )
 {

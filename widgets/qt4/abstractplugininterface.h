@@ -12,7 +12,7 @@ namespace PlexyDesk
     {
         public:
            virtual void init() = 0;
-           virtual  QGraphicsItem * backdrop() {return new QGraphicsRectItem ();};
+           virtual  QGraphicsItem * item() {return new QGraphicsRectItem ();};
            virtual  void render(QPainter *p,QRectF r) {};
 
 

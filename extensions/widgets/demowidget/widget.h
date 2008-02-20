@@ -14,7 +14,7 @@ class VISIBLE_SYM WidgetDemo : public QObject , public PlexyDesk::WidgetInterfac
     public:
     WidgetDemo(QObject * object = 0);
     virtual ~WidgetDemo();
-    virtual QGraphicsItem * backdrop();// {};
+    virtual QGraphicsItem * item();// {};
 };
 
 

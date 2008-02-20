@@ -13,19 +13,19 @@ class VISIBLE_SYM  DesktopView : public QGraphicsView
 {
     Q_OBJECT
     public:
-        DesktopView ( QGraphicsScene * scene = new QGraphicsScene(), QWidget * parent = 0 );
+        DesktopView(QGraphicsScene * scene = new QGraphicsScene(), QWidget * parent = 0);
         virtual ~DesktopView();
 
         void addWallpaper(const QString& path);
 
         void addRender(QGraphicsScene * scene);
 
-        void addDesktopWidget(QWidget * widget);
+        void addExtension(const QString& name);
 
-        void addDesktopItem (QGraphicsItem * item);
+        void addDesktopItem(QGraphicsItem * item);
 
     protected:
-        void drawBackground ( QPainter * painter, const QRectF & rect );
+        void drawBackground(QPainter * painter, const QRectF& rect);
 	//void paintEvent(QPaintEvent * event);
 
     private:

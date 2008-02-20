@@ -15,7 +15,7 @@ Clock::~Clock()
 
 }
 
-QGraphicsItem * Clock::backdrop()
+QGraphicsItem * Clock::item()
 {
 
 return new  PlexyDesk::ClockWidget(QRectF(0,0,340,240),0);

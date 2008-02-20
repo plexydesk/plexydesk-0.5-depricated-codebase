@@ -14,7 +14,7 @@ class VISIBLE_SYM Cpu : public QObject , public PlexyDesk::WidgetInterface
     public:
     Cpu(QObject * object = 0);
     virtual ~Cpu();
-    virtual QGraphicsItem * backdrop();// {};
+    virtual QGraphicsItem * item();// {};
 };
 
 

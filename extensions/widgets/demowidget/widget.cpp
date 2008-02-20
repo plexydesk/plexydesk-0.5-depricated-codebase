@@ -13,7 +13,7 @@ WidgetDemo::~WidgetDemo()
 
 }
 
-QGraphicsItem * WidgetDemo::backdrop()
+QGraphicsItem * WidgetDemo::item()
 {
     QCalendarWidget *date = new QCalendarWidget(0);
     date->setWindowOpacity(0.2);
