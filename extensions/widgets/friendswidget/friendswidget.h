@@ -23,6 +23,7 @@
 
 #include "frienditem.h"
 #include <desktopwidget.h>
+
 #include <QImage>
 #include <QPaintDevice>
 #include <QLabel>
@@ -37,52 +38,32 @@
 
 class QTimer;
 
-namespace PlexyDesk
+namespace PlexyDesk {
+
+class FriendsWidget : public DesktopWidget
 {
-
-
-class FriendsWidget:public DesktopWidget
-{
-
     Q_OBJECT
 
-	public:
-	FriendsWidget(const QRectF &rect, QWidget *widget = 0);
-	virtual ~FriendsWidget();
-	virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem * e, QWidget *);
-	virtual void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
-	virtual void paintExtBackFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget *);
-	void setPath(QString);
-	void drawFriendsWidget();
-        /*
-         virtual void mousePressEvent( QMouseEvent *e)
-	{
-		clickPos = e->pos();
-		setCursor(Qt::SizeAllCursor);
-        }
-        virtual void mouseMoveEvent( QMouseEvent *e)
-	{
-	move( e->globalPos() - clickPos );
-	}
-	virtual void mouseReleaseEvent(QMouseEvent *e)
-	{
-		setCursor(Qt::ArrowCursor);
-	}
-*/
-	public slots:
-	
-	private:
+    public:
+        FriendsWidget(const QRectF &rect, QWidget *widget = 0);
+        virtual ~FriendsWidget();
+        virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *e, QWidget *w);
+        virtual void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *e, QWidget *w);
+        virtual void paintExtBackFace(QPainter *painter, const QStyleOptionGraphicsItem *e , QWidget *w);
+        void setPath(const QString& path);
+        void drawFriendsWidget();
 
-	QMap<QString, QGraphicsItem*> items;
-	QMap<QString, QGraphicsItem*> actions;
+    private:
+        int shade;
 
-	int shade;
+        QPixmap  user;
+        QImage _main_bg;
 
-	QPixmap  user;
-	QImage _main_bg;
+        QString prefix;
+        QPoint clickPos;
 
-	QString prefix;
-	QPoint clickPos;
+        QMap<QString, QGraphicsItem*> items;
+        QMap<QString, QGraphicsItem*> actions;
 };
 
 } // namespace PlexyDesk
