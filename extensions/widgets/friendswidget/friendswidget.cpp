@@ -32,7 +32,7 @@ DesktopWidget(rect,widget)
 {
     mShade = 0;
     setPath("/usr/share/plexy/skins/default/friendswidget/");
-    setDockImage(QPixmap(mPrefix + "icon.png"));
+    setDockImage(QPixmap( QString(PLEXPREFIX)+"/theme/skins/default/widget/friendswidget/"+ "icon.png"));
     drawFriendsWidget();
 }
 
