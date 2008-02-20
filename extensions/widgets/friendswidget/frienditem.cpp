@@ -21,6 +21,8 @@
 #include "frienditem.h"
 
 #include <plexy.h>
+#include <desktopwidget.h>
+
 #include <QPainter>
 #include <QPaintEvent>
 #include <QStyleOptionGraphicsItem>
@@ -46,6 +48,11 @@ QRectF FriendItem::boundingRect() const
 
 void FriendItem::paint(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *widget)
 {
+    DesktopWidget *dw = static_cast<DesktopWidget *>(parentItem());
+
+    if (dw->state() == DesktopWidget::DOCK)
+        return;
+
     QRectF r = e->exposedRect;
 
     p->setCompositionMode(QPainter::CompositionMode_Source);

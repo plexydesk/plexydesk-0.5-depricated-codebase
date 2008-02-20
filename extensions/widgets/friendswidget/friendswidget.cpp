@@ -44,8 +44,8 @@ void FriendsWidget::setPath(const QString& path)
 void FriendsWidget::drawFriendsWidget()
 {
     //Friends
-    FriendItem* fitem = new FriendItem(this);
-    fitem->setPos(18,50);
+    FriendItem *fitem = new FriendItem(this);
+    fitem->setPos(18, 50);
     fitem->setName("Siraj");
     //fitem->setIcon
 
@@ -54,7 +54,7 @@ void FriendsWidget::drawFriendsWidget()
     mItems[fitem->name()] = fitem;
 
     fitem = new FriendItem(this);
-    fitem->setPos(18,100);
+    fitem->setPos(18, 100);
     fitem->setName("Lahiru");
     //fitem->setIcon
 
@@ -63,7 +63,7 @@ void FriendsWidget::drawFriendsWidget()
     mItems[fitem->name()] = fitem;
 
     fitem = new FriendItem(this);
-    fitem->setPos(18,150);
+    fitem->setPos(18, 150);
     fitem->setName("Bud");
     //fitem->setIcon
 
@@ -72,7 +72,7 @@ void FriendsWidget::drawFriendsWidget()
     mItems[fitem->name()] = fitem;
 
     fitem = new FriendItem(this);
-    fitem->setPos(18,200);
+    fitem->setPos(18, 200);
     fitem->setName("Mani");
     //fitem->setIcon
 
@@ -81,8 +81,8 @@ void FriendsWidget::drawFriendsWidget()
     mItems[fitem->name()] = fitem;
 
     //Actions
-    FriendItem* action = new FriendItem(this);
-    action->setPos(18,50);
+    FriendItem *action = new FriendItem(this);
+    action->setPos(18, 50);
     action->setName("Chat");
     action->setIcon(QPixmap("/usr/share/plexy/skins/default/friendswidget/chat.png"));
     action->hide();
@@ -92,7 +92,7 @@ void FriendsWidget::drawFriendsWidget()
     mActions[action->name()] = action;
 
     action = new FriendItem(this);
-    action->setPos(18,100);
+    action->setPos(18, 100);
     action->setName("Webcam");
     action->setIcon(QPixmap("/usr/share/plexy/skins/default/friendswidget/webcam.png"));
     action->hide();
@@ -102,7 +102,7 @@ void FriendsWidget::drawFriendsWidget()
     mActions[action->name()] = action;
 
     action = new FriendItem(this);
-    action->setPos(18,150);
+    action->setPos(18, 150);
     action->setName("Blog");
     action->setIcon(QPixmap("/usr/share/plexy/skins/default/friendswidget/blog.png"));
     action->hide();
@@ -112,7 +112,7 @@ void FriendsWidget::drawFriendsWidget()
     mActions[action->name()] = action;
 
     action = new FriendItem(this);
-    action->setPos(18,200);
+    action->setPos(18, 200);
     action->setName("Twitter");
     action->setIcon(QPixmap("/usr/share/plexy/skins/default/friendswidget/twitter.png"));
     action->hide();
@@ -138,20 +138,20 @@ void FriendsWidget::paintExtFace (QPainter *p,
     p->setCompositionMode(QPainter::CompositionMode_Source);
     p->fillRect(rect(), Qt::transparent);
 
-    p->drawImage (QRect(0,0,m_main_bg.width(),m_main_bg.height()),m_main_bg);
+    p->drawImage (QRect(0, 0, m_main_bg.width(), m_main_bg.height()), m_main_bg);
     p->setCompositionMode(QPainter::CompositionMode_SourceOver);
     p->setBackgroundMode(Qt::TransparentMode);
 
     p->save ();
     p->setRenderHint (QPainter::SmoothPixmapTransform);
     if (mShade == 0) {
-        p->drawPixmap (m_main_bg.rect (), QPixmap ().fromImage(m_main_bg));
+        p->drawPixmap (m_main_bg.rect(), QPixmap().fromImage(m_main_bg));
         mShade = 1;
     }
 
-    p->setRenderHints(QPainter::SmoothPixmapTransform |
+/*    p->setRenderHints(QPainter::SmoothPixmapTransform |
                       QPainter::Antialiasing |
-                      QPainter::HighQualityAntialiasing);
+                      QPainter::HighQualityAntialiasing);*/
 
     p->setPen(QColor(255, 255, 255));
     p->setFont(QFont("Bitstream Charter", 10, QFont::Bold));
@@ -175,10 +175,12 @@ void FriendsWidget::paintExtDockFace(QPainter *p,
                                      const QStyleOptionGraphicsItem *e,
                                      QWidget *)
 {
+    qDebug() << "drawing dock" << __PRETTY_FUNCTION__ << __LINE__;
  	p->setRenderHints(QPainter::SmoothPixmapTransform |
                       QPainter::Antialiasing |
                       QPainter::HighQualityAntialiasing);
 
+    p->save();
     QMapIterator<QString, QGraphicsItem*> i(mItems);
     while (i.hasNext()) {
         i.next();
@@ -190,13 +192,15 @@ void FriendsWidget::paintExtDockFace(QPainter *p,
         ix.next();
         (ix.value())->hide();
     }
+    p->restore();
 }
 
 void FriendsWidget::paintExtBackFace(QPainter *p,
                                      const QStyleOptionGraphicsItem *e,
                                      QWidget *)
 {
-    QRectF r  = e->exposedRect;
+    qDebug() << "drawing back face" << __PRETTY_FUNCTION__ << __LINE__;
+    QRectF r = e->exposedRect;
 
     p->setCompositionMode(QPainter::CompositionMode_Source);
     p->fillRect(rect(), Qt::transparent);
