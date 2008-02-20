@@ -1,4 +1,5 @@
 #include "desktopwidget.h"
+#include <config.h>
 
 
 namespace PlexyDesk
@@ -116,14 +117,13 @@ void DesktopWidget::stateChanged(QTimeLine::State state)
         resetMatrix();
 	prepareGeometryChange ();
 	setRect(0,0,d->dock.width(),d->dock.height());
-	QPointF center = d->clickPos;
-	int x_ = center.x() - d->dock.width()/2;
-	int y_ = center.y() -d->dock.height()/2 ;
+	QPointF center = rect().center();//d->clickPos;
+	int x_ = center.x();// - d->dock.width()/2;
+	int y_ = center.y();// -d->dock.height()/2 ;
 	setState(DOCK);
 	d->opacity = 1.0;
 	update();
 	setPos(mapToScene(QPoint(x_,y_))); 
-	qDebug()<<d->clickPos<<endl;
 	setCacheMode(DeviceCoordinateCache);
 	        if(d->proxyWidget)
 	        {
@@ -140,7 +140,7 @@ void DesktopWidget::updateStep(int frame)
     QPointF center = boundingRect().center();
     QTransform mat = QTransform();
     mat.translate(center.x(), center.y());
-    mat.scale(1 - frame / 150.0, 1 - frame / 150.0);
+    mat.scale(1 - frame / 450.0, 1 - frame / 450.0);
     mat.translate(-center.x(), -center.y());
     //mat.shear( frame/1500.0,frame/1500.0);
     setTransform(mat);
@@ -199,9 +199,6 @@ void DesktopWidget::mousePressEvent ( QGraphicsSceneMouseEvent * event )
         qDebug()<<"Not doing any thing "<<endl;
         }
 
-
-
-//	QGraphicsRectItem::mouseReleaseEvent(event);
 }
 
 
