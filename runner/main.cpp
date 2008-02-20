@@ -13,10 +13,8 @@
 #include <X11/Xlib.h>
 #include <QX11Info>
 #include <netwm.h>
-
 #endif
-//#include <fixx11h.h>
-//#include <QtDBus/QtDBus>
+
 #include <QtWebKit/QWebView>
 
 //plexy
@@ -27,54 +25,54 @@
 #include <widgetfactory.h>
 #include <pluginloader.h>
 
+using namespace PlexyDesk;
+
 int main( int argc, char ** argv )
 {
-QApplication app(argc,argv);
+    QApplication app(argc,argv);
 
+    //PlexyDesk::PluginLoader   plug ;//= new PluginLoader::PluginLoader();
+	qDebug() << PlexyDesk::PluginLoader::getInstance()->listPlugins("Desktop");
+	qDebug() << PlexyDesk::PluginLoader::getInstance()->listPlugins("Media");
 
+    QGraphicsScene scene;
 
-//PlexyDesk::PluginLoader   plug ;//= new PluginLoader::PluginLoader();
-	qDebug()<<PlexyDesk::PluginLoader::getInstance()->listPlugins("Desktop");
-	qDebug()<<PlexyDesk::PluginLoader::getInstance()->listPlugins("Media");
+    scene.setSceneRect(QDesktopWidget().availableGeometry());
+    scene.setBackgroundBrush(Qt::NoBrush);
+    scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 
+    DesktopView *view = new DesktopView(&scene);
+    view->resize(QDesktopWidget().availableGeometry().size());
+    //view->setWindowOpacity(0.1);
 
-using namespace PlexyDesk;
-QGraphicsScene scene;
-scene.setSceneRect(QDesktopWidget().availableGeometry());
-scene.setBackgroundBrush(Qt::NoBrush);
-scene.setItemIndexMethod(QGraphicsScene::NoIndex);
-DesktopView * view = new DesktopView(&scene);
-view->resize( QDesktopWidget().availableGeometry().size());
-//view->setWindowOpacity(0.1);
 #ifdef Q_WS_X11
-NETWinInfo info( QX11Info::display(), view->winId(), QX11Info::appRootWindow(), NET::WMDesktop );
-info.setDesktop( NETWinInfo::OnAllDesktops );
-info.setWindowType(NET::Desktop);
+    NETWinInfo info( QX11Info::display(), view->winId(), QX11Info::appRootWindow(), NET::WMDesktop );
+    info.setDesktop( NETWinInfo::OnAllDesktops );
+    info.setWindowType(NET::Desktop);
 #endif
 
-
     WidgetInterface * face ;
-	face = (WidgetInterface*)PluginLoader::getInstance()->instance("plexyfriends");
-   	if(face)
-    scene.addItem(face->backdrop());
-    
-	face = (WidgetInterface*)PluginLoader::getInstance()->instance("plexyclock");
-   	if(face)
-    scene.addItem(face->backdrop());    
-        
-/*
-scene.addItem(bgfact->instance()->backdrop());
-scene.addItem(widgetfact->instance()->backdrop());
-//scene.addItem(currentDrop->backdrop());
-scene.addItem(clock->backdrop());
-//scene.addItem(cpu->backdrop());
-scene.addItem(friends->backdrop());
 
-widgetfact->instance()->backdrop()->setZValue(-100);
-*/
-view->show();
+	face = (WidgetInterface*) PluginLoader::getInstance()->instance("plexyfriends");
+   	if (face)
+        scene.addItem(face->backdrop());
 
+	face = (WidgetInterface*) PluginLoader::getInstance()->instance("plexyclock");
+   	if (face)
+        scene.addItem(face->backdrop());
 
-return app.exec();
+    /*
+    scene.addItem(bgfact->instance()->backdrop());
+    scene.addItem(widgetfact->instance()->backdrop());
+    scene.addItem(currentDrop->backdrop());
+    scene.addItem(clock->backdrop());
+    scene.addItem(cpu->backdrop());
+    scene.addItem(friends->backdrop());
 
+    widgetfact->instance()->backdrop()->setZValue(-100);
+    */
+
+    view->show();
+
+    return app.exec();
 }
