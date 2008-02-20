@@ -30,15 +30,15 @@ namespace PlexyDesk {
 FriendsWidget::FriendsWidget (const QRectF &rect, QWidget *widget):
 DesktopWidget(rect,widget)
 {
-    shade = 0;
+    mShade = 0;
     setPath("/usr/share/plexy/skins/default/friendswidget/");
-    setDockImage(QPixmap(prefix + "icon.png"));
+    setDockImage(QPixmap(mPrefix + "icon.png"));
     drawFriendsWidget();
 }
 
 void FriendsWidget::setPath(const QString& path)
 {
-    prefix = path + "/";
+    mPrefix = path + "/";
 }
 
 void FriendsWidget::drawFriendsWidget()
@@ -51,7 +51,7 @@ void FriendsWidget::drawFriendsWidget()
 
     connect(fitem, SIGNAL (clicked()), this, SLOT (spin()));
 
-    items[fitem->name()] = fitem;
+    mItems[fitem->name()] = fitem;
 
     fitem = new FriendItem(this);
     fitem->setPos(18,100);
@@ -60,7 +60,7 @@ void FriendsWidget::drawFriendsWidget()
 
     connect(fitem, SIGNAL (clicked()), this, SLOT (spin()));
 
-    items[fitem->name()] = fitem;
+    mItems[fitem->name()] = fitem;
 
     fitem = new FriendItem(this);
     fitem->setPos(18,150);
@@ -69,7 +69,7 @@ void FriendsWidget::drawFriendsWidget()
 
     connect(fitem, SIGNAL (clicked()), this, SLOT (spin()));
 
-    items[fitem->name()] = fitem;
+    mItems[fitem->name()] = fitem;
 
     fitem = new FriendItem(this);
     fitem->setPos(18,200);
@@ -78,7 +78,7 @@ void FriendsWidget::drawFriendsWidget()
 
     connect(fitem, SIGNAL (clicked()), this, SLOT (spin()));
 
-    items[fitem->name()] = fitem;
+    mItems[fitem->name()] = fitem;
 
     //Actions
     FriendItem* action = new FriendItem(this);
@@ -89,7 +89,7 @@ void FriendsWidget::drawFriendsWidget()
 
     connect(action, SIGNAL (clicked()), this, SLOT (spin()));
 
-    actions[action->name()] = action;
+    mActions[action->name()] = action;
 
     action = new FriendItem(this);
     action->setPos(18,100);
@@ -99,7 +99,7 @@ void FriendsWidget::drawFriendsWidget()
 
     connect(action, SIGNAL (clicked()), this, SLOT (spin()));
 
-    actions[action->name()] = action;
+    mActions[action->name()] = action;
 
     action = new FriendItem(this);
     action->setPos(18,150);
@@ -109,7 +109,7 @@ void FriendsWidget::drawFriendsWidget()
 
     connect(action, SIGNAL (clicked()), this, SLOT (spin()));
 
-    actions[action->name()] = action;
+    mActions[action->name()] = action;
 
     action = new FriendItem(this);
     action->setPos(18,200);
@@ -119,53 +119,51 @@ void FriendsWidget::drawFriendsWidget()
 
     connect(action, SIGNAL (clicked()), this, SLOT (spin()));
 
-    actions[action->name()] = action;
+    mActions[action->name()] = action;
 
-    _main_bg = QImage (prefix + "default.png");
+    m_main_bg = QImage (mPrefix + "default.png");
 }
 
 FriendsWidget::~FriendsWidget ()
 {
-
 }
 
 void FriendsWidget::paintExtFace (QPainter *p,
                                   const QStyleOptionGraphicsItem *e,
                                   QWidget *)
 {
+    qDebug() << "drawing face" << __PRETTY_FUNCTION__ << __LINE__;
     QRectF r = e->exposedRect;
 
     p->setCompositionMode(QPainter::CompositionMode_Source);
     p->fillRect(rect(), Qt::transparent);
 
-    p->drawImage (QRect(0,0,_main_bg.width(),_main_bg.height()),_main_bg);
+    p->drawImage (QRect(0,0,m_main_bg.width(),m_main_bg.height()),m_main_bg);
     p->setCompositionMode(QPainter::CompositionMode_SourceOver);
     p->setBackgroundMode(Qt::TransparentMode);
+
     p->save ();
     p->setRenderHint (QPainter::SmoothPixmapTransform);
-    if (shade == 0) {
-        p->drawPixmap (_main_bg.rect (), QPixmap ().fromImage(_main_bg));
-        shade = 1;
+    if (mShade == 0) {
+        p->drawPixmap (m_main_bg.rect (), QPixmap ().fromImage(m_main_bg));
+        mShade = 1;
     }
-
-    p->restore ();
-    p->save ();
 
     p->setRenderHints(QPainter::SmoothPixmapTransform |
                       QPainter::Antialiasing |
                       QPainter::HighQualityAntialiasing);
 
-    p->setPen(QColor(255,255,255));
-    p->setFont(QFont("Bitstream Charter",10,QFont::Bold));
-    p->drawText(QRect(60,5,100,64), Qt::AlignCenter ,"Plexy-Friends" );
+    p->setPen(QColor(255, 255, 255));
+    p->setFont(QFont("Bitstream Charter", 10, QFont::Bold));
+    p->drawText(QRect(60, 5, 100, 64), Qt::AlignCenter, "Plexy-Friends");
 
-    QMapIterator<QString, QGraphicsItem*> i(items);
+    QMapIterator<QString, QGraphicsItem*> i(mItems);
     while (i.hasNext()) {
         i.next();
         (i.value())->show();
     }
 
-    QMapIterator<QString, QGraphicsItem*> ix(actions);
+    QMapIterator<QString, QGraphicsItem*> ix(mActions);
     while (ix.hasNext()) {
         ix.next();
         (ix.value())->hide();
@@ -181,13 +179,13 @@ void FriendsWidget::paintExtDockFace(QPainter *p,
                       QPainter::Antialiasing |
                       QPainter::HighQualityAntialiasing);
 
-    QMapIterator<QString, QGraphicsItem*> i(items);
+    QMapIterator<QString, QGraphicsItem*> i(mItems);
     while (i.hasNext()) {
         i.next();
         (i.value())->hide();
     }
 
-    QMapIterator<QString, QGraphicsItem*> ix(actions);
+    QMapIterator<QString, QGraphicsItem*> ix(mActions);
     while (ix.hasNext()) {
         ix.next();
         (ix.value())->hide();
@@ -203,15 +201,15 @@ void FriendsWidget::paintExtBackFace(QPainter *p,
     p->setCompositionMode(QPainter::CompositionMode_Source);
     p->fillRect(rect(), Qt::transparent);
 
-    p->drawImage (QRect(0, 0, _main_bg.width(), _main_bg.height()), _main_bg);
+    p->drawImage (QRect(0, 0, m_main_bg.width(), m_main_bg.height()), m_main_bg);
     p->setCompositionMode(QPainter::CompositionMode_SourceOver);
     p->setBackgroundMode(Qt::TransparentMode);
     p->save ();
     p->setRenderHint (QPainter::SmoothPixmapTransform);
 
-    if (shade == 0) {
-        p->drawPixmap (_main_bg.rect (), QPixmap ().fromImage(_main_bg));
-        shade = 1;
+    if (mShade == 0) {
+        p->drawPixmap (m_main_bg.rect (), QPixmap ().fromImage(m_main_bg));
+        mShade = 1;
     }
 
     p->restore ();
@@ -226,13 +224,13 @@ void FriendsWidget::paintExtBackFace(QPainter *p,
     p->setFont(QFont("Bitstream Charter", 10, QFont::Bold));
     p->drawText(QRect(60, 5, 100, 64), Qt::AlignCenter, "Plexy-Friends" );
 
-    QMapIterator<QString, QGraphicsItem*> i(items);
+    QMapIterator<QString, QGraphicsItem*> i(mItems);
     while (i.hasNext()) {
         i.next();
         (i.value())->hide();
     }
 
-    QMapIterator<QString, QGraphicsItem*> ix(actions);
+    QMapIterator<QString, QGraphicsItem*> ix(mActions);
     while (ix.hasNext()) {
         ix.next();
         (ix.value())->show();

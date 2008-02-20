@@ -54,16 +54,16 @@ class FriendsWidget : public DesktopWidget
         void drawFriendsWidget();
 
     private:
-        int shade;
+        int mShade;
 
-        QPixmap  user;
-        QImage _main_bg;
+        QPixmap mUser;
+        QImage m_main_bg;
 
-        QString prefix;
-        QPoint clickPos;
+        QString mPrefix;
+        QPoint mClickPos;
 
-        QMap<QString, QGraphicsItem*> items;
-        QMap<QString, QGraphicsItem*> actions;
+        QMap<QString, QGraphicsItem*> mItems;
+        QMap<QString, QGraphicsItem*> mActions;
 };
 
 } // namespace PlexyDesk
