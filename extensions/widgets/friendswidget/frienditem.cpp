@@ -22,7 +22,7 @@
 
 #include <plexy.h>
 #include <desktopwidget.h>
-
+#include <config.h>
 #include <QPainter>
 #include <QPaintEvent>
 #include <QStyleOptionGraphicsItem>
@@ -33,8 +33,8 @@ FriendItem::FriendItem(QGraphicsItem * parent)
 {
 	mShade = 0;
 	setParentItem(parent);
-	mPanel = QImage("/usr/share/plexy/skins/default/friendswidget/panel.png");
-	mIcon = QPixmap("/usr/share/plexy/skins/default/friendswidget/face.png");
+	mPanel = QImage(QString(PLEXYPREFIX)+"/theme/skins/default/widget/friendswidget/panel.png");
+	mIcon = QPixmap(QString(PLEXYPREFIX)+"/theme/skins/default/widget/friendswidget/face.png");
 }
 
 FriendItem::~FriendItem()
