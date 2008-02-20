@@ -19,83 +19,83 @@
  ***************************************************************************/
 
 #include "frienditem.h"
+
+#include <plexy.h>
 #include <QPainter>
 #include <QPaintEvent>
 #include <QStyleOptionGraphicsItem>
-#include <plexy.h>
 
-namespace PlexyDesk
-{
+namespace PlexyDesk {
 
 FriendItem::FriendItem(QGraphicsItem * parent)
 {
-	shade=0;
-	setParentItem (parent);
-	panel = QImage ("/usr/share/plexy/skins/default/friendswidget/panel.png");
-	icon = QPixmap ("/usr/share/plexy/skins/default/friendswidget/face.png");
+	mShade = 0;
+	setParentItem(parent);
+	mPanel = QImage("/usr/share/plexy/skins/default/friendswidget/panel.png");
+	mIcon = QPixmap("/usr/share/plexy/skins/default/friendswidget/face.png");
 }
 
 FriendItem::~FriendItem()
 {
-
 }
 
 QRectF FriendItem::boundingRect() const
 {
-	return QRectF(0,0,183,53);
+	return QRectF(0, 0, 183, 53);
 }
 
 void FriendItem::paint(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *widget)
 {
-  QRectF r  = e->exposedRect;
+    QRectF r = e->exposedRect;
 
-  p->setCompositionMode(QPainter::CompositionMode_Source);
-  p->fillRect(QRectF(0,0,183,53), Qt::transparent);
+    p->setCompositionMode(QPainter::CompositionMode_Source);
+    p->fillRect(QRectF(0, 0, 183, 53), Qt::transparent);
 
-  p->drawImage (QRect(0,0,panel.width(),panel.height()),panel);
-  p->setCompositionMode(QPainter::CompositionMode_SourceOver);
-  p->setBackgroundMode(Qt::TransparentMode);
-  p->save ();
-  p->setRenderHint (QPainter::SmoothPixmapTransform);
-  if (shade == 0)
-    {
-      p->drawPixmap (panel.rect (), QPixmap ().fromImage(panel));
-      shade = 1;
+    p->drawImage(QRect(0, 0, mPanel.width(), mPanel.height()), mPanel);
+    p->setCompositionMode(QPainter::CompositionMode_SourceOver);
+    p->setBackgroundMode(Qt::TransparentMode);
+
+    p->save();
+    p->setRenderHint(QPainter::SmoothPixmapTransform);
+    if (mShade == 0) {
+        p->drawPixmap(mPanel.rect(), QPixmap().fromImage(mPanel));
+        mShade = 1;
     }
-  p->restore ();
+    p->restore();
 
-  p->save ();
+    p->save();
+    p->drawPixmap (QRect(8, 10, mIcon.width(), mIcon.height()), QPixmap(mIcon));
+    p->restore();
 
-  p->drawPixmap (QRect(8,10,icon.width (), icon.height ()), QPixmap (icon));
+    p->setRenderHints(QPainter::SmoothPixmapTransform |
+                      QPainter::Antialiasing |
+                      QPainter::HighQualityAntialiasing);
 
-  p->restore ();
-
-  p->setRenderHints(QPainter::SmoothPixmapTransform |QPainter::Antialiasing |QPainter::HighQualityAntialiasing);
-
-  p->setPen(QColor(255,255,255));
-  p->setFont(QFont("Bitstream Charter",11));
-  p->drawText(QRect(45,20,150,20), Qt::AlignLeft ,name );
+    p->setPen(QColor(255, 255, 255));
+    p->setFont(QFont("Bitstream Charter", 11));
+    p->drawText(QRect(45, 20, 150, 20), Qt::AlignLeft, mName);
 }
 
-void FriendItem::mousePressEvent( QGraphicsSceneMouseEvent * event )
+void FriendItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
   emit clicked();
 }
 
-void FriendItem::setName(QString n)
+void FriendItem::setName(const QString& name)
 {
-	name=n;
+	mName = name;
 }
 
 void FriendItem::setIcon(QPixmap m)
 {
-	icon=m;
+	mIcon = m;
 }
 
-QString FriendItem::getName()
+QString FriendItem::name() const
 {
-	return name;
+	return mName;
 }
 
 }// namespace PlexyDesk
+
 #include "frienditem.moc"

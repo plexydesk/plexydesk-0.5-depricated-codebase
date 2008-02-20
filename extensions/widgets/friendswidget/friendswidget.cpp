@@ -51,7 +51,7 @@ void FriendsWidget::drawFriendsWidget()
 
     connect(fitem, SIGNAL (clicked()), this, SLOT (spin()));
 
-    items[fitem->getName()] = fitem;
+    items[fitem->name()] = fitem;
 
     fitem = new FriendItem(this);
     fitem->setPos(18,100);
@@ -60,7 +60,7 @@ void FriendsWidget::drawFriendsWidget()
 
     connect(fitem, SIGNAL (clicked()), this, SLOT (spin()));
 
-    items[fitem->getName()] = fitem;
+    items[fitem->name()] = fitem;
 
     fitem = new FriendItem(this);
     fitem->setPos(18,150);
@@ -69,7 +69,7 @@ void FriendsWidget::drawFriendsWidget()
 
     connect(fitem, SIGNAL (clicked()), this, SLOT (spin()));
 
-    items[fitem->getName()] = fitem;
+    items[fitem->name()] = fitem;
 
     fitem = new FriendItem(this);
     fitem->setPos(18,200);
@@ -78,7 +78,7 @@ void FriendsWidget::drawFriendsWidget()
 
     connect(fitem, SIGNAL (clicked()), this, SLOT (spin()));
 
-    items[fitem->getName()] = fitem;
+    items[fitem->name()] = fitem;
 
     //Actions
     FriendItem* action = new FriendItem(this);
@@ -89,7 +89,7 @@ void FriendsWidget::drawFriendsWidget()
 
     connect(action, SIGNAL (clicked()), this, SLOT (spin()));
 
-    actions[action->getName()] = action;
+    actions[action->name()] = action;
 
     action = new FriendItem(this);
     action->setPos(18,100);
@@ -99,7 +99,7 @@ void FriendsWidget::drawFriendsWidget()
 
     connect(action, SIGNAL (clicked()), this, SLOT (spin()));
 
-    actions[action->getName()] = action;
+    actions[action->name()] = action;
 
     action = new FriendItem(this);
     action->setPos(18,150);
@@ -109,7 +109,7 @@ void FriendsWidget::drawFriendsWidget()
 
     connect(action, SIGNAL (clicked()), this, SLOT (spin()));
 
-    actions[action->getName()] = action;
+    actions[action->name()] = action;
 
     action = new FriendItem(this);
     action->setPos(18,200);
@@ -119,7 +119,7 @@ void FriendsWidget::drawFriendsWidget()
 
     connect(action, SIGNAL (clicked()), this, SLOT (spin()));
 
-    actions[action->getName()] = action;
+    actions[action->name()] = action;
 
     _main_bg = QImage (prefix + "default.png");
 }
