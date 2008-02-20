@@ -33,8 +33,8 @@ FriendItem::FriendItem(QGraphicsItem * parent)
 {
 	mShade = 0;
 	setParentItem(parent);
-	mPanel = QImage(QString(PLEXPREFIX)+"/theme/skins/default/widget/friendswidget/panel.png");
-	mIcon = QPixmap(QString(PLEXPREFIX)+"/theme/skins/default/widget/friendswidget/face.png");
+	mPanel = QImage(QString(PLEXPREFIX) + "/theme/skins/default/widget/friendswidget/panel.png");
+	mIcon = QPixmap(QString(PLEXPREFIX) + "/theme/skins/default/widget/friendswidget/face.png");
 }
 
 FriendItem::~FriendItem()

@@ -27,12 +27,12 @@
 
 namespace PlexyDesk {
 
-FriendsWidget::FriendsWidget (const QRectF &rect, QWidget *widget):
-DesktopWidget(rect,widget)
+FriendsWidget::FriendsWidget (const QRectF &rect, QWidget *widget)
+    : DesktopWidget(rect,widget)
 {
     mShade = 0;
-    setPath("/usr/share/plexy/skins/default/friendswidget/");
-    setDockImage(QPixmap( QString(PLEXPREFIX)+"/theme/skins/default/widget/friendswidget/"+ "icon.png"));
+    setPath(QString(PLEXPREFIX) + "/theme/skins/default/widget/friendswidget");
+    setDockImage(QPixmap(mPrefix + "icon.png"));
     drawFriendsWidget();
 }
 
@@ -84,7 +84,7 @@ void FriendsWidget::drawFriendsWidget()
     FriendItem *action = new FriendItem(this);
     action->setPos(18, 50);
     action->setName("Chat");
-    action->setIcon(QPixmap("/usr/share/plexy/skins/default/friendswidget/chat.png"));
+    action->setIcon(QPixmap(mPrefix + "chat.png"));
     action->hide();
 
     connect(action, SIGNAL (clicked()), this, SLOT (spin()));
@@ -94,7 +94,7 @@ void FriendsWidget::drawFriendsWidget()
     action = new FriendItem(this);
     action->setPos(18, 100);
     action->setName("Webcam");
-    action->setIcon(QPixmap("/usr/share/plexy/skins/default/friendswidget/webcam.png"));
+    action->setIcon(QPixmap(mPrefix + "webcam.png"));
     action->hide();
 
     connect(action, SIGNAL (clicked()), this, SLOT (spin()));
@@ -104,7 +104,7 @@ void FriendsWidget::drawFriendsWidget()
     action = new FriendItem(this);
     action->setPos(18, 150);
     action->setName("Blog");
-    action->setIcon(QPixmap("/usr/share/plexy/skins/default/friendswidget/blog.png"));
+    action->setIcon(QPixmap(mPrefix + "blog.png"));
     action->hide();
 
     connect(action, SIGNAL (clicked()), this, SLOT (spin()));
@@ -114,7 +114,7 @@ void FriendsWidget::drawFriendsWidget()
     action = new FriendItem(this);
     action->setPos(18, 200);
     action->setName("Twitter");
-    action->setIcon(QPixmap("/usr/share/plexy/skins/default/friendswidget/twitter.png"));
+    action->setIcon(QPixmap(mPrefix + "twitter.png"));
     action->hide();
 
     connect(action, SIGNAL (clicked()), this, SLOT (spin()));
@@ -216,8 +216,6 @@ void FriendsWidget::paintExtBackFace(QPainter *p,
         mShade = 1;
     }
 
-    p->restore ();
-    p->save ();
     p->restore ();
 
     p->setRenderHints(QPainter::SmoothPixmapTransform |
