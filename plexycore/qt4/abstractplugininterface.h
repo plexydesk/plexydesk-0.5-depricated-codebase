@@ -8,7 +8,7 @@
 
 namespace PlexyDesk
 {
-    class AbstractPluginInterface 
+    class AbstractPluginInterface:public QObject 
     {
         public:
            virtual void init() = 0;

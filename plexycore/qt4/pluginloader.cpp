@@ -87,7 +87,7 @@ PluginLoader::PluginLoader ():d (new Private)
 
   void PluginLoader::loadDesktop (const QString & path)
   {
-    qDebug () << path << endl;
+    //qDebug () << path << endl;
 
     QSettings desktopFile (path, QSettings::IniFormat, this);
 

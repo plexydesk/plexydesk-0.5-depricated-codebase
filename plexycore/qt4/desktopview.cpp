@@ -36,6 +36,13 @@ DesktopView::~DesktopView()
     delete d;
 }
 
+void DesktopView::getdata(QVariant& data)
+{
+    emit newData(data);
+    scene()->update();
+    invalidateScene(); 
+}
+
 void DesktopView::addExtension(const QString& name)
 {
         d->widgets = (WidgetInterface*) PluginLoader::getInstance()->instance(name);
@@ -46,8 +53,11 @@ void DesktopView::addExtension(const QString& name)
 void DesktopView::addData(const QString& name)
 {
         d->data = (DataInterface*) PluginLoader::getInstance()->instance(name);
-       // if (d->widgets)
-      //  scene()->addItem(d->widgets->item());
+
+         if (d->data) {
+             connect(d->data,SIGNAL(data(QVariant&)),this, SLOT(getdata(QVariant&)));
+             connect(this,SIGNAL(newData(QVariant&)),d->bIface,SLOT(data(QVariant&)));
+         }
 }
 
 
@@ -56,6 +66,7 @@ void DesktopView::drawBackground ( QPainter * painter, const QRectF & rect )
     painter->save();
     painter->setClipRect(rect);
     if(d->bIface){
+        qDebug()<<"..................>"<<endl;
   	d->bIface->render(painter,QRectF(rect.x(),rect.y(),rect.width(),rect.height()));
     }
 

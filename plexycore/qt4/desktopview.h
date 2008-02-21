@@ -26,6 +26,12 @@ class VISIBLE_SYM  DesktopView : public QGraphicsView
 
         void addDesktopItem(QGraphicsItem * item);
 
+        //FOR TESTING ONLLY
+        public slots:
+            void getdata(QVariant&);
+signals:
+         void newData(QVariant&);
+
     protected:
         void drawBackground(QPainter * painter, const QRectF& rect);
 	//void paintEvent(QPaintEvent * event);
