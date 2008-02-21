@@ -21,33 +21,30 @@
    
    void FlickerData::loadImages(int id, bool stat)
    {
-       if (requestID == id){
-           if (http->bytesAvailable() > 0) {
-               QByteArray ba = http->readAll();
-               const char *data = ba.constData();
-               const int len = 24;
-               int i = 0;
-               while (i < ba.size()-5) {
-                    if (data[i] == '.') {
-                      if (data[i+1] == 'j' && data[i+2] == 'p'
+qDebug()<<id<<endl;
+     if (id == requestID) {
+        if (http->bytesAvailable() > 0) {
+            QByteArray ba = http->readAll();
+            const char *data = ba.constData();
+            const int len = 24; // length of "http://static.flickr.com"
+            int i = 0;
+            while (i < ba.size()-5) {
+                if (data[i] == '.') {
+                    if (data[i+1] == 'j' && data[i+2] == 'p'
                         && data[i+3] == 'g' && data[i+4] == '\"') {
-                             int j = i;
-                              while (j > 0 && data[j] != '\"') --j;
-                               QByteArray addr(ba.mid(j+1, i-j+3));
-                               images << QString(addr.mid(len, addr.size()-len).constData());
-                            qDebug()<<images<<endl;
-                      }
+                        int j = i;
+                        while (j > 0 && data[j] != '\"') --j;
+                        QByteArray addr(ba.mid(j+1, i-j+3));
+                        images << QString(addr.mid(len, addr.size()-len).constData());
                     }
-               }
-           }
-       }
-
-	if (dataID == id){
-        	
+                }
+                ++i;
+            }
+         }
 	}
-
-    
-   }
+   }   
+        
+        
    QGraphicsItem * FlickerData::item()
    {
    }
