@@ -13,7 +13,7 @@
          connect(http, SIGNAL(requestFinished(int, bool)),
                          SLOT(loadImages(int, bool)));
 	 http->setHost("www.flickr.com");    
-         requestID= http->get(QString("/search/?q=%1").arg("allah"));
+         requestID= http->get(QString("/search/?w=all&q=%1&m=text").arg("fresh morning"));
     }
     FlickerData::~FlickerData()
     {
@@ -34,16 +34,25 @@
                         int j = i;
                         while (j > 0 && data[j] != '\"') --j;
                         QByteArray addr(ba.mid(j+1, i-j+3));
-                        images << QString(addr.mid(len,
-                                    addr.size()-len).constData());
+                        char farmID = addr.at(11);
+                        QByteArray serverID (addr.mid(30,4));
+                        addr = addr.replace(QByteArray("_m"),QByteArray("_o"));
+                        // qDebug()<<addr<<farmID<<serverID<<endl;
+                        // images << QString(addr.mid(len,
+                        //addr.size()-len).constData());
+                        images<< QString(addr);
                     }
                 }
                 ++i;
             }
          }
               if ( images.size() > 0) {
-                   http->setHost("farm3.static.flickr.com");
-                   dataID = http->get(images.at(0));
+                  QString hostURL = images.at(0);
+                  QString host  (hostURL.mid(7,23));
+                  QString fileName (hostURL.mid(24+6,hostURL.length()+1));
+                  qDebug()<<"Host name =="<<host<<fileName<<endl;
+                  http->setHost(host);
+                  dataID = http->get(fileName);
               }
 
       }  else if (id == dataID) {
