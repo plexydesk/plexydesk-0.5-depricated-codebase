@@ -50,9 +50,9 @@ int main( int argc, char ** argv )
     info.setWindowType(NET::Desktop);
 #endif
 
-    //view->addExtension("plexyfriends");
-   // view->addExtension("plexyclock");
-//    view->addData("flickerengine");
+    view->addExtension("plexyfriends");
+    view->addExtension("plexyclock");
+    view->addData("flickerengine");
     view->show();
 
     return app.exec();

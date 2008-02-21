@@ -4,7 +4,7 @@
 #include<QtGui>
 
 
-Cpu::Cpu(QObject * object):QObject(object)
+Cpu::Cpu(QObject * object)
 {
 
 }

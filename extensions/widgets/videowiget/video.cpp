@@ -3,7 +3,7 @@
 #include <QtWebKit>
 
 
-VideoWidget::VideoWidget(QObject * object):QObject(object)
+VideoWidget::VideoWidget(QObject * object)
 {
 
 }

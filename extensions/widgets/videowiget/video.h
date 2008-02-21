@@ -6,7 +6,7 @@
 #include <widgetinterface.h>
 
 
-class VISIBLE_SYM VideoWidget : public QObject , public PlexyDesk::WidgetInterface
+class VISIBLE_SYM VideoWidget :public PlexyDesk::WidgetInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::WidgetInterface)
