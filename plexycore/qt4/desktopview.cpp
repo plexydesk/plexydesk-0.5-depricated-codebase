@@ -28,8 +28,7 @@ DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsV
        d->bIface  = 0;
        d->widgets = 0;
        d->data = 0;
-       QString defaults = PluginLoader::getInstance()->listPlugins("Desktop").first();
-       d->bIface = (BackdropInterface*)PluginLoader::getInstance()->instance(defaults);
+       d->bIface = (BackdropInterface*)PluginLoader::getInstance()->instance("classicbackdrop");
 }
 
 DesktopView::~DesktopView()
@@ -58,9 +57,8 @@ void DesktopView::drawBackground ( QPainter * painter, const QRectF & rect )
     painter->setClipRect(rect);
     if(d->bIface){
   	d->bIface->render(painter,QRectF(rect.x(),rect.y(),rect.width(),rect.height()));
-    }else {
-    qDebug()<<"Bad"<<endl;
-   }
+    }
+
     painter->restore();
 }
 

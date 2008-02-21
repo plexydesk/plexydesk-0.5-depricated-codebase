@@ -14,6 +14,7 @@ namespace PlexyDesk
             void init(){}
             BackdropInterface(){}
             ~BackdropInterface(){}
+            virtual void render(QPainter *p,QRectF r) = 0;
     };
 } // namespace PlexyDesk
 

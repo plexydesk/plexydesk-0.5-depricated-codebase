@@ -50,7 +50,7 @@ void ClassicBackdrop::render(QPainter *p,QRectF r)
    // QRect er = p->matrix().inverted().mapRect(QRect(r.x(),r.y(),r.width(),r.height())).adjusted(-1, -1, 1, 1);
     p->fillRect(r.x(),r.y(),r.width(),r.height(),paint);
 //	p->drawImage(r,img);
-	//p->drawPixmap(r.x(),r.y(),r.width(),r.height(),bg);
+//	p->drawPixmap(r.x(),r.y(),r.width(),r.height(),bg);
 }
 
 Q_EXPORT_PLUGIN2(ClassicBackdrop,ClassicBackdrop)
