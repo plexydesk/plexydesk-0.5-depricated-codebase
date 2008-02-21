@@ -22,6 +22,8 @@ class VISIBLE_SYM  DesktopView : public QGraphicsView
 
         void addExtension(const QString& name);
 
+        void addData(const QString& name);
+
         void addDesktopItem(QGraphicsItem * item);
 
     protected:

@@ -1,6 +1,7 @@
 #include "desktopview.h"
 #include <backdropfactory.h>
 #include <abstractplugininterface.h>
+#include <datainterface.h>
 #include <QGLWidget>
 
 
@@ -14,6 +15,7 @@ class  DesktopView::Private
     ExtensionProducer<BackdropInterface> fact;
     BackdropInterface * bIface ;
     WidgetInterface * widgets;       
+    DataInterface * data;       
     BackdropFactory * bgfact;
 };
 
@@ -25,6 +27,7 @@ DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsV
        setAlignment(Qt::AlignLeft | Qt::AlignTop);
        d->bIface  = 0;
        d->widgets = 0;
+       d->data = 0;
        QString defaults = PluginLoader::getInstance()->listPlugins("Desktop").first();
        d->bIface = (BackdropInterface*)PluginLoader::getInstance()->instance(defaults);
 }
@@ -41,13 +44,23 @@ void DesktopView::addExtension(const QString& name)
         scene()->addItem(d->widgets->item());
 }
 
+void DesktopView::addData(const QString& name)
+{
+        d->data = (DataInterface*) PluginLoader::getInstance()->instance(name);
+       // if (d->widgets)
+      //  scene()->addItem(d->widgets->item());
+}
+
+
 void DesktopView::drawBackground ( QPainter * painter, const QRectF & rect )
 {
     painter->save();
     painter->setClipRect(rect);
     if(d->bIface){
   	d->bIface->render(painter,QRectF(rect.x(),rect.y(),rect.width(),rect.height()));
-    }
+    }else {
+    qDebug()<<"Bad"<<endl;
+   }
     painter->restore();
 }
 

@@ -1,0 +1,6 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Flicker Data Engine
+Type=Engine
+Comment=Engine to Load flicker Images
+X-PLEXYDESK-Library=flickerengine

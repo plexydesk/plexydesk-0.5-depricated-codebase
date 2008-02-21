@@ -31,9 +31,8 @@ int main( int argc, char ** argv )
 {
     QApplication app(argc,argv);
 
-    //PlexyDesk::PluginLoader   plug ;//= new PluginLoader::PluginLoader();
-	qDebug() << PlexyDesk::PluginLoader::getInstance()->listPlugins("Desktop");
-	qDebug() << PlexyDesk::PluginLoader::getInstance()->listPlugins("Media");
+    qDebug() << PlexyDesk::PluginLoader::getInstance()->listPlugins("Desktop");
+    qDebug() << PlexyDesk::PluginLoader::getInstance()->listPlugins("Media");
 
     QGraphicsScene scene;
 
@@ -46,14 +45,14 @@ int main( int argc, char ** argv )
     //view->setWindowOpacity(0.1);
 
 #ifdef Q_WS_X11
-    NETWinInfo info( QX11Info::display(), view->winId(), QX11Info::appRootWindow(), NET::WMDesktop );
-    info.setDesktop( NETWinInfo::OnAllDesktops );
+    NETWinInfo info(QX11Info::display(), view->winId(), QX11Info::appRootWindow(), NET::WMDesktop );
+    info.setDesktop(NETWinInfo::OnAllDesktops);
     info.setWindowType(NET::Desktop);
 #endif
 
-
     view->addExtension("plexyfriends");
     view->addExtension("plexyclock");
+//    view->addData("flickerengine");
     view->show();
 
     return app.exec();
