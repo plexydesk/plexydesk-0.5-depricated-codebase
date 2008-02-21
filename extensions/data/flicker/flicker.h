@@ -7,7 +7,7 @@
 #include <abstractplugininterface.h>
 #include <QtNetwork>
 
-class VISIBLE_SYM FlickerData : public QObject , public PlexyDesk::AbstractPluginInterface 
+class VISIBLE_SYM FlickerData :public PlexyDesk::AbstractPluginInterface 
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)

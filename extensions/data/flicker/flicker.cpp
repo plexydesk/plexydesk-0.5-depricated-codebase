@@ -3,7 +3,7 @@
 
 
     
-   FlickerData::FlickerData(QObject * object):QObject(object)
+   FlickerData::FlickerData(QObject * object)
     {
 	init();
     }
@@ -21,12 +21,9 @@
    
    void FlickerData::loadImages(int id, bool stat)
    {
-qDebug()<<id<<endl;
      if (id == requestID) {
         if (http->bytesAvailable() > 0) {
-            qDebug()<<"Available Buytes:"<<http->bytesAvailable()<<endl;
             QByteArray ba = http->readAll();
-           // qDebug()<<ba<<endl;
             const char *data = ba.constData();
             const int len = 30;
             int i = 0;
@@ -37,16 +34,15 @@ qDebug()<<id<<endl;
                         int j = i;
                         while (j > 0 && data[j] != '\"') --j;
                         QByteArray addr(ba.mid(j+1, i-j+3));
-                      //  qDebug()<<addr<<endl;
-                        images << QString(addr.mid(len, addr.size()-len).constData());
-                        qDebug()<<images <<endl;
+                        images << QString(addr.mid(len,
+                                    addr.size()-len).constData());
                     }
                 }
                 ++i;
             }
          }
               if ( images.size() > 0) {
-                   http->setHost("static.flickr.com");
+                   http->setHost("farm3.static.flickr.com");
                    dataID = http->get(images.at(0));
               }
 
@@ -55,11 +51,14 @@ qDebug()<<id<<endl;
               QByteArray img = http->readAll();
               newWall = QImage(QImage::fromData(img));
               qDebug()<<newWall.size()<<img<<endl;
+              if (!newWall.isNull()) {
+                  QVariant image(img);
+                  emit data(image);
+              }
           }
       }
-   }   
-        
-        
+   }
+
    QGraphicsItem * FlickerData::item()
    {
    }
