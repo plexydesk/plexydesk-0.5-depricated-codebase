@@ -45,8 +45,8 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}
     ${CMAKE_BINARY_DIR}/extensions/widgets/clock
     ${CMAKE_BINARY_DIR}/plexylib
-    ${CMAKE_BINARY_DIR}/widgets/qt4
-    ${CMAKE_BINARY_DIR}/widgets/gtk
+    ${CMAKE_BINARY_DIR}/plexycore/qt4
+    ${CMAKE_BINARY_DIR}/plexycore/gtk
     ${CMAKE_BINARY_DIR}/extensions/backdrop/classicdrop
     ${CMAKE_BINARY_DIR}/extensions/widgets/demowidget
     ${CMAKE_BINARY_DIR}/extensions/widgets/videowiget
@@ -55,7 +55,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/extensions/data/flicker
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_SOURCE_DIR}/plexylib
-    ${CMAKE_SOURCE_DIR}/widgets/qt4
+    ${CMAKE_SOURCE_DIR}/plexycore/qt4
     ${CMAKE_SOURCE_DIR}/widgets/gtk
     ${QT_INCLUDE_DIR}
 )
@@ -63,7 +63,7 @@ INCLUDE_DIRECTORIES(
 
 
 add_subdirectory(plexylib)
-add_subdirectory(widgets/qt4/)
+add_subdirectory(plexycore/qt4/)
 add_subdirectory(extensions/backdrop/classicdrop)
 add_subdirectory(extensions/widgets/demowidget)
 add_subdirectory(runner)
