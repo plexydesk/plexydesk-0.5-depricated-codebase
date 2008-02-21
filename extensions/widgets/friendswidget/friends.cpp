@@ -25,7 +25,6 @@
 #include <QtGui>
 
 Friends::Friends(QObject * object)
-  : QObject(object)
 {
 }
 

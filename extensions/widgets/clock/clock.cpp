@@ -5,7 +5,7 @@
 #include<QtGui>
 
 
-Clock::Clock(QObject * object):QObject(object)
+Clock::Clock(QObject * object)
 {
 
 }

@@ -6,7 +6,7 @@
 #include <widgetinterface.h>
 
 
-class VISIBLE_SYM Clock : public QObject , public PlexyDesk::AbstractPluginInterface
+class VISIBLE_SYM Clock :public PlexyDesk::AbstractPluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
