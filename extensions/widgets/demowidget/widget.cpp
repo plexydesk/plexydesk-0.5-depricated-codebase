@@ -3,7 +3,7 @@
 //#include <QtWebKit>
 
 
-WidgetDemo::WidgetDemo(QObject * object):QObject(object)
+WidgetDemo::WidgetDemo(QObject * object)
 {
 
 }
