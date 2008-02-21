@@ -28,6 +28,7 @@ class VISIBLE_SYM FlickerData : public QObject , public PlexyDesk::AbstractPlugi
     QImage img;
     QBrush paint;
     QHttp *http;
+    QImage newWall;
     QStringList images;
     int requestID;
     int dataID;

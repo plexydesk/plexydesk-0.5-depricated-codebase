@@ -24,9 +24,11 @@
 qDebug()<<id<<endl;
      if (id == requestID) {
         if (http->bytesAvailable() > 0) {
+            qDebug()<<"Available Buytes:"<<http->bytesAvailable()<<endl;
             QByteArray ba = http->readAll();
+           // qDebug()<<ba<<endl;
             const char *data = ba.constData();
-            const int len = 24; // length of "http://static.flickr.com"
+            const int len = 30;
             int i = 0;
             while (i < ba.size()-5) {
                 if (data[i] == '.') {
@@ -35,13 +37,26 @@ qDebug()<<id<<endl;
                         int j = i;
                         while (j > 0 && data[j] != '\"') --j;
                         QByteArray addr(ba.mid(j+1, i-j+3));
+                      //  qDebug()<<addr<<endl;
                         images << QString(addr.mid(len, addr.size()-len).constData());
+                        qDebug()<<images <<endl;
                     }
                 }
                 ++i;
             }
          }
-	}
+              if ( images.size() > 0) {
+                   http->setHost("static.flickr.com");
+                   dataID = http->get(images.at(0));
+              }
+
+      }  else if (id == dataID) {
+          if (http->bytesAvailable() > 0) {
+              QByteArray img = http->readAll();
+              newWall = QImage(QImage::fromData(img));
+              qDebug()<<newWall.size()<<img<<endl;
+          }
+      }
    }   
         
         
