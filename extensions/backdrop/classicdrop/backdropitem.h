@@ -2,6 +2,8 @@
 #define PLEXY_BACK_DROP_ITEM_CLASSIC_H
 
 #include <QtCore>
+#include <datainterface.h>
+#include <pluginloader.h>
 #include <QtGui>
 #include <plexy.h>
 
@@ -18,6 +20,10 @@ namespace PlexyDesk
         virtual ~BackdropItem();
         void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
         QRectF boundingRect() const;
+        public slots:
+            void data(QVariant&);
+        signals:
+            void newWall(QVariant&);
         private:
         QPixmap bg;
 

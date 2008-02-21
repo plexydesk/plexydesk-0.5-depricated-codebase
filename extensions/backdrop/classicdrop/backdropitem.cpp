@@ -15,6 +15,13 @@ namespace PlexyDesk
         proxyWidget->setWidget(w);
         proxyWidget->setGeometry(boundingRect().adjusted(25, 25, -25, -25));
         proxyWidget->setCacheMode(QGraphicsItem::DeviceCoordinateCache);
+ 
+        PlexyDesk::DataInterface * data = (PlexyDesk::DataInterface*)
+        PlexyDesk::PluginLoader::getInstance()->instance("flickerengine");
+         if (data) {
+             connect(data,SIGNAL(data(QVariant&)),this, SLOT(data(QVariant&)));
+     }
+    
         for (int i = 0; i < 10 ; i++) {
             w->addSlide(QPixmap("/usr/share/plexy/skins/default/default.png"));
         }
@@ -36,6 +43,11 @@ namespace PlexyDesk
     QRectF BackdropItem::boundingRect() const
     {
         return QRectF(0,0,QDesktopWidget().screenGeometry().width() ,240); 
+    }
+
+    void BackdropItem::data(QVariant& data)
+    {
+        qDebug()<<data<<endl;
     }
 
 } // namespace PlexyDesk
