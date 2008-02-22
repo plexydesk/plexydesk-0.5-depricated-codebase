@@ -12,12 +12,13 @@ namespace PlexyDesk
     {
         public:
 	void init() {}
-            DataInterface(){}
-            ~DataInterface(){}
-           virtual  QGraphicsItem * item() = 0;
+        DataInterface(){}
+        ~DataInterface(){}
+        virtual  QGraphicsItem * item() = 0;
         public slots:
+
         signals:
-           virtual void data(QVariant&)=0;
+        virtual void data(QVariant&)=0;
     };
 } // namespace PlexyDesk
 
