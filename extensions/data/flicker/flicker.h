@@ -20,6 +20,7 @@ class VISIBLE_SYM FlickerData :public PlexyDesk::AbstractPluginInterface
     virtual void render(QPainter *p,QRectF r);// {};
     public slots:
           void loadImages(int, bool);
+          void nextImage();
     signals:
          void data(QVariant&);
 
@@ -32,8 +33,9 @@ class VISIBLE_SYM FlickerData :public PlexyDesk::AbstractPluginInterface
     QStringList images;
     int requestID;
     int dataID;
-    int width;
-    int height;
+    int slideCount;
+    int currentSlide;
+    QTimer * imageTimer;
 };
 
 

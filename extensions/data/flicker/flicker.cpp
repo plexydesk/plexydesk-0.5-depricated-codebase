@@ -5,7 +5,11 @@
     
    FlickerData::FlickerData(QObject * object)
     {
+        slideCount = 0;
+        currentSlide = 0;
 	init();
+        imageTimer = new QTimer(this);
+        connect(imageTimer,SIGNAL(timeout()),this,SLOT(nextImage()));
     }
     void  FlickerData::init()
     {
@@ -18,7 +22,21 @@
     FlickerData::~FlickerData()
     {
     }
-   
+   void FlickerData::nextImage()
+   {
+       qDebug()<<"Counting "<<endl;
+       QString hostURL = images.at(currentSlide);
+       QString host  (hostURL.mid(7,23));
+       QString fileName (hostURL.mid(24+6,hostURL.length()+1));
+       qDebug()<<"Host name =="<<host<<fileName<<endl;
+       http->setHost(host);
+       dataID = http->get(fileName);
+       currentSlide++;
+       if (currentSlide > slideCount-1) {
+            currentSlide = 0;
+            imageTimer->stop();
+       }
+   }
    void FlickerData::loadImages(int id, bool stat)
    {
      if (id == requestID) {
@@ -47,15 +65,13 @@
             }
          }
               if ( images.size() > 0) {
-                  QString hostURL = images.at(0);
-                  QString host  (hostURL.mid(7,23));
-                  QString fileName (hostURL.mid(24+6,hostURL.length()+1));
-                  qDebug()<<"Host name =="<<host<<fileName<<endl;
-                  http->setHost(host);
-                  dataID = http->get(fileName);
+                  slideCount = images.count();
+                  imageTimer->start(5000);
               }
 
-      }  else if (id == dataID) {
+      }  
+    qDebug()<<id<<endl; 
+     if (id >  requestID ) {
           if (http->bytesAvailable() > 0) {
               QByteArray img = http->readAll();
               newWall = QImage(QImage::fromData(img));
@@ -66,6 +82,11 @@
               }
           }
       }
+
+    if (id == slideCount -1) {
+        imageTimer->start(5000);
+    }
+
    }
 
    QGraphicsItem * FlickerData::item()
