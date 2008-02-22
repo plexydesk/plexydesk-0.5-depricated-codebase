@@ -98,7 +98,7 @@ void DesktopWidget::setBackFaceImage(QPixmap img)
 
 void DesktopWidget::spin()
 { 
-   d->timer->start(5);
+   d->timer->start(10);
 }
 
 void DesktopWidget::hideWidget()
@@ -205,10 +205,11 @@ void DesktopWidget::mousePressEvent ( QGraphicsSceneMouseEvent * event )
 void DesktopWidget::animate()
 {
 
-    d->angle += 36;
-    setCacheMode(NoCache);
+    d->angle += 36/2;
+    //setCacheMode(NoCache);
+    setCacheMode(ItemCoordinateCache);
     QPointF center = this->boundingRect().center();
-    //resetMatrix();
+    resetMatrix();
     QTransform mat = QTransform();//this->transform();
     mat.translate(center.x(),center.y());
     mat.scale(0.5,0.5);

@@ -18,7 +18,7 @@ Clock::~Clock()
 QGraphicsItem * Clock::item()
 {
 
-return new  PlexyDesk::ClockWidget(QRectF(0,0,340,240),0);
+return new  PlexyDesk::ClockWidget(QRectF(0,0,210,210),0);
 }
 
 Q_EXPORT_PLUGIN2(Clock,Clock)
