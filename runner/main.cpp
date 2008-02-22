@@ -52,7 +52,7 @@ int main( int argc, char ** argv )
 
     view->addExtension("plexyfriends");
     view->addExtension("plexyclock");
-    view->addData("flickerengine");
+//    view->addData("flickerengine");
     view->show();
 
     return app.exec();

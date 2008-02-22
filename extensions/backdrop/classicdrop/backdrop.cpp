@@ -11,7 +11,13 @@ ClassicBackdrop::ClassicBackdrop(QObject * object)
     p.begin(&img);
     p.drawPixmap(QRect(0,0,width,height),bg);
     paint.setTextureImage(img);
-    loadData("flickerengine");
+    flickrEngine= loadData("flickerengine");
+    if (flickrEngine) {
+        connect(flickrEngine,SIGNAL(data(QVariant&)),this,SLOT(data(QVariant&)));
+    }else {
+        qDebug("DataSource Was Null");
+    }
+
 }
 
 ClassicBackdrop::~ClassicBackdrop()
@@ -28,6 +34,7 @@ void ClassicBackdrop::data(QVariant& data)
     p.end();
     qDebug()<<img.size()<<endl;
     paint.setTextureImage(img);
+    emit dataChange();
 }
 
 void ClassicBackdrop::render(QPainter *p,QRectF r)

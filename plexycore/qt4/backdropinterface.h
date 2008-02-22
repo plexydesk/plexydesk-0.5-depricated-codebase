@@ -17,6 +17,8 @@ namespace PlexyDesk
             ~BackdropInterface(){}
             virtual DataInterface * loadData(const QString& name);
             virtual void render(QPainter *p,QRectF r) = 0;
+            signals:
+            void dataChange();
     };
 } // namespace PlexyDesk
 

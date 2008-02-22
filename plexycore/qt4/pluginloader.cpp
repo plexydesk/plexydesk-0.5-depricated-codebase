@@ -62,7 +62,7 @@ PluginLoader::PluginLoader ():d (new Private)
           ExtensionProducer<AbstractPluginInterface> factory;
           Iface = factory.instance(interface,plugin);
           groups[pluginName] = Iface;
-          
+          qDebug()<<"Loading.."<< Iface<<pluginName<<endl;
       }
     else
       {

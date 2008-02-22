@@ -8,11 +8,12 @@ namespace PlexyDesk
 {
     DataInterface *  BackdropInterface::loadData(const QString& name)
     {
-        qDebug()<<"oops"<<endl;
-     DataInterface * data = (DataInterface*)PluginLoader().instance(name);
+     DataInterface * data = (DataInterface*)PluginLoader::getInstance()->instance(name);
 
               if (data) {
                   return data;
+              } else {
+                  qDebug()<<"Null data found"<<endl;
               }
 
               return 0;

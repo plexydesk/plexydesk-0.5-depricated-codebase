@@ -20,11 +20,13 @@ class VISIBLE_SYM ClassicBackdrop :public PlexyDesk::BackdropInterface
         void render(QPainter *p,QRectF r);
     public slots:
         void data(QVariant&);
-
+    signals:
+        void dataChange();
     private:
         QPixmap bg;
         QImage img;
         QBrush paint;
+        PlexyDesk::DataInterface * flickrEngine;
         int width;
         int height;
 };
