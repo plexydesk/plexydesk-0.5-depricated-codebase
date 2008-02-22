@@ -19,14 +19,14 @@ PluginLoader * PluginLoader::mInstance = 0;
      ~Private ()
     {
     }
-    Interface groups;
+   Interface groups;
     QString prefix;
   };
 
 PluginLoader::PluginLoader ():d (new Private)
   {
     d->prefix = QString (PLEXPREFIX) + "/ext/groups/";
-    scanDisk ();
+   // scanDisk ();
   }
 
   PluginLoader::~PluginLoader ()
@@ -35,38 +35,43 @@ PluginLoader::PluginLoader ():d (new Private)
   }
 
 	QStringList PluginLoader::listPlugins(const QString& types)	{
-		return d->groups.keys();
+		return groups.keys();
 	}
 	
     AbstractPluginInterface * PluginLoader::instance(const QString& name)
     {
-    	return d->groups[name ];	
+    	return groups[name ];	
     }	
 
   void PluginLoader::load (const QString & interface,const QString & pluginName)
   {
-  	#ifdef Q_WS_MAC
+    #ifdef Q_WS_MAC
     QPluginLoader loader (QString (PLEXPREFIX) + "/lib/plexyext/lib" + pluginName + ".dylib");
     #endif
     
     #ifdef Q_WS_X11
     QPluginLoader loader (QString (PLEXPREFIX) + "/lib/plexyext/lib" + pluginName + ".so");
     #endif
-    
+
     QObject *plugin = loader.instance ();
+
     if (plugin)
       {
-        AbstractPluginInterface * Iface = 0;
-        ExtensionProducer<AbstractPluginInterface> factory;
-        Iface = factory.instance(interface,plugin);
-		d->groups[pluginName] = Iface;
+          
+          AbstractPluginInterface * Iface = 0;
+          ExtensionProducer<AbstractPluginInterface> factory;
+          Iface = factory.instance(interface,plugin);
+          groups[pluginName] = Iface;
+          
       }
     else
       {
 	qDebug () << loader.errorString () << endl;;
 //	d->currentDrop = 0;
 
-      }
+      
+    }
+    
   }
 
 

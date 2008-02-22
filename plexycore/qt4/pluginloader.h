@@ -20,17 +20,18 @@ namespace PlexyDesk
         virtual ~PluginLoader();
         QStringList listPlugins(const QString& types);
         AbstractPluginInterface * instance(const QString& name);
+        void scanDisk();
         static PluginLoader * getInstance()
         {
              if (!mInstance) {
                  mInstance = new PluginLoader();
+                 mInstance->scanDisk();
              }
 
             return mInstance;
         }
 
         protected:
-            void scanDisk();
             void loadDesktop(const QString& path);
             void  load(const QString& interface,const QString& plugin);
  
@@ -38,6 +39,7 @@ namespace PlexyDesk
             class Private;
             Private * const d ;
             static VISIBLE_SYM PluginLoader * mInstance;
+            Interface groups;
 
 
     };
