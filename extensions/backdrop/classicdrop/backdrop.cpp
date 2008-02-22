@@ -1,7 +1,5 @@
 #include "backdrop.h"
-#include "backdropitem.h"
 #include <desktopwidget.h>
-#include "pictureflow.h"
 
 ClassicBackdrop::ClassicBackdrop(QObject * object)
 {
@@ -32,27 +30,6 @@ void ClassicBackdrop::data(QVariant& data)
     p.end();
     qDebug()<<img.size()<<endl;
     paint.setTextureImage(img);
-}
-
-QGraphicsItem * ClassicBackdrop::item()
-{
-
-PictureFlow* w = new PictureFlow; 
-w->setSlideSize(QSize(320/4, 240/4));
-w->resize(300,150);
-w->setBackgroundColor(Qt::white);
-for (int i = 0; i < 10 ; i++) {
-            w->addSlide(QPixmap("/usr/share/plexy/skins/default/default.png"));
-      }
-        w->setCenterIndex(w->slideCount()/2);
-	w->move(40,40);
-        PlexyDesk::DesktopWidget * wid = new PlexyDesk::DesktopWidget(QRect(0,0,380,240),w);
-        wid->setDockImage(QPixmap("/usr/share/plexy/skins/widgets/widget01/pila.png"));
-        wid->setFaceImage(QPixmap("/usr/share/plexy/skins/widgets/widget01/pila.png"));
-
-return wid;
-
-//return new  PlexyDesk::BackdropItem(QRectF(0,0,200,200));//QGraphicsPixmapItem(QPixmap("/home/siraj/downloads-torrents/wallpaper/water.png"));
 }
 
 void ClassicBackdrop::render(QPainter *p,QRectF r)

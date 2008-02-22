@@ -9,25 +9,24 @@
 #include <abstractplugininterface.h>
 
 
-class VISIBLE_SYM ClassicBackdrop :public PlexyDesk::AbstractPluginInterface 
+class VISIBLE_SYM ClassicBackdrop :public PlexyDesk::BackdropInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
     public:
-    ClassicBackdrop(QObject * object = 0);
-    virtual ~ClassicBackdrop();
-    void init(){}
-    virtual QGraphicsItem * item();// {};
-    void render(QPainter *p,QRectF r);// {};
+        ClassicBackdrop(QObject * object = 0);
+        virtual ~ClassicBackdrop();
+        void render(QPainter *p,QRectF r);
     public slots:
         void data(QVariant&);
+
     private:
-    QPixmap bg;
-    QImage img;
-    QBrush paint;
-    int width;
-    int height;
+        QPixmap bg;
+        QImage img;
+        QBrush paint;
+        int width;
+        int height;
 };
 
 
