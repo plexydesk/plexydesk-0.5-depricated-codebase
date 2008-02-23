@@ -209,16 +209,16 @@ void DesktopWidget::animate()
     //setCacheMode(NoCache);
     setCacheMode(ItemCoordinateCache);
     QPointF center = this->boundingRect().center();
-    resetMatrix();
+//    resetMatrix();
     QTransform mat = QTransform();//this->transform();
     mat.translate(center.x(),center.y());
-    mat.scale(0.5,0.5);
+ //   mat.scale(0.5,0.5);
     mat.rotate(d->angle,Qt::YAxis);
-    mat.scale(2.0,2.0);
+   // mat.scale(2.0,2.0);
     mat.translate(-center.x(),-center.y());
     this->setTransform(mat);
 
-	if ( d->angle == 360)
+	if ( d->angle == 180)
 	{
 
 	if(d->s ==  NORMALSIDE)
@@ -233,12 +233,14 @@ void DesktopWidget::animate()
         }
 		d->timer->stop();
 		d->angle = 0;
+		resetMatrix();
 		setCacheMode(DeviceCoordinateCache);
                 d->opacity = 1.0;
 		update();
+		return;
 	}
 
-        d->opacity -= 0.1;
+        d->opacity -= 0.2;
 
 
 }
@@ -265,7 +267,7 @@ void DesktopWidget::paintBackSide (QPainter * p,const QRectF& rect)
 {
      
 	p->save();
-        p->setOpacity(0.8);
+	p->setOpacity(0.8);
 	p->setRenderHints( QPainter::SmoothPixmapTransform);
 	p->drawPixmap(QRect(0,0,rect.width(),rect.height()),d->back);
 	p->restore();
@@ -306,7 +308,12 @@ void DesktopWidget::paint(QPainter * painter, const QStyleOptionGraphicsItem * o
 	else if ( d->s == BACKSIDE)
 	{
 	paintBackSide (painter,option->exposedRect);
+//	painter->save();
+//	QTransform trans= QTransform ();
+//	trans.rotate(180,Qt::YAxis);
+        //painter->setTransform(trans,true);;
 	this->paintExtBackFace(painter,option,widget);
+//	painter->restore();
 	}
 	else if ( d->s == DOCK)
 	{
