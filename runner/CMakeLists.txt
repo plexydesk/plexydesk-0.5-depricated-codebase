@@ -39,5 +39,5 @@ TARGET_LINK_LIBRARIES(
 
 
 ########### install files ###############
-INSTALL(TARGETS plexydesk DESTINATION {CMAKE_INSTALL_PREFIX}/bin/)
+INSTALL(TARGETS plexydesk DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/)
 #INSTALL( FILES raptor.desktop  DESTINATION  ${DATA_INSTALL_DIR}/kicker/applets )
