@@ -1,7 +1,7 @@
 PROJECT(PlexyDesktop)
 #siraj@kde.org
 #LGPL2
-
+INCLUDE(CPack)
 FIND_PACKAGE(Qt4 REQUIRED)
 FIND_PACKAGE(FFMPEG REQUIRED)
 FIND_PACKAGE(OpenGL REQUIRED)
@@ -12,7 +12,7 @@ FIND_PACKAGE(OpenGL REQUIRED)
 
 SET(LIB_MAJOR 0)
 SET(LIB_MINOR 1)
-SET(LIB_RELEASE 1)
+SET(LIB_RELEASE SVNBUILD)
 SET(LIB_SUB_RELEASE 1)
 SET(APPLICATION_INTERNAL_VERSION "20071216")
 SET(APPLICATION_DATE "2008-01-01")
@@ -71,6 +71,7 @@ add_subdirectory(runner)
 add_subdirectory(artwork)
 add_subdirectory(artwork/buttons)
 if (UNIX) 
+add_subdirectory(3rdparty/libmagic)
 	if(FFMPEG_FOUND)
 #add_subdirectory(extensions/widgets/videowiget)
 	endif(FFMPEG_FOUND)

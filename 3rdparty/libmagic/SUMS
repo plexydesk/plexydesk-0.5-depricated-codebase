@@ -1,0 +1,18 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+5574c6965ae5f583e55880e397fbb018  COPYING
+8203cf0da306aa003e30321dc954e100  Makefile
+20a2d3b79c5b8a1908fec22c2be00f59  README
+7730e4caaeeac87e70145eb224227b03  magic.c
+a57ae0e8c14acf42bb578b9578c3f392  magic.h
+35192f2bafac132d6efbc3fc347ef8f3  minifile.c
+a152945a83171292e0417a6fd52ad1c4  sysdep.h
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.0.1 (GNU/Linux)
+Comment: For info see http://www.gnupg.org
+
+iD8DBQE5Lit872WPD+Q4jaIRArrHAJ9ejRpuPgS8evbbOeTIYnyc1/I5jACgtaau
+kjoeZLbfc45XQzpDlmnXLfA=
+=vzmg
+-----END PGP SIGNATURE-----
