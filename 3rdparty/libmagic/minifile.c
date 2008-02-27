@@ -41,7 +41,8 @@ int main (int argc, char *argv[]) {
 
 	for (i = 1; i < argc; i++) {
 		d = magic_identify_file (mh, argv[i]);
-		printf("%s: %s\n",argv[i],d ? d : "unknown");
+		printf("%s: %s\n",argv[i],d );
+
 	}
 
 	magic_close (mh);

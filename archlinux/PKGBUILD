@@ -2,9 +2,9 @@
 pkgname=plexydesk-svn
 pkgver=253
 pkgrel=1
-pkgdesc="A Workspace =)"
+pkgdesc="A Modular Desktop Renderer"
 url="http://plexydesk.org"
-license="GPL"
+license="LGPL"
 arch=('i686' 'amd64')
 depends=('qt-copy-svn')
 makedepends=('subversion' 'cmake')
