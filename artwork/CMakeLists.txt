@@ -2,7 +2,7 @@ PROJECT(PlexyDesktop)
 
 FILE(GLOB PNGFILES *.png kbfxlayoutrc kbfxfontrc version-2 )
 
-INSTALL(FILES ${PNGFILES}  DESTINATION ${CMAKE_INSTALL_DIR}/share/plexy/skins/default/)
+INSTALL(FILES ${PNGFILES}  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/skins/default/)
 
 add_subdirectory(buttons)
 add_subdirectory(widget-example)
