@@ -30,6 +30,7 @@ ADD_EXECUTABLE(plexydesk ${plexydesk_PART_SRCS})
 TARGET_LINK_LIBRARIES(
 	plexydesk 
 	qtviz
+	plexymagic
 	${QT_QTGUI_LIBRARY}
     ${QT_QTCORE_LIBRARY}
     ${QT_QTOPENGL_LIBRARY}
@@ -38,5 +39,5 @@ TARGET_LINK_LIBRARIES(
 
 
 ########### install files ###############
-INSTALL(TARGETS plexydesk DESTINATION /usr/local/bin/)
+INSTALL(TARGETS plexydesk DESTINATION {CMAKE_INSTALL_PREFIX}/bin/)
 #INSTALL( FILES raptor.desktop  DESTINATION  ${DATA_INSTALL_DIR}/kicker/applets )
