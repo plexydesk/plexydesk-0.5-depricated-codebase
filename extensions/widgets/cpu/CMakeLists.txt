@@ -27,14 +27,14 @@ QT4_AUTOMOC( ${plexycpusrc})
 
 TARGET_LINK_LIBRARIES(
 	       plexycpu
-	       GL
-	       QtWebKit
+			qtviz
+		   ${QT_QTGUI_LIBRARY}
 	       ${OPENGL_LIBRARIES}
 	       ${QT_QTCORE_LIBRARY}
 	       ${QT_QTOPENGL_LIBRARY}
        )
 
-INSTALL(TARGETS plexycpu DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext/widgets/)
-
+INSTALL(TARGETS plexycpu DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext/)
+install(FILES cpu.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups/)
 
 add_subdirectory(cpu)

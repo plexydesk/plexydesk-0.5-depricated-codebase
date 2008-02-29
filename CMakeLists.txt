@@ -75,7 +75,7 @@ add_subdirectory(3rdparty/libmagic)
 	if(FFMPEG_FOUND)
 #add_subdirectory(extensions/widgets/videowiget)
 	endif(FFMPEG_FOUND)
-#add_subdirectory(extensions/widgets/cpu)
+add_subdirectory(extensions/widgets/cpu)
 endif(UNIX)
 
 add_subdirectory(extensions/widgets/clock)
