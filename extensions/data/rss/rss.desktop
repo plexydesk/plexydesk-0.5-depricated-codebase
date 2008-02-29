@@ -1,0 +1,6 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=RSS Data Engine
+Type=Engine
+Comment=Engine to Load RSS Feeds
+X-PLEXYDESK-Library=rssengine
