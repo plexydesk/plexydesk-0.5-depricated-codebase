@@ -48,8 +48,16 @@ using namespace PlexyDesk;
 int main( int argc, char ** argv )
 {
     QApplication app(argc,argv);
-
-    qDebug() << PlexyDesk::PluginLoader::getInstance()->listPlugins("Desktop");
+/*
+    QDir d(QDir::homePath());
+    QDirModel *model = new QDirModel;
+    model->index(QDir::homePath());
+    //qDebug()<<model->mimeTypes()<<endl;
+    for(int i = 0 ; i < model->rawCount();i++)
+    {
+        qDebug()<<model->mimeType(i)<<endl;
+    }
+  */  qDebug() << PlexyDesk::PluginLoader::getInstance()->listPlugins("Desktop");
     qDebug() << PlexyDesk::PluginLoader::getInstance()->listPlugins("Media");
 
     QGraphicsScene scene;

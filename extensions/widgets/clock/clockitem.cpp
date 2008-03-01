@@ -17,6 +17,7 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 #include "clockitem.h"
+#include <config.h>
 #include <QtCore>
 #include <QtGui>
 
@@ -24,7 +25,7 @@ namespace PlexyDesk
 {
     ClockItem::ClockItem(const QRectF &rect, QWidget *widget ):DesktopWidget(rect,widget)
     {
-        setDockImage(QPixmap("/usr/share/plexy/skins/widgets/widget01/schedulepng.png"));
+        setDockImage(QPixmap(QString(PLEXPREFIX)+"/share/plexy/skins/widgets/widget01/schedulepng.png"));
     }
     
     ClockItem::~ClockItem()

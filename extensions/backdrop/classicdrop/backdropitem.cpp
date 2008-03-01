@@ -28,7 +28,7 @@ namespace PlexyDesk
         w->setSlideSize(QSize(320/2, 240/2));
         w->resize(QDesktopWidget().screenGeometry().width() ,240);
         w->setBackgroundColor(Qt::white);
-        bg = QPixmap("/usr/share/plexy/skins/default/default.png"); 
+        bg = QPixmap( QString(PLEXYPREIX)+"/share/plexy/skins/default/default.png"); 
         CustomProxy *proxyWidget  = new   CustomProxy ( this);
         proxyWidget->setWidget(w);
         proxyWidget->setGeometry(boundingRect().adjusted(25, 25, -25, -25));

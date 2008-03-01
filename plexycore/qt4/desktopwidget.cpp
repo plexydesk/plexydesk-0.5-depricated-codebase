@@ -60,9 +60,9 @@ class DesktopWidget::Private
 		d->backdrop = true;
 		d->opacity = 1.0;
 		//d->hidding = false;
-		d->panel = QPixmap("/usr/share/plexy/skins/widgets/widget01/Panel.png");
-		d->back = QPixmap("/usr/share/plexy/skins/widgets/widget01/reverse.png");
-		d->dock = QPixmap ("/usr/share/plexy/skins/widgets/widget01/Icon.png");
+		d->panel = QPixmap(QString(PLEXPREFIX)+"/share/plexy/skins/widgets/widget01/Panel.png");
+		d->back = QPixmap(QString(PLEXPREFIX)+"/share/plexy/skins/widgets/widget01/reverse.png");
+		d->dock = QPixmap (QString(PLEXPREFIX)+"/share/plexy/skins/widgets/widget01/Icon.png");
 		d->scale = 1;
 		//setRect(QRect(0,0,d->panel.width(),d->panel.height()));
 		setCacheMode (QGraphicsItem::ItemCoordinateCache,d->panel.size());

@@ -41,6 +41,7 @@
 
 
 #include <plexy.h>
+#include <config.h>
 #include "clockwidget.h"
 #include <qmatrix.h>
 //Added by qt3to4:
@@ -57,7 +58,7 @@ DesktopWidget(rect,widget)
 {
   shade = 0;
   
-  setPath("/usr/share/plexy/skins/default/clock/");
+  setPath(QString(PLEXPREFIX)+"/share/plexy/skins/default/clock/");
 drawClockWidget();
   //this->setAttribute (Qt::WA_NoSystemBackground);
 

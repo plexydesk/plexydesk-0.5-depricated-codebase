@@ -17,11 +17,12 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 #include "backdrop.h"
+#include <config.h>
 #include <desktopwidget.h>
 
 ClassicBackdrop::ClassicBackdrop(QObject * object)
 {
-    bg = QPixmap("/usr/share/plexy/skins/default/default.png");
+    bg = QPixmap( QString(PLEXPREFIX)+"/share/plexy/skins/default/default.png");
     width = QDesktopWidget().availableGeometry().width();
     height = QDesktopWidget().availableGeometry().height();
     img = QImage(width,height,QImage::Format_ARGB32_Premultiplied);
@@ -35,7 +36,6 @@ ClassicBackdrop::ClassicBackdrop(QObject * object)
     }else {
         qDebug("DataSource Was Null");
     }
-
 }
 
 ClassicBackdrop::~ClassicBackdrop()
