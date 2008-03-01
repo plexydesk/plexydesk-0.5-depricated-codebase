@@ -42,7 +42,7 @@ DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsV
        setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
        setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
        setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
-       setViewport(new QGLWidget);
+//       setViewport(new QGLWidget);
        setAlignment(Qt::AlignLeft | Qt::AlignTop);
        d->bIface  = 0;
        d->widgets = 0;

@@ -76,7 +76,7 @@ add_subdirectory(3rdparty/libmagic)
 #add_subdirectory(extensions/widgets/videowiget)
 	endif(FFMPEG_FOUND)
 add_subdirectory(extensions/widgets/cpu)
-endif(APPLE
+endif(APPLE)
 
 add_subdirectory(extensions/widgets/clock)
 add_subdirectory(extensions/widgets/friendswidget)
