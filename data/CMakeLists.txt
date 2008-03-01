@@ -1,0 +1,7 @@
+PROJECT(PlexyDesktop)
+
+FILE(GLOB PNGFILES mimetypes version-2 )
+
+INSTALL(FILES ${PNGFILES}  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/mime/)
+
+

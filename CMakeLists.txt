@@ -65,6 +65,8 @@ INCLUDE_DIRECTORIES(
 add_subdirectory(plexylib)
 add_subdirectory(plexycore/qt4/)
 add_subdirectory(extensions/backdrop/classicdrop)
+add_subdirectory(data)
+
 
 add_subdirectory(extensions/widgets/demowidget)
 add_subdirectory(runner)
