@@ -35,7 +35,7 @@ namespace PlexyDesk
    {
 	QStringList splits = file.split(".");
 	QString ext =  splits.at(1);     
-	qDebug()<<ext<<endl;
+	return ext;
 
    }
  

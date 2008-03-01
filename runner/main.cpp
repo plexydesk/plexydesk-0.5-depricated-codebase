@@ -49,7 +49,7 @@ int main( int argc, char ** argv )
     QApplication app(argc,argv);
     qDebug() << PlexyDesk::PluginLoader::getInstance()->listPlugins("Desktop");
     qDebug() << PlexyDesk::PluginLoader::getInstance()->listPlugins("Media");
-    PlexyDesk::FakeMime::getInstance()->getType("hello.png");
+    qDebug() << PlexyDesk::FakeMime::getInstance()->getType("hello.png")<<endl;
     QGraphicsScene scene;
 
     scene.setSceneRect(QDesktopWidget().availableGeometry());
