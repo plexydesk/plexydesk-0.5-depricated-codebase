@@ -40,6 +40,7 @@
 #include <backdropfactory.h>
 #include <widgetfactory.h>
 #include <pluginloader.h>
+#include <fakemime.h>
 
 using namespace PlexyDesk;
 
@@ -48,7 +49,7 @@ int main( int argc, char ** argv )
     QApplication app(argc,argv);
     qDebug() << PlexyDesk::PluginLoader::getInstance()->listPlugins("Desktop");
     qDebug() << PlexyDesk::PluginLoader::getInstance()->listPlugins("Media");
-
+    PlexyDesk::FakeMime::getInstance()->getType("hello.png");
     QGraphicsScene scene;
 
     scene.setSceneRect(QDesktopWidget().availableGeometry());
