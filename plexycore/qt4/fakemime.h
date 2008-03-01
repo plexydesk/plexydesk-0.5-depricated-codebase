@@ -30,12 +30,7 @@ namespace PlexyDesk
         public:
            static FakeMime*  getInstance();
            ///these will be pure virtual on the real plexy desk
-           void read();
-           void save(){}
-           QString MyPictures ;
-           QString MyMovies;
-           QString CurrentWallpaper;
-
+	QString getType(const QString& path);
 
         private:
            static FakeMime * config;

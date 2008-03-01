@@ -31,6 +31,12 @@ namespace PlexyDesk
         }
     }
 
+    QString getType(const QString& type)
+   {
+       
+   }
+ 
+
 }
 
 
