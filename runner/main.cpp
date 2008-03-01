@@ -17,8 +17,6 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
-//siraj@kde.org GPL2
-//
 #include <QtCore>
 #include <QtGui>
 
@@ -48,16 +46,7 @@ using namespace PlexyDesk;
 int main( int argc, char ** argv )
 {
     QApplication app(argc,argv);
-/*
-    QDir d(QDir::homePath());
-    QDirModel *model = new QDirModel;
-    model->index(QDir::homePath());
-    //qDebug()<<model->mimeTypes()<<endl;
-    for(int i = 0 ; i < model->rawCount();i++)
-    {
-        qDebug()<<model->mimeType(i)<<endl;
-    }
-  */  qDebug() << PlexyDesk::PluginLoader::getInstance()->listPlugins("Desktop");
+    qDebug() << PlexyDesk::PluginLoader::getInstance()->listPlugins("Desktop");
     qDebug() << PlexyDesk::PluginLoader::getInstance()->listPlugins("Media");
 
     QGraphicsScene scene;
@@ -76,8 +65,8 @@ int main( int argc, char ** argv )
     info.setWindowType(NET::Desktop);
 #endif
 
-//    view->addExtension("plexyfriends");
-//    view->addExtension("plexyclock");
+    view->addExtension("plexyfriends");
+    view->addExtension("plexyclock");
 //    view->addData("flickerengine");
     view->show();
 
