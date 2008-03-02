@@ -38,6 +38,7 @@ namespace PlexyDesk
      proxyURL="";
      proxyUser="";
      proxyPasswd="";
+     proxyPort=3128;
     
 	
    }

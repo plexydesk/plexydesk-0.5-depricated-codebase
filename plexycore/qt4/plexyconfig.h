@@ -36,6 +36,7 @@ namespace PlexyDesk
            QString MyMovies;
            QString CurrentWallpaper;
 	   bool proxyOn;
+	   int proxyPort;
 	   QString proxyURL;
            QString proxyUser;
 	   QString proxyPasswd;

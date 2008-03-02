@@ -18,6 +18,7 @@
 *******************************************************************************/
 #include "flicker.h"
 #include <desktopwidget.h>
+#include <plexyconfig.h>
 
 
     
@@ -32,6 +33,16 @@
     void  FlickerData::init()
     {
 	 http = new QHttp(this);
+	
+	 PlexyDesk::Config::getInstance()->read();
+	 if(PlexyDesk::Config::getInstance()->proxyOn){ 
+              http->setProxy(PlexyDesk::Config::getInstance()->proxyURL,
+                             PlexyDesk::Config::getInstance()->proxyPort,
+                             PlexyDesk::Config::getInstance()->proxyUser,
+                             PlexyDesk::Config::getInstance()->proxyPasswd
+                             );
+	}
+	
          connect(http, SIGNAL(requestFinished(int, bool)),
                          SLOT(loadImages(int, bool)));
 	 http->setHost("www.flickr.com");    
