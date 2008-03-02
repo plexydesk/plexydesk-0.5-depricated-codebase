@@ -44,6 +44,7 @@
 			      );
 
               http->setProxy(NtProxy);
+	      QNetworkProxy::setApplicationProxy(NtProxy);
 	}
 	
          connect(http, SIGNAL(requestFinished(int, bool)),
