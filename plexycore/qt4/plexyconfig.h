@@ -35,6 +35,10 @@ namespace PlexyDesk
            QString MyPictures ;
            QString MyMovies;
            QString CurrentWallpaper;
+	   bool proxyOn;
+	   QString proxyURL;
+           QString proxyUser;
+	   QString proxyPasswd;
 
 
         private:

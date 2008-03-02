@@ -66,10 +66,12 @@ int main( int argc, char ** argv )
     info.setWindowType(NET::Desktop);
 #endif
 
+    view->show();
+
     view->addExtension("plexyfriends");
+    view->addExtension("imagepil");
     view->addExtension("plexyclock");
 //    view->addData("flickerengine");
-    view->show();
 
     return app.exec();
 }

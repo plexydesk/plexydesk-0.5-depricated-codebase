@@ -31,6 +31,17 @@ namespace PlexyDesk
         }
     }
 
+    void Config::read()
+   {
+    
+     proxyOn=false;
+     proxyURL="";
+     proxyUser="";
+     proxyPasswd="";
+    
+	
+   }
+
 }
 
 

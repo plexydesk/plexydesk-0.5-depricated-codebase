@@ -52,6 +52,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/extensions/widgets/videowiget
     ${CMAKE_BINARY_DIR}/extensions/widgets/cpu
     ${CMAKE_BINARY_DIR}/extensions/widgets/friendswidget
+    ${CMAKE_BINARY_DIR}/extensions/widgets/imagepile
     ${CMAKE_BINARY_DIR}/extensions/data/flicker
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_SOURCE_DIR}/plexylib
@@ -65,6 +66,7 @@ INCLUDE_DIRECTORIES(
 add_subdirectory(plexylib)
 add_subdirectory(plexycore/qt4/)
 add_subdirectory(extensions/backdrop/classicdrop)
+add_subdirectory(extensions/widgets/imagepile)
 add_subdirectory(data)
 
 
@@ -78,7 +80,7 @@ add_subdirectory(3rdparty/libmagic)
 #add_subdirectory(extensions/widgets/videowiget)
 	endif(FFMPEG_FOUND)
 add_subdirectory(extensions/widgets/cpu)
-endif(APPLE)
+endif(NOT APPLE)
 
 add_subdirectory(extensions/widgets/clock)
 add_subdirectory(extensions/widgets/friendswidget)
