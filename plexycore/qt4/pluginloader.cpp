@@ -30,31 +30,32 @@ PluginLoader * PluginLoader::mInstance = 0;
 
   class PluginLoader::Private
   {
-  public:
-    Private ()
-    {
-    }
-     ~Private ()
-    {
-    }
-   Interface groups;
+      public:
+        Private ()
+       {
+       }
+       ~Private ()
+       {
+       }
+    Interface groups;
     QString prefix;
-  };
+   };
 
-PluginLoader::PluginLoader ():d (new Private)
-  {
-    d->prefix = QString (PLEXPREFIX) + "/ext/groups/";
+    PluginLoader::PluginLoader ():d (new Private)
+    {
+        d->prefix = QString (PLEXPREFIX) + "/ext/groups/";
    // scanDisk ();
-  }
+    }
 
-  PluginLoader::~PluginLoader ()
-  {
-    delete d;
-  }
+    PluginLoader::~PluginLoader ()
+    {
+        delete d;
+    }
 
-	QStringList PluginLoader::listPlugins(const QString& types)	{
-		return groups.keys();
-	}
+    QStringList PluginLoader::listPlugins(const QString& types)
+    {
+        return groups.keys();
+    }
 	
     AbstractPluginInterface * PluginLoader::instance(const QString& name)
     {
@@ -80,7 +81,7 @@ PluginLoader::PluginLoader ():d (new Private)
           ExtensionProducer<AbstractPluginInterface> factory;
           Iface = factory.instance(interface,plugin);
           groups[pluginName] = Iface;
-          qDebug()<<"Loading.."<< Iface<<pluginName<<endl;
+          qDebug()<<"PluginLoader::load"<<"Loading.."<< Iface<<pluginName<<endl;
       }
     else
       {
