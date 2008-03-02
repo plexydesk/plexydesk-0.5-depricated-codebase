@@ -23,7 +23,6 @@
 #include <QtCore>
 #include <QtGui>
 #include <abstractplugininterface.h>
-#include <datainterface.h>
 
 namespace PlexyDesk
 {
@@ -33,7 +32,7 @@ namespace PlexyDesk
             void init(){}
             BackdropInterface(){}
             ~BackdropInterface(){}
-            virtual DataInterface * loadData(const QString& name);
+//            virtual DataInterface * loadData(const QString& name);
             virtual void render(QPainter *p,QRectF r) = 0;
             signals:
             void dataChange();

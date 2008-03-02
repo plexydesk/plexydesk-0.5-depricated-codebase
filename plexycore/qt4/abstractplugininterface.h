@@ -26,12 +26,15 @@
 
 namespace PlexyDesk
 {
+
+    class DataInterface;
     class AbstractPluginInterface:public QObject 
     {
         public:
            virtual void init() = 0;
            virtual  QGraphicsItem * item() {return new QGraphicsRectItem ();};
            virtual  void render(QPainter *p,QRectF r) {};
+	   virtual DataInterface* AbstractPluginInterface::loadData(const QString& name);
 
 
     };
