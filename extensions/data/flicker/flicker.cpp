@@ -36,11 +36,14 @@
 	
 	 PlexyDesk::Config::getInstance()->read();
 	 if(PlexyDesk::Config::getInstance()->proxyOn){ 
-              http->setProxy(PlexyDesk::Config::getInstance()->proxyURL,
-                             PlexyDesk::Config::getInstance()->proxyPort,
-                             PlexyDesk::Config::getInstance()->proxyUser,
-                             PlexyDesk::Config::getInstance()->proxyPasswd
-                             );
+	 QNetworkProxy NtProxy(PlexyDesk::Config::getInstance()->proxyType,
+		               PlexyDesk::Config::getInstance()->proxyURL,
+                               PlexyDesk::Config::getInstance()->proxyPort,
+                               PlexyDesk::Config::getInstance()->proxyUser,
+                               PlexyDesk::Config::getInstance()->proxyPasswd
+			      );
+
+              http->setProxy(NtProxy);
 	}
 	
          connect(http, SIGNAL(requestFinished(int, bool)),

@@ -21,6 +21,7 @@
 #define PLEXY_CONIFG_LINUX_QT_H
 
 #include <QtCore>
+#include <QtNetwork>
 #include <plexy.h>
 
 namespace PlexyDesk
@@ -37,6 +38,7 @@ namespace PlexyDesk
            QString CurrentWallpaper;
 	   bool proxyOn;
 	   int proxyPort;
+	   QNetworkProxy::ProxyType proxyType;
 	   QString proxyURL;
            QString proxyUser;
 	   QString proxyPasswd;
