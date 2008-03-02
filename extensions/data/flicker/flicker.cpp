@@ -53,11 +53,11 @@
     }
    void FlickerData::nextImage()
    {
-       qDebug()<<"Counting "<<endl;
+
        QString hostURL = images.at(currentSlide);
        QString host  (hostURL.mid(7,23));
        QString fileName (hostURL.mid(24+6,hostURL.length()+1));
-       qDebug()<<"Host name =="<<host<<fileName<<endl;
+
        http->setHost(host);
        dataID = http->get(fileName);
        currentSlide++;
@@ -99,12 +99,10 @@
               }
 
       }  
-    qDebug()<<id<<endl; 
      if (id >  requestID ) {
           if (http->bytesAvailable() > 0) {
               QByteArray img = http->readAll();
               newWall = QImage(QImage::fromData(img));
-              qDebug()<<newWall.size()<<img<<endl;
               if (!newWall.isNull()) {
                   QVariant image(img);
                   emit data(image);

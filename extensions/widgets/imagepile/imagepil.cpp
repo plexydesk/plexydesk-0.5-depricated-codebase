@@ -41,6 +41,7 @@ void ImagePile::data(QVariant& data)
 {
     QImage wall(QImage::fromData(data.toByteArray()));
     flow->addSlide(wall);     
+    flow->showNext();
     qDebug()<<"Adding Slide"<<endl;;
 }
 
