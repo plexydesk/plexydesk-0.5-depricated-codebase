@@ -20,6 +20,7 @@
 #include <backdropfactory.h>
 #include <abstractplugininterface.h>
 #include <datainterface.h>
+#include <desktopwidget.h>
 #include <QGLWidget>
 
 
@@ -67,21 +68,15 @@ void DesktopView::backgroundChanged()
 void DesktopView::addExtension(const QString& name)
 {
         d->widgets = (WidgetInterface*) PluginLoader::getInstance()->instance(name);
-        if (d->widgets)
-        scene()->addItem(d->widgets->item());
+        if (d->widgets){
+                //scene()->addItem(d->widgets->item());
+		DesktopWidget * widget = (DesktopWidget*) d->widgets->item();		
+		if(widget){
+		      widget->configState(DesktopWidget::DOCK);
+		      scene()->addItem(widget);
+		}
+	}
 }
-/*
-void DesktopView::addData(const QString& name)
-{
-        d->data = (DataInterface*) PluginLoader::getInstance()->instance(name);
-
-         if (d->data) {
-//             connect(d->data,SIGNAL(data(QVariant&)),this, SLOT(getdata(QVariant&)));
- //            connect(this,SIGNAL(newData(QVariant&)),d->bIface,SLOT(data(QVariant&)));
-         }
-}
-
-*/
 
 
 void DesktopView::drawBackground ( QPainter * painter, const QRectF & rect )

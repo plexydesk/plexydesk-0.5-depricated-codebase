@@ -42,7 +42,7 @@ namespace PlexyDesk
 	   QString proxyURL;
            QString proxyUser;
 	   QString proxyPasswd;
-
+           bool collitionOn;
 
         private:
            static Config * config;

@@ -94,6 +94,7 @@ DesktopWidget::~DesktopWidget()
 	delete d;
 }
 
+
 QRectF DesktopWidget::boundingRect() const
 {
        return rect();//QRect(0,0,d->panel.width(),d->panel.height());	
@@ -160,7 +161,6 @@ void DesktopWidget::updateStep(int frame)
     mat.translate(center.x(), center.y());
     mat.scale(1 - frame / 450.0, 1 - frame / 450.0);
     mat.translate(-center.x(), -center.y());
-    //mat.shear( frame/1500.0,frame/1500.0);
     setTransform(mat);
        
                 if( d->opacity >= 0.0)
@@ -174,6 +174,32 @@ void DesktopWidget::updateStep(int frame)
 void DesktopWidget::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
 QGraphicsRectItem::hoverEnterEvent(event);
+}
+
+
+void  DesktopWidget::mouseMoveEvent ( QGraphicsSceneMouseEvent * event)
+{
+
+	Config::getInstance()->read();
+	
+	if (!Config::getInstance()->collitionOn){
+	 QGraphicsItem::mouseMoveEvent(event);
+	 return;
+       }else {
+	QList<QGraphicsItem*>  list = collidingItems();
+	if(list.count() > 0){
+		foreach(QGraphicsItem *item,list) { 
+                 if(item == this) {
+                 break;
+                 } else{
+                               DesktopWidget  * wigy = (DesktopWidget*)item;
+				if( wigy->state() == DOCK)
+				wigy->spin();
+                }
+	    }
+        }
+     }
+	QGraphicsItem::mouseMoveEvent(event);
 }
 
 void DesktopWidget::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event )
@@ -279,8 +305,31 @@ return d->s ;
 
 void DesktopWidget::setState(DesktopWidget::State s)
 {
-d->s = s;
+//hack
+		d->s = s;
 }
+
+
+void DesktopWidget::configState(DesktopWidget::State s)
+{
+        //resetMatrix();
+	prepareGeometryChange ();
+	if(s == DOCK){
+	setRect(0,0,d->dock.width(),d->dock.height());
+        }
+	else {
+	setRect(0,0,d->panel.width(),d->panel.height());
+       }
+	
+		d->s = s;
+//	QPointF center = rect().center();//d->clickPos;
+	if(d->proxyWidget){  
+            d->proxyWidget->hide();
+       }
+
+}
+
+
 void DesktopWidget::paintBackSide (QPainter * p,const QRectF& rect)
 {
      

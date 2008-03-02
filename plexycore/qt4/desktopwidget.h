@@ -19,6 +19,7 @@
 #ifndef PLEXY_DESKTOP_WIDGET_H
 #define PLEXY_DESKTOP_WIDGET_H	
 #include <plexy.h>
+#include <plexyconfig.h>
 #include <QtCore>
 #include <QtGui>
 
@@ -35,13 +36,14 @@ namespace PlexyDesk
 		DesktopWidget(const QRectF &rect, QWidget *embeddedWidget = 0);
 
 		virtual ~DesktopWidget();
-
+			
 		virtual void paintBackSide (QPainter * painter,const QRectF& rect);
 		virtual void paintViewSide (QPainter * painter,const QRectF& rect);
 		virtual void paintDockView (QPainter * painter,const QRectF& rect); 
 		    
                         void drawBackdrop(bool);
 		        void setState(State s);
+		        void configState(State s);
 		        State state(); 
                         void setDockImage(QPixmap);
                         void setFaceImage(QPixmap);
@@ -49,13 +51,11 @@ namespace PlexyDesk
 
 		virtual QRectF boundingRect() const;
 		virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
-		virtual void mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event );
+		virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event );
+		virtual void mouseMoveEvent ( QGraphicsSceneMouseEvent * event);
 		virtual void paintExtFace(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0){}
 		virtual void paintExtBackFace(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0){}
-
 		virtual void paintExtDockFace(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0){}
-		//virtual void setOpacity(double op);
-		//virtual double opacity();
 		
 	
 	public slots:

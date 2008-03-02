@@ -39,6 +39,9 @@ namespace PlexyDesk
      proxyUser="";
      proxyPasswd="";
      proxyPort=3128;
+
+    //collitions detection
+     collitionOn = false;
     
 	
    }
