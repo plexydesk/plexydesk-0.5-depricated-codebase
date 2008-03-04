@@ -37,6 +37,8 @@ namespace PlexyDesk
 
         signals:
         virtual void data(QVariant&)=0;
+        virtual void pushData(QVariant&) = 0;
+
     };
 } // namespace PlexyDesk
 
