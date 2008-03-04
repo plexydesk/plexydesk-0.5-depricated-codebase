@@ -179,7 +179,7 @@ QGraphicsRectItem::hoverEnterEvent(event);
 
 void  DesktopWidget::mouseMoveEvent ( QGraphicsSceneMouseEvent * event)
 {
-
+/*
 	Config::getInstance()->read();
 	
 	if (!Config::getInstance()->collitionOn){
@@ -199,6 +199,7 @@ void  DesktopWidget::mouseMoveEvent ( QGraphicsSceneMouseEvent * event)
 	    }
         }
      }
+     */
 	QGraphicsItem::mouseMoveEvent(event);
 }
 
@@ -294,19 +295,19 @@ void DesktopWidget::animate()
 
 void DesktopWidget::drawBackdrop(bool b)
 {
-d->backdrop = b;
+    d->backdrop = b;
 }
 
 DesktopWidget::State DesktopWidget::state()
 {
-return d->s ;
+    return d->s ;
 }
 
 
 void DesktopWidget::setState(DesktopWidget::State s)
 {
 //hack
-		d->s = s;
+    d->s = s;
 }
 
 
