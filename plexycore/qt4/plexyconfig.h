@@ -46,7 +46,7 @@ namespace PlexyDesk
 
         private:
            static Config * config;
-           Config(){};
+           Config(){read();};
            Config(Config &){}
            Config& operator=(const Config&);
     };

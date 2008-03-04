@@ -37,7 +37,6 @@ namespace PlexyDesk
         virtual ~ImagePileWidget();
         void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
         void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
-        virtual void mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event );
         QRectF boundingRect() const;
     
         private:

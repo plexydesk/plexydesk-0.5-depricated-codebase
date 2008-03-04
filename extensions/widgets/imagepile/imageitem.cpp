@@ -30,9 +30,6 @@ namespace PlexyDesk
     {
     }
 
-    void ImagePileWidget::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event )
-    {
-    }
     
 void ImagePileWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
     {

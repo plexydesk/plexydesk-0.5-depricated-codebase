@@ -34,8 +34,9 @@
     {
 	 http = new QHttp(this);
 	
-	 PlexyDesk::Config::getInstance()->read();
-	 if(PlexyDesk::Config::getInstance()->proxyOn == true){ 
+         
+//	 PlexyDesk::Config::getInstance()->read();
+	 if(PlexyDesk::Config::getInstance()->proxyOn){ 
 	 QNetworkProxy NtProxy(PlexyDesk::Config::getInstance()->proxyType,
 		               PlexyDesk::Config::getInstance()->proxyURL,
                                PlexyDesk::Config::getInstance()->proxyPort,
@@ -45,7 +46,7 @@
 
               http->setProxy(NtProxy);
 	      QNetworkProxy::setApplicationProxy(NtProxy);
-	qDebug()<<"FlickerData::init()"<<"Proxy state"<<PlexyDesk::Config::getInstance()->proxyOn<<endl;
+	      qDebug()<<"FlickerData::init()"<<"Proxy state"<<PlexyDesk::Config::getInstance()->proxyOn<<endl;
 	}
 	
          connect(http, SIGNAL(requestFinished(int, bool)),
