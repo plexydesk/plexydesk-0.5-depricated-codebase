@@ -29,15 +29,14 @@ namespace PlexyDesk
     class DataInterface : public AbstractPluginInterface 
     {
         public:
-	void init() {}
-        DataInterface(){}
-        ~DataInterface(){}
-        virtual  QGraphicsItem * item() = 0;
+	    void init() {}
+            DataInterface(){}
+            ~DataInterface(){}
+            virtual  QGraphicsItem * item() = 0;
         public slots:
-
+            virtual void pushData(QVariant&) = 0;
         signals:
-        virtual void data(QVariant&)=0;
-        virtual void pushData(QVariant&) = 0;
+            virtual void data(QVariant&)=0;
 
     };
 } // namespace PlexyDesk
