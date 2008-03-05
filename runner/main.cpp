@@ -71,6 +71,7 @@ int main( int argc, char ** argv )
     view->addExtension("plexyfriends");
     view->addExtension("imagepil");
     view->addExtension("plexyclock");
+    view->addExtension("plexyyoutube");
 //    view->addData("flickerengine");
 
     return app.exec();

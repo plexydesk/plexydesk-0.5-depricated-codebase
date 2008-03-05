@@ -53,7 +53,10 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/extensions/widgets/cpu
     ${CMAKE_BINARY_DIR}/extensions/widgets/friendswidget
     ${CMAKE_BINARY_DIR}/extensions/widgets/imagepile
+    ${CMAKE_BINARY_DIR}/extensions/widgets/youtubewidget
     ${CMAKE_BINARY_DIR}/extensions/data/flicker
+    ${CMAKE_BINARY_DIR}/extensions/data/rss
+    ${CMAKE_BINARY_DIR}/extensions/data/utube
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_SOURCE_DIR}/plexylib
     ${CMAKE_SOURCE_DIR}/plexycore/qt4
@@ -84,5 +87,8 @@ endif(NOT APPLE)
 
 add_subdirectory(extensions/widgets/clock)
 add_subdirectory(extensions/widgets/friendswidget)
+add_subdirectory(extensions/widgets/youtubewidget)
 add_subdirectory(extensions/data/flicker)
+add_subdirectory(extensions/data/rss)
+add_subdirectory(extensions/data/utube)
 
