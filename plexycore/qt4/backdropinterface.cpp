@@ -39,3 +39,5 @@ namespace PlexyDesk
 
 } // namespace PlexyDesk
 
+
+#instance "backdropinterface.moc"

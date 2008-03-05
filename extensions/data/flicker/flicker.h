@@ -24,8 +24,9 @@
 #include <backdropinterface.h>
 #include <abstractplugininterface.h>
 #include <QtNetwork>
+#include <datainterface.h>
 
-class VISIBLE_SYM FlickerData :public PlexyDesk::AbstractPluginInterface 
+class VISIBLE_SYM FlickerData :public PlexyDesk::DataInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
@@ -47,6 +48,7 @@ class VISIBLE_SYM FlickerData :public PlexyDesk::AbstractPluginInterface
     QPixmap bg;
     QImage img;
     QBrush paint;
+    QString searchkey;
     QHttp *http;
     QImage newWall;
     QStringList images;

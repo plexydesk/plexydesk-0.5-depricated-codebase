@@ -29,30 +29,30 @@
 	init();
         imageTimer = new QTimer(this);
         connect(imageTimer,SIGNAL(timeout()),this,SLOT(nextImage()));
+        searchkey = "Fresh Morning";
     }
+
     void  FlickerData::init()
     {
 	 http = new QHttp(this);
-	
-         
-//	 PlexyDesk::Config::getInstance()->read();
+
 	 if(PlexyDesk::Config::getInstance()->proxyOn){ 
-	 QNetworkProxy NtProxy(PlexyDesk::Config::getInstance()->proxyType,
-		               PlexyDesk::Config::getInstance()->proxyURL,
-                               PlexyDesk::Config::getInstance()->proxyPort,
-                               PlexyDesk::Config::getInstance()->proxyUser,
-                               PlexyDesk::Config::getInstance()->proxyPasswd
-			      );
+	     QNetworkProxy NtProxy(PlexyDesk::Config::getInstance()->proxyType,
+		                   PlexyDesk::Config::getInstance()->proxyURL,
+                                   PlexyDesk::Config::getInstance()->proxyPort,
+                                   PlexyDesk::Config::getInstance()->proxyUser,
+                                   PlexyDesk::Config::getInstance()->proxyPasswd
+			           );
 
               http->setProxy(NtProxy);
 	      QNetworkProxy::setApplicationProxy(NtProxy);
-	      qDebug()<<"FlickerData::init()"<<"Proxy state"<<PlexyDesk::Config::getInstance()->proxyOn<<endl;
 	}
 	
          connect(http, SIGNAL(requestFinished(int, bool)),
-                         SLOT(loadImages(int, bool)));
+                       SLOT(loadImages(int, bool)));
+
 	 http->setHost("www.flickr.com");    
-         requestID= http->get(QString("/search/?w=all&q=%1&m=text").arg("fresh morning"));
+         requestID= http->get(QString("/search/?w=all&q=%1&m=text").arg(searchkey));
     }
     FlickerData::~FlickerData()
     {
@@ -71,6 +71,12 @@
             currentSlide = 0;
             imageTimer->stop();
        }
+   }
+   void FlickerData::pushData(QVariant& str)
+   {
+     searchkey = str.toString();
+     init();
+
    }
    void FlickerData::loadImages(int id, bool stat)
    {
