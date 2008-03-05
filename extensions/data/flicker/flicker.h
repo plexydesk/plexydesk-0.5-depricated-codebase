@@ -39,6 +39,7 @@ class VISIBLE_SYM FlickerData :public PlexyDesk::AbstractPluginInterface
     public slots:
           void loadImages(int, bool);
           void nextImage();
+          void pushData(QVariant&);
     signals:
          void data(QVariant&);
 

@@ -23,6 +23,7 @@
 #include <QPixmap>
 #include <QPaintEvent>
 #include <math.h>
+#include <config.h>
 #include <QBitmap>
 
 namespace PlexyDesk
@@ -31,10 +32,9 @@ namespace PlexyDesk
 YouTubeWidget::YouTubeWidget (const QRectF &rect, QWidget *widget):
 DesktopWidget(rect,widget)
 {
-  shade == 0;
-  //getBaseData();
+  shade = 0;
   moveY = 0;
-  setPath("/usr/share/plexy/skins/default/youtube/");
+  setPath(QString(PLEXPREFIX) +"/theme/skins/default/widget/default/youtube/");
   setDockImage(QPixmap(prefix + "icon.png"));
 
   PlexyDesk::DataInterface * utubeEngine = (PlexyDesk::DataInterface*)
