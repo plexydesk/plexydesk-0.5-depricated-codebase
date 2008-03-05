@@ -25,7 +25,11 @@ ClassicBackdrop::ClassicBackdrop(QObject * object)
     bg = QPixmap( QString(PLEXPREFIX)+"/share/plexy/skins/default/default.png");
     width = QDesktopWidget().availableGeometry().width();
     height = QDesktopWidget().availableGeometry().height();
-    img = QImage(width,height,QImage::Format_ARGB32_Premultiplied);
+#ifdef Q_WS_MAC
+    width  =  QDesktopWidget().screenGeometry().width();
+    height = QDesktopWidget().screenGeometry().height();
+#endif
+      img = QImage(width,height,QImage::Format_ARGB32_Premultiplied);
     QPainter p;
     p.begin(&img);
     p.drawPixmap(QRect(0,0,width,height),bg);
@@ -57,7 +61,18 @@ void ClassicBackdrop::data(QVariant& data)
 
 void ClassicBackdrop::render(QPainter *p,QRectF r)
 {
+
+#ifdef Q_WS_MAC
+		p->setOpacity(0.0);
+		//p->fillRect(r.x(),r.y(),r.width(),r.height(),QColor(Qt::transparent));
+		
+#endif
+
+#ifdef Q_WS_X11
    p->fillRect(r.x(),r.y(),r.width(),r.height(),paint);
+
+#endif
+
 }
 
 Q_EXPORT_PLUGIN2(ClassicBackdrop,ClassicBackdrop)

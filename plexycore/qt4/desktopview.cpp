@@ -40,6 +40,9 @@ class  DesktopView::Private
 
 DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsView(scene,parent),d(new Private)
 {
+       setWindowFlags(Qt::FramelessWindowHint);
+       setAttribute(Qt::WA_ContentsPropagated );
+       //scene->setBackgroundBrush(QColor(Qt::transparent));
        setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
        setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
        setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
