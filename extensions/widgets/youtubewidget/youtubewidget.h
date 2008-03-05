@@ -45,6 +45,7 @@ class YouTubeWidget:public DesktopWidget
         YouTubeWidget(const QRectF &rect, QWidget *widget = 0);
         virtual ~YouTubeWidget();
 	virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem * e, QWidget *);
+	virtual void wheelEvent(QGraphicsSceneWheelEvent * event);
 	void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
 	void setPath(QString);
 	void drawWidget();;
@@ -73,7 +74,7 @@ class YouTubeWidget:public DesktopWidget
 	private:
 
 	int shade;
-	
+	int moveY;	
 	QImage m_bg;
     QImage mItem_bg;
 

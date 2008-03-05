@@ -63,8 +63,9 @@ void ClassicBackdrop::render(QPainter *p,QRectF r)
 {
 
 #ifdef Q_WS_MAC
-		p->setOpacity(0.0);
-		//p->fillRect(r.x(),r.y(),r.width(),r.height(),QColor(Qt::transparent));
+	//	p->setOpacity(0.0);
+//	p->fillRect(r.x(),r.y(),r.width(),r.height(),QColor(Qt::transparent));
+   	p->fillRect(r.x(),r.y(),r.width(),r.height(),paint);
 		
 #endif
 
