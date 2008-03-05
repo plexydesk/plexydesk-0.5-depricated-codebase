@@ -92,7 +92,7 @@ void
 void YouTubeWidget::wheelEvent(QGraphicsSceneWheelEvent * event)
 {
 	update();
-        moveY -= event->delta()/10;
+        moveY -= event->delta();
 }
 
 
@@ -117,7 +117,7 @@ void YouTubeWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e
   p->restore ();
   p->save();
   p->setRenderHints(QPainter::SmoothPixmapTransform |QPainter::Antialiasing |QPainter::HighQualityAntialiasing);
-  QRect cliper (0,10,r.width(),r.height()-60);
+  QRect cliper (0,20,r.width(),r.height()-60);
   p->setClipRect(cliper);
   if(mVideos.size()>0){
     int texty=moveY; int tagy=moveY+30;
