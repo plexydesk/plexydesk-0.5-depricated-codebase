@@ -70,10 +70,7 @@ void YouTubeWidget::data(QVariant& data)
     videoentity.desc = (mVariantMap["description"]).toString();
     videoentity.thumb = (mVariantMap["thumb"]).toString();
     
-    //qDebug() << videoentity->title;
-    
     mVideos.append(videoentity);
- //  	scroll(0,2); 
     emit dataChanged();
 }
 
@@ -84,22 +81,18 @@ void
    
    mItem_bg = QImage (prefix + "videotag.png");
 
-   /*gloss stuff*/
-   //gloss = QImage (prefix + "boarderLarge.png");;
 }
 
 void
         YouTubeWidget::drawItems()
 {
-    //qDebug() << mVideos.count();
     update ();
-    //getNxtData();
 }
 
 void YouTubeWidget::wheelEvent(QGraphicsSceneWheelEvent * event)
 {
 	update();
-        moveY -= event->delta()/100;
+        moveY -= event->delta()/10;
 }
 
 
@@ -107,8 +100,6 @@ void YouTubeWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e
 {
 
   QRectF r  = e->exposedRect;
-  //scroll(0,2,e->exposedRect);
-    //p->setOpacity(0.8);
   p->setCompositionMode(QPainter::CompositionMode_Source);
   p->fillRect(rect(), Qt::transparent);
 
@@ -124,9 +115,10 @@ void YouTubeWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e
     }
 
   p->restore ();
-
+  p->save();
   p->setRenderHints(QPainter::SmoothPixmapTransform |QPainter::Antialiasing |QPainter::HighQualityAntialiasing);
-
+  QRect cliper (0,10,r.width(),r.height()-60);
+  p->setClipRect(cliper);
   if(mVideos.size()>0){
     int texty=moveY; int tagy=moveY+30;
     for (int i = 0; i < mVideos.size(); ++i) {
@@ -137,20 +129,17 @@ void YouTubeWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e
         
         p->setPen( QColor(255,255,255) );
         p->setFont( QFont("Bitstream Charter",10,QFont::Bold) );
-        p->drawText(20,texty,300,30,Qt::AlignLeft,QString(videoentity.title) );
+        p->drawText(40,texty+60,300,30,Qt::AlignLeft,QString(videoentity.title) );
         
         p->setPen( QColor(255,255,255) );
         p->setFont( QFont("Bitstream Charter",9) );
-        p->drawText(30,texty+30,250,100,Qt::AlignLeft|Qt::TextWordWrap,QString(videoentity.desc) );
+        p->drawText(40,texty+90,250,100,Qt::AlignLeft|Qt::TextWordWrap,QString(videoentity.desc) );
 
         
         texty += mItem_bg.height(); tagy += mItem_bg.height();
     }
   }
-
-//   p->setPen(QColor(255,255,255));
-//   p->setFont(QFont("Bitstream Charter",10,QFont::Bold));
-//   p->drawText(QRect(70,130,64,64), Qt::AlignCenter ,"CPU" );
+  p->restore();
 }
 
 
