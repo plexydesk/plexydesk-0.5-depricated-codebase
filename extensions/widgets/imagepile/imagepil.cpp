@@ -26,7 +26,7 @@ ImagePile::ImagePile(QObject * object)
 {
     flow = new PictureFlow(0);
     flow->setSlideSize(QSize(320/2, 240/2));
-    flow->resize(350,150);
+    flow->resize(300,120);
     flow->move(24,8);
 //    emit dataChange();	
     widget =  new PlexyDesk::ImagePileWidget(QRectF(0, 0, 400, 200), flow);
