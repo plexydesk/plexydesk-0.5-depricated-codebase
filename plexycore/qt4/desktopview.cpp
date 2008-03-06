@@ -36,6 +36,9 @@ class  DesktopView::Private
     WidgetInterface * widgets;       
     DataInterface * data;       
     BackdropFactory * bgfact;
+    QGraphicsGridLayout * gridLayout;
+    int row;
+    int column;
 };
 
 DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsView(scene,parent),d(new Private)
@@ -56,6 +59,11 @@ DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsV
        if (d->bIface) {
           connect(d->bIface,SIGNAL(dataChange()),this,SLOT(backgroundChanged()));
        }
+
+       d->gridLayout = new QGraphicsGridLayout ();
+       d->row = 0;
+       d->column = 100;
+       //this->scene()->addItem(d->gridLayout);
 }
 
 DesktopView::~DesktopView()
@@ -78,6 +86,11 @@ void DesktopView::addExtension(const QString& name)
 		if(widget){
 		      widget->configState(DesktopWidget::DOCK);
 		      scene()->addItem(widget);
+                      widget->setPos(d->row,d->column);
+                      d->row += widget->boundingRect().width()+100;
+                      d->column += widget->boundingRect().height()+100;
+                      //d->gridLayout->addItem(widget,d->row++,d->column++);
+
 		}
 	}
 }
