@@ -79,10 +79,11 @@ class DesktopWidget::Private
 
 		d->hideTimer  = new QTimer(this);
 		connect (d->hideTimer , SIGNAL(timeout()),this, SLOT(animateHide()));	
-	
-			d->timeLine = new QTimeLine();
-			d->timeLine->setDuration(300);
-			d->timeLine->setFrameRange(0, 300);
+
+			d->timeLine = new QTimeLine(100,this);
+			//d->timeLine->setDuration(300);
+			d->timeLine->setFrameRange(0,100);
+                        //d->timeLine->setUpdateInterval(45);
     			connect(d->timeLine, SIGNAL(frameChanged(int)), this, SLOT(updateStep(int)));
     			connect(d->timeLine, SIGNAL(stateChanged ( QTimeLine::State)), this, 
     			SLOT( stateChanged(QTimeLine::State) ));
@@ -122,17 +123,27 @@ void DesktopWidget::spin()
 
 void DesktopWidget::hideWidget()
 { 
-        d->timeLine->setDirection(QTimeLine::Forward);
-        if (d->timeLine->state() == QTimeLine::NotRunning)
-        {
+    
+    if (d->timeLine->state() == QTimeLine::NotRunning){
                         d->timeLine->start();
         }
 }
 
 void DesktopWidget::stateChanged(QTimeLine::State state)
 {
-        if(state == QTimeLine::NotRunning)
-        {
+    
+   
+    if(state == QTimeLine::NotRunning){
+        //resetMatrix();
+	d->opacity = 1.0;
+
+        if ( this->state() == DOCK) {
+	prepareGeometryChange ();
+	setRect(0,0,d->dock.width(),d->dock.height());
+        //resetMatrix();
+        }
+
+        /*
         resetMatrix();
 	prepareGeometryChange ();
 	setRect(0,0,d->dock.width(),d->dock.height());
@@ -144,29 +155,32 @@ void DesktopWidget::stateChanged(QTimeLine::State state)
 	update();
 	setPos(mapToScene(QPoint(x_,y_))); 
 	setCacheMode(DeviceCoordinateCache);
-	        if(d->proxyWidget)
-	        {
+
+        if(d->proxyWidget){
 	                d->proxyWidget->hide();
 	        }
+                */
         }
+       
 }
 
 
 void DesktopWidget::updateStep(int frame)
 {
-
+//hack
 
     QPointF center = boundingRect().center();
     QTransform mat = QTransform();
     mat.translate(center.x(), center.y());
-    mat.scale(1 - frame / 450.0, 1 - frame / 450.0);
+    mat.scale( 1- frame/720.0 ,1-frame/720.0 );
     mat.translate(-center.x(), -center.y());
     setTransform(mat);
-       
+      
                 if( d->opacity >= 0.0)
                 {
-                         d->opacity -= 0.2;
+                //         d->opacity -= 0.2;
                 }
+         
                 update();
 }
 
@@ -179,70 +193,84 @@ QGraphicsRectItem::hoverEnterEvent(event);
 
 void  DesktopWidget::mouseMoveEvent ( QGraphicsSceneMouseEvent * event)
 {
-/*
-	Config::getInstance()->read();
-	
-	if (!Config::getInstance()->collitionOn){
-	 QGraphicsItem::mouseMoveEvent(event);
-	 return;
-       }else {
-	QList<QGraphicsItem*>  list = collidingItems();
-	if(list.count() > 0){
-		foreach(QGraphicsItem *item,list) { 
-                 if(item == this) {
-                 break;
-                 } else{
-                               DesktopWidget  * wigy = (DesktopWidget*)item;
-				if( wigy->state() == DOCK)
-				wigy->spin();
-                }
-	    }
-        }
-     }
-     */
 	QGraphicsItem::mouseMoveEvent(event);
 }
 
 void DesktopWidget::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event )
 {
 
-d->clickPos = event->pos();
 
-if( d->s != DOCK)
-{
-if (d->proxyWidget )
-{
+  if ( d->s != DOCK) {
+        if (d->proxyWidget) {
+            d->proxyWidget->hide();
+        }
+   setState(DOCK);
+   prepareGeometryChange ();
+   setRect(0,0,d->dock.width(),d->dock.height());
+   d->timeLine->setDirection(QTimeLine::Forward);
+   hideWidget();
+  }else {
+        d->hideTimer->stop();
+	setState(NORMALSIDE);
+	prepareGeometryChange ();
+	setRect(d->saveRect);
+	d->opacity = 1.0;
+
+	if (d->proxyWidget ){
+        d->proxyWidget->show();
+        }
+
+        d->timeLine->setDirection(QTimeLine::Backward);
+        hideWidget();
+  }
+
+/*
+   d->clickPos = event->pos();
+
+   if( d->s != DOCK){
+       if (d->proxyWidget ){
         d->proxyWidget->hide();
-}
-hideWidget();
-}
-else
-{
-	d->hideTimer->stop();
+       }
+    d->timeLine->setDirection(QTimeLine::Forward);
+    //hideWidget();
+  //resetMatrix();
+	prepareGeometryChange ();
+	setRect(0,0,d->dock.width(),d->dock.height());
+	QPointF center = rect().center();//d->clickPos;
+	int x_ = center.x();// - d->dock.width()/2;
+	int y_ = center.y();// -d->dock.height()/2 ;
+	setState(DOCK);
+	d->opacity = 1.0;
+	update();
+	setPos(mapToScene(QPoint(x_,y_))); 
+	setCacheMode(DeviceCoordinateCache);
+  } else {
+
+        d->timeLine->setDirection(QTimeLine::Backward);
+        d->hideTimer->stop();
+	setState(NORMALSIDE);
 	resetMatrix();
 	prepareGeometryChange ();
 	setRect(d->saveRect);
-	setState(NORMALSIDE);
 	d->opacity = 1.0;
-	if (d->proxyWidget )
-        {
+	if (d->proxyWidget ){
         d->proxyWidget->show();
         }
-	update();
-	setCacheMode(DeviceCoordinateCache);
+  //      hideWidget();
+
+    update();
+    setCacheMode(DeviceCoordinateCache);
 }
 
 QGraphicsRectItem::mouseDoubleClickEvent(event);
+    */
 }
 
 void DesktopWidget::mousePressEvent ( QGraphicsSceneMouseEvent * event )
 {
         if ( event->buttons() == Qt::RightButton) {
             spin();
-        } else {
-
-        qDebug()<<"Not doing any thing "<<endl;
-        }
+        } 
 
 }
 
@@ -285,7 +313,7 @@ void DesktopWidget::animate()
 		return;
 	}
 
-        d->opacity -= 0.2;
+        //d->opacity -= 0.2;
 
 
 }
