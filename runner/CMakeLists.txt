@@ -14,23 +14,32 @@ INCLUDE_DIRECTORIES(
 					   		 )
 
 include_directories(${CMAKE_SOURCE_DIR}/lib/)
-
 ########### source files ###############
 SET(plexydesk_PART_SRCS
 	main.cpp
 )
 
-
+SET (qtviz_MOC
+	../plexycore/qt4/baserender.cpp
+	../plexycore/qt4/desktopview.cpp
+	../plexycore/qt4/pluginloader.cpp
+	../plexycore/qt4/widgetfactory.cpp
+	../plexycore/qt4/desktopwidget.cpp
+	../plexycore/qt4/abstractplugininterface.cpp
+	../plexycore/qt4/backdropfactory.cpp
+	../extensions/backdrop/classicdrop/backdrop.cpp
+	)
+	
+QT4_AUTOMOC(${qtviz_MOC})
 
 ########### prepare files ###############
-ADD_EXECUTABLE(plexydesk ${plexydesk_PART_SRCS})
+ADD_EXECUTABLE(plexydesk ${plexydesk_PART_SRCS} ${qtviz_MOC})
 #KDE4_ADD_PLUGIN(plexydesk ${raptor_plasmoid_PART_SRCS})
 
 
 TARGET_LINK_LIBRARIES(
 	plexydesk 
 	qtviz
-	plexymagic
 	${QT_QTGUI_LIBRARY}
     ${QT_QTCORE_LIBRARY}
     ${QT_QTOPENGL_LIBRARY}

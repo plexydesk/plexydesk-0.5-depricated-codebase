@@ -15,7 +15,14 @@ SET (utubeenginesrc
 	utube.cpp
 		)
 
-add_library (utubeengine SHARED ${utubeenginesrc})
+SET (plexicore_MOC
+    ../../../plexycore/qt4/abstractplugininterface.cpp
+    ../../../plexycore/qt4/pluginloader.cpp
+    )
+    
+QT4_AUTOMOC( ${plexicore_MOC})
+
+add_library (utubeengine SHARED ${utubeenginesrc} ${plexicore_MOC})
 QT4_AUTOMOC( ${utubeenginesrc}) 
 
 #SET_TARGET_PROPERTIES(plexy

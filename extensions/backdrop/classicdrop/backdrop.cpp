@@ -74,6 +74,9 @@ void ClassicBackdrop::render(QPainter *p,QRectF r)
 
 #endif
 
+#ifdef Q_WS_WIN
+   p->fillRect(r.x(),r.y(),r.width(),r.height(),paint);
+#endif
 }
 
 Q_EXPORT_PLUGIN2(ClassicBackdrop,ClassicBackdrop)

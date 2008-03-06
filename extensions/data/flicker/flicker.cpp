@@ -131,6 +131,7 @@
 
    QGraphicsItem * FlickerData::item()
    {
+       return NULL;
    }
 
    void FlickerData::render(QPainter *p,QRectF r)

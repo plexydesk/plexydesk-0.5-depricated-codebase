@@ -135,6 +135,8 @@ void RssData::parseXml()
 
 QGraphicsItem * RssData::item()
 {
+    /// \todo: null for success compilation only
+    return NULL;
 }
 
 void RssData::render( QPainter *p,QRectF r )

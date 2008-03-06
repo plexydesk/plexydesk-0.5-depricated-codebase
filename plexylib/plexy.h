@@ -49,6 +49,11 @@
 #define __PLEXY_EXPORTS
 
 #include <config.h>
+#include <QtCore/QtGlobal>
+
+#ifdef Q_WS_WIN
+#define __PRETTY_FUNCTION__ QString("%1 %2 %3 %4 %4").arg(__FILE__).arg(__LINE__).arg(__FUNCTION__).arg(__FUNCDNAME__).arg(__FUNCSIG__)
+#endif
 
 #ifdef __GNUC__
 #define PACK __attribute__((__packed__))

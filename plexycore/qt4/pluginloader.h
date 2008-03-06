@@ -51,12 +51,16 @@ namespace PlexyDesk
 
         protected:
             void loadDesktop(const QString& path);
-            void  load(const QString& interface,const QString& plugin);
+            void load(const QString& _interface, const QString& plugin);
  
         private:
             class Private;
             Private * const d ;
+#ifdef Q_WS_WIN
+            static PluginLoader * mInstance;
+#else
             static VISIBLE_SYM PluginLoader * mInstance;
+#endif
             Interface groups;
 
 

@@ -72,6 +72,10 @@ PluginLoader * PluginLoader::mInstance = 0;
     QPluginLoader loader (QString (PLEXPREFIX) + "/lib/plexyext/lib" + pluginName + ".so");
     #endif
 
+    #ifdef Q_WS_WIN
+    QPluginLoader loader (QString (PLEXPREFIX) + "/lib/plexyext/" + pluginName + ".dll");
+    #endif
+
     QObject *plugin = loader.instance ();
 
     if (plugin)

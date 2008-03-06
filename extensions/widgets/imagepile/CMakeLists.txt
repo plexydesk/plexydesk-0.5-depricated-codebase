@@ -14,10 +14,18 @@ INCLUDE_DIRECTORIES(
 SET (imagepilsrc
 	imageitem.cpp
 	imagepil.cpp    
-        pictureflow.cpp
+  pictureflow.cpp
 		)
 
-add_library (imagepil SHARED ${imagepilsrc})
+SET (plexicore_MOC
+  ../../../plexycore/qt4/pluginloader.cpp
+  ../../../plexycore/qt4/abstractplugininterface.cpp
+  ../../../plexycore/qt4/desktopwidget.cpp
+    )
+    
+QT4_AUTOMOC( ${plexicore_MOC})
+
+add_library (imagepil SHARED ${imagepilsrc} ${plexicore_MOC})
 QT4_AUTOMOC( ${imagepilsrc}) 
 
 #SET_TARGET_PROPERTIES(plexy

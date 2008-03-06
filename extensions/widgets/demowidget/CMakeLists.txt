@@ -16,7 +16,15 @@ SET (widgetdemosrc
 	widgetitem.cpp
 		)
 
-add_library (widgetdemo SHARED ${widgetdemosrc})
+SET (plexicore_MOC
+    ../../../plexycore/qt4/abstractplugininterface.cpp
+    ../../../plexycore/qt4/pluginloader.cpp
+    ../../../plexycore/qt4/desktopwidget.cpp
+    )
+    
+QT4_AUTOMOC( ${plexicore_MOC})
+
+add_library (widgetdemo SHARED ${widgetdemosrc} ${plexicore_MOC})
 QT4_AUTOMOC( ${widgetdemosrc}) 
 
 #SET_TARGET_PROPERTIES(plexy

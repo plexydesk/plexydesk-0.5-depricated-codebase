@@ -12,19 +12,19 @@ INCLUDE_DIRECTORIES(
 
 
 SET (qtvizsrc 	
-	#	baserender.cpp 
+	baserender.cpp 
 	desktopview.cpp
 	pluginloader.cpp
 	netwm.cpp
 	abstractplugininterface.cpp
 	fakemime.cpp
 	#	extensionfactory.cpp
-	#	backdropfactory.cpp
-#	widgetfactory.cpp
+	backdropfactory.cpp
+	widgetfactory.cpp
 	desktopwidget.cpp
 	plexyconfig.cpp
 		)
-
+    
 add_library (qtviz SHARED ${qtvizsrc})
 QT4_AUTOMOC( ${qtvizsrc}) 
 
@@ -37,4 +37,8 @@ TARGET_LINK_LIBRARIES(
 	       ${QT_QTOPENGL_LIBRARY}
        )
 
+if(NOT WIN32)
 INSTALL(TARGETS qtviz DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/)
+elseif(WIN32)
+INSTALL(TARGETS qtviz DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/)
+endif(NOT WIN32)

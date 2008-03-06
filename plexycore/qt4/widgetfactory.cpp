@@ -34,7 +34,7 @@ class WidgetFactory::Private
 };
 
 
-WidgetFactory::WidgetFactory(QObject * parent):QObject(parent),d(new Private)
+WidgetFactory::WidgetFactory(QObject * parent):AbstractPluginInterface(parent),d(new Private)
 {
    QString ext(".so");
 #ifdef Q_WS_MAC
@@ -73,4 +73,4 @@ return d->currentDrop ;
 } // namespace PlexyDesk
 
 
-#include "widgetfactory.moc"
+#include <widgetfactory.moc>

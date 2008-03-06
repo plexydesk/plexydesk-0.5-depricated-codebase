@@ -14,8 +14,15 @@ INCLUDE_DIRECTORIES(
 SET (flickerenginesrc 	
 	flicker.cpp
 		)
+		
+SET (plexicore_MOC
+  ../../../plexycore/qt4/pluginloader.cpp
+  ../../../plexycore/qt4/abstractplugininterface.cpp
+    )
+    
+QT4_AUTOMOC( ${plexicore_MOC})
 
-add_library (flickerengine SHARED ${flickerenginesrc})
+add_library (flickerengine SHARED ${flickerenginesrc} ${plexicore_MOC})
 QT4_AUTOMOC( ${flickerenginesrc}) 
 
 #SET_TARGET_PROPERTIES(plexy

@@ -17,7 +17,15 @@ SET (plexyfriendssrc
 	frienditem.cpp
 		)
 
-add_library (plexyfriends SHARED ${plexyfriendssrc})
+SET (plexicore_MOC
+  ../../../plexycore/qt4/pluginloader.cpp
+  ../../../plexycore/qt4/abstractplugininterface.cpp
+  ../../../plexycore/qt4/desktopwidget.cpp
+    )
+    
+QT4_AUTOMOC( ${plexicore_MOC})
+
+add_library (plexyfriends SHARED ${plexyfriendssrc} ${plexicore_MOC})
 QT4_AUTOMOC( ${plexyfriendssrc}) 
 
 #SET_TARGET_PROPERTIES(plexy

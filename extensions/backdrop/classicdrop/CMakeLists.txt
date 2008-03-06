@@ -14,8 +14,15 @@ INCLUDE_DIRECTORIES(
 SET (classicbackdropsrc 	
 	backdrop.cpp
 		)
+		
+SET (plexicore_MOC
+  ../../../plexycore/qt4/pluginloader.cpp
+  ../../../plexycore/qt4/abstractplugininterface.cpp
+    )
+    
+QT4_AUTOMOC( ${plexicore_MOC})
 
-add_library (classicbackdrop SHARED ${classicbackdropsrc})
+add_library (classicbackdrop SHARED ${classicbackdropsrc} ${plexicore_MOC})
 QT4_AUTOMOC( ${classicbackdropsrc}) 
 
 #SET_TARGET_PROPERTIES(plexy
@@ -32,6 +39,7 @@ TARGET_LINK_LIBRARIES(
 	       ${QT_QTCORE_LIBRARY}
 	       ${QT_QTOPENGL_LIBRARY}
        )
+
 
 INSTALL(TARGETS classicbackdrop DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext/)
 install(FILES classic.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups/)

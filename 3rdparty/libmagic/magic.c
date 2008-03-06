@@ -46,6 +46,12 @@ static char rcsid[] = "$Id: magic.c,v 1.41 2000/05/26 07:31:31 fyre Exp $";
 #include "magic.h"
 #undef MAGIC_C
 
+#include <QtCore/QtGlobal>
+#ifdef Q_WS_WIN
+#include <stdio.h>
+#define snprintf _snprintf
+#endif
+
 /* exported functions */
 magichandle_t* magic_init (unsigned flags);
 int magic_close (magichandle_t* mh);
@@ -436,7 +442,7 @@ static int snprintf1s (char* dest, size_t n, const char* format, const char* str
 	if (!validate_format (format, string_type))
 		return 0;
 
-	return snprintf(dest,n,format, str);
+    return snprintf(dest,n,format, str);
 }
 
 /*

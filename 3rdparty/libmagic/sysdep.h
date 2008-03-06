@@ -43,6 +43,10 @@
 
 #define _GNU_SOURCE
 
+#ifdef Q_WS_WIN
+#include <QtGlobal>
+#endif
+
 /* standard integer sizes */
 #if (__GLIBC__ >= 2)
 # include <stdint.h>
@@ -64,9 +68,14 @@ typedef unsigned int           uint32_t;
 #  if (BSD >= 199103) || defined(__FreeBSD__) || defined(__OpenBSD__)
 #   include <machine/endian.h>
 #  else
-#   define BIG_ENDIAN		4321
-#   define LITTLE_ENDIAN	1234
-#   error Define your byte order in sysdep.h 
+#   if (Q_BYTE_ORDER==Q_LITTLE_ENDIAN)
+#     define LITTLE_ENDIAN  1234
+#     define BYTE_ORDER LITTLE_ENDIAN
+#   else
+#     define BIG_ENDIAN		4321
+#     define LITTLE_ENDIAN	1234
+#     error Define your byte order in sysdep.h
+#   endif
 /*
 #   define BYTE_ORDER	LITTLE_ENDIAN
 #   define BYTE_ORDER	BIG_ENDIAN

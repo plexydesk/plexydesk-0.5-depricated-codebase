@@ -21,6 +21,11 @@
 #include <QPainter>
 #include <QtGui>
 #include <QtOpenGL>
+#include <QtCore/QtGlobal>
+
+#ifdef Q_WS_WIN
+#define GL_MULTISAMPLE 0x809D
+#endif
 
 namespace PlexyDesk
 {

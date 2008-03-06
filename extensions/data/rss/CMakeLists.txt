@@ -15,7 +15,14 @@ SET (rssenginesrc
 	rss.cpp
 		)
 
-add_library (rssengine SHARED ${rssenginesrc})
+SET (plexicore_MOC
+    ../../../plexycore/qt4/abstractplugininterface.cpp
+    ../../../plexycore/qt4/pluginloader.cpp
+    )
+    
+QT4_AUTOMOC( ${plexicore_MOC})
+
+add_library (rssengine SHARED ${rssenginesrc} ${plexicore_MOC})
 QT4_AUTOMOC( ${rssenginesrc}) 
 
 #SET_TARGET_PROPERTIES(plexy

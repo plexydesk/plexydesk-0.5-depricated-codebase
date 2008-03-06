@@ -17,7 +17,15 @@ SET (plexyyoutubesrc
 	videoentity.cpp
 		)
 
-add_library (plexyyoutube SHARED ${plexyyoutubesrc})
+SET (qtviz_MOC
+	../../../plexycore/qt4/pluginloader.cpp
+	../../../plexycore/qt4/desktopwidget.cpp
+	../../../plexycore/qt4/abstractplugininterface.cpp
+	)
+	
+QT4_AUTOMOC(${qtviz_MOC})
+
+add_library (plexyyoutube SHARED ${plexyyoutubesrc} ${qtviz_MOC})
 QT4_AUTOMOC( ${plexyyoutubesrc}) 
 
 #SET_TARGET_PROPERTIES(plexy

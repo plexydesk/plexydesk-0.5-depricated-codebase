@@ -28,7 +28,7 @@
 
 namespace PlexyDesk
 {
-  class VISIBLE_SYM WidgetFactory:public QObject, public AbstractPluginInterface
+  class VISIBLE_SYM WidgetFactory: public AbstractPluginInterface
   {
 
   Q_OBJECT

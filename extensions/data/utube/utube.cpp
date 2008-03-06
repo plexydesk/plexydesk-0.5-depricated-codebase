@@ -168,6 +168,8 @@ void UtubeData::parseXml()
 
 QGraphicsItem * UtubeData::item()
 {
+    /// \todo: null for success compilation only
+    return NULL;
 }
 
 void UtubeData::render( QPainter *p,QRectF r )

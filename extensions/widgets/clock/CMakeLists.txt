@@ -17,7 +17,15 @@ SET (plexyclocksrc
 	clockwidget.cpp
 		)
 
-add_library (plexyclock SHARED ${plexyclocksrc})
+SET (plexicore_MOC
+  ../../../plexycore/qt4/pluginloader.cpp
+  ../../../plexycore/qt4/abstractplugininterface.cpp
+  ../../../plexycore/qt4/desktopwidget.cpp
+    )
+    
+QT4_AUTOMOC( ${plexicore_MOC})
+
+add_library (plexyclock SHARED ${plexyclocksrc} ${plexicore_MOC})
 QT4_AUTOMOC( ${plexyclocksrc}) 
 
 #SET_TARGET_PROPERTIES(plexy
