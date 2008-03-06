@@ -19,11 +19,14 @@
 #include "imageitem.h"
 #include <QtCore>
 #include <QtGui>
+#include <config.h>
 
 namespace PlexyDesk
 {
     ImagePileWidget::ImagePileWidget(const QRectF &rect, QWidget *widget ):DesktopWidget(rect,widget)
     {
+        setDockImage(QPixmap(QString(PLEXPREFIX)+"/share/plexy/skins/widgets/widget01/pila.png"));
+        setFaceImage(QPixmap(QString(PLEXPREFIX)+"/share/plexy/skins/widgets/widget01/pila.png")); 
     }
     
     ImagePileWidget::~ImagePileWidget()

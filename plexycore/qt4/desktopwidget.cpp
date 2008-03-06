@@ -54,17 +54,14 @@ class DesktopWidget::Private
 			d->proxyWidget = new QGraphicsProxyWidget (this);
 			d->proxyWidget->setFocusPolicy(Qt::StrongFocus);
 			d->proxyWidget->setWidget(widget);
-			//d->proxyWidget->setGeometry(re);	
 			d->proxyWidget->show();
 		}
 		d->backdrop = true;
 		d->opacity = 1.0;
-		//d->hidding = false;
 		d->panel = QPixmap(QString(PLEXPREFIX)+"/share/plexy/skins/widgets/widget01/Panel.png");
 		d->back = QPixmap(QString(PLEXPREFIX)+"/share/plexy/skins/widgets/widget01/reverse.png");
 		d->dock = QPixmap (QString(PLEXPREFIX)+"/share/plexy/skins/widgets/widget01/Icon.png");
 		d->scale = 1;
-		//setRect(QRect(0,0,d->panel.width(),d->panel.height()));
 		setCacheMode (QGraphicsItem::ItemCoordinateCache,d->panel.size());
 		setCacheMode(DeviceCoordinateCache);
 		setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);

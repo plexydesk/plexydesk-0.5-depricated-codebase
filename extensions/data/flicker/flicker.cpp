@@ -26,15 +26,15 @@
     {
         slideCount = 0;
         currentSlide = 0;
+        searchkey = "fresh morning";
+	http = new QHttp(this);
 	init();
         imageTimer = new QTimer(this);
         connect(imageTimer,SIGNAL(timeout()),this,SLOT(nextImage()));
-        searchkey = "Fresh Morning";
     }
 
     void  FlickerData::init()
     {
-	 http = new QHttp(this);
 
 	 if(PlexyDesk::Config::getInstance()->proxyOn){ 
 	     QNetworkProxy NtProxy(PlexyDesk::Config::getInstance()->proxyType,
@@ -80,6 +80,7 @@
    }
    void FlickerData::loadImages(int id, bool stat)
    {
+
      if (id == requestID) {
         if (http->bytesAvailable() > 0) {
             QByteArray ba = http->readAll();
@@ -96,7 +97,7 @@
                         char farmID = addr.at(11);
                         QByteArray serverID (addr.mid(30,4));
                         addr = addr.replace(QByteArray("_m"),QByteArray("_o"));
-                        // qDebug()<<addr<<farmID<<serverID<<endl;
+                         qDebug()<<addr<<farmID<<serverID<<endl;
                         // images << QString(addr.mid(len,
                         //addr.size()-len).constData());
                         images<< QString(addr);
