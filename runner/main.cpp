@@ -47,6 +47,12 @@ using namespace PlexyDesk;
 int main( int argc, char ** argv )
 {
     QApplication app(argc,argv);
+
+#ifdef Q_WS_WIN
+    QString pluginPath = app.applicationDirPath() + "/plugins/imageformats";
+    app.addLibraryPath(pluginPath);
+#endif
+
     qDebug() << PlexyDesk::PluginLoader::getInstance()->listPlugins("Desktop");
     qDebug() << PlexyDesk::PluginLoader::getInstance()->listPlugins("Media");
     qDebug() << PlexyDesk::FakeMime::getInstance()->getType("hello.png")<<endl;
