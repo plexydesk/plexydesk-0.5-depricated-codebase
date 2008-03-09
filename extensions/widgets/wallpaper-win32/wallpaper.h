@@ -1,7 +1,7 @@
 /*******************************************************************************
 * This file is part of PlexyDesk.
 *  Maintained by : Siraj Razick <siraj@kde.org>
-*  Authored By  :
+*  Authored By  : Dariusz Mikulski <dariusz.mikulski@gmail.com>
 *
 *  PlexyDesk is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU Lesser General Public License as published by
@@ -16,39 +16,32 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#ifndef PLEXY_CLASSIC_BACKDROP_H
-#define PLEXY_CLASSIC_BACKDROP_H
+#ifndef PLEXY_WALLPAPER_CHANGE_H
+#define PLEXY_WALLPAPER_CHANGE_H
 
 #include <QtCore>
 #include <plexy.h>
-#include <backdropinterface.h>
 #include <datainterface.h>
-#include <pluginloader.h>
-#include <abstractplugininterface.h>
 
-
-class VISIBLE_SYM ClassicBackdrop :public PlexyDesk::BackdropInterface
+namespace PlexyDesk
 {
-    Q_OBJECT
-    Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
+    class VISIBLE_SYM WallpaperChange : public PlexyDesk::DataInterface
+    {
+        Q_OBJECT
+        Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
     public:
-        ClassicBackdrop(QObject * object = 0);
-        virtual ~ClassicBackdrop();
-        void render(QPainter *p,QRectF r);
+        void  init() {}
+        WallpaperChange(QObject * object = 0);
+        virtual ~WallpaperChange();
+        virtual QGraphicsItem * item();// {};
     public slots:
-        void data(QVariant&);
+        void pushData(QVariant&);
+        void changeWallpaper(bool);
     signals:
-        void dataChange();
-    private:
-        QPixmap bg;
-        QImage img;
-        QBrush paint;
-        PlexyDesk::DataInterface * flickrEngine;
-        PlexyDesk::DataInterface *wallpaperWin;
-        int width;
-        int height;
-};
+        void data(QVariant&);
 
+    };
+}
 
-#endif
+#endif // PLEXY_WALLPAPER_CHANGE_H

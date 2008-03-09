@@ -40,6 +40,19 @@ ClassicBackdrop::ClassicBackdrop(QObject * object)
     }else {
         qDebug("DataSource Was Null");
     }
+
+#ifdef Q_WS_WIN
+    wallpaperWin = loadData("wallpaperchange-win32");
+    if(wallpaperWin)
+    {
+        connect(wallpaperWin, SIGNAL(data(QVariant&)), this, SLOT(data(QVariant&)));
+    }
+    else
+    {
+        qDebug("Windows Wallpaper cannot load");
+    }
+#endif
+
 }
 
 ClassicBackdrop::~ClassicBackdrop()
@@ -49,7 +62,11 @@ ClassicBackdrop::~ClassicBackdrop()
 
 void ClassicBackdrop::data(QVariant& data)
 {
-    QImage wall(QImage::fromData(data.toByteArray()));
+    QImage wall = data.value<QImage>();
+    if(wall.isNull())
+    {
+        wall = QImage::fromData(data.toByteArray());
+    }
     QPainter p ;
     p.begin(&img);
     p.drawImage(QRect(0,0,width,height),wall);

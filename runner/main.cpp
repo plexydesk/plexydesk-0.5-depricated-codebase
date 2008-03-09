@@ -79,6 +79,7 @@ int main( int argc, char ** argv )
     view->addExtension("plexyclock");
     view->addExtension("plexyyoutube");
     view->addExtension("plexycpu");
+    view->addExtension("wallpaperchange-win32");
 //    view->addData("flickerengine");
 
     return app.exec();

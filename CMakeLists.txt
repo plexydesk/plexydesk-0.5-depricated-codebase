@@ -55,6 +55,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/extensions/widgets/friendswidget
     ${CMAKE_BINARY_DIR}/extensions/widgets/imagepile
     ${CMAKE_BINARY_DIR}/extensions/widgets/youtubewidget
+    ${CMAKE_BINARY_DIR}/extensions/widgets/wallpaper-win32
     ${CMAKE_BINARY_DIR}/extensions/data/flicker
     ${CMAKE_BINARY_DIR}/extensions/data/rss
     ${CMAKE_BINARY_DIR}/extensions/data/utube
@@ -95,3 +96,6 @@ add_subdirectory(extensions/data/flicker)
 add_subdirectory(extensions/data/rss)
 add_subdirectory(extensions/data/utube)
 
+if(WIN32)
+add_subdirectory(extensions/widgets/wallpaper-win32)
+endif(WIN32)
