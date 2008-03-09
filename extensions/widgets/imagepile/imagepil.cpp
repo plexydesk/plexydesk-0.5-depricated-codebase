@@ -61,6 +61,7 @@ void ImagePile::data(QVariant& data)
     flow->addSlide(wall);     
     flow->showNext();
     search->setEnabled(true);
+    widget->setCoverPic(wall);
     qDebug()<<"Adding Slide"<<endl;;
 }
 

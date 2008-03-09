@@ -27,6 +27,7 @@ namespace PlexyDesk
     {
         setDockImage(QPixmap(QString(PLEXPREFIX)+"/share/plexy/skins/widgets/widget01/pila.png"));
         setFaceImage(QPixmap(QString(PLEXPREFIX)+"/share/plexy/skins/widgets/widget01/pila.png")); 
+        cover = QImage(200,200,QImage::Format_ARGB32_Premultiplied);
     }
     
     ImagePileWidget::~ImagePileWidget()
@@ -34,18 +35,25 @@ namespace PlexyDesk
     }
 
     
-void ImagePileWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
+    void ImagePileWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
     {
 		
     }
 
-void ImagePileWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
+    void ImagePileWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
     {
+        QRectF r = e->exposedRect;
+        p->drawImage(QRectF(20,20,r.width()-40,r.height()-40) , cover);
     }
 
     QRectF ImagePileWidget::boundingRect() const
     {
         return rect();
+    }
+
+    void ImagePileWidget::setCoverPic(QImage img)
+    {
+        cover = img;
     }
 
 } // namespace PlexyDesk
