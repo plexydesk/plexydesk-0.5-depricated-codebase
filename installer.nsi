@@ -28,7 +28,7 @@ Section "PlexyDesktop Shortcuts"
 
   CreateDirectory "$SMPROGRAMS\$APPNAME"
   CreateShortCut "$SMPROGRAMS\$APPNAME\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
-  CreateShortCut "$SMPROGRAMS\$APPNAME\$APPNAME.lnk" "$INSTDIR\bin\$APPNAME.exe" "" "$INSTDIR\bin\$APPNAME.exe" 0
+  CreateShortCut "$SMPROGRAMS\$APPNAME\$APPNAME.lnk" "$INSTDIR\bin\$APPNAME.exe" "" "$INSTDIR\bin\plexydesk.exe" 0
   
 SectionEnd
 
