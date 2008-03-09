@@ -6,7 +6,7 @@
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = PlexyDesk
 PROJECT_NUMBER         = 0.1
-OUTPUT_DIRECTORY       = /mnt/debian/siraj/projects/plexy/plexydesk/docs/api/
+OUTPUT_DIRECTORY       = ${CMAKE_SOURCE_DIR}/docs/api/
 CREATE_SUBDIRS         = NO
 OUTPUT_LANGUAGE        = English
 BRIEF_MEMBER_DESC      = YES
@@ -25,7 +25,7 @@ ABBREVIATE_BRIEF       = "The $name class" \
 ALWAYS_DETAILED_SEC    = NO
 INLINE_INHERITED_MEMB  = NO
 FULL_PATH_NAMES        = YES
-STRIP_FROM_PATH        = /mnt/debian/siraj/projects/plexy/plexydesk/
+STRIP_FROM_PATH        = ${CMAKE_SOURCE_DIR}
 STRIP_FROM_INC_PATH    = 
 SHORT_NAMES            = NO
 JAVADOC_AUTOBRIEF      = NO
@@ -85,7 +85,7 @@ WARN_LOGFILE           =
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = /mnt/debian/siraj/projects/plexy/plexydesk
+INPUT                  = ${CMAKE_SOURCE_DIR}
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          = *.c \
                          *.cc \

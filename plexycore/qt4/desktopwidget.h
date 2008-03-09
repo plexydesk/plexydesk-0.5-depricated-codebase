@@ -16,6 +16,18 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
+
+/**
+ * \class DesktopWidget
+ *
+ * \ingroup PlexyDesk
+ *
+ * \brief Base class for Visual Desktop Extensions
+ * DesktopWidget defines all the common features of a visual desktop extension.
+ * When writing visual extensions, the user must inherit from this class. 
+ *
+ */
+
 #ifndef PLEXY_DESKTOP_WIDGET_H
 #define PLEXY_DESKTOP_WIDGET_H	
 #include <plexy.h>
@@ -29,10 +41,20 @@ namespace PlexyDesk
 	{
 		Q_OBJECT
 	public:
-		typedef enum {	DOCK,
-				NORMALSIDE,
+		typedef enum {	DOCK ,
+				NORMALSIDE ,
 				BACKSIDE} State;
 
+	       /** \brief A useful method.
+               * \param rect Defines the bounding rectangular area of a 
+               * desktop widget
+               * \param embeddedWidget an optional parameter to embed a regular 
+               * QWidget.  
+               * 
+               * This will construct a extension with default settings with an 
+               * optional QWidget embedded 
+               */
+	
 		DesktopWidget(const QRectF &rect, QWidget *embeddedWidget = 0);
 
 		virtual ~DesktopWidget();
@@ -50,25 +72,33 @@ namespace PlexyDesk
                         void setBackFaceImage(QPixmap );
 
 		virtual QRectF boundingRect() const;
-		virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
-		virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event );
-		virtual void mouseMoveEvent ( QGraphicsSceneMouseEvent * event);
-		virtual void paintExtFace(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0){}
-		virtual void paintExtBackFace(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0){}
-		virtual void paintExtDockFace(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0){}
+
 		
 	
 	public slots:
-				void updateStep(int);
-				void stateChanged(QTimeLine::State);
-				void animate();
-				void hideWidget();
-				void spin();
-				//virtual void animateHide();
-				
+ 		        void zoomIn ( int );
+ 		        void zoomOut ( int );
+                        void zoomDone ( );
 	protected:
 		virtual void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0); 
+
 		virtual void mousePressEvent ( QGraphicsSceneMouseEvent * event );
+
+		virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+
+		virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event );
+
+		virtual void mouseMoveEvent ( QGraphicsSceneMouseEvent * event);
+
+		virtual void paintExtFace(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0){}
+
+		virtual void paintExtBackFace(QPainter * painter,
+                                        const QStyleOptionGraphicsItem * option,
+                                              QWidget * widget = 0){}
+
+		virtual void paintExtDockFace(QPainter * painter,
+                                        const QStyleOptionGraphicsItem * it, 
+                                              QWidget * widget = 0){}
 	private:
 		class Private ;
 		Private * const d;

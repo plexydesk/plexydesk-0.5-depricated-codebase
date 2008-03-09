@@ -22,352 +22,218 @@
 
 namespace PlexyDesk
 {
-class DesktopWidget::Private
-{
-	public:
-		Private(){}
-		~ Private(){}
-	QTimer * timer;
-	QTimer * hideTimer;
-	QTimer * showTimer;
-	QTimeLine * timeLine;
-	State s;
-	QPixmap panel;
-	QPixmap back;
-	QPixmap dock;
-	int angle;
-	int angleHide;
-	QGraphicsProxyWidget * proxyWidget;	
-	double opacity;
-	QRectF saveRect;
-	int scale;
-	 QPointF clickPos;
-	bool backdrop;
-	//bool hindding;
-};
-	DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget):
-	QGraphicsRectItem(rect),d(new Private)
-	{	
-		d->proxyWidget = 0;
-		if (widget)
-		{
-			d->proxyWidget = new QGraphicsProxyWidget (this);
-			d->proxyWidget->setFocusPolicy(Qt::StrongFocus);
-			d->proxyWidget->setWidget(widget);
-			d->proxyWidget->show();
-		}
-		d->backdrop = true;
-		d->opacity = 1.0;
-		d->panel = QPixmap(QString(PLEXPREFIX)+"/share/plexy/skins/widgets/widget01/Panel.png");
-		d->back = QPixmap(QString(PLEXPREFIX)+"/share/plexy/skins/widgets/widget01/reverse.png");
-		d->dock = QPixmap (QString(PLEXPREFIX)+"/share/plexy/skins/widgets/widget01/Icon.png");
-		d->scale = 1;
-		setCacheMode (QGraphicsItem::ItemCoordinateCache,d->panel.size());
-		setCacheMode(DeviceCoordinateCache);
-		setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
-		setFlag(QGraphicsItem::ItemIsMovable,true);
-		setAcceptsHoverEvents(true);
-		d->saveRect = rect;
-		d->s = NORMALSIDE;
-		d->angle = 0;
-		d->angleHide = 0;
-		d->timer  = new QTimer(this);
-		connect (d->timer , SIGNAL(timeout()),this, SLOT(animate()));
+    class DesktopWidget::Private
+    {
+        public:
+            Private(){}
+	    ~ Private(){}
+            QTimeLine *zoomin;
+            QTimeLine *zoomout;
+	    State s;
+	    QPixmap panel;
+	    QPixmap back;
+	    QPixmap dock;
+	    int angle;
+	    int angleHide;
+	    QGraphicsProxyWidget * proxyWidget;	
+	    double opacity;
+	    QRectF saveRect;
+	    int scale;
+	    QPointF clickPos;
+	    bool backdrop;
+   };
 
-		d->hideTimer  = new QTimer(this);
-		connect (d->hideTimer , SIGNAL(timeout()),this, SLOT(animateHide()));	
+    DesktopWidget::DesktopWidget ( const QRectF &rect , QWidget *widget ):
+	                           QGraphicsRectItem(rect),d(new Private)
+    {	
+            d->proxyWidget = 0;
+	    if (widget){
+	        d->proxyWidget = new QGraphicsProxyWidget (this);
+		d->proxyWidget->setFocusPolicy(Qt::StrongFocus);
+		d->proxyWidget->setWidget(widget);
+		d->proxyWidget->show();
+	    }
 
-			d->timeLine = new QTimeLine(100,this);
-			//d->timeLine->setDuration(300);
-			d->timeLine->setFrameRange(0,100);
-                        //d->timeLine->setUpdateInterval(45);
-    			connect(d->timeLine, SIGNAL(frameChanged(int)), this, SLOT(updateStep(int)));
-    			connect(d->timeLine, SIGNAL(stateChanged ( QTimeLine::State)), this, 
-    			SLOT( stateChanged(QTimeLine::State) ));
-	
-	}
+	    d->backdrop = true;
+	    d->opacity = 1.0;
+	    d->panel = QPixmap(QString(PLEXPREFIX)+
+                               "/share/plexy/skins/widgets/widget01/Panel.png");
+	    d->back = QPixmap(QString(PLEXPREFIX)+
+                              "/share/plexy/skins/widgets/widget01/reverse.png");
+	    d->dock = QPixmap (QString(PLEXPREFIX)+
+                               "/share/plexy/skins/widgets/widget01/Icon.png");
+	    d->scale = 1;
+	    setCacheMode (QGraphicsItem::ItemCoordinateCache,d->panel.size());
+	    setCacheMode(DeviceCoordinateCache);
+	    setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
+	    setFlag ( QGraphicsItem::ItemIsMovable , true );
+	    setAcceptsHoverEvents ( true );
+	    d->saveRect = rect;
+	    d->s = NORMALSIDE;
+	    d->angle = 0;
+	    d->angleHide = 0;
 
-DesktopWidget::~DesktopWidget()
-{
-	delete d;
-}
+            ///zoom in settings
+            d->zoomin = new QTimeLine ( 100 , this );
+            d->zoomin->setFrameRange ( 0 , 100 );
+            connect ( d->zoomin , SIGNAL ( frameChanged ( int ) ) , 
+                      this , SLOT ( zoomIn (int) ) );
+            connect ( d->zoomin , SIGNAL ( finished () ) ,
+                      this , SLOT ( zoomDone () ) );
 
+            //zoom out 
+            d->zoomout = new QTimeLine ( 300 , this );
+            d->zoomout->setFrameRange ( 0 , 300 );
+            connect ( d->zoomout , SIGNAL ( frameChanged ( int ) ) , 
+                      this , SLOT ( zoomOut (int) ) );
+            connect ( d->zoomout , SIGNAL ( finished () ) ,
+                      this , SLOT ( zoomDone () ) );
+    }
 
-QRectF DesktopWidget::boundingRect() const
-{
-       return rect();//QRect(0,0,d->panel.width(),d->panel.height());	
-}	
+    DesktopWidget::~DesktopWidget ( )
+    {
+        delete d;
+    }
 
-void DesktopWidget::setDockImage(QPixmap img)
-{
-    d->dock  = img;
-}
-
-void DesktopWidget::setFaceImage(QPixmap img)
-{
-d->panel = img;
-}
-
-void DesktopWidget::setBackFaceImage(QPixmap img)
-{
-    d->back = img;
-}
-
-void DesktopWidget::spin()
-{ 
-   d->timer->start(10);
-}
-
-void DesktopWidget::hideWidget()
-{ 
-    
-    if (d->timeLine->state() == QTimeLine::NotRunning){
-                        d->timeLine->start();
-        }
-}
-
-void DesktopWidget::stateChanged(QTimeLine::State state)
-{
-    
-   
-    if(state == QTimeLine::NotRunning){
-        //resetMatrix();
-	d->opacity = 1.0;
-
-        if ( this->state() == DOCK) {
-	prepareGeometryChange ();
-	setRect(0,0,d->dock.width(),d->dock.height());
-        //resetMatrix();
-        }
-
-        /*
+    void DesktopWidget::zoomDone ( )
+    {
+        prepareGeometryChange () ;
         resetMatrix();
-	prepareGeometryChange ();
-	setRect(0,0,d->dock.width(),d->dock.height());
-	QPointF center = rect().center();//d->clickPos;
-	int x_ = center.x();// - d->dock.width()/2;
-	int y_ = center.y();// -d->dock.height()/2 ;
-	setState(DOCK);
-	d->opacity = 1.0;
-	update();
-	setPos(mapToScene(QPoint(x_,y_))); 
-	setCacheMode(DeviceCoordinateCache);
+        d->opacity = 1.0;
+    }
 
-        if(d->proxyWidget){
-	                d->proxyWidget->hide();
-	        }
-                */
+    void DesktopWidget::zoomIn ( int frame )
+    {
+        QPointF center = boundingRect ().center();
+        QTransform mat = QTransform();
+        mat.translate (  center.x() ,  center.y() );
+        mat.scale ( 1 + frame / 150.0 , 1 + frame / 150.0 );
+        mat.translate ( - center.x() ,  - center.y() );
+        setTransform (mat);
+        if ( d->opacity >= 0.0) {
+            d->opacity -= 0.3;
         }
-       
-}
+    }
+    void DesktopWidget::zoomOut ( int frame )
+    {
+        QPointF center = boundingRect ().center();
+        QTransform mat = QTransform();
+        mat.translate (  center.x() ,  center.y() );
+        mat.scale ( 1 - frame / 450.0 , 1 - frame / 450.0 );
+        mat.translate ( - center.x() ,  - center.y() );
+        setTransform (mat);
+        if ( d->opacity >= 0.0) {
+            d->opacity -= 0.2;
+        }
+    }
+
+    QRectF DesktopWidget::boundingRect ( ) const
+    {
+        return rect();
+    }	
+
+    void DesktopWidget::setDockImage ( QPixmap img )
+    {
+        d->dock  = img;
+    }
+
+    void DesktopWidget::setFaceImage ( QPixmap img )
+    {
+        d->panel = img;
+    }
+
+    void DesktopWidget::setBackFaceImage(QPixmap img)
+   {
+       d->back = img;    
+   }
 
 
-void DesktopWidget::updateStep(int frame)
-{
-//hack
-
-    QPointF center = boundingRect().center();
-    QTransform mat = QTransform();
-    mat.translate(center.x(), center.y());
-    mat.scale( 1- frame/720.0 ,1-frame/720.0 );
-    mat.translate(-center.x(), -center.y());
-    setTransform(mat);
-      
-                if( d->opacity >= 0.0)
-                {
-                //         d->opacity -= 0.2;
-                }
-         
-                update();
-}
+   void DesktopWidget::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+   {
+       QGraphicsRectItem::hoverEnterEvent(event);
+   }
 
 
-void DesktopWidget::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
-{
-QGraphicsRectItem::hoverEnterEvent(event);
-}
-
-
-void  DesktopWidget::mouseMoveEvent ( QGraphicsSceneMouseEvent * event)
-{
+   void  DesktopWidget::mouseMoveEvent ( QGraphicsSceneMouseEvent * event)
+   {
 	QGraphicsItem::mouseMoveEvent(event);
-}
+   }
 
-void DesktopWidget::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event )
-{
+    void DesktopWidget::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event )
+    {
+       if ( d->s == DOCK ) {
+           setState( NORMALSIDE );
+           prepareGeometryChange ( );
+           this->setRect( d->saveRect );
+           if ( d->proxyWidget ) {
+               d->proxyWidget->show ( );
+           }
 
-
-  if ( d->s != DOCK) {
-        if (d->proxyWidget) {
-            d->proxyWidget->hide();
-        }
-   setState(DOCK);
-   prepareGeometryChange ();
-   setRect(0,0,d->dock.width(),d->dock.height());
-   d->timeLine->setDirection(QTimeLine::Forward);
-   hideWidget();
-  }else {
-        d->hideTimer->stop();
-	setState(NORMALSIDE);
-	prepareGeometryChange ();
-	setRect(d->saveRect);
-	d->opacity = 1.0;
-
-	if (d->proxyWidget ){
-        d->proxyWidget->show();
-        }
-
-        d->timeLine->setDirection(QTimeLine::Backward);
-        hideWidget();
-  }
-
-/*
-   d->clickPos = event->pos();
-
-   if( d->s != DOCK){
-       if (d->proxyWidget ){
-        d->proxyWidget->hide();
+          d->zoomin->start();
+       } else {
+           setState( DOCK );
+           prepareGeometryChange ( );
+           this->setRect ( 0 , 0 , d->dock.width ( ), d->dock.height ( ) );
+           if ( d->proxyWidget ) {
+               d->proxyWidget->hide ( );
+           }
+           d->zoomout->start();
        }
-    d->timeLine->setDirection(QTimeLine::Forward);
-    //hideWidget();
-  //resetMatrix();
-	prepareGeometryChange ();
-	setRect(0,0,d->dock.width(),d->dock.height());
-	QPointF center = rect().center();//d->clickPos;
-	int x_ = center.x();// - d->dock.width()/2;
-	int y_ = center.y();// -d->dock.height()/2 ;
-	setState(DOCK);
-	d->opacity = 1.0;
-	update();
-	setPos(mapToScene(QPoint(x_,y_))); 
-	setCacheMode(DeviceCoordinateCache);
-  } else {
+   }
 
-        d->timeLine->setDirection(QTimeLine::Backward);
-        d->hideTimer->stop();
-	setState(NORMALSIDE);
-	resetMatrix();
-	prepareGeometryChange ();
-	setRect(d->saveRect);
-	d->opacity = 1.0;
-	if (d->proxyWidget ){
-        d->proxyWidget->show();
-        }
-  //      hideWidget();
-
-    update();
-    setCacheMode(DeviceCoordinateCache);
-}
-
-QGraphicsRectItem::mouseDoubleClickEvent(event);
-    */
-}
-
-void DesktopWidget::mousePressEvent ( QGraphicsSceneMouseEvent * event )
-{
+    void DesktopWidget::mousePressEvent ( QGraphicsSceneMouseEvent * event )
+    {
         if ( event->buttons() == Qt::RightButton) {
-            spin();
+         // spin();
         } 
+    }
 
-}
+
+    void DesktopWidget::drawBackdrop(bool b)
+    {
+        d->backdrop = b;
+    }
+
+    DesktopWidget::State DesktopWidget::state()
+    {
+        return d->s ;
+    }
 
 
-void DesktopWidget::animate()
-{
+    void DesktopWidget::setState(DesktopWidget::State s)
+    {
+        d->s = s;
+    }
 
-    d->angle += 36/2;
-    //setCacheMode(NoCache);
-    setCacheMode(ItemCoordinateCache);
-    QPointF center = this->boundingRect().center();
-//    resetMatrix();
-    QTransform mat = QTransform();//this->transform();
-    mat.translate(center.x(),center.y());
- //   mat.scale(0.5,0.5);
-    mat.rotate(d->angle,Qt::YAxis);
-   // mat.scale(2.0,2.0);
-    mat.translate(-center.x(),-center.y());
-    this->setTransform(mat);
 
-	if ( d->angle == 180)
-	{
-
-	if(d->s ==  NORMALSIDE)
-	{
-		setState(BACKSIDE);
-	}
-	else if ( d->s == BACKSIDE)
-	{
-		setState(NORMALSIDE);
-	} else {
-
+    void DesktopWidget::configState(DesktopWidget::State s)
+    {
+        resetMatrix();
+        prepareGeometryChange ();
+        if(s == DOCK){
+	    setRect(0,0,d->dock.width(),d->dock.height());
+        } else {
+	    setRect(0,0,d->panel.width(),d->panel.height());
         }
-		d->timer->stop();
-		d->angle = 0;
-		resetMatrix();
-		setCacheMode(DeviceCoordinateCache);
-                d->opacity = 1.0;
-		update();
-		return;
-	}
-
-        //d->opacity -= 0.2;
-
-
-}
-
-
-
-
-void DesktopWidget::drawBackdrop(bool b)
-{
-    d->backdrop = b;
-}
-
-DesktopWidget::State DesktopWidget::state()
-{
-    return d->s ;
-}
-
-
-void DesktopWidget::setState(DesktopWidget::State s)
-{
-//hack
-    d->s = s;
-}
-
-
-void DesktopWidget::configState(DesktopWidget::State s)
-{
-        //resetMatrix();
-	prepareGeometryChange ();
-	if(s == DOCK){
-	setRect(0,0,d->dock.width(),d->dock.height());
-        }
-	else {
-	setRect(0,0,d->panel.width(),d->panel.height());
-       }
-	
-		d->s = s;
-//	QPointF center = rect().center();//d->clickPos;
-	if(d->proxyWidget){  
+        d->s = s;
+  
+       if(d->proxyWidget){  
             d->proxyWidget->hide();
-       }
+        }
+    }
 
-}
 
-
-void DesktopWidget::paintBackSide (QPainter * p,const QRectF& rect)
-{
-     
+    void DesktopWidget::paintBackSide (QPainter * p,const QRectF& rect)
+    {
 	p->save();
 	p->setOpacity(0.8);
 	p->setRenderHints( QPainter::SmoothPixmapTransform);
 	p->drawPixmap(QRect(0,0,rect.width(),rect.height()),d->back);
 	p->restore();
-}
+    }  
 
-void DesktopWidget::paintViewSide (QPainter * p,const QRectF& rect)
-{
+    void DesktopWidget::paintViewSide (QPainter * p,const QRectF& rect)
+    {
         if(!d->backdrop)
                 return;
 	p->save();
@@ -375,22 +241,21 @@ void DesktopWidget::paintViewSide (QPainter * p,const QRectF& rect)
 	p->setRenderHints(QPainter::SmoothPixmapTransform );
 	p->drawPixmap(QRect(0,0,rect.width(),rect.height()),d->panel);
 	p->restore();
-}
+    }
 
-void DesktopWidget::paintDockView (QPainter * p,const QRectF& rect)
-{
-	p->save();
-	p->setRenderHints(QPainter::SmoothPixmapTransform );
-	p->drawPixmap(QRect(0,0,rect.width(),rect.height()),d->dock);
-	p->restore();
-}
+    void DesktopWidget::paintDockView (QPainter * p,const QRectF& rect)
+   {
+       p->save();
+       p->setRenderHints(QPainter::SmoothPixmapTransform );
+       p->drawPixmap(QRect(0,0,rect.width(),rect.height()),d->dock);
+       p->restore();
+   }
 
-void DesktopWidget::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
-{
+   void DesktopWidget::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
+   {
 	
 	if (isObscured())
           return;
-          
 	painter->setOpacity(d->opacity);
 	painter->setClipRect(option->exposedRect);
 	if (d->s == NORMALSIDE)
@@ -401,27 +266,15 @@ void DesktopWidget::paint(QPainter * painter, const QStyleOptionGraphicsItem * o
 	else if ( d->s == BACKSIDE)
 	{
 	paintBackSide (painter,option->exposedRect);
-//	painter->save();
-//	QTransform trans= QTransform ();
-//	trans.rotate(180,Qt::YAxis);
-        //painter->setTransform(trans,true);;
 	this->paintExtBackFace(painter,option,widget);
-//	painter->restore();
 	}
 	else if ( d->s == DOCK)
 	{
 	paintDockView (painter,option->exposedRect);
 	this->paintExtDockFace(painter,option,widget);
 	}
-        /*
-	painter->setRenderHints(QPainter::TextAntialiasing);
-	painter->setPen(Qt::white);
-     	painter->setFont(QFont("Bitstream Charter", 10));
-	painter->drawText(QRectF(rect().width()-25,rect().height()-25,30,30), Qt::AlignCenter, "+");
-        */
-}
+   }
 
-};//
+};//namespace PlexyDesk
 
 #include "desktopwidget.moc"
-
