@@ -78,8 +78,9 @@ void FlickerData::nextImage()
 
 void FlickerData::pushData(QVariant& str)
 {
-     searchkey = str.toString();
-     init();
+//    http->abort();
+    searchkey = str.toString();
+    init();
 }
 
 void FlickerData::loadImages(int id, bool stat)

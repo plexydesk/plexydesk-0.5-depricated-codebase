@@ -26,7 +26,7 @@ ClassicBackdrop::ClassicBackdrop(QObject * object)
     width = QDesktopWidget().availableGeometry().width();
     height = QDesktopWidget().availableGeometry().height();
 #ifdef Q_WS_MAC
-    width  =  QDesktopWidget().screenGeometry().width();
+    width  = QDesktopWidget().screenGeometry().width();
     height = QDesktopWidget().screenGeometry().height();
 #endif
       img = QImage(width,height,QImage::Format_ARGB32_Premultiplied);
@@ -36,9 +36,9 @@ ClassicBackdrop::ClassicBackdrop(QObject * object)
     paint.setTextureImage(img);
     flickrEngine= loadData("flickerengine");
     if (flickrEngine) {
-        connect(flickrEngine,SIGNAL(data(QVariant&)),this,SLOT(data(QVariant&)));
+        connect(flickrEngine,SIGNAL(data(QVariant&)),
+                this,SLOT(data(QVariant&)));
     }else {
-        qDebug("DataSource Was Null");
     }
 
 #ifdef Q_WS_WIN
@@ -80,8 +80,6 @@ void ClassicBackdrop::render(QPainter *p,QRectF r)
 {
 
 #ifdef Q_WS_MAC
-	//	p->setOpacity(0.0);
-//	p->fillRect(r.x(),r.y(),r.width(),r.height(),QColor(Qt::transparent));
    	p->fillRect(r.x(),r.y(),r.width(),r.height(),paint);
 		
 #endif

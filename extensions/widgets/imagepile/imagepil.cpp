@@ -24,32 +24,52 @@
 
 ImagePile::ImagePile(QObject * object)
 {
-    flow = new PictureFlow(0);
+    base = new QWidget();
+    flow = new PictureFlow(base);
     flow->setSlideSize(QSize(320/2, 240/2));
-    flow->resize(300,120);
-    flow->move(24,8);
-//    emit dataChange();	
-    widget =  new PlexyDesk::ImagePileWidget(QRectF(0, 0, 400, 200), flow);
+    flow->resize(300,180);
+    flow->move(0,0);
+    base->resize(300,200);
+
+    search = new QLineEdit(base);
+    search->move(0,180);
+    search->resize(300,20);
+    search->show();
+    connect (search , SIGNAL(returnPressed ()) , this , SLOT(searchImage () ) );
+
+    widget =  new PlexyDesk::ImagePileWidget(QRectF(0, 0, 300, 200), base);
 }
 
 ImagePile::~ImagePile()
 {
-delete flow;
+    delete flow;
 }
+
+void ImagePile::searchImage ()
+{
+    qDebug()<<"Searching"<<endl;
+    search->setEnabled(false);
+    flow->setFocus(Qt::TabFocusReason);
+    QVariant data(search->text());
+    emit sendData(data);
+}
+
 
 void ImagePile::data(QVariant& data)
 {
     QImage wall(QImage::fromData(data.toByteArray()));
     flow->addSlide(wall);     
     flow->showNext();
+    search->setEnabled(true);
     qDebug()<<"Adding Slide"<<endl;;
 }
 
 QGraphicsItem * ImagePile::item()
 {
-    flickrEngine= loadData("flickerengine");
+    flickrEngine = loadData("flickerengine");
     if (flickrEngine) {
         connect(flickrEngine,SIGNAL(data(QVariant&)),this,SLOT(data(QVariant&)));
+        connect(this,SIGNAL(sendData(QVariant&)),flickrEngine,SLOT(pushData(QVariant&)));
     }else {
         qDebug()<<"DataSource Was Null"<<"ImagePile::ImagePile(QObject * object)"<<endl;;
     }

@@ -50,23 +50,16 @@ public:
   QLabel * video;
   QTimer * vidtimer;
   QImage * currentFrame;
-//SDL needed for Sound can't Wait  for Phonon ;-) 
- // SDL_mutex *mutex;
-  //SDL_cond *cond;
 
 };
 
 VPlayer::VPlayer (QObject * parent):QObject (parent), d (new Private)
 {
-  init ();
-//   d->video = new QLabel(0);
-//   d->video->resize(320,240);
-//    d->video->show();
-
-	d->vidtimer = new QTimer(this);
- 	connect(d->vidtimer,SIGNAL(timeout()),this,SLOT(decode()));
-	d->vidtimer->start(12);
-        d->currentFrame = 0;
+   init ();
+   d->vidtimer = new QTimer(this);
+   connect(d->vidtimer,SIGNAL(timeout()),this,SLOT(decode()));
+   d->vidtimer->start(12);
+   d->currentFrame = 0;
 }
 
 
@@ -82,7 +75,6 @@ void VPlayer::decode()
 {
 	if(av_read_frame(d->pFormatCtx, &d->packet)>= 0 )
 	{
-		//qDebug("Reading Data");
 		 if (d->packet.stream_index==d->videoStream) {
 		
 			avcodec_decode_video(d->pCodecCtx, d->pFrame, &d->frameFinished,d->packet.data, d->packet.size);
@@ -95,38 +87,32 @@ void VPlayer::decode()
 			emit frameReady(*d->currentFrame);
 	//		delete d->currentFrame;
 			}
-			else
-			{
-				qDebug("Video not ready");
+			else{
+			    qDebug("Video not ready");
 			}
 				
 		}
 	}
-	else
-	{
-	//qDebug("Video Done");
-	emit videoDone();
-        d->vidtimer->stop();
+	else{
+	    emit videoDone();
+            d->vidtimer->stop();
 	}	
 
 av_free_packet(&d->packet);
 }
 
 
-void
-VPlayer::init ()
+void VPlayer::init ()
 {
-  av_register_all ();
-  qDebug () << "VPlayer::init()" << "Done :-)" << endl;
+    av_register_all ();
 }
 
 
-void
-VPlayer::setFileName (const QString & name)
+void VPlayer::setFileName (const QString & name)
 {
-  QFile *file = new QFile (name);
+    QFile *file = new QFile (name);
 
-  if (file->exists ())
+    if (file->exists ())
     {
       qDebug () << "Loading Media from " << name << endl;
 

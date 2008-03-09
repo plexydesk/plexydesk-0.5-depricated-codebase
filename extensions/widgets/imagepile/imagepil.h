@@ -40,10 +40,14 @@ class VISIBLE_SYM ImagePile :public PlexyDesk::WidgetInterface
         virtual QGraphicsItem * item();// {};
     public slots:
         void data(QVariant&);
+        void searchImage();
    signals:
 	void change();
+        void sendData(QVariant&);
    private:
 	 PictureFlow * flow ;
+         QWidget * base;
+         QLineEdit * search;
 	 PlexyDesk::DataInterface * flickrEngine;
 	 PlexyDesk::ImagePileWidget * widget;
 };
