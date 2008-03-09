@@ -45,7 +45,7 @@ namespace PlexyDesk
 				NORMALSIDE ,
 				BACKSIDE} State;
 
-	       /** \brief A useful method.
+	       /** \brief Constructor
                * \param rect Defines the bounding rectangular area of a 
                * desktop widget
                * \param embeddedWidget an optional parameter to embed a regular 
