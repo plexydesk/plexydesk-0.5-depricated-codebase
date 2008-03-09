@@ -54,9 +54,12 @@
 	 http->setHost("www.flickr.com");    
          requestID= http->get(QString("/search/?w=all&q=%1&m=text").arg(searchkey));
     }
+
     FlickerData::~FlickerData()
     {
+        delete http;
     }
+
    void FlickerData::nextImage()
    {
 
@@ -72,12 +75,14 @@
             imageTimer->stop();
        }
    }
+
    void FlickerData::pushData(QVariant& str)
    {
      searchkey = str.toString();
      init();
 
    }
+
    void FlickerData::loadImages(int id, bool stat)
    {
 
@@ -98,8 +103,6 @@
                         QByteArray serverID (addr.mid(30,4));
                         addr = addr.replace(QByteArray("_m"),QByteArray("_o"));
                          qDebug()<<addr<<farmID<<serverID<<endl;
-                        // images << QString(addr.mid(len,
-                        //addr.size()-len).constData());
                         images<< QString(addr);
                     }
                 }
