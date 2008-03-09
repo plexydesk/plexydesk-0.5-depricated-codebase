@@ -22,8 +22,8 @@
 
 
     
-   FlickerData::FlickerData(QObject * object)
-    {
+FlickerData::FlickerData(QObject * object)
+{
         slideCount = 0;
         currentSlide = 0;
         searchkey = "fresh morning";
@@ -31,10 +31,10 @@
 	init();
         imageTimer = new QTimer(this);
         connect(imageTimer,SIGNAL(timeout()),this,SLOT(nextImage()));
-    }
+}
 
-    void  FlickerData::init()
-    {
+void  FlickerData::init()
+{
 
 	 if(PlexyDesk::Config::getInstance()->proxyOn){ 
 	     QNetworkProxy NtProxy(PlexyDesk::Config::getInstance()->proxyType,
@@ -53,15 +53,15 @@
 
 	 http->setHost("www.flickr.com");    
          requestID= http->get(QString("/search/?w=all&q=%1&m=text").arg(searchkey));
-    }
+}
 
-    FlickerData::~FlickerData()
-    {
+FlickerData::~FlickerData()
+{
         delete http;
-    }
+}
 
-   void FlickerData::nextImage()
-   {
+void FlickerData::nextImage()
+{
 
        QString hostURL = images.at(currentSlide);
        QString host  (hostURL.mid(7,23));
@@ -74,72 +74,72 @@
             currentSlide = 0;
             imageTimer->stop();
        }
-   }
+}
 
-   void FlickerData::pushData(QVariant& str)
-   {
+void FlickerData::pushData(QVariant& str)
+{
      searchkey = str.toString();
      init();
+}
 
-   }
+void FlickerData::loadImages(int id, bool stat)
+{
 
-   void FlickerData::loadImages(int id, bool stat)
-   {
-
-     if (id == requestID) {
-        if (http->bytesAvailable() > 0) {
-            QByteArray ba = http->readAll();
-            const char *data = ba.constData();
-            const int len = 30;
-            int i = 0;
-            while (i < ba.size()-5) {
-                if (data[i] == '.') {
-                    if (data[i+1] == 'j' && data[i+2] == 'p'
-                        && data[i+3] == 'g' && data[i+4] == '\"') {
-                        int j = i;
-                        while (j > 0 && data[j] != '\"') --j;
-                        QByteArray addr(ba.mid(j+1, i-j+3));
-                        char farmID = addr.at(11);
-                        QByteArray serverID (addr.mid(30,4));
-                        addr = addr.replace(QByteArray("_m"),QByteArray("_o"));
-                         qDebug()<<addr<<farmID<<serverID<<endl;
-                        images<< QString(addr);
-                    }
+   if (id == requestID) {
+     if (http->bytesAvailable() > 0) {
+         QByteArray ba = http->readAll();
+         const char *data = ba.constData();
+         const int len = 30;
+         int i = 0;
+         while (i < ba.size()-5) {
+            if (data[i] == '.') {
+               if (data[i+1] == 'j' && data[i+2] == 'p'
+                    && data[i+3] == 'g' && data[i+4] == '\"') {
+                   int j = i;
+                   while (j > 0 && data[j] != '\"') --j;
+                    QByteArray addr(ba.mid(j+1, i-j+3));
+                    char farmID = addr.at(11);
+                    QByteArray serverID (addr.mid(30,4));
+                    addr = addr.replace(QByteArray("_m"),QByteArray("_o"));
+                    images<< QString(addr);
                 }
-                ++i;
             }
-         }
-              if ( images.size() > 0) {
-                  slideCount = images.count();
-                  imageTimer->start(5000);
-              }
+            ++i;
+            }
+     }
+      if ( images.size() > 0) {
+              slideCount = images.count();
+              imageTimer->start(5000);
+          }
+      }
 
-      }  
      if (id >  requestID ) {
           if (http->bytesAvailable() > 0) {
+              
               QByteArray img = http->readAll();
               newWall = QImage(QImage::fromData(img));
-              if (!newWall.isNull()) {
-                  QVariant image(img);
-                  emit data(image);
+
+                  if (!newWall.isNull()) {
+                      QVariant image(img);
+                      emit data(image);
               }
           }
       }
 
-    if (id == slideCount -1) {
-        imageTimer->start(5000);
-    }
-
+   if (id == slideCount -1) {
+       imageTimer->start(5000);
    }
 
-   QGraphicsItem * FlickerData::item()
-   {
-       return NULL;
-   }
+}
 
-   void FlickerData::render(QPainter *p,QRectF r)
-   {
-   }
+QGraphicsItem * FlickerData::item()
+{
+    return NULL;
+}
+
+void FlickerData::render(QPainter *p,QRectF r)
+{
+}
 
 Q_EXPORT_PLUGIN2(FlickerData,FlickerData)
 #include "flicker.moc"
