@@ -64,6 +64,7 @@ int main( int argc, char ** argv )
 
     DesktopView *view = new DesktopView(&scene);
     view->resize(QDesktopWidget().availableGeometry().size());
+    view->move(0, 0);
     //view->setWindowOpacity(0.1);
 
 #ifdef Q_WS_X11
