@@ -30,6 +30,7 @@ ImagePile::ImagePile(QObject * object)
     flow->resize(300,180);
     flow->move(0,0);
     base->resize(300,200);
+    base->move(0,0);
 
     search = new QLineEdit(base);
     search->move(0,180);
@@ -62,7 +63,6 @@ void ImagePile::data(QVariant& data)
     flow->showNext();
     search->setEnabled(true);
     widget->setCoverPic(wall);
-    qDebug()<<"Adding Slide"<<endl;;
 }
 
 QGraphicsItem * ImagePile::item()

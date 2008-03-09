@@ -39,6 +39,9 @@ namespace PlexyDesk
         void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
         QRectF boundingRect() const;
         void setCoverPic(QImage img);
+      signals:
+             void swtch();
+
     
         private:
         QImage cover;
