@@ -20,7 +20,7 @@
 #include <config.h>
 #include <desktopwidget.h>
 
-ClassicBackdrop::ClassicBackdrop(QObject * object)
+BgPlugin::BgPlugin(QObject * object) : BackdropPlugin( object)
 {
     bg = QPixmap( QString(PLEXPREFIX)+"/share/plexy/skins/default/default.png");
     width = QDesktopWidget().availableGeometry().width();
@@ -56,12 +56,12 @@ ClassicBackdrop::ClassicBackdrop(QObject * object)
 */
 }
 
-ClassicBackdrop::~ClassicBackdrop()
+BgPlugin::~BgPlugin()
 {
 
 }
 
-void ClassicBackdrop::data(QVariant& data)
+void BgPlugin::data(QVariant& data)
 {
     QImage wall = data.value<QImage>();
     if(wall.isNull())
@@ -77,7 +77,7 @@ void ClassicBackdrop::data(QVariant& data)
     emit dataChange();
 }
 
-void ClassicBackdrop::render(QPainter *p,QRectF r)
+void BgPlugin::render(QPainter *p,QRectF r)
 {
 
 #ifdef Q_WS_MAC
@@ -94,5 +94,4 @@ void ClassicBackdrop::render(QPainter *p,QRectF r)
 #endif
 }
 
-Q_EXPORT_PLUGIN2(ClassicBackdrop,ClassicBackdrop)
 #include "backdrop.moc"

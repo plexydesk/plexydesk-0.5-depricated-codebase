@@ -17,9 +17,11 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 #include "desktopview.h"
-#include <abstractplugininterface.h>
-#include <datainterface.h>
 #include <desktopwidget.h>
+#include <backdropinterface.h>
+#include <pluginloader.h>
+#include <baseplugin.h>
+#include <backdropplugin.h>
 #include <QGLWidget>
 
 
@@ -30,7 +32,10 @@ class  DesktopView::Private
     public:
     Private(){}
     ~Private(){}
-//    BackdropInterface * bIface ;
+    BackdropInterface * bIface ;
+    BackdropPlugin * bgPlugin;
+    BasePlugin  * base;
+    QPointer<BasePlugin> safe;
     QGraphicsGridLayout * gridLayout;
     int row;
     int column;
@@ -47,11 +52,16 @@ DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsV
        setFrameStyle(QFrame::NoFrame);
 //       setViewport(new QGLWidget);
        setAlignment(Qt::AlignLeft | Qt::AlignTop);
- //      d->bIface  = 0;
-   //    d->bIface = (BackdropInterface*)PluginLoader::getInstance()->instance("classicbackdrop");
-     //  if (d->bIface) {
+       d->bIface  = 0;
+       d->bIface = (BackdropInterface*)PluginLoader::getInstance()->instance("classicbackdrop");
+     // if (d->bIface) {
        //   connect(d->bIface,SIGNAL(dataChange()),this,SLOT(backgroundChanged()));
       // }
+
+      // d->bgPlugin  = qobject_cast <BackdropPlugin *> ( PluginLoader::getInstance()->instance("classicbackdrop") ) ;
+      if ( d->bIface )
+       qDebug () << d->bIface->instance()  <<endl;
+//      printf(" value of %x\n",d->bgPlugin);
 
        d->gridLayout = new QGraphicsGridLayout ();
        d->row = 0;
@@ -95,9 +105,9 @@ void DesktopView::drawBackground ( QPainter * painter, const QRectF & rect )
 {
     painter->save();
     painter->setClipRect(rect);
- //   if(d->bIface){
-  //	d->bIface->render(painter,QRectF(rect.x(),rect.y(),rect.width(),rect.height()));
-   // }
+    if( d->bgPlugin ) {
+ // 	d->bgPlugin->render(painter,QRectF(rect.x(),rect.y(),rect.width(),rect.height()));
+    }
 
     painter->restore();
 }

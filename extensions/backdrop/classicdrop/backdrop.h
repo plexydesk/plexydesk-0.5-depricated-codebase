@@ -21,31 +21,30 @@
 
 #include <QtCore>
 #include <plexy.h>
-#include <backdropinterface.h>
-#include <datainterface.h>
-#include <pluginloader.h>
-#include <abstractplugininterface.h>
+#include <config.h>
+#include <backdropplugin.h>
+//#include <abstractplugininterface.h>
 
 
-class VISIBLE_SYM ClassicBackdrop :public PlexyDesk::BackdropInterface
+class VISIBLE_SYM BgPlugin :public PlexyDesk::BackdropPlugin
 {
     Q_OBJECT
- //   Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
     public:
-        ClassicBackdrop(QObject * object = 0);
-        virtual ~ClassicBackdrop();
+        BgPlugin(QObject * object = 0);
+        virtual ~BgPlugin();
         void render(QPainter *p,QRectF r);
     public slots:
         void data(QVariant&);
+        void pushData(QVariant&) {}
     signals:
         void dataChange();
     private:
         QPixmap bg;
         QImage img;
         QBrush paint;
-        PlexyDesk::DataInterface * flickrEngine;
-        PlexyDesk::DataInterface *wallpaperWin;
+ ////       PlexyDesk::DataInterface * flickrEngine;
+    //    PlexyDesk::DataInterface *wallpaperWin;
         int width;
         int height;
 };

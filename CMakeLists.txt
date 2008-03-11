@@ -70,16 +70,16 @@ INCLUDE_DIRECTORIES(
 
 add_subdirectory(plexylib)
 add_subdirectory(plexycore/qt4/)
-#add_subdirectory(extensions/backdrop/classicdrop)
+add_subdirectory(extensions/backdrop/classicdrop)
 #add_subdirectory(extensions/widgets/imagepile)
-#add_subdirectory(data)
+add_subdirectory(data)
 
 
 #add_subdirectory(extensions/widgets/demowidget)
-#add_subdirectory(runner)
-#add_subdirectory(artwork)
-#add_subdirectory(artwork/buttons)
-#add_subdirectory(3rdparty/libmagic)
+add_subdirectory(runner)
+add_subdirectory(artwork)
+add_subdirectory(artwork/buttons)
+add_subdirectory(3rdparty/libmagic)
 #if (NOT APPLE) 
 #if(NOT WIN32)
 #if(FFMPEG_FOUND)

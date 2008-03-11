@@ -37,8 +37,6 @@
 #include <plexy.h>
 #include <baserender.h>
 #include <desktopview.h>
-#include <backdropfactory.h>
-#include <widgetfactory.h>
 #include <pluginloader.h>
 #include <fakemime.h>
 
@@ -75,14 +73,15 @@ int main( int argc, char ** argv )
 #endif
 
     view->show();
-
+/*
     view->addExtension("plexyfriends");
     view->addExtension("imagepil");
     view->addExtension("plexyclock");
     view->addExtension("plexyyoutube");
     view->addExtension("plexycpu");
     view->addExtension("wallpaperchange-win32");
-//    view->addData("flickerengine");
+*/
+//   view->addData("flickerengine");
 
     return app.exec();
 }

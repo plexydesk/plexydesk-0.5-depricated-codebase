@@ -9,7 +9,7 @@ namespace PlexyDesk
     {
         Q_OBJECT
         public:
-            BasePlugin (QObject *parent = 0);
+            BasePlugin (QObject *parent = 0): QObject(parent) {}
         
     };
 } // namespace PlexyDesk

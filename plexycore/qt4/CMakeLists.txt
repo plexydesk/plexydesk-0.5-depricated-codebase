@@ -21,6 +21,8 @@ SET (qtvizsrc
 	fakemime.cpp
 	desktopwidget.cpp
 	plexyconfig.cpp
+	baseplugin.cpp
+	abstractplugininterface.cpp
 		)
     
 add_library (qtviz SHARED ${qtvizsrc})

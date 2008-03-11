@@ -20,7 +20,8 @@
 #define PLUGIN_LOADER_H
 
 #include <plexy.h>
-#include "abstractplugininterface.h"
+#include <abstractplugininterface.h>
+#include <baseplugin.h>
 #include <QtCore>
 #include <QtGui>
 
@@ -33,11 +34,11 @@ namespace PlexyDesk
     Q_OBJECT
         public:
         typedef QHash <QString,AbstractPluginInterface*> Interface;
-        typedef QHash <QString,Interface*> Dict;
+        typedef QHash <QString,BasePlugin*> Dict;
         PluginLoader();
         virtual ~PluginLoader();
         QStringList listPlugins(const QString& types);
-        AbstractPluginInterface * instance(const QString& name);
+        AbstractPluginInterface  * instance(const QString& name);
         void scanDisk();
         static PluginLoader * getInstance()
         {

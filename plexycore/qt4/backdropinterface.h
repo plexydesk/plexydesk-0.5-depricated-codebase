@@ -33,7 +33,7 @@ namespace PlexyDesk
             void init(){}
             BackdropInterface(){}
             ~BackdropInterface(){}
-            virtual BackdropPlugin * instance() = 0;
+            virtual BasePlugin * instance() = 0;
     };
 } // namespace PlexyDesk
 

@@ -12,24 +12,18 @@ INCLUDE_DIRECTORIES(
 
 
 SET (classicbackdropsrc 	
-	backdrop.cpp
+		backdrop.cpp
+	classicinterface.cpp
 		)
 		
 SET (plexicore_MOC
-  ../../../plexycore/qt4/pluginloader.cpp
-  ../../../plexycore/qt4/abstractplugininterface.cpp
     )
     
-QT4_AUTOMOC( ${plexicore_MOC})
+#QT4_AUTOMOC( ${plexicore_MOC})
 
-add_library (classicbackdrop SHARED ${classicbackdropsrc} ${plexicore_MOC})
 QT4_AUTOMOC( ${classicbackdropsrc}) 
+add_library (classicbackdrop SHARED ${classicbackdropsrc} ${plexicore_MOC})
 
-#SET_TARGET_PROPERTIES(plexy
-#
-#	·       ·       PROPERTIES
-	#	#	·       ·       COMPILE_FLAGS ${CMAKE_SHARED_LIBRARY_CXX_FLAGS})
-#
 
 TARGET_LINK_LIBRARIES(
 	       classicbackdrop
