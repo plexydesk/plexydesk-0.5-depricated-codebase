@@ -4,13 +4,13 @@
 
 #include <plexy.h>
 #include <config.h>
-
+#include <baseplugin.h>
 #include <QtCore>
 #include <QtGui>
 
 namespace PlexyDesk
 {
-    class BackdropPlugin : public QObject
+    class BackdropPlugin : public BasePlugin
     {
         Q_OBJECT
         public :
