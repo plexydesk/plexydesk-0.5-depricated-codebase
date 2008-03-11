@@ -1,4 +1,3 @@
-#include <backdropinterface.h>
 #include <abstractplugininterface.h>
 #include <plexy.h>
 #include <config.h>
@@ -9,6 +8,7 @@ namespace PlexyDesk
     AbstractPluginInterface::AbstractPluginInterface(QObject *parent /* = 0 */) : QObject(parent) {}
     DataInterface * AbstractPluginInterface::loadData(const QString& name)
     {
+/*
         DataInterface * data = (DataInterface*)PluginLoader::getInstance()->instance(name);
 
         if (data) {
@@ -16,7 +16,7 @@ namespace PlexyDesk
         } else {
             qDebug()<<"AbstractPluginInterface::"<<"Null data found"<<endl;
         }
-
+*/
         return 0;
     }
 

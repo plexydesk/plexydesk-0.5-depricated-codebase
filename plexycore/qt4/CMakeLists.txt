@@ -16,12 +16,13 @@ SET (qtvizsrc
 	desktopview.cpp
 	pluginloader.cpp
 	netwm.cpp
-	abstractplugininterface.cpp
+#	abstractplugininterface.cpp
 	dataplugin.cpp
+        backdropplugin.cpp
 	fakemime.cpp
 	#	extensionfactory.cpp
-	backdropfactory.cpp
-	widgetfactory.cpp
+#	backdropfactory.cpp
+#	widgetfactory.cpp
 	desktopwidget.cpp
 	plexyconfig.cpp
 		)
