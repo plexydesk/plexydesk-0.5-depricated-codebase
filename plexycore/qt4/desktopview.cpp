@@ -54,9 +54,8 @@ DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsV
        setAlignment(Qt::AlignLeft | Qt::AlignTop);
        d->bIface  = 0;
        d->bIface = (BackdropInterface*)PluginLoader::getInstance()->instance("classicbackdrop");
-      d->bgPlugin = 0;
-     // if ( d->bIface )
-       //qDebug () << d->bIface->instance()  <<endl;
+       d->bgPlugin = static_cast <BackdropPlugin*> (d->bIface->instance());
+
 
        d->gridLayout = new QGraphicsGridLayout ();
        d->row = 0;
@@ -100,7 +99,7 @@ void DesktopView::drawBackground ( QPainter * painter, const QRectF & rect )
     painter->save();
     painter->setClipRect(rect);
     if( d->bgPlugin ) {
- // 	d->bgPlugin->render(painter,QRectF(rect.x(),rect.y(),rect.width(),rect.height()));
+  	d->bgPlugin->render(painter,QRectF(rect.x(),rect.y(),rect.width(),rect.height()));
     }
 
     painter->restore();
