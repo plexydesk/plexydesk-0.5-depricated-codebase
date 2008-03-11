@@ -1,16 +1,15 @@
 
 #ifndef PLEXY_DATA_PLUGIN_H
 #define PLEXY_DATA_PLUGIN_H 
-
 #include <plexy.h>
 #include <config.h>
-
+#include <baseplugin.h>
 #include <QtCore>
 #include <QtGui>
 
 namespace PlexyDesk
 {
-    class DataPlugin : public QObject
+    class DataPlugin : public BasePlugin
     {
         Q_OBJECT
         public :
