@@ -32,7 +32,7 @@ class  DesktopView::Private
     public:
     Private(){}
     ~Private(){}
-    BackdropInterface * bIface ;
+    AbstractPluginInterface * bIface ;
     BackdropPlugin * bgPlugin;
     BasePlugin  * base;
     QPointer<BasePlugin> safe;
@@ -54,19 +54,13 @@ DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsV
        setAlignment(Qt::AlignLeft | Qt::AlignTop);
        d->bIface  = 0;
        d->bIface = (BackdropInterface*)PluginLoader::getInstance()->instance("classicbackdrop");
-     // if (d->bIface) {
-       //   connect(d->bIface,SIGNAL(dataChange()),this,SLOT(backgroundChanged()));
-      // }
-
-      // d->bgPlugin  = qobject_cast <BackdropPlugin *> ( PluginLoader::getInstance()->instance("classicbackdrop") ) ;
-      if ( d->bIface )
-       qDebug () << d->bIface->instance()  <<endl;
-//      printf(" value of %x\n",d->bgPlugin);
+      d->bgPlugin = 0;
+     // if ( d->bIface )
+       //qDebug () << d->bIface->instance()  <<endl;
 
        d->gridLayout = new QGraphicsGridLayout ();
        d->row = 0;
        d->column = 100;
-       //this->scene()->addItem(d->gridLayout);
 }
 
 DesktopView::~DesktopView()
