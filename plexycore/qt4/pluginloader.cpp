@@ -57,10 +57,10 @@ PluginLoader * PluginLoader::mInstance = 0;
         return groups.keys();
     }
 	
-    AbstractPluginInterface *  PluginLoader::instance(const QString& name)
+    BasePlugin *  PluginLoader::instance(const QString& name)
     {
-//        qDebug()<<groups.contains(name) <<endl;
-    	return  groups[name ];	
+        if ( groups.contains(name) )
+    	   return   groups[name]->instance();
     }	
 
   void PluginLoader::load (const QString & interface,const QString & pluginName)

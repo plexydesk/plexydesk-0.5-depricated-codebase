@@ -38,7 +38,7 @@ namespace PlexyDesk
         PluginLoader();
         virtual ~PluginLoader();
         QStringList listPlugins(const QString& types);
-        AbstractPluginInterface  * instance(const QString& name);
+        BasePlugin * instance(const QString& name);
         void scanDisk();
         static PluginLoader * getInstance()
         {

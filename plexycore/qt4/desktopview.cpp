@@ -50,10 +50,7 @@ DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsV
        setFrameStyle(QFrame::NoFrame);
 //       setViewport(new QGLWidget);
        setAlignment(Qt::AlignLeft | Qt::AlignTop);
-       d->bIface  = 0;
-       d->bIface = (BackdropInterface*)PluginLoader::getInstance()->instance("classicbackdrop");
-       d->bgPlugin = static_cast <BackdropPlugin*> (d->bIface->instance());
-
+       d->bgPlugin  = static_cast<BackdropPlugin*> (PluginLoader::getInstance()->instance("classicbackdrop"));
 
        d->gridLayout = new QGraphicsGridLayout ();
        d->row = 0;
