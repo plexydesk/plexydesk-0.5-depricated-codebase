@@ -23,6 +23,7 @@
 #include <QtCore>
 #include <QtGui>
 #include <abstractplugininterface.h>
+#include <backdropplugin.h>
 
 namespace PlexyDesk
 {
@@ -32,6 +33,7 @@ namespace PlexyDesk
             void init(){}
             BackdropInterface(){}
             ~BackdropInterface(){}
+            virtual BackdropPlugin * instance() = 0;
     };
 } // namespace PlexyDesk
 
