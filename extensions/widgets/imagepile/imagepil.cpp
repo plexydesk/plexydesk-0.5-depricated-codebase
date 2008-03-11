@@ -20,6 +20,7 @@
 #include "imagepil.h"
 
 #include <QtCore>
+#include <pluginloader.h>
 #include <QtGui>
 
 ImagePile::ImagePile(QObject * object)
@@ -67,7 +68,12 @@ void ImagePile::data(QVariant& data)
 
 QGraphicsItem * ImagePile::item()
 {
-    flickrEngine = loadData("flickerengine");
+    //flickrEngine = loadData("flickerengine");
+
+    PlexyDesk::PluginLoader * loader = new PlexyDesk::PluginLoader();
+    loader->scanDisk();
+    flickrEngine  = (PlexyDesk::DataInterface*) loader->instance("flickerengine");
+
     if (flickrEngine) {
         connect(flickrEngine,SIGNAL(data(QVariant&)),this,SLOT(data(QVariant&)));
         connect(this,SIGNAL(sendData(QVariant&)),flickrEngine,SLOT(pushData(QVariant&)));

@@ -53,9 +53,6 @@ int main( int argc, char ** argv )
     app.addLibraryPath(pluginPath);
 #endif
 
-    qDebug() << PlexyDesk::PluginLoader::getInstance()->listPlugins("Desktop");
-    qDebug() << PlexyDesk::PluginLoader::getInstance()->listPlugins("Media");
-    qDebug() << PlexyDesk::FakeMime::getInstance()->getType("hello.png")<<endl;
     QGraphicsScene scene;
 
     scene.setSceneRect(QDesktopWidget().availableGeometry());
