@@ -26,17 +26,14 @@
 #include <QtNetwork>
 #include <datainterface.h>
 
-class VISIBLE_SYM FlickerData :public PlexyDesk::DataInterface
+class VISIBLE_SYM FlickerData :public PlexyDesk::DataPlugin
 {
     Q_OBJECT
-    Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
     public:
     FlickerData(QObject * object = 0);
     virtual ~FlickerData();
-    void init();
-    virtual QGraphicsItem * item();// {};
-    virtual void render(QPainter *p,QRectF r);// {};
+          void init();
     public slots:
           void loadImages(int, bool);
           void nextImage();

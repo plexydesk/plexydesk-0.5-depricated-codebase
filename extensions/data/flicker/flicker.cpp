@@ -133,14 +133,5 @@ void FlickerData::loadImages(int id, bool stat)
 
 }
 
-QGraphicsItem * FlickerData::item()
-{
-    return NULL;
-}
 
-void FlickerData::render(QPainter *p,QRectF r)
-{
-}
-
-Q_EXPORT_PLUGIN2(FlickerData,FlickerData)
 #include "flicker.moc"

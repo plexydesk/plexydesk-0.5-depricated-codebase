@@ -21,6 +21,7 @@
 
 
 #include <plexy.h>
+#include <dataplugin.h>
 #include <QtCore>
 #include <QtGui>
 
@@ -34,8 +35,8 @@ namespace PlexyDesk
         AbstractPluginInterface(QObject *parent = 0);
         virtual void init() = 0;
         virtual  QGraphicsItem * item() {return new QGraphicsRectItem ();};
-        virtual  void render(QPainter *p,QRectF r) {};
-        virtual DataInterface* loadData(const QString& name);
+        virtual  void render(QPainter *p,QRectF r) =0;
+        virtual DataPlugin* loadData(const QString& name);
     };
 } // namespace PlexyDesk
 

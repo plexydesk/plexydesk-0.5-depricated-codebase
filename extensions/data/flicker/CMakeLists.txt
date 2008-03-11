@@ -13,6 +13,7 @@ INCLUDE_DIRECTORIES(
 
 SET (flickerenginesrc 	
 	flicker.cpp
+        flickerinterface.cpp
 		)
 		
 SET (plexicore_MOC

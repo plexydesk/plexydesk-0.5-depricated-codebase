@@ -34,6 +34,7 @@ ClassicBackdrop::ClassicBackdrop(QObject * object)
     p.begin(&img);
     p.drawPixmap(QRect(0,0,width,height),bg);
     paint.setTextureImage(img);
+/*
     flickrEngine= loadData("flickerengine");
     if (flickrEngine) {
         connect(flickrEngine,SIGNAL(data(QVariant&)),
@@ -52,7 +53,7 @@ ClassicBackdrop::ClassicBackdrop(QObject * object)
         qDebug("Windows Wallpaper cannot load");
     }
 #endif
-
+*/
 }
 
 ClassicBackdrop::~ClassicBackdrop()
@@ -80,8 +81,7 @@ void ClassicBackdrop::render(QPainter *p,QRectF r)
 {
 
 #ifdef Q_WS_MAC
-   	p->fillRect(r.x(),r.y(),r.width(),r.height(),paint);
-		
+   	p->fillRect(r.x(),r.y(),r.width(),r.height(),paint);		
 #endif
 
 #ifdef Q_WS_X11

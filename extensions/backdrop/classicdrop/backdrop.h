@@ -30,7 +30,7 @@
 class VISIBLE_SYM ClassicBackdrop :public PlexyDesk::BackdropInterface
 {
     Q_OBJECT
-    Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
+ //   Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
     public:
         ClassicBackdrop(QObject * object = 0);

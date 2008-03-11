@@ -23,6 +23,7 @@
 #include <QtCore>
 #include <QtGui>
 #include <abstractplugininterface.h>
+#include <dataplugin.h>
 
 namespace PlexyDesk
 {
@@ -32,12 +33,13 @@ namespace PlexyDesk
 	    void init() {}
             DataInterface(){}
             ~DataInterface(){}
-            virtual  QGraphicsItem * item() = 0;
+	    virtual DataPlugin * instance() = 0;
+/*
         public slots:
             virtual void pushData(QVariant&) = 0;
         signals:
             virtual void data(QVariant&)=0;
-
+*/
     };
 } // namespace PlexyDesk
 

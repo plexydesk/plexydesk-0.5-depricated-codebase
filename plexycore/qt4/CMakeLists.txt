@@ -17,6 +17,7 @@ SET (qtvizsrc
 	pluginloader.cpp
 	netwm.cpp
 	abstractplugininterface.cpp
+	dataplugin.cpp
 	fakemime.cpp
 	#	extensionfactory.cpp
 	backdropfactory.cpp
