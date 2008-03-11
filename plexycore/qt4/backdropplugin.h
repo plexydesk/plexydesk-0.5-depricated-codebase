@@ -1,6 +1,6 @@
 
-#ifndef PLEXY_DATA_PLUGIN_H
-#define PLEXY_DATA_PLUGIN_H 
+#ifndef PLEXY_BACK_PLUGIN_H
+#define PLEXY_BACK_PLUGIN_H 
 
 #include <plexy.h>
 #include <config.h>

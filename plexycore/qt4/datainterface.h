@@ -34,12 +34,6 @@ namespace PlexyDesk
             DataInterface(){}
             ~DataInterface(){}
 	    virtual DataPlugin * instance() = 0;
-/*
-        public slots:
-            virtual void pushData(QVariant&) = 0;
-        signals:
-            virtual void data(QVariant&)=0;
-*/
     };
 } // namespace PlexyDesk
 
