@@ -34,8 +34,6 @@ class  DesktopView::Private
     ~Private(){}
     AbstractPluginInterface * bIface ;
     BackdropPlugin * bgPlugin;
-    BasePlugin  * base;
-    QPointer<BasePlugin> safe;
     QGraphicsGridLayout * gridLayout;
     int row;
     int column;

@@ -32,7 +32,6 @@ ClassicBackdrop::~ClassicBackdrop()
 
 PlexyDesk::BasePlugin * ClassicBackdrop::instance()
 {
-    qDebug()<<"Calling me ?"<<endl;
     return new BgPlugin(this);
 }
 
