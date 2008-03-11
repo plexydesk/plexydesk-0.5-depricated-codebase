@@ -16,21 +16,21 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#ifndef PLEXY_WIDGET_DEMO_H
-#define PLEXY_WIDGET_DEMO_H
+#ifndef PLEXY_CLOCK_I
+#define PLEXY_CLOCK_I
 
 #include <QtCore>
 #include <plexy.h>
 #include <widgetinterface.h>
 
 
-class VISIBLE_SYM Clock :public PlexyDesk::AbstractPluginInterface
+class VISIBLE_SYM ClockInterface :public PlexyDesk::AbstractPluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
     public:
-    Clock(QObject * object = 0);
+    ClockInterface(QObject * object = 0);
     PlexyDesk::BasePlugin * instance () ;
 };
 

@@ -22,18 +22,17 @@
 #include <QtCore>
 #include <plexy.h>
 #include <widgetinterface.h>
+#include <widgetplugin.h>
 
 
-class VISIBLE_SYM Clock :public PlexyDesk::AbstractPluginInterface
+class VISIBLE_SYM Clock :public PlexyDesk::WidgetPlugin
 {
     Q_OBJECT
-    Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
     public:
-   void  init() {} 
-    Clock(QObject * object = 0);
-    virtual ~Clock();
-    virtual QGraphicsItem * item();// {};
+        Clock(QObject * object = 0);
+        virtual ~Clock();
+        virtual QGraphicsItem * item();
 };
 
 

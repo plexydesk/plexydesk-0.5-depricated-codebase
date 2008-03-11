@@ -24,7 +24,7 @@ SET (plexicore_MOC
   ../../../plexycore/qt4/desktopwidget.cpp
     )
     
-QT4_AUTOMOC( ${plexicore_MOC})
+#QT4_AUTOMOC( ${plexicore_MOC})
 
 add_library (plexyclock SHARED ${plexyclocksrc} ${plexicore_MOC})
 QT4_AUTOMOC( ${plexyclocksrc}) 

@@ -73,14 +73,13 @@ int main( int argc, char ** argv )
 #endif
 
     view->show();
-/*
-    view->addExtension("plexyfriends");
-    view->addExtension("imagepil");
+  //  view->addExtension("plexyfriends");
+ //   view->addExtension("imagepil");
+ for ( int i = 0 ; i < 5 ; i++)
     view->addExtension("plexyclock");
-    view->addExtension("plexyyoutube");
-    view->addExtension("plexycpu");
-    view->addExtension("wallpaperchange-win32");
-*/
+//    view->addExtension("plexyyoutube");
+//    view->addExtension("plexycpu");
+//    view->addExtension("wallpaperchange-win32");
 //   view->addData("flickerengine");
 
     return app.exec();

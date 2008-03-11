@@ -22,6 +22,7 @@
 #include <pluginloader.h>
 #include <baseplugin.h>
 #include <backdropplugin.h>
+#include <widgetplugin.h>
 #include <QGLWidget>
 
 
@@ -34,6 +35,7 @@ class  DesktopView::Private
     ~Private(){}
     AbstractPluginInterface * bIface ;
     BackdropPlugin * bgPlugin;
+    WidgetPlugin * widgets;
     QGraphicsGridLayout * gridLayout;
     int row;
     int column;
@@ -51,7 +53,7 @@ DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsV
 //       setViewport(new QGLWidget);
        setAlignment(Qt::AlignLeft | Qt::AlignTop);
        d->bgPlugin  = static_cast<BackdropPlugin*> (PluginLoader::getInstance()->instance("classicbackdrop"));
-
+        d->widgets = 0;
        d->gridLayout = new QGraphicsGridLayout ();
        d->row = 0;
        d->column = 100;
@@ -70,8 +72,8 @@ void DesktopView::backgroundChanged()
 
 void DesktopView::addExtension(const QString& name)
 {
-/*
-        d->widgets = (WidgetInterface*) PluginLoader::getInstance()->instance(name);
+
+        d->widgets = static_cast<WidgetPlugin*> ( PluginLoader::getInstance()->instance(name));
         if (d->widgets){
                 //scene()->addItem(d->widgets->item());
 		DesktopWidget * widget = (DesktopWidget*) d->widgets->item();		
@@ -85,7 +87,7 @@ void DesktopView::addExtension(const QString& name)
 
 		}
 	}
-*/
+
 }
 
 

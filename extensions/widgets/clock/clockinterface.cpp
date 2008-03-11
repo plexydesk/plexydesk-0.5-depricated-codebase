@@ -16,27 +16,24 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
+#include "clockinterface.h"
 #include "clock.h"
 #include "clockitem.h"
 #include "clockwidget.h"
-#include <QtCore>
-#include<QtGui>
+#include  <QtCore>
+#include  <QtGui>
 
 
-Clock::Clock(QObject * object)
+ClockInterface::ClockInterface(QObject * object)
 {
 
 }
 
-Clock::~Clock()
-{
 
+PlexyDesk::BasePlugin  * ClockInterface::instance()
+{
+ return new Clock(this);
 }
 
-PlexyDesk::BasePlugin  * Clock::insetance ()
-{
-
-}
-
-Q_EXPORT_PLUGIN2(Clock,Clock)
-#include "clock.moc"
+Q_EXPORT_PLUGIN2(ClockInterface,ClockInterface)
+#include "clockinterface.moc"
