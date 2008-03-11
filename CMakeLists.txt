@@ -89,7 +89,7 @@ add_subdirectory(3rdparty/libmagic)
 #endif(NOT WIN32)
 #endif(NOT APPLE)
 
-#add_subdirectory(extensions/widgets/clock)
+add_subdirectory(extensions/widgets/clock)
 #add_subdirectory(extensions/widgets/friendswidget)
 #add_subdirectory(extensions/widgets/youtubewidget)
 #add_subdirectory(extensions/data/flicker)

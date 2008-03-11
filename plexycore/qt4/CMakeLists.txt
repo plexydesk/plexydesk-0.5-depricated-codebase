@@ -22,6 +22,7 @@ SET (qtvizsrc
 	desktopwidget.cpp
 	plexyconfig.cpp
 	baseplugin.cpp
+	widgetplugin.cpp
 	abstractplugininterface.cpp
 		)
     

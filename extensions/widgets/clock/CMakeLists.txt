@@ -15,6 +15,7 @@ SET (plexyclocksrc
 	clock.cpp
 	clockitem.cpp
 	clockwidget.cpp
+	clockinterface.cpp
 		)
 
 SET (plexicore_MOC
