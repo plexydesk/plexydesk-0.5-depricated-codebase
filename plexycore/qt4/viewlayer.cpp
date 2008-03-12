@@ -28,18 +28,22 @@ void ViewLayer::addItem ( const QString& layerName, DesktopWidget * item)
 
 void ViewLayer::showLayer (const QString& layername)
 {
-    for (int i = 0; i < currentList->size();i++) {
-       if ( currentList->at(i) ) {
-           currentList->at(i)->hide();
-       }
-    }
+    if (!layer.contains(layername)) {
+        qDebug("Invalid Layer:  ViewLayer::showLayer()");
+    } else {
+        for (int i = 0; i < currentList->size();i++) {
+              if ( currentList->at(i) ) {
+                  currentList->at(i)->hide();
+              }
+          }
 
-    currentList  = this->layer[layername];
+        currentList  = this->layer[layername];
 
-    for (int i = 0; i < currentList->size();i++) {
-       if ( currentList->at(i) ) {
-           currentList->at(i)->show();
-       }
+        for (int i = 0; i < currentList->size();i++) {
+           if ( currentList->at(i) ) {
+               currentList->at(i)->show();
+           }
+        }
     }
 }
 
