@@ -24,6 +24,7 @@ SET (qtvizsrc
 	baseplugin.cpp
 	widgetplugin.cpp
 	abstractplugininterface.cpp
+	viewlayer.cpp
 		)
     
 add_library (qtviz SHARED ${qtvizsrc})

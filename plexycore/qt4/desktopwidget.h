@@ -37,7 +37,7 @@
 
 namespace PlexyDesk
 {
-	class DesktopWidget:public QObject, public QGraphicsRectItem
+	class DesktopWidget : public QObject, public QGraphicsRectItem
 	{
 		Q_OBJECT
 	public:

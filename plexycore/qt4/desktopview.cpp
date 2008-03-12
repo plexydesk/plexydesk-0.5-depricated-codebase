@@ -57,6 +57,8 @@ DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsV
        d->gridLayout = new QGraphicsGridLayout ();
        d->row = 0;
        d->column = 100;
+       
+       d->gridLayout = new QGraphicsGridLayout ;
 }
 
 DesktopView::~DesktopView()
