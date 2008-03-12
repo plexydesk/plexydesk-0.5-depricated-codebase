@@ -28,7 +28,20 @@ void ViewLayer::addItem ( const QString& layerName, DesktopWidget * item)
 
 void ViewLayer::showLayer (const QString& layername)
 {
-   currentList  = this->layer[layername];
+    for (int i = 0; i < currentList->size();i++) {
+       if ( currentList->at(i) ) {
+           currentList->at(i)->hide();
+       }
+    }
+
+    currentList  = this->layer[layername];
+
+    for (int i = 0; i < currentList->size();i++) {
+       if ( currentList->at(i) ) {
+           currentList->at(i)->show();
+       }
+    }
+}
 
 } // namespace PlexyDesk
 
