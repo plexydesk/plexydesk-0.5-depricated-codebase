@@ -50,6 +50,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/plexycore/gtk
     ${CMAKE_BINARY_DIR}/extensions/backdrop/classicdrop
     ${CMAKE_BINARY_DIR}/extensions/widgets/demowidget
+    ${CMAKE_BINARY_DIR}/extensions/widgets/welcome
     ${CMAKE_BINARY_DIR}/extensions/widgets/videowiget
     ${CMAKE_BINARY_DIR}/extensions/widgets/cpu
     ${CMAKE_BINARY_DIR}/extensions/widgets/friendswidget
@@ -90,6 +91,7 @@ add_subdirectory(3rdparty/libmagic)
 #endif(NOT APPLE)
 
 add_subdirectory(extensions/widgets/clock)
+add_subdirectory(extensions/widgets/welcome)
 #add_subdirectory(extensions/widgets/friendswidget)
 #add_subdirectory(extensions/widgets/youtubewidget)
 #add_subdirectory(extensions/data/flicker)
