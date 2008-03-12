@@ -1,0 +1,174 @@
+*
+* General Information (07/25/07)
+*
+
+Blitz is an interm image effect library that people can use until KDE4.1 is
+released. KImageEffect, the old image effect class is being dropped for KDE4.0
+and the replacement, Quasar, won't be ready until KDE4.1. Blitz gives people 
+something to use in the meantime.
+
+At first glance Blitz may look like a KImageEffect2. That is what I originally 
+intended. Nonetheless most of the effects have significantly changed so
+may operate differently. Many of the methods in KImageEffect were quick hacks 
+and ports I made. With Blitz I finally sat down, read my old code, and 
+reimplemented everything. In some cases this was just code cleanup and 
+bugfixing but in many other cases I used better algorithms and/or custom MMX 
+code. Expect differences, hopefully for the better. I'm a little older,
+a tad bit wiser, and a heck of a lot less drunk these days >:)
+
+I plan on porting much of the good stuff to Quasar once it is ready so don't 
+hesitate to email me if you have a problem or find a bug! My email is
+currently daniel.duley@verizon.net.
+
+In order to help people porting from KImageEffect I've added a bunch of notes 
+below about some of the various changes you will find. Much of it is just
+my rambling about what the methods do but hopefully you will find some of it 
+useful. Not all changes are mentioned here, just the ones that stand out to 
+me.
+
+*
+* A few notes about MMX
+*
+
+For floating point I used AMD 3dNow! and not the more common floating point 
+SSE extensions. 3dNow is being depreciated in favor of SSE but I have one of 
+those odd AMD Athlons that only support the integer SSE instructions. I 
+usually note if something uses 3dNow or just normal MMX acceleration and in 
+any case all the methods have C++ versions that should still be a significant 
+improvement over KImageEffect.
+
+I also extended KCPUInfo. It can now detect both 3dNow! versions I and II as 
+well as MMX-SSE. 
+
+*
+* Smoothscaling
+*
+
+There are two new smoothscaling methods, smoothScale() and smoothScaleFilter().
+
+The smoothScale() method is a port I did from Imlib2 to QImage ages ago that 
+was originally written by Rasterman and Willem Monsuwe and supports MMX. My 
+version eventually found it's way into Qt:
+
+http://doc.trolltech.com/4.3-snapshot/qimage.html#image-transformations
+
+but I don't believe it supports the MMX routines. If/when it does the copy
+here will become obsolete. At least Gwenview and KSplashX also include their 
+own copies of my port.
+
+Rasterman and Willem knew how to write a smoothscaling algorithm ;-) 
+Originally I took the algorithm used in NetPBM and Qt3 and added MMX/3dnow
+optimizations. It ran in about 1/2 the time as Qt3. Then I ported Imlib's
+C algorithm and it ran at about the same speed as my MMX optimized one...
+Finally I ported Imlib's MMX version and it ran in less than half the
+time as my MMX algorithm, (taking only a quarter of the time Qt3 did).
+After further optimization it seems to run at around 1/6th.
+
+The other smoothscaling method is smoothScaleFilter(). This was originally
+based on ImageMagick's ResizeImage() and supports various filters. It's
+a higher quality, (thus slower), scaling method. It's pretty popular and I 
+know of at least one other image viewer that includes it's own port of it. My 
+version has been fairly heavily reworked. I was able to inline and optimize
+lots of stuff so it should be relatively fast.
+
+*
+* Convolution
+*
+
+There are two new convolution methods, convolve() and convolveInteger().
+Convolve uses a floating point matrix and supports 3dNow! acceleration while 
+convolveInteger() obviously is integer and supports normal MMX acceleration. 
+
+I was pretty excited when I wrote these because convolve is often used in
+image management and can be used as a basis for a lot of different effects. 
+Having fast accelerated versions is very cool. In Blitz this is now used for 
+sharpen(), antialias(), emboss(), and convolveEdge().
+
+*
+* Inline HSV and Interpolation 
+*
+
+This is also new. Some algorithms need to either work in the HSV colorspace
+or interpolate pixels in the RGB colorspace while inside large loops. In order 
+to optimize this I wrote inline implementations that at least GCC can handle
+without problems. I'm not sure if this is something that will be made public 
+or just used internally, and I know Zack has some interesting interpolation 
+stuff going on inside Arthur that I haven't really checked out yet.
+
+*
+* Blurs
+*
+
+The old blur is now gaussianBlur() and has been totally rewritten. The most
+significant change would have to be that it now actually works properly, but a 
+close second would be I added a ton of MMX/3dNow! acceleration. Nonetheless
+this is still a higher quality, slower blur. For a faster one I looked at 
+Imlib2 and snagged it's algorithm. This is now the default blur() method.
+
+In the meantime Zack has written a few blur methods as well. I'm not sure if 
+some will be dropped or we will just have a lot of blurs ;-)
+
+*
+* Edge detection
+*
+
+The edge() method was rewritten to use the Sobel algorithm and has an MMX 
+version. You can also use convolveEdge() for convolution based edge detection.
+
+*
+* HSV Contrast
+*
+
+The HSV contrast method has been rewritten, works as expected, and uses a 
+nifty little lookup table I came up with that saves some expensive math :)
+There are other small efficiency improvements and a bugfix where I was 
+treating brightness as luminosity.
+
+*
+* Grayscale
+* 
+
+This uses the same algorithm as Qt but supports MMX SIMD to operate on all the 
+pixel components at once. It's a cheap, fast grayscale method.
+
+There is also an additional grayscaleBrightness() method that uses the "value"
+component of the HSV value. I've used this in algorithms that require pixel 
+intensity but it probably won't be included in Quasar. Consider this legacy
+code.
+
+*
+* Despeckle
+*
+
+Now takes 1/4th the memory that KImageEffect did. It's still a expensive, 
+(read: slower), effect though...
+
+*
+* Swirl, Implode, Wave 
+*
+
+Same algorithms as before but rewritten to be cleaner, fix a few obvious 
+bugs in the geometry, and use inline interpolation.
+
+*
+* Equalize and Normalize
+*
+
+These also use the same algorithm as before but have been rewritten. I was
+able to get rid of some floating point math and no longer need to promote 
+values before I use them so it should be considerably faster. It's also *much*
+cleaner and more readable.
+
+*
+* Gradients and rotation
+*
+
+Other than basic changes for Qt4 these are unchanged from KImageEffect and 
+possibly obsolete. You can now use QPainter on a QImage with gradient brushes 
+and rotate images using either QTransform or QMatrix.
+
+I can possibly see keeping these around as cheap, fast methods since I believe 
+they should be slightly faster than using a painter or calling 
+QImage::transformed(). If I'm wrong about this, (I haven't tested it), they 
+will be dropped.
+

@@ -64,6 +64,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}/plexylib
     ${CMAKE_SOURCE_DIR}/plexycore/qt4
     ${CMAKE_SOURCE_DIR}/widgets/gtk
+    ${CMAKE_SOURCE_DIR}/3rdparty/qimageblitz
     ${QT_INCLUDE_DIR}
 )
 
@@ -81,6 +82,7 @@ add_subdirectory(runner)
 add_subdirectory(artwork)
 add_subdirectory(artwork/buttons)
 add_subdirectory(3rdparty/libmagic)
+add_subdirectory(3rdparty/qimageblitz)
 #if (NOT APPLE) 
 #if(NOT WIN32)
 #if(FFMPEG_FOUND)

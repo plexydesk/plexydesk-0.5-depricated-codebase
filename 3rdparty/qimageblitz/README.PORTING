@@ -1,0 +1,129 @@
+I. Introduction.
+
+Since most people using this are going to be porting code from KImageEffect
+I've written a small porting guide to help you out. This is broken into two
+main sections: "Depreciated And Removed Items", which describes methods that
+have been removed, and "Changed Methods And Parameters", which describes 
+methods that are still there but have changed names or parameters.
+
+This document just describes API changes. It does not discuss if the actual 
+method's algorithm has changed. Many have so may give different results. For a
+general overview of some of these changes see README.BLITZ.
+
+Daniel M. Duley <daniel.duley@verizon.net>
+
+II. Depreciated And Removed Items.
+
+*
+* rotate()
+*
+QImage::transformed() now has efficient special cases to handle right angles 
+and performance should be fine. Use that instead.
+
+*
+* hash()
+* shade()
+* solarize()
+*
+These were removed because they either weren't being used much, were expensive,
+or in the case of solarize rather stupid, (at least how I coded it ;-).
+
+*
+* blend():
+* blendOnLower():
+* flatten():
+* modulate():
+* selectedImage():
+*
+I suspect the removal of these methods are probably what is going to cause a 
+the most porting problems. They were primarily used to generate special image 
+overlays and highlights. 
+
+The problem with them is they are a huge amount of unmaintained code and now 
+QPainter has very well designed alphablending and raster operations that make
+them obsolete. Your better off using QPainter.
+
+If your like me you might first balk at doing this because it seems like
+overkill to use QPainter just to do a highlight, but it's now really efficient 
+at blending and raster ops. If you don't believe me look at Qt's 
+src/gui/painting/qdrawutil.* and qpaintengine_raster. It's really rather 
+amazing at how optimized it is, at least to me >:)
+
+Here is a little example to get you started. This will highlight an image 
+contained in "image" with a blue overlay while still retaining the original 
+alpha channel:
+
+// Upgrade if needed for alphablending
+if(image.format() != QImage::Format_ARGB32_Premultiplied &&
+    image.format() != QImage::Format_ARGB32)
+      image = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+
+// Draw our overlay
+QPainter p;
+p.begin(&image);
+// Keep original image alpha channel
+p.setCompositionMode(QPainter::CompositionMode_SourceAtop);
+// Replace this color with your overlay's color and alpha value
+p.fillRect(image.rect(), QColor(0, 0, 255, 64));
+// Done
+p.end();
+
+To do a pixmap is very similiar and is what KPixmapEffect::selectedPixmap()
+used to do when updated to Qt4, (thanks to Fredrik).
+
+III. Changed Methods And Parameters.
+
+*
+* toGray()
+*
+Changed to grayscale() because the meaning of the bool parameter has changed.
+
+*
+* contrast()
+* contrastHSV()
+*
+There are no longer two contrast methods, just contrast(), and it takes the
+same parameters that contrastHSV() used to.
+
+*
+* charcoal()
+*
+No longer takes a radius or sigma.
+
+*
+* edge()
+*
+The default edge algorithm has changed and no longer takes a radius parameter. 
+For the old behavior use convolveEdge() instead.
+
+*
+* blur()
+* 
+The default blur algorithm has changed and now just takes an integer radius. 
+For the old behavior use gaussianBlur() instead.
+
+*
+* oilPaint()
+* oilPaintConvolve()
+*
+There is now only the oilPaint() method since we now have very efficient 
+convolution. It takes the same parameters that oilPaintConvolve() used to.
+
+*
+* sharpen()
+*
+The sharpen method that took a single factor parameter has been depreciated 
+and removed. Use the other convolve-based sharpen() that takes a radius and 
+sigma instead.
+
+*
+* threshold()
+*
+Now takes a channel enum to threshold as well as "on" and "off" colors.
+The default values are the same.
+
+*
+* channelIntensity()
+*
+Shares the same enum as threshold().
+

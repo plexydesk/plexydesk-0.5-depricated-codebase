@@ -1,0 +1,75 @@
+0.0.3: 
+
+* A pretty big round of cleanups and basic improvements including using new
+Qt macros when possible, replacing x/y loops with pointer ones, and a few
+more special cases for 8bit or premultiplied source images instead of 
+converting them to RGBA.
+
+* Each effect has now been tested on 8bit, 32bit RGB, 32bit RGBA, and 
+premultiplied images with and without MMX. Several filters and modes have been
+added to the test app.
+
+* Valgrinded Blitz while running each effect in each of the above modes. No 
+leaks. Also ran Krazy and fixed a few basic issues but there are still a few 
+more to do.
+
+* Found and fixed a few bugs during the above testing. Most of them were a
+places I checked the image format by depth and not QImage::format(). I also
+fixed edge(): forgot to call emms after inline asm, scaleFiltered():
+broken with 8bit images, and grayscale(): never reduce depth w/ an alpha
+channel.
+
+* Added the API and some basic porting documentation.
+
+* Removed rotate() since QImage::transformed() has efficent special cases for 
+right angles. Use that instead and performance should be fine. 
+
+* Since Qt now uses the same C/C++ smoothscaling algorithm we do there is
+no reason to include a copy of it here. We just include the MMX version and
+call Qt if it's not available on the current machine. Saves a boatload of 
+code.
+
+* Like QImage I've added the Qt::AspectRatioMode parameter to both 
+smoothScale() and smoothScaleFilter() because it's nice to have :)
+
+* Removed grayscaleBrightness(). It wasn't in KImageEffect and was just there
+until I got around to porting some old code that used it :P
+
+* Minor improvements to the gradient code, which hasn't gotten any love in
+ages. Most notably memcpy has been a builtin gcc function for ages now and 
+supports all sorts of CPU extensions, so you want to use it and not your
+own loops when possible. Like rotate() this may eventually become obsolete by 
+using special cases in Qt's raster painter for linear gradients, but for now 
+it should still be a little faster. Main reason why I care is because people
+tend to use gradients as resizable backgrounds so every ounce of speed counts.
+
+* A few touchups to blur: Don't bother processing if the radius is too small
+and handle 8bit source images without upgrading.
+
+* Readded a simple SIMD MMX invert I did a long time ago that does two pixels
+at once. This was taken out of the initial release due to an alignment problem.
+It will be faster than QImage::invertPixels() on x86 but I got to check it out
+against QPainter's raster ops, which are really heavily optimized by now.
+
+* Ported, readded, and tested desaturate, channelIntensity, and fade.
+
+* Moved inlinehsv.h and interpolate.h to the private/ directory.
+
+* Known outstanding issues found while testing: 
+
+ConvolveEdge() produces ugly results with some images. I didn't notice this 
+until I tried it with a dithered one. This is probably due to using a cheaper 
+integer matrix instead of a floating point one, but I got to look at it more.
+Other convolve operations are fine.
+
+Threshold() reduces all images to a 2 color palette and I shouldn't do this if 
+there is an alpha channel.
+
+Krazy apparently doesn't like inline or private methods in public headers. 
+
+0.0.2: 07/31/07
+* Fixes to build with current KDE SVN. CMake no longer needs any commands for 
+moc files and KAboutData had a few changes.
+
+0.0.1: 07/27/07
+* Initial public release
