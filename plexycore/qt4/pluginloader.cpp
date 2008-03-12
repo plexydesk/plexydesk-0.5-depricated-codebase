@@ -86,7 +86,7 @@ PluginLoader * PluginLoader::mInstance = 0;
           ExtensionProducer<AbstractPluginInterface> factory;
           Iface = factory.instance(interface,plugin);
           groups[pluginName] = Iface;
-          qDebug()<<"PluginLoader::load"<<"Loading.."<< Iface<<pluginName<<endl;
+    //      qDebug()<<"PluginLoader::load"<<"Loading.."<< Iface<<pluginName<<endl;
       }
     else
       {
