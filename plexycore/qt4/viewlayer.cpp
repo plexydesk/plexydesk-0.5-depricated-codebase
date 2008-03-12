@@ -6,7 +6,7 @@ namespace PlexyDesk
 
 ViewLayer::ViewLayer(QObject * obj) : QObject(obj)
 {
-     currentList  
+     currentList = new List; 
 }
 
 ViewLayer::~ViewLayer ()
@@ -28,8 +28,7 @@ void ViewLayer::addItem ( const QString& layerName, DesktopWidget * item)
 
 void ViewLayer::showLayer (const QString& layername)
 {
-    
-}
+   currentList  = this->layer[layername];
 
 } // namespace PlexyDesk
 
