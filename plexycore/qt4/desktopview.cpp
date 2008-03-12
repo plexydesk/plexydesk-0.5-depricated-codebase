@@ -23,6 +23,7 @@
 #include <baseplugin.h>
 #include <backdropplugin.h>
 #include <widgetplugin.h>
+#include <viewlayer.h>
 #include <QGLWidget>
 
 
@@ -37,6 +38,7 @@ class  DesktopView::Private
     BackdropPlugin * bgPlugin;
     WidgetPlugin * widgets;
     QGraphicsGridLayout * gridLayout;
+    ViewLayer *  layer;
     int row;
     int column;
 };
@@ -55,7 +57,7 @@ DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsV
        d->gridLayout = new QGraphicsGridLayout ();
        d->row = 0;
        d->column = 100;
-       
+       d->layer = new ViewLayer(this);
        d->gridLayout = new QGraphicsGridLayout ;
 }
 
