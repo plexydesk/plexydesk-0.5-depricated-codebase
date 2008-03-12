@@ -45,12 +45,10 @@ DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsV
 {
        setWindowFlags(Qt::FramelessWindowHint);
        setAttribute(Qt::WA_ContentsPropagated );
-       //scene->setBackgroundBrush(QColor(Qt::transparent));
        setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
        setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
        setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
        setFrameStyle(QFrame::NoFrame);
-//       setViewport(new QGLWidget);
        setAlignment(Qt::AlignLeft | Qt::AlignTop);
        d->bgPlugin  = static_cast<BackdropPlugin*> (PluginLoader::getInstance()->instance("classicbackdrop"));
         d->widgets = 0;

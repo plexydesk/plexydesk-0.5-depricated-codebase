@@ -26,13 +26,16 @@ namespace PlexyDesk
              *  created.
              *  \param item is the widget we wish to add
              * */
-            void addItem(const QString& layerName , DesktopWidget * item);
+            void addItem (const QString& layerName , DesktopWidget * item);
+
+            void showLayer (const QString& layer);
 
         private:
             typedef QList <DesktopWidget*> List;
             typedef QMap <QString,List*> Layer;
 
             Layer layer;
+            List * currentList;
 
     };
 } // namespace PlexyDesk
