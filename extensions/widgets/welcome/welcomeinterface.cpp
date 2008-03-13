@@ -24,9 +24,7 @@
 
 WelcomeInterface::WelcomeInterface(QObject * object)
 {
-
 }
-
 
 PlexyDesk::BasePlugin  * WelcomeInterface::instance()
 {

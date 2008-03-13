@@ -15,6 +15,7 @@ SET (welcomesrc
 	welcomeinterface.cpp
 	wellcomeitem.cpp
 	plugin.cpp
+	frameitem.cpp
 		)
 
 SET (plexicore_MOC

@@ -25,9 +25,22 @@
 
 Welcome::Welcome(QObject * object)
 {
-    icon1 = new WellcomeItem(QRect(0,0,128,256));
+    frm = new Frame(QRect(0,0,140 * 3 ,256));
+    icon1 = new WellcomeItem(QRect(0,0,128,256),frm);
     icon1->setName("");
     icon1->setIcon(QPixmap(QString(PLEXPREFIX)+"/share/plexy/skins/default/welcome/keditbookmarks.png"));
+
+    icon2 = new WellcomeItem(QRect(0,0,128,256),frm);
+    icon2->setName("");
+    icon2->setIcon(QPixmap(QString(PLEXPREFIX)+"/share/plexy/skins/default/welcome/keditbookmarks.png"));
+    icon2->setPos(140,0);
+
+    icon3 = new WellcomeItem(QRect(0,0,128,256),frm);
+    icon3->setName("");
+    icon3->setIcon(QPixmap(QString(PLEXPREFIX)+"/share/plexy/skins/default/welcome/keditbookmarks.png"));
+    icon3->setPos((140 * 2 ),0);
+
+
 }
 
 Welcome::~Welcome()
@@ -37,7 +50,7 @@ Welcome::~Welcome()
 
 QGraphicsItem * Welcome::item()
 {
-   return  icon1; 
+   return  frm; 
 }
 
 #include "plugin.moc"
