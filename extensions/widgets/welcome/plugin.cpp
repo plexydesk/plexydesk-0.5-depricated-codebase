@@ -16,23 +16,28 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#include "welcomeinterface.h"
 #include "plugin.h"
-#include  <QtCore>
-#include  <QtGui>
+#include <plexy.h>
+#include <config.h>
+#include <QtCore>
+#include<QtGui>
 
 
-WelcomeInterface::WelcomeInterface(QObject * object)
+Welcome::Welcome(QObject * object)
+{
+    icon1 = new WellcomeItem(QRect(0,0,128,256));
+    icon1->setName("");
+    icon1->setIcon(QPixmap(QString(PLEXPREFIX)+"/share/plexy/skins/default/welcome/keditbookmarks.png"));
+}
+
+Welcome::~Welcome()
 {
 
 }
 
-
-PlexyDesk::BasePlugin  * WelcomeInterface::instance()
+QGraphicsItem * Welcome::item()
 {
-// return new Clock(this);
-   return  new Welcome(this);
+   return  icon1; 
 }
 
-Q_EXPORT_PLUGIN2(WelcomeInterface,WelcomeInterface)
-#include "welcomeinterface.moc"
+#include "plugin.moc"

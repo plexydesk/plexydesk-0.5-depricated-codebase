@@ -22,6 +22,7 @@
 #include <QtCore>
 #include <plexy.h>
 #include <widgetinterface.h>
+//#include "wellcomeitem.h"
 
 
 class VISIBLE_SYM WelcomeInterface :public PlexyDesk::AbstractPluginInterface
@@ -30,8 +31,8 @@ class VISIBLE_SYM WelcomeInterface :public PlexyDesk::AbstractPluginInterface
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
     public:
-    WelcomeInterface(QObject * object = 0);
-    PlexyDesk::BasePlugin * instance () ;
+       WelcomeInterface(QObject * object = 0);
+       PlexyDesk::BasePlugin * instance () ;
 };
 
 

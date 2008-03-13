@@ -169,7 +169,7 @@ namespace PlexyDesk
                d->proxyWidget->show ( );
            }
 
-          d->zoomin->start();
+        //  d->zoomin->start();
        } else {
            setState( DOCK );
            prepareGeometryChange ( );

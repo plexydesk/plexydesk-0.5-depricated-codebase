@@ -64,7 +64,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}/plexylib
     ${CMAKE_SOURCE_DIR}/plexycore/qt4
     ${CMAKE_SOURCE_DIR}/widgets/gtk
-    ${CMAKE_SOURCE_DIR}/3rdparty/qimageblitz
+    ${CMAKE_SOURCE_DIR}/3rdparty/qimageblitz/blitz/
     ${QT_INCLUDE_DIR}
 )
 

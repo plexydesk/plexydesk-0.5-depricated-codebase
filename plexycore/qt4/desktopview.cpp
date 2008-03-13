@@ -55,8 +55,8 @@ DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsV
        d->bgPlugin  = static_cast<BackdropPlugin*> (PluginLoader::getInstance()->instance("classicbackdrop"));
         d->widgets = 0;
        d->gridLayout = new QGraphicsGridLayout ();
-       d->row = 0;
-       d->column = 100;
+       d->row = QDesktopWidget().availableGeometry().height()/4;
+       d->column =  QDesktopWidget().availableGeometry().height()/2;;
        d->layer = new ViewLayer(this);
        d->gridLayout = new QGraphicsGridLayout ;
 }
@@ -93,6 +93,26 @@ void DesktopView::addExtension(const QString& name)
 
 }
 
+void DesktopView::addCoreExtension(const QString& name)
+{
+
+        d->widgets = static_cast<WidgetPlugin*> ( PluginLoader::getInstance()->instance(name));
+        if (d->widgets){
+                //scene()->addItem(d->widgets->item());
+		QGraphicsRectItem  * widget = (QGraphicsRectItem*) d->widgets->item();		
+		if(widget){
+		     // widget->configState(DesktopWidget::DOCK);
+		      scene()->addItem(widget);
+                      widget->setPos(d->row,d->column);
+                      d->row += widget->boundingRect().width()+10;
+                  //    d->column += widget->boundingRect().height()+10;
+                      //d->layer->addItem("Widgets",widget);
+                      //d->gridLayout->addItem(widget,d->row++,d->column++);
+
+		}
+	}
+
+}
 
 void DesktopView::drawBackground ( QPainter * painter, const QRectF & rect )
 {

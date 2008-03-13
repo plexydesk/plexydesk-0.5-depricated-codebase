@@ -13,6 +13,8 @@ INCLUDE_DIRECTORIES(
 
 SET (welcomesrc 	
 	welcomeinterface.cpp
+	wellcomeitem.cpp
+	plugin.cpp
 		)
 
 SET (plexicore_MOC
@@ -34,7 +36,8 @@ QT4_AUTOMOC( ${welcomesrc})
 
 TARGET_LINK_LIBRARIES(
 	       welcome
-			qtviz
+		qtviz
+		qimageblitz
 		   ${QT_QTGUI_LIBRARY}
 	       ${OPENGL_LIBRARIES}
 	       ${QT_QTCORE_LIBRARY}

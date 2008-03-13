@@ -16,23 +16,29 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#include "welcomeinterface.h"
-#include "plugin.h"
-#include  <QtCore>
-#include  <QtGui>
+#ifndef PLEXY_WELCOME_H
+#define PLEXY_WELCOME_H
+
+#include <QtCore>
+#include <plexy.h>
+#include <widgetinterface.h>
+#include <widgetplugin.h>
+#include "wellcomeitem.h"
 
 
-WelcomeInterface::WelcomeInterface(QObject * object)
+class VISIBLE_SYM Welcome :public PlexyDesk::WidgetPlugin
 {
+    Q_OBJECT
 
-}
+    public:
+        Welcome(QObject * object = 0);
+        virtual ~Welcome();
+        virtual QGraphicsItem * item();
+    private:
+        WellcomeItem * icon1;
+        WellcomeItem * icon2;
+        WellcomeItem * icon3;
+};
 
 
-PlexyDesk::BasePlugin  * WelcomeInterface::instance()
-{
-// return new Clock(this);
-   return  new Welcome(this);
-}
-
-Q_EXPORT_PLUGIN2(WelcomeInterface,WelcomeInterface)
-#include "welcomeinterface.moc"
+#endif
