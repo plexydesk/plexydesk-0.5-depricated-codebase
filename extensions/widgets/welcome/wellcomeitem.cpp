@@ -13,43 +13,25 @@ public:
     Private ()
     {
     }
-    int
-      height;
-    int
-      width;
-    QString
-      text;
-    QString
-      comment;
-    QString
-      tooltip;
-    QString
-      icon;
-    int
-      Rating;
-    MouseState
-      state;
-    ThemeNames
-      ids;
-    QSize
-      size;
-    QSize
-      elementSize;
-    QPixmap
-      iconPixmap;
-    float
-      opacity;
+    int height;
+    int  width;
+    QString text;
+    QString comment;
+    QString tooltip;
+    QString icon;
+    int Rating;
+    MouseState state;
+    ThemeNames ids;
+    QSize size;
+    QSize elementSize;
+    QPixmap iconPixmap;
+    float opacity;
     //Grid
-    int
-      ncol;
-    int
-      nrow;
-    QTimeLine
-      timeline;
-    QImage
-      refimg;
-    bool
-      blured;
+    int ncol;
+    int nrow;
+    QTimeLine timeline;
+    QImage refimg;
+    bool blured;
 };
 
 
