@@ -32,8 +32,6 @@ namespace PlexyDesk
 	void init() {}
             WidgetInterface(){}
             ~WidgetInterface(){}
-           //virtual  QGraphicsItem * item() = 0;
-           //virtual void render (QPainter *p,QRectF r){};
     };
 } // namespace PlexyDesk
 

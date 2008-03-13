@@ -25,20 +25,21 @@
 
 Welcome::Welcome(QObject * object)
 {
-    frm = new Frame(QRect(0,0,140 * 3 ,256));
+    frm = new Frame(QRect(0,0,140 * 4 ,128*3));
     icon1 = new WellcomeItem(QRect(0,0,128,256),frm);
     icon1->setName("");
     icon1->setIcon(QPixmap(QString(PLEXPREFIX)+"/share/plexy/skins/default/welcome/keditbookmarks.png"));
+    icon1->setPos(60,70);
 
     icon2 = new WellcomeItem(QRect(0,0,128,256),frm);
     icon2->setName("");
     icon2->setIcon(QPixmap(QString(PLEXPREFIX)+"/share/plexy/skins/default/welcome/keditbookmarks.png"));
-    icon2->setPos(140,0);
+    icon2->setPos(220,70);
 
     icon3 = new WellcomeItem(QRect(0,0,128,256),frm);
     icon3->setName("");
     icon3->setIcon(QPixmap(QString(PLEXPREFIX)+"/share/plexy/skins/default/welcome/keditbookmarks.png"));
-    icon3->setPos((140 * 2 ),0);
+    icon3->setPos(380,70);
 
 
 }

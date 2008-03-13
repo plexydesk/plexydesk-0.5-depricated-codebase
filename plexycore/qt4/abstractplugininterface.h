@@ -36,9 +36,6 @@ namespace PlexyDesk
         AbstractPluginInterface(QObject *parent = 0){}
         virtual void init() {};
         virtual BasePlugin * instance() = 0;
-        //virtual  QGraphicsItem * item() {return new QGraphicsRectItem ();};
-        //virtual  void render(QPainter *p,QRectF r) {qDebug()<<"Called Draoing"<<endl;}
-        //virtual DataPlugin* loadData(const QString& name);
     };
 } // namespace PlexyDesk
 
