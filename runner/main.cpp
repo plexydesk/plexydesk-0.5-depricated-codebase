@@ -75,7 +75,7 @@ int main( int argc, char ** argv )
     view->show();
   //  view->addExtension("plexyfriends");
  //   view->addExtension("imagepil");
- for ( int i = 0 ; i < 5 ; i++)
+// for ( int i = 0 ; i < 5 ; i++)
     view->addCoreExtension("welcome");
 
     view->addExtension("plexyclock");
