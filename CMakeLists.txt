@@ -96,7 +96,7 @@ add_subdirectory(extensions/widgets/clock)
 add_subdirectory(extensions/widgets/welcome)
 #add_subdirectory(extensions/widgets/friendswidget)
 #add_subdirectory(extensions/widgets/youtubewidget)
-#add_subdirectory(extensions/data/flicker)
+add_subdirectory(extensions/data/flicker)
 #add_subdirectory(extensions/data/rss)
 #add_subdirectory(extensions/data/utube)
 
