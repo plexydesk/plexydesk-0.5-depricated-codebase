@@ -18,20 +18,21 @@
 *******************************************************************************/
 
 #include "interface.h"
-
+#include "imageplugin.h"
 #include <QtCore>
 #include <pluginloader.h>
 #include <QtGui>
+
 
 Interface::Interface(QObject * object)
 {
 }
 
-PlexyDesk::BasePlugin* instance()
+PlexyDesk::BasePlugin* Interface::instance()
 {
-
+    return new ImagePlugin();
 }
 
-Q_EXPORT_PLUGIN2(Interface, Interface)
+Q_EXPORT_PLUGIN2(Interface,Interface)
 
 #include "interface.moc"
