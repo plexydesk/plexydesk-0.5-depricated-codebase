@@ -16,40 +16,22 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#ifndef PLEXY_WIDGET_IMAGEPILE_H
-#define PLEXY_WIDGET_IMAGEPILE_H
 
-#include <plexy.h>
+#include "interface.h"
 
 #include <QtCore>
-#include <abstractplugininterface.h>
-#include <datainterface.h>
-#include <widgetinterface.h>
-#include "pictureflow.h"
-#include "imageitem.h"
+#include <pluginloader.h>
+#include <QtGui>
 
-class VISIBLE_SYM ImagePile :public PlexyDesk::WidgetInterface
+Interface::Interface(QObject * object)
 {
-    Q_OBJECT
-    Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
+}
 
-    public:
-        void init(){}
-        ImagePile(QObject * object = 0);
-        virtual ~ImagePile();
-        virtual QGraphicsItem * item();// {};
-    public slots:
-        void data(QVariant&);
-        void searchImage();
-   signals:
-	void change();
-        void sendData(QVariant&);
-   private:
-	 PictureFlow * flow ;
-         QWidget * base;
-         QLineEdit * search;
-	 PlexyDesk::DataInterface * flickrEngine;
-	 PlexyDesk::ImagePileWidget * widget;
-};
+PlexyDesk::BasePlugin* instance()
+{
 
-#endif
+}
+
+Q_EXPORT_PLUGIN2(Interface, Interface)
+
+#include "interface.moc"

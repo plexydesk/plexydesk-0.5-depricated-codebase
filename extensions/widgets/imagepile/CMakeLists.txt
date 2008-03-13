@@ -13,7 +13,7 @@ INCLUDE_DIRECTORIES(
 
 SET (imagepilsrc
 	imageitem.cpp
-	imagepil.cpp    
+	interface.cpp 
   pictureflow.cpp
 		)
 
