@@ -14,7 +14,8 @@ INCLUDE_DIRECTORIES(
 SET (imagepilsrc
 	imageitem.cpp
 	interface.cpp 
-  pictureflow.cpp
+        pictureflow.cpp
+	imageplugin.cpp
 		)
 
 SET (plexicore_MOC
