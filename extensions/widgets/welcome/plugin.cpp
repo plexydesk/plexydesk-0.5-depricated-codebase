@@ -20,7 +20,7 @@
 #include <plexy.h>
 #include <config.h>
 #include <QtCore>
-#include<QtGui>
+#include <QtGui>
 
 
 Welcome::Welcome(QObject * object)

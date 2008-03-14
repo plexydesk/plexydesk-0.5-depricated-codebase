@@ -14,8 +14,7 @@ INCLUDE_DIRECTORIES(
 SET (imagepilsrc
 	imageitem.cpp
 	interface.cpp 
-        pictureflow.cpp
-	imageplugin.cpp
+  pictureflow.cpp
 		)
 
 #QT4_AUTOMOC( ${plexicore_MOC})

@@ -17,8 +17,10 @@ SET (flickerenginesrc
 		)
 		
 SET (plexicore_MOC
-  ../../../plexycore/qt4/pluginloader.cpp
-  ../../../plexycore/qt4/abstractplugininterface.cpp
+    ../../../plexycore/qt4/pluginloader.cpp
+    ../../../plexycore/qt4/abstractplugininterface.cpp
+    ../../../plexycore/qt4/dataplugin.cpp
+    ../../../plexycore/qt4/baseplugin.cpp
     )
     
 QT4_AUTOMOC( ${plexicore_MOC})

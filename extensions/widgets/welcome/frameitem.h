@@ -5,13 +5,14 @@
 #include <QtCore>
 #include <QtGui>
 #include <QSvgRenderer>
+#include <config.h>
 
 class Frame :public  QGraphicsRectItem
 {
     public:
         Frame (const QRectF& rect,QGraphicsItem * parent = 0):QGraphicsRectItem(rect,parent)
         {
-           render.load(QString("/usr/local/share/plexy/skins/default/welcome/background.svg"));
+           render.load(QString(PLEXPREFIX)+"/share/plexy/skins/default/welcome/background.svg");
         }
         void  paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
     private:
