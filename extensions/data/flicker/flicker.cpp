@@ -28,7 +28,7 @@ FlickerData::FlickerData(QObject * object)
         currentSlide = 0;
         searchkey = "fresh morning";
 	http = new QHttp(this);
-	init();
+//	init();
         imageTimer = new QTimer(this);
         connect(imageTimer,SIGNAL(timeout()),this,SLOT(nextImage()));
 }
@@ -78,7 +78,7 @@ void FlickerData::nextImage()
 
 void FlickerData::pushData(QVariant& str)
 {
-//    http->abort();
+    http->abort();
     searchkey = str.toString();
     init();
 }
@@ -123,6 +123,8 @@ void FlickerData::loadImages(int id, bool stat)
                   if (!newWall.isNull()) {
                       QVariant image(img);
                       emit data(image);
+              }else {
+                  qDebug()<<"Invalid Image data"<<endl;
               }
           }
       }

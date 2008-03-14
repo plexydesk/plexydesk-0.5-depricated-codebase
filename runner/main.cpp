@@ -72,12 +72,14 @@ int main( int argc, char ** argv )
     info.setWindowType(NET::Desktop);
 #endif
 
+    view->addExtension("imagepil");
     view->show();
   //  view->addExtension("plexyfriends");
  //   view->addExtension("imagepil");
 // for ( int i = 0 ; i < 5 ; i++)
     view->addCoreExtension("welcome");
 
+    view->addExtension("imagepil");
     view->addExtension("plexyclock");
 //    view->addExtension("plexyyoutube");
 //    view->addExtension("plexycpu");
