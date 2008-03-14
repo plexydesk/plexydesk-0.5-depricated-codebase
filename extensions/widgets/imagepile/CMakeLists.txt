@@ -15,6 +15,7 @@ SET (imagepilsrc
 	imageitem.cpp
 	interface.cpp 
   pictureflow.cpp
+  imageplugin.cpp
 		)
 
 #QT4_AUTOMOC( ${plexicore_MOC})
