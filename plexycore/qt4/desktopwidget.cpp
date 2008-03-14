@@ -74,8 +74,8 @@ namespace PlexyDesk
 	    d->angleHide = 0;
 
             ///zoom in settings
-            d->zoomin = new QTimeLine ( 100 , this );
-            d->zoomin->setFrameRange ( 0 , 100 );
+            d->zoomin = new QTimeLine ( 150 , this );
+            d->zoomin->setFrameRange ( 100 , 150 );
             connect ( d->zoomin , SIGNAL ( frameChanged ( int ) ) , 
                       this , SLOT ( zoomIn (int) ) );
             connect ( d->zoomin , SIGNAL ( finished () ) ,
@@ -107,11 +107,11 @@ namespace PlexyDesk
         QPointF center = boundingRect ().center();
         QTransform mat = QTransform();
         mat.translate (  center.x() ,  center.y() );
-        mat.scale ( 1 + frame / 150.0 , 1 + frame / 150.0 );
+        mat.scale ( frame/500.0 ,  frame/500.0  );
         mat.translate ( - center.x() ,  - center.y() );
         setTransform (mat);
         if ( d->opacity >= 0.0) {
-            d->opacity -= 0.3;
+            //d->opacity -= 0.3;
         }
     }
     void DesktopWidget::zoomOut ( int frame )
@@ -123,7 +123,7 @@ namespace PlexyDesk
         mat.translate ( - center.x() ,  - center.y() );
         setTransform (mat);
         if ( d->opacity >= 0.0) {
-            d->opacity -= 0.2;
+            //d->opacity -= 0.2;
         }
     }
 
@@ -169,7 +169,7 @@ namespace PlexyDesk
                d->proxyWidget->show ( );
            }
 
-        //  d->zoomin->start();
+          d->zoomin->start();
        } else {
            setState( DOCK );
            prepareGeometryChange ( );
@@ -256,6 +256,11 @@ namespace PlexyDesk
 	
 	if (isObscured())
           return;
+
+        if (!painter->isActive())
+                return;
+
+
 	painter->setOpacity(d->opacity);
 	painter->setClipRect(option->exposedRect);
 	if (d->s == NORMALSIDE)
