@@ -18,9 +18,17 @@ SET (imagepilsrc
   imageplugin.cpp
 		)
 
-#QT4_AUTOMOC( ${plexicore_MOC})
+SET (plexicore_MOC
+  ../../../plexycore/qt4/desktopwidget.cpp
+  ../../../plexycore/qt4/pluginloader.cpp
+  ../../../plexycore/qt4/widgetplugin.cpp
+  ../../../plexycore/qt4/abstractplugininterface.cpp
+  ../../../plexycore/qt4/baseplugin.cpp
+    )
 
-add_library (imagepil SHARED ${imagepilsrc})
+QT4_AUTOMOC( ${plexicore_MOC})
+
+add_library (imagepil SHARED ${imagepilsrc} ${plexicore_MOC})
 QT4_AUTOMOC( ${imagepilsrc}) 
 
 #SET_TARGET_PROPERTIES(plexy
