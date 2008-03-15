@@ -1,7 +1,7 @@
 /*******************************************************************************
 * This file is part of PlexyDesk.
 *  Maintained by : Siraj Razick <siraj@kde.org>
-*  Authored By  :
+*  Authored By  : Siraj Razick <siraj@kde.org>
 *
 *  PlexyDesk is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU Lesser General Public License as published by
@@ -165,28 +165,6 @@ void VPlayer::setFileName (const QString & name)
     avpicture_fill((AVPicture *)d->pFrameRGB, d->buffer, PIX_FMT_RGBA32, d->pCodecCtx->width, d->pCodecCtx->height);
 
     i=0;
-/*  
-    while (av_read_frame(d->pFormatCtx, &d->packet)>=0) {
-
-              if (d->packet.stream_index==d->videoStream) {
-
-                        avcodec_decode_video(d->pCodecCtx, d->pFrame, &d->frameFinished,d->packet.data, d->packet.size);
-                       
-			 if (d->frameFinished) {
-		
-			img_convert((AVPicture *)d->pFrameRGB, PIX_FMT_RGBA32, (AVPicture*)d->pFrame,PIX_FMT_YUV420P,d->pCodecCtx->width,d->pCodecCtx->height);
-			
-			QImage img(d->pFrameRGB->data[0],d->pCodecCtx->width,d->pCodecCtx->height,QImage::Format_ARGB32);
-			d->video->setPixmap(QPixmap::fromImage(img));
-		        d->video->update();
-			QCoreApplication::processEvents();
-    
-          }
-        
-      }
-av_free_packet(&d->packet);
-    }
-*/
 }
 else
 {
