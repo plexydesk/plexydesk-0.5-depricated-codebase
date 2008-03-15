@@ -75,19 +75,20 @@ namespace PlexyDesk
 
             ///zoom in settings
             d->zoomin = new QTimeLine ( 150 , this );
-            d->zoomin->setFrameRange ( 100 , 150 );
+            d->zoomin->setFrameRange ( 120 , 150 );
             connect ( d->zoomin , SIGNAL ( frameChanged ( int ) ) , 
                       this , SLOT ( zoomIn (int) ) );
             connect ( d->zoomin , SIGNAL ( finished () ) ,
                       this , SLOT ( zoomDone () ) );
 
             //zoom out 
-            d->zoomout = new QTimeLine ( 300 , this );
-            d->zoomout->setFrameRange ( 0 , 300 );
+            d->zoomout = new QTimeLine (150 , this );
+            d->zoomout->setFrameRange ( 0, 150 );
             connect ( d->zoomout , SIGNAL ( frameChanged ( int ) ) , 
                       this , SLOT ( zoomOut (int) ) );
             connect ( d->zoomout , SIGNAL ( finished () ) ,
                       this , SLOT ( zoomDone () ) );
+            d->zoomin->start();
     }
 
     DesktopWidget::~DesktopWidget ( )
@@ -107,7 +108,7 @@ namespace PlexyDesk
         QPointF center = boundingRect ().center();
         QTransform mat = QTransform();
         mat.translate (  center.x() ,  center.y() );
-        mat.scale ( frame/500.0 ,  frame/500.0  );
+        mat.scale ( frame/150.0 ,  frame/150.0  );
         mat.translate ( - center.x() ,  - center.y() );
         setTransform (mat);
         if ( d->opacity >= 0.0) {
