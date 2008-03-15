@@ -16,27 +16,25 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#ifndef FLICKER_DATA_I
-#define FLICKER_DATA_I
+#ifndef VIDEO_DATA_I
+#define VIDEO_DATA_I
 
 #include <QtCore>
 #include <plexy.h>
 #include <backdropinterface.h>
 #include <abstractplugininterface.h>
-#include <QtNetwork>
 #include <datainterface.h>
 #include <dataplugin.h>
-#include "flicker.h" 
 
-class VISIBLE_SYM FlickerInterface :public PlexyDesk::DataInterface
+class VISIBLE_SYM VideoInterface :public PlexyDesk::DataInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
     public:
-    FlickerInterface(QObject * object = 0);
-    virtual ~FlickerInterface(){}
-          PlexyDesk::DataPlugin * instance();
+        VideoInterface(QObject * object = 0);
+        virtual ~VideoInterface(){}
+        PlexyDesk::DataPlugin * instance();
 
 };
 

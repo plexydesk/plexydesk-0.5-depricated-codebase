@@ -16,21 +16,20 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#include "flicker.h"
-#include "flickerinterface.h"
+#include "videointerface.h"
 #include <desktopwidget.h>
 #include <plexyconfig.h>
 
 
     
-FlickerInterface::FlickerInterface(QObject * object)
+VideoInterface::VideoInterface(QObject * object)
 {
 }
 
-PlexyDesk::DataPlugin *  FlickerInterface::instance()
+PlexyDesk::DataPlugin *  VideoInterface::instance()
 {
  return new FlickerData();
 }
 
-Q_EXPORT_PLUGIN2(FlickerInterface,FlickerInterface)
-#include "flickerinterface.moc"
+Q_EXPORT_PLUGIN2(VideoInterface,VideoInterface)
+#include "videointerface.moc"
