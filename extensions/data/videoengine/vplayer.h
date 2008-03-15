@@ -16,20 +16,43 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#include "videointerface.h"
-#include <desktopwidget.h>
-#include <plexyconfig.h>
+
+#ifndef V_PLAYER_H
+#define V_PLAYER_H
+
+#include <QtCore>
+#include <QtGui>
+#include <plexy.h>
 
 
-    
-VideoInterface::VideoInterface(QObject * object)
+namespace PlexyDesk
 {
-}
-
-PlexyDesk::DataPlugin *  VideoInterface::instance()
+class VISIBLE_SYM VPlayer : public QObject
 {
- return ;//ew FlickerData();
-}
+Q_OBJECT
+    public :
+        VPlayer(QObject *parent= 0);
+        ~VPlayer();
 
-Q_EXPORT_PLUGIN2(VideoInterface,VideoInterface)
-#include "videointerface.moc"
+        void setFileName(const QString& Path);
+	
+//        void fileName();
+	
+public slots:
+	//void pull() {}
+	void decode();
+signals:
+	void videoDone();
+	void frameReady(QImage & img);
+	
+    protected:
+        void init();
+	      
+
+    private:
+        class Private;
+            Private * const d;
+};
+
+}
+#endif
