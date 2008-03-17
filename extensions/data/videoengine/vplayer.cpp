@@ -110,7 +110,7 @@ void VPlayer::init ()
 void VPlayer::setFileName (const QString & name)
 {
     QFile *file = new QFile (name);
-    init().;    
+    init();    
 
     if (file->exists ())
     {
