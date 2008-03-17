@@ -17,6 +17,7 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 #include "videointerface.h"
+#include "video.h"
 #include <desktopwidget.h>
 #include <plexyconfig.h>
 
@@ -28,7 +29,7 @@ VideoInterface::VideoInterface(QObject * object)
 
 PlexyDesk::DataPlugin *  VideoInterface::instance()
 {
- return 0;//ew FlickerData();
+ return new VideoData(this);
 }
 
 Q_EXPORT_PLUGIN2(VideoInterface,VideoInterface)
