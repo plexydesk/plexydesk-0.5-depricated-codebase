@@ -35,12 +35,13 @@ class VISIBLE_SYM VideoData :public PlexyDesk::DataPlugin
     virtual ~VideoData();
           void init();
     public slots:
-          void pushData(QVariant&){}
+          void pushData(QVariant&);
+          void grab(QImage & );
     signals:
          void data(QVariant&);
 
     private:
-         VPlayer * vplayer;
+         PlexyDesk::VPlayer * vplayer;
 ;
 };
 

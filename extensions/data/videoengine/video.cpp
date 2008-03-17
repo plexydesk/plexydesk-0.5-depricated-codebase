@@ -28,17 +28,27 @@ VideoData::VideoData(QObject * object)
 }
 
 
+void VideoData::pushData(QVariant& data)
+{
+    vplayer->setFileName(data.toString());
+}
 
 void  VideoData::init()
 {
-    vplayer = VPlayer();
+    vplayer = new PlexyDesk::VPlayer();
 }
 
 VideoData::~VideoData()
 {
 }
 
-
+void VideoData::grab(QImage & img)
+{
+    if (! img.isNull() ) {
+        QVariant frame(img);
+        emit data(frame);
+    }
+}
 
 
 #include "video.moc"
