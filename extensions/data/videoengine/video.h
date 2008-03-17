@@ -24,6 +24,7 @@
 #include <backdropinterface.h>
 #include <abstractplugininterface.h>
 #include <datainterface.h>
+#include "vplayer.h"
 
 class VISIBLE_SYM VideoData :public PlexyDesk::DataPlugin
 {
@@ -34,11 +35,12 @@ class VISIBLE_SYM VideoData :public PlexyDesk::DataPlugin
     virtual ~VideoData();
           void init();
     public slots:
-          void pushData(QVariant&);
+          void pushData(QVariant&){}
     signals:
          void data(QVariant&);
 
     private:
+         VPlayer * vplayer;
 ;
 };
 

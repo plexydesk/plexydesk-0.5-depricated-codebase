@@ -8,10 +8,7 @@ INCLUDE_DIRECTORIES(
 		 )
 
 
-SET (videoenginesrc 	
-	flicker.cpp
-        flickerinterface.cpp
-		)
+SET (videoenginesrc video.cpp  videointerface.cpp  vplayer.cpp )
 		
 
 add_library (videoengine SHARED ${videoenginesrc})

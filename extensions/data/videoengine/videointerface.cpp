@@ -28,7 +28,7 @@ VideoInterface::VideoInterface(QObject * object)
 
 PlexyDesk::DataPlugin *  VideoInterface::instance()
 {
- return ;//ew FlickerData();
+ return 0;//ew FlickerData();
 }
 
 Q_EXPORT_PLUGIN2(VideoInterface,VideoInterface)
