@@ -55,10 +55,9 @@ public:
 
 VPlayer::VPlayer (QObject * parent):QObject (parent), d (new Private)
 {
-   init ();
+  // init ();
    d->vidtimer = new QTimer(this);
    connect(d->vidtimer,SIGNAL(timeout()),this,SLOT(decode()));
-   d->vidtimer->start(12);
    d->currentFrame = 0;
 }
 
@@ -111,6 +110,7 @@ void VPlayer::init ()
 void VPlayer::setFileName (const QString & name)
 {
     QFile *file = new QFile (name);
+    init().;    
 
     if (file->exists ())
     {
@@ -169,12 +169,12 @@ void VPlayer::setFileName (const QString & name)
 else
 {
   qDebug ("File Dose not Exisit");
+  return;
 }
 
 delete file;
-
 }
-
+ 
 }
 
 #include "vplayer.moc"

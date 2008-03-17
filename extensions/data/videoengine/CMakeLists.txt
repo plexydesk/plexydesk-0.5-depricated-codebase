@@ -23,6 +23,9 @@ QT4_AUTOMOC( ${videoenginesrc})
 TARGET_LINK_LIBRARIES(
 	       videoengine
 	       qtviz
+		avutil 
+		avformat
+		avcodec 
 	       ${QT_QTGUI_LIBRARY}
 	       ${OPENGL_LIBRARIES}
 	       ${QT_QTCORE_LIBRARY}
