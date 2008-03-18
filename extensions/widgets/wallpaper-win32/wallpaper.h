@@ -23,25 +23,21 @@
 #include <plexy.h>
 #include <datainterface.h>
 
-namespace PlexyDesk
+class VISIBLE_SYM WallpaperChange : public PlexyDesk::DataPlugin
 {
-    class VISIBLE_SYM WallpaperChange : public PlexyDesk::DataInterface
-    {
-        Q_OBJECT
+    Q_OBJECT
         Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
-    public:
-        void  init() {}
-        WallpaperChange(QObject * object = 0);
-        virtual ~WallpaperChange();
-        virtual QGraphicsItem * item();// {};
-    public slots:
-        void pushData(QVariant&);
-        void changeWallpaper(bool);
-    signals:
-        void data(QVariant&);
-
-    };
-}
+public:
+    void init() {}
+    WallpaperChange(QObject * object = 0);
+    virtual ~WallpaperChange();
+    virtual QGraphicsItem * item();// {};
+public slots:
+    void pushData(QVariant&);
+    void changeWallpaper(bool);
+signals:
+    void data(QVariant&);
+};
 
 #endif // PLEXY_WALLPAPER_CHANGE_H

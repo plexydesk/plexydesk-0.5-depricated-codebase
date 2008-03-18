@@ -19,42 +19,37 @@
 #include "wallpaper.h"
 #include "wallpaperwidget.h"
 
-namespace PlexyDesk
+WallpaperChange::WallpaperChange(QObject * object)
 {
-    WallpaperChange::WallpaperChange(QObject * object)
-    {
-    }
+}
 
-    WallpaperChange::~WallpaperChange()
-    {
+WallpaperChange::~WallpaperChange()
+{
 
-    }
+}
 
-    QGraphicsItem * WallpaperChange::item()
-    {
-        QPushButton *button = new QPushButton("Change Wallpaper", 0);
-        button->move(10, 10);
-        connect(button, SIGNAL(clicked(bool)), this, SLOT(changeWallpaper(bool)));
+QGraphicsItem * WallpaperChange::item()
+{
+    QPushButton *button = new QPushButton("Change Wallpaper", 0);
+    button->move(10, 10);
+    connect(button, SIGNAL(clicked(bool)), this, SLOT(changeWallpaper(bool)));
 
-        return new PlexyDesk::WallpaperWidget(QRectF(0,0,340,240), button);
-    }
+    return new WallpaperWidget(QRectF(0,0,340,240), button);
+}
 
-    void WallpaperChange::pushData(QVariant&)
-    {
+void WallpaperChange::pushData(QVariant&)
+{
 
-    }
+}
 
-    void WallpaperChange::changeWallpaper(bool)
-    {
-        QString wallpaperRegPath("HKEY_CURRENT_USER\\Control Panel\\Desktop");
-        QSettings settings(wallpaperRegPath, QSettings::NativeFormat);
-        QString imagePath = settings.value("Wallpaper").toString();
-        QImage img(imagePath);
-        QVariant image(img);
-        emit data(image);
-    }
-
-    Q_EXPORT_PLUGIN2(WallpaperChange, WallpaperChange)
+void WallpaperChange::changeWallpaper(bool)
+{
+    QString wallpaperRegPath("HKEY_CURRENT_USER\\Control Panel\\Desktop");
+    QSettings settings(wallpaperRegPath, QSettings::NativeFormat);
+    QString imagePath = settings.value("Wallpaper").toString();
+    QImage img(imagePath);
+    QVariant image(img);
+    emit data(image);
 }
 
 #include "wallpaper.moc"

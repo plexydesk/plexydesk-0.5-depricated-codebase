@@ -20,41 +20,37 @@
 #include <QtCore>
 #include <QtGui>
 
-namespace PlexyDesk
+WallpaperWidget::WallpaperWidget(const QRectF &rect, QWidget *widget )
+:PlexyDesk::DesktopWidget(rect,widget)
 {
-    WallpaperWidget::WallpaperWidget(const QRectF &rect, QWidget *widget )
-        :DesktopWidget(rect,widget)
-    {
-    }
-    
-    WallpaperWidget::~WallpaperWidget()
-    {
+}
 
-    }
+WallpaperWidget::~WallpaperWidget()
+{
 
-    void WallpaperWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
-    {
-    }
+}
 
-    void WallpaperWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
-    {
-        p->setRenderHints(QPainter::SmoothPixmapTransform |QPainter::Antialiasing |QPainter::HighQualityAntialiasing);
+void WallpaperWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
+{
+}
 
-        p->setPen(QColor(255,255,255));
-        p->setFont(QFont("Bitstream Charter", 9));
-        p->drawText(QRect(8,5,64,64), Qt::AlignCenter, "Wallpaper");
-    }
+void WallpaperWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
+{
+    p->setRenderHints(QPainter::SmoothPixmapTransform |QPainter::Antialiasing |QPainter::HighQualityAntialiasing);
 
-    void WallpaperWidget::paintExtBackFace(QPainter *p, const QStyleOptionGraphicsItem * e, QWidget *widget)
-    {
+    p->setPen(QColor(255,255,255));
+    p->setFont(QFont("Bitstream Charter", 9));
+    p->drawText(QRect(8,5,64,64), Qt::AlignCenter, "Wallpaper");
+}
 
-    }
+void WallpaperWidget::paintExtBackFace(QPainter *p, const QStyleOptionGraphicsItem * e, QWidget *widget)
+{
 
-    QRectF WallpaperWidget::boundingRect() const
-    {
-        return rect();
-    }
+}
 
-} // namespace PlexyDesk
+QRectF WallpaperWidget::boundingRect() const
+{
+    return rect();
+}
 
 #include "wallpaperwidget.moc"

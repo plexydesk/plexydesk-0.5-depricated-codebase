@@ -13,11 +13,13 @@ INCLUDE_DIRECTORIES(
 SET (wallpaper_CPP
     wallpaper.cpp
     wallpaperwidget.cpp
+    wallpaperinterface.cpp
     )
     
 SET (wallpaper_H
     wallpaper.h
     wallpaperwidget.h
+    wallpaperinterface.h
     )
     
 SOURCE_GROUP(source
