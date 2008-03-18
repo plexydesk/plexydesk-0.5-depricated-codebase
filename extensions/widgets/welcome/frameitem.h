@@ -12,7 +12,8 @@ class Frame :public  QGraphicsRectItem
     public:
         Frame (const QRectF& rect,QGraphicsItem * parent = 0):QGraphicsRectItem(rect,parent)
         {
-           render.load(QString(PLEXPREFIX)+"/share/plexy/skins/default/welcome/background.svg");
+           setFlag ( QGraphicsItem::ItemIsMovable , true );
+           render.load(QString(PLEXPREFIX)+"/share/plexy/skins/default/welcome/welcome.svg");
         }
         void  paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
     private:

@@ -49,3 +49,5 @@ TARGET_LINK_LIBRARIES(
 INSTALL(TARGETS imagepil DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext/)
 install(FILES imagepil.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups/)
 
+add_subdirectory(img)
+
