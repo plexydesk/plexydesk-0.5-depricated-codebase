@@ -65,11 +65,7 @@ VPlayer::VPlayer (QObject * parent):QObject (parent), d (new Private)
 
 VPlayer::~VPlayer ()
 {
-	
 }
-
-
-
 
 void VPlayer::decode()
 {

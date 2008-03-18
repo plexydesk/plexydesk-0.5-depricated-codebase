@@ -14,7 +14,6 @@ INCLUDE_DIRECTORIES(
 SET (videowidgetsrc 	
 	video.cpp
 	videoitem.cpp
-	vplayer.cpp
 		)
 
 add_library (videowidget SHARED ${videowidgetsrc})
@@ -29,10 +28,6 @@ QT4_AUTOMOC( ${videowidgetsrc})
 TARGET_LINK_LIBRARIES(
 	       videowidget
 	       GL
-	       QtWebKit
-	       avutil 
-	       avformat
-	       avcodec 
 	       ${OPENGL_LIBRARIES}
 	       ${QT_QTCORE_LIBRARY}
 	       ${QT_QTOPENGL_LIBRARY}
