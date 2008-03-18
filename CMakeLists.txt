@@ -51,7 +51,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/extensions/backdrop/classicdrop
     ${CMAKE_BINARY_DIR}/extensions/widgets/demowidget
     ${CMAKE_BINARY_DIR}/extensions/widgets/welcome
-    ${CMAKE_BINARY_DIR}/extensions/widgets/videowiget
+    #    ${CMAKE_BINARY_DIR}/extensions/widgets/videowiget
     ${CMAKE_BINARY_DIR}/extensions/widgets/cpu
     ${CMAKE_BINARY_DIR}/extensions/widgets/friendswidget
     ${CMAKE_BINARY_DIR}/extensions/widgets/imagepile
@@ -60,6 +60,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/extensions/data/flicker
     ${CMAKE_BINARY_DIR}/extensions/data/rss
     ${CMAKE_BINARY_DIR}/extensions/data/utube
+    ${CMAKE_BINARY_DIR}/extensions/data/videoengine 
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_SOURCE_DIR}/plexylib
     ${CMAKE_SOURCE_DIR}/plexycore/qt4
@@ -86,7 +87,7 @@ add_subdirectory(3rdparty/qimageblitz)
 #if (NOT APPLE) 
 #if(NOT WIN32)
 #if(FFMPEG_FOUND)
-#add_subdirectory(extensions/widgets/videowiget)
+add_subdirectory(extensions/data/videoengine/)
 #endif(FFMPEG_FOUND)
 #add_subdirectory(extensions/widgets/cpu)
 #endif(NOT WIN32)

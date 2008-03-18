@@ -16,8 +16,6 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#include "video.h"
-#include "videoitem.h"
 #include <QtWebKit>
 
 
@@ -37,5 +35,4 @@ QGraphicsItem * VideoWidget::item()
 return new  PlexyDesk::VideoItem(QRectF(0,0,380,300),0);
 }
 
-Q_EXPORT_PLUGIN2(VideoWidget,VideoWidget)
 #include "video.moc"

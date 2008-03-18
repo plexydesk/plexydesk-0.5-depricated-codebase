@@ -55,7 +55,7 @@ public:
 
 VPlayer::VPlayer (QObject * parent):QObject (parent), d (new Private)
 {
-  // init ();
+   init ();
    d->vidtimer = new QTimer(this);
    connect(d->vidtimer,SIGNAL(timeout()),this,SLOT(decode()));
    d->currentFrame = 0;
@@ -104,13 +104,14 @@ av_free_packet(&d->packet);
 void VPlayer::init ()
 {
     av_register_all ();
+   // d->vidtimer->start(500);
 }
 
 
 void VPlayer::setFileName (const QString & name)
 {
     QFile *file = new QFile (name);
-    init();    
+   // init();    
 
     if (file->exists ())
     {
@@ -173,6 +174,9 @@ else
 }
 
 delete file;
+
+d->vidtimer->start(12);
+
 }
  
 }

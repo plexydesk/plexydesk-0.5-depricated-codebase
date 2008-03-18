@@ -45,6 +45,7 @@ VideoData::~VideoData()
 
 void VideoData::grab(QImage & img)
 {
+    qDebug()<<"Video"<<endl;
     if (! img.isNull() ) {
         QVariant frame(img);
         emit data(frame);

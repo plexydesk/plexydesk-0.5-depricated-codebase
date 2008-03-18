@@ -39,6 +39,7 @@
 #include <desktopview.h>
 #include <pluginloader.h>
 #include <fakemime.h>
+#include <datainterface.h>
 
 using namespace PlexyDesk;
 
@@ -81,6 +82,15 @@ int main( int argc, char ** argv )
 
     view->addExtension("imagepil");
     view->addExtension("plexyclock");
+//    view->addExtension("videoengine");
+
+     PlexyDesk::PluginLoader * loader = new PlexyDesk::PluginLoader();
+     loader->scanDisk();
+     PlexyDesk::DataInterface * e  = (PlexyDesk::DataInterface*) loader->instance("flickerengine");
+     QVariant name("/home/siraj/Video/tami/vlvi-part1.ogg");
+    // e->pushData(name);
+
+
 //    view->addExtension("plexyyoutube");
 //    view->addExtension("plexycpu");
 //    view->addExtension("wallpaperchange-win32");

@@ -2,27 +2,39 @@
 
 void Frame::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
 {
-    painter->fillRect(QRectF(6,6,rect().width()-12,rect().height()-38),QColor(0,0,0));
 
-    QPixmap top (QSize(7,7));
-            top.fill(Qt::transparent);
+    painter->save();
+    painter->setRenderHint(QPainter::Antialiasing,false);
+    painter->fillRect(boundingRect() ,QColor(0,0,0));
+    //painter->translate(0.5,0.5);
+    QPixmap top ( QSize(render.boundsOnElement("g3329").width(), render.boundsOnElement("g3329").height()  ));
+    top.fill(Qt::transparent);
     QPainter p;
     p.begin(&top);
+    p.save();
+    p.translate(0.5,0.5);
     render.render(&p,"g3329");
+    p.restore(); 
     p.end();
-    painter->drawPixmap(0,0,top);
+    painter->drawPixmap(boundingRect().x(),boundingRect().y(),top);
     
-    QPixmap tileTop(QSize (6,7));
+    QPixmap tileTop(QSize (boundingRect().width(),7));
     tileTop.fill(Qt::transparent);
     p.begin(&tileTop);
-    render.render(&p,"g3341",QRectF(-1.0,0.0,8.0,7.0));
+    p.save();
+    p.translate(-(boundingRect().width()/7),0.5);
+    render.render(&p,"g3341");
+    p.restore();
     p.end();
-    painter->drawTiledPixmap(QRectF(6,0,rect().width()-12,7),tileTop);
+    painter->drawPixmap(boundingRect().x()+7,boundingRect().y(),tileTop);
 
-    QPixmap left (QSize (7,7));
+    QPixmap left (QSize(render.boundsOnElement("g3335").width(), render.boundsOnElement("g3329").height()));
     left.fill(Qt::transparent);
     p.begin(&left);
+    p.save();
+    p.translate(0.5,0.5);
     render.render(&p,"g3335");
+    p.restore ();
     p.end();
     painter->drawPixmap(rect().width()-7,0,left);
 
@@ -60,7 +72,7 @@ void Frame::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, 
     render.render(&p,"g3359",QRectF(-1.0,0.0,8.0,7.0));
     p.end();
     painter->drawTiledPixmap(QRectF(6,rect().height()-33,rect().width()-12,7),tileBot);
-
+    painter->restore();
 
 
 }
