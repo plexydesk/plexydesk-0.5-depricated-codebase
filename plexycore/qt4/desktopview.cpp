@@ -55,8 +55,8 @@ DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsV
        d->bgPlugin  = static_cast<BackdropPlugin*> (PluginLoader::getInstance()->instance("classicbackdrop"));
         d->widgets = 0;
        d->gridLayout = new QGraphicsGridLayout ();
-       d->row = QDesktopWidget().availableGeometry().height()/4;
-       d->column =  QDesktopWidget().availableGeometry().height()/2;;
+       d->row = QDesktopWidget().availableGeometry().center().x()-(140*4)/2;
+       d->column =  QDesktopWidget().availableGeometry().center().y()/2;;
        d->layer = new ViewLayer(this);
        d->gridLayout = new QGraphicsGridLayout ;
 }
