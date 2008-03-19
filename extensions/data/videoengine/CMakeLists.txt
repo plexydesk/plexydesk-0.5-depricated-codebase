@@ -7,11 +7,17 @@ INCLUDE_DIRECTORIES(
 	   ${QT_QTTEST_INCLUDE_DIR}
 		 )
 
-
 SET (videoenginesrc video.cpp  videointerface.cpp  vplayer.cpp )
-		
 
-add_library (videoengine SHARED ${videoenginesrc})
+SET (plexicore_MOC
+  ../../../plexycore/qt4/dataplugin.cpp
+  ../../../plexycore/qt4/abstractplugininterface.cpp
+  ../../../plexycore/qt4/baseplugin.cpp
+    )
+    
+QT4_AUTOMOC( ${plexicore_MOC})
+		
+add_library (videoengine SHARED ${videoenginesrc} ${plexicore_MOC})
 QT4_AUTOMOC( ${videoenginesrc}) 
 
 #SET_TARGET_PROPERTIES(plexy
@@ -20,6 +26,20 @@ QT4_AUTOMOC( ${videoenginesrc})
 	#	#	·       ·       COMPILE_FLAGS ${CMAKE_SHARED_LIBRARY_CXX_FLAGS})
 #
 
+if(WIN32)
+TARGET_LINK_LIBRARIES(
+	       videoengine
+	       qtviz
+ 	       ${CMAKE_SOURCE_DIR}/3rdparty/win32/ffmpeg/lib/avutil-49
+	       ${CMAKE_SOURCE_DIR}/3rdparty/win32/ffmpeg/lib/avformat-50
+	       ${CMAKE_SOURCE_DIR}/3rdparty/win32/ffmpeg/lib/avcodec-51
+	       ${QT_QTGUI_LIBRARY}
+	       ${OPENGL_LIBRARIES}
+	       ${QT_QTCORE_LIBRARY}
+	       ${QT_QTNETWORK_LIBRARY}
+	       ${QT_QTOPENGL_LIBRARY}
+       )
+else(WIN32)
 TARGET_LINK_LIBRARIES(
 	       videoengine
 	       qtviz
@@ -32,6 +52,7 @@ TARGET_LINK_LIBRARIES(
 	       ${QT_QTNETWORK_LIBRARY}
 	       ${QT_QTOPENGL_LIBRARY}
        )
+endif(WIN32)
 
 INSTALL(TARGETS videoengine DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext/)
 install(FILES videoengine.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups/)
