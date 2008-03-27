@@ -1,7 +1,7 @@
 
 SET (plexysrc 	
-	vector3d.cpp
-		particle.cpp 
+    vector3d.cpp
+		particle.cpp
 		)
 
 add_library (plexy SHARED ${plexysrc})
@@ -11,6 +11,11 @@ add_library (plexy SHARED ${plexysrc})
 #	·       ·       PROPERTIES
 	#	#	·       ·       COMPILE_FLAGS ${CMAKE_SHARED_LIBRARY_CXX_FLAGS})
 #
+
+TARGET_LINK_LIBRARIES (
+    plexy
+    ${QT_QTCORE_LIBRARY}
+    )
 
 if(NOT WIN32)
 INSTALL(TARGETS plexy DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/)

@@ -25,14 +25,13 @@
 #include <QtCore>
 #include <QtGui>
 
-
 namespace PlexyDesk
 {
     class VISIBLE_SYM PluginLoader:public QObject
     {
 
-    Q_OBJECT
-        public:
+        Q_OBJECT
+    public:
         typedef QHash <QString,AbstractPluginInterface*> Interface;
         typedef QHash <QString,BasePlugin*> Dict;
         PluginLoader();
@@ -42,29 +41,36 @@ namespace PlexyDesk
         void scanDisk();
         static PluginLoader * getInstance()
         {
-             if (!mInstance) {
-                 mInstance = new PluginLoader();
-                 mInstance->scanDisk();
-             }
+            if (!mInstance) {
+                mInstance = new PluginLoader();
+                mInstance->scanDisk();
+            }
 
             return mInstance;
         }
 
-        protected:
-            void loadDesktop(const QString& path);
-            void load(const QString& _interface, const QString& plugin);
- 
-        private:
-            class Private;
-            Private * const d ;
+        QString applicationDirPath()
+        {
 #ifdef Q_WS_WIN
-            static PluginLoader * mInstance;
+            return QString(QCoreApplication::applicationDirPath() + "/..");
 #else
-            static VISIBLE_SYM PluginLoader * mInstance;
+            return QString(PLEXPREFIX);
 #endif
-            Interface groups;
+        }
 
+    protected:
+        void loadDesktop(const QString& path);
+        void load(const QString& _interface, const QString& plugin);
 
+    private:
+        class Private;
+        Private * const d ;
+#ifdef Q_WS_WIN
+        static PluginLoader * mInstance;
+#else
+        static VISIBLE_SYM PluginLoader * mInstance;
+#endif
+        Interface groups;
     };
 
 } // namespace PlexDesk

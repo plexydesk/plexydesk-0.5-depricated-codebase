@@ -22,7 +22,7 @@
 
 BgPlugin::BgPlugin(QObject * object) : BackdropPlugin( object)
 {
-    bg = QPixmap( QString(PLEXPREFIX)+"/share/plexy/skins/default/default.png");
+    bg = QPixmap( applicationDirPath() + "/share/plexy/skins/default/default.png");
     width = QDesktopWidget().availableGeometry().width();
     height = QDesktopWidget().availableGeometry().height();
 #ifdef Q_WS_MAC

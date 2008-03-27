@@ -12,12 +12,12 @@ INCLUDE_DIRECTORIES(
 
 
 SET (utubeenginesrc 	
-	utube.cpp
+    utube.cpp
 		)
 
 SET (plexicore_MOC
-    ../../../plexycore/qt4/abstractplugininterface.cpp
-    ../../../plexycore/qt4/pluginloader.cpp
+    ${CMAKE_SOURCE_DIR}/plexycore/qt4/abstractplugininterface.cpp
+    ${CMAKE_SOURCE_DIR}/plexycore/qt4/pluginloader.cpp
     )
     
 QT4_AUTOMOC( ${plexicore_MOC})

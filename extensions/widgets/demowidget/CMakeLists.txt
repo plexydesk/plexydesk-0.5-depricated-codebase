@@ -17,9 +17,9 @@ SET (widgetdemosrc
 		)
 
 SET (plexicore_MOC
-    ../../../plexycore/qt4/abstractplugininterface.cpp
-    ../../../plexycore/qt4/pluginloader.cpp
-    ../../../plexycore/qt4/desktopwidget.cpp
+    ${CMAKE_SOURCE_DIR}/plexycore/qt4/abstractplugininterface.cpp
+    ${CMAKE_SOURCE_DIR}/plexycore/qt4/pluginloader.cpp
+    ${CMAKE_SOURCE_DIR}/plexycore/qt4/desktopwidget.cpp
     )
     
 QT4_AUTOMOC( ${plexicore_MOC})

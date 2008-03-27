@@ -20,13 +20,13 @@ SET(plexydesk_PART_SRCS
 )
 
 SET (qtviz_MOC
-	../plexycore/qt4/baserender.cpp
-	../plexycore/qt4/desktopview.cpp
-	../plexycore/qt4/pluginloader.cpp
-	../plexycore/qt4/desktopwidget.cpp
-	../plexycore/qt4/viewlayer.cpp
+	${CMAKE_SOURCE_DIR}/plexycore/qt4/baserender.cpp
+	${CMAKE_SOURCE_DIR}/plexycore/qt4/desktopview.cpp
+	${CMAKE_SOURCE_DIR}/plexycore/qt4/pluginloader.cpp
+	${CMAKE_SOURCE_DIR}/plexycore/qt4/desktopwidget.cpp
+	${CMAKE_SOURCE_DIR}/plexycore/qt4/viewlayer.cpp
 		)
-	
+			
 QT4_AUTOMOC(${qtviz_MOC})
 
 ########### prepare files ###############

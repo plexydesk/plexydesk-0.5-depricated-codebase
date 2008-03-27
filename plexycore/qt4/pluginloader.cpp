@@ -26,110 +26,110 @@
 namespace PlexyDesk
 {
 
-PluginLoader * PluginLoader::mInstance = 0;
+    PluginLoader * PluginLoader::mInstance = 0;
 
-  class PluginLoader::Private
-  {
-  public:
-    Private ()
-   {
-   }
-   ~Private ()
-   {
-   }
-Interface groups;
-QString prefix;
-   };
+    class PluginLoader::Private
+    {
+    public:
+        Private ()
+        {
+        }
+        ~Private ()
+        {
+        }
+        Interface groups;
+        QString prefix;
+    };
 
-PluginLoader::PluginLoader ():d (new Private)
-{
-    d->prefix = QString (PLEXPREFIX) + "/ext/groups/";
-   // scanDisk ();
-}
-
-PluginLoader::~PluginLoader ()
-{
-    delete d;
-}
-
-QStringList PluginLoader::listPlugins(const QString& types)
-{
-    return groups.keys();
-}
-	
-BasePlugin *  PluginLoader::instance(const QString& name)
-{
-    if ( groups.contains(name) ){
-	   return   groups[name]->instance();
-    }  else {
-        return 0;
+    PluginLoader::PluginLoader ():d (new Private)
+    {
+        d->prefix = applicationDirPath() + "/ext/groups/";
+        // scanDisk ();
     }
-}	
 
-  void PluginLoader::load (const QString & interface,const QString & pluginName)
-  {
+    PluginLoader::~PluginLoader ()
+    {
+        delete d;
+    }
+
+    QStringList PluginLoader::listPlugins(const QString& types)
+    {
+        return groups.keys();
+    }
+
+    BasePlugin *  PluginLoader::instance(const QString& name)
+    {
+        if ( groups.contains(name) ){
+            return   groups[name]->instance();
+        }  else {
+            return 0;
+        }
+    }	
+
+    void PluginLoader::load (const QString & interface,const QString & pluginName)
+    {
 #ifdef Q_WS_MAC
-QPluginLoader loader (QString (PLEXPREFIX) + "/lib/plexyext/lib" + pluginName + ".dylib");
+        QPluginLoader loader (applicationDirPath() + "/lib/plexyext/lib" + pluginName + ".dylib");
 #endif
 
 #ifdef Q_WS_X11
-QPluginLoader loader (QString (PLEXPREFIX) + "/lib/plexyext/lib" + pluginName + ".so");
+        QPluginLoader loader (applicationDirPath() + "/lib/plexyext/lib" + pluginName + ".so");
 #endif
 
 #ifdef Q_WS_WIN
-QPluginLoader loader (QString (PLEXPREFIX) + "/lib/plexyext/" + pluginName + ".dll");
+        QPluginLoader loader (applicationDirPath() + "/lib/plexyext/" + pluginName + ".dll");
 #endif
 
-QObject *plugin = loader.instance ();
+        QObject *plugin = loader.instance ();
 
-if (plugin)
-  {
-      
-      AbstractPluginInterface * Iface = 0;
-      ExtensionProducer<AbstractPluginInterface> factory;
-      Iface = factory.instance(interface,plugin);
-      groups[pluginName] = Iface;
-//      qDebug()<<"PluginLoader::load"<<"Loading.."<< Iface<<pluginName<<endl;
-  }
-else
-  {
-	qDebug () << loader.errorString () << endl;;
-//	d->currentDrop = 0;
+        if (plugin)
+        {
 
-  
-}
-
-  }
+            AbstractPluginInterface * Iface = 0;
+            ExtensionProducer<AbstractPluginInterface> factory;
+            Iface = factory.instance(interface,plugin);
+            groups[pluginName] = Iface;
+            //      qDebug()<<"PluginLoader::load"<<"Loading.."<< Iface<<pluginName<<endl;
+        }
+        else
+        {
+            qDebug () << loader.errorString () << endl;;
+            //	d->currentDrop = 0;
 
 
-  void PluginLoader::scanDisk ()
-  {
-QDir dir (d->prefix);
-dir.setFilter (QDir::Files | QDir::Hidden | QDir::NoSymLinks);
-dir.setSorting (QDir::Size | QDir::Reversed);
+        }
 
-QFileInfoList list = dir.entryInfoList ();
-for (int i = 0; i < list.size (); ++i)
-  {
-	QFileInfo fileInfo = list.at (i);
-	loadDesktop (d->prefix + fileInfo.fileName ());
-  }
+    }
 
-  }				// namespace PlexDesk
 
-  void PluginLoader::loadDesktop (const QString & path)
-  {
-//qDebug () << path << endl;
+    void PluginLoader::scanDisk ()
+    {
+        QDir dir (d->prefix);
+        dir.setFilter (QDir::Files | QDir::Hidden | QDir::NoSymLinks);
+        dir.setSorting (QDir::Size | QDir::Reversed);
 
-QSettings desktopFile (path, QSettings::IniFormat, this);
+        QFileInfoList list = dir.entryInfoList ();
+        for (int i = 0; i < list.size (); ++i)
+        {
+            QFileInfo fileInfo = list.at (i);
+            loadDesktop (d->prefix + fileInfo.fileName ());
+        }
 
-desktopFile.beginGroup ("Desktop Entry");
+    }				// namespace PlexDesk
 
-load (desktopFile.value ("Type").toString (),desktopFile.value ("X-PLEXYDESK-Library").toString ());
+    void PluginLoader::loadDesktop (const QString & path)
+    {
+        //qDebug () << path << endl;
 
-desktopFile.endGroup ();
+        QSettings desktopFile (path, QSettings::IniFormat, this);
 
-  }
+        desktopFile.beginGroup ("Desktop Entry");
+
+        load (desktopFile.value ("Type").toString (),desktopFile.value ("X-PLEXYDESK-Library").toString ());
+
+        desktopFile.endGroup ();
+
+    }
 }
 
 #include "pluginloader.moc"

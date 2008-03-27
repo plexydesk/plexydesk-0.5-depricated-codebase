@@ -10,17 +10,16 @@ INCLUDE_DIRECTORIES(
 	   ${QT_QTTEST_INCLUDE_DIR}
 		 )
 
-
 SET (flickerenginesrc 	
-	flicker.cpp
-        flickerinterface.cpp
+    flicker.cpp
+    flickerinterface.cpp
 		)
 		
 SET (plexicore_MOC
-    ../../../plexycore/qt4/pluginloader.cpp
-    ../../../plexycore/qt4/abstractplugininterface.cpp
-    ../../../plexycore/qt4/dataplugin.cpp
-    ../../../plexycore/qt4/baseplugin.cpp
+    ${CMAKE_SOURCE_DIR}/plexycore/qt4/pluginloader.cpp
+    ${CMAKE_SOURCE_DIR}/plexycore/qt4/abstractplugininterface.cpp
+    ${CMAKE_SOURCE_DIR}/plexycore/qt4/dataplugin.cpp
+    ${CMAKE_SOURCE_DIR}/plexycore/qt4/baseplugin.cpp
     )
     
 QT4_AUTOMOC( ${plexicore_MOC})

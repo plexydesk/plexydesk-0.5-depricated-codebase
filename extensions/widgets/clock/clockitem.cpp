@@ -25,7 +25,7 @@ namespace PlexyDesk
 {
 ClockItem::ClockItem(const QRectF &rect, QWidget *widget ):DesktopWidget(rect,widget)
 {
-    setDockImage(QPixmap(QString(PLEXPREFIX)+"/share/plexy/skins/widgets/widget01/schedulepng.png"));
+    setDockImage(QPixmap(applicationDirPath() + "/share/plexy/skins/widgets/widget01/schedulepng.png"));
 }
 
 ClockItem::~ClockItem()

@@ -10,7 +10,7 @@ public:
     {
     }
     ~
-    Private ()
+        Private ()
     {
     }
     int height;
@@ -38,7 +38,7 @@ public:
 WellcomeItem::WellcomeItem (const QRectF &rect, QGraphicsItem * parent ):QGraphicsRectItem(rect,parent),
 d (new Private)
 {
-//TODO
+    //TODO
     d->height = 128;
     d->width =  128;
     d->size = QSize(d->width,d->height);
@@ -48,7 +48,7 @@ d (new Private)
     d->timeline.setFrameRange (0, 120);
     d->timeline.setCurveShape(QTimeLine::EaseInCurve);
     connect (&d->timeline, SIGNAL (frameChanged (int)), this,
-	   SLOT (zoom (int)));
+        SLOT (zoom (int)));
     d->blured = false;
     d->refimg = QImage (d->size, QImage::Format_ARGB32_Premultiplied);
     d->refimg = reflection (d->refimg);
@@ -78,68 +78,62 @@ QImage WellcomeItem::reflection (QImage & img)
     return reflect;
 }
 
-void
-WellcomeItem::paintItem (QPainter * painter,
-			const QRectF rect)
+void WellcomeItem::paintItem (QPainter * painter,
+                         const QRectF rect)
 {
     painter->setRenderHint (QPainter::SmoothPixmapTransform,true);
 
     QRectF source (0, 0, d->width,d->height);
     if (!d->iconPixmap.isNull ())
-      {
+    {
         painter->
-	drawPixmap (int
-		    (((int) source.width () - d->iconPixmap.width ()) / 2),
-		    int (((int) source.height () -
-			  d->iconPixmap.height ()) / 2),
-		    d->iconPixmap.height (), d->iconPixmap.width (),
-		    d->iconPixmap);
-      }
+            drawPixmap (int
+            (((int) source.width () - d->iconPixmap.width ()) / 2),
+            int (((int) source.height () -
+            d->iconPixmap.height ()) / 2),
+            d->iconPixmap.height (), d->iconPixmap.width (),
+            d->iconPixmap);
+    }
 }
-void
-WellcomeItem::paint (QPainter * painter,
-		     const QStyleOptionGraphicsItem * option,
-		     QWidget * widget)
+void WellcomeItem::paint (QPainter * painter,
+                     const QStyleOptionGraphicsItem * option,
+                     QWidget * widget)
 {
     Q_UNUSED (widget);
-      painter->save();
-      painter->setClipRect(option->exposedRect);
-     // painter->setCompositionMode(QPainter::CompositionMode_Source);
+    painter->save();
+    painter->setClipRect(option->exposedRect);
+    // painter->setCompositionMode(QPainter::CompositionMode_Source);
     //  painter->fillRect(option->exposedRect, Qt::transparent);
     //  painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
-      this->paintItem (painter, option->exposedRect);
-      painter->drawImage(QPoint( (d->width -  d->iconPixmap.width())/2 ,d->iconPixmap.height()) ,d->refimg);
-      painter->restore();
+    this->paintItem (painter, option->exposedRect);
+    painter->drawImage(QPoint( (d->width -  d->iconPixmap.width())/2 ,d->iconPixmap.height()) ,d->refimg);
+    painter->restore();
 }
 
-void
-WellcomeItem::setOpacity (float op)
+void WellcomeItem::setOpacity (float op)
 {
     d->opacity = op;
 }
 
-QString
-WellcomeItem::loadSvg (MouseState state)
+QString WellcomeItem::loadSvg (MouseState state)
 {
     return d->ids[state];
 }
 
 //Events
 
-void
-WellcomeItem::hoverEnterEvent (QGraphicsSceneHoverEvent * event)
+void WellcomeItem::hoverEnterEvent (QGraphicsSceneHoverEvent * event)
 {
     Q_UNUSED (event);
     d->state = OVER;
     update ();
     d->timeline.setDirection (QTimeLine::Forward);
     if (d->timeline.state () == QTimeLine::NotRunning)
-      d->timeline.start ();
+        d->timeline.start ();
     emit clicked ();
 }
 
-void
-WellcomeItem::hoverMoveEvent (QGraphicsSceneHoverEvent * event)
+void WellcomeItem::hoverMoveEvent (QGraphicsSceneHoverEvent * event)
 {
     Q_UNUSED (event);
     d->state = OVER;
@@ -154,7 +148,7 @@ void WellcomeItem::hoverLeaveEvent (QGraphicsSceneHoverEvent * event)
     update ();
     d->timeline.setDirection (QTimeLine::Backward);
     if (d->timeline.state () == QTimeLine::NotRunning)
-      d->timeline.start ();
+        d->timeline.start ();
 
 }
 
@@ -176,7 +170,7 @@ void WellcomeItem::setIcon (const QPixmap &icon)
     QImage Buffer = icon.toImage();
     d->refimg = d->refimg.scaled(boundingRect().width(),boundingRect().height());
     QPainter p (&d->refimg);
-    
+
     p.setRenderHint(QPainter::Antialiasing);
     p.setRenderHint(QPainter::SmoothPixmapTransform);
     p.setCompositionMode (QPainter::CompositionMode_Source);
@@ -192,8 +186,7 @@ void WellcomeItem::setIcon (const QPixmap &icon)
 
 }
 
-void
-WellcomeItem::zoom (int step)
+void WellcomeItem::zoom (int step)
 {
 
     QPointF center = this->boundingRect ().center ();

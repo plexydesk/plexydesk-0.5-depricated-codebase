@@ -17,7 +17,7 @@ SET (qtvizsrc
 	pluginloader.cpp
 	netwm.cpp
 	dataplugin.cpp
-        backdropplugin.cpp
+  backdropplugin.cpp
 	fakemime.cpp
 	desktopwidget.cpp
 	plexyconfig.cpp
@@ -26,7 +26,7 @@ SET (qtvizsrc
 	abstractplugininterface.cpp
 	viewlayer.cpp
 		)
-    
+		
 add_library (qtviz SHARED ${qtvizsrc})
 QT4_AUTOMOC( ${qtvizsrc}) 
 

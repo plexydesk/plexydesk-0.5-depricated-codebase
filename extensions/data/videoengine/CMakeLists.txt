@@ -10,9 +10,9 @@ INCLUDE_DIRECTORIES(
 SET (videoenginesrc video.cpp  videointerface.cpp  vplayer.cpp )
 
 SET (plexicore_MOC
-  ../../../plexycore/qt4/dataplugin.cpp
-  ../../../plexycore/qt4/abstractplugininterface.cpp
-  ../../../plexycore/qt4/baseplugin.cpp
+  ${CMAKE_SOURCE_DIR}/plexycore/qt4/dataplugin.cpp
+  ${CMAKE_SOURCE_DIR}/plexycore/qt4/abstractplugininterface.cpp
+  ${CMAKE_SOURCE_DIR}/plexycore/qt4/baseplugin.cpp
     )
     
 QT4_AUTOMOC( ${plexicore_MOC})
