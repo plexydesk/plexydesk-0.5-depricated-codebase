@@ -1,5 +1,5 @@
-cmake -DCMAKE_INSTALL_PREFIX:STRING="installer" -G "Visual Studio 8 2005"
-devenv PlexyDesktop.sln /build release /project install
+cmake -DCMAKE_INSTALL_PREFIX:STRING="installer" -G "Visual Studio 9 2008"
+msbuild PlexyDesktop.sln /t:Build /p:Configuration=Release
 
 mkdir .\installer
 mkdir .\installer\installer
