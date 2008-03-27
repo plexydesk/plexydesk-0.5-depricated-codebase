@@ -1,6 +1,9 @@
 cmake -DCMAKE_INSTALL_PREFIX:STRING="installer" -G "Visual Studio 8 2005"
 devenv PlexyDesktop.sln /build release /project install
 
+mkdir .\installer
+mkdir .\installer\installer
+mkdir .\installer\installer\bin
 mkdir .\installer\installer\bin\plugins
 mkdir .\installer\installer\bin\plugins\imageformats
 
