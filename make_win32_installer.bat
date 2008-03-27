@@ -7,6 +7,11 @@ mkdir .\installer\installer\bin
 mkdir .\installer\installer\bin\plugins
 mkdir .\installer\installer\bin\plugins\imageformats
 
+vcbuild INSTALL.vcproj "Release|Win32"
+
+del /F/S/Q .\installer\installer\include\qimageblitz\*.*
+rmdir /S/Q .\installer\installer\include\qimageblitz
+rmdir /S/Q .\installer\installer\include
 del /F/S/Q .\installer\installer\*.lib
 
 xcopy %QTDIR%\bin\QtSvg4.dll .\installer\installer\bin
