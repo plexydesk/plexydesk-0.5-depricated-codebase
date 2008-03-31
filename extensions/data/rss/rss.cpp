@@ -133,6 +133,12 @@ void RssData::parseXml()
     //emit data(rss);
 }
 
+void RssData::pushData(QVariant& var)
+{
+    mHttp->abort();
+    init();
+}
+
 QGraphicsItem * RssData::item()
 {
     /// \todo: null for success compilation only

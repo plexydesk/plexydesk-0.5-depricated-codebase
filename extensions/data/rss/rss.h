@@ -30,9 +30,8 @@
 #include <QMap>
 #include <QList>
 
-class VISIBLE_SYM RssData:public PlexyDesk::AbstractPluginInterface {
+class VISIBLE_SYM RssData:public PlexyDesk::DataPlugin {
     Q_OBJECT
-    Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
     public:
     RssData( QObject * object = 0 );
@@ -40,6 +39,7 @@ class VISIBLE_SYM RssData:public PlexyDesk::AbstractPluginInterface {
     void init();
     virtual QGraphicsItem * item();// {};
     virtual void render( QPainter *p,QRectF r );// {};
+    virtual void pushData(QVariant&);
 
     public slots:
     void fetch();
