@@ -1,6 +1,6 @@
 #Contributor: Lukas Appelhans <l.appelhans@gmx.de>
 pkgname=plexydesk-svn
-pkgver=253
+pkgver=254
 pkgrel=1
 pkgdesc="A Modular Desktop Renderer"
 url="http://plexydesk.org"

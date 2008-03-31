@@ -22,15 +22,13 @@
 #include <QtCore>
 #include <plexy.h>
 #include <widgetinterface.h>
+#include <widgetplugin.h>
 
-
-class VISIBLE_SYM Cpu :public PlexyDesk::AbstractPluginInterface
+class VISIBLE_SYM Cpu :public PlexyDesk::WidgetPlugin
 {
     Q_OBJECT
-    Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
     public:
-    void  init() {} 
     Cpu(QObject * object = 0);
     virtual ~Cpu();
     virtual QGraphicsItem * item();// {};
