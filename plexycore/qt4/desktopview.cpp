@@ -53,7 +53,7 @@ DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsV
        setFrameStyle(QFrame::NoFrame);
        setAlignment(Qt::AlignLeft | Qt::AlignTop);
        d->bgPlugin  = static_cast<BackdropPlugin*> (PluginLoader::getInstance()->instance("classicbackdrop"));
-        d->widgets = 0;
+       d->widgets = 0;
        d->gridLayout = new QGraphicsGridLayout ();
        d->row = QDesktopWidget().availableGeometry().center().x()-(140*4)/2;
        d->column =  QDesktopWidget().availableGeometry().center().y()/2;;
