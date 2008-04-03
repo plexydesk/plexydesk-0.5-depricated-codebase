@@ -1,0 +1,6 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Photo Data Engine
+Type=Engine
+Comment=Engine to Load Local Images
+X-PLEXYDESK-Library=localphotosengine
