@@ -43,6 +43,11 @@ class  DesktopView::Private
     int column;
 };
 
+bool getLessThanWidget(const QGraphicsItem* it1, const QGraphicsItem* it2)
+{
+	return it1->zValue() < it2->zValue();
+}
+
 DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsView(scene,parent),d(new Private)
 {
        setWindowFlags(Qt::FramelessWindowHint);
@@ -125,6 +130,36 @@ void DesktopView::drawBackground ( QPainter * painter, const QRectF & rect )
     painter->restore();
 }
 
+void DesktopView::mousePressEvent(QMouseEvent *event)
+{
+	setTopMostWidget(event->pos());
+
+	QGraphicsView::mousePressEvent(event);
+}
+
+void DesktopView::setTopMostWidget(const QPoint &pt)
+{
+	int i = 0;
+	QGraphicsItem *clickedItem = scene()->itemAt(pt);
+	if(clickedItem == 0)
+		return;
+
+	QList<QGraphicsItem *> itemsList = scene()->items();
+	qStableSort(itemsList.begin(), itemsList.end(), getLessThanWidget);
+
+	clickedItem->setZValue(itemsList.size());
+
+	foreach(QGraphicsItem* item, itemsList)
+	{
+		if(item == clickedItem)
+			continue;
+
+		item->setZValue(i);
+		i++;
+	}
+
+	clickedItem->update();
+}
 
 }
 #include "desktopview.moc"

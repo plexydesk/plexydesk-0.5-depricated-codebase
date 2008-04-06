@@ -23,42 +23,33 @@
 #include <QtGui>
 #include <plexy.h>
 
-
 namespace PlexyDesk
 {
 
-class VISIBLE_SYM  DesktopView : public QGraphicsView
-{
-    Q_OBJECT
-    public:
-        DesktopView(QGraphicsScene * scene = new QGraphicsScene(), QWidget * parent = 0);
-        virtual ~DesktopView();
+	class VISIBLE_SYM  DesktopView : public QGraphicsView
+	{
+		Q_OBJECT
+	public:
+		DesktopView(QGraphicsScene * scene = new QGraphicsScene(), QWidget * parent = 0);
+		virtual ~DesktopView();
 
-        void addWallpaper(const QString& path);
+		void addWallpaper(const QString& path);
+		void addRender(QGraphicsScene * scene);
+		void addExtension(const QString& name);
+		void addCoreExtension(const QString& name);
+		void addDesktopItem(QGraphicsItem * item);
+		public slots:
+			void backgroundChanged();
 
-        void addRender(QGraphicsScene * scene);
+	protected:
+		void drawBackground(QPainter * painter, const QRectF& rect);
+		void mousePressEvent(QMouseEvent *event);
 
-        void addExtension(const QString& name);
-
-        void addCoreExtension(const QString& name);
-
-//        void addData(const QString& name);
-
-        void addDesktopItem(QGraphicsItem * item);
-
-        public slots:
-         void backgroundChanged();
-
-    protected:
-        void drawBackground(QPainter * painter, const QRectF& rect);
-	//void paintEvent(QPaintEvent * event);
-
-    private:
-            class Private;
-            Private * const d ;
-
-};
-
-
+	private:
+		class Private;
+		Private * const d;
+		void setTopMostWidget(const QPoint &pt);
+	};
 } // namespace #ifndef
+
 #endif
