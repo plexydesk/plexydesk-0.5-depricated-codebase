@@ -31,7 +31,7 @@
 #include <netwm.h>
 #endif
 
-#include <QtWebKit/QWebView>
+//#include <QtWebKit/QWebView>
 
 //plexy
 #include <plexy.h>
