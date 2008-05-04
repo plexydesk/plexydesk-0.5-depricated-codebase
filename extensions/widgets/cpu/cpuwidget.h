@@ -20,24 +20,8 @@
 #ifndef CPU_WIDGET_H
 #define CPU_WIDGET_H
 
-#include <qimage.h>
-#include <desktopwidget.h>
-#include <QPaintDevice>
-#include <QLabel>
-#include <QPixmap>
-#include <QTimer>
-#include <QPaintEvent>
-#include <X11/Xlib.h>
-#include <X11/extensions/composite.h>
-#include <X11/extensions/Xcomposite.h>
-#include <X11/extensions/Xrender.h>
-#include <X11/extensions/shape.h>
-#include <X11/extensions/Xdamage.h>
-#include <QPainter>
-#include <QTime>
-#include <QX11Info>
-#include <QWidget>
-#include <QColor>
+#include <QtCore>
+#include <QtGui>
 
 class QTimer;
 
