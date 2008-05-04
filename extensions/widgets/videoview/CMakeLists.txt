@@ -13,7 +13,7 @@ INCLUDE_DIRECTORIES(
 
 SET (videoviewsrc
 	videoitem.cpp
-	interface.cpp 
+	videointerface.cpp 
     videoplugin.cpp
 		)
 

@@ -25,16 +25,17 @@
 #include <datainterface.h>
 #include <desktopwidget.h>
 
+
 namespace PlexyDesk
 {
 
-    class ImagePileWidget: public DesktopWidget
+    class VideoWidget: public DesktopWidget
     {
 
     Q_OBJECT
         public:
-        ImagePileWidget(const QRectF &rect, QWidget *embeddedWidget = 0);
-        virtual ~ImagePileWidget();
+        VideoWidget(const QRectF &rect, QWidget *embeddedWidget = 0);
+        virtual ~VideoWidget();
         void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
         void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
         QRectF boundingRect() const;

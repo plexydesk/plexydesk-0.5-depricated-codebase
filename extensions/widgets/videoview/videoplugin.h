@@ -26,7 +26,7 @@
 #include <datainterface.h>
 #include <widgetinterface.h>
 #include "pictureflow.h"
-#include "imageitem.h"
+#include "videoitem.h"
 #include <widgetplugin.h>
 
 class VISIBLE_SYM VideoPlugin :public PlexyDesk::WidgetPlugin
@@ -44,7 +44,7 @@ class VISIBLE_SYM VideoPlugin :public PlexyDesk::WidgetPlugin
 	void change();
         void sendData(QVariant&);
    private:
-	 PictureFlow * flow ;
+	// PictureFlow * flow ;
          QWidget * base;
          QLineEdit * search;
 	 PlexyDesk::DataInterface * flickrEngine;

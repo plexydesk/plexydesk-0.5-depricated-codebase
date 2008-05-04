@@ -26,8 +26,8 @@
 VideoPlugin::VideoPlugin(QObject * object)
 {
     base = new QWidget();
-
-    flow = new PictureFlow(base);
+/*
+   // flow = new PictureFlow(base);
     flow->setSlideSize(QSize(320/2, 240/2));
     flow->resize(300,170);
     flow->move(0,0);
@@ -39,22 +39,22 @@ VideoPlugin::VideoPlugin(QObject * object)
     search->resize(300,30);
     search->show();
     connect (search , SIGNAL(returnPressed ()) , this , SLOT(searchImage () ) );
-
-    widget =  new PlexyDesk::ImagePileWidget(QRectF(0, 0, 340,240), base);
+*/
+    widget =  new PlexyDesk::VideoWidget(QRectF(0, 0, 340,240), base);
 
     base->move(20,20);
 }
 
 VideoPlugin::~VideoPlugin()
 {
-    delete flow;
+  //  delete flow;
 }
 
 void VideoPlugin::searchImage ()
 {
     qDebug()<<"Searching"<<endl;
     search->setEnabled(false);
-    flow->setFocus(Qt::TabFocusReason);
+  //  flow->setFocus(Qt::TabFocusReason);
     QVariant data(search->text());
     emit sendData(data);
 }
@@ -63,8 +63,8 @@ void VideoPlugin::searchImage ()
 void VideoPlugin::data(QVariant& data)
 {
     QImage wall(QImage::fromData(data.toByteArray()));
-    flow->addSlide(wall);     
-    flow->showNext();
+   // flow->addSlide(wall);     
+   // flow->showNext();
     search->setEnabled(true);
     widget->setCoverPic(wall);
 }
@@ -75,7 +75,7 @@ QGraphicsItem * VideoPlugin::item()
 
     PlexyDesk::PluginLoader * loader = new PlexyDesk::PluginLoader();
     loader->scanDisk();
-    flickrEngine  = (PlexyDesk::DataInterface*) loader->instance("flickerengine");
+    flickrEngine  = (PlexyDesk::DataInterface*) loader->instance("videoengine");
 
     if (flickrEngine) {
         connect(flickrEngine,SIGNAL(data(QVariant&)),this,SLOT(data(QVariant&)));
@@ -84,7 +84,7 @@ QGraphicsItem * VideoPlugin::item()
         qDebug()<<"DataSource Was Null"<<"VideoPlugin::VideoPlugin(QObject * object)"<<endl;;
     }
 
-    PictureFlow * flow = new PictureFlow(0);
+    //PictureFlow * flow = new PictureFlow(0);
     return widget;//new PlexyDesk::VideoPluginWidget(QRectF(0, 0, 400, 200), flow);
 }
 
