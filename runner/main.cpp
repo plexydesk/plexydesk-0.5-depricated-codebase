@@ -79,7 +79,7 @@ int main( int argc, char ** argv )
  //   view->addExtension("imagepil");
 // for ( int i = 0 ; i < 5 ; i++)
     view->addCoreExtension("welcome");
-
+	view->addCoreExtension("videoview");
     view->addExtension("imagepil");
     view->addExtension("plexyclock");
 //    view->addExtension("videoengine");

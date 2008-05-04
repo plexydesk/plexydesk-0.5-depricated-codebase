@@ -38,6 +38,7 @@ namespace PlexyDesk
         virtual ~VideoWidget();
         void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
         void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
+		void setFrameImage(QImage& img);
         QRectF boundingRect() const;
         void setCoverPic(QImage img);
       signals:
@@ -46,6 +47,7 @@ namespace PlexyDesk
     
         private:
         QImage cover;
+		QImage video;
 
     };
 
