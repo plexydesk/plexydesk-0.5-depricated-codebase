@@ -18,12 +18,10 @@
 *******************************************************************************/
 
 #include <plexy.h>
+#include <config.h>
 #include "cpuwidget.h"
-#include <QMatrix>
-#include <QPixmap>
-#include <QPaintEvent>
-#include <math.h>
-#include <QBitmap>
+#include <QtCore>
+#include <QtGui>
 
 namespace PlexyDesk
 {
