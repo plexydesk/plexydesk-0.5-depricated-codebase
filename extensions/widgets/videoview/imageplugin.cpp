@@ -17,13 +17,13 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
-#include "imageplugin.h"
+#include "videoplugin.h"
 
 #include <QtCore>
 #include <pluginloader.h>
 #include <QtGui>
 
-ImagePlugin::ImagePlugin(QObject * object)
+VideoPlugin::VideoPlugin(QObject * object)
 {
     base = new QWidget();
 
@@ -45,12 +45,12 @@ ImagePlugin::ImagePlugin(QObject * object)
     base->move(20,20);
 }
 
-ImagePlugin::~ImagePlugin()
+VideoPlugin::~VideoPlugin()
 {
     delete flow;
 }
 
-void ImagePlugin::searchImage ()
+void VideoPlugin::searchImage ()
 {
     qDebug()<<"Searching"<<endl;
     search->setEnabled(false);
@@ -60,7 +60,7 @@ void ImagePlugin::searchImage ()
 }
 
 
-void ImagePlugin::data(QVariant& data)
+void VideoPlugin::data(QVariant& data)
 {
     QImage wall(QImage::fromData(data.toByteArray()));
     flow->addSlide(wall);     
@@ -69,7 +69,7 @@ void ImagePlugin::data(QVariant& data)
     widget->setCoverPic(wall);
 }
 
-QGraphicsItem * ImagePlugin::item()
+QGraphicsItem * VideoPlugin::item()
 {
     //flickrEngine = loadData("flickerengine");
 
@@ -81,12 +81,12 @@ QGraphicsItem * ImagePlugin::item()
         connect(flickrEngine,SIGNAL(data(QVariant&)),this,SLOT(data(QVariant&)));
         connect(this,SIGNAL(sendData(QVariant&)),flickrEngine,SLOT(pushData(QVariant&)));
     }else {
-        qDebug()<<"DataSource Was Null"<<"ImagePlugin::ImagePlugin(QObject * object)"<<endl;;
+        qDebug()<<"DataSource Was Null"<<"VideoPlugin::VideoPlugin(QObject * object)"<<endl;;
     }
 
     PictureFlow * flow = new PictureFlow(0);
-    return widget;//new PlexyDesk::ImagePluginWidget(QRectF(0, 0, 400, 200), flow);
+    return widget;//new PlexyDesk::VideoPluginWidget(QRectF(0, 0, 400, 200), flow);
 }
 
 
-#include "imageplugin.moc"
+#include "videoplugin.moc"

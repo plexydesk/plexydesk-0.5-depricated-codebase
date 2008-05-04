@@ -16,8 +16,8 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#ifndef PLEXY_WIDGET_IMAGEPILE_H
-#define PLEXY_WIDGET_IMAGEPILE_H
+#ifndef PLEXY_WIDGET_VIDEO_H
+#define PLEXY_WIDGET_VIDEO_H
 
 #include <plexy.h>
 
@@ -48,7 +48,7 @@ class VISIBLE_SYM ImagePlugin :public PlexyDesk::WidgetPlugin
          QWidget * base;
          QLineEdit * search;
 	 PlexyDesk::DataInterface * flickrEngine;
-	 PlexyDesk::ImagePileWidget * widget;
+	 PlexyDesk::VideoWidget * widget;
 };
 
 #endif
