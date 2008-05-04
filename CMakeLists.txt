@@ -92,7 +92,7 @@ if(NOT WIN32)
 if(FFMPEG_FOUND)
 	#add_subdirectory(extensions/data/videoengine/)
 endif(FFMPEG_FOUND)
-add_subdirectory(extensions/widgets/cpu)
+#add_subdirectory(extensions/widgets/cpu)
 endif(NOT WIN32)
 endif(NOT APPLE)
 
