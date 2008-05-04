@@ -23,7 +23,7 @@
 
 
     
-VideoInterface::VideoInterface(QObject * object)
+VideoInterface::VideoInterface(QObject * object):QObject(object)
 {
 }
 
