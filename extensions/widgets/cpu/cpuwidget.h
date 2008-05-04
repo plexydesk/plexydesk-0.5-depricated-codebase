@@ -35,58 +35,45 @@ class CpuWidget:public DesktopWidget
     Q_OBJECT
 
 	public:
-	CpuWidget(const QRectF &rect, QWidget *widget = 0);
-	virtual ~CpuWidget();
-	virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem * e, QWidget *);
-	void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
-	void setPath(QString);
-	void drawCpuWidget();
-	void getBaseData();
-	void getNxtData();
-        /*
-         virtual void mousePressEvent( QMouseEvent *e)
-	{
-		clickPos = e->pos();
-		setCursor(Qt::SizeAllCursor);
-        }
-        virtual void mouseMoveEvent( QMouseEvent *e)
-	{
-	move( e->globalPos() - clickPos );
-	}
-	virtual void mouseReleaseEvent(QMouseEvent *e)
-	{
-		setCursor(Qt::ArrowCursor);
-	}
-*/
+	
+	    CpuWidget(const QRectF &rect, QWidget *widget = 0);
+	    virtual ~CpuWidget();
+	    virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem * e, QWidget *);
+	    void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
+	    void setPath(QString);
+	    void drawCpuWidget();
+	    void getBaseData();
+	    void getNxtData();
+	
 	public slots:
-	void drawMeter();
+	    void drawMeter();
 	
 	private:
-	QTimer  *meter_timer;
-	long user_a;
-	long nice_a;
-	long sys_a;
-	long idle_a;
+	    QTimer  *meter_timer;
+	    long user_a;
+	    long nice_a;
+	    long sys_a;
+	    long idle_a;
 
-	long user_b;
-	long nice_b;
-	long sys_b;
-	long idle_b;
+	    long user_b;
+	    long nice_b;
+	    long sys_b;
+	    long idle_b;
 
-	long usage;
-	long total;
+	    long usage;
+	    long total;
 
-	double percen;
+	    double percen;
 
-	int shade;
+	    int shade;
 	
-	QPixmap  _meter_hand;
-	QPixmap thedot;
-	QImage _cpu_bg;
-	QImage gloss;
+	    QPixmap  _meter_hand;
+	    QPixmap thedot;
+     	QImage _cpu_bg;
+	    QImage gloss;
 
-	QString prefix;
-	QPoint clickPos;
+     	QString prefix;
+	    QPoint clickPos;
 };
 
 } // namespace PlexyDesk
