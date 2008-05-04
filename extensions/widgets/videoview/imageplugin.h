@@ -29,13 +29,13 @@
 #include "imageitem.h"
 #include <widgetplugin.h>
 
-class VISIBLE_SYM ImagePlugin :public PlexyDesk::WidgetPlugin
+class VISIBLE_SYM VideoPlugin :public PlexyDesk::WidgetPlugin
 {
     Q_OBJECT
 
     public:
-        ImagePlugin(QObject * object = 0);
-        virtual ~ImagePlugin();
+        VideoPlugin(QObject * object = 0);
+        virtual ~VideoPlugin();
         virtual QGraphicsItem * item();// {};
     public slots:
         void data(QVariant&);
