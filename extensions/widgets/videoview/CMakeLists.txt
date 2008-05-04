@@ -12,10 +12,9 @@ INCLUDE_DIRECTORIES(
 
 
 SET (videoviewsrc
-	imageitem.cpp
+	videoitem.cpp
 	interface.cpp 
-  pictureflow.cpp
-  imageplugin.cpp
+    videoplugin.cpp
 		)
 
 SET (plexicore_MOC
