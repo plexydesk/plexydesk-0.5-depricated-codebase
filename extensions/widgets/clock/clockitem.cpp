@@ -49,8 +49,6 @@ void ClockItem::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem * e
 		p->setPen(QColor(0,0,255));
 		p->setFont(QFont("Bitstream Charter",50));
 		p->drawText(QRect(20,40,160,160), Qt::AlignTop ,QString("%1").arg(QDate::currentDate().day() )  )  ;
-	
-	//	p->drawText(QRect(8,5,64,64), Qt::AlignCenter ,"Calendar" ) ;
 }
 
 QRectF ClockItem::boundingRect() const
