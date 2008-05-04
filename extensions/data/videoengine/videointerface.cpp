@@ -23,14 +23,14 @@
 
 
     
-VideoInterface::VideoInterface(QObject * object):QObject(object)
+IVideoInterface::IVideoInterface(QObject * object)
 {
 }
 
-PlexyDesk::DataPlugin *  VideoInterface::instance()
+PlexyDesk::DataPlugin *  IVideoInterface::instance()
 {
  return new VideoData(this);
 }
 
-Q_EXPORT_PLUGIN2(VideoInterface,VideoInterface)
+Q_EXPORT_PLUGIN2(IVideoInterface,IVideoInterface)
 #include "videointerface.moc"

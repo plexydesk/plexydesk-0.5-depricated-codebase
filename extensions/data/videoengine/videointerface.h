@@ -26,14 +26,14 @@
 #include <datainterface.h>
 #include <dataplugin.h>
 
-class VISIBLE_SYM VideoInterface :public PlexyDesk::DataInterface
+class VISIBLE_SYM IVideoInterface :public PlexyDesk::DataInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
     public:
-        VideoInterface(QObject * object = 0);
-        virtual ~VideoInterface(){}
+        IVideoInterface(QObject * object = 0);
+        virtual ~IVideoInterface(){}
         PlexyDesk::DataPlugin * instance();
 
 };
