@@ -7,7 +7,7 @@ INCLUDE_DIRECTORIES(
 	   ${QT_QTTEST_INCLUDE_DIR}
 		 )
 
-SET (videoenginesrc video.cpp  videointerface.cpp  vplayer.cpp )
+SET (videoenginesrc video.cpp  ivideointerface.cpp  vplayer.cpp )
 
 SET (plexicore_MOC
   ${CMAKE_SOURCE_DIR}/plexycore/qt4/dataplugin.cpp

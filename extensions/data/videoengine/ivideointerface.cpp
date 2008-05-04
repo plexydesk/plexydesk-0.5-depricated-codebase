@@ -16,7 +16,7 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#include "videointerface.h"
+#include "ivideointerface.h"
 #include "video.h"
 #include <desktopwidget.h>
 #include <plexyconfig.h>
@@ -33,4 +33,4 @@ PlexyDesk::DataPlugin *  IVideoInterface::instance()
 }
 
 Q_EXPORT_PLUGIN2(IVideoInterface,IVideoInterface)
-#include "videointerface.moc"
+#include "ivideointerface.moc"

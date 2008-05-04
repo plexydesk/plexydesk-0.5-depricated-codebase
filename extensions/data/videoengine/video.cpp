@@ -24,12 +24,12 @@
     
 VideoData::VideoData(QObject * object)
 {
-    init();
 }
 
 
 void VideoData::pushData(QVariant& data)
 {
+    init();
     vplayer->setFileName(data.toString());
 }
 
@@ -46,7 +46,7 @@ VideoData::~VideoData()
 void VideoData::grab(QImage & img)
 {
     if (! img.isNull() ) {
-        QVariant frame(img);
+        QVariant frame = img;
         emit data(frame);
     }
 }

@@ -43,7 +43,7 @@ class VISIBLE_SYM VideoPlugin :public PlexyDesk::WidgetPlugin
 	void change();
         void sendData(QVariant&);
    private:
-	// PictureFlow * flow ;
+	 QLabel * flow ;
          QWidget * base;
          QLineEdit * search;
 	 PlexyDesk::DataInterface * flickrEngine;

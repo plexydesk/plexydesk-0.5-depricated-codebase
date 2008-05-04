@@ -26,15 +26,16 @@
 VideoPlugin::VideoPlugin(QObject * object)
 {
 	base = new QWidget();
-   // flow = new PictureFlow(base);
+
+     flow = new QLabel(base);
     //flow->setSlideSize(QSize(320/2, 240/2));
-    //flow->resize(300,170);
-    //flow->move(0,0);
-    base->resize(300,30);
+    flow->resize(300,170);
+    flow->move(0,0);
+    base->resize(300,200);
 
     search = new QLineEdit(base);
     search->setStyleSheet("border:1px solid ; font-style:strong ;padding-left:20px; background: black ; background-image:url(/usr/local/share/plexy/skins/default/flick/bg-search.png) ;background-repeat: no-repeat ;  color:black ");
-    search->move(0,0);
+    search->move(0,170);
     search->resize(300,30);
     search->show();
     connect (search , SIGNAL(returnPressed ()) , this , SLOT(searchImage () ) );
@@ -62,12 +63,10 @@ void VideoPlugin::searchImage ()
 
 void VideoPlugin::data(QVariant& data)
 {
-    QImage wall(QImage::fromData(data.toByteArray()));
-   // flow->addSlide(wall);     
-   // flow->showNext();
+    QImage wall = data.value<QImage>();
     search->setEnabled(true);
-    widget->setCoverPic(wall);
-	widget->setFrameImage(wall);
+    flow->setPixmap(QPixmap::fromImage(wall));
+//    flow->repaint(); 
 }
 
 QGraphicsItem * VideoPlugin::item()

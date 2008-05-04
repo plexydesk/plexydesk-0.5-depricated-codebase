@@ -38,6 +38,7 @@ namespace PlexyDesk
 	void VideoWidget::setFrameImage(QImage& img)
 	{
 		video  = img;
+                update();
 	}   
 	 
     void VideoWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
