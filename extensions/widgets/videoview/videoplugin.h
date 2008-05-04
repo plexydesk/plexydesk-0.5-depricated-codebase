@@ -25,7 +25,6 @@
 #include <abstractplugininterface.h>
 #include <datainterface.h>
 #include <widgetinterface.h>
-#include "pictureflow.h"
 #include "videoitem.h"
 #include <widgetplugin.h>
 
