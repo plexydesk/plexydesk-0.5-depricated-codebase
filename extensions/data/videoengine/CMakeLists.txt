@@ -31,7 +31,7 @@ TARGET_LINK_LIBRARIES(
 	       videoengine
 	       qtviz
  	       ${CMAKE_SOURCE_DIR}/3rdparty/win32/ffmpeg/lib/avutil-49
-	       ${CMAKE_SOURCE_DIR}/3rdparty/win32/ffmpeg/lib/avformat-50
+	       ${CMAKE_SOURCE_DIR}/3rdparty/win32/ffmpeg/lib/avformat-51
 	       ${CMAKE_SOURCE_DIR}/3rdparty/win32/ffmpeg/lib/avcodec-51
 	       ${QT_QTGUI_LIBRARY}
 	       ${OPENGL_LIBRARIES}
