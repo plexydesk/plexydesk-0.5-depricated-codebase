@@ -19,9 +19,16 @@
 
 #include "vplayer.h"
 
-//mgeg
+#ifdef _MSC_VER
+extern "C"
+{
 #include <ffmpeg/avcodec.h>
 #include <ffmpeg/avformat.h>
+}
+#else
+#include <ffmpeg/avcodec.h>
+#include <ffmpeg/avformat.h>
+#endif
 
 //#include <SDL.h>
 //#include <SDL_thread.h>
