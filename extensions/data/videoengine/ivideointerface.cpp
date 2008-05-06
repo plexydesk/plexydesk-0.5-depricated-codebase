@@ -21,16 +21,15 @@
 #include <desktopwidget.h>
 #include <plexyconfig.h>
 
-
-    
 IVideoInterface::IVideoInterface(QObject * object)
 {
 }
 
 PlexyDesk::DataPlugin *  IVideoInterface::instance()
 {
- return new VideoData(this);
+	return new VideoData();
 }
 
 Q_EXPORT_PLUGIN2(IVideoInterface,IVideoInterface)
+
 #include "ivideointerface.moc"

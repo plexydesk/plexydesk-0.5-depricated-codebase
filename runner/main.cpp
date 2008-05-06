@@ -82,13 +82,13 @@ int main( int argc, char ** argv )
 	view->addCoreExtension("videoview");
     view->addExtension("imagepil");
     view->addExtension("plexyclock");
-//    view->addExtension("videoengine");
+    view->addExtension("videoengine");
 
-     PlexyDesk::PluginLoader * loader = new PlexyDesk::PluginLoader();
+     PlexyDesk::PluginLoader *loader = new PlexyDesk::PluginLoader();
      loader->scanDisk();
-     PlexyDesk::DataInterface * e  = (PlexyDesk::DataInterface*) loader->instance("flickerengine");
-     QVariant name("/home/siraj/Video/tami/vlvi-part1.ogg");
-    // e->pushData(name);
+     PlexyDesk::DataInterface *e  = (PlexyDesk::DataInterface*) loader->instance("videoengine");
+     QVariant name("vlvi-part1.ogg");
+     //e->pushData(name);
 
 
 //    view->addExtension("plexyyoutube");

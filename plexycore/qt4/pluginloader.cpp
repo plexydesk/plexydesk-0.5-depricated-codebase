@@ -22,21 +22,15 @@
 #include "pluginloader.h"
 #include "extensionfactory.h"
 
-
 namespace PlexyDesk
 {
-
-    PluginLoader * PluginLoader::mInstance = 0;
+    PluginLoader *PluginLoader::mInstance = 0;
 
     class PluginLoader::Private
     {
     public:
-        Private ()
-        {
-        }
-        ~Private ()
-        {
-        }
+        Private () {}
+        ~Private () {}
         Interface groups;
         QString prefix;
     };
@@ -44,7 +38,6 @@ namespace PlexyDesk
     PluginLoader::PluginLoader ():d (new Private)
     {
         d->prefix = applicationDirPath() + "/ext/groups/";
-        // scanDisk ();
     }
 
     PluginLoader::~PluginLoader ()
@@ -57,14 +50,14 @@ namespace PlexyDesk
         return groups.keys();
     }
 
-    BasePlugin *  PluginLoader::instance(const QString& name)
-    {
-        if ( groups.contains(name) ){
-            return   groups[name]->instance();
-        }  else {
-            return 0;
-        }
-    }	
+	BasePlugin *PluginLoader::instance(const QString& name)
+	{
+		if ( groups.contains(name) ){
+			return groups[name]->instance();
+		}  else {
+			return 0;
+		}
+	}	
 
     void PluginLoader::load (const QString & interface,const QString & pluginName)
     {
@@ -84,23 +77,17 @@ namespace PlexyDesk
 
         if (plugin)
         {
-
-            AbstractPluginInterface * Iface = 0;
+            AbstractPluginInterface *Iface = 0;
             ExtensionProducer<AbstractPluginInterface> factory;
             Iface = factory.instance(interface,plugin);
             groups[pluginName] = Iface;
-            //      qDebug()<<"PluginLoader::load"<<"Loading.."<< Iface<<pluginName<<endl;
+            qDebug() << "PluginLoader::load" << "Loading.." << Iface << pluginName << endl;
         }
         else
         {
             qDebug () << loader.errorString () << endl;;
-            //	d->currentDrop = 0;
-
-
         }
-
     }
-
 
     void PluginLoader::scanDisk ()
     {
@@ -114,12 +101,11 @@ namespace PlexyDesk
             QFileInfo fileInfo = list.at (i);
             loadDesktop (d->prefix + fileInfo.fileName ());
         }
-
-    }				// namespace PlexDesk
+    }
 
     void PluginLoader::loadDesktop (const QString & path)
     {
-        //qDebug () << path << endl;
+        qDebug () << path << endl;
 
         QSettings desktopFile (path, QSettings::IniFormat, this);
 
@@ -128,7 +114,6 @@ namespace PlexyDesk
         load (desktopFile.value ("Type").toString (),desktopFile.value ("X-PLEXYDESK-Library").toString ());
 
         desktopFile.endGroup ();
-
     }
 }
 

@@ -28,26 +28,28 @@
 #include "videoitem.h"
 #include <widgetplugin.h>
 
-class VISIBLE_SYM VideoPlugin :public PlexyDesk::WidgetPlugin
+class VISIBLE_SYM VideoPlugin : public PlexyDesk::WidgetPlugin
 {
-    Q_OBJECT
+	Q_OBJECT
 
-    public:
-        VideoPlugin(QObject * object = 0);
-        virtual ~VideoPlugin();
-        virtual QGraphicsItem * item();// {};
-    public slots:
-        void data(QVariant&);
-        void searchImage();
-   signals:
-	void change();
-        void sendData(QVariant&);
-   private:
-	 QLabel * flow ;
-         QWidget * base;
-         QLineEdit * search;
-	 PlexyDesk::DataInterface * flickrEngine;
-	 PlexyDesk::VideoWidget * widget;
+public:
+	VideoPlugin(QObject * object = 0);
+	virtual ~VideoPlugin();
+	virtual QGraphicsItem * item();
+
+public slots:
+	void data(QVariant&);
+	void searchImage();
+
+signals:
+		void change();
+		void sendData(QVariant&);
+private:
+	QLabel *flow ;
+	QWidget *base;
+	QLineEdit *search;
+	PlexyDesk::DataInterface *videoEngine;
+	PlexyDesk::VideoWidget *widget;
 };
 
 #endif

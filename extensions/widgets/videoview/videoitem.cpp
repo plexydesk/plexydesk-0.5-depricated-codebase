@@ -23,45 +23,45 @@
 
 namespace PlexyDesk
 {
-    VideoWidget::VideoWidget(const QRectF &rect, QWidget *widget ):DesktopWidget(rect,widget)
-    {
-        setDockImage(QPixmap(applicationDirPath() + "/share/plexy/skins/widgets/widget01/pila.png"));
-//        setFaceImage(QPixmap(applicationDirPath() + "/share/plexy/skins/widgets/widget01/pila.png")); 
-        cover = QImage(200,200,QImage::Format_ARGB32_Premultiplied);
+	VideoWidget::VideoWidget(const QRectF &rect, QWidget *widget ):DesktopWidget(rect,widget)
+	{
+		setDockImage(QPixmap(applicationDirPath() + "/share/plexy/skins/widgets/widget01/pila.png"));
+		//        setFaceImage(QPixmap(applicationDirPath() + "/share/plexy/skins/widgets/widget01/pila.png")); 
+		cover = QImage(200,200,QImage::Format_ARGB32_Premultiplied);
 		video = QImage(200,200,QImage::Format_ARGB32_Premultiplied);
-    }
-    
-    VideoWidget::~VideoWidget()
-    {
-    }
+	}
+
+	VideoWidget::~VideoWidget()
+	{
+	}
 
 	void VideoWidget::setFrameImage(QImage& img)
 	{
 		video  = img;
-                update();
+		update();
 	}   
-	 
-    void VideoWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
-    {
-		 QRectF r = e->exposedRect;
-	        p->drawImage(QRectF(20,20,r.width()-40,r.height()-40) , video);
-    }
 
-    void VideoWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
-    {
-        QRectF r = e->exposedRect;
-        p->drawImage(QRectF(20,20,r.width()-40,r.height()-40) , cover);
-    }
+	void VideoWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
+	{
+		QRectF r = e->exposedRect;
+		p->drawImage(QRectF(20,20,r.width()-40,r.height()-40) , video);
+	}
 
-    QRectF VideoWidget::boundingRect() const
-    {
-        return rect();
-    }
+	void VideoWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
+	{
+		QRectF r = e->exposedRect;
+		p->drawImage(QRectF(20,20,r.width()-40,r.height()-40) , cover);
+	}
 
-    void VideoWidget::setCoverPic(QImage img)
-    {
-        cover = img;
-    }
+	QRectF VideoWidget::boundingRect() const
+	{
+		return rect();
+	}
+
+	void VideoWidget::setCoverPic(QImage img)
+	{
+		cover = img;
+	}
 
 } // namespace PlexyDesk
 

@@ -21,11 +21,9 @@
 #include <plexyconfig.h>
 
 
-    
 VideoData::VideoData(QObject * object)
 {
 }
-
 
 void VideoData::pushData(QVariant& data)
 {
@@ -50,6 +48,5 @@ void VideoData::grab(QImage & img)
         emit data(frame);
     }
 }
-
 
 #include "video.moc"

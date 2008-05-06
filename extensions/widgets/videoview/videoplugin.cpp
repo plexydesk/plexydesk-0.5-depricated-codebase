@@ -27,65 +27,65 @@ VideoPlugin::VideoPlugin(QObject * object)
 {
 	base = new QWidget();
 
-     flow = new QLabel(base);
-    //flow->setSlideSize(QSize(320/2, 240/2));
-    flow->resize(300,170);
-    flow->move(0,0);
-    base->resize(300,200);
+	flow = new QLabel(base);
+	//flow->setSlideSize(QSize(320/2, 240/2));
+	flow->resize(300,170);
+	flow->move(0,0);
+	base->resize(300,200);
 
-    search = new QLineEdit(base);
-    search->setStyleSheet("border:1px solid ; font-style:strong ;padding-left:20px; background: black ; background-image:url(/usr/local/share/plexy/skins/default/flick/bg-search.png) ;background-repeat: no-repeat ;  color:black ");
-    search->move(0,170);
-    search->resize(300,30);
-    search->show();
-    connect (search , SIGNAL(returnPressed ()) , this , SLOT(searchImage () ) );
-    widget =  new PlexyDesk::VideoWidget(QRectF(0, 0, 340,240), base);
+	search = new QLineEdit(base);
+	search->setStyleSheet("border:1px solid ; font-style:strong ;padding-left:20px; background: black ; background-image:url(/usr/local/share/plexy/skins/default/flick/bg-search.png) ;background-repeat: no-repeat ;  color:black ");
+	search->move(0,170);
+	search->resize(300,30);
+	search->show();
+	connect (search , SIGNAL(returnPressed ()) , this , SLOT(searchImage () ) );
+	widget =  new PlexyDesk::VideoWidget(QRectF(0, 0, 340,240), base);
 
-    base->move(20,20);
+	base->move(20,20);
 }
 
 VideoPlugin::~VideoPlugin()
 {
-  //  delete flow;
+	//  delete flow;
 	delete base;
 }
 
 void VideoPlugin::searchImage ()
 {
-    qDebug()<<"Searching"<<endl;
-    search->setEnabled(false);
-  //  flow->setFocus(Qt::TabFocusReason);
+	qDebug() << "Searching video" << endl;
+	search->setEnabled(false);
+	//  flow->setFocus(Qt::TabFocusReason);
 
-    QVariant data(search->text());
-    emit sendData(data);
+	QVariant data(search->text());
+	emit sendData(data);
 }
 
 
 void VideoPlugin::data(QVariant& data)
 {
-    QImage wall = data.value<QImage>();
-    search->setEnabled(true);
-    flow->setPixmap(QPixmap::fromImage(wall));
-//    flow->repaint(); 
+	QImage wall = data.value<QImage>();
+	search->setEnabled(true);
+	flow->setPixmap(QPixmap::fromImage(wall));
+	//    flow->repaint(); 
 }
 
 QGraphicsItem * VideoPlugin::item()
 {
-    //flickrEngine = loadData("flickerengine");
+	//flickrEngine = loadData("flickerengine");
 
-    PlexyDesk::PluginLoader * loader = new PlexyDesk::PluginLoader();
-    loader->scanDisk();
-    flickrEngine  = (PlexyDesk::DataInterface*) loader->instance("videoengine");
+	PlexyDesk::PluginLoader * loader = new PlexyDesk::PluginLoader();
+	loader->scanDisk();
+	videoEngine  = (PlexyDesk::DataInterface*) loader->instance("videoengine");
 
-    if (flickrEngine) {
-        connect(flickrEngine,SIGNAL(data(QVariant&)),this,SLOT(data(QVariant&)));
-        connect(this,SIGNAL(sendData(QVariant&)),flickrEngine,SLOT(pushData(QVariant&)));
-    }else {
-        qDebug()<<"DataSource Was Null"<<"VideoPlugin::VideoPlugin(QObject * object)"<<endl;;
-    }
+	if (videoEngine) {
+		connect(videoEngine, SIGNAL(data(QVariant&)), this, SLOT(data(QVariant&)));
+		connect(this, SIGNAL(sendData(QVariant&)), videoEngine, SLOT(pushData(QVariant&)));
+	}else {
+		qDebug() << "DataSource Was Null" << "VideoPlugin::VideoPlugin(QObject * object)" << endl;
+	}
 
-    //PictureFlow * flow = new PictureFlow(0);
-    return widget;//new PlexyDesk::VideoPluginWidget(QRectF(0, 0, 400, 200), flow);
+	//PictureFlow * flow = new PictureFlow(0);
+	return widget;//new PlexyDesk::VideoPluginWidget(QRectF(0, 0, 400, 200), flow);
 }
 
 

@@ -31,8 +31,8 @@ namespace PlexyDesk
     {
         public:
 	    void init() {}
-            DataInterface(){}
-            ~DataInterface(){}
+		DataInterface(){}
+        ~DataInterface(){}
 	    virtual DataPlugin * instance() = 0;
     };
 } // namespace PlexyDesk
