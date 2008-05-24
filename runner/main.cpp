@@ -76,7 +76,7 @@ int main( int argc, char ** argv )
     PlexyDesk::PluginLoader *loader = new PlexyDesk::PluginLoader();
     loader->scanDisk();
     view->show();
-    view->addCoreExtension("welcome");
+//    view->addCoreExtension("welcome");
 //   view->addCoreExtension("videoview");
  //   view->addExtension("imagepil");
    // view->addExtension("plexyclock");
