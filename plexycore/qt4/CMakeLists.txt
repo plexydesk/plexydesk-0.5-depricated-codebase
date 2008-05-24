@@ -21,14 +21,14 @@ SET (qtvizsrc
 	fakemime.cpp
 	desktopwidget.cpp
 	plexyconfig.cpp
-	baseplugin.cpp
+		baseplugin.cpp
 	#	widgetplugin.cpp
-	abstractplugininterface.cpp
+	#	abstractplugininterface.cpp
 	viewlayer.cpp
 		)
 		
 add_library (qtviz SHARED ${qtvizsrc})
-QT4_AUTOMOC( widgetplugin.h  ${qtvizsrc}) 
+QT4_AUTOMOC(  abstractplugininterface.h widgetplugin.h  ${qtvizsrc}) 
 
 
 TARGET_LINK_LIBRARIES(
