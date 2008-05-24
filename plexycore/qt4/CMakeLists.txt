@@ -25,6 +25,7 @@ SET (qtvizsrc
 	widgetplugin.cpp
 	abstractplugininterface.cpp
 	viewlayer.cpp
+	wellcomeitem.cpp
 		)
 		
 add_library (qtviz SHARED ${qtvizsrc})
@@ -33,6 +34,7 @@ QT4_AUTOMOC(${qtvizsrc})
 
 TARGET_LINK_LIBRARIES(
 	       qtviz
+	       qimageblitz
 	       ${QT_QTGUI_LIBRARY}
 	       ${OPENGL_LIBRARIES}
 	       ${QT_QTCORE_LIBRARY}
