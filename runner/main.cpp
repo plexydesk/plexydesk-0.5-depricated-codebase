@@ -60,9 +60,9 @@ int main( int argc, char ** argv )
 
     DesktopView *view = new DesktopView(&scene);
     view->resize(QDesktopWidget().availableGeometry().size());
-    view->move(0, 0);
 #ifdef Q_WS_WIN
     /// \brief: remove plexy from taskbar
+    view->move(0, 0);
     view->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
 #endif
     //view->setWindowOpacity(0.1);
