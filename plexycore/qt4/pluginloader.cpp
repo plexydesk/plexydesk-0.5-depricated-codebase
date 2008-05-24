@@ -78,8 +78,8 @@ namespace PlexyDesk
         if (plugin)
         {
             AbstractPluginInterface *Iface = 0;
-            ExtensionProducer<AbstractPluginInterface> factory;
-            Iface = factory.instance(interface,plugin);
+            //ExtensionProducer<AbstractPluginInterface> factory;
+            Iface = qobject_cast<AbstractPluginInterface*> (plugin);//factory.instance(interface,plugin);
             groups[pluginName] = Iface;
             qDebug() << "PluginLoader::load" << "Loading.." << Iface << pluginName << endl;
         }
