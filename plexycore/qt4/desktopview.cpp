@@ -17,6 +17,7 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 #include "desktopview.h"
+#include "wellcomeitem.h"
 #include <desktopwidget.h>
 #include <backdropinterface.h>
 #include <pluginloader.h>
@@ -25,6 +26,7 @@
 #include <widgetplugin.h>
 #include <viewlayer.h>
 #include <QGLWidget>
+#include <frameitem.h>
 
 
 namespace PlexyDesk
@@ -41,6 +43,11 @@ public:
     ViewLayer *  layer;
     int row;
     int column;
+    WellcomeItem * icon1;
+    WellcomeItem * icon2;
+    WellcomeItem * icon3;
+    WellcomeItem * icon4;
+    Frame * frm;
 };
 
 bool getLessThanWidget(const QGraphicsItem* it1, const QGraphicsItem* it2)
@@ -64,6 +71,25 @@ DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsV
     d->column =  QDesktopWidget().availableGeometry().center().y()/2;;
     d->layer = new ViewLayer(this);
     d->gridLayout = new QGraphicsGridLayout ;
+
+    d->frm = new Frame(QRect(0,0,140 * 4 ,128*3));
+    d->icon1 = new WellcomeItem(QRect(0,0,128,256),d->frm);
+    d->icon1->setName("");
+    d->icon1->setIcon(QPixmap(QString(PLEXPREFIX) + "/share/plexy/skins/default/welcome/kfm_home.png"));
+    d->icon1->setPos(60,70);
+
+    d->icon2 = new WellcomeItem(QRect(0,0,128,256),d->frm);
+    d->icon2->setName("");
+    d->icon2->setIcon(QPixmap(QString(PLEXPREFIX) + "/share/plexy/skins/default/welcome/colors.png"));
+    d->icon2->setPos(220,70);
+
+    d->icon3 = new WellcomeItem(QRect(0,0,128,256),d->frm);
+    d->icon3->setName("");
+    d->icon3->setIcon(QPixmap(QString(PLEXPREFIX) + "/share/plexy/skins/default/welcome/gnome_apps.png"));
+    d->icon3->setPos(380,70);
+
+    this->scene()->addItem(d->frm);
+
 }
 
 DesktopView::~DesktopView()

@@ -26,6 +26,7 @@ SET (qtvizsrc
 	abstractplugininterface.cpp
 	viewlayer.cpp
 	wellcomeitem.cpp
+	frameitem.cpp
 		)
 		
 add_library (qtviz SHARED ${qtvizsrc})
@@ -39,6 +40,7 @@ TARGET_LINK_LIBRARIES(
 	       ${OPENGL_LIBRARIES}
 	       ${QT_QTCORE_LIBRARY}
 	       ${QT_QTOPENGL_LIBRARY}
+	       ${QT_QTSVG_LIBRARY}
        )
 
 if(NOT WIN32)
