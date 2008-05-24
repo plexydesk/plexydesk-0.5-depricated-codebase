@@ -24,43 +24,43 @@
 
 namespace PlexyDesk
 {
-    PluginLoader *PluginLoader::mInstance = 0;
+PluginLoader *PluginLoader::mInstance = 0;
 
-    class PluginLoader::Private
-    {
-    public:
+class PluginLoader::Private
+{
+public:
         Private () {}
         ~Private () {}
         Interface groups;
         QString prefix;
-    };
+};
 
-    PluginLoader::PluginLoader ():d (new Private)
-    {
+PluginLoader::PluginLoader ():d (new Private)
+{
         d->prefix = applicationDirPath() + "/ext/groups/";
-    }
+}
 
-    PluginLoader::~PluginLoader ()
-    {
+PluginLoader::~PluginLoader ()
+{
         delete d;
-    }
+}
 
-    QStringList PluginLoader::listPlugins(const QString& types)
-    {
+QStringList PluginLoader::listPlugins(const QString& types)
+{
         return groups.keys();
-    }
+}
 
-	BasePlugin *PluginLoader::instance(const QString& name)
-	{
-		if ( groups.contains(name) ){
-			return groups[name]->instance();
-		}  else {
-			return 0;
-		}
-	}	
+BasePlugin *PluginLoader::instance(const QString& name)
+{
+        if ( groups.contains(name) ) {
+                return groups[name]->instance();
+        }  else {
+                return 0;
+        }
+}
 
-    void PluginLoader::load (const QString & interface,const QString & pluginName)
-    {
+void PluginLoader::load (const QString & interface,const QString & pluginName)
+{
 #ifdef Q_WS_MAC
         QPluginLoader loader (applicationDirPath() + "/lib/plexyext/lib" + pluginName + ".dylib");
 #endif
@@ -75,36 +75,32 @@ namespace PlexyDesk
 
         QObject *plugin = loader.instance ();
 
-        if (plugin)
-        {
-            AbstractPluginInterface *Iface = 0;
-            //ExtensionProducer<AbstractPluginInterface> factory;
-            Iface = qobject_cast<AbstractPluginInterface*> (plugin);//factory.instance(interface,plugin);
-            groups[pluginName] = Iface;
-            qDebug() << "PluginLoader::load" << "Loading.." << Iface << pluginName << endl;
+        if (plugin) {
+                AbstractPluginInterface *Iface = 0;
+                //ExtensionProducer<AbstractPluginInterface> factory;
+                Iface = qobject_cast<AbstractPluginInterface*> (plugin);//factory.instance(interface,plugin);
+                groups[pluginName] = Iface;
+                qDebug() << "PluginLoader::load" << "Loading.." << Iface << pluginName << endl;
+        } else {
+                qDebug () << loader.errorString () << endl;;
         }
-        else
-        {
-            qDebug () << loader.errorString () << endl;;
-        }
-    }
+}
 
-    void PluginLoader::scanDisk ()
-    {
+void PluginLoader::scanDisk ()
+{
         QDir dir (d->prefix);
         dir.setFilter (QDir::Files | QDir::Hidden | QDir::NoSymLinks);
         dir.setSorting (QDir::Size | QDir::Reversed);
 
         QFileInfoList list = dir.entryInfoList ();
-        for (int i = 0; i < list.size (); ++i)
-        {
-            QFileInfo fileInfo = list.at (i);
-            loadDesktop (d->prefix + fileInfo.fileName ());
+        for (int i = 0; i < list.size (); ++i) {
+                QFileInfo fileInfo = list.at (i);
+                loadDesktop (d->prefix + fileInfo.fileName ());
         }
-    }
+}
 
-    void PluginLoader::loadDesktop (const QString & path)
-    {
+void PluginLoader::loadDesktop (const QString & path)
+{
         qDebug () << path << endl;
 
         QSettings desktopFile (path, QSettings::IniFormat, this);
@@ -114,7 +110,7 @@ namespace PlexyDesk
         load (desktopFile.value ("Type").toString (),desktopFile.value ("X-PLEXYDESK-Library").toString ());
 
         desktopFile.endGroup ();
-    }
+}
 }
 
 #include "pluginloader.moc"

@@ -22,13 +22,13 @@ SET (qtvizsrc
 	desktopwidget.cpp
 	plexyconfig.cpp
 	baseplugin.cpp
-	widgetplugin.cpp
+	#	widgetplugin.cpp
 	abstractplugininterface.cpp
 	viewlayer.cpp
 		)
 		
 add_library (qtviz SHARED ${qtvizsrc})
-QT4_AUTOMOC( ${qtvizsrc}) 
+QT4_AUTOMOC( widgetplugin.h  ${qtvizsrc}) 
 
 
 TARGET_LINK_LIBRARIES(
