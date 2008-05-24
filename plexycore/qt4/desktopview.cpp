@@ -109,7 +109,7 @@ void DesktopView::addCoreExtension(const QString& name)
 		     // widget->configState(DesktopWidget::DOCK);
 		      scene()->addItem(widget);
                       widget->setPos(d->row,d->column);
-                      d->row += widget->boundingRect().width()+10;
+                      d->row += widget->boundingRect().width();
                   //    d->column += widget->boundingRect().height()+10;
                       //d->layer->addItem("Widgets",widget);
                       //d->gridLayout->addItem(widget,d->row++,d->column++);

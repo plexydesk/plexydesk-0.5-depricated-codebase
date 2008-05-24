@@ -73,28 +73,16 @@ int main( int argc, char ** argv )
     info.setWindowType(NET::Desktop);
 #endif
 
+    PlexyDesk::PluginLoader *loader = new PlexyDesk::PluginLoader();
+    loader->scanDisk();
+
     view->addExtension("imagepil");
     view->show();
-  //  view->addExtension("plexyfriends");
- //   view->addExtension("imagepil");
-// for ( int i = 0 ; i < 5 ; i++)
-    view->addCoreExtension("welcome");
-	view->addCoreExtension("videoview");
+
+    //view->addCoreExtension("welcome");
+    view->addCoreExtension("videoview");
     view->addExtension("imagepil");
     view->addExtension("plexyclock");
-    view->addExtension("videoengine");
-
-     PlexyDesk::PluginLoader *loader = new PlexyDesk::PluginLoader();
-     loader->scanDisk();
-     PlexyDesk::DataInterface *e  = (PlexyDesk::DataInterface*) loader->instance("videoengine");
-     QVariant name("vlvi-part1.ogg");
-     //e->pushData(name);
-
-
-//    view->addExtension("plexyyoutube");
-//    view->addExtension("plexycpu");
-//    view->addExtension("wallpaperchange-win32");
-//   view->addData("flickerengine");
 
     return app.exec();
 }
