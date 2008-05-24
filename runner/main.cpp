@@ -78,11 +78,10 @@ int main( int argc, char ** argv )
 
     view->addExtension("imagepil");
     view->show();
-
-    //view->addCoreExtension("welcome");
-    view->addCoreExtension("videoview");
-    view->addExtension("imagepil");
-    view->addExtension("plexyclock");
+    view->addCoreExtension("welcome");
+//    view->addCoreExtension("videoview");
+ //   view->addExtension("imagepil");
+   // view->addExtension("plexyclock");
 
     return app.exec();
 }
