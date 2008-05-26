@@ -29,6 +29,7 @@ SET (qtvizsrc
      frameitem.cpp
     )
 
+
 add_library (qtviz SHARED ${qtvizsrc})
 QT4_AUTOMOC(${qtvizsrc})
 
