@@ -79,9 +79,10 @@ namespace PlexyDesk
         virtual QRectF boundingRect() const;
 
     public slots:
-        void zoomIn ( int );
-        void zoomOut ( int );
-        void zoomDone ( );
+        void zoomIn(int);
+        void zoomOut(int);
+        void zoomDone();
+        void spin();
 
     protected:
         virtual void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0); 

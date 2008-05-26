@@ -76,10 +76,10 @@ int main( int argc, char ** argv )
     PlexyDesk::PluginLoader *loader = new PlexyDesk::PluginLoader();
     loader->scanDisk();
     view->show();
-//    view->addCoreExtension("welcome");
-//   view->addCoreExtension("videoview");
- //   view->addExtension("imagepil");
-   // view->addExtension("plexyclock");
+// view->addCoreExtension("welcome");
+   view->addCoreExtension("videoview");
+   view->addExtension("imagepil");
+   view->addExtension("plexyclock");
 
     return app.exec();
 }
