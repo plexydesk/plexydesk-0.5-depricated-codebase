@@ -18,6 +18,7 @@ SET (plexyclocksrc
 	clockinterface.cpp
 		)
 
+if (WIN32)
 SET (plexicore_MOC
   ${CMAKE_SOURCE_DIR}/plexycore/qt4/pluginloader.cpp
   ${CMAKE_SOURCE_DIR}/plexycore/qt4/abstractplugininterface.cpp
@@ -26,10 +27,10 @@ SET (plexicore_MOC
   ${CMAKE_SOURCE_DIR}/plexycore/qt4/baseplugin.cpp
     )
     
-#QT4_AUTOMOC( ${plexicore_MOC})
-
-add_library (plexyclock SHARED ${plexyclocksrc} ${plexicore_MOC})
 QT4_AUTOMOC( ${plexyclocksrc}) 
+endif(WIN32)
+add_library (plexyclock SHARED ${plexyclocksrc} ${plexicore_MOC})
+QT4_AUTOMOC( ${plexycore_MOC}) 
 
 #SET_TARGET_PROPERTIES(plexy
 #
