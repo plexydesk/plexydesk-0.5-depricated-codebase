@@ -1,6 +1,6 @@
 
 #ifndef PLEXY_WIDGET_PLUGIN_H
-#define PLEXY_WIDGET_PLUGIN_H 
+#define PLEXY_WIDGET_PLUGIN_H
 
 #include <plexy.h>
 #include <config.h>
@@ -10,14 +10,14 @@
 
 namespace PlexyDesk
 {
-    class WidgetPlugin : public BasePlugin
-    {
+class WidgetPlugin : public BasePlugin
+{
         Q_OBJECT
-        public :
-                WidgetPlugin(QObject  * object = 0){}
-                virtual ~WidgetPlugin(){}
-                virtual QGraphicsItem * item () = 0;
+public :
+        WidgetPlugin(QObject  * object = 0) {}
+        virtual ~WidgetPlugin() {}
+        virtual QGraphicsItem * item () = 0;
 
-     };
+};
 }
 #endif

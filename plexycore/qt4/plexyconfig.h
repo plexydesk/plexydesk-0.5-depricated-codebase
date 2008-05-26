@@ -26,30 +26,32 @@
 
 namespace PlexyDesk
 {
-    class VISIBLE_SYM Config
-    {
-        public:
-           static Config*  getInstance();
-           ///these will be pure virtual on the real plexy desk
-           void read();
-           void save(){}
-           QString MyPictures ;
-           QString MyMovies;
-           QString CurrentWallpaper;
-	   bool proxyOn;
-	   int proxyPort;
-	   QNetworkProxy::ProxyType proxyType;
-	   QString proxyURL;
-           QString proxyUser;
-	   QString proxyPasswd;
-           bool collitionOn;
+class VISIBLE_SYM Config
+{
+public:
+        static Config*  getInstance();
+        ///these will be pure virtual on the real plexy desk
+        void read();
+        void save() {}
+        QString MyPictures ;
+        QString MyMovies;
+        QString CurrentWallpaper;
+        bool proxyOn;
+        int proxyPort;
+        QNetworkProxy::ProxyType proxyType;
+        QString proxyURL;
+        QString proxyUser;
+        QString proxyPasswd;
+        bool collitionOn;
 
-        private:
-           static Config * config;
-           Config(){read();};
-           Config(Config &){}
-           Config& operator=(const Config&);
-    };
+private:
+        static Config * config;
+        Config() {
+                read();
+        };
+        Config(Config &) {}
+        Config& operator=(const Config&);
+};
 } // namespace PlexyDesk
 
 

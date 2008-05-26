@@ -26,13 +26,13 @@
 
 namespace PlexyDesk
 {
-    class WidgetInterface : public AbstractPluginInterface 
-    {
-        public:
-	void init() {}
-            WidgetInterface(){}
-            ~WidgetInterface(){}
-    };
+class WidgetInterface : public AbstractPluginInterface
+{
+public:
+        void init() {}
+        WidgetInterface() {}
+        ~WidgetInterface() {}
+};
 } // namespace PlexyDesk
 
 Q_DECLARE_INTERFACE(PlexyDesk::WidgetInterface, "org.plexydesk.WidgetInterface")

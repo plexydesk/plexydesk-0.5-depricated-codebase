@@ -20,31 +20,31 @@
 
 namespace PlexyDesk
 {
-    Config * Config::config = 0;
+Config * Config::config = 0;
 
-    Config * Config::getInstance()
-    {
+Config * Config::getInstance()
+{
         if ( config == 0) {
-         return  new Config();
-        }else {
-            return config;
+                return  new Config();
+        } else {
+                return config;
         }
-    }
+}
 
-    void Config::read()
-   {
-    
-     proxyOn=false;
-     proxyURL="";
-     proxyUser="";
-     proxyPasswd="";
-     proxyPort=3128;
+void Config::read()
+{
 
-    //collitions detection
-     collitionOn = false;
-    
-	
-   }
+        proxyOn=false;
+        proxyURL="";
+        proxyUser="";
+        proxyPasswd="";
+        proxyPort=3128;
+
+        //collitions detection
+        collitionOn = false;
+
+
+}
 
 }
 

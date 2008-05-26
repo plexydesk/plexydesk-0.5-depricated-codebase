@@ -27,11 +27,11 @@
 
 namespace PlexyDesk
 {
-    class VISIBLE_SYM PluginLoader:public QObject
-    {
+class VISIBLE_SYM PluginLoader:public QObject
+{
 
         Q_OBJECT
-    public:
+public:
         typedef QHash <QString,AbstractPluginInterface*> Interface;
         typedef QHash <QString,BasePlugin*> Dict;
         PluginLoader();
@@ -39,30 +39,28 @@ namespace PlexyDesk
         QStringList listPlugins(const QString& types);
         BasePlugin * instance(const QString& name);
         void scanDisk();
-        static PluginLoader * getInstance()
-        {
-            if (!mInstance) {
-                mInstance = new PluginLoader();
-                mInstance->scanDisk();
-            }
+        static PluginLoader * getInstance() {
+                if (!mInstance) {
+                        mInstance = new PluginLoader();
+                        mInstance->scanDisk();
+                }
 
-            return mInstance;
+                return mInstance;
         }
 
-        QString applicationDirPath()
-        {
+        QString applicationDirPath() {
 #ifdef Q_WS_WIN
-            return QString(QCoreApplication::applicationDirPath() + "/..");
+                return QString(QCoreApplication::applicationDirPath() + "/..");
 #else
-            return QString(PLEXPREFIX);
+                return QString(PLEXPREFIX);
 #endif
         }
 
-    protected:
+protected:
         void loadDesktop(const QString& path);
         void load(const QString& _interface, const QString& plugin);
 
-    private:
+private:
         class Private;
         Private * const d ;
 #ifdef Q_WS_WIN
@@ -71,7 +69,7 @@ namespace PlexyDesk
         static VISIBLE_SYM PluginLoader * mInstance;
 #endif
         Interface groups;
-    };
+};
 
 } // namespace PlexDesk
 

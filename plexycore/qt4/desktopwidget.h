@@ -24,12 +24,12 @@
  *
  * \brief Base class for Visual Desktop Extensions
  * DesktopWidget defines all the common features of a visual desktop extension.
- * When writing visual extensions, the user must inherit from this class. 
+ * When writing visual extensions, the user must inherit from this class.
  *
  */
 
 #ifndef PLEXY_DESKTOP_WIDGET_H
-#define PLEXY_DESKTOP_WIDGET_H	
+#define PLEXY_DESKTOP_WIDGET_H
 #include <plexy.h>
 #include <plexyconfig.h>
 #include <QtCore>
@@ -37,25 +37,24 @@
 
 namespace PlexyDesk
 {
-    class DesktopWidget : public QObject, public QGraphicsRectItem
-    {
+class DesktopWidget : public QObject, public QGraphicsRectItem
+{
         Q_OBJECT
-    public:
-        typedef enum
-        {
-            DOCK,
-            NORMALSIDE,
-            BACKSIDE
+public:
+        typedef enum {
+                DOCK,
+                NORMALSIDE,
+                BACKSIDE
         } State;
 
         /** \brief Constructor
-        * \param rect Defines the bounding rectangular area of a 
+        * \param rect Defines the bounding rectangular area of a
         * desktop widget
-        * \param embeddedWidget an optional parameter to embed a regular 
-        * QWidget.  
-        * 
-        * This will construct a extension with default settings with an 
-        * optional QWidget embedded 
+        * \param embeddedWidget an optional parameter to embed a regular
+        * QWidget.
+        *
+        * This will construct a extension with default settings with an
+        * optional QWidget embedded
         */
 
         DesktopWidget(const QRectF &rect, QWidget *embeddedWidget = 0);
@@ -66,41 +65,41 @@ namespace PlexyDesk
 
         virtual void paintBackSide (QPainter * painter,const QRectF& rect);
         virtual void paintViewSide (QPainter * painter,const QRectF& rect);
-        virtual void paintDockView (QPainter * painter,const QRectF& rect); 
+        virtual void paintDockView (QPainter * painter,const QRectF& rect);
 
         void drawBackdrop(bool);
         void setState(State s);
         void configState(State s);
-        State state(); 
+        State state();
         void setDockImage(QPixmap);
         void setFaceImage(QPixmap);
         void setBackFaceImage(QPixmap );
 
         virtual QRectF boundingRect() const;
 
-    public slots:
+public slots:
         void zoomIn(int);
         void zoomOut(int);
         void zoomDone();
         void spin();
 
-    protected:
-        virtual void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0); 
+protected:
+        virtual void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
         virtual void mousePressEvent ( QGraphicsSceneMouseEvent * event );
         virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
         virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event );
         virtual void mouseMoveEvent ( QGraphicsSceneMouseEvent * event);
-        virtual void paintExtFace(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0){}
+        virtual void paintExtFace(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0) {}
         virtual void paintExtBackFace(QPainter * painter,
-            const QStyleOptionGraphicsItem * option,
-            QWidget * widget = 0){}
+                                      const QStyleOptionGraphicsItem * option,
+                                      QWidget * widget = 0) {}
         virtual void paintExtDockFace(QPainter * painter,
-            const QStyleOptionGraphicsItem * it, 
-            QWidget * widget = 0){}
-    private:
+                                      const QStyleOptionGraphicsItem * it,
+                                      QWidget * widget = 0) {}
+private:
         class Private ;
         Private * const d;
-    };
+};
 }//
 
 #endif

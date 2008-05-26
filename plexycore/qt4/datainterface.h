@@ -27,14 +27,14 @@
 
 namespace PlexyDesk
 {
-    class DataInterface : public AbstractPluginInterface 
-    {
-        public:
-	    void init() {}
-		DataInterface(){}
-        ~DataInterface(){}
-	    virtual DataPlugin * instance() = 0;
-    };
+class DataInterface : public AbstractPluginInterface
+{
+public:
+        void init() {}
+        DataInterface() {}
+        ~DataInterface() {}
+        virtual DataPlugin * instance() = 0;
+};
 } // namespace PlexyDesk
 
 Q_DECLARE_INTERFACE(PlexyDesk::DataInterface, "org.plexydesk.DataInterface")

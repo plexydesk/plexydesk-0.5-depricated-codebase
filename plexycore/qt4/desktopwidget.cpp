@@ -191,13 +191,13 @@ void DesktopWidget::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event )
 void DesktopWidget::mousePressEvent ( QGraphicsSceneMouseEvent * event )
 {
         if ( event->buttons() == Qt::RightButton) {
-            d->spintimer->start(100);
+                d->spintimer->start(100);
         }
 }
 
 void DesktopWidget::spin ()
 {
-        
+
         QPointF center = boundingRect ().center();
         QTransform mat = QTransform();
         mat.translate (  center.x() ,  center.y() );
@@ -210,13 +210,13 @@ void DesktopWidget::spin ()
         }
 
         if (d->angle >= 180) {
-         resetMatrix();
-         d->angle = 0;
-         d->spintimer->stop();
-         if ( state() == BACKSIDE)
-             setState(NORMALSIDE);
+                resetMatrix();
+                d->angle = 0;
+                d->spintimer->stop();
+                if ( state() == BACKSIDE)
+                        setState(NORMALSIDE);
         } else {
-            setState(BACKSIDE );
+                setState(BACKSIDE );
         }
 
 }

@@ -29,14 +29,14 @@
 namespace PlexyDesk
 {
 
-    class AbstractPluginInterface: public QObject 
-    {
-        Q_OBJECT 
-    public:
-        AbstractPluginInterface(QObject *parent = 0){}
+class AbstractPluginInterface: public QObject
+{
+        Q_OBJECT
+public:
+        AbstractPluginInterface(QObject *parent = 0) {}
         virtual void init() {};
         virtual BasePlugin * instance() = 0;
-    };
+};
 } // namespace PlexyDesk
 
 Q_DECLARE_INTERFACE(PlexyDesk::AbstractPluginInterface, "org.plexydesk.PluginInterface")
