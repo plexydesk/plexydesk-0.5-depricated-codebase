@@ -4,10 +4,10 @@ set(QT_USE_OPENGL TRUE)
 include(${QT_USE_FILE})
 
 INCLUDE_DIRECTORIES(
-        $ {QT_INCLUDES}
-        $ {QT_QTOPENGL_INCLUDE_DIR}
-        $ {QT_QTNETWORK_INCLUDE_DIR}
-        $ {QT_QTTEST_INCLUDE_DIR}
+        ${QT_INCLUDES}
+        ${QT_QTOPENGL_INCLUDE_DIR}
+        ${QT_QTNETWORK_INCLUDE_DIR}
+        ${QT_QTTEST_INCLUDE_DIR}
 )
 
 
@@ -29,22 +29,22 @@ SET (qtvizsrc
      frameitem.cpp
     )
 
-add_library (qtviz SHARED $ {qtvizsrc})
-QT4_AUTOMOC($ {qtvizsrc})
+add_library (qtviz SHARED ${qtvizsrc})
+QT4_AUTOMOC(${qtvizsrc})
 
 
 TARGET_LINK_LIBRARIES(
         qtviz
         qimageblitz
-        $ {QT_QTGUI_LIBRARY}
-        $ {OPENGL_LIBRARIES}
-        $ {QT_QTCORE_LIBRARY}
-        $ {QT_QTOPENGL_LIBRARY}
-        $ {QT_QTSVG_LIBRARY}
+        ${QT_QTGUI_LIBRARY}
+        ${OPENGL_LIBRARIES}
+        ${QT_QTCORE_LIBRARY}
+        ${QT_QTOPENGL_LIBRARY}
+        ${QT_QTSVG_LIBRARY}
 )
 
 if (NOT WIN32)
-        INSTALL(TARGETS qtviz DESTINATION $ {CMAKE_INSTALL_PREFIX}/lib/)
+        INSTALL(TARGETS qtviz DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/)
         elseif(WIN32)
-        INSTALL(TARGETS qtviz DESTINATION $ {CMAKE_INSTALL_PREFIX}/bin/)
+        INSTALL(TARGETS qtviz DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/)
         endif(NOT WIN32)
