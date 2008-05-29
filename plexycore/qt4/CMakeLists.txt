@@ -25,7 +25,7 @@ SET (qtvizsrc
      widgetplugin.cpp
      abstractplugininterface.cpp
      viewlayer.cpp
-     wellcomeitem.cpp
+     navigator.cpp
      frameitem.cpp
     )
 
