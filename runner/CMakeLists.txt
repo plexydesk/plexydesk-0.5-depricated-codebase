@@ -6,12 +6,12 @@ set(QT_USE_OPENGL TRUE)
 include(${QT_USE_FILE})
 
 INCLUDE_DIRECTORIES(
-		   ${QT_INCLUDES}
-		   	   ${QT_QTOPENGL_INCLUDE_DIR}
-			   	   ${QT_QTNETWORK_INCLUDE_DIR}
-				   	   ${QT_QTTEST_INCLUDE_DIR}
-					   ${X11_INCLUDE_DIR}
-					   		 )
+   ${QT_INCLUDES}
+   ${QT_QTOPENGL_INCLUDE_DIR}
+   ${QT_QTNETWORK_INCLUDE_DIR}
+   ${QT_QTTEST_INCLUDE_DIR}
+   ${X11_INCLUDE_DIR}
+ )
 
 include_directories(${CMAKE_SOURCE_DIR}/lib/)
 ########### source files ###############
@@ -19,15 +19,16 @@ SET(plexydesk_PART_SRCS
 	main.cpp
 )
 
+IF (WIN32)
 SET (qtviz_MOC
 	${CMAKE_SOURCE_DIR}/plexycore/qt4/baserender.cpp
 	${CMAKE_SOURCE_DIR}/plexycore/qt4/desktopview.cpp
 	${CMAKE_SOURCE_DIR}/plexycore/qt4/pluginloader.cpp
 	${CMAKE_SOURCE_DIR}/plexycore/qt4/desktopwidget.cpp
 	${CMAKE_SOURCE_DIR}/plexycore/qt4/viewlayer.cpp
-		)
-			
+	)
 QT4_AUTOMOC(${qtviz_MOC})
+ENDIF(WIN32) 
 
 ########### prepare files ###############
 ADD_EXECUTABLE(plexydesk ${plexydesk_PART_SRCS} ${qtviz_MOC})
@@ -38,8 +39,8 @@ TARGET_LINK_LIBRARIES(
 	plexydesk 
 	qtviz
 	${QT_QTGUI_LIBRARY}
-    ${QT_QTCORE_LIBRARY}
-    ${QT_QTOPENGL_LIBRARY}
+        ${QT_QTCORE_LIBRARY}
+        ${QT_QTOPENGL_LIBRARY}
 	${QT_AND_KDECORE_LIBS}
 	)
 
