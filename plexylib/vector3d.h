@@ -47,7 +47,7 @@ class  VISIBLE_SYM Vector3D
 		double magnitude();
 
 		double dot(Vector3D);
-                Vector3D mult(float scalar);
+                Vector3D mult(float);
 	
 		Vector3D cross(Vector3D);
 

@@ -191,34 +191,33 @@ void DesktopWidget::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event )
 void DesktopWidget::mousePressEvent ( QGraphicsSceneMouseEvent * event )
 {
         if ( event->buttons() == Qt::RightButton) {
-                d->spintimer->start(100);
+                d->spintimer->start(10);
         }
 }
 
 void DesktopWidget::spin ()
 {
 
+        d->angle += 18;
+        setCacheMode(ItemCoordinateCache);
         QPointF center = boundingRect ().center();
         QTransform mat = QTransform();
         mat.translate (  center.x() ,  center.y() );
         mat.rotate (d->angle,Qt::YAxis);
         mat.translate ( - center.x() ,  - center.y() );
         setTransform (mat);
-        d->angle += 6;
-        if ( d->opacity >= 0.0) {
-                //d->opacity -= 0.2;
-        }
 
         if (d->angle >= 180) {
-                resetMatrix();
-                d->angle = 0;
-                d->spintimer->stop();
-                if ( state() == BACKSIDE)
-                        setState(NORMALSIDE);
-        } else {
+            if (state() == BACKSIDE){
+                 setState(NORMALSIDE);
+            } else {
                 setState(BACKSIDE );
+            }
+            d->spintimer->stop();
+            resetMatrix();
+            setCacheMode(DeviceCoordinateCache);
+            d->angle = 0;
         }
-
 }
 
 void DesktopWidget::drawBackdrop(bool b)
