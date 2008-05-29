@@ -1,11 +1,11 @@
-#include "wellcomeitem.h"
+#include "navigator.h"
 #include <QtCore>
 
 namespace PlexyDesk
 {
 
 class
-                        WellcomeItem::Private
+                        Navigator::Private
 {
 public:
         Private () {
@@ -35,7 +35,7 @@ public:
 };
 
 
-WellcomeItem::WellcomeItem (const QRectF &rect, QGraphicsItem * parent ):QGraphicsRectItem(rect,parent),
+Navigator::Navigator (const QRectF &rect, QGraphicsItem * parent ):QGraphicsRectItem(rect,parent),
                 d (new Private)
 {
         //TODO
@@ -56,12 +56,12 @@ WellcomeItem::WellcomeItem (const QRectF &rect, QGraphicsItem * parent ):QGraphi
 
 }
 
-WellcomeItem::~WellcomeItem ()
+Navigator::~Navigator ()
 {
         delete d;
 }
 
-QImage WellcomeItem::reflection (QImage & img)
+QImage Navigator::reflection (QImage & img)
 {
         QImage reflect = img.mirrored (0, 1);
         QPainter p (&reflect);
@@ -78,7 +78,7 @@ QImage WellcomeItem::reflection (QImage & img)
         return reflect;
 }
 
-void WellcomeItem::paintItem (QPainter * painter,
+void Navigator::paintItem (QPainter * painter,
                               const QRectF rect)
 {
         painter->setRenderHint (QPainter::SmoothPixmapTransform,true);
@@ -94,7 +94,7 @@ void WellcomeItem::paintItem (QPainter * painter,
                             d->iconPixmap);
         }
 }
-void WellcomeItem::paint (QPainter * painter,
+void Navigator::paint (QPainter * painter,
                           const QStyleOptionGraphicsItem * option,
                           QWidget * widget)
 {
@@ -109,19 +109,19 @@ void WellcomeItem::paint (QPainter * painter,
         painter->restore();
 }
 
-void WellcomeItem::setOpacity (float op)
+void Navigator::setOpacity (float op)
 {
         d->opacity = op;
 }
 
-QString WellcomeItem::loadSvg (MouseState state)
+QString Navigator::loadSvg (MouseState state)
 {
         return d->ids[state];
 }
 
 //Events
 
-void WellcomeItem::hoverEnterEvent (QGraphicsSceneHoverEvent * event)
+void Navigator::hoverEnterEvent (QGraphicsSceneHoverEvent * event)
 {
         Q_UNUSED (event);
         d->state = OVER;
@@ -132,7 +132,7 @@ void WellcomeItem::hoverEnterEvent (QGraphicsSceneHoverEvent * event)
         emit clicked ();
 }
 
-void WellcomeItem::hoverMoveEvent (QGraphicsSceneHoverEvent * event)
+void Navigator::hoverMoveEvent (QGraphicsSceneHoverEvent * event)
 {
         Q_UNUSED (event);
         d->state = OVER;
@@ -140,7 +140,7 @@ void WellcomeItem::hoverMoveEvent (QGraphicsSceneHoverEvent * event)
 
 }
 
-void WellcomeItem::hoverLeaveEvent (QGraphicsSceneHoverEvent * event)
+void Navigator::hoverLeaveEvent (QGraphicsSceneHoverEvent * event)
 {
         Q_UNUSED (event);
         d->state = REGULAR;
@@ -151,17 +151,17 @@ void WellcomeItem::hoverLeaveEvent (QGraphicsSceneHoverEvent * event)
 
 }
 
-QString WellcomeItem::name () const
+QString Navigator::name () const
 {
         return d->text;
 }
 
-void WellcomeItem::setName (const QString & name)
+void Navigator::setName (const QString & name)
 {
         d->text = name;
 }
 
-void WellcomeItem::setIcon (const QPixmap &icon)
+void Navigator::setIcon (const QPixmap &icon)
 {
         d->iconPixmap = QPixmap (icon);
         //FIXME
@@ -185,7 +185,7 @@ void WellcomeItem::setIcon (const QPixmap &icon)
 
 }
 
-void WellcomeItem::zoom (int step)
+void Navigator::zoom (int step)
 {
 
         QPointF center = this->boundingRect ().center ();
@@ -201,4 +201,4 @@ void WellcomeItem::zoom (int step)
 
 } // namespace PlexyDesk
 
-#include "wellcomeitem.moc"
+#include "navigator.moc"

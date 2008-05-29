@@ -14,7 +14,7 @@
 namespace PlexyDesk
 {
 
-class  WellcomeItem:public QObject, public QGraphicsRectItem
+class  Navigator:public QObject, public QGraphicsRectItem
 {
         Q_OBJECT
 public:
@@ -22,8 +22,8 @@ public:
         typedef enum { REGULAR,OVER,PRESSED } MouseState;
         typedef QHash <MouseState,QString> ThemeNames;
 
-        WellcomeItem(const QRectF &rect,QGraphicsItem * parent = 0);
-        virtual ~WellcomeItem();
+        Navigator(const QRectF &rect,QGraphicsItem * parent = 0);
+        virtual ~Navigator();
 
 
         void  paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
