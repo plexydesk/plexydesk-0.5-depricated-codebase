@@ -27,10 +27,10 @@ SET (plexicore_MOC
   ${CMAKE_SOURCE_DIR}/plexycore/qt4/baseplugin.cpp
     )
     
-QT4_AUTOMOC( ${plexyclocksrc}) 
+QT4_AUTOMOC( ${plexycore_MOC}) 
 endif(WIN32)
 add_library (plexyclock SHARED ${plexyclocksrc} ${plexicore_MOC})
-QT4_AUTOMOC( ${plexycore_MOC}) 
+QT4_AUTOMOC( ${plexyclocksrc}) 
 
 #SET_TARGET_PROPERTIES(plexy
 #
