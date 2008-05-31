@@ -57,6 +57,10 @@ bool getLessThanWidget(const QGraphicsItem* it1, const QGraphicsItem* it2)
 
 DesktopView::DesktopView ( QGraphicsScene * scene, QWidget * parent ):QGraphicsView(scene,parent),d(new Private)
 {
+
+//#ifndef Q_WS_MAC
+//      setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers)));
+//#endif
         setWindowFlags(Qt::FramelessWindowHint);
         setAttribute(Qt::WA_ContentsPropagated );
         setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
