@@ -101,7 +101,6 @@ void PluginLoader::scanDisk()
 
 void PluginLoader::loadDesktop(const QString & path)
 {
-    qDebug() << path << endl;
 
     QSettings desktopFile(path, QSettings::IniFormat, this);
 
