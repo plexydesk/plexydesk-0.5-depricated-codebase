@@ -29,9 +29,9 @@ namespace PlexyDesk
 class WidgetInterface : public AbstractPluginInterface
 {
 public:
-        void init() {}
-        WidgetInterface() {}
-        ~WidgetInterface() {}
+    void init() {}
+    WidgetInterface() {}
+    ~WidgetInterface() {}
 };
 } // namespace PlexyDesk
 

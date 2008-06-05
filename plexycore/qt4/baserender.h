@@ -33,33 +33,33 @@ namespace PlexyDesk
 
 class VISIBLE_SYM BaseRender:public QGLWidget
 {
-        Q_OBJECT
+    Q_OBJECT
 
 public:
-        typedef QMap<QString,QPixmap*> CacheDict;
+    typedef QMap<QString,QPixmap*> CacheDict;
 
-        BaseRender(QWidget * parent = 0, const QGLWidget * shareWidget = 0, Qt::WindowFlags f = 0);
+    BaseRender(QWidget * parent = 0, const QGLWidget * shareWidget = 0, Qt::WindowFlags f = 0);
 
-        virtual ~BaseRender();
+    virtual ~BaseRender();
 
-        void resetViewport (int width, int height);
+    void resetViewport(int width, int height);
 
-        void resetOverlay  (int width, int height);
+    void resetOverlay(int width, int height);
 
 protected:
 
-        void initializeGL();
+    void initializeGL();
 
-        void resizeGL(int width, int height);
+    void resizeGL(int width, int height);
 
 //    void paintGL();
 
-        void paintEvent(QPaintEvent *);
+    void paintEvent(QPaintEvent *);
 
-        void drawWallpaper() {};
+    void drawWallpaper() {};
 private:
-        class Private;
-        Private * const d ;
+    class Private;
+    Private * const d ;
 };
 
 } // namespace #ifndef

@@ -24,18 +24,18 @@ FakeMime * FakeMime::config = 0;
 
 FakeMime * FakeMime::getInstance()
 {
-        if ( config == 0) {
-                return  new FakeMime();
-        } else {
-                return config;
-        }
+    if (config == 0) {
+        return  new FakeMime();
+    } else {
+        return config;
+    }
 }
 
 QString FakeMime::getType(const QString& file)
 {
-        QStringList splits = file.split(".");
-        QString ext =  splits.at(1);
-        return ext;
+    QStringList splits = file.split(".");
+    QString ext =  splits.at(1);
+    return ext;
 
 }
 

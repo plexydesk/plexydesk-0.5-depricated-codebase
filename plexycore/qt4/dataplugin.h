@@ -11,14 +11,14 @@ namespace PlexyDesk
 {
 class DataPlugin : public BasePlugin
 {
-        Q_OBJECT
+    Q_OBJECT
 public :
-        DataPlugin(QObject  * object = 0) {}
-        virtual ~DataPlugin() {}
+    DataPlugin(QObject  * object = 0) {}
+    virtual ~DataPlugin() {}
 public slots:
-        virtual void pushData(QVariant&) = 0;
+    virtual void pushData(QVariant&) = 0;
 signals:
-        virtual void data(QVariant&)=0;
+    virtual void data(QVariant&)=0;
 
 };
 }

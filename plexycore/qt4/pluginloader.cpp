@@ -29,87 +29,87 @@ PluginLoader *PluginLoader::mInstance = 0;
 class PluginLoader::Private
 {
 public:
-        Private () {}
-        ~Private () {}
-        Interface groups;
-        QString prefix;
+    Private() {}
+    ~Private() {}
+    Interface groups;
+    QString prefix;
 };
 
-PluginLoader::PluginLoader ():d (new Private)
+PluginLoader::PluginLoader():d(new Private)
 {
-        d->prefix = applicationDirPath() + "/ext/groups/";
+    d->prefix = applicationDirPath() + "/ext/groups/";
 }
 
-PluginLoader::~PluginLoader ()
+PluginLoader::~PluginLoader()
 {
-        delete d;
+    delete d;
 }
 
 QStringList PluginLoader::listPlugins(const QString& types)
 {
-        return groups.keys();
+    return groups.keys();
 }
 
 BasePlugin *PluginLoader::instance(const QString& name)
 {
-        if ( groups.contains(name) ) {
-                return groups[name]->instance();
-        }  else {
-                return 0;
-        }
+    if (groups.contains(name)) {
+        return groups[name]->instance();
+    }  else {
+        return 0;
+    }
 }
 
-void PluginLoader::load (const QString & interface,const QString & pluginName)
+void PluginLoader::load(const QString & interface,const QString & pluginName)
 {
 #ifdef Q_WS_MAC
-        QPluginLoader loader (applicationDirPath() + "/lib/plexyext/lib" + pluginName + ".dylib");
+    QPluginLoader loader(applicationDirPath() + "/lib/plexyext/lib" + pluginName + ".dylib");
 #endif
 
 #ifdef Q_WS_X11
-        QPluginLoader loader (applicationDirPath() + "/lib/plexyext/lib" + pluginName + ".so");
+    QPluginLoader loader(applicationDirPath() + "/lib/plexyext/lib" + pluginName + ".so");
 #endif
 
 #ifdef Q_WS_WIN
-        QPluginLoader loader (applicationDirPath() + "/lib/plexyext/" + pluginName + ".dll");
+    QPluginLoader loader(applicationDirPath() + "/lib/plexyext/" + pluginName + ".dll");
 #endif
 
-        QObject *plugin = loader.instance ();
+    QObject *plugin = loader.instance();
 
-        if (plugin) {
-                AbstractPluginInterface *Iface = 0;
-                //ExtensionProducer<AbstractPluginInterface> factory;
-                Iface = qobject_cast<AbstractPluginInterface*> (plugin);//factory.instance(interface,plugin);
-                groups[pluginName] = Iface;
-                qDebug() << "PluginLoader::load" << "Loading.." << Iface << pluginName << endl;
-        } else {
-                qDebug () << loader.errorString () << endl;;
-        }
+    if (plugin) {
+        AbstractPluginInterface *Iface = 0;
+        //ExtensionProducer<AbstractPluginInterface> factory;
+        Iface = qobject_cast<AbstractPluginInterface*> (plugin);//factory.instance(interface,plugin);
+        groups[pluginName] = Iface;
+        qDebug() << "PluginLoader::load" << "Loading.." << Iface << pluginName << endl;
+    } else {
+        qDebug() << loader.errorString() << endl;;
+    }
 }
 
-void PluginLoader::scanDisk ()
+void PluginLoader::scanDisk()
 {
-        QDir dir (d->prefix);
-        dir.setFilter (QDir::Files | QDir::Hidden | QDir::NoSymLinks);
-        dir.setSorting (QDir::Size | QDir::Reversed);
+    QDir dir(d->prefix);
+    dir.setFilter(QDir::Files | QDir::Hidden | QDir::NoSymLinks);
+    dir.setSorting(QDir::Size | QDir::Reversed);
 
-        QFileInfoList list = dir.entryInfoList ();
-        for (int i = 0; i < list.size (); ++i) {
-                QFileInfo fileInfo = list.at (i);
-                loadDesktop (d->prefix + fileInfo.fileName ());
-        }
+    QFileInfoList list = dir.entryInfoList();
+    for (int i = 0; i < list.size(); ++i) {
+        QFileInfo fileInfo = list.at(i);
+        loadDesktop(d->prefix + fileInfo.fileName());
+    }
 }
 
-void PluginLoader::loadDesktop (const QString & path)
+void PluginLoader::loadDesktop(const QString & path)
 {
-        qDebug () << path << endl;
+    qDebug() << path << endl;
 
-        QSettings desktopFile (path, QSettings::IniFormat, this);
+    QSettings desktopFile(path, QSettings::IniFormat, this);
 
-        desktopFile.beginGroup ("Desktop Entry");
+    desktopFile.beginGroup("Desktop Entry");
 
-        load (desktopFile.value ("Type").toString (),desktopFile.value ("X-PLEXYDESK-Library").toString ());
+    load(desktopFile.value("Type").toString(),desktopFile.value("X-PLEXYDESK-Library").toString());
 
-        desktopFile.endGroup ();
+    desktopFile.endGroup();
 }
 }
 

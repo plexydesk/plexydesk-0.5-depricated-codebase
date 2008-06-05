@@ -31,11 +31,11 @@ namespace PlexyDesk
 
 class AbstractPluginInterface: public QObject
 {
-        Q_OBJECT
+    Q_OBJECT
 public:
-        AbstractPluginInterface(QObject *parent = 0) {}
-        virtual void init() {};
-        virtual BasePlugin * instance() = 0;
+    AbstractPluginInterface(QObject *parent = 0) {}
+    virtual void init() {};
+    virtual BasePlugin * instance() = 0;
 };
 } // namespace PlexyDesk
 

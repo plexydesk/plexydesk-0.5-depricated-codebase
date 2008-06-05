@@ -30,10 +30,10 @@ namespace PlexyDesk
 class BackdropInterface : public AbstractPluginInterface
 {
 public:
-        void init() {}
-        BackdropInterface() {}
-        ~BackdropInterface() {}
-        virtual BasePlugin * instance() = 0;
+    void init() {}
+    BackdropInterface() {}
+    ~BackdropInterface() {}
+    virtual BasePlugin * instance() = 0;
 };
 } // namespace PlexyDesk
 

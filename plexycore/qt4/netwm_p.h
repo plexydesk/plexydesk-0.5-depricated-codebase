@@ -57,42 +57,43 @@
 template <class Z> class NETRArray
 {
 public:
-        /**
-           Constructs an empty (size == 0) array.
-        **/
+    /**
+       Constructs an empty (size == 0) array.
+    **/
 
-        NETRArray();
+    NETRArray();
 
-        /**
-           Resizable array destructor.
-        **/
+    /**
+       Resizable array destructor.
+    **/
 
-        ~NETRArray();
+    ~NETRArray();
 
-        /**
-           The [] operator does the work.  If the index is larger than the current
-           size of the array, it is resized.
-         **/
+    /**
+       The [] operator does the work.  If the index is larger than the current
+       size of the array, it is resized.
+     **/
 
-        Z &operator[](int);
+    Z &operator[](int);
 
-        /**
-           Returns the size of the array.
-         **/
+    /**
+       Returns the size of the array.
+     **/
 
-        int size() const {
-                return sz;
-        }
+    int size() const
+    {
+        return sz;
+    }
 
-        /**
-           Resets the array (size == 0).
-         **/
-        void reset();
+    /**
+       Resets the array (size == 0).
+     **/
+    void reset();
 
 private:
-        int sz;
-        int capacity;
-        Z *d;
+    int sz;
+    int capacity;
+    Z *d;
 };
 
 
@@ -101,34 +102,35 @@ private:
    @internal
 **/
 
-struct NETRootInfoPrivate {
-        // information about the X server
-        Display *display;
-        NETSize rootSize;
-        Window root;
-        Window supportwindow;
-        const char *name;
-        int screen;
+struct NETRootInfoPrivate
+{
+    // information about the X server
+    Display *display;
+    NETSize rootSize;
+    Window root;
+    Window supportwindow;
+    const char *name;
+    int screen;
 
-        // data that changes (either by the window manager or by a client)
-        // and requires updates
-        NETRArray<NETPoint> viewport;
-        NETRArray<NETRect> workarea;
-        NETSize geometry;
-        Window active;
-        Window *clients, *stacking, *virtual_roots, *kde_system_tray_windows;
-        NETRArray<const char *> desktop_names;
-        int number_of_desktops;
-        int current_desktop;
+    // data that changes (either by the window manager or by a client)
+    // and requires updates
+    NETRArray<NETPoint> viewport;
+    NETRArray<NETRect> workarea;
+    NETSize geometry;
+    Window active;
+    Window *clients, *stacking, *virtual_roots, *kde_system_tray_windows;
+    NETRArray<const char *> desktop_names;
+    int number_of_desktops;
+    int current_desktop;
 
-        unsigned long clients_count, stacking_count, virtual_roots_count,
-        kde_system_tray_windows_count;
-        bool showing_desktop;
+    unsigned long clients_count, stacking_count, virtual_roots_count,
+    kde_system_tray_windows_count;
+    bool showing_desktop;
 
-        unsigned long properties[ 5 ];
-        unsigned long client_properties[ 5 ]; // properties the client is interested in
+    unsigned long properties[ 5 ];
+    unsigned long client_properties[ 5 ]; // properties the client is interested in
 
-        int ref;
+    int ref;
 };
 
 
@@ -137,36 +139,37 @@ struct NETRootInfoPrivate {
    @internal
 **/
 
-struct NETWinInfoPrivate {
-        Display *display;
-        Window window, root;
-        NET::MappingState mapping_state;
-        Bool mapping_state_dirty;
+struct NETWinInfoPrivate
+{
+    Display *display;
+    Window window, root;
+    NET::MappingState mapping_state;
+    Bool mapping_state_dirty;
 
-        NETRArray<NETIcon> icons;
-        int icon_count;
+    NETRArray<NETIcon> icons;
+    int icon_count;
 
-        NETRect icon_geom, win_geom;
-        unsigned long state;
-        NETExtendedStrut extended_strut;
-        NETStrut strut;
-        NETStrut frame_strut; // strut?
-        NETRArray<NET::WindowType> types;
-        char *name, *visible_name, *icon_name, *visible_icon_name;
-        int desktop;
-        int pid;
-        int handled_icons;
-        Window kde_system_tray_win_for;
-        Time user_time;
-        char* startup_id;
-        Window transient_for, window_group;
-        unsigned long allowed_actions;
-        char* class_class, *class_name, *role, *client_machine;
+    NETRect icon_geom, win_geom;
+    unsigned long state;
+    NETExtendedStrut extended_strut;
+    NETStrut strut;
+    NETStrut frame_strut; // strut?
+    NETRArray<NET::WindowType> types;
+    char *name, *visible_name, *icon_name, *visible_icon_name;
+    int desktop;
+    int pid;
+    int handled_icons;
+    Window kde_system_tray_win_for;
+    Time user_time;
+    char* startup_id;
+    Window transient_for, window_group;
+    unsigned long allowed_actions;
+    char* class_class, *class_name, *role, *client_machine;
 
-        unsigned long properties[ 2 ];
-        bool has_net_support;
+    unsigned long properties[ 2 ];
+    bool has_net_support;
 
-        int ref;
+    int ref;
 };
 
 

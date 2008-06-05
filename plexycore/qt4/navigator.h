@@ -16,47 +16,48 @@ namespace PlexyDesk
 
 class  Navigator:public QObject, public QGraphicsRectItem
 {
-        Q_OBJECT
+    Q_OBJECT
 public:
 
-        typedef enum { REGULAR,OVER,PRESSED } MouseState;
-        typedef QHash <MouseState,QString> ThemeNames;
+    typedef enum { REGULAR,OVER,PRESSED } MouseState;
+    typedef QHash <MouseState,QString> ThemeNames;
 
-        Navigator(const QRectF &rect,QGraphicsItem * parent = 0);
-        virtual ~Navigator();
-
-
-        void  paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
-        // void  paintExtDockFace( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0){}
+    Navigator(const QRectF &rect,QGraphicsItem * parent = 0);
+    virtual ~Navigator();
 
 
-        bool isEmpty() const {
-                return false;
-        }
+    void  paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
+    // void  paintExtDockFace(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0){}
 
-        QString name() const ;
-        void setName(const QString& name);
 
-        void setOpacity(float op);
+    bool isEmpty() const
+    {
+        return false;
+    }
 
-        void setIcon(const QPixmap &icon);
+    QString name() const ;
+    void setName(const QString& name);
+
+    void setOpacity(float op);
+
+    void setIcon(const QPixmap &icon);
 
 public slots:
-        void zoom(int step);
+    void zoom(int step);
 signals:
-        void  clicked();
+    void  clicked();
 protected:
-        virtual void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
-        virtual void hoverMoveEvent ( QGraphicsSceneHoverEvent * event );
-        virtual void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event );
+    virtual void hoverEnterEvent(QGraphicsSceneHoverEvent * event);
+    virtual void hoverMoveEvent(QGraphicsSceneHoverEvent * event);
+    virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent * event);
 protected:
-        QImage reflection(QImage& src);
-        void paintItem(QPainter * painter,const QRectF );
-        //    void paintItemRef(QPainter * painter,const QRectF);
+    QImage reflection(QImage& src);
+    void paintItem(QPainter * painter,const QRectF);
+    //    void paintItemRef(QPainter * painter,const QRectF);
 private:
-        QString loadSvg(MouseState state);
-        class Private;
-        Private * const d ;
+    QString loadSvg(MouseState state);
+    class Private;
+    Private * const d ;
 
 };
 

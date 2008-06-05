@@ -24,24 +24,24 @@ Config * Config::config = 0;
 
 Config * Config::getInstance()
 {
-        if ( config == 0) {
-                return  new Config();
-        } else {
-                return config;
-        }
+    if (config == 0) {
+        return  new Config();
+    } else {
+        return config;
+    }
 }
 
 void Config::read()
 {
 
-        proxyOn=false;
-        proxyURL="";
-        proxyUser="";
-        proxyPasswd="";
-        proxyPort=3128;
+    proxyOn=false;
+    proxyURL="";
+    proxyUser="";
+    proxyPasswd="";
+    proxyPort=3128;
 
-        //collitions detection
-        collitionOn = false;
+    //collitions detection
+    collitionOn = false;
 
 
 }

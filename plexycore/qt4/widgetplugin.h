@@ -12,11 +12,11 @@ namespace PlexyDesk
 {
 class WidgetPlugin : public BasePlugin
 {
-        Q_OBJECT
+    Q_OBJECT
 public :
-        WidgetPlugin(QObject  * object = 0) {}
-        virtual ~WidgetPlugin() {}
-        virtual QGraphicsItem * item () = 0;
+    WidgetPlugin(QObject  * object = 0) {}
+    virtual ~WidgetPlugin() {}
+    virtual QGraphicsItem * item() = 0;
 
 };
 }

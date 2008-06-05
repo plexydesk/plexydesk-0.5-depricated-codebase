@@ -30,10 +30,10 @@ namespace PlexyDesk
 class DataInterface : public AbstractPluginInterface
 {
 public:
-        void init() {}
-        DataInterface() {}
-        ~DataInterface() {}
-        virtual DataPlugin * instance() = 0;
+    void init() {}
+    DataInterface() {}
+    ~DataInterface() {}
+    virtual DataPlugin * instance() = 0;
 };
 } // namespace PlexyDesk
 
