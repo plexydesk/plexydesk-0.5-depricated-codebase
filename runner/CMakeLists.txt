@@ -19,6 +19,12 @@ SET(plexydesk_PART_SRCS
 	main.cpp
 )
 
+IF(WIN32)
+SET(GUI_TYPE WIN32)
+ADD_DEFINITIONS(-DNODEFAULTLIB:library)
+SET (${QT_LIBRARIES} qtmain ${QT_LIBRARIES})
+ENDIF(WIN32)
+
 IF (WIN32)
 SET (qtviz_MOC
 	${CMAKE_SOURCE_DIR}/plexycore/qt4/baserender.cpp
@@ -26,6 +32,8 @@ SET (qtviz_MOC
 	${CMAKE_SOURCE_DIR}/plexycore/qt4/pluginloader.cpp
 	${CMAKE_SOURCE_DIR}/plexycore/qt4/desktopwidget.cpp
 	${CMAKE_SOURCE_DIR}/plexycore/qt4/viewlayer.cpp
+	${CMAKE_SOURCE_DIR}/plexycore/qt4/navigator.cpp
+	${CMAKE_SOURCE_DIR}/plexycore/qt4/frameitem.cpp
 	)
 QT4_AUTOMOC(${qtviz_MOC})
 ENDIF(WIN32) 

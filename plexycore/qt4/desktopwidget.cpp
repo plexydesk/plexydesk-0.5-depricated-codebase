@@ -20,6 +20,7 @@
 #include <config.h>
 #include <plexy.h>
 
+#include <QGraphicsProxyWidget>
 
 namespace PlexyDesk
 {
