@@ -17,8 +17,8 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
-#ifndef YOUTUBE_WIDGET_H
-#define YOUTUBE_WIDGET_H
+#ifndef PLEXY_YOUTUBE_WIDGET_H
+#define PLEXY_YOUTUBE_WIDGET_H
 
 #include "videoentity.h"
 
@@ -64,13 +64,13 @@ class YouTubeWidget:public DesktopWidget
 		setCursor(Qt::ArrowCursor);
 	}
 */
-    
+
     public slots:
         void data(QVariant&);
         void drawItems();
     signals:
         void dataChanged();
-	
+
 	private:
 
 	int shade;
@@ -80,9 +80,9 @@ class YouTubeWidget:public DesktopWidget
 
 	QString prefix;
 	QPoint clickPos;
-    
+
     PlexyDesk::DataInterface * utubeEngine;
-    
+
     QList<VideoEntity> mVideos;
     QMap<QString,QVariant> mVariantMap;
 };

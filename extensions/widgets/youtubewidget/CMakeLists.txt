@@ -14,6 +14,7 @@ INCLUDE_DIRECTORIES(
 SET (plexyyoutubesrc
 	youtube.cpp
 	youtubewidget.cpp
+	youtubeinterface.cpp
 	videoentity.cpp
 		)
 

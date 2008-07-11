@@ -19,8 +19,7 @@
 #include "youtube.h"
 #include "youtubewidget.h"
 #include <QtCore>
-#include<QtGui>
-
+#include <QtGui>
 
 YouTube::YouTube(QObject * object)
 {
@@ -34,8 +33,8 @@ YouTube::~YouTube()
 
 QGraphicsItem * YouTube::item()
 {
-    return new  PlexyDesk::YouTubeWidget(QRectF(0,0,450,350),0);
+    return new PlexyDesk::YouTubeWidget(QRectF(0,0,210,210),0);
 }
 
-Q_EXPORT_PLUGIN2(YouTube,YouTube)
+//Q_EXPORT_PLUGIN2(YouTube,YouTube)
 #include "youtube.moc"

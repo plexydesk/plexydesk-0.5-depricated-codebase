@@ -32,6 +32,7 @@ namespace PlexyDesk
 YouTubeWidget::YouTubeWidget (const QRectF &rect, QWidget *widget):
 DesktopWidget(rect,widget)
 {
+  qDebug("YouTubeWidget Constructor called");
   shade = 0;
   moveY = 0;
   setPath(QString(PLEXPREFIX) +"/theme/skins/default/widget/default/youtube/");
@@ -47,7 +48,7 @@ DesktopWidget(rect,widget)
   }else {
       qDebug("DataSource Was Null");
   }
-  
+
   connect(this,SIGNAL(dataChanged()),this,SLOT(drawItems()));
   drawWidget();
 }
@@ -147,7 +148,11 @@ void
 YouTubeWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem * e
 , QWidget *)
 {
-    
+    p->setRenderHints(QPainter::SmoothPixmapTransform |QPainter::Antialiasing |QPainter::HighQualityAntialiasing);
+
+    p->setPen(QColor(255,255,255));
+    p->setFont(QFont("Bitstream Charter",15));
+    p->drawText(QRect(8,5,64,64), Qt::AlignCenter ,"YouTube" ) ;
 }
 
 } // namespace PlexyDesk
