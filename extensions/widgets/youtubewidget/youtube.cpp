@@ -33,6 +33,7 @@ YouTube::~YouTube()
 
 QGraphicsItem * YouTube::item()
 {
+	qDebug("Calling Youtube::item");
     return new PlexyDesk::YouTubeWidget(QRectF(0,0,210,210),0);
 }
 

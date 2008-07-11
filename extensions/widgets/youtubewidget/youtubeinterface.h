@@ -1,10 +1,13 @@
 #ifndef PLEXY_YOUTUBE_I
 #define PLEXY_YOUTUBE_I
 
-
-#include <QtCore>
 #include <plexy.h>
+#include <QtCore>
+
+#include <abstractplugininterface.h>
+#include <datainterface.h>
 #include <widgetinterface.h>
+
 
 class VISIBLE_SYM YouTubeInterface :public PlexyDesk::AbstractPluginInterface
 {
