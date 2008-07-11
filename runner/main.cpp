@@ -79,6 +79,7 @@ int main( int argc, char ** argv )
     view->addCoreExtension("videoview");
     view->addExtension("imagepil");
     view->addExtension("plexyclock");
+    view->addExtension("plexyyoutube");
 
     return app.exec();
 }
