@@ -139,7 +139,14 @@ void DesktopView::addCoreExtension(const QString& name)
     }
 
 }
-
+/*
+void DesktopView::paintEvent(QPaintEvent * event)
+{
+    QPaintEvent *newEvent=new QPaintEvent(event->region().boundingRect());
+    QGraphicsView::paintEvent(newEvent);
+    delete newEvent;
+}
+*/
 void DesktopView::drawBackground(QPainter * painter, const QRectF & rect)
 {
     painter->save();
