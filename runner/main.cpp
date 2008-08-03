@@ -46,14 +46,11 @@ using namespace PlexyDesk;
 int main( int argc, char ** argv )
 {
     QApplication app(argc,argv);
-
 #ifdef Q_WS_WIN
     QString pluginPath = app.applicationDirPath() + "/plugins/imageformats";
     app.addLibraryPath(pluginPath);
 #endif
-
     QGraphicsScene scene;
-
     scene.setSceneRect(QDesktopWidget().availableGeometry());
     scene.setBackgroundBrush(Qt::NoBrush);
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
@@ -76,10 +73,11 @@ int main( int argc, char ** argv )
     PlexyDesk::PluginLoader *loader = new PlexyDesk::PluginLoader();
     loader->scanDisk();
     view->show();
+/*
     view->addCoreExtension("videoview");
     view->addExtension("imagepil");
     view->addExtension("plexyclock");
     view->addExtension("plexyyoutube");
-
+*/
     return app.exec();
 }
