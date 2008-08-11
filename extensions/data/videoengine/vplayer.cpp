@@ -128,7 +128,7 @@ namespace PlexyDesk{
 			dump_format(d->pFormatCtx, 0, name.toLatin1(), 0);
 
 			d->videoStream = -1;
-			int i;
+			unsigned int i;
 			for (i=0; i < d->pFormatCtx->nb_streams; i++) {
 				if (d->pFormatCtx->streams[i]->codec->codec_type==CODEC_TYPE_VIDEO) {
 					d->videoStream = i;
