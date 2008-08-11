@@ -22,6 +22,8 @@ SET (qtviz_MOC
 	${CMAKE_SOURCE_DIR}/plexycore/qt4/pluginloader.cpp
 	${CMAKE_SOURCE_DIR}/plexycore/qt4/desktopwidget.cpp
 	${CMAKE_SOURCE_DIR}/plexycore/qt4/abstractplugininterface.cpp
+	${CMAKE_SOURCE_DIR}/plexycore/qt4/widgetplugin.cpp
+	${CMAKE_SOURCE_DIR}/plexycore/qt4/baseplugin.cpp
 	)
 	
 QT4_AUTOMOC(${qtviz_MOC})
