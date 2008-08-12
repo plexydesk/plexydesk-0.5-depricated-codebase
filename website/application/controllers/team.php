@@ -1,20 +1,19 @@
 <?php
 
-class Ideas extends Controller {
+class Team extends Controller {
 
-	function Ideas()
+	function Team()
 	{
 		parent::Controller();	
 	}
 	
 	function index()
 	{	
-		$page_data['page_title'] = "Ideas";
+		$page_data['page_title'] = "PlexyDesk Team";
 		
 		$this->application->app_top($page_data);
 		$this->display->head();
-		$this->display->banner();
-		$this->pages->ideas();
+		$this->pages->team();
 		$this->display->side_bar();
 		
 		$this->display->footer();

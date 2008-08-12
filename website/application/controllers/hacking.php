@@ -9,7 +9,7 @@ class Hacking extends Controller {
 	
 	function index()
 	{	
-		$page_data['page_title'] = "Dwonload";
+		$page_data['page_title'] = "Hacking";
 		
 		$this->application->app_top($page_data);
 		$this->display->head();

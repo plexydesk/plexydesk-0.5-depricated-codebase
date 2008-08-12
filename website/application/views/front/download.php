@@ -2,7 +2,7 @@
 	<div id="content">
 		<div id="main">
 			<div class="main-block">
-				<h1>Dwonload</h1>
+				<h1>Download</h1>
 				<p>
 					PlexyDesk is an exciting project with great goals which is done by a wonderful and an experienced team who are responsive and talented in multitude of ways...
 					many problems that the users are likely to face in the future. PlexyDesk ideas are geared towards solving those challenging problems. PlexyDesk ideas are geared towards solving those challenging problems

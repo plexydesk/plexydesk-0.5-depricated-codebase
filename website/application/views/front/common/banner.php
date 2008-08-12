@@ -11,9 +11,9 @@
 				The Aim of PlexDesk team is to create "A Desktop which is easy to communicate, Create and Simply cool!"
 			</p>
 			<ul class="top-nav">
-				<li class="download"><a href="<?php echo base_url(); ?>/index.php/download/">Download</a></li>
-				<li class="screenshots"><a href="<?php echo base_url(); ?>/index.php/screenshots/">Screenshots</a></li>
-				<li class="sponcer"><a href="<?php echo base_url(); ?>/index.php/sponcer/">Sponcer</a></li>
+				<li class="download"><a href="<?php echo base_url(); ?>index.php/download/">Download</a></li>
+				<li class="screenshots"><a href="<?php echo base_url(); ?>index.php/screenshots/">Screenshots</a></li>
+				<li class="sponcer"><a href="<?php echo base_url(); ?>index.php/sponcer/">Sponcer</a></li>
 			</ul>
 		</div>
 	</div>

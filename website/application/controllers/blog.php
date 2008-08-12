@@ -5,9 +5,9 @@ class Blog extends Controller {
 	function Blog()
 	{
 		parent::Controller();
-		$this->load->model('Mdl_blog');
+		//$this->load->model('Mdl_blog');
 		
-		$this->load->scaffolding('tbl_blog_entries');
+		//$this->load->scaffolding('tbl_blog_entries');
 	}
 	
 	function index()
@@ -24,7 +24,7 @@ class Blog extends Controller {
 		
 		$this->display->footer();
 	}
-		
+	/*	
 	function enrty($post_id)
 	{
 		$page_data['page_title'] = "Blog";
@@ -56,5 +56,6 @@ class Blog extends Controller {
 		
 		$this->display->footer();
 	}
+	*/
 }
 ?>
