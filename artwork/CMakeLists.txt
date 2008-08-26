@@ -6,5 +6,5 @@ INSTALL(FILES ${PNGFILES}  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/skins
 
 add_subdirectory(buttons)
 add_subdirectory(widget-example)
-add_subdirectory(artwok)
+add_subdirectory(artwork)
 
