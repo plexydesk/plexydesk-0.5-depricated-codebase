@@ -11,13 +11,13 @@ InstallDir $PROGRAMFILES\PlexyDesktop\
 SetCompressor /SOLID lzma
 
 ; Request application privileges for Windows Vista
-RequestExecutionLevel user
+RequestExecutionLevel admin
 
 ;--------------------------------
 ; Pages
 
 Page components
-Page directory
+;Page directory
 Page instfiles
 
 UninstPage uninstConfirm

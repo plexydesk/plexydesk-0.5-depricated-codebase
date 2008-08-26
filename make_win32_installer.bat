@@ -14,6 +14,7 @@ rmdir /S/Q c:\installer\include\qimageblitz
 rmdir /S/Q c:\installer\include
 del /F/S/Q c:\installer\*.lib
 
+
 xcopy %QTDIR%\bin\QtSvg4.dll c:\installer\bin
 xcopy %QTDIR%\bin\QtOpenGL4.dll c:\installer\bin
 xcopy %QTDIR%\bin\QtNetwork4.dll c:\installer\bin
@@ -29,4 +30,4 @@ xcopy %QTDIR%\plugins\imageformats\qgif4.dll c:\installer\bin\plugins\imageforma
 
 "C:\Program Files\NSIS\makensis" installer.nsi
 
-rmdir /S/Q installer
+rem rmdir /S/Q c:\installer
