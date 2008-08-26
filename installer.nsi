@@ -6,7 +6,7 @@ Name "$APPNAME"
 OutFile "PlexyDeskop-0.1.1-win32.exe"
  
 # define installation directory
-InstallDir $PROGRAMFILES\PlexyDesktop\
+InstallDir c:\plexydesk\
 
 SetCompressor /SOLID lzma
 
