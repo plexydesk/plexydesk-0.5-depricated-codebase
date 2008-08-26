@@ -48,7 +48,7 @@ section
    
   SetOutPath $INSTDIR
   SetOverwrite on
-  FILE /r installer\installer\*.*
+  FILE /r c:\installer\*.*
    
   # create the uninstaller
   writeUninstaller "$INSTDIR\uninstall.exe"
