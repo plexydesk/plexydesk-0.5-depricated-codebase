@@ -109,7 +109,7 @@ endif(FFMPEG_FOUND)
 endif(NOT APPLE)
 
 add_subdirectory(extensions/widgets/clock)
-add_subdirectory(extensions/widgets/welcome)
+#add_subdirectory(extensions/widgets/welcome)
 add_subdirectory(extensions/widgets/videoview)
 #add_subdirectory(extensions/widgets/friendswidget)
 add_subdirectory(extensions/widgets/youtubewidget)
