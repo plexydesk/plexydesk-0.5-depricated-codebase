@@ -1,4 +1,5 @@
 VAR /GLOBAL APPNAME
+VAR /GLOBAL APPBIN
 
 Name "$APPNAME"
 
@@ -6,7 +7,7 @@ Name "$APPNAME"
 OutFile "PlexyDeskop-0.1.1-win32.exe"
  
 # define installation directory
-InstallDir c:\plexydesk\
+InstallDir "c:\plexydesk\"
 
 SetCompressor /SOLID lzma
 
@@ -28,7 +29,7 @@ Section "PlexyDesktop Shortcuts"
 
   CreateDirectory "$SMPROGRAMS\$APPNAME"
   CreateShortCut "$SMPROGRAMS\$APPNAME\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
-  CreateShortCut "$SMPROGRAMS\$APPNAME\$APPNAME.lnk" "$INSTDIR\bin\$APPNAME.exe" "" "$INSTDIR\bin\plexydesk.exe" 0
+  CreateShortCut "$SMPROGRAMS\$APPNAME\$APPNAME.lnk" "$INSTDIR\bin\$APPBIN.exe" "" "$INSTDIR\bin\$APPBIN.exe" 0
   
 SectionEnd
 
@@ -48,14 +49,15 @@ section
    
   SetOutPath $INSTDIR
   SetOverwrite on
-  FILE /r c:\installer\*.*
+  FILE /r plexydesk\*.*
    
   # create the uninstaller
-  writeUninstaller "$INSTDIR\uninstall.exe"
+  writeUninstaller "c:\$APPBIN\uninstall.exe"
 sectionEnd
 
 Function .onInit
 
 StrCpy $APPNAME "PlexyDeskop"
+StrCpy $APPBIN "plexydesk"
 
 FunctionEnd
