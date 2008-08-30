@@ -31,7 +31,7 @@ YouTubeDataInterface::~YouTubeDataInterface ()
 
 PlexyDesk::DataPlugin *YouTubeDataInterface::instance()
 {
-	return 0;
+	return new PlexyDesk::UtubeData();
 }
 
 Q_EXPORT_PLUGIN2(YouTubeDataInterface, YouTubeDataInterface)
