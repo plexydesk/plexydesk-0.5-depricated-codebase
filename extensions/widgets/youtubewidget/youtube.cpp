@@ -33,9 +33,7 @@ YouTube::~YouTube()
 
 QGraphicsItem * YouTube::item()
 {
-	qDebug("Calling Youtube::item");
-    return new PlexyDesk::YouTubeWidget(QRectF(0,0,210,210),0);
+    return new PlexyDesk::YouTubeWidget(QRectF(0,0,400,400),0);
 }
 
-//Q_EXPORT_PLUGIN2(YouTube,YouTube)
 #include "youtube.moc"

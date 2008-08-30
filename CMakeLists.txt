@@ -115,7 +115,7 @@ add_subdirectory(extensions/widgets/videoview)
 add_subdirectory(extensions/widgets/youtubewidget)
 add_subdirectory(extensions/data/flicker)
 #add_subdirectory(extensions/data/rss)
-#add_subdirectory(extensions/data/utube)
+add_subdirectory(extensions/data/utube)
 
 #if(WIN32)
 #add_subdirectory(extensions/widgets/wallpaper-win32)

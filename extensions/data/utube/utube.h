@@ -30,10 +30,10 @@
 #include <QMap>
 #include <QList>
 
-class VISIBLE_SYM UtubeData:public PlexyDesk::AbstractPluginInterface {
+class VISIBLE_SYM UtubeData : public PlexyDesk::DataPlugin 
+{
     Q_OBJECT
-    Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
-
+    
     public:
         UtubeData( QObject * object = 0 );
         virtual ~UtubeData();

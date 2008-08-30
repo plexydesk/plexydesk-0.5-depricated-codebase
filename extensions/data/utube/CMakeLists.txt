@@ -13,6 +13,7 @@ INCLUDE_DIRECTORIES(
 
 SET (utubeenginesrc 	
     utube.cpp
+    youtubedatainterface.cpp
 		)
 
 SET (plexicore_MOC
@@ -25,11 +26,6 @@ QT4_AUTOMOC( ${plexicore_MOC})
 add_library (utubeengine SHARED ${utubeenginesrc} ${plexicore_MOC})
 QT4_AUTOMOC( ${utubeenginesrc}) 
 
-#SET_TARGET_PROPERTIES(plexy
-#
-#	·       ·       PROPERTIES
-	#	#	·       ·       COMPILE_FLAGS ${CMAKE_SHARED_LIBRARY_CXX_FLAGS})
-#
 
 TARGET_LINK_LIBRARIES(
 	       utubeengine

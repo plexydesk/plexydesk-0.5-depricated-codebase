@@ -176,5 +176,4 @@ void UtubeData::render( QPainter *p,QRectF r )
 {
 }
 
-Q_EXPORT_PLUGIN2(UtubeData,UtubeData)
 #include "utube.moc"

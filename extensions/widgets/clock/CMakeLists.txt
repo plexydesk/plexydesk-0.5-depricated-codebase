@@ -32,12 +32,6 @@ endif(WIN32)
 add_library (plexyclock SHARED ${plexyclocksrc} ${plexicore_MOC})
 QT4_AUTOMOC( ${plexyclocksrc}) 
 
-#SET_TARGET_PROPERTIES(plexy
-#
-#	·       ·       PROPERTIES
-	#	#	·       ·       COMPILE_FLAGS ${CMAKE_SHARED_LIBRARY_CXX_FLAGS})
-#
-
 TARGET_LINK_LIBRARIES(
 	       plexyclock
 			qtviz

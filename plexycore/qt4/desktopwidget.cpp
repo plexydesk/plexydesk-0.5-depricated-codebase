@@ -291,8 +291,6 @@ void DesktopWidget::paint(QPainter * painter, const QStyleOptionGraphicsItem * o
 
     if (!painter->isActive())
         return;
-
-
     painter->setOpacity(d->opacity);
     painter->setClipRect(option->exposedRect);
     if (d->s == NORMALSIDE) {

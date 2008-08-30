@@ -32,7 +32,7 @@ class VISIBLE_SYM Clock :public PlexyDesk::WidgetPlugin
     public:
         Clock(QObject * object = 0);
         virtual ~Clock();
-        virtual QGraphicsItem * item();
+        QGraphicsItem* item();
 };
 
 

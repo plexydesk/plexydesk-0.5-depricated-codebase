@@ -32,7 +32,6 @@ namespace PlexyDesk
 YouTubeWidget::YouTubeWidget (const QRectF &rect, QWidget *widget):
 DesktopWidget(rect,widget)
 {
-  qDebug("YouTubeWidget Constructor called");
   shade = 0;
   moveY = 0;
   setPath(QString(PLEXPREFIX) +"/theme/skins/default/widget/default/youtube/");

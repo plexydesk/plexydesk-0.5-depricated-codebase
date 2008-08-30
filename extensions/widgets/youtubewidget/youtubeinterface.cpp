@@ -9,10 +9,8 @@ YouTubeInterface::YouTubeInterface(QObject * object)
 {
 }
 
-
 PlexyDesk::BasePlugin * YouTubeInterface::instance()
 {
-	qDebug("Calling YouTubeInterface::instance");
 	return new YouTube(this);
 }
 
