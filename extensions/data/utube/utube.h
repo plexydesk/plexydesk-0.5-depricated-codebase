@@ -45,7 +45,7 @@ class VISIBLE_SYM UtubeData : public PlexyDesk::DataPlugin
     void fetch();
     void finished( int id, bool error );
     void readData( const QHttpResponseHeader & );
-
+     void pushData(QVariant&) {}
     signals:
         void data( QVariant& );
         void success();
