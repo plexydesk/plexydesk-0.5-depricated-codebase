@@ -18,7 +18,6 @@
 *******************************************************************************/
 #include "classicinterface.h"
 #include "backdrop.h"
-#include <config.h>
 #include <desktopwidget.h>
 
 ClassicBackdrop::ClassicBackdrop(QObject * object)

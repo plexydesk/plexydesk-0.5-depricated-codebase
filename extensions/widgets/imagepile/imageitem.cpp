@@ -19,7 +19,6 @@
 #include "imageitem.h"
 #include <QtCore>
 #include <QtGui>
-#include <config.h>
 
 namespace PlexyDesk
 {

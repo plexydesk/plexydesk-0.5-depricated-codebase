@@ -20,7 +20,6 @@
 
 
 #include <plexy.h>
-#include <config.h>
 #include "clockwidget.h"
 #include <qmatrix.h>
 //Added by qt3to4:

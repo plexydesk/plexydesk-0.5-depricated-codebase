@@ -18,7 +18,6 @@
 *******************************************************************************/
 #include <QtCore>
 #include <QtGui>
-#include <config.h>
 #include "pluginloader.h"
 #include "extensionfactory.h"
 

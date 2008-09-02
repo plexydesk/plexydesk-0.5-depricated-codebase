@@ -17,7 +17,6 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 #include "clockitem.h"
-#include <config.h>
 #include <QtCore>
 #include <QtGui>
 

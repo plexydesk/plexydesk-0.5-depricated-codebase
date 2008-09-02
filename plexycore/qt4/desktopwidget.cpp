@@ -17,7 +17,6 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 #include "desktopwidget.h"
-#include <config.h>
 #include <plexy.h>
 
 #include <QGraphicsProxyWidget>
@@ -308,7 +307,7 @@ void DesktopWidget::paint(QPainter * painter, const QStyleOptionGraphicsItem * o
 QString DesktopWidget::applicationDirPath()
 {
 #ifdef Q_WS_WIN
-    return QString(QCoreApplication::applicationDirPath() + "/..");
+    return QCoreApplication::applicationDirPath() + "/..";
 #else
     return QString(PLEXPREFIX);
 #endif

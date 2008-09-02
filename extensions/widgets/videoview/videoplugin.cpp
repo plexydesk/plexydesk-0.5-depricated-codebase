@@ -34,7 +34,7 @@ VideoPlugin::VideoPlugin(QObject * object)
 	base->resize(300,200);
 
 	search = new QLineEdit(base);
-	search->setStyleSheet("border:1px solid ; font-style:strong ;padding-left:20px; background: black ; background-image:url(" + QString(PLEXPREFIX) + "/share/plexy/skins/default/flick/bg-search.png) ;background-repeat: no-repeat ;  color:black ");
+	search->setStyleSheet("border:1px solid ; font-style:strong ;padding-left:20px; background: black ; background-image:url(" + applicationDirPath() + "/share/plexy/skins/default/flick/bg-search.png) ;background-repeat: no-repeat ;  color:black ");
 	search->move(0,170);
 	search->resize(300,30);
 	search->show();

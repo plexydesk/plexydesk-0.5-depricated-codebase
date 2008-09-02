@@ -71,6 +71,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/extensions/widgets/imagepile
     ${CMAKE_BINARY_DIR}/extensions/widgets/youtubewidget
     ${CMAKE_BINARY_DIR}/extensions/widgets/videoview
+	${CMAKE_BINARY_DIR}/extensions/widgets/sdlvideoview
     ${CMAKE_BINARY_DIR}/extensions/widgets/wallpaper-win32
     ${CMAKE_BINARY_DIR}/extensions/data/flicker
     ${CMAKE_BINARY_DIR}/extensions/data/rss
@@ -111,6 +112,7 @@ endif(NOT APPLE)
 add_subdirectory(extensions/widgets/clock)
 #add_subdirectory(extensions/widgets/welcome)
 add_subdirectory(extensions/widgets/videoview)
+add_subdirectory(extensions/widgets/sdlvideoview)
 #add_subdirectory(extensions/widgets/friendswidget)
 add_subdirectory(extensions/widgets/youtubewidget)
 add_subdirectory(extensions/data/flicker)

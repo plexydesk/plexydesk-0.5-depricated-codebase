@@ -19,6 +19,8 @@ SET (utubeenginesrc
 SET (plexicore_MOC
     ${CMAKE_SOURCE_DIR}/plexycore/qt4/abstractplugininterface.cpp
     ${CMAKE_SOURCE_DIR}/plexycore/qt4/pluginloader.cpp
+	${CMAKE_SOURCE_DIR}/plexycore/qt4/dataplugin.cpp
+	${CMAKE_SOURCE_DIR}/plexycore/qt4/baseplugin.cpp
     )
     
 QT4_AUTOMOC( ${plexicore_MOC})
