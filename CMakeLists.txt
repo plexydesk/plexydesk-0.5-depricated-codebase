@@ -71,7 +71,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/extensions/widgets/imagepile
     ${CMAKE_BINARY_DIR}/extensions/widgets/youtubewidget
     ${CMAKE_BINARY_DIR}/extensions/widgets/videoview
-	${CMAKE_BINARY_DIR}/extensions/widgets/sdlvideoview
+#	${CMAKE_BINARY_DIR}/extensions/widgets/sdlvideoview
     ${CMAKE_BINARY_DIR}/extensions/widgets/wallpaper-win32
     ${CMAKE_BINARY_DIR}/extensions/data/flicker
     ${CMAKE_BINARY_DIR}/extensions/data/rss
