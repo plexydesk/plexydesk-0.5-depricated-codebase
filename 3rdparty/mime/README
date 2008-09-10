@@ -1,0 +1,22 @@
+  Type: Library
+ Title: QFreeDesktopMime
+Author: Matteo Bertozzi <theo.bertozzi@gmail.com>
+
+QFreeDesktopMime is a Qt4 class for determining the MIME type of files using FreeDesktop Specification.
+
+		http://freedesktop.org/wiki/Specifications/shared-mime-info-spec
+
+How to:
+	To compile test-mime example run
+		For windows and Linux: qmake && make
+		Fox Mac OS X: qmake -spec macx-g++ && make
+
+	To Run test-mime example run
+		./test-mime <directory path>
+
+
+	How to Get Mime Info
+		QFreeDesktopMime mime;
+		QString mimeType = mime.fromFile("/home/theo/myfile.cpp");
+		std::cout << qPrintable(mimeType) << qPrintable(mime.description());
+
