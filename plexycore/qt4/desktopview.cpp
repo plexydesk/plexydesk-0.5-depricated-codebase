@@ -57,10 +57,6 @@ bool getLessThanWidget(const QGraphicsItem* it1, const QGraphicsItem* it2)
 
 DesktopView::DesktopView(QGraphicsScene * scene, QWidget * parent):QGraphicsView(scene,parent),d(new Private)
 {
-
-//#ifndef Q_WS_MAC
-//      setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers)));
-//#endif
     setWindowFlags(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_ContentsPropagated);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -71,31 +67,6 @@ DesktopView::DesktopView(QGraphicsScene * scene, QWidget * parent):QGraphicsView
     d->bgPlugin  = static_cast<BackdropPlugin*>(PluginLoader::getInstance()->instance("classicbackdrop"));
     d->widgets = 0;
     d->gridLayout = new QGraphicsGridLayout();
-    d->row = QDesktopWidget().availableGeometry().center().x()-(140*4)/2;
-    d->column =  QDesktopWidget().availableGeometry().center().y()/2;;
-    d->layer = new ViewLayer(this);
-    d->gridLayout = new QGraphicsGridLayout ;
-
-    d->frm = new Frame(QRect(d->row,d->column,140 * 4 ,128*3));
-    d->icon1 = new Navigator(QRect(0,0,128,256),d->frm);
-    d->icon1->setName("");
-    d->icon1->setIcon(QPixmap(QApplication::applicationDirPath() + "/../share/plexy/skins/default/welcome/kfm_home.png"));
-    d->icon1->setPos(d->row+60,d->column+70);
-
-    QString bla = QApplication::applicationDirPath() + "/../share/plexy/skins/default/welcome/kfm_home.png";
-    d->icon2 = new Navigator(QRect(0,0,128,256),d->frm);
-    d->icon2->setName("");
-    d->icon2->setIcon(QPixmap(QApplication::applicationDirPath() + "/../share/plexy/skins/default/welcome/colors.png"));
-    d->icon2->setPos(d->row+220,d->column+70);
-
-    d->icon3 = new Navigator(QRect(0,0,128,256),d->frm);
-    d->icon3->setName("");
-    d->icon3->setIcon(QPixmap(QApplication::applicationDirPath() + "/../share/plexy/skins/default/welcome/gnome_apps.png"));
-    d->icon3->setPos(d->row+380,d->column+70);
-    this->scene()->addItem(d->frm);
-    d->row = 0;
-    d->column = 0;
-
 }
 
 DesktopView::~DesktopView()
