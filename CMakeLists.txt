@@ -83,6 +83,8 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}/widgets/gtk
     ${CMAKE_SOURCE_DIR}/3rdparty/qimageblitz/blitz/
     ${CMAKE_SOURCE_DIR}/3rdparty/lqr/
+	${CMAKE_SOURCE_DIR}/3rdparty/mime/
+	${CMAKE_BINARY_DIR}/3rdparty/mime/
     ${QT_INCLUDE_DIR}
 )
 
@@ -100,6 +102,7 @@ add_subdirectory(runner)
 add_subdirectory(artwork)
 add_subdirectory(artwork/buttons)
 add_subdirectory(3rdparty/libmagic)
+add_subdirectory(3rdparty/mime)
 add_subdirectory(3rdparty/qimageblitz)
 #add_subdirectory(3rdparty/cair)
 if(NOT APPLE) 
