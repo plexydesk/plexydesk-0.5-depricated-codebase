@@ -40,6 +40,7 @@
 #include <pluginloader.h>
 #include <fakemime.h>
 #include <datainterface.h>
+#include <canvas.h>
 
 using namespace PlexyDesk;
 
@@ -50,7 +51,7 @@ int main( int argc, char ** argv )
     QString pluginPath = app.applicationDirPath() + "/plugins/imageformats";
     app.addLibraryPath(pluginPath);
 #endif
-    QGraphicsScene scene;
+    Canvas scene;
     scene.setBackgroundBrush(Qt::NoBrush);
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 
