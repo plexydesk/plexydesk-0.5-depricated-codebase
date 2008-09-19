@@ -51,12 +51,12 @@ int main( int argc, char ** argv )
     app.addLibraryPath(pluginPath);
 #endif
     QGraphicsScene scene;
-    scene.setSceneRect(QDesktopWidget().availableGeometry());
     scene.setBackgroundBrush(Qt::NoBrush);
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 
     DesktopView *view = new DesktopView(&scene);
     view->resize(QDesktopWidget().availableGeometry().size());
+    scene.setSceneRect(QDesktopWidget().availableGeometry());//TODO Resolution changes ?
 #ifdef Q_WS_WIN
     /// \brief: remove plexy from taskbar
     view->move(0, 0);
@@ -79,6 +79,6 @@ int main( int argc, char ** argv )
     view->addExtension("plexyclock");
     view->addExtension("plexyyoutube");
 */
- view->addExtension("plexyyoutube");
+     view->addExtension("plexyclock");
     return app.exec();
 }

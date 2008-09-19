@@ -41,12 +41,9 @@ public:
     WidgetPlugin * widgets;
     QGraphicsGridLayout * gridLayout;
     ViewLayer *  layer;
-    int row;
-    int column;
-    Navigator * icon1;
-    Navigator * icon2;
-    Navigator * icon3;
-    Navigator * icon4;
+    float row;
+    float column;
+    float margin;
     Frame * frm;
 };
 
@@ -67,6 +64,9 @@ DesktopView::DesktopView(QGraphicsScene * scene, QWidget * parent):QGraphicsView
     d->bgPlugin  = static_cast<BackdropPlugin*>(PluginLoader::getInstance()->instance("classicbackdrop"));
     d->widgets = 0;
     d->gridLayout = new QGraphicsGridLayout();
+    d->row=d->column = 0.0; 
+    d->margin = 10.0;
+    d->layer = new ViewLayer();
 }
 
 DesktopView::~DesktopView()
@@ -90,7 +90,7 @@ void DesktopView::addExtension(const QString& name)
             widget->configState(DesktopWidget::DOCK);
             scene()->addItem(widget);
             widget->setPos(d->row,d->column);
-            d->row += widget->boundingRect().width()+10;
+            d->row += widget->boundingRect().width()+d->margin;
             d->layer->addItem("Widgets",widget);
         }
     }
