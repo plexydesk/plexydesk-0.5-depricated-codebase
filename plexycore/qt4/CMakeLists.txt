@@ -27,6 +27,7 @@ SET(qtvizsrc
     viewlayer.cpp
     navigator.cpp
     frameitem.cpp
+    canvas.cpp
   )
 
 
