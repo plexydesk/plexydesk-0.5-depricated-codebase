@@ -55,10 +55,14 @@ bool getLessThanWidget(const QGraphicsItem* it1, const QGraphicsItem* it2)
 DesktopView::DesktopView(QGraphicsScene * scene, QWidget * parent):QGraphicsView(scene,parent),d(new Private)
 {
     setWindowFlags(Qt::FramelessWindowHint);
-    setAttribute(Qt::WA_ContentsPropagated);
+   // setAttribute(Qt::WA_ContentsPropagated);
+    setAttribute(Qt::WA_NoSystemBackground);
+ //   setAttribute(Qt::WA_OpaquePaintEvent);
+    setViewport(new QWidget);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
+    setOptimizationFlag(QGraphicsView::DontClipPainter);
+    //setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
     setFrameStyle(QFrame::NoFrame);
     setAlignment(Qt::AlignLeft | Qt::AlignTop);
     d->bgPlugin  = static_cast<BackdropPlugin*>(PluginLoader::getInstance()->instance("classicbackdrop"));
@@ -121,10 +125,14 @@ void DesktopView::paintEvent(QPaintEvent * event)
 */
 void DesktopView::drawBackground(QPainter * painter, const QRectF & rect)
 {
+   painter->setCompositionMode(QPainter::CompositionMode_Source);
+    painter->fillRect(rect, Qt::transparent);
     painter->save();
+          painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
+   // painter->setOpacity(0.0);
     painter->setClipRect(rect);
     if (d->bgPlugin) {
-        d->bgPlugin->render(painter,QRectF(rect.x(),rect.y(),rect.width(),rect.height()));
+     //   d->bgPlugin->render(painter,QRectF(rect.x(),rect.y(),rect.width(),rect.height()));
     }
 
     painter->restore();
