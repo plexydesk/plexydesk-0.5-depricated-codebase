@@ -1,0 +1,6 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Example Network Data Engine
+Type=Engine
+Comment=Load fake http data
+X-PLEXYDESK-Library=exampleengine
