@@ -190,7 +190,7 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event)
 
 void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent * event)
 {
-    if (event->buttons() == Qt::RightButton && (state() == NORMALSIDE || state() == BACKSIDE ) {
+    if (event->buttons() == Qt::RightButton && (state() == NORMALSIDE || state() == BACKSIDE )) {
         d->spintimer->start(10);
     }
 }
