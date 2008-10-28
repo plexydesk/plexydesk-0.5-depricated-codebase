@@ -38,6 +38,7 @@ public:
     void addExtension(const QString& name);
     void addCoreExtension(const QString& name);
     void addDesktopItem(QGraphicsItem * item);
+    void enableOpenGL(bool);
 public slots:
     void backgroundChanged();
 

@@ -8,7 +8,7 @@ INCLUDE_DIRECTORIES(
 	   ${QT_QTOPENGL_INCLUDE_DIR}
 	   ${QT_QTNETWORK_INCLUDE_DIR}
 	   ${QT_QTTEST_INCLUDE_DIR}
-		 )
+ )
 
 
 SET (classicbackdropsrc 	

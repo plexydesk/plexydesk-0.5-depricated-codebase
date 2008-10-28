@@ -74,6 +74,17 @@ DesktopView::DesktopView(QGraphicsScene * scene, QWidget * parent):QGraphicsView
     d->layer = new ViewLayer();
 }
 
+
+void DesktopView::enableOpenGL(bool state)
+{
+    if (state) {
+      setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+      setViewport(new QGLWidget(new QGLContext(QGL::StencilBuffer | QGL::AlphaChannel)));
+    } else {
+          setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
+            setViewport(new QWidget);
+    }
+}
 DesktopView::~DesktopView()
 {
     delete d;
