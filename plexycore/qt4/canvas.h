@@ -2,6 +2,13 @@
 #define _CANVAS_H_
 
 #include <QtGui>
+#include <backdropinterface.h>
+#include <pluginloader.h>
+#include <baseplugin.h>
+#include <backdropplugin.h>
+#include <widgetplugin.h>
+#include <frameitem.h>
+
 
 /**
  * \class Canvas
