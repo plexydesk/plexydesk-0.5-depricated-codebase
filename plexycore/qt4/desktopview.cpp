@@ -54,11 +54,8 @@ bool getLessThanWidget(const QGraphicsItem* it1, const QGraphicsItem* it2)
 
 DesktopView::DesktopView(QGraphicsScene * scene, QWidget * parent):QGraphicsView(scene,parent),d(new Private)
 {
+    /* setup */
     setWindowFlags(Qt::FramelessWindowHint);
-   // setAttribute(Qt::WA_ContentsPropagated);
-   // setAttribute(Qt::WA_NoSystemBackground);
-   // setAttribute(Qt::WA_OpaquePaintEvent);
-//    setViewport(new QWidget);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setOptimizationFlag(QGraphicsView::DontClipPainter);
@@ -66,6 +63,8 @@ DesktopView::DesktopView(QGraphicsScene * scene, QWidget * parent):QGraphicsView
     setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     setFrameStyle(QFrame::NoFrame);
     setAlignment(Qt::AlignLeft | Qt::AlignTop);
+    
+    /* init */
     d->bgPlugin  = static_cast<BackdropPlugin*>(PluginLoader::getInstance()->instance("classicbackdrop"));
     d->widgets = 0;
     d->gridLayout = new QGraphicsGridLayout();
@@ -95,6 +94,12 @@ void DesktopView::backgroundChanged()
     invalidateScene();
     scene()->update();
 }
+
+/* 
+Adds an Widget Extension to Plexy Desktop, give the widget
+name in string i.e "clock" or "radio", the internals will
+take care of the loading the widget plugin name is correct
+*/
 
 void DesktopView::addExtension(const QString& name)
 {
@@ -128,6 +133,7 @@ void DesktopView::addCoreExtension(const QString& name)
 
 }
 /*
+//small speed up , try if the speed is too low
 void DesktopView::paintEvent(QPaintEvent * event)
 {
     QPaintEvent *newEvent=new QPaintEvent(event->region().boundingRect());

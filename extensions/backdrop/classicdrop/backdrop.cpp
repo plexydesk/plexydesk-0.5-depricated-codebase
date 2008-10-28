@@ -55,19 +55,7 @@ void BgPlugin::data(QVariant& data)
 
 void BgPlugin::render(QPainter *p,QRectF r)
 {
-
-#ifdef Q_WS_MAC
-   	p->fillRect(r.x(),r.y(),r.width(),r.height(),paint);		
-#endif
-
-#ifdef Q_WS_X11
-   p->fillRect(r.x(),r.y(),r.width(),r.height(),paint);
-
-#endif
-
-#ifdef Q_WS_WIN
-   p->fillRect(r.x(),r.y(),r.width(),r.height(),paint);
-#endif
+   	p->fillRect(r.x(),r.y(),r.width(),r.height(),paint);
 }
 
 #include "backdrop.moc"
