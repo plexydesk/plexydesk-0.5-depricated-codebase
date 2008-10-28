@@ -129,10 +129,9 @@ void DesktopView::drawBackground(QPainter * painter, const QRectF & rect)
     painter->fillRect(rect, Qt::transparent);
     painter->save();
           painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
-   // painter->setOpacity(0.0);
     painter->setClipRect(rect);
     if (d->bgPlugin) {
-     //   d->bgPlugin->render(painter,QRectF(rect.x(),rect.y(),rect.width(),rect.height()));
+        d->bgPlugin->render(painter,QRectF(rect.x(),rect.y(),rect.width(),rect.height()));
     }
 
     painter->restore();
