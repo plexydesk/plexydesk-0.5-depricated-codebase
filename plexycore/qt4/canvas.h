@@ -24,7 +24,7 @@ public:
   Canvas ( QObject * parent = 0 );
   ~Canvas();
 protected:
-  void drawBackground ( QPainter * painter, const QRectF & rect );
+  virtual void drawBackground ( QPainter * painter, const QRectF & rect );
 private:
     class Private;
     Private * const d;

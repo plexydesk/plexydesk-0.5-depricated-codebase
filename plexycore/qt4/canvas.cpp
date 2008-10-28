@@ -34,6 +34,7 @@ public:
 
 Canvas::Canvas (QObject * parent): QGraphicsScene(parent), d(new Private)
 {
+  //  d->bgPlugin  = static_cast<BackdropPlugin*>(PluginLoader::getInstance()->instance("classicbackdrop"));
 } 
 
 Canvas::~Canvas()
@@ -43,9 +44,17 @@ Canvas::~Canvas()
 
 void Canvas::drawBackground ( QPainter * painter, const QRectF & rect )
 {
- // painter->setOpacity(0.0);
- // painter->setCompositionMode(QPainter::CompositionMode_Source);
-//  painter->fillRect(rect,QColor(Qt::transparent));
+  /*
+    painter->setCompositionMode(QPainter::CompositionMode_Source);
+    painter->fillRect(rect, Qt::transparent);
+    painter->save();
+    painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
+    painter->setClipRect(rect);
+    if (d->bgPlugin) {
+        d->bgPlugin->render(painter,QRectF(rect.x(),rect.y(),rect.width(),rect.height()));
+    }
+    painter->restore();
+    */
 }
 
 } /* PlexyDesk */

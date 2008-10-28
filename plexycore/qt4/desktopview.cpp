@@ -56,13 +56,14 @@ DesktopView::DesktopView(QGraphicsScene * scene, QWidget * parent):QGraphicsView
 {
     setWindowFlags(Qt::FramelessWindowHint);
    // setAttribute(Qt::WA_ContentsPropagated);
-    setAttribute(Qt::WA_NoSystemBackground);
- //   setAttribute(Qt::WA_OpaquePaintEvent);
-    setViewport(new QWidget);
+   // setAttribute(Qt::WA_NoSystemBackground);
+   // setAttribute(Qt::WA_OpaquePaintEvent);
+//    setViewport(new QWidget);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setOptimizationFlag(QGraphicsView::DontClipPainter);
-    //setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
+ ///   setOptimizationFlag(QGraphicsView::DontClipPainter);
+    setCacheMode(QGraphicsView::CacheBackground);
+    setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     setFrameStyle(QFrame::NoFrame);
     setAlignment(Qt::AlignLeft | Qt::AlignTop);
     d->bgPlugin  = static_cast<BackdropPlugin*>(PluginLoader::getInstance()->instance("classicbackdrop"));
@@ -123,8 +124,10 @@ void DesktopView::paintEvent(QPaintEvent * event)
     delete newEvent;
 }
 */
+
 void DesktopView::drawBackground(QPainter * painter, const QRectF & rect)
 {
+
    painter->setCompositionMode(QPainter::CompositionMode_Source);
     painter->fillRect(rect, Qt::transparent);
     painter->save();
