@@ -38,8 +38,6 @@ DesktopWidget(rect,widget)
 
     setPath(applicationDirPath() + "/share/plexy/skins/default/clock/");
     drawClockWidget();
-    //this->setAttribute (Qt::WA_NoSystemBackground);
-
 }
 
 void ClockWidget::setPath(QString str)
@@ -52,19 +50,7 @@ void
 ClockWidget::drawClockWidget()
 {
 
-    /*
-    if(prefix.isNull())
-    prefix = QString ("/home/siraj/projects/GUI/svn/qtclock/clock/");
-    */
-
-
-
     _clock_bg = QImage (prefix + "background.png");
-    //  _clock_bg = _clock_bg.convertDepth (32);
-    //_clock_bg.setAlphaBuffer (true);
-
-
-    ///  this->resize (_clock_bg.width (), _clock_bg.height ());
     /*gloss stuff*/
 
     gloss = QImage (prefix + "gloss.png");
@@ -78,7 +64,7 @@ ClockWidget::drawClockWidget()
     _secs_hand = QPixmap ().fromImage(QImage (prefix + "second-hand-long.png"));
     sec_timer = new QTimer (this);
     connect (sec_timer, SIGNAL (timeout ()), this, SLOT (drawSeconds ()));
-    sec_timer->start (500);
+    sec_timer->start (1000);
     /** Mins after that **/
     _mins_hand = QPixmap ().fromImage(QImage (prefix + "second-hand.png"));
     _hour_hand = QPixmap ().fromImage(QImage (prefix + "second-hand.png"));
@@ -141,11 +127,8 @@ ClockWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWid
 {
 
     QRectF r  = e->exposedRect;
-
-
     p->setCompositionMode(QPainter::CompositionMode_Source);
     p->fillRect(rect(), Qt::transparent);
-
     p->drawImage (QRect(0,0,_clock_bg.width(),_clock_bg.height()),_clock_bg);
     p->setCompositionMode(QPainter::CompositionMode_SourceOver);
     p->setBackgroundMode(Qt::TransparentMode);
