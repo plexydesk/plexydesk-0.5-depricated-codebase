@@ -14,6 +14,7 @@ INCLUDE_DIRECTORIES(
 SET (classicbackdropsrc 	
 		backdrop.cpp
 		classicinterface.cpp
+		${CMAKE_SOURCE_DIR}/plexycore/qt4/canvas.cpp
 		)
 		
 SET (plexicore_MOC

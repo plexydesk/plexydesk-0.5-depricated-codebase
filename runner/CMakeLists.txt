@@ -34,6 +34,7 @@ SET (qtviz_MOC
 	${CMAKE_SOURCE_DIR}/plexycore/qt4/viewlayer.cpp
 	${CMAKE_SOURCE_DIR}/plexycore/qt4/navigator.cpp
 	${CMAKE_SOURCE_DIR}/plexycore/qt4/frameitem.cpp
+	${CMAKE_SOURCE_DIR}/plexycore/qt4/canvas.cpp
 	)
 QT4_AUTOMOC(${qtviz_MOC})
 ENDIF(WIN32) 
