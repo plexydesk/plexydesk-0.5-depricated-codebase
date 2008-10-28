@@ -23,7 +23,16 @@
 namespace PlexyDesk
 {
 
-Canvas::Canvas (QObject * parent): QGraphicsScene(parent)
+class Canvas::Private
+{
+public:
+    Private() {}
+    ~Private() {}
+    AbstractPluginInterface * bIface ;
+    BackdropPlugin * bgPlugin;
+};
+
+Canvas::Canvas (QObject * parent): QGraphicsScene(parent), d(new Private)
 {
 } 
 
