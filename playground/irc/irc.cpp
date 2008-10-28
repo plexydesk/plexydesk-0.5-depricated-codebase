@@ -46,15 +46,35 @@ void IrcData::parse()
 {
     QByteArray ba;
     QString* currentLine;
-    while(1){
+   while(1){
         ba = service->readLine();
         if(!ba.isEmpty()){
             currentLine = new QString(ba);
+            QString arg1;
+            QString arg2;
             if((currentLine->left(1)).compare(":")==0){
                 currentLine->remove(0,1);
-                QString host = currentLine->left(currentLine->indexOf(" "));
-                currentLine->remove(host,Qt::CaseSensitive);
-                emit sample(host);
+//                 qDebug() << *currentLine;
+                QRegExp argRegExp("([^\\s]*)[\\s].*");
+                int pos = argRegExp.indexIn(*currentLine);
+                if(pos>-1){
+                    arg1 = argRegExp.cap(1);
+//                     qDebug() << arg1;
+                }
+                QRegExp restRegExp("[^\\s]*[\\s](.*)");
+                pos = restRegExp.indexIn(*currentLine);
+                if(pos>-1){
+                    *currentLine = restRegExp.cap(1);
+//                     qDebug() << *currentLine;
+                }
+                pos = argRegExp.indexIn(*currentLine);
+                if(pos>-1){
+                    arg2 = argRegExp.cap(1);
+                    qDebug() << "**********" <<arg2;
+                }
+//                 QString host = currentLine->left(currentLine->indexOf(" "));
+//                 currentLine->remove(host,Qt::CaseSensitive);
+                emit sample(arg1);
             }
         }
         else break;

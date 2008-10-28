@@ -11,6 +11,7 @@ class IrcData : public QObject
         void connectToServer();
         IrcData(QString server, qint16 port);
         bool isConnected();
+        void setNick();
     public slots:
         void ErrorHandler(QAbstractSocket::SocketError);
         void setConnected();
@@ -20,6 +21,8 @@ class IrcData : public QObject
         void error(QAbstractSocket::SocketError);
         void connected();
         void sample(QString);
+        void nickSet();
+        void duplicateNick();
     private:
         QTcpSocket *service;
         QString server;

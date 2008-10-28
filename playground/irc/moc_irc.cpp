@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'irc.h'
 **
-** Created: Tue Oct 28 20:26:04 2008
+** Created: Tue Oct 28 23:15:20 2008
 **      by: The Qt Meta Object Compiler version 59 (Qt 4.4.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_IrcData[] = {
        1,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   10, // methods
+       9,   10, // methods
        0,    0, // properties
        0,    0, // enums/sets
 
@@ -31,19 +31,22 @@ static const uint qt_meta_data_IrcData[] = {
        9,    8,    8,    8, 0x05,
       45,    8,    8,    8, 0x05,
       57,    8,    8,    8, 0x05,
+      73,    8,    8,    8, 0x05,
+      83,    8,    8,    8, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      73,    8,    8,    8, 0x0a,
-     116,    8,    8,    8, 0x0a,
-     131,    8,    8,    8, 0x0a,
-     138,    8,    8,    8, 0x0a,
+      99,    8,    8,    8, 0x0a,
+     142,    8,    8,    8, 0x0a,
+     157,    8,    8,    8, 0x0a,
+     164,    8,    8,    8, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_IrcData[] = {
     "IrcData\0\0error(QAbstractSocket::SocketError)\0"
-    "connected()\0sample(QString)\0"
+    "connected()\0sample(QString)\0nickSet()\0"
+    "duplicateNick()\0"
     "ErrorHandler(QAbstractSocket::SocketError)\0"
     "setConnected()\0init()\0parse()\0"
 };
@@ -76,12 +79,14 @@ int IrcData::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 0: error((*reinterpret_cast< QAbstractSocket::SocketError(*)>(_a[1]))); break;
         case 1: connected(); break;
         case 2: sample((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 3: ErrorHandler((*reinterpret_cast< QAbstractSocket::SocketError(*)>(_a[1]))); break;
-        case 4: setConnected(); break;
-        case 5: init(); break;
-        case 6: parse(); break;
+        case 3: nickSet(); break;
+        case 4: duplicateNick(); break;
+        case 5: ErrorHandler((*reinterpret_cast< QAbstractSocket::SocketError(*)>(_a[1]))); break;
+        case 6: setConnected(); break;
+        case 7: init(); break;
+        case 8: parse(); break;
         }
-        _id -= 7;
+        _id -= 9;
     }
     return _id;
 }
@@ -104,5 +109,17 @@ void IrcData::sample(QString _t1)
 {
     void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 2, _a);
+}
+
+// SIGNAL 3
+void IrcData::nickSet()
+{
+    QMetaObject::activate(this, &staticMetaObject, 3, 0);
+}
+
+// SIGNAL 4
+void IrcData::duplicateNick()
+{
+    QMetaObject::activate(this, &staticMetaObject, 4, 0);
 }
 QT_END_MOC_NAMESPACE
