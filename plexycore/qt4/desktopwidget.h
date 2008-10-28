@@ -62,7 +62,7 @@ public:
 
     virtual ~DesktopWidget();
 
-    QString applicationDirPath();
+    static QString applicationDirPath();
 
     virtual void paintBackSide(QPainter * painter,const QRectF& rect);
     virtual void paintViewSide(QPainter * painter,const QRectF& rect);

@@ -17,6 +17,7 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 #include "plexyconfig.h"
+#include <desktopwidget.h>
 
 namespace PlexyDesk
 {
@@ -39,7 +40,7 @@ void Config::read()
     proxyUser="";
     proxyPasswd="";
     proxyPort=3128;
-
+    CurrentWallpaper =  DesktopWidget::applicationDirPath() + "/share/plexy/skins/default/default.png";
     //collitions detection
     collitionOn = false;
 

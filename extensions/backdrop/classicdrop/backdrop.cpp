@@ -18,10 +18,11 @@
 *******************************************************************************/
 #include "backdrop.h"
 #include <desktopwidget.h>
+#include <plexyconfig.h>
 
 BgPlugin::BgPlugin(QObject * object) : BackdropPlugin( object)
 {
-    bg = QPixmap( applicationDirPath() + "/share/plexy/skins/default/default.png");
+    bg = QPixmap(PlexyDesk::Config::getInstance()->CurrentWallpaper);
     width  = QDesktopWidget().screenGeometry().width();
     height = QDesktopWidget().screenGeometry().height();
     
