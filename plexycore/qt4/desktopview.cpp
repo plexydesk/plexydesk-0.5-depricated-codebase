@@ -61,7 +61,7 @@ DesktopView::DesktopView(QGraphicsScene * scene, QWidget * parent):QGraphicsView
 //    setViewport(new QWidget);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
- ///   setOptimizationFlag(QGraphicsView::DontClipPainter);
+    setOptimizationFlag(QGraphicsView::DontClipPainter);
     setCacheMode(QGraphicsView::CacheBackground);
     setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     setFrameStyle(QFrame::NoFrame);
@@ -129,15 +129,14 @@ void DesktopView::drawBackground(QPainter * painter, const QRectF & rect)
 {
 
    painter->setCompositionMode(QPainter::CompositionMode_Source);
-    painter->fillRect(rect, Qt::transparent);
-    painter->save();
-          painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
-    painter->setClipRect(rect);
+   painter->fillRect(rect, Qt::transparent);
+   painter->save();
+   painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
+   painter->setClipRect(rect);
     if (d->bgPlugin) {
-        d->bgPlugin->render(painter,QRectF(rect.x(),rect.y(),rect.width(),rect.height()));
+        d->bgPlugin->render(painter,QRectF(rect.x(),sceneRect().y(),rect.width(),rect.height()));
     }
-
-    painter->restore();
+   painter->restore();
 }
 
 void DesktopView::mousePressEvent(QMouseEvent *event)

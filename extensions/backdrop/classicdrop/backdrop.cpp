@@ -22,37 +22,14 @@
 BgPlugin::BgPlugin(QObject * object) : BackdropPlugin( object)
 {
     bg = QPixmap( applicationDirPath() + "/share/plexy/skins/default/default.png");
-    width = QDesktopWidget().availableGeometry().width();
-    height = QDesktopWidget().availableGeometry().height();
-#ifdef Q_WS_MAC
     width  = QDesktopWidget().screenGeometry().width();
     height = QDesktopWidget().screenGeometry().height();
-#endif
-      img = QImage(width,height,QImage::Format_ARGB32_Premultiplied);
+    
+    img = QImage(width,height,QImage::Format_ARGB32_Premultiplied);
     QPainter p;
     p.begin(&img);
     p.drawPixmap(QRect(0,0,width,height),bg);
     paint.setTextureImage(img);
-/*
-    flickrEngine= loadData("flickerengine");
-    if (flickrEngine) {
-        connect(flickrEngine,SIGNAL(data(QVariant&)),
-                this,SLOT(data(QVariant&)));
-    }else {
-    }
-
-#ifdef Q_WS_WIN
-    wallpaperWin = loadData("wallpaperchange-win32");
-    if(wallpaperWin)
-    {
-        connect(wallpaperWin, SIGNAL(data(QVariant&)), this, SLOT(data(QVariant&)));
-    }
-    else
-    {
-        qDebug("Windows Wallpaper cannot load");
-    }
-#endif
-*/
 }
 
 BgPlugin::~BgPlugin()

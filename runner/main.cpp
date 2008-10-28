@@ -54,14 +54,13 @@ int main( int argc, char ** argv )
     Canvas scene;
     scene.setBackgroundBrush(Qt::NoBrush);
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
- 
+    scene.setSceneRect(QDesktopWidget().availableGeometry());//TODO Resolution changes ?
 
     DesktopView *view = new DesktopView(&scene);
     QRect r = QDesktopWidget().availableGeometry();
     view->move(r.x(),r.y());
     view->resize(QDesktopWidget().availableGeometry().size());
-    scene.setSceneRect(QDesktopWidget().availableGeometry());//TODO Resolution changes ?
-    qDebug()<<"Desktop"<<QDesktopWidget().availableGeometry();
+    qDebug()<<scene.sceneRect () ;
 #ifdef Q_WS_WIN
     /// \brief: remove plexy from taskbar
     view->move(0, 0);
