@@ -13,7 +13,7 @@ INCLUDE_DIRECTORIES(
 
 SET (classicbackdropsrc 	
 		backdrop.cpp
-    classicinterface.cpp
+		classicinterface.cpp
 		)
 		
 SET (plexicore_MOC
