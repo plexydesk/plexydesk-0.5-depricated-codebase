@@ -1,6 +1,7 @@
 #include "irc.h"
 #include <QApplication>
 #include <QNetworkProxy>
+#include <plexyconfig.h>
 
 IrcData::IrcData(QObject *p) : QObject(p)
 {
@@ -18,14 +19,15 @@ void IrcData::connectToServer()
 {
     service = new QTcpSocket();
 
-    QNetworkProxy proxy;
-    proxy.setType(QNetworkProxy::HttpProxy);
-    proxy.setHostName("bsnlproxy.iitk.ac.in");
-    proxy.setPort(3128);
-    proxy.setUser("shankar");
-    proxy.setPassword("LINKINpark");
-
+    if (PlexyDesk::Config::getInstance()->proxyOn) {
+    QNetworkProxy proxy (PlexyDesk::Config::getInstance()->proxyType,
+                                   PlexyDesk::Config::getInstance()->proxyURL,
+                                   PlexyDesk::Config::getInstance()->proxyPort,
+                                   PlexyDesk::Config::getInstance()->proxyUser,
+                                   PlexyDesk::Config::getInstance()->proxyPasswd
+                                   );
     service->setProxy(proxy);
+    }
     service->connectToHost(server,port);
 
     connect(service,SIGNAL(error(QAbstractSocket::SocketError)),SIGNAL(errorHandler(QAbstractSocket::SocketError)));
