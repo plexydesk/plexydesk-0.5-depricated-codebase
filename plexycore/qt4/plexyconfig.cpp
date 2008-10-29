@@ -26,15 +26,30 @@ Config * Config::config = 0;
 Config * Config::getInstance()
 {
     if (config == 0) {
-        return  new Config();
+        return  new Config("plexydesk", QSettings::NativeFormat, 0);
     } else {
         return config;
     }
 }
 
+Config::Config(const QString & fileName, Format format, QObject * parent ): QSettings(fileName, format, parent)
+{
+write();
+read();
+}
+
+void Config::write () 
+{
+    setValue("proxyOn",false);
+    setValue("proxyURL","");
+    setValue("proxyUser","");
+    setValue("ProxyPasswd","");
+    setValue("proxyPort",3128);
+    setValue("CurrentWallpaper", DesktopWidget::applicationDirPath() + "/share/plexy/skins/default/default.png");
+    setValue("collitionOn",false);
+}
 void Config::read()
 {
-
     proxyOn=false;
     proxyURL="";
     proxyUser="";
@@ -43,10 +58,8 @@ void Config::read()
     CurrentWallpaper =  DesktopWidget::applicationDirPath() + "/share/plexy/skins/default/default.png";
     //collitions detection
     collitionOn = false;
-
-
 }
 
 }
 
-
+#include "plexyconfig.moc"

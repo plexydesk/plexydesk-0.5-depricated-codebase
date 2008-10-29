@@ -26,13 +26,14 @@
 
 namespace PlexyDesk
 {
-class VISIBLE_SYM Config
+class VISIBLE_SYM Config : public QSettings
 {
+Q_OBJECT
 public:
     static Config*  getInstance();
     ///these will be pure virtual on the real plexy desk
     void read();
-    void save() {}
+    void write();
     QString MyPictures ;
     QString MyMovies;
     QString CurrentWallpaper;
@@ -45,6 +46,7 @@ public:
     bool collitionOn;
 
 private:
+    Config(const QString & fileName, Format format, QObject * parent = 0);
     static Config * config;
     Config()
     {
