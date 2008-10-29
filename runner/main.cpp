@@ -31,8 +31,6 @@
 #include <netwm.h>
 #endif
 
-//#include <QtWebKit/QWebView>
-
 //plexy
 #include <plexy.h>
 #include <baserender.h>
@@ -85,5 +83,6 @@ int main( int argc, char ** argv )
     view->addExtension("plexyyoutube");
 */
      view->addExtension("plexyclock");
+     view->addExtension("imagepil");
     return app.exec();
 }
