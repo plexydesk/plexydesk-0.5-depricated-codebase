@@ -1,4 +1,4 @@
-SET (plexyircsrc )
+SET (plexyircsrc irc.cpp )
 QT4_AUTOMOC(${plexyircsrc})
 add_library (plexyirc SHARED ${plexyircsrc})
 
