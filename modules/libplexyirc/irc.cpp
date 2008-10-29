@@ -1,7 +1,6 @@
 #include "irc.h"
 #include <QApplication>
 #include <QNetworkProxy>
-#include <plexyconfig.h>
 
 IrcData::IrcData(QObject *p) : QObject(p)
 {
@@ -19,20 +18,19 @@ void IrcData::connectToServer()
 {
     service = new QTcpSocket();
 
-    if (PlexyDesk::Config::getInstance()->proxyOn) {
-    QNetworkProxy proxy (PlexyDesk::Config::getInstance()->proxyType,
-                                   PlexyDesk::Config::getInstance()->proxyURL,
-                                   PlexyDesk::Config::getInstance()->proxyPort,
-                                   PlexyDesk::Config::getInstance()->proxyUser,
-                                   PlexyDesk::Config::getInstance()->proxyPasswd
-                                   );
+    QNetworkProxy proxy;
+    proxy.setType(QNetworkProxy::HttpProxy);
+    proxy.setHostName("vsnlproxy.iitk.ac.in");
+    proxy.setPort(3128);
+    proxy.setUser("shankar");
+    proxy.setPassword("LINKINpark");
+
     service->setProxy(proxy);
-    }
     service->connectToHost(server,port);
 
-    connect(service,SIGNAL(error(QAbstractSocket::SocketError)),SIGNAL(errorHandler(QAbstractSocket::SocketError)));
+    connect(service,SIGNAL(error(QAbstractSocket::SocketError)),SLOT(errorHandler(QAbstractSocket::SocketError)));
     connect(service,SIGNAL(connected()),SLOT(setConnected()));
-    connect(service,SIGNAL(connected()),SLOT(init()));
+
     connect(service,SIGNAL(readyRead()),SLOT(parse()));
 }
 
@@ -51,67 +49,78 @@ void IrcData::joinChannel(QString channel)
     service->write(QString("JOIN %1\r\n").arg(channel).toAscii());
 }
 
-void IrcData::init()
-{
-    service->write("NICK spamBOT_sharp\r\n");
-    service->write("USER spamBOT_sharp localhost localhost :spamBOT_sharp\r\n");
-    service->write("JOIN #spamBOT_sharp\r\n");
-}
+// void IrcData::init()
+// {
+//     service->write("NICK sharpBot\r\n");
+//     service->write("USER sharpBot 7 * :Mani Shankar's BOT\r\n");
+//     service->write("JOIN #plexydesk\r\n");
+// }
 
+int i=1;
 void IrcData::parse()
 {
-    QByteArray ba;
-    QString* currentLine;
-    QString host;
-    int i=1;    // to retrieve first 5 reponse lines
-    while(1){
-        ba = service->readLine();
-        if(!ba.isEmpty()){
-            currentLine = new QString(ba);
-            QString arg1;
-            QString arg2;
-            QString arg3;
-            if((currentLine->left(1)).compare(":")==0){
+    char buffer[1024];
+    char tempBuffer[1024];
+    bool append;
+    QString *currentLine;
+    QString *host;
+    while(service->readLine(buffer,sizeof(buffer)) > 0){
+        if(QString(buffer).endsWith("\r\n")){
+            if(append){
+                currentLine = new QString(tempBuffer);
+                currentLine->append(QString(buffer));
+                append = 0;
+            }
+            else {
+                currentLine = new QString(buffer);
+            }
+        }
+        else{
+            for(int i=0; i<1024;i++)
+                tempBuffer[i] = buffer[i];
+            append = 1;
+            continue;
+        }
+        QString *arg1;
+        QString *arg2;
+        QString *arg3;
+        if((currentLine->left(1)).compare(":")==0){
                 currentLine->remove(0,1);   // remove the prefix :
                 QRegExp argRegExp("([^\\s]*)[\\s].*");
                 int pos = argRegExp.indexIn(*currentLine);
                 if(pos>-1){
-                    arg1 = argRegExp.cap(1);
+                    arg1 = new QString(argRegExp.cap(1));
                 }
+                QString *restLine;
                 QRegExp restRegExp("[^\\s]*[\\s](.*)");
                 pos = restRegExp.indexIn(*currentLine);
                 if(pos>-1){
-                    *currentLine = restRegExp.cap(1);
+                    restLine = new QString(restRegExp.cap(1));
                 }
-                pos = argRegExp.indexIn(*currentLine);
+                pos = argRegExp.indexIn(*restLine);
                 if(pos>-1){
-                    arg2 = argRegExp.cap(1);
+                    arg2 = new QString(argRegExp.cap(1));
                 }
-                if(i==1){
-                    host = arg1;
+                if(i==4 || i==5){
+                    host = new QString(*arg1);
                 }
-                if( arg1.compare(host) == 0)
+                if( arg1->compare(*host) == 0)
                 {
-                    switch(arg2.toInt()){
-                        case 433:// emit nickResponse(DuplicateNick,"Duplicate Nick");
-                                    i++;
-                                    break;
-                        case 451: emit ;//notRegistered();
-                                    i++;
-                                    break;
-//                         case 3: break;
-//                                     i++;
-//                         case 4: break;
-//                                     i++;
-//                         case 5: break;
-//                                     i++;
+                    switch(arg2->toInt()){
+                        case 1: emit userResponse(UserOK, "User OK");
+                        emit nickResponse(NickOK, "Nick OK");
+                        break;
+                        case 431: emit nickResponse(NoNickGiven,"No Nick Given");
+                        break;
+                        case 433: emit nickResponse(NickInUse,"Nick in Use");
+                        break;
+                        case 462: emit userResponse(UserAlreadyRegistered,"User already registered");
+                        break;
                         default: break;
                     }
                 }
-//                 emit sample(arg1);
-            }
         }
-        else break;
+        i++;
     }
 }
 
@@ -148,13 +157,13 @@ void IrcData::errorHandler(QAbstractSocket::SocketError err)
             emit(connectResponse(UnknownSocketError,"UnknownSocketError")); break;
         case QAbstractSocket::UnfinishedSocketOperationError:
             emit(connectResponse(UnfinishedSocketOperationError,"UnfinishedSocketOperationError")); break;
-        default: break;
+            default: break;
     }
 }
 
 void IrcData::setConnected()
 {
-    emit(connectResponse(ConnectOK,"Connected OK"));
+    emit(connectResponse(ConnectOK,"Connect OK"));
     Connected = 1;
 }
 
