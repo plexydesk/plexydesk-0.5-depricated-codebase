@@ -91,7 +91,7 @@ void IrcData::parse()
                 if( arg1.compare(host) == 0)
                 {
                     switch(arg2.toInt()){
-                        case 433: emit nickResponse(DuplicateNick,"Duplicate Nick");
+                        case 433:// emit nickResponse(DuplicateNick,"Duplicate Nick");
                                     i++;
                                     break;
                         case 451: emit ;//notRegistered();

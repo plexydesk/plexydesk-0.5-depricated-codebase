@@ -77,14 +77,17 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/extensions/data/rss
     ${CMAKE_BINARY_DIR}/extensions/data/utube
     ${CMAKE_BINARY_DIR}/extensions/data/videoengine 
+    ${CMAKE_BINARY_DIR}/modules/libplexyirc/ 
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_SOURCE_DIR}/plexylib
     ${CMAKE_SOURCE_DIR}/plexycore/qt4
     ${CMAKE_SOURCE_DIR}/widgets/gtk
     ${CMAKE_SOURCE_DIR}/3rdparty/qimageblitz/blitz/
     ${CMAKE_SOURCE_DIR}/3rdparty/lqr/
-	${CMAKE_SOURCE_DIR}/3rdparty/mime/
-	${CMAKE_BINARY_DIR}/3rdparty/mime/
+    ${CMAKE_SOURCE_DIR}/3rdparty/mime/
+    ${CMAKE_SOURCE_DIR}/modules/libplexyirc/
+    ${CMAKE_BINARY_DIR}/3rdparty/mime/
+
     ${QT_INCLUDE_DIR}
 )
 
@@ -121,6 +124,7 @@ add_subdirectory(extensions/widgets/youtubewidget)
 add_subdirectory(extensions/data/flicker)
 #add_subdirectory(extensions/data/rss)
 add_subdirectory(extensions/data/utube)
+add_subdirectory(modules/libplexyirc)
 
 #if(WIN32)
 #add_subdirectory(extensions/widgets/wallpaper-win32)

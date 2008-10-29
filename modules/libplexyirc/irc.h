@@ -1,10 +1,10 @@
-#include <QtCore>
-#include <QTcpSocket>
-#include "user.h"
-#include <plexy.h>
-
 #ifndef IRC_H
 #define IRC_H
+
+#include <QtCore>
+#include <QTcpSocket>
+#include <user.h>
+#include <plexy.h>
 
 typedef enum{
     ConnectOK,
@@ -46,7 +46,7 @@ typedef enum{
     InviteRequired
 } ChannelResponseType;
 
-class VISYBLE_SYM IrcData : public QObject
+class VISIBLE_SYM IrcData : public QObject
 {
     Q_OBJECT
     public:
