@@ -16,68 +16,31 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#include "example.h"
+#include "ircengine.h"
 #include <desktopwidget.h>
 #include <plexyconfig.h>
 
 
     
-ExampleData::ExampleData(QObject * object)
+IRCData::IRCData(QObject * object)
 {
-        slideCount = 0;
-        currentSlide = 0;
-        searchkey = "fresh morning";
-	    http = new QHttp(this);
-        init();
-        imageTimer = new QTimer(this);
-        connect(imageTimer,SIGNAL(timeout()),this,SLOT(nextImage()));
 }
 
-void  ExampleData::init()
+void  IRCData::init()
 {
-
-	 if(PlexyDesk::Config::getInstance()->proxyOn){ 
-	     QNetworkProxy NtProxy(PlexyDesk::Config::getInstance()->proxyType,
-		                   PlexyDesk::Config::getInstance()->proxyURL,
-                                   PlexyDesk::Config::getInstance()->proxyPort,
-                                   PlexyDesk::Config::getInstance()->proxyUser,
-                                   PlexyDesk::Config::getInstance()->proxyPasswd
-			           );
-
-              http->setProxy(NtProxy);
-	      QNetworkProxy::setApplicationProxy(NtProxy);
-	}
-	
-         connect(http, SIGNAL(requestFinished(int, bool)),
-                       SLOT(loadCallback(int, bool)));
-
-	 http->setHost("www.flickr.com");    
-    /*note 1 we are saving the request ID , so will call this in loadCallback*/
-    
-     requestID= http->get(QString("/search/?w=all&q=%1&m=text").arg(searchkey));
 }
 
-ExampleData::~ExampleData()
+IRCData::~IRCData()
 {
-        delete http;
 }
 
-void ExampleData::pushData(QVariant& str)
+void IRCData::pushData(QVariant& str)
 {
-    http->abort();
-    searchkey = str.toString();
-    init();
 }
 
-void ExampleData::loadCallback(int id, bool stat)
+void IRCData::loadCallback(int id, bool stat)
 {
-   if(id == requestID ) /* this is a id we know  , and set on init() */ {
-     if (stat) /*our request had no errors*/ {
-        qDebug()<<http->readAll()<<endl; //print all the data we got from url
-     }
-   }
-
 }
 
 
-#include "example.moc"
+#include "ircengine.moc"

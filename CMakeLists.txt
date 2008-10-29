@@ -75,6 +75,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/extensions/widgets/wallpaper-win32
     ${CMAKE_BINARY_DIR}/extensions/data/flicker
     ${CMAKE_BINARY_DIR}/extensions/data/rss
+    ${CMAKE_BINARY_DIR}/extensions/data/irc
     ${CMAKE_BINARY_DIR}/extensions/data/utube
     ${CMAKE_BINARY_DIR}/extensions/data/videoengine 
     ${CMAKE_BINARY_DIR}/modules/libplexyirc/ 
@@ -124,6 +125,7 @@ add_subdirectory(extensions/widgets/youtubewidget)
 add_subdirectory(extensions/data/flicker)
 #add_subdirectory(extensions/data/rss)
 add_subdirectory(extensions/data/utube)
+add_subdirectory(extensions/data/irc)
 add_subdirectory(modules/libplexyirc)
 
 #if(WIN32)

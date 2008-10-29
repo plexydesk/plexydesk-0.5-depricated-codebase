@@ -16,8 +16,8 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#ifndef FLICKER_DATA_I
-#define FLICKER_DATA_I
+#ifndef IRC_DATA_I
+#define IRC_DATA_I
 
 #include <QtCore>
 #include <plexy.h>
@@ -26,16 +26,15 @@
 #include <QtNetwork>
 #include <datainterface.h>
 #include <dataplugin.h>
-#include "flicker.h" 
 
-class ExampleInterface :public PlexyDesk::DataInterface
+class IRCInterface :public PlexyDesk::DataInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
     public:
-      ExampleInterface(QObject * object = 0);
-      virtual ~ExampleInterface(){}
+      IRCInterface(QObject * object = 0);
+      virtual ~IRCInterface(){}
       
       /* this will return a valid data plugin pointer*/
       PlexyDesk::DataPlugin * instance();

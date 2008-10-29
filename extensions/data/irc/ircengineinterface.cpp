@@ -16,22 +16,22 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#include "example.h"
-#include "exampleinterface.h"
+#include "ircengine.h"
+#include "ircengineinterface.h"
 #include <desktopwidget.h>
 #include <plexyconfig.h>
     
-ExampleInterface::ExampleInterface(QObject * object)
+IRCInterface::IRCInterface(QObject * object)
 {
 }
 
-PlexyDesk::DataPlugin *ExampleInterface::instance()
+PlexyDesk::DataPlugin *IRCInterface::instance()
 {
 /* this is the plugin we are returning since plexy core 
 or other plugins will expect this pointer
 */
-	return new ExampleData();
+	return new IRCData();
 }
 
-Q_EXPORT_PLUGIN2(ExampleInterface, ExampleInterface)
-#include "exampleinterface.moc"
+Q_EXPORT_PLUGIN2(IRCInterface, IRCInterface)
+#include "ircengineinterface.moc"

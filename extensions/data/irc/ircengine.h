@@ -16,8 +16,8 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#ifndef Example_DATA_H
-#define Example_DATA_H
+#ifndef IRC_DATA_H
+#define IRC_DATA_H
 
 #include <QtCore>
 #include <plexy.h>
@@ -26,34 +26,24 @@
 #include <QtNetwork>
 #include <datainterface.h>
 
-class VISIBLE_SYM ExampleData :public PlexyDesk::DataPlugin
+class VISIBLE_SYM IRCData :public PlexyDesk::DataPlugin
 {
     Q_OBJECT
 
     public:
-    ExampleData(QObject * object = 0);
-    virtual ~ExampleData();
+    IRCData(QObject * object = 0);
+    virtual ~IRCData();
           void init();
     public slots:
     /* ID tells you the Qhttp id which youare pocessing
     */
+ 	  void pushData(QVariant&);
           void loadCallback(int ID, bool status);
     signals:
          void data(QVariant&);
 
     private:
-    QPixmap bg;
-    QImage img;
-    QBrush paint;
-    QString searchkey;
-    QHttp *http;
-    QImage newWall;
-    QStringList images;
-    int requestID;
-    int dataID;
-    int slideCount;
-    int currentSlide;
-    QTimer * imageTimer;
+
 };
 
 
