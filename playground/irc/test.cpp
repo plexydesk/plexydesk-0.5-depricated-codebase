@@ -1,26 +1,35 @@
 #include <QApplication>
-#include "irc.h"
 #include "test.h"
 
-void Tester::connectionHandler()
+void Tester::connectHandler(ConnectResponseType response,QString error)
 {
-    qDebug() << "Connected";
+    if(response == ConnectOK)
+        qDebug() << error;
+    else
+    {
+        qDebug() << error;
+    }
 }
 
-// void Tester::nickHandler(int code)
-// {
-//     switch(code){
-//         case 0: qDebug() << "Nick Set";
-//                 break;
-//         case 1: qDebug() << "Duplicate Nick";
-//                 break;
-//         default: break;
-//     }
-// }
-
-void Tester::sampleHandler(QString str)
+void Tester::userHandler(UserResponseType response,QString error)
 {
-    qDebug() << str;
+    if(response == UserOK)
+        qDebug() << error;
+    else
+    {
+        qDebug() << error;
+    }
+}
+
+void Tester::nickHandler(NickResponseType response,QString error)
+{
+    switch(response){
+        case NickOK: qDebug() << error;
+                break;
+        case NickInUse: qDebug() << "Duplicate Nick";
+                break;
+        default: break;
+    }
 }
 
 Tester::Tester(QObject *p) : QObject(p)
@@ -28,8 +37,12 @@ Tester::Tester(QObject *p) : QObject(p)
     Test = 0;
     IrcData *irc = new IrcData("64.161.254.20",6667);
     irc->connectToServer();
-    connect(irc,SIGNAL(connected()),SLOT(connectionHandler()));
-    connect(irc,SIGNAL(sample(QString)),SLOT(sampleHandler(QString)));
+    connect(irc,SIGNAL(connectResponse(ConnectResponseType,QString)),SLOT(connectHandler(ConnectResponseType,QString)));
+    irc->setNick("sharpBot");
+    connect(irc,SIGNAL(nickResponse(NickResponseType,QString)),SLOT(nickHandler(NickResponseType,QString)));
+    irc->setUser("sharpBot", 7, "*", "Mani Shankar's BOT");
+    connect(irc,SIGNAL(userResponse(UserResponseType,QString)),SLOT(userHandler(UserResponseType,QString)));
+    irc->joinChannel("#plexy");
 }
 
 int main(int argc, char** argv)

@@ -35,7 +35,7 @@ typedef enum{
 } NickResponseType;
 
 typedef enum{
-    UserNeedMoreParams,
+    UserOK,
     UserAlreadyRegistered
 } UserResponseType;
 
@@ -52,7 +52,6 @@ class IrcData : public QObject
         IrcData(QObject *p =0);
         IrcData(QString server, qint16 port);
         bool isConnected();
-        void setConnected();
 
         /*!
         Asynchonously emits connectResponse(ConnectResponseType response,QString error)
@@ -118,7 +117,10 @@ class IrcData : public QObject
 
     public slots:
 
-        void init();
+        /*!
+        emits connectResponse(ConnectOK,"Connected OK")
+        */
+        void setConnected();
 
         /*!
         handle socket errors and emit connectResponse()

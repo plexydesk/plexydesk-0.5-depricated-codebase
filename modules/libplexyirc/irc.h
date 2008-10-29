@@ -1,10 +1,9 @@
-#ifndef IRC_H
-#define IRC_H
-
 #include <QtCore>
 #include <QTcpSocket>
-#include <user.h>
-#include <plexy.h>
+#include "user.h"
+
+#ifndef IRC_H
+#define IRC_H
 
 typedef enum{
     ConnectOK,
@@ -36,7 +35,7 @@ typedef enum{
 } NickResponseType;
 
 typedef enum{
-    UserNeedMoreParams,
+    UserOK,
     UserAlreadyRegistered
 } UserResponseType;
 
@@ -46,14 +45,13 @@ typedef enum{
     InviteRequired
 } ChannelResponseType;
 
-class VISIBLE_SYM IrcData : public QObject
+class IrcData : public QObject
 {
     Q_OBJECT
     public:
         IrcData(QObject *p =0);
         IrcData(QString server, qint16 port);
         bool isConnected();
-        void setConnected();
 
         /*!
         Asynchonously emits connectResponse(ConnectResponseType response,QString error)
@@ -119,7 +117,10 @@ class VISIBLE_SYM IrcData : public QObject
 
     public slots:
 
-        void init();
+        /*!
+        emits connectResponse(ConnectOK,"Connected OK")
+        */
+        void setConnected();
 
         /*!
         handle socket errors and emit connectResponse()
@@ -138,3 +139,4 @@ class VISIBLE_SYM IrcData : public QObject
         bool Connected;
 };
 #endif
+

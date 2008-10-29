@@ -1,4 +1,6 @@
 #include <QtCore>
+#include "irc.h"
+
 
 class Tester : public QObject
 {
@@ -6,8 +8,9 @@ class Tester : public QObject
     public:
         Tester(QObject *p =0);
     public slots:
-        void connectionHandler();
-        void sampleHandler(QString str);
+        void connectHandler(ConnectResponseType,QString);
+        void userHandler(UserResponseType,QString);
+        void nickHandler(NickResponseType,QString);
     private:
         int Test;
 };
