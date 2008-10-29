@@ -4,8 +4,19 @@
 
 void Tester::connectionHandler()
 {
-    qDebug("Connected");
+    qDebug() << "Connected";
 }
+
+// void Tester::nickHandler(int code)
+// {
+//     switch(code){
+//         case 0: qDebug() << "Nick Set";
+//                 break;
+//         case 1: qDebug() << "Duplicate Nick";
+//                 break;
+//         default: break;
+//     }
+// }
 
 void Tester::sampleHandler(QString str)
 {
