@@ -57,6 +57,7 @@ void IrcData::joinChannel(QString channel)
 // }
 
 int i=1;
+QList<User> empty;
 void IrcData::parse()
 {
     char buffer[1024];
@@ -84,6 +85,7 @@ void IrcData::parse()
         QString *arg1;
         QString *arg2;
         QString *arg3;
+        QString *arg4;
         if((currentLine->left(1)).compare(":")==0){
                 currentLine->remove(0,1);   // remove the prefix :
                 QRegExp argRegExp("([^\\s]*)[\\s].*");
@@ -107,16 +109,129 @@ void IrcData::parse()
                 if( arg1->compare(*host) == 0)
                 {
                     switch(arg2->toInt()){
-                        case 1: emit userResponse(UserOK, "User OK");
-                        emit nickResponse(NickOK, "Nick OK");
-                        break;
-                        case 431: emit nickResponse(NoNickGiven,"No Nick Given");
-                        break;
-                        case 433: emit nickResponse(NickInUse,"Nick in Use");
-                        break;
-                        case 462: emit userResponse(UserAlreadyRegistered,"User already registered");
-                        break;
-                        default: break;
+                        case 1: 
+                            emit userResponse(UserOK, "User OK");
+                            emit nickResponse(NickOK, "Nick OK");
+                            break;
+                        case 332:
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = argRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                arg3 = new QString(argRegExp.cap(1));
+                            }
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = argRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                arg4 = new QString(argRegExp.cap(1));
+                            }
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            restLine->remove(0,1);
+                            emit channelResponse(Topic,*restLine,*arg4,empty);
+                            qDebug() << *restLine;
+                            break;
+                        case 403: 
+                            emit channelResponse(NoSuchChannel,"No Such Channel","",empty);
+                            break;
+                        case 405: 
+                            emit channelResponse(TooManyChannels,"Too Many Channels","",empty);
+                            break;
+                        case 407: 
+                            emit channelResponse(TooManyTargets,"Too Many Channels","",empty);
+                            break;
+                        case 431: 
+                            emit nickResponse(NoNickGiven,"No Nick Given");
+                            break;
+                        case 432: 
+                            emit nickResponse(ErroneusNick,"Erroneus Nick");
+                            break;
+                        case 433: 
+                            emit nickResponse(NickInUse,"Nick in Use");
+                            break;
+                        case 436: 
+                            emit nickResponse(NickCollision,"Nick Collision");
+                            break;
+                        case 437:
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = argRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                arg3 = new QString(argRegExp.cap(1));
+                            }
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = argRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                arg4 = new QString(argRegExp.cap(1));
+                            }
+                            if(arg4->startsWith("#"))
+                                emit channelResponse(ChannelUnavailResource,"Channel Unavailable Resource",*arg4,empty);
+                            else
+                                emit nickResponse(NickUnavailResource,"Nick Unavailable Resource");
+                            break;
+                        case 461: 
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = argRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                arg3 = new QString(argRegExp.cap(1));
+                            }
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = argRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                arg4 = new QString(argRegExp.cap(1));
+                            }
+                            if(arg4->compare("USER")==0)
+                                emit userResponse(UserNeedMoreParams,"User Need More Params");
+                            if(arg4->compare("JOIN")==0)
+                                emit channelResponse(ChannelNeedMoreParams,"Channel Need More Params",*arg4,empty);
+                            break;
+                        case 462: 
+                            emit userResponse(UserAlreadyRegistered,"User already registered");
+                            break;
+                        case 471: 
+                            emit channelResponse(ChannelIsFull,"Channel Is Full","",empty);
+                            break;
+                        case 473: 
+                            emit channelResponse(InviteOnlyChannel,"Invite Only Channel","",empty);
+                            break;
+                        case 474: 
+                            emit channelResponse(BannedFromChannel,"Banned From Channel","",empty);
+                            break;
+                        case 475: 
+                            emit channelResponse(BadChannelKey,"Bad Channel Key","",empty);
+                            break;
+                        case 476: 
+                            emit channelResponse(BadChannelMask,"Bad Channel Mask","",empty);
+                            break;
+                        case 477: 
+                            emit channelResponse(BannedFromChannel,"Banned From Channel","",empty);
+                            break;
+                        case 478: 
+                            emit channelResponse(BannedFromChannel,"Banned From Channel","",empty);
+                            break;
+                        case 484:
+                            emit nickResponse(NickRestricted,"Nick Restricted");
+                            break;
+                        default: 
+                            break;
                     }
                 }
         }
@@ -128,36 +243,52 @@ void IrcData::errorHandler(QAbstractSocket::SocketError err)
 {
     switch(err){
         case QAbstractSocket::ConnectionRefusedError:
-            emit(connectResponse(ConnectionRefusedError,"ConnectionRefusedError")); break;
+            emit(connectResponse(ConnectionRefusedError,"ConnectionRefusedError"));
+            break;
         case QAbstractSocket::RemoteHostClosedError:
-            emit(connectResponse(RemoteHostClosedError,"RemoteHostClosedError")); break;
+            emit(connectResponse(RemoteHostClosedError,"RemoteHostClosedError"));
+            break;
         case QAbstractSocket::HostNotFoundError:
-            emit(connectResponse(HostNotFoundError,"HostNotFoundError")); break;
+            emit(connectResponse(HostNotFoundError,"HostNotFoundError"));
+            break;
         case QAbstractSocket::SocketAccessError:
-            emit(connectResponse(SocketAccessError,"SocketAccessError")); break;
+            emit(connectResponse(SocketAccessError,"SocketAccessError"));
+            break;
         case QAbstractSocket::SocketResourceError:
-            emit(connectResponse(SocketResourceError,"SocketResourceError")); break;
+            emit(connectResponse(SocketResourceError,"SocketResourceError"));
+            break;
         case QAbstractSocket::SocketTimeoutError:
-            emit(connectResponse(SocketTimeoutError,"SocketTimeoutError")); break;
+            emit(connectResponse(SocketTimeoutError,"SocketTimeoutError"));
+            break;
         case QAbstractSocket::DatagramTooLargeError:
-            emit(connectResponse(DatagramTooLargeError,"DatagramTooLargeError")); break;
+            emit(connectResponse(DatagramTooLargeError,"DatagramTooLargeError"));
+            break;
         case QAbstractSocket::NetworkError:
-            emit(connectResponse(NetworkError,"NetworkError")); break;
+            emit(connectResponse(NetworkError,"NetworkError"));
+            break;
         case QAbstractSocket::AddressInUseError:
-            emit(connectResponse(AddressInUseError,"AddressInUseError")); break;
+            emit(connectResponse(AddressInUseError,"AddressInUseError"));
+            break;
         case QAbstractSocket::SocketAddressNotAvailableError:
-            emit(connectResponse(SocketAddressNotAvailableError,"SocketAddressNotAvailableError")); break;
+            emit(connectResponse(SocketAddressNotAvailableError,"SocketAddressNotAvailableError"));
+            break;
         case QAbstractSocket::UnsupportedSocketOperationError:
-            emit(connectResponse(UnsupportedSocketOperationError,"UnsupportedSocketOperationError")); break;
+            emit(connectResponse(UnsupportedSocketOperationError,"UnsupportedSocketOperationError"));
+            break;
         case QAbstractSocket::ProxyAuthenticationRequiredError:
-            emit(connectResponse(ProxyAuthenticationRequiredError,"ProxyAuthenticationRequiredError")); break;
+            emit(connectResponse(ProxyAuthenticationRequiredError,"ProxyAuthenticationRequiredError"));
+            break;
         case QAbstractSocket::SslHandshakeFailedError: 
-            emit(connectResponse(SslHandshakeFailedError,"SslHandshakeFailedError")); break;
+            emit(connectResponse(SslHandshakeFailedError,"SslHandshakeFailedError"));
+            break;
         case QAbstractSocket::UnknownSocketError: 
-            emit(connectResponse(UnknownSocketError,"UnknownSocketError")); break;
+            emit(connectResponse(UnknownSocketError,"UnknownSocketError"));
+            break;
         case QAbstractSocket::UnfinishedSocketOperationError:
-            emit(connectResponse(UnfinishedSocketOperationError,"UnfinishedSocketOperationError")); break;
-            default: break;
+            emit(connectResponse(UnfinishedSocketOperationError,"UnfinishedSocketOperationError"));
+            break;
+        default: 
+            break;
     }
 }
 

@@ -108,14 +108,14 @@ void IrcData::parse()
                 {
                     switch(arg2->toInt()){
                         case 1: emit userResponse(UserOK, "User OK");
-                        emit nickResponse(NickOK, "Nick OK");
-                        break;
+                                emit nickResponse(NickOK, "Nick OK");
+                                 break;
                         case 431: emit nickResponse(NoNickGiven,"No Nick Given");
-                        break;
+                                break;
                         case 433: emit nickResponse(NickInUse,"Nick in Use");
-                        break;
+                                break;
                         case 462: emit userResponse(UserAlreadyRegistered,"User already registered");
-                        break;
+                                break;
                         default: break;
                     }
                 }

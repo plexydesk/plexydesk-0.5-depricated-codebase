@@ -30,19 +30,30 @@ typedef enum{
     NoNickGiven,
     ErroneusNick,
     NickCollision,
-    UnavailResource,
-    Restricted
+    NickUnavailResource,
+    NickRestricted,
 } NickResponseType;
 
 typedef enum{
     UserOK,
-    UserAlreadyRegistered
+    UserAlreadyRegistered,
+    UserNeedMoreParams
 } UserResponseType;
 
 typedef enum{
     ChannelOK,
-    PrivateChannel,
-    InviteRequired
+    BannedFromChannel,
+    InviteOnlyChannel,
+    BadChannelKey,
+    ChannelIsFull,
+    BadChannelMask,
+    NoSuchChannel,
+    TooManyChannels,
+    TooManyTargets,
+    Topic,  //topic stored in QString error
+    UserList,
+    ChannelUnavailResource,
+    ChannelNeedMoreParams
 } ChannelResponseType;
 
 class IrcData : public QObject

@@ -26,7 +26,7 @@ void Tester::nickHandler(NickResponseType response,QString error)
     switch(response){
         case NickOK: qDebug() << error;
                 break;
-        case NickInUse: qDebug() << "Duplicate Nick";
+        case NickInUse: qDebug() << error;
                 break;
         default: break;
     }
