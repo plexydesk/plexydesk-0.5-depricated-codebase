@@ -68,6 +68,12 @@ typedef enum{
     AwayMessage
 } MessageResponseType;
 
+typedef enum{
+    PartNeedMoreParams,
+    PartNoSuchChannel,
+    PartNotInChannel
+} PartResponseType;
+
 class IrcData : public QObject
 {
     Q_OBJECT
@@ -106,10 +112,24 @@ class IrcData : public QObject
         void setUser(QString user,qint16 mode,QString unused,QString realName);
 
         /*!
+        Asynchronousy emits messageResponse(MessageResponseType,QString)
         \param channel The channel to which the message is to be delivered or the nick of the person to PVT with
         \param message The message that should be delivered :P
         */
         void writeMessage(QString channel,QString message);
+
+        /*!
+        Asynchronousy emits partResponse(PartResponseType,QString)
+        \param channel Channle to part from
+        \param partMessage Part Message
+        */
+        void partChannel(QString channel, QString partMessage);
+
+        /*!
+        Asynchronousy emits quitResponse(QuitResponseType,QString)
+        \param quitMessage Quit Message
+        */
+        void quit(QString quitMessage);
 
     signals:
 
@@ -149,6 +169,12 @@ class IrcData : public QObject
         \param error if error, the error is retured in this, else empty(not null)
          */
         void messageResponse(MessageResponseType response,QString error);
+
+        /*!
+        \param response Response code for the request partChannel(QString,QString) check PartResponseType (irc.h)
+        \param error if error, the error is retured in this, else empty(not null)
+        */
+        void partResponse(PartResponseType response,QString error);
 
     public slots:
 

@@ -13,6 +13,7 @@ class Tester : public QObject
         void nickHandler(NickResponseType,QString);
         void channelHandler(ChannelResponseType,QString,QStringList);
         void messageHandler(MessageResponseType,QString);
+        void partHandler(PartResponseType,QString);
     private:
         int Test;
 };

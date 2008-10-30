@@ -52,6 +52,11 @@ void Tester::messageHandler(MessageResponseType response,QString error)
     }
 }
 
+void Tester::partHandler(PartResponseType response,QString error)
+{
+    qDebug() << error ;
+}
+
 Tester::Tester(QObject *p) : QObject(p)
 {
     Test = 0;
@@ -74,6 +79,9 @@ Tester::Tester(QObject *p) : QObject(p)
 //     irc->writeMessage("sira", "Hi Folks, Our IRC engine works!");
     irc->writeMessage("dA_ShArP", "Hi Folks, Our IRC engine works!");
     connect(irc,SIGNAL(messageResponse(MessageResponseType,QString)),SLOT(messageHandler(MessageResponseType,QString)));
+
+    irc->partChannel("#plexydesk", "Even Bots can type PART messages!");
+    connect(irc,SIGNAL(partResponse(PartResponseType,QString)),SLOT(partHandler(PartResponseType,QString)));
 }
 
 int main(int argc, char** argv)

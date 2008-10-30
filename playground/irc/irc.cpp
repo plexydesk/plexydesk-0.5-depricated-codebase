@@ -54,6 +54,11 @@ void IrcData::writeMessage(QString channel,QString message)
     service->write(QString("PRIVMSG %1 :%2\r\n").arg(channel).arg(message).toAscii());
 }
 
+void IrcData::partChannel(QString channel,QString message)
+{
+    service->write(QString("PART %1 :%2\r\n").arg(channel).arg(message).toAscii());
+}
+
 // void IrcData::init()
 // {
 //     service->write("NICK sharpBot\r\n");
@@ -405,6 +410,9 @@ void IrcData::parse()
                             else
                                 emit nickResponse(NickUnavailResource,"Nick Unavailable Resource");
                             break;
+                        case 442:
+                            emit partResponse(PartNotInChannel,"Part Not In Channel");
+                            break;
                         case 461: 
                             pos = restRegExp.indexIn(*restLine);
                             if(pos>-1){
@@ -443,6 +451,8 @@ void IrcData::parse()
                                 }
                                 emit channelResponse(ChannelNeedMoreParams,"Channel Need More Params",empty << *arg4);
                             }
+                            if(arg4->compare("PART")==0)
+                                emit partResponse(PartNeedMoreParams,"Part Need More Params");
                             break;
                         case 462: 
                             emit userResponse(UserAlreadyRegistered,"User already registered");
