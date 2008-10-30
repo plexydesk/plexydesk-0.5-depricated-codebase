@@ -57,7 +57,7 @@ void IrcData::joinChannel(QString channel)
 // }
 
 int i=1;
-QList<User> empty;
+QStringList empty;
 void IrcData::parse()
 {
     char buffer[1024];
@@ -135,17 +135,17 @@ void IrcData::parse()
                                 restLine = new QString(restRegExp.cap(1));
                             }
                             restLine->remove(0,1);
-                            emit channelResponse(Topic,*restLine,*arg4,empty);
+                            emit channelResponse(Topic,*restLine,empty << *arg4);
                             qDebug() << *restLine;
                             break;
                         case 403: 
-                            emit channelResponse(NoSuchChannel,"No Such Channel","",empty);
+                            emit channelResponse(NoSuchChannel,"No Such Channel",empty << *arg4);
                             break;
                         case 405: 
-                            emit channelResponse(TooManyChannels,"Too Many Channels","",empty);
+                            emit channelResponse(TooManyChannels,"Too Many Channels",empty << *arg4);
                             break;
                         case 407: 
-                            emit channelResponse(TooManyTargets,"Too Many Channels","",empty);
+                            emit channelResponse(TooManyTargets,"Too Many Channels",empty << *arg4);
                             break;
                         case 431: 
                             emit nickResponse(NoNickGiven,"No Nick Given");
@@ -177,7 +177,7 @@ void IrcData::parse()
                                 arg4 = new QString(argRegExp.cap(1));
                             }
                             if(arg4->startsWith("#"))
-                                emit channelResponse(ChannelUnavailResource,"Channel Unavailable Resource",*arg4,empty);
+                                emit channelResponse(ChannelUnavailResource,"Channel Unavailable Resource",empty << *arg4);
                             else
                                 emit nickResponse(NickUnavailResource,"Nick Unavailable Resource");
                             break;
@@ -201,31 +201,31 @@ void IrcData::parse()
                             if(arg4->compare("USER")==0)
                                 emit userResponse(UserNeedMoreParams,"User Need More Params");
                             if(arg4->compare("JOIN")==0)
-                                emit channelResponse(ChannelNeedMoreParams,"Channel Need More Params",*arg4,empty);
+                                emit channelResponse(ChannelNeedMoreParams,"Channel Need More Params",empty << *arg4);
                             break;
                         case 462: 
                             emit userResponse(UserAlreadyRegistered,"User already registered");
                             break;
                         case 471: 
-                            emit channelResponse(ChannelIsFull,"Channel Is Full","",empty);
+                            emit channelResponse(ChannelIsFull,"Channel Is Full",empty << *arg4);
                             break;
                         case 473: 
-                            emit channelResponse(InviteOnlyChannel,"Invite Only Channel","",empty);
+                            emit channelResponse(InviteOnlyChannel,"Invite Only Channel",empty << *arg4);
                             break;
                         case 474: 
-                            emit channelResponse(BannedFromChannel,"Banned From Channel","",empty);
+                            emit channelResponse(BannedFromChannel,"Banned From Channel",empty << *arg4);
                             break;
                         case 475: 
-                            emit channelResponse(BadChannelKey,"Bad Channel Key","",empty);
+                            emit channelResponse(BadChannelKey,"Bad Channel Key",empty << *arg4);
                             break;
                         case 476: 
-                            emit channelResponse(BadChannelMask,"Bad Channel Mask","",empty);
+                            emit channelResponse(BadChannelMask,"Bad Channel Mask",empty << *arg4);
                             break;
                         case 477: 
-                            emit channelResponse(BannedFromChannel,"Banned From Channel","",empty);
+                            emit channelResponse(BannedFromChannel,"Banned From Channel",empty << *arg4);
                             break;
                         case 478: 
-                            emit channelResponse(BannedFromChannel,"Banned From Channel","",empty);
+                            emit channelResponse(BannedFromChannel,"Banned From Channel",empty << *arg4);
                             break;
                         case 484:
                             emit nickResponse(NickRestricted,"Nick Restricted");
@@ -234,6 +234,41 @@ void IrcData::parse()
                             break;
                     }
                 }
+        }
+        else{
+            QRegExp argRegExp("([^\\s]*)[\\s].*");
+            int pos = argRegExp.indexIn(*currentLine);
+            if(pos>-1){
+                arg1 = new QString(argRegExp.cap(1));
+            }
+            QString *restLine;
+            QRegExp restRegExp("[^\\s]*[\\s](.*)");
+            pos = restRegExp.indexIn(*currentLine);
+            if(pos>-1){
+                restLine = new QString(restRegExp.cap(1));
+            }
+
+            if(arg1->compare("PING")==0){
+                pos = argRegExp.indexIn(*restLine);
+                if(pos>-1){
+                    arg2 = new QString(argRegExp.cap(1));
+                }
+                arg2->remove(0,1);
+                service->write(QString("PONG %1").arg(*arg2).toAscii());
+            }
+            else if(arg1->compare("NOTICE")==0){
+                pos = argRegExp.indexIn(*restLine);
+                if(pos>-1){
+                    arg2 = new QString(argRegExp.cap(1));
+                }
+                pos = restRegExp.indexIn(*restLine);
+                if(pos>-1){
+                    restLine = new QString(restRegExp.cap(1));
+                }
+                restLine->remove(0,1);
+                restLine->remove("\r\n");
+                qDebug() << QString("%1 %2 :%3").arg(*arg1).arg(*arg2).arg(*restLine);
+            }
         }
         i++;
     }

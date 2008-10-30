@@ -115,10 +115,10 @@ class IrcData : public QObject
         /*!
         \param response Response code for the request joinChannel(QString), check ChannelResponseType (irc.h)
         \param error if error, the error is retured in this, else empty(not null)
-        \param channelName Since the reponse signals are asynchronous, to identify which channel emitted this response
-        \param userList List of all users in that channel, if the ChannelResponseType is OK
+        \param userList List of all users in that channel, if the ChannelResponseType is OK,
+                        further for every ChannelResponseType the first string or userList is the channel name
          */
-        void channelResponse(ChannelResponseType response,QString error,QString channelName ,QList<User> userList);
+        void channelResponse(ChannelResponseType response,QString error,QStringList userList);
 
         /*!
         \param response Response code for the request setUser(QString) check UserResponseType (irc.h)
