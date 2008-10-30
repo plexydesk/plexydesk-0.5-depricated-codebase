@@ -57,6 +57,17 @@ typedef enum{
     ChannelNeedMoreParams
 } ChannelResponseType;
 
+typedef enum{
+    NoRecipient,
+    NoTextToSend,
+    CannotSendToChannel,
+    NoTopLevel,
+    WildTopLevel,
+//     TooManyTargets,
+    NoSuchNick,
+    AwayMessage
+} MessageResponseType;
+
 class IrcData : public QObject
 {
     Q_OBJECT
@@ -132,6 +143,12 @@ class IrcData : public QObject
         \param error if error, the error is retured in this, else empty(not null)
         */
         void userResponse(UserResponseType response,QString error);
+
+        /*!
+        \param response Response code for the request writeMessage(QString,QString) check UserResponseType (irc.h)
+        \param error if error, the error is retured in this, else empty(not null)
+         */
+        void messageResponse(MessageResponseType response,QString error);
 
     public slots:
 

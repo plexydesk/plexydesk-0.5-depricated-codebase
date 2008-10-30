@@ -42,6 +42,16 @@ void Tester::channelHandler(ChannelResponseType response,QString error,QStringLi
     }
 }
 
+void Tester::messageHandler(MessageResponseType response,QString error)
+{
+    if(response == AwayMessage)
+        qDebug() << error;
+    else
+    {
+        qDebug() << error ;
+    }
+}
+
 Tester::Tester(QObject *p) : QObject(p)
 {
     Test = 0;
@@ -62,7 +72,8 @@ Tester::Tester(QObject *p) : QObject(p)
 //     irc->writeMessage("#plexydesk", "Hi Folks, Our IRC engine works!");
 //     irc->writeMessage("zakirs", "Hi Folks, Our IRC engine works!");
 //     irc->writeMessage("sira", "Hi Folks, Our IRC engine works!");
-//     irc->writeMessage("dA_ShArP", "Hi Folks, Our IRC engine works!");
+    irc->writeMessage("dA_ShArP", "Hi Folks, Our IRC engine works!");
+    connect(irc,SIGNAL(messageResponse(MessageResponseType,QString)),SLOT(messageHandler(MessageResponseType,QString)));
 }
 
 int main(int argc, char** argv)

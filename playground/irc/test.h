@@ -12,6 +12,7 @@ class Tester : public QObject
         void userHandler(UserResponseType,QString);
         void nickHandler(NickResponseType,QString);
         void channelHandler(ChannelResponseType,QString,QStringList);
+        void messageHandler(MessageResponseType,QString);
     private:
         int Test;
 };

@@ -124,6 +124,22 @@ void IrcData::parse()
                             emit userResponse(UserOK, "User OK");
                             emit nickResponse(NickOK, "Nick OK");
                             break;
+                        case 301:
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = argRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                arg3 = new QString(argRegExp.cap(1));
+                            }
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = argRegExp.indexIn(*restLine);
+                            emit messageResponse(AwayMessage,*restLine);
+                            break;
                         case 332:
                             pos = restRegExp.indexIn(*restLine);
                             if(pos>-1){
@@ -202,6 +218,25 @@ void IrcData::parse()
                             emit channelResponse(UserList,"user List",empty);
 //                             qDebug() << empty;
                             break;
+                        case 401: 
+//                             pos = restRegExp.indexIn(*restLine);
+//                             if(pos>-1){
+//                                 restLine = new QString(restRegExp.cap(1));
+//                             }
+//                             pos = argRegExp.indexIn(*restLine);
+//                             if(pos>-1){
+//                                 arg3 = new QString(argRegExp.cap(1));
+//                             }
+//                             pos = restRegExp.indexIn(*restLine);
+//                             if(pos>-1){
+//                                 restLine = new QString(restRegExp.cap(1));
+//                             }
+//                             pos = argRegExp.indexIn(*restLine);
+//                             if(pos>-1){
+//                                 arg4 = new QString(argRegExp.cap(1));
+//                             }
+                            emit messageResponse(NoSuchNick,"No Such Nick");
+                            break;
                         case 403: 
                             pos = restRegExp.indexIn(*restLine);
                             if(pos>-1){
@@ -220,6 +255,25 @@ void IrcData::parse()
                                 arg4 = new QString(argRegExp.cap(1));
                             }
                             emit channelResponse(NoSuchChannel,"No Such Channel",empty << *arg4);
+                            break;
+                        case 404: 
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = argRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                arg3 = new QString(argRegExp.cap(1));
+                            }
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = argRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                arg4 = new QString(argRegExp.cap(1));
+                            }
+                            emit messageResponse(CannotSendToChannel,QString("Cannot Send To Channel :%1").arg(*arg4));
                             break;
                         case 405:
                             pos = restRegExp.indexIn(*restLine);
@@ -258,6 +312,47 @@ void IrcData::parse()
                                 arg4 = new QString(argRegExp.cap(1));
                             }
                             emit channelResponse(TooManyTargets,"Too Many Channels",empty << *arg4);
+                            break;
+                        case 411: 
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = argRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                arg3 = new QString(argRegExp.cap(1));
+                            }
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            restLine->remove(0,1);
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = argRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                arg3 = new QString(argRegExp.cap(1));
+                            }
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = argRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                arg4 = new QString(argRegExp.cap(1));
+                            }
+                            emit messageResponse(NoRecipient,QString("No Recipient :%1").arg(*arg4));
+                            break;
+                        case 412:
+                            emit messageResponse(NoTextToSend,"No Text To Send");
+                            break;
+                        case 413:
+                            emit messageResponse(NoTopLevel,"No Top Level");
+                            break;
+                        case 414:
+                            emit messageResponse(WildTopLevel,"Wild Top Level");
                             break;
                         case 431: 
                             emit nickResponse(NoNickGiven,"No Nick Given");
