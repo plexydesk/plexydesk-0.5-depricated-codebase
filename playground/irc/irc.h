@@ -43,6 +43,7 @@ typedef enum{
 typedef enum{
     ChannelOK,
     BannedFromChannel,
+    NoChannelModes,
     InviteOnlyChannel,
     BadChannelKey,
     ChannelIsFull,
@@ -92,6 +93,12 @@ class IrcData : public QObject
         \param realName Real Name of the User
         */
         void setUser(QString user,qint16 mode,QString unused,QString realName);
+
+        /*!
+        \param channel The channel to which the message is to be delivered or the nick of the person to PVT with
+        \param message The message that should be delivered :P
+        */
+        void writeMessage(QString channel,QString message);
 
     signals:
 

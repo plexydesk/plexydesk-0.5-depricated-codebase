@@ -32,17 +32,37 @@ void Tester::nickHandler(NickResponseType response,QString error)
     }
 }
 
+void Tester::channelHandler(ChannelResponseType response,QString error,QStringList userList)
+{
+    if(response == UserList)
+        qDebug() << userList;
+    else
+    {
+        qDebug() << error << " :"<<userList.takeAt(0);
+    }
+}
+
 Tester::Tester(QObject *p) : QObject(p)
 {
     Test = 0;
     IrcData *irc = new IrcData("64.161.254.20",6667);
     irc->connectToServer();
-    connect(irc,SIGNAL(connectResponse(ConnectResponseType,QString)),SLOT(connectHandler(ConnectResponseType,QString)));
+    connect(irc,SIGNAL(connectResponse(ConnectResponseType,QString)),
+            SLOT(connectHandler(ConnectResponseType,QString)));
     irc->setNick("sharpBot");
     connect(irc,SIGNAL(nickResponse(NickResponseType,QString)),SLOT(nickHandler(NickResponseType,QString)));
+
     irc->setUser("sharpBot", 7, "*", "Mani Shankar's BOT");
     connect(irc,SIGNAL(userResponse(UserResponseType,QString)),SLOT(userHandler(UserResponseType,QString)));
-    irc->joinChannel("#plexy");
+
+    irc->joinChannel("#plexydesk");
+    connect(irc,SIGNAL(channelResponse(ChannelResponseType,QString,QStringList)),
+            SLOT(channelHandler(ChannelResponseType,QString,QStringList)));
+
+//     irc->writeMessage("#plexydesk", "Hi Folks, Our IRC engine works!");
+//     irc->writeMessage("zakirs", "Hi Folks, Our IRC engine works!");
+//     irc->writeMessage("sira", "Hi Folks, Our IRC engine works!");
+//     irc->writeMessage("dA_ShArP", "Hi Folks, Our IRC engine works!");
 }
 
 int main(int argc, char** argv)

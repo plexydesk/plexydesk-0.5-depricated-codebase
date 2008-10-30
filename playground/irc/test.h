@@ -11,6 +11,7 @@ class Tester : public QObject
         void connectHandler(ConnectResponseType,QString);
         void userHandler(UserResponseType,QString);
         void nickHandler(NickResponseType,QString);
+        void channelHandler(ChannelResponseType,QString,QStringList);
     private:
         int Test;
 };
