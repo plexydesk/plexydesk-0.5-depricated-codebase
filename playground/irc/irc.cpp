@@ -919,44 +919,44 @@ void IrcData::parse()
                     }
                 }
         }
-        else{
-//             qDebug() << "YAY!";
-//             std::cout << "yay!\n";
-            QRegExp argRegExp("([^\\s]*)[\\s].*");
-            int pos = argRegExp.indexIn(*currentLine);
-            if(pos>-1){
-                arg1 = new QString(argRegExp.cap(1));
-            }
-            QString *restLine;
-            QRegExp restRegExp("[^\\s]*[\\s](.*)");
-            pos = restRegExp.indexIn(*currentLine);
-            if(pos>-1){
-                restLine = new QString(restRegExp.cap(1));
-            }
-
-            if(arg1->compare("PING")==0){
-                pos = argRegExp.indexIn(*restLine);
-                if(pos>-1){
-                    arg2 = new QString(argRegExp.cap(1));
-                }
-                arg2->remove(0,1);
-                service->write(QString("PONG %1").arg(*arg2).toAscii());
-            }
-            else if(arg1->compare("NOTICE")==0){
-                pos = argRegExp.indexIn(*restLine);
-                if(pos>-1){
-                    arg2 = new QString(argRegExp.cap(1));
-                }
-                pos = restRegExp.indexIn(*restLine);
-                if(pos>-1){
-                    restLine = new QString(restRegExp.cap(1));
-                }
-                restLine->remove(0,1);
-                restLine->remove("\r\n");
-//                 qDebug("Yay!");
-                qDebug() << QString("%1 %2 :%3").arg(*arg1).arg(*arg2).arg(*restLine);
-            }
-        }
+//         else{
+// //             qDebug() << "YAY!";
+// //             std::cout << "yay!\n";
+//             QRegExp argRegExp("([^\\s]*)[\\s].*");
+//             int pos = argRegExp.indexIn(*currentLine);
+//             if(pos>-1){
+//                 arg1 = new QString(argRegExp.cap(1));
+//             }
+//             QString *restLine;
+//             QRegExp restRegExp("[^\\s]*[\\s](.*)");
+//             pos = restRegExp.indexIn(*currentLine);
+//             if(pos>-1){
+//                 restLine = new QString(restRegExp.cap(1));
+//             }
+// 
+//             if(arg1->compare("PING")==0){
+//                 pos = argRegExp.indexIn(*restLine);
+//                 if(pos>-1){
+//                     arg2 = new QString(argRegExp.cap(1));
+//                 }
+//                 arg2->remove(0,1);
+//                 service->write(QString("PONG %1").arg(*arg2).toAscii());
+//             }
+//             else if(arg1->compare("NOTICE")==0){
+//                 pos = argRegExp.indexIn(*restLine);
+//                 if(pos>-1){
+//                     arg2 = new QString(argRegExp.cap(1));
+//                 }
+//                 pos = restRegExp.indexIn(*restLine);
+//                 if(pos>-1){
+//                     restLine = new QString(restRegExp.cap(1));
+//                 }
+//                 restLine->remove(0,1);
+//                 restLine->remove("\r\n");
+// //                 qDebug("Yay!");
+//                 qDebug() << QString("%1 %2 :%3").arg(*arg1).arg(*arg2).arg(*restLine);
+//             }
+//         }
         i++;
     } // End While
 }
