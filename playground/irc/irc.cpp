@@ -1,6 +1,7 @@
 #include "irc.h"
 #include <QApplication>
 #include <QNetworkProxy>
+#include <iostream>
 
 IrcData::IrcData(QObject *p) : QObject(p)
 {
@@ -157,7 +158,7 @@ void IrcData::parse()
         QString *arg4;
         QString *arg5;
         QString *arg6;
-        qDebug() << *currentLine;
+//         qDebug() << *currentLine;
         if((currentLine->left(1)).compare(":")==0){
                 currentLine->remove(0,1);   // remove the prefix :
                 QRegExp argRegExp("([^\\s]*)[\\s].*");
@@ -428,6 +429,7 @@ void IrcData::parse()
                                 restLine = new QString(restRegExp.cap(1));
                             }
                             restLine->remove(0,1);
+                            restLine->remove("\r\n");
                             emit channelResponse(Topic,*restLine,empty << *arg4);
                             break;
                         case 341:
@@ -918,6 +920,8 @@ void IrcData::parse()
                 }
         }
         else{
+//             qDebug() << "YAY!";
+//             std::cout << "yay!\n";
             QRegExp argRegExp("([^\\s]*)[\\s].*");
             int pos = argRegExp.indexIn(*currentLine);
             if(pos>-1){
@@ -948,6 +952,8 @@ void IrcData::parse()
                     restLine = new QString(restRegExp.cap(1));
                 }
                 restLine->remove(0,1);
+                restLine->remove("\r\n");
+//                 qDebug("Yay!");
                 qDebug() << QString("%1 %2 :%3").arg(*arg1).arg(*arg2).arg(*restLine);
             }
         }

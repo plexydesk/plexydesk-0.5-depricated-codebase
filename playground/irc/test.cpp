@@ -95,8 +95,8 @@ Tester::Tester(QObject *p) : QObject(p)
     connect(irc,SIGNAL(channelResponse(ChannelResponseType,QString,QStringList)),
             SLOT(channelHandler(ChannelResponseType,QString,QStringList)));
 
-    irc->away("Yay!");
-    connect(irc,SIGNAL(awayResponse(AwayResponseType,QString)),SLOT(awayHandler(AwayResponseType,QString)));
+//     irc->away("Yay!");
+//     connect(irc,SIGNAL(awayResponse(AwayResponseType,QString)),SLOT(awayHandler(AwayResponseType,QString)));
 
 //     irc->writeMessage("#plexydesk", "Hi Folks, Our IRC engine works!");
 //     irc->writeMessage("zakirs", "Hi Folks, Our IRC engine works!");
