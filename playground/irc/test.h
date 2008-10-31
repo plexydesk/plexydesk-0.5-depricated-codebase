@@ -1,5 +1,6 @@
 #include <QtCore>
 #include "irc.h"
+#include "user.h"
 
 
 class Tester : public QObject
@@ -16,6 +17,7 @@ class Tester : public QObject
         void partHandler(PartResponseType,QString);
         void inviteHandler(InviteResponseType,QString);
         void kickHandler(KickResponseType,QString);
+        void whoisHandler(WhoisResponseType,QString,User);
     private:
         int Test;
 };

@@ -27,7 +27,7 @@ typedef enum{
 typedef enum{
     NickOK,
     NickInUse,
-    NoNickGiven,
+    NickNoNickGiven,
     ErroneusNick,
     NickCollision,
     NickUnavailResource,
@@ -92,6 +92,12 @@ typedef enum{
     KickNotInChannel,
     KickNotOnChannel
 } KickResponseType;
+
+typedef enum{
+    WhoisNoNickGiven,
+    WhoisNoSuchNick,
+    WhoisOK
+} WhoisResponseType;
 
 class IrcData : public QObject
 {
@@ -171,6 +177,12 @@ class IrcData : public QObject
         */
         void kick(QString channel,QString nick,QString comment);
 
+        /*!
+        Asynchronously emits whoisResponse(WhoisResponseType,QString,User)
+        \param nick The nick of who you need whois information
+        */
+        void whois(QString nick);
+
     signals:
 
         /*!
@@ -228,6 +240,14 @@ class IrcData : public QObject
         \param error If error, the error is returned int this, else the info for the corresponding response
         */
         void kickResponse(KickResponseType,QString);
+
+        /*!
+        \param response Response code for the request whois(QString) check WhoisResponseType (irc.h)
+        \param error If error, the error is returned int this, else the info for the corresponding response
+        \param message The actual whois reponse ! Nick, User, Host, Real Name, Server, Server Info, Away Message(if away else skipped) ,
+        \param channels The channels the user has joined
+        */
+        void whoisResponse(WhoisResponseType response,QString error,User user);
 
     public slots:
 

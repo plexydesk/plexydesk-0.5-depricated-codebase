@@ -19,11 +19,12 @@ bool partCalled=0;
 bool nickCalled =0;
 bool userCalled =0;
 bool joinCalled =0;
-bool privmsgCalled = 0;
+bool privmsgCalled =0;
 bool passCalled =0;
 bool inviteCalled =0;
 bool quitCalled =0;
 bool kickCalled =0;
+bool whoisCalled =0;
 
 void IrcData::connectToServer()
 {
@@ -100,6 +101,13 @@ void IrcData::kick(QString channel,QString nick,QString message)
     kickCalled = 1;
 }
 
+void IrcData::whois(QString nick)
+{
+//     service->write("WHOIS dA_ShArP\r\n");
+    service->write(QString("WHOIS %1\r\n").arg(nick).toAscii());
+    whoisCalled = 1;
+}
+
 // void IrcData::init()
 // {
 //     service->write("NICK sharpBot\r\n");
@@ -110,7 +118,8 @@ void IrcData::kick(QString channel,QString nick,QString message)
 int i=1;
 int j =0;
 int listFinish = 1;
-QStringList empty;
+QStringList empty; //UserList
+User who; //Whois List
 bool append = 0;
 char buffer[1024];
 char tempBuffer[1024];
@@ -141,6 +150,7 @@ void IrcData::parse()
         QString *arg3;
         QString *arg4;
         QString *arg5;
+        QString *arg6;
 //         qDebug() << *currentLine;
         if((currentLine->left(1)).compare(":")==0){
                 currentLine->remove(0,1);   // remove the prefix :
@@ -191,6 +201,185 @@ void IrcData::parse()
                             if(inviteCalled){
                                 emit inviteResponse(InviteAwayMessage,*restLine);
                                 inviteCalled = 0;
+                            }
+                            if(whoisCalled){
+                                who.isAway =1;
+                                who.awayMessage = *restLine;
+//                                 whoisCalled = 0;
+                            }
+                            break;
+                        case 311:
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = argRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                arg3 = new QString(argRegExp.cap(1));
+                            }
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = argRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                arg4 = new QString(argRegExp.cap(1));
+                            }
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = argRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                arg5 = new QString(argRegExp.cap(1));
+                            }
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = argRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                arg6 = new QString(argRegExp.cap(1));
+                            }
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            restLine->remove(0,1);
+                            if(whoisCalled){
+                                who.nick =*arg4;
+                                who.user = *arg5;
+                                who.host = *arg6;
+                                who.realName = *restLine;
+//                                 qDebi
+//                                 whoisCalled = 0;
+                            }
+                            break;
+                        case 312:
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = argRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                arg3 = new QString(argRegExp.cap(1));
+                            }
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = argRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                arg4 = new QString(argRegExp.cap(1));
+                            }
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = argRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                arg5 = new QString(argRegExp.cap(1));
+                            }
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            restLine->remove(0,1);
+                            if(whoisCalled){
+                                who.server =*arg5;
+                                who.serverInfo = *restLine;
+//                                 whoisCalled = 0;
+                            }
+                            break;
+                        case 313:
+                            if(whoisCalled){
+                                who.isOP = 1;
+//                                 whoisCalled = 0;
+                            }
+                            break;
+                        case 317:
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = argRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                arg3 = new QString(argRegExp.cap(1));
+                            }
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = argRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                arg4 = new QString(argRegExp.cap(1));
+                            }
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = argRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                arg5 = new QString(argRegExp.cap(1));
+                            }
+                            if(whoisCalled){
+                                who.isIdle = 1;
+                                who.idleTime = *arg5;
+//                                 whoisCalled = 0;
+                            }
+                            break;
+                        case 318:
+                            if(whoisCalled){
+                                emit whoisResponse(WhoisOK,"Whois OK",who);
+                                who = User();
+                                whoisCalled = 0;
+                            }
+                            break;
+                        case 319:
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = argRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                arg3 = new QString(argRegExp.cap(1));
+                            }
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = argRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                arg4 = new QString(argRegExp.cap(1));
+                            }
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+//                             qDebug() << *currentLine;
+                            restLine->remove(0,1);
+                            restLine->remove("\r\n");
+//                             qDebug() << *restLine;
+                            if(whoisCalled){
+                                while(restLine->compare("")!=0 || restLine->compare(" ")!=0){
+                                    pos = argRegExp.indexIn(*restLine);
+                                    if(pos>-1){
+                                        who.channels << QString(argRegExp.cap(1));
+//                                         qDebug() << QString(argRegExp.cap(1));
+                                    }
+                                    pos = restRegExp.indexIn(*restLine);
+                                    if(pos>-1){
+                                        restLine = new QString(restRegExp.cap(1));
+//                                         qDebug() << *restLine;
+                                    }
+                                    else {break;}
+                                    j++;
+                                }
+//                                 whoisCalled = 0;
                             }
                             break;
                         case 332:
@@ -270,27 +459,12 @@ void IrcData::parse()
 //                             qDebug() << empty << "HHHH******";
                             break;
                         case 366:
-                            listFinish = 1;
+//                             listFinish = 1;
                             emit channelResponse(UserList,"user List",empty);
+                            empty = QStringList();
 //                             qDebug() << empty;
                             break;
                         case 401: 
-//                             pos = restRegExp.indexIn(*restLine);
-//                             if(pos>-1){
-//                                 restLine = new QString(restRegExp.cap(1));
-//                             }
-//                             pos = argRegExp.indexIn(*restLine);
-//                             if(pos>-1){
-//                                 arg3 = new QString(argRegExp.cap(1));
-//                             }
-//                             pos = restRegExp.indexIn(*restLine);
-//                             if(pos>-1){
-//                                 restLine = new QString(restRegExp.cap(1));
-//                             }
-//                             pos = argRegExp.indexIn(*restLine);
-//                             if(pos>-1){
-//                                 arg4 = new QString(argRegExp.cap(1));
-//                             }
                             if(privmsgCalled){
                                 emit messageResponse(MessageNoSuchNick,"PRIVMSG No Such Nick");
                                 privmsgCalled =0;
@@ -298,6 +472,10 @@ void IrcData::parse()
                             if(inviteCalled){
                                 emit inviteResponse(InviteNoSuchNick,"Invite No Such Nick");
                                 inviteCalled = 0;
+                            }
+                            if(whoisCalled){
+                                emit whoisResponse(WhoisNoSuchNick,"Whois No Such Nick",who);
+                                whoisCalled =0;
                             }
                             break;
                         case 403: 
@@ -424,8 +602,15 @@ void IrcData::parse()
                         case 414:
                             emit messageResponse(WildTopLevel,"Wild Top Level");
                             break;
-                        case 431: 
-                            emit nickResponse(NoNickGiven,"No Nick Given");
+                        case 431:
+                            if(whoisCalled){
+                                emit whoisResponse(WhoisNoNickGiven,"Whois No Nick Given",who);
+                                whoisCalled =0;
+                            }
+                            if(nickCalled){
+                                emit nickResponse(NickNoNickGiven,"Nick No Nick Given");
+                                nickCalled =0;
+                            }
                             break;
                         case 432: 
                             emit nickResponse(ErroneusNick,"Erroneus Nick");
