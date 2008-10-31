@@ -154,6 +154,7 @@ class IrcData : public QObject
         \param response Response code for the request joinChannel(QString), check ChannelResponseType (irc.h)
         \param error if error, the error is retured in this, else empty(not null)
         \param userList List of all users in that channel, if the ChannelResponseType is OK,
+                        OPs start with @ and moderators start with +
                         further for every ChannelResponseType the first string or userList is the channel name
          */
         void channelResponse(ChannelResponseType response,QString error,QStringList userList);

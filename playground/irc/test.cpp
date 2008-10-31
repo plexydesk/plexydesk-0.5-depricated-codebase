@@ -70,7 +70,7 @@ Tester::Tester(QObject *p) : QObject(p)
     irc->setUser("sharpBot", 7, "*", "Mani Shankar's BOT");
     connect(irc,SIGNAL(userResponse(UserResponseType,QString)),SLOT(userHandler(UserResponseType,QString)));
 
-    irc->joinChannel("#plexydesk");
+    irc->joinChannel("#gentoo");
     connect(irc,SIGNAL(channelResponse(ChannelResponseType,QString,QStringList)),
             SLOT(channelHandler(ChannelResponseType,QString,QStringList)));
 
@@ -80,7 +80,7 @@ Tester::Tester(QObject *p) : QObject(p)
     irc->writeMessage("dA_ShArP", "Hi Folks, Our IRC engine works!");
     connect(irc,SIGNAL(messageResponse(MessageResponseType,QString)),SLOT(messageHandler(MessageResponseType,QString)));
 
-    irc->partChannel("#plexydesk", "Even Bots can type PART messages!");
+    irc->partChannel("#gentoo", "Even Bots can type PART messages!");
     connect(irc,SIGNAL(partResponse(PartResponseType,QString)),SLOT(partHandler(PartResponseType,QString)));
 }
 
