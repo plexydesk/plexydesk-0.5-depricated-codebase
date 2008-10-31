@@ -64,7 +64,7 @@ typedef enum{
     NoTopLevel,
     WildTopLevel,
 //     TooManyTargets,
-    NoSuchNick,
+    MessageNoSuchNick,
     AwayMessage
 } MessageResponseType;
 
@@ -73,6 +73,16 @@ typedef enum{
     PartNoSuchChannel,
     PartNotInChannel
 } PartResponseType;
+
+typedef enum{
+    InviteNeedMoreParams,
+    InviteNoSuchNick,
+    InviteNotInChannel,
+    InviteUserOnChannel,
+    InviteChannelOpNeeded,
+    InviteOK,
+    InviteAwayMessage
+} InviteResponseType;
 
 class IrcData : public QObject
 {
@@ -86,6 +96,12 @@ class IrcData : public QObject
         Asynchonously emits connectResponse(ConnectResponseType response,QString error)
         */
         void connectToServer();
+
+        /*!
+        Doesn't emit anything
+        \param pass password for a registration, don't comfuse this with NickServ password
+        */
+        void setPassword(QString pass);
 
         /*!
         Asynchronously emits nickResponce(NickResponseType)
@@ -120,16 +136,23 @@ class IrcData : public QObject
 
         /*!
         Asynchronousy emits partResponse(PartResponseType,QString)
-        \param channel Channle to part from
+        \param channel Channel to part from
         \param partMessage Part Message
         */
         void partChannel(QString channel, QString partMessage);
 
         /*!
-        Asynchronousy emits quitResponse(QuitResponseType,QString)
+        Doesn't emit anything
         \param quitMessage Quit Message
         */
         void quit(QString quitMessage);
+
+        /*!
+        Asynchronousy emits inviteResponse(InviteResponseType,QString)
+        \param nick Nick to invite
+        \param channel Invite to channel
+        */
+        void invite(QString nick, QString channel);
 
     signals:
 
@@ -176,6 +199,12 @@ class IrcData : public QObject
         \param error if error, the error is retured in this, else empty(not null)
         */
         void partResponse(PartResponseType response,QString error);
+
+        /*!
+        \param response Response code for the request invite(QString,QString) check InviteResponseType (irc.h)
+        \param error If error, the error is returned int this, else the info for the corresponding response
+        */
+        void inviteResponse(InviteResponseType response,QString error);
 
     public slots:
 

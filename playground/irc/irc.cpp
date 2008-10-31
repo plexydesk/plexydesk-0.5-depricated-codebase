@@ -14,13 +14,23 @@ IrcData::IrcData(QString server_arg, qint16 port_arg)
     port = port_arg;
 }
 
+bool connectCalled=0;
+bool partCalled=0;
+bool nickCalled =0;
+bool userCalled =0;
+bool joinCalled =0;
+bool privmsgCalled = 0;
+bool passCalled =0;
+bool inviteCalled =0;
+bool quitCalled =0;
+
 void IrcData::connectToServer()
 {
     service = new QTcpSocket();
 
     QNetworkProxy proxy;
     proxy.setType(QNetworkProxy::HttpProxy);
-    proxy.setHostName("vsnlproxy.iitk.ac.in");
+    proxy.setHostName("bsnlproxy.iitk.ac.in");
     proxy.setPort(3128);
     proxy.setUser("shankar");
     proxy.setPassword("LINKINpark");
@@ -37,26 +47,50 @@ void IrcData::connectToServer()
 void IrcData::setNick(QString nick)
 {
     service->write(QString("NICK %1\r\n").arg(nick).toAscii());
+    nickCalled = 1;
 }
 
 void IrcData::setUser(QString user,qint16 mode,QString unused,QString realName)
 {
     service->write(QString("USER %1 %2 %3 :%4\r\n").arg(user).arg(mode).arg(unused).arg(realName).toAscii());
+    userCalled = 1;
 }
 
 void IrcData::joinChannel(QString channel)
 {
     service->write(QString("JOIN %1\r\n").arg(channel).toAscii());
+    joinCalled = 1;
 }
 
 void IrcData::writeMessage(QString channel,QString message)
 {
     service->write(QString("PRIVMSG %1 :%2\r\n").arg(channel).arg(message).toAscii());
+    privmsgCalled = 1;
 }
 
 void IrcData::partChannel(QString channel,QString message)
 {
     service->write(QString("PART %1 :%2\r\n").arg(channel).arg(message).toAscii());
+    partCalled = 1;
+}
+
+void IrcData::setPassword(QString pass)
+{
+    service->write(QString("PASS %1\r\n").arg(pass).toAscii());
+    passCalled = 1;
+}
+
+void IrcData::invite(QString nick,QString channel)
+{
+    service->write(QString("INVITE %1 %2\r\n").arg(nick).arg(channel).toAscii());
+    inviteCalled = 1;
+}
+
+void IrcData::quit(QString message)
+{
+    service->write("QUIT :Yay sira!\r\n");
+//     service->write(QString("QUIT :Yay , sharp's QUIT works!\r\n")/*.arg(message)*/.toAscii());
+    quitCalled = 1;
 }
 
 // void IrcData::init()
@@ -143,7 +177,14 @@ void IrcData::parse()
                                 restLine = new QString(restRegExp.cap(1));
                             }
                             pos = argRegExp.indexIn(*restLine);
-                            emit messageResponse(AwayMessage,*restLine);
+                            if(privmsgCalled){
+                                emit messageResponse(AwayMessage,*restLine);
+                                privmsgCalled = 0;
+                            }
+                            if(inviteCalled){
+                                emit inviteResponse(InviteAwayMessage,*restLine);
+                                inviteCalled = 0;
+                            }
                             break;
                         case 332:
                             pos = restRegExp.indexIn(*restLine);
@@ -168,6 +209,9 @@ void IrcData::parse()
                             }
                             restLine->remove(0,1);
                             emit channelResponse(Topic,*restLine,empty << *arg4);
+                            break;
+                        case 341:
+                            emit inviteResponse(InviteOK,"Invite OK");
                             break;
                         case 353:
                             pos = restRegExp.indexIn(*restLine);
@@ -240,7 +284,14 @@ void IrcData::parse()
 //                             if(pos>-1){
 //                                 arg4 = new QString(argRegExp.cap(1));
 //                             }
-                            emit messageResponse(NoSuchNick,"No Such Nick");
+                            if(privmsgCalled){
+                                emit messageResponse(MessageNoSuchNick,"PRIVMSG No Such Nick");
+                                privmsgCalled =0;
+                            }
+                            if(inviteCalled){
+                                emit inviteResponse(InviteNoSuchNick,"Invite No Such Nick");
+                                inviteCalled = 0;
+                            }
                             break;
                         case 403: 
                             pos = restRegExp.indexIn(*restLine);
@@ -411,7 +462,21 @@ void IrcData::parse()
                                 emit nickResponse(NickUnavailResource,"Nick Unavailable Resource");
                             break;
                         case 442:
-                            emit partResponse(PartNotInChannel,"Part Not In Channel");
+//                             qDebug() << *currentLine;
+                            if(partCalled){
+                                emit partResponse(PartNotInChannel,"Part Not In Channel");
+                                partCalled = 0;
+                            }
+                            if(inviteCalled){
+                                emit inviteResponse(InviteNotInChannel,"Invite Not In Channel");
+                                inviteCalled =0;
+                            }
+                            break;
+                        case 443:
+                            if(inviteCalled){
+                                emit inviteResponse(InviteUserOnChannel,"Invite User On Channel");
+                                inviteCalled = 0;
+                            }
                             break;
                         case 461: 
                             pos = restRegExp.indexIn(*restLine);
@@ -453,6 +518,9 @@ void IrcData::parse()
                             }
                             if(arg4->compare("PART")==0)
                                 emit partResponse(PartNeedMoreParams,"Part Need More Params");
+                            break;
+                            if(arg4->compare("INVITE")==0)
+                                emit inviteResponse(InviteNeedMoreParams,"Invite Need More Params");
                             break;
                         case 462: 
                             emit userResponse(UserAlreadyRegistered,"User already registered");
@@ -589,6 +657,12 @@ void IrcData::parse()
                                 arg4 = new QString(argRegExp.cap(1));
                             }
                             emit channelResponse(BannedFromChannel,"Banned From Channel",empty << *arg4);
+                            break;
+                        case 482:
+                            if(inviteCalled){
+                                emit inviteResponse(InviteChannelOpNeeded,"Invite Channel Op Needed");
+                                inviteCalled = 0;
+                            }
                             break;
                         case 484:
                             emit nickResponse(NickRestricted,"Nick Restricted");

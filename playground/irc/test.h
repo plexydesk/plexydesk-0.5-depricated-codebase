@@ -14,6 +14,7 @@ class Tester : public QObject
         void channelHandler(ChannelResponseType,QString,QStringList);
         void messageHandler(MessageResponseType,QString);
         void partHandler(PartResponseType,QString);
+        void inviteHandler(InviteResponseType,QString);
     private:
         int Test;
 };
