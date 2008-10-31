@@ -15,6 +15,7 @@ class Tester : public QObject
         void messageHandler(MessageResponseType,QString);
         void partHandler(PartResponseType,QString);
         void inviteHandler(InviteResponseType,QString);
+        void kickHandler(KickResponseType,QString);
     private:
         int Test;
 };

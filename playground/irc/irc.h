@@ -47,8 +47,8 @@ typedef enum{
     InviteOnlyChannel,
     BadChannelKey,
     ChannelIsFull,
-    BadChannelMask,
-    NoSuchChannel,
+    ChannelBadChannelMask,
+    ChannelNoSuchChannel,
     TooManyChannels,
     TooManyTargets,
     Topic,  //topic stored in QString error
@@ -71,18 +71,27 @@ typedef enum{
 typedef enum{
     PartNeedMoreParams,
     PartNoSuchChannel,
-    PartNotInChannel
+    PartNotOnChannel
 } PartResponseType;
 
 typedef enum{
     InviteNeedMoreParams,
     InviteNoSuchNick,
-    InviteNotInChannel,
+    InviteNotOnChannel,
     InviteUserOnChannel,
     InviteChannelOpNeeded,
     InviteOK,
     InviteAwayMessage
 } InviteResponseType;
+
+typedef enum{
+    KickNeedMoreParams,
+    KickNoSuchChannel,
+    KickBadChannelMask,
+    KickChannelOpNeeded,
+    KickNotInChannel,
+    KickNotOnChannel
+} KickResponseType;
 
 class IrcData : public QObject
 {
@@ -154,6 +163,14 @@ class IrcData : public QObject
         */
         void invite(QString nick, QString channel);
 
+        /*!
+        Asynchronously emits kickResponse(KickResponseType,QString)
+        \param channel Which channel to kick from
+        \param nick The person to kick
+        \param comment Kick comment
+        */
+        void kick(QString channel,QString nick,QString comment);
+
     signals:
 
         /*!
@@ -205,6 +222,12 @@ class IrcData : public QObject
         \param error If error, the error is returned int this, else the info for the corresponding response
         */
         void inviteResponse(InviteResponseType response,QString error);
+
+        /*!
+        \param response Response code for the request kick(QString,QString,QString) check KickResponseType (irc.h)
+        \param error If error, the error is returned int this, else the info for the corresponding response
+        */
+        void kickResponse(KickResponseType,QString);
 
     public slots:
 

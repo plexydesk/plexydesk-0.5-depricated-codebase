@@ -62,6 +62,10 @@ void Tester::inviteHandler(InviteResponseType response,QString error)
     qDebug() << error ;
 }
 
+void Tester::kickHandler(KickResponseType response,QString error)
+{
+    qDebug() << error ;
+}
 
 Tester::Tester(QObject *p) : QObject(p)
 {
@@ -86,11 +90,14 @@ Tester::Tester(QObject *p) : QObject(p)
 //     irc->writeMessage("sadasdasd", "Hi Folks, Our IRC engine works!");
 //     connect(irc,SIGNAL(messageResponse(MessageResponseType,QString)),SLOT(messageHandler(MessageResponseType,QString)));
 
-    irc->invite("dA_ShArP","#plexydesk");
-    connect(irc,SIGNAL(inviteResponse(InviteResponseType,QString)),SLOT(inviteHandler(InviteResponseType,QString)));
+//     irc->invite("dA_ShArP","#plexydesk");
+//     connect(irc,SIGNAL(inviteResponse(InviteResponseType,QString)),SLOT(inviteHandler(InviteResponseType,QString)));
 
-//     irc->partChannel("#gentoo", "Even Bots can type PART messages!");
-//     connect(irc,SIGNAL(partResponse(PartResponseType,QString)),SLOT(partHandler(PartResponseType,QString)));
+    irc->kick("#plexydesk","dA_ShArP", "Even Bots can Kick!");
+    connect(irc,SIGNAL(kickResponse(KickResponseType,QString)),SLOT(kickHandler(KickResponseType,QString)));
+
+    irc->partChannel("#plexydesk", "Even Bots can type PART messages!");
+    connect(irc,SIGNAL(partResponse(PartResponseType,QString)),SLOT(partHandler(PartResponseType,QString)));
 
 //     irc->quit("Even BOTs can give Quit messages!");
 }

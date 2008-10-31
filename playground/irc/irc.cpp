@@ -23,6 +23,7 @@ bool privmsgCalled = 0;
 bool passCalled =0;
 bool inviteCalled =0;
 bool quitCalled =0;
+bool kickCalled =0;
 
 void IrcData::connectToServer()
 {
@@ -91,6 +92,12 @@ void IrcData::quit(QString message)
     service->write("QUIT :Yay sira!\r\n");
 //     service->write(QString("QUIT :Yay , sharp's QUIT works!\r\n")/*.arg(message)*/.toAscii());
     quitCalled = 1;
+}
+
+void IrcData::kick(QString channel,QString nick,QString message)
+{
+    service->write(QString("KICK %1 %2 :%3\r\n").arg(channel).arg(nick).arg(message).toAscii());
+    kickCalled = 1;
 }
 
 // void IrcData::init()
@@ -310,7 +317,14 @@ void IrcData::parse()
                             if(pos>-1){
                                 arg4 = new QString(argRegExp.cap(1));
                             }
-                            emit channelResponse(NoSuchChannel,"No Such Channel",empty << *arg4);
+                            if(joinCalled){
+                                emit channelResponse(ChannelNoSuchChannel,"No Such Channel",empty << *arg4);
+                                joinCalled =0;
+                            }
+                            if(kickCalled){
+                                emit kickResponse(KickNoSuchChannel,"Kick No Such Channel");
+                                kickCalled = 0;
+                            }
                             break;
                         case 404: 
                             pos = restRegExp.indexIn(*restLine);
@@ -461,14 +475,24 @@ void IrcData::parse()
                             else
                                 emit nickResponse(NickUnavailResource,"Nick Unavailable Resource");
                             break;
+                        case 441:
+                            if(kickCalled){
+                                emit kickResponse(KickNotInChannel,"Kick Not In Channel");
+                                kickCalled = 0;
+                            }
+                            break;
                         case 442:
 //                             qDebug() << *currentLine;
                             if(partCalled){
-                                emit partResponse(PartNotInChannel,"Part Not In Channel");
+                                emit partResponse(PartNotOnChannel,"Part Not On Channel");
                                 partCalled = 0;
                             }
+                            if(kickCalled){
+                                emit kickResponse(KickNotOnChannel,"Kick Not On Channel");
+                                kickCalled = 0;
+                            }
                             if(inviteCalled){
-                                emit inviteResponse(InviteNotInChannel,"Invite Not In Channel");
+                                emit inviteResponse(InviteNotOnChannel,"Invite Not On Channel");
                                 inviteCalled =0;
                             }
                             break;
@@ -518,9 +542,10 @@ void IrcData::parse()
                             }
                             if(arg4->compare("PART")==0)
                                 emit partResponse(PartNeedMoreParams,"Part Need More Params");
-                            break;
                             if(arg4->compare("INVITE")==0)
                                 emit inviteResponse(InviteNeedMoreParams,"Invite Need More Params");
+                            if(arg4->compare("KICK")==0)
+                                emit kickResponse(KickNeedMoreParams,"Kick Need More Params");
                             break;
                         case 462: 
                             emit userResponse(UserAlreadyRegistered,"User already registered");
@@ -618,7 +643,14 @@ void IrcData::parse()
                             if(pos>-1){
                                 arg4 = new QString(argRegExp.cap(1));
                             }
-                            emit channelResponse(BadChannelMask,"Bad Channel Mask",empty << *arg4);
+                            if(joinCalled){
+                                emit channelResponse(ChannelBadChannelMask,"Bad Channel Mask",empty << *arg4);
+                                joinCalled = 0;
+                            }
+                            if(kickCalled){
+                                emit kickResponse(KickBadChannelMask,"Kick Bad Channel Mask");
+                                joinCalled = 0;
+                            }
                             break;
                         case 477: 
                             pos = restRegExp.indexIn(*restLine);
@@ -662,6 +694,10 @@ void IrcData::parse()
                             if(inviteCalled){
                                 emit inviteResponse(InviteChannelOpNeeded,"Invite Channel Op Needed");
                                 inviteCalled = 0;
+                            }
+                            if(kickCalled){
+                                emit kickResponse(KickChannelOpNeeded,"Kick Channel Op Needed");
+                                kickCalled = 0;
                             }
                             break;
                         case 484:
