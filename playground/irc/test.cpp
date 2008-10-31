@@ -85,10 +85,10 @@ Tester::Tester(QObject *p) : QObject(p)
     irc->connectToServer();
     connect(irc,SIGNAL(connectResponse(ConnectResponseType,QString)),
             SLOT(connectHandler(ConnectResponseType,QString)));
-    irc->setNick("sharpBot");
+    irc->setNick("spamBot");
     connect(irc,SIGNAL(nickResponse(NickResponseType,QString)),SLOT(nickHandler(NickResponseType,QString)));
 
-    irc->setUser("sharpBot", 7, "*", "Mani Shankar's BOT");
+    irc->setUser("spamBot", 7, "*", "Mani Shankar's BOT");
     connect(irc,SIGNAL(userResponse(UserResponseType,QString)),SLOT(userHandler(UserResponseType,QString)));
 
     irc->joinChannel("#plexydesk");
