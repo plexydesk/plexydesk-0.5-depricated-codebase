@@ -27,6 +27,12 @@ bool quitCalled =0;
 bool kickCalled =0;
 bool whoisCalled =0;
 bool awayCalled = 0;
+bool operCalled =0;
+bool modeCalled =0;
+bool listCalled =0;
+bool topicCalled =0;
+bool noticeCalled =0;
+bool namesCalled = 0;
 
 void IrcData::connectToServer()
 {
@@ -113,6 +119,42 @@ void IrcData::away(QString message)
 {
     service->write(QString("AWAY %1\r\n").arg(message).toAscii());
     awayCalled = 1;
+}
+
+void IrcData::oper(QString nick,QString password)
+{
+    service->write(QString("OPER %1 %2\r\n").arg(nick).arg(password).toAscii());
+    operCalled = 1;
+}
+
+void IrcData::mode(QString nick,QString mode)
+{
+    service->write(QString("MODE  %1 %2\r\n").arg(nick).arg(mode).toAscii());
+    modeCalled = 1;
+}
+
+void IrcData::topic(QString channel,QString topic)
+{
+    service->write(QString("TOPIC %1 :%2\r\n").arg(channel).arg(topic).toAscii());
+    topicCalled = 1;
+}
+
+void IrcData::list()
+{
+    service->write(QString("LIST\r\n").toAscii());
+    listCalled = 1;
+}
+
+void IrcData::notice(QString target,QString text)
+{
+    service->write(QString("NOTICE %1 :%2\r\n").arg(target).arg(text).toAscii());
+    noticeCalled = 1;
+}
+
+void IrcData::names(QString channel)
+{
+    service->write(QString("NAMES %1\r\n").arg(channel).toAscii());
+    namesCalled = 1;
 }
 
 // void IrcData::init()

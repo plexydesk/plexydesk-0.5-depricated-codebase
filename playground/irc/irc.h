@@ -104,6 +104,24 @@ typedef enum{
     UnAway
 } AwayResponseType;
 
+typedef enum{
+} OperResponseType;
+
+typedef enum{
+} ModeResponseType;
+
+typedef enum{
+} TopicResponseType;
+
+typedef enum{
+} ListResponseType;
+
+typedef enum{
+} NoticeResponseType;
+
+typedef enum{
+} NamesResponseType;
+
 class IrcData : public QObject
 {
     Q_OBJECT
@@ -194,6 +212,47 @@ class IrcData : public QObject
         */
         void away(QString message);
 
+        /*!
+        Asynchronously emits operResponse(OperResponseType,QString)
+        \param nick The nick of yourself
+        \param password Your password
+         */
+        void oper(QString nick,QString password);
+
+        /*!
+        Asynchronously emits modeResponse(ModeResponseType,QString)
+        \param nick Nick of the person
+        \param mode The mode string he wants to change to, say -o+n
+        */
+        void mode(QString nick,QString mode);
+
+        /*!
+        Asynchronously emits topicResponse(TopicResponseType,QString)
+        \param channel The channel whose topic you want to change
+        \param topic The new topi you want to set to
+        */
+        void topic(QString channel,QString topic);
+
+        /*!
+        Asynchronously emits listResponse(ListResponseType,QString,QStringList)
+        */
+        void list();
+
+        /*!
+        Asynchronously emits noticeResponse(NoticeResponseType,QString)
+        \param target The channel/nick to whom you want to send the notice to
+        \param text The actual text you want to send as notice
+         */
+        void notice(QString target,QString text);
+
+        /*!
+        Asynchronously emits namesResponse(NamesResponseType,QString,QStringList)
+        \param channel The channel whose user list you want to know
+         */
+        void names(QString channel);
+
+//         service(QString nickname,QString reserved, QString distribution,QString type,QString reserved,QString info);
+
     signals:
 
         /*!
@@ -265,6 +324,42 @@ class IrcData : public QObject
         \param error If error, the error is returned int this, else the info for the corresponding response
         */
         void awayResponse(AwayResponseType response,QString error);
+
+        /*!
+        \param response Response code for the request oper(QString,QString) check OperResponseType (irc.h)
+        \param error If error, the error is returned int this, else the info for the corresponding response
+         */
+        void operResponse(OperResponseType response,QString error);
+
+        /*!
+        \param response Response code for the request mode(QString,QString) check ModeResponseType (irc.h)
+        \param error If error, the error is returned int this, else the info for the corresponding response
+         */
+        void modeResponse(ModeResponseType response,QString error);
+
+        /*!
+        \param response Response code for the request topic(QString,QString) check TopicResponseType (irc.h)
+        \param error If error, the error is returned int this, else the info for the corresponding response
+         */
+        void topicResponse(TopicResponseType response,QString error);
+
+        /*!
+        \param response Response code for the request list() check ListResponseType (irc.h)
+        \param error If error, the error is returned int this, else the info for the corresponding response
+         */
+        void listResponse(ListResponseType response,QString error,QStringList listOfServer);
+
+        /*!
+        \param response Response code for the request notice(QString,QString) check NoticeResponseType (irc.h)
+        \param error If error, the error is returned int this, else the info for the corresponding response
+         */
+        void noticeResponse(NoticeResponseType response,QString error);
+
+        /*!
+        \param response Response code for the request names(QString) check NamesResponseType (irc.h)
+        \param error If error, the error is returned int this, else the info for the corresponding response
+         */
+        void namesResponse(NamesResponseType response,QString error,QStringList namesList);
 
     public slots:
 
