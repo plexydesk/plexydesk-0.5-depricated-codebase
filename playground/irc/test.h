@@ -18,6 +18,7 @@ class Tester : public QObject
         void inviteHandler(InviteResponseType,QString);
         void kickHandler(KickResponseType,QString);
         void whoisHandler(WhoisResponseType,QString,User);
+        void awayHandler(AwayResponseType,QString);
     private:
         int Test;
 };

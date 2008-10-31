@@ -73,6 +73,11 @@ void Tester::whoisHandler(WhoisResponseType response,QString error,User who)
     qDebug() << who.nick << " " << who.user << " " << who.host << " " << who.realName << " " << who.server << " " << who.serverInfo << " " << who.awayMessage << " " << who.channels ;
 }
 
+void Tester::awayHandler(AwayResponseType response,QString error)
+{
+    qDebug() << error ;
+}
+
 Tester::Tester(QObject *p) : QObject(p)
 {
     Test = 0;
@@ -90,6 +95,9 @@ Tester::Tester(QObject *p) : QObject(p)
     connect(irc,SIGNAL(channelResponse(ChannelResponseType,QString,QStringList)),
             SLOT(channelHandler(ChannelResponseType,QString,QStringList)));
 
+    irc->away("Yay!");
+    connect(irc,SIGNAL(awayResponse(AwayResponseType,QString)),SLOT(awayHandler(AwayResponseType,QString)));
+
 //     irc->writeMessage("#plexydesk", "Hi Folks, Our IRC engine works!");
 //     irc->writeMessage("zakirs", "Hi Folks, Our IRC engine works!");
 //     irc->writeMessage("sira", "Hi Folks, Our IRC engine works!");
@@ -102,8 +110,8 @@ Tester::Tester(QObject *p) : QObject(p)
 //     irc->kick("#plexydesk","dA_ShArP", "Even Bots can Kick!");
 //     connect(irc,SIGNAL(kickResponse(KickResponseType,QString)),SLOT(kickHandler(KickResponseType,QString)));
 
-    irc->whois("dA_ShArP");
-    connect(irc,SIGNAL(whoisResponse(WhoisResponseType,QString,User)),SLOT(whoisHandler(WhoisResponseType,QString,User)));
+//     irc->whois("siraj");
+//     connect(irc,SIGNAL(whoisResponse(WhoisResponseType,QString,User)),SLOT(whoisHandler(WhoisResponseType,QString,User)));
 
 //     irc->partChannel("#plexydesk", "Even Bots can type PART messages!");
 //     connect(irc,SIGNAL(partResponse(PartResponseType,QString)),SLOT(partHandler(PartResponseType,QString)));

@@ -25,6 +25,7 @@ bool inviteCalled =0;
 bool quitCalled =0;
 bool kickCalled =0;
 bool whoisCalled =0;
+bool awayCalled = 0;
 
 void IrcData::connectToServer()
 {
@@ -103,9 +104,14 @@ void IrcData::kick(QString channel,QString nick,QString message)
 
 void IrcData::whois(QString nick)
 {
-//     service->write("WHOIS dA_ShArP\r\n");
     service->write(QString("WHOIS %1\r\n").arg(nick).toAscii());
     whoisCalled = 1;
+}
+
+void IrcData::away(QString message)
+{
+    service->write(QString("AWAY %1\r\n").arg(message).toAscii());
+    awayCalled = 1;
 }
 
 // void IrcData::init()
@@ -151,7 +157,7 @@ void IrcData::parse()
         QString *arg4;
         QString *arg5;
         QString *arg6;
-//         qDebug() << *currentLine;
+        qDebug() << *currentLine;
         if((currentLine->left(1)).compare(":")==0){
                 currentLine->remove(0,1);   // remove the prefix :
                 QRegExp argRegExp("([^\\s]*)[\\s].*");
@@ -207,6 +213,22 @@ void IrcData::parse()
                                 who.awayMessage = *restLine;
 //                                 whoisCalled = 0;
                             }
+//                             if(awayCalled){
+//                                 emit awayResponse(Away,"Away OK");
+//                                 awayCalled = 0;
+//                             }
+                            break;
+                        case 305:
+                            if(awayCalled){
+                                emit awayResponse(UnAway,"UnAway OK");
+                                awayCalled = 0;
+                            }
+                            break;
+                        case 306:
+                            if(awayCalled){
+                                emit awayResponse(Away,"Away OK");
+                                awayCalled = 0;
+                            }
                             break;
                         case 311:
                             pos = restRegExp.indexIn(*restLine);
@@ -250,6 +272,7 @@ void IrcData::parse()
                                 restLine = new QString(restRegExp.cap(1));
                             }
                             restLine->remove(0,1);
+                            restLine->remove("\r\n");
                             if(whoisCalled){
                                 who.nick =*arg4;
                                 who.user = *arg5;
@@ -289,6 +312,7 @@ void IrcData::parse()
                                 restLine = new QString(restRegExp.cap(1));
                             }
                             restLine->remove(0,1);
+                            restLine->remove("\r\n");
                             if(whoisCalled){
                                 who.server =*arg5;
                                 who.serverInfo = *restLine;

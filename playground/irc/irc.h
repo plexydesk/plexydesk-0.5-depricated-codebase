@@ -99,6 +99,11 @@ typedef enum{
     WhoisOK
 } WhoisResponseType;
 
+typedef enum{
+    Away,
+    UnAway
+} AwayResponseType;
+
 class IrcData : public QObject
 {
     Q_OBJECT
@@ -183,6 +188,12 @@ class IrcData : public QObject
         */
         void whois(QString nick);
 
+        /*!
+        Asynchronously emits whoisResponse(WhoisResponseType,QString,User)
+        \param nick The nick of who you need whois information
+        */
+        void away(QString message);
+
     signals:
 
         /*!
@@ -248,6 +259,12 @@ class IrcData : public QObject
         \param channels The channels the user has joined
         */
         void whoisResponse(WhoisResponseType response,QString error,User user);
+
+        /*!
+        \param response Response code for the request away(QString) check AwayResponseType (irc.h)
+        \param error If error, the error is returned int this, else the info for the corresponding response
+        */
+        void awayResponse(AwayResponseType response,QString error);
 
     public slots:
 
