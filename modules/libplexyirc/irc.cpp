@@ -172,4 +172,4 @@ bool IrcData::isConnected()
     return Connected;
 }
 
-
+#include "irc.moc"
