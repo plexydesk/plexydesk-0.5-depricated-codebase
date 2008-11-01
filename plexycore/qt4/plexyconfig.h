@@ -46,7 +46,7 @@ public:
     bool collitionOn;
 
 private:
-    Config(const QString & fileName, Format format, QObject * parent = 0);
+    Config(const QString & organization, const QString & application = QString(), QObject * parent = 0);
     static Config * config;
     Config()
     {
