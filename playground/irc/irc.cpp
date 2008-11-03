@@ -45,7 +45,7 @@ void IrcData::connectToServer()
     proxy.setUser("shankar");
     proxy.setPassword("LINKINpark");
 
-    service->setProxy(proxy);
+    //service->setProxy(proxy);
     service->connectToHost(server,port);
 
     connect(service,SIGNAL(error(QAbstractSocket::SocketError)),SLOT(errorHandler(QAbstractSocket::SocketError)));
@@ -221,7 +221,7 @@ void IrcData::parse()
                 if(i==4 || i==5){
                     host = new QString(*arg1);
                 }
-                if( arg1->compare(*host) == 0)
+                if(  arg1->compare(*host) == 0)
                 {
 //                     qDebug() << *arg2;
                     switch(arg2->toInt()){

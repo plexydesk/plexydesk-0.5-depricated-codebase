@@ -33,7 +33,7 @@ public:
     static Config*  getInstance();
     ///these will be pure virtual on the real plexy desk
     void read();
-    void write();
+    void writeToFile();
     QString MyPictures ;
     QString MyMovies;
     QString CurrentWallpaper;
@@ -44,7 +44,7 @@ public:
     QString proxyUser;
     QString proxyPasswd;
     bool collitionOn;
-
+    void setWallpaper(const QString& str);
 private:
     Config(const QString & organization, const QString & application = QString(), QObject * parent = 0);
     static Config * config;

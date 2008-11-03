@@ -18,7 +18,7 @@
 *******************************************************************************/
 
 #include <canvas.h>
-
+#include <plexyconfig.h>
 
 namespace PlexyDesk
 {
@@ -35,12 +35,28 @@ public:
 Canvas::Canvas (QObject * parent): QGraphicsScene(parent), d(new Private)
 {
   //  d->bgPlugin  = static_cast<BackdropPlugin*>(PluginLoader::getInstance()->instance("classicbackdrop"));
+ //setAcceptDrops(true);
+
 } 
 
 Canvas::~Canvas()
 {
   
 }  
+
+void Canvas::dropEvent ( QGraphicsSceneDragDropEvent * event )
+{
+    event->accept();
+}
+
+void Canvas::dragEnterEvent(QGraphicsSceneDragDropEvent *event)
+{
+    event->acceptProposedAction();
+    if (event->mimeData()->hasUrls()) {
+     Config::getInstance()->setWallpaper(event->mimeData()->urls().at(0).toString(QUrl::StripTrailingSlash | QUrl::RemoveScheme));
+    }
+    //QGraphicsScene::dragEnterEvent(event);
+}
 
 void Canvas::drawBackground ( QPainter * painter, const QRectF & rect )
 {
