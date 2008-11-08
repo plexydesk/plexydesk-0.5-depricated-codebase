@@ -1,0 +1,34 @@
+[Desktop Entry]
+Type=Service
+X-KDE-ServiceTypes=KCModule
+
+X-KDE-Library=kcm_kwin4_effect_builtins
+X-KDE-ParentComponents=kwin4_effect_sphere
+X-KDE-PluginKeyword=sphere
+
+Name=Desktop Sphere
+Name[be@latin]=Rabočaja kula
+Name[el]=Σφαίρα επιφάνειας εργασίας
+Name[et]=Töölauasfäär
+Name[ga]=Sféar Deisce
+Name[gl]=Escritorio en esfera
+Name[gu]=ડેસ્કટોપ ગોળો
+Name[kk]=Үстел сферасы
+Name[km]=ស៊្វែរ​ផ្ទៃតុ
+Name[kn]=ಗಣಕತೆರೆ ಗೋಲ
+Name[nb]=Skrivebordskule
+Name[nds]=Schriefdischkugel
+Name[nn]=Skrivebordskule
+Name[pa]=ਡੈਸਕਟਾਪ ਗੋਲਾ
+Name[pt]=Esfera de Ecrãs
+Name[pt_BR]=Esfera de Ecrãs
+Name[ro]=Sferă de birou
+Name[sl]=Krogla z namizji
+Name[sr]=Сфера површи
+Name[sr@latin]=Sfera površi
+Name[sv]=Skrivbordsklot
+Name[te]=డెస్క్ టాప్ గొళం
+Name[tr]=Masaüstü Küresi
+Name[uk]=Стільнична сфера
+Name[x-test]=xxDesktop Spherexx
+Name[zh_TW]=桌面球體

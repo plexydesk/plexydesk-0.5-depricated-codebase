@@ -1,0 +1,36 @@
+[Desktop Entry]
+Type=Service
+X-KDE-ServiceTypes=KCModule
+
+X-KDE-Library=kcm_kwin4_effect_builtins
+X-KDE-ParentComponents=kwin4_effect_cube
+X-KDE-PluginKeyword=cube
+
+Name=Desktop Cube
+Name[be@latin]=Rabočy kub
+Name[el]=Κύβος επιφάνειας εργασίας
+Name[et]=Töölauakuubik
+Name[ga]=Ciúb Deisce
+Name[gl]=Cubo do escritorio
+Name[gu]=ડેસ્કટોપ ટ્યુબ
+Name[he]=שולחן עבודה קובייתי
+Name[ja]=デスクトップキューブ
+Name[kk]=Үстел текшесі
+Name[km]=គូប​ផ្ទៃតុ​
+Name[kn]=ಗಣಕತೆರೆ ಘನಾಕೃತಿ
+Name[nb]=Skrivebordsterning
+Name[nds]=Wörpel-Schriefdisch
+Name[nn]=Skrivebordskube
+Name[pa]=ਡੈਸਕਟਾਪ ਘਣ
+Name[pt]=Cubo de Ecrãs
+Name[pt_BR]=Cubo de Ecrãs
+Name[ro]=Cub de birou
+Name[sl]=Kocka z namizji
+Name[sr]=Коцка површи
+Name[sr@latin]=Kocka površi
+Name[sv]=Skrivbordskub
+Name[te]=‍డెస్‍క్ టాప్ క్యూబ్
+Name[tr]=Masaüstü Küpü
+Name[uk]=Куб стільниць
+Name[x-test]=xxDesktop Cubexx
+Name[zh_TW]=桌面立方體
