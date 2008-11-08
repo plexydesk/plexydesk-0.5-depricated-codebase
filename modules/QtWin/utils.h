@@ -22,9 +22,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef KWIN_UTILS_H
 #define KWIN_UTILS_H
 
-#include <config-workspace.h>
-#include <config-X11.h>
-#include <config-kwin.h>
+//#include <config-workspace.h>
+//#include <config-X11.h>
+//#include <config-kwin.h>
 
 #include <kwinconfig.h>
 

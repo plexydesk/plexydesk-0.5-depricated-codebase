@@ -24,12 +24,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QTimer>
 #include <QVector>
-#include <kshortcut.h>
+//#include <kshortcut.h>
 #include <QCursor>
 #include <netwm.h>
-#include <kxmessages.h>
+//#include <kxmessages.h>
 #include <QDateTime>
-#include <kmanagerselection.h>
+//#include <kmanagerselection.h>
 
 #include "plugins.h"
 #include "utils.h"
