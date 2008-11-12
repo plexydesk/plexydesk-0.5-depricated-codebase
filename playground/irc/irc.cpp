@@ -40,12 +40,12 @@ void IrcData::connectToServer()
 
     QNetworkProxy proxy;
     proxy.setType(QNetworkProxy::HttpProxy);
-    proxy.setHostName("bsnlproxy.iitk.ac.in");
+    proxy.setHostName("vsnlproxy.iitk.ac.in");
     proxy.setPort(3128);
     proxy.setUser("shankar");
     proxy.setPassword("LINKINpark");
 
-    //service->setProxy(proxy);
+    service->setProxy(proxy);
     service->connectToHost(server,port);
 
     connect(service,SIGNAL(error(QAbstractSocket::SocketError)),SLOT(errorHandler(QAbstractSocket::SocketError)));
@@ -164,6 +164,471 @@ void IrcData::names(QString channel)
 //     service->write("JOIN #plexydesk\r\n");
 // }
 
+QString getArg1(QString* currentLine){
+    QString *arg1;
+    QString *restLine;
+    QRegExp argRegExp("([^\\s]*)[\\s].*");
+    int pos = argRegExp.indexIn(*currentLine);
+    if(pos>-1){
+        arg1 = new QString(argRegExp.cap(1));
+    }
+}
+
+QString getRestLine1(QString* currentLine){
+    QString *arg1;
+    QString *restLine;
+    QRegExp argRegExp("([^\\s]*)[\\s].*");
+    int pos = argRegExp.indexIn(*currentLine);
+    if(pos>-1){
+        arg1 = new QString(argRegExp.cap(1));
+    }
+    QRegExp restRegExp("[^\\s]*[\\s](.*)");
+    pos = restRegExp.indexIn(*currentLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    restLine->remove(0,1);
+    restLine->remove("\r\n");
+    return *restLine;
+}
+
+QString getArg2(QString* currentLine){
+    QString *arg1;
+    QString *arg2;
+    QString *restLine;
+    QRegExp argRegExp("([^\\s]*)[\\s].*");
+    int pos = argRegExp.indexIn(*currentLine);
+    if(pos>-1){
+        arg1 = new QString(argRegExp.cap(1));
+    }
+    QRegExp restRegExp("[^\\s]*[\\s](.*)");
+    pos = restRegExp.indexIn(*currentLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg2 = new QString(argRegExp.cap(1));
+    }
+    return *arg2;
+}
+
+QString getRestLine2(QString* currentLine){
+    QString *arg1;
+    QString *arg2;
+    QString *restLine;
+    QRegExp argRegExp("([^\\s]*)[\\s].*");
+    int pos = argRegExp.indexIn(*currentLine);
+    if(pos>-1){
+        arg1 = new QString(argRegExp.cap(1));
+    }
+    QRegExp restRegExp("[^\\s]*[\\s](.*)");
+    pos = restRegExp.indexIn(*currentLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg2 = new QString(argRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    restLine->remove(0,1);
+    restLine->remove("\r\n");
+    return *restLine;
+}
+
+QString getArg3(QString* currentLine){
+    QString *arg1;
+    QString *arg2;
+    QString *arg3;
+    QString *restLine;
+    QRegExp argRegExp("([^\\s]*)[\\s].*");
+    int pos = argRegExp.indexIn(*currentLine);
+    if(pos>-1){
+        arg1 = new QString(argRegExp.cap(1));
+    }
+    QRegExp restRegExp("[^\\s]*[\\s](.*)");
+    pos = restRegExp.indexIn(*currentLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg2 = new QString(argRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg3 = new QString(argRegExp.cap(1));
+    }
+    return *arg3;
+}
+
+QString getRestLine3(QString* currentLine){
+    QString *arg1;
+    QString *arg2;
+    QString *arg3;
+    QString *restLine;
+    QRegExp argRegExp("([^\\s]*)[\\s].*");
+    int pos = argRegExp.indexIn(*currentLine);
+    if(pos>-1){
+        arg1 = new QString(argRegExp.cap(1));
+    }
+    QRegExp restRegExp("[^\\s]*[\\s](.*)");
+    pos = restRegExp.indexIn(*currentLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg2 = new QString(argRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg3 = new QString(argRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    restLine->remove(0,1);
+    restLine->remove("\r\n");
+    return *restLine;
+}
+
+QString getArg4(QString* currentLine){
+    QString *arg1;
+    QString *arg2;
+    QString *arg3;
+    QString *arg4;
+    QString *restLine;
+    QRegExp argRegExp("([^\\s]*)[\\s].*");
+    int pos = argRegExp.indexIn(*currentLine);
+    if(pos>-1){
+        arg1 = new QString(argRegExp.cap(1));
+    }
+    QRegExp restRegExp("[^\\s]*[\\s](.*)");
+    pos = restRegExp.indexIn(*currentLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg2 = new QString(argRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg3 = new QString(argRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg4 = new QString(argRegExp.cap(1));
+    }
+    return *arg4;
+}
+
+QString getRestLine4(QString* currentLine){
+    QString *arg1;
+    QString *arg2;
+    QString *arg3;
+    QString *arg4;
+    QString *restLine;
+    QRegExp argRegExp("([^\\s]*)[\\s].*");
+    int pos = argRegExp.indexIn(*currentLine);
+    if(pos>-1){
+        arg1 = new QString(argRegExp.cap(1));
+    }
+    QRegExp restRegExp("[^\\s]*[\\s](.*)");
+    pos = restRegExp.indexIn(*currentLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg2 = new QString(argRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg3 = new QString(argRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg4 = new QString(argRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    restLine->remove(0,1);
+    restLine->remove("\r\n");
+    return *restLine;
+}
+
+QString getArg5(QString* currentLine){
+    QString *arg1;
+    QString *arg2;
+    QString *arg3;
+    QString *arg4;
+    QString *arg5;
+    QString *restLine;
+    QRegExp argRegExp("([^\\s]*)[\\s].*");
+    int pos = argRegExp.indexIn(*currentLine);
+    if(pos>-1){
+        arg1 = new QString(argRegExp.cap(1));
+    }
+    QRegExp restRegExp("[^\\s]*[\\s](.*)");
+    pos = restRegExp.indexIn(*currentLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg2 = new QString(argRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg3 = new QString(argRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg4 = new QString(argRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg5 = new QString(argRegExp.cap(1));
+    }
+    return *arg5;
+}
+
+QString getRestLine5(QString* currentLine){
+    QString *arg1;
+    QString *arg2;
+    QString *arg3;
+    QString *arg4;
+    QString *arg5;
+    QString *restLine;
+    QRegExp argRegExp("([^\\s]*)[\\s].*");
+    int pos = argRegExp.indexIn(*currentLine);
+    if(pos>-1){
+        arg1 = new QString(argRegExp.cap(1));
+    }
+    QRegExp restRegExp("[^\\s]*[\\s](.*)");
+    pos = restRegExp.indexIn(*currentLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg2 = new QString(argRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg3 = new QString(argRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg4 = new QString(argRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg5 = new QString(argRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    restLine->remove(0,1);
+    restLine->remove("\r\n");
+    return *restLine;
+}
+
+QString getArg6(QString *currentLine){
+    QString *arg1;
+    QString *arg2;
+    QString *arg3;
+    QString *arg4;
+    QString *arg5;
+    QString *arg6;
+    QString *restLine;
+    QRegExp argRegExp("([^\\s]*)[\\s].*");
+    int pos = argRegExp.indexIn(*currentLine);
+    if(pos>-1){
+        arg1 = new QString(argRegExp.cap(1));
+    }
+    QRegExp restRegExp("[^\\s]*[\\s](.*)");
+    pos = restRegExp.indexIn(*currentLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg2 = new QString(argRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg3 = new QString(argRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg4 = new QString(argRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg5 = new QString(argRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg6 = new QString(argRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    return *arg6;
+}
+
+QString getRestLine6(QString *currentLine){
+    QString *arg1;
+    QString *arg2;
+    QString *arg3;
+    QString *arg4;
+    QString *arg5;
+    QString *arg6;
+    QString *restLine;
+    QRegExp argRegExp("([^\\s]*)[\\s].*");
+    int pos = argRegExp.indexIn(*currentLine);
+    if(pos>-1){
+        arg1 = new QString(argRegExp.cap(1));
+    }
+    QRegExp restRegExp("[^\\s]*[\\s](.*)");
+    pos = restRegExp.indexIn(*currentLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg2 = new QString(argRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg3 = new QString(argRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg4 = new QString(argRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg5 = new QString(argRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = argRegExp.indexIn(*restLine);
+    if(pos>-1){
+        arg6 = new QString(argRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    pos = restRegExp.indexIn(*restLine);
+    if(pos>-1){
+        restLine = new QString(restRegExp.cap(1));
+    }
+    restLine->remove(0,1);
+    restLine->remove("\r\n");
+    return *restLine;
+}
+
+
 int i=1;
 int j =0;
 int listFinish = 1;
@@ -200,7 +665,7 @@ void IrcData::parse()
         QString *arg4;
         QString *arg5;
         QString *arg6;
-//         qDebug() << *currentLine;
+        qDebug() << *currentLine;
         if((currentLine->left(1)).compare(":")==0){
                 currentLine->remove(0,1);   // remove the prefix :
                 QRegExp argRegExp("([^\\s]*)[\\s].*");
@@ -226,8 +691,14 @@ void IrcData::parse()
 //                     qDebug() << *arg2;
                     switch(arg2->toInt()){
                         case 1: 
-                            emit userResponse(UserOK, "User OK");
-                            emit nickResponse(NickOK, "Nick OK");
+                            if(userCalled){
+                                emit userResponse(UserOK, "User OK");
+                                userCalled = 0;
+                            }
+                            if(nickCalled){
+                                emit nickResponse(NickOK, "Nick OK");
+                                nickCalled = 0;
+                            }
                             break;
                         case 301:
                             pos = restRegExp.indexIn(*restLine);
@@ -449,6 +920,37 @@ void IrcData::parse()
 //                                 whoisCalled = 0;
                             }
                             break;
+                        case 322:
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            pos = argRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                arg3 = new QString(argRegExp.cap(1));
+                            }
+                            pos = restRegExp.indexIn(*restLine);
+                            if(pos>-1){
+                                restLine = new QString(restRegExp.cap(1));
+                            }
+                            restLine->remove("\r\n");
+                            if(listCalled){
+                                empty << *restLine;
+                            }
+                            break;
+                        case 323:
+                            if(listCalled){
+                                emit listResponse(ListOK,"List OK",empty);
+                                empty = QStringList();
+                                listCalled = 0;
+                            }
+                            break;
+                        case 331:
+                            if(topicCalled){
+                                emit topicResponse(TopicNotSet,"Topic No Topic Set");
+                                topicCalled = 0;
+                            }
+                            break;
                         case 332:
                             pos = restRegExp.indexIn(*restLine);
                             if(pos>-1){
@@ -472,10 +974,20 @@ void IrcData::parse()
                             }
                             restLine->remove(0,1);
                             restLine->remove("\r\n");
-                            emit channelResponse(Topic,*restLine,empty << *arg4);
+                            if(joinCalled){
+                                emit channelResponse(Topic,*restLine,empty << *arg4);
+                                joinCalled = 0;
+                            }
+                            if(topicCalled){
+                                emit topicResponse(TopicSet,*restLine);
+                                topicCalled = 0;
+                            }
                             break;
                         case 341:
-                            emit inviteResponse(InviteOK,"Invite OK");
+                            if(inviteCalled){
+                                emit inviteResponse(InviteOK,"Invite OK");
+                                inviteCalled = 0;
+                            }
                             break;
                         case 353:
                             pos = restRegExp.indexIn(*restLine);
@@ -528,9 +1040,25 @@ void IrcData::parse()
                             break;
                         case 366:
 //                             listFinish = 1;
-                            emit channelResponse(UserList,"user List",empty);
-                            empty = QStringList();
+                            if(joinCalled){
+                                emit channelResponse(UserList,"user List",empty);
+                                empty = QStringList();
+                                joinCalled = 0;
+                                qDebug("JOIN Called");
+                            }
+                            if(namesCalled){
+                                emit namesResponse(NamesUserList,"Names user List",empty);
+                                empty = QStringList();
+                                namesCalled = 0;
+                                qDebug("NAMES called");
+                            }
 //                             qDebug() << empty;
+                            break;
+                        case 381:
+                            if(operCalled){
+                                emit operResponse(OperOK,"Oper OK");
+                                operCalled = 0;
+                            }
                             break;
                         case 401: 
                             if(privmsgCalled){
@@ -748,6 +1276,10 @@ void IrcData::parse()
                                 emit inviteResponse(InviteNotOnChannel,"Invite Not On Channel");
                                 inviteCalled =0;
                             }
+                            if(topicCalled){
+                                emit topicResponse(TopicNotOnChannel,"Topic Not On Channel");
+                                topicCalled =0;
+                            }
                             break;
                         case 443:
                             if(inviteCalled){
@@ -799,9 +1331,19 @@ void IrcData::parse()
                                 emit inviteResponse(InviteNeedMoreParams,"Invite Need More Params");
                             if(arg4->compare("KICK")==0)
                                 emit kickResponse(KickNeedMoreParams,"Kick Need More Params");
+                            if(arg4->compare("OPER")==0)
+                                emit operResponse(OperNeedMoreParams,"Oper Need More Params");
+                            if(arg4->compare("TOPIC")==0)
+                                emit topicResponse(TopicNeedMoreParams,"Topic Need More Params");
                             break;
                         case 462: 
                             emit userResponse(UserAlreadyRegistered,"User already registered");
+                            break;
+                        case 464:
+                            if(operCalled){
+                                emit operResponse(OperPasswordMismatch,"Oper Password Mismatch");
+                                operCalled = 0;
+                            }
                             break;
                         case 471: 
                             pos = restRegExp.indexIn(*restLine);
@@ -922,7 +1464,14 @@ void IrcData::parse()
                             if(pos>-1){
                                 arg4 = new QString(argRegExp.cap(1));
                             }
-                            emit channelResponse(NoChannelModes,"No Channel Modes",empty << *arg4);
+                            if(joinCalled){
+                                emit channelResponse(ChannelNoChannelModes,"Channel No Channel Modes",empty << *arg4);
+                                joinCalled = 0;
+                            }
+                            if(topicCalled){
+                                emit topicResponse(TopicNoChannelModes,"Topic No Channel Modes");
+                                topicCalled = 0;
+                            }
                             break;
                         case 478: 
                             pos = restRegExp.indexIn(*restLine);
@@ -952,12 +1501,45 @@ void IrcData::parse()
                                 emit kickResponse(KickChannelOpNeeded,"Kick Channel Op Needed");
                                 kickCalled = 0;
                             }
+                            if(topicCalled){
+                                emit topicResponse(TopicChannelOpNeeded,"Topic Channel Op Needed");
+                                topicCalled = 0;
+                            }
                             break;
                         case 484:
                             emit nickResponse(NickRestricted,"Nick Restricted");
                             break;
+                        case 491:
+                            emit operResponse(NoOperHost,"No Oper Host");
+                            break;
                         default: 
                             break;
+                    }
+                }
+                else{
+                    // Handle Generic Response
+//                     QRegExp user("[a-z]+");
+                    QString user = *arg1;
+                    QString command = *arg2;
+                    QString nick = arg1->left(arg1->indexOf('!'));
+//                     qDebug() << nick;
+                    if( command == "PRIVMSG"){
+                        emit genericResponse(PRIVMSG,nick,getArg3(currentLine),getRestLine3(currentLine),"");
+                    }
+                    if( command == "JOIN"){
+                        emit genericResponse(JOIN,nick,getRestLine2(currentLine),"","");
+                    }
+                    if( command == "QUIT"){
+                        emit genericResponse(QUIT,nick,getRestLine2(currentLine),"","");
+                    }
+                    if(command == "PART"){
+                        emit genericResponse(PART,nick,getArg3(currentLine),getRestLine3(currentLine),"");
+                    }
+                    if(command == "KICK"){
+                        emit genericResponse(KICK,nick,getArg3(currentLine),getRestLine4(currentLine),getArg4(currentLine));
+                    }
+                    if(command == "NICK"){
+                        emit genericResponse(NICK,nick,getArg3(currentLine),getRestLine3(currentLine),"");
                     }
                 }
         }

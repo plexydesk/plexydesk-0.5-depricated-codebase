@@ -19,6 +19,12 @@ class Tester : public QObject
         void kickHandler(KickResponseType,QString);
         void whoisHandler(WhoisResponseType,QString,User);
         void awayHandler(AwayResponseType,QString);
+        void operHandler(OperResponseType,QString);
+        void topicHandler(TopicResponseType,QString);
+        void listHandler(ListResponseType,QString,QStringList);
+        void noticeHandler(NoticeResponseType,QString);
+        void namesHandler(NamesResponseType,QString,QStringList);
+        void genericHandler(ResponseType,QString,QString,QString,QString);
     private:
         int Test;
 };

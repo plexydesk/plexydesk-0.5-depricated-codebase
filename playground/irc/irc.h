@@ -43,7 +43,7 @@ typedef enum{
 typedef enum{
     ChannelOK,
     BannedFromChannel,
-    NoChannelModes,
+    ChannelNoChannelModes,
     InviteOnlyChannel,
     BadChannelKey,
     ChannelIsFull,
@@ -105,23 +105,43 @@ typedef enum{
 } AwayResponseType;
 
 typedef enum{
+    OperNeedMoreParams,
+    NoOperHost,
+    OperPasswordMismatch,
+    OperOK
 } OperResponseType;
 
 typedef enum{
 } ModeResponseType;
 
 typedef enum{
+    TopicNeedMoreParams,
+    TopicNotOnChannel,
+    TopicChannelOpNeeded,
+    TopicNoChannelModes,
+    TopicSet,
+    TopicNotSet
 } TopicResponseType;
 
 typedef enum{
+    ListOK
 } ListResponseType;
 
 typedef enum{
 } NoticeResponseType;
 
 typedef enum{
+    NamesUserList
 } NamesResponseType;
 
+typedef enum{
+    PRIVMSG,
+    JOIN,
+    PART,
+    QUIT,
+    KICK,
+    NICK
+} ResponseType;
 class IrcData : public QObject
 {
     Q_OBJECT
@@ -360,6 +380,16 @@ class IrcData : public QObject
         \param error If error, the error is returned int this, else the info for the corresponding response
          */
         void namesResponse(NamesResponseType response,QString error,QStringList namesList);
+
+        /*!
+        This response Potentially holds *everything else*. We strongly recommed you to check ResponseType enum!
+        \param response The generic response type
+        \param arg1 Since this is generic, giving a flexibility to send messages using arguments
+        \param arg2 Since this is generic, giving a flexibility to send messages using arguments
+        \param arg3 Since this is generic, giving a flexibility to send messages using arguments
+        \param arg3 Since this is generic, giving a flexibility to send messages using arguments
+        */
+        void genericResponse(ResponseType response,QString arg1,QString arg2,QString arg3,QString arg4);
 
     public slots:
 
