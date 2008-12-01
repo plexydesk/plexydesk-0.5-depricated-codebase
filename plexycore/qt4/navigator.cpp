@@ -1,38 +1,38 @@
 #include "navigator.h"
-#include <QtCore>
+
+#include <QPainter>
+#include <QStyleOptionGraphicsItem>
+#include <QTimeLine>
 
 namespace PlexyDesk
 {
+    class Navigator::Private
+    {
+    public:
+        Private() {}
+        ~Private() {}
 
-class
-            Navigator::Private
-{
-public:
-    Private() {
-    }
-    ~
-    Private() {
-    }
-    int height;
-    int  width;
-    QString text;
-    QString comment;
-    QString tooltip;
-    QString icon;
-    int Rating;
-    MouseState state;
-    ThemeNames ids;
-    QSize size;
-    QSize elementSize;
-    QPixmap iconPixmap;
-    float opacity;
-    //Grid
-    int ncol;
-    int nrow;
-    QTimeLine timeline;
-    QImage refimg;
-    bool blured;
-};
+        int height;
+        int  width;
+        QString text;
+        QString comment;
+        QString tooltip;
+        QString icon;
+        int Rating;
+        MouseState state;
+        ThemeNames ids;
+        QSize size;
+        QSize elementSize;
+        QPixmap iconPixmap;
+        float opacity;
+
+        //Grid
+        int ncol;
+        int nrow;
+        QTimeLine timeline;
+        QImage refimg;
+        bool blured;
+    };
 
 
 Navigator::Navigator(const QRectF &rect, QGraphicsItem * parent):QGraphicsRectItem(rect,parent),
@@ -200,5 +200,3 @@ void Navigator::zoom(int step)
 }
 
 } // namespace PlexyDesk
-
-#include "navigator.moc"

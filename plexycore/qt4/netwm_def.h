@@ -45,7 +45,6 @@
 #define   __netwm_def_h
 
 #include <plexy.h>
-//#include <kdelibs_export.h>
 
 /**
   Simple point class for NET classes.

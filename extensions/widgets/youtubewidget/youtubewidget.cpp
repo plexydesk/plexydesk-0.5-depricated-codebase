@@ -19,11 +19,15 @@
 
 #include <plexy.h>
 #include "youtubewidget.h"
+#include <math.h>
+
 #include <QMatrix>
 #include <QPixmap>
 #include <QPaintEvent>
-#include <math.h>
+#include <QPainter>
 #include <QBitmap>
+#include <QGraphicsSceneWheelEvent>
+#include <QStyleOptionGraphicsItem>
 
 namespace PlexyDesk
 {
@@ -154,4 +158,3 @@ YouTubeWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem * e
 }
 
 } // namespace PlexyDesk
-#include "youtubewidget.moc"

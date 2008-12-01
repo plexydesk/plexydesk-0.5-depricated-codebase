@@ -4,47 +4,63 @@ set(QT_USE_OPENGL TRUE)
 include(${QT_USE_FILE})
 
 INCLUDE_DIRECTORIES(
-	   ${QT_INCLUDES}
-	   ${QT_QTOPENGL_INCLUDE_DIR}
-	   ${QT_QTNETWORK_INCLUDE_DIR}
-	   ${QT_QTTEST_INCLUDE_DIR}
-		 )
+	${QT_INCLUDES}
+	${QT_QTOPENGL_INCLUDE_DIR}
+	${QT_QTNETWORK_INCLUDE_DIR}
+	${QT_QTTEST_INCLUDE_DIR}
+)
 
-
-SET (plexyyoutubesrc
-	youtube.cpp
-	youtubewidget.cpp
-	youtubeinterface.cpp
+SET (sourceFiles
 	videoentity.cpp
-		)
+	youtube.cpp
+	youtubeinterface.cpp
+	youtubewidget.cpp
+)
 
-SET (qtviz_MOC
-	${CMAKE_SOURCE_DIR}/plexycore/qt4/pluginloader.cpp
-	${CMAKE_SOURCE_DIR}/plexycore/qt4/desktopwidget.cpp
-	${CMAKE_SOURCE_DIR}/plexycore/qt4/abstractplugininterface.cpp
-	${CMAKE_SOURCE_DIR}/plexycore/qt4/widgetplugin.cpp
-	${CMAKE_SOURCE_DIR}/plexycore/qt4/baseplugin.cpp
-	)
-	
-QT4_AUTOMOC(${qtviz_MOC})
+set(headerFiles
+	videoentity.h
+	youtube.h
+	youtubeinterface.h
+	youtubewidget.h
+)
 
-add_library (plexyyoutube SHARED ${plexyyoutubesrc} ${qtviz_MOC})
-QT4_AUTOMOC( ${plexyyoutubesrc}) 
+set(QTMOC_SRCS
+	youtube.h
+	youtubeinterface.h
+	youtubewidget.h
+	../../../plexycore/qt4/desktopwidget.h
+	../../../plexycore/qt4/pluginloader.h
+	../../../plexycore/qt4/widgetplugin.h
+	../../../plexycore/qt4/widgetinterface.h
+	../../../plexycore/qt4/abstractplugininterface.h
+	../../../plexycore/qt4/baseplugin.h
+	../../../plexycore/qt4/backdropplugin.h
+	../../../plexycore/qt4/dataplugin.h
+	../../../plexycore/qt4/datainterface.h
+	../../../plexycore/qt4/plexyconfig.h
+)
 
-#SET_TARGET_PROPERTIES(plexy
-#
-#	·       ·       PROPERTIES
-	#	#	·       ·       COMPILE_FLAGS ${CMAKE_SHARED_LIBRARY_CXX_FLAGS})
-#
+qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
+
+set(sourceFiles
+	${sourceFiles}
+	${headerFiles}
+)
+
+set(libs
+	${QT_QTGUI_LIBRARY}
+	${OPENGL_LIBRARIES}
+	${QT_QTCORE_LIBRARY}
+	${QT_QTOPENGL_LIBRARY}
+)
+
+add_library (plexyyoutube SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
-	       plexyyoutube
-			qtviz
-		   ${QT_QTGUI_LIBRARY}
-	       ${OPENGL_LIBRARIES}
-	       ${QT_QTCORE_LIBRARY}
-	       ${QT_QTOPENGL_LIBRARY}
-       )
+	plexyyoutube
+	qtviz
+	${libs}
+)
 
 INSTALL(TARGETS plexyyoutube DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext/)
 install(FILES youtube.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups/)

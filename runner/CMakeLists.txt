@@ -15,9 +15,27 @@ INCLUDE_DIRECTORIES(
 
 include_directories(${CMAKE_SOURCE_DIR}/lib/)
 ########### source files ###############
-SET(plexydesk_PART_SRCS
+SET(sourceFiles
 	main.cpp
 )
+
+set(QTMOC_SRCS
+	../plexycore/qt4/desktopwidget.h
+	../plexycore/qt4/pluginloader.h
+	../plexycore/qt4/widgetplugin.h
+	../plexycore/qt4/widgetinterface.h
+	../plexycore/qt4/abstractplugininterface.h
+	../plexycore/qt4/baseplugin.h
+	../plexycore/qt4/baserender.h
+	../plexycore/qt4/desktopview.h
+	../plexycore/qt4/canvas.h
+	../plexycore/qt4/backdropplugin.h
+	../plexycore/qt4/dataplugin.h
+	../plexycore/qt4/datainterface.h
+	../plexycore/qt4/plexyconfig.h
+)
+
+qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
 
 IF(WIN32)
 SET(GUI_TYPE WIN32)
@@ -25,33 +43,22 @@ ADD_DEFINITIONS(-DNODEFAULTLIB:library)
 SET (${QT_LIBRARIES} qtmain ${QT_LIBRARIES})
 ENDIF(WIN32)
 
-IF (WIN32)
-SET (qtviz_MOC
-	${CMAKE_SOURCE_DIR}/plexycore/qt4/baserender.cpp
-	${CMAKE_SOURCE_DIR}/plexycore/qt4/desktopview.cpp
-	${CMAKE_SOURCE_DIR}/plexycore/qt4/pluginloader.cpp
-	${CMAKE_SOURCE_DIR}/plexycore/qt4/desktopwidget.cpp
-	${CMAKE_SOURCE_DIR}/plexycore/qt4/viewlayer.cpp
-	${CMAKE_SOURCE_DIR}/plexycore/qt4/navigator.cpp
-	${CMAKE_SOURCE_DIR}/plexycore/qt4/frameitem.cpp
-	${CMAKE_SOURCE_DIR}/plexycore/qt4/canvas.cpp
-	)
-QT4_AUTOMOC(${qtviz_MOC})
-ENDIF(WIN32) 
+set(libs
+	${QT_QTGUI_LIBRARY}
+	${QT_QTCORE_LIBRARY}
+    ${QT_QTOPENGL_LIBRARY}
+	${QT_AND_KDECORE_LIBS}
+)
 
 ########### prepare files ###############
-ADD_EXECUTABLE(plexydesk ${plexydesk_PART_SRCS} ${qtviz_MOC})
+ADD_EXECUTABLE(plexydesk ${sourceFiles} ${QT_MOC_SRCS})
 #KDE4_ADD_PLUGIN(plexydesk ${raptor_plasmoid_PART_SRCS})
-
 
 TARGET_LINK_LIBRARIES(
 	plexydesk 
 	qtviz
-	${QT_QTGUI_LIBRARY}
-        ${QT_QTCORE_LIBRARY}
-        ${QT_QTOPENGL_LIBRARY}
-	${QT_AND_KDECORE_LIBS}
-	)
+	${libs}
+)
 
 
 ########### install files ###############

@@ -8,24 +8,42 @@ INCLUDE_DIRECTORIES(
 	   ${QT_QTTEST_INCLUDE_DIR}
 		 )
 
-SET (videoenginesrc video.cpp  ivideointerface.cpp  vplayer.cpp )
+set(sourceFiles
+	video.cpp
+	ivideointerface.cpp
+	vplayer.cpp
+)
 
-SET (plexicore_MOC
-  ${CMAKE_SOURCE_DIR}/plexycore/qt4/dataplugin.cpp
-  ${CMAKE_SOURCE_DIR}/plexycore/qt4/abstractplugininterface.cpp
-  ${CMAKE_SOURCE_DIR}/plexycore/qt4/baseplugin.cpp
-    )
-    
-QT4_AUTOMOC( ${plexicore_MOC})
-		
-add_library (videoengine SHARED ${videoenginesrc} ${plexicore_MOC})
-QT4_AUTOMOC( ${videoenginesrc}) 
+set(headerFiles
+	ivideointerface.h
+	video.h
+	vplayer.h
+)
 
-#SET_TARGET_PROPERTIES(plexy
-#
-#	·       ·       PROPERTIES
-	#	#	·       ·       COMPILE_FLAGS ${CMAKE_SHARED_LIBRARY_CXX_FLAGS})
-#
+set(QTMOC_SRCS
+	ivideointerface.h
+	video.h
+	vplayer.h
+	../../../plexycore/qt4/desktopwidget.h
+	../../../plexycore/qt4/pluginloader.h
+	../../../plexycore/qt4/widgetplugin.h
+	../../../plexycore/qt4/widgetinterface.h
+	../../../plexycore/qt4/abstractplugininterface.h
+	../../../plexycore/qt4/baseplugin.h
+	../../../plexycore/qt4/backdropplugin.h
+	../../../plexycore/qt4/dataplugin.h
+	../../../plexycore/qt4/datainterface.h
+	../../../plexycore/qt4/plexyconfig.h
+)
+
+qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
+
+set(sourceFiles
+	${sourceFiles}
+	${headerFiles}
+)
+
+add_library (videoengine SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 if(WIN32)
 TARGET_LINK_LIBRARIES(

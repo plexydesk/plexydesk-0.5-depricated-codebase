@@ -19,10 +19,9 @@
 
 #include "interface.h"
 #include "imageplugin.h"
-#include <QtCore>
 #include <pluginloader.h>
-#include <QtGui>
 
+#include <QtPlugin>
 
 Interface::Interface(QObject * object)
 {
@@ -34,5 +33,3 @@ PlexyDesk::BasePlugin* Interface::instance()
 }
 
 Q_EXPORT_PLUGIN2(Interface,Interface)
-
-#include "interface.moc"

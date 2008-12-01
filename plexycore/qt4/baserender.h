@@ -21,12 +21,13 @@
 
 #include <plexy.h>
 #include <QGLWidget>
-#include <QtCore>
-#include <QImage>
 #ifdef Q_WS_X11
 #include <GL/gl.h>
 #include <GL/glu.h>
 #endif
+
+class QPixmap;
+class QString;
 
 namespace PlexyDesk
 {

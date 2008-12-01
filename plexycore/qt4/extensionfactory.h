@@ -25,19 +25,17 @@
 #include <widgetinterface.h>
 #include <plexy.h>
 
-
 namespace PlexyDesk
 {
-
-template <class T>
-class VISIBLE_SYM ExtensionProducer
-{
-public:
-    T * instance(const QString& name,QObject *obj)
+    template <class T>
+    class VISIBLE_SYM ExtensionProducer
     {
-        return  qobject_cast<T*> (obj);
-    }
-};
+    public:
+        T * instance(const QString& name,QObject *obj)
+        {
+            return  qobject_cast<T*> (obj);
+        }
+    };
 
 } // namespace PlexyDesk
 

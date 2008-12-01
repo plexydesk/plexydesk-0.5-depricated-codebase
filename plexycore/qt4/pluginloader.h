@@ -22,57 +22,49 @@
 #include <plexy.h>
 #include <abstractplugininterface.h>
 #include <baseplugin.h>
-#include <QtCore>
-#include <QtGui>
+
+#include <QHash>
 
 namespace PlexyDesk
 {
-class VISIBLE_SYM PluginLoader:public QObject
-{
-
-    Q_OBJECT
-public:
-    typedef QHash <QString,AbstractPluginInterface*> Interface;
-    typedef QHash <QString,BasePlugin*> Dict;
-    PluginLoader();
-    virtual ~PluginLoader();
-    QStringList listPlugins(const QString& types);
-    BasePlugin * instance(const QString& name);
-    void scanDisk();
-    static PluginLoader * getInstance()
+    class VISIBLE_SYM PluginLoader : public QObject
     {
-        if (!mInstance)
+        Q_OBJECT
+
+    public:
+        typedef QHash <QString,AbstractPluginInterface*> Interface;
+
+        PluginLoader();
+        virtual ~PluginLoader();
+
+        static PluginLoader * getInstance();
+
+        QStringList listPlugins(const QString& types);
+        BasePlugin * instance(const QString& name);
+        void scanDisk();
+
+        QString applicationDirPath()
         {
-            mInstance = new PluginLoader();
-            mInstance->scanDisk();
+#ifdef Q_WS_WIN
+            return QString(QCoreApplication::applicationDirPath() + "/..");
+#else
+            return QString(PLEXPREFIX);
+#endif
         }
 
-        return mInstance;
-    }
+    protected:
+        void loadDesktop(const QString& path);
+        void load(const QString& _interface, const QString& plugin);
 
-    QString applicationDirPath()
-    {
+    private:
+        class Private;
+        Private * const d ;
 #ifdef Q_WS_WIN
-        return QString(QCoreApplication::applicationDirPath() + "/..");
+        static PluginLoader *mInstance;
 #else
-        return QString(PLEXPREFIX);
+        static VISIBLE_SYM PluginLoader * mInstance;
 #endif
-    }
-
-protected:
-    void loadDesktop(const QString& path);
-    void load(const QString& _interface, const QString& plugin);
-
-private:
-    class Private;
-    Private * const d ;
-#ifdef Q_WS_WIN
-    static PluginLoader * mInstance;
-#else
-    static VISIBLE_SYM PluginLoader * mInstance;
-#endif
-    Interface groups;
-};
+    };
 
 } // namespace PlexDesk
 

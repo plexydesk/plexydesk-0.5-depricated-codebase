@@ -2,9 +2,6 @@
 #ifndef VIEW_LAYER_H
 #define VIEW_LAYER_H
 
-
-#include <QtCore>
-#include <QtGui>
 #include <config.h>
 
 #include <plexy.h>
@@ -12,7 +9,7 @@
 
 namespace PlexyDesk
 {
-    class ViewLayer : public  QObject
+    class VISIBLE_SYM ViewLayer : public  QObject
     {
         Q_OBJECT
     public:

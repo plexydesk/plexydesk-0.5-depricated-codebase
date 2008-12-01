@@ -2,12 +2,13 @@
 #ifndef FRAME_ITEM_H
 #define FRAME_ITEM_H
 
-#include <QtCore>
-#include <QtGui>
+#include <QGraphicsRectItem>
 #include <QSvgRenderer>
-#include <config.h>
 
-class Frame :public  QGraphicsRectItem
+#include <config.h>
+#include <plexy.h>
+
+class VISIBLE_SYM Frame :public  QGraphicsRectItem
 {
 public:
     Frame(const QRectF& rect,QGraphicsItem * parent = 0):QGraphicsRectItem(rect,parent)

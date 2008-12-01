@@ -19,11 +19,12 @@
 #ifndef PLEXY_CLASSIC_BACKDROP_H
 #define PLEXY_CLASSIC_BACKDROP_H
 
-#include <QtCore>
+#include <QPainter>
+#include <QDesktopWidget>
+#include <QPixmap>
 #include <plexy.h>
 #include <config.h>
 #include <backdropplugin.h>
-//#include <abstractplugininterface.h>
 
 
 class VISIBLE_SYM BgPlugin :public PlexyDesk::BackdropPlugin

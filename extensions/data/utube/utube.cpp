@@ -19,6 +19,8 @@
 #include "utube.h"
 #include <desktopwidget.h>
 
+#include <QTimer>
+
 UtubeData::UtubeData( QObject * object )
 {
     init();
@@ -175,5 +177,3 @@ QGraphicsItem * UtubeData::item()
 void UtubeData::render( QPainter *p,QRectF r )
 {
 }
-
-#include "utube.moc"

@@ -20,7 +20,6 @@
 #include <desktopwidget.h>
 #include <plexyconfig.h>
 
-
     
 IRCData::IRCData(QObject * object)
 {
@@ -41,6 +40,3 @@ void IRCData::pushData(QVariant& str)
 void IRCData::loadCallback(int id, bool stat)
 {
 }
-
-
-#include "ircengine.moc"

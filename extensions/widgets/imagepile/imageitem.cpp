@@ -17,8 +17,9 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 #include "imageitem.h"
-#include <QtCore>
-#include <QtGui>
+
+#include <QStyleOptionGraphicsItem>
+#include <QPainter>
 
 namespace PlexyDesk
 {
@@ -56,5 +57,3 @@ namespace PlexyDesk
     }
 
 } // namespace PlexyDesk
-
-#include "imageitem.moc"

@@ -20,21 +20,19 @@
 #ifndef PLEXY_DATA_INTERFACE
 #define PLEXY_DATA_INTERFACE
 
-#include <QtCore>
-#include <QtGui>
 #include <abstractplugininterface.h>
 #include <dataplugin.h>
 
 namespace PlexyDesk
 {
-class DataInterface : public AbstractPluginInterface
-{
-public:
-    void init() {}
-    DataInterface() {}
-    ~DataInterface() {}
-    virtual DataPlugin * instance() = 0;
-};
+    class VISIBLE_SYM DataInterface : public AbstractPluginInterface
+    {
+        Q_OBJECT
+    public:
+        void init() {}
+        virtual ~DataInterface() {}
+        virtual DataPlugin * instance() = 0;
+    };
 } // namespace PlexyDesk
 
 Q_DECLARE_INTERFACE(PlexyDesk::DataInterface, "org.plexydesk.DataInterface")

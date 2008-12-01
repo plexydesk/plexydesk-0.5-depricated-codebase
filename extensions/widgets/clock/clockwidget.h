@@ -17,31 +17,20 @@
 *   Free Software Foundation, Inc.,                                       *
 *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
 ***************************************************************************/
-    
-    
-    
-    
-    
+
 #ifndef CLOCK
 #define CLOCK
     
-    
 #include <desktopwidget.h>
-#include <QtCore>
-#include <QtGui>
     
-    
-class QTimer;
+#include <QTime>
     
 namespace PlexyDesk
 {
-    
-    
-class ClockWidget:public DesktopWidget
-{
-    
+    class ClockWidget:public DesktopWidget
+    {
         Q_OBJECT
-    
+
     public:
         ClockWidget (const QRectF &rect, QWidget *widget = 0);
         virtual ~ClockWidget();
@@ -49,31 +38,31 @@ class ClockWidget:public DesktopWidget
         void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
         void setPath(QString);
         void drawClockWidget();
-    public slots:
-        void drawSeconds();
-    
+        public slots:
+            void drawSeconds();
+
     private:
         QTimer  * sec_timer;
         QTimer  * mins_timer;
         QTimer  * hours_timer;
-    
+
         QPixmap  _secs_hand;
         QPixmap  _mins_hand;
         QPixmap  _hour_hand;
-    
+
         QStringList _hour_path;
         QStringList _mins_path;
         QStringList _secs_path;
-    
+
         QImage _clock_bg;
         QImage _bg;
         QString prefix;
-    
+
         double _secs;
         double _mins;
         double _hour;
-    
-    
+
+
         int seconds;
         int s_a;
         QTime time;
@@ -84,7 +73,7 @@ class ClockWidget:public DesktopWidget
         int shade;
         QImage lens;
         QPixmap date;
-    
+
     };
     
 } // namespace PlexyDesk

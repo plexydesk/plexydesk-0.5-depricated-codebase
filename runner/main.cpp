@@ -65,7 +65,6 @@ int main( int argc, char ** argv )
     view->move(0, 0);
     view->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
 #endif
-    //view->setWindowOpacity(0.1);
 
 #ifdef Q_WS_X11
     NETWinInfo info(QX11Info::display(), view->winId(), QX11Info::appRootWindow(), NET::WMDesktop );
@@ -81,8 +80,8 @@ int main( int argc, char ** argv )
     view->addExtension("imagepil");
     view->addExtension("plexyclock");
     view->addExtension("plexyyoutube");
+    view->addExtension("plexyclock");
+    view->addExtension("imagepil");
 */
-     view->addExtension("plexyclock");
-     view->addExtension("imagepil");
     return app.exec();
 }

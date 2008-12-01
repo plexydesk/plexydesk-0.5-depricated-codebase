@@ -19,38 +19,38 @@
 #ifndef UTUBE_DATA_H
 #define UTUBE_DATA_H
 
-#include <QtCore>
 #include <plexy.h>
 #include <backdropinterface.h>
 #include <abstractplugininterface.h>
-//#include <QtNetwork>
-//#include <QBuffer>
 #include <QXmlStreamReader>
 #include <QHttp>
 #include <QMap>
 #include <QList>
+#include <QGraphicsItem>
+//plexy
+#include <datainterface.h>
 
 class VISIBLE_SYM UtubeData : public PlexyDesk::DataPlugin 
 {
     Q_OBJECT
     
-    public:
-        UtubeData( QObject * object = 0 );
-        virtual ~UtubeData();
+public:
+    UtubeData( QObject * object = 0 );
+    virtual ~UtubeData();
     void init();
     virtual QGraphicsItem * item();// {};
     virtual void render( QPainter *p,QRectF r );// {};
 
-    public slots:
+public slots:
     void fetch();
     void finished( int id, bool error );
     void readData( const QHttpResponseHeader & );
-     void pushData(QVariant&) {}
-    signals:
-        void data( QVariant& );
-        void success();
+    void pushData(QVariant&) {}
+signals:
+    void data( QVariant& );
+    void success();
 
-    private:
+private:
     void parseXml();
 
     QXmlStreamReader mXml;

@@ -33,6 +33,4 @@ PlexyDesk::BasePlugin* VideoInterface::instance()
     return new VideoPlugin();
 }
 
-Q_EXPORT_PLUGIN2(VideoInterface,VideoInterface)
-
-#include "videointerface.moc"
+Q_EXPORT_PLUGIN2(VideoInterface, VideoInterface)

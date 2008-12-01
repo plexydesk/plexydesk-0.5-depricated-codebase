@@ -19,8 +19,6 @@
 #ifndef PLEXY_BACK_DROP_ITEM_CLASSIC_H
 #define PLEXY_BACK_DROP_ITEM_CLASSIC_H
 
-#include <QtCore>
-#include <QtGui>
 #include <plexy.h>
 #include <datainterface.h>
 #include <desktopwidget.h>
@@ -30,22 +28,19 @@ namespace PlexyDesk
 
     class ImagePileWidget: public DesktopWidget
     {
-
-    Q_OBJECT
-        public:
+        Q_OBJECT
+    public:
         ImagePileWidget(const QRectF &rect, QWidget *embeddedWidget = 0);
         virtual ~ImagePileWidget();
         void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
         void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
         QRectF boundingRect() const;
         void setCoverPic(QImage img);
-      signals:
-             void swtch();
+    signals:
+        void swtch();
 
-    
-        private:
+    private:
         QImage cover;
-
     };
 
 

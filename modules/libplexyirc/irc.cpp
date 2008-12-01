@@ -83,7 +83,7 @@ void IrcData::parse()
         }
         QString *arg1;
         QString *arg2;
-        QString *arg3;
+
         if((currentLine->left(1)).compare(":")==0){
                 currentLine->remove(0,1);   // remove the prefix :
                 QRegExp argRegExp("([^\\s]*)[\\s].*");
@@ -171,5 +171,3 @@ bool IrcData::isConnected()
 {
     return Connected;
 }
-
-#include "irc.moc"

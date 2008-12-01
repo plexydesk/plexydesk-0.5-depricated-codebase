@@ -21,7 +21,6 @@
 
 #include <plexy.h>
 
-#include <QtCore>
 #include <abstractplugininterface.h>
 #include <datainterface.h>
 #include <widgetinterface.h>

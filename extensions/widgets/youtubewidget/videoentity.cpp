@@ -31,4 +31,3 @@ namespace PlexyDesk
 
     VideoEntity::~VideoEntity(){}
 }
-#include "videoentity.moc"

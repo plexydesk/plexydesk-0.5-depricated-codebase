@@ -19,29 +19,33 @@
 #ifndef FLICKER_DATA_H
 #define FLICKER_DATA_H
 
-#include <QtCore>
+#include <QDesktopWidget>
+#include <QPainter>
+#include <QPixmap>
+
 #include <plexy.h>
 #include <backdropinterface.h>
 #include <abstractplugininterface.h>
-#include <QtNetwork>
 #include <datainterface.h>
+
+class QHttp;
 
 class VISIBLE_SYM FlickerData :public PlexyDesk::DataPlugin
 {
     Q_OBJECT
 
-    public:
+public:
     FlickerData(QObject * object = 0);
     virtual ~FlickerData();
-          void init();
-    public slots:
-          void loadImages(int, bool);
-          void nextImage();
-          void pushData(QVariant&);
-    signals:
-         void data(QVariant&);
+    void init();
+public slots:
+    void loadImages(int, bool);
+    void nextImage();
+    void pushData(QVariant&);
+signals:
+    void data(QVariant&);
 
-    private:
+private:
     QPixmap bg;
     QImage img;
     QBrush paint;

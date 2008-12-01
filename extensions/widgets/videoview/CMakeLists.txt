@@ -1,49 +1,67 @@
+project(videoview)
+
+add_definitions (${QT_DEFINITIONS})
 
 set(QT_USE_OPENGL TRUE)
 # -> this will cause cmake to include and link against the OpenGL module
 include(${QT_USE_FILE})
 
-INCLUDE_DIRECTORIES(
-	   ${QT_INCLUDES}
-	   ${QT_QTOPENGL_INCLUDE_DIR}
-	   ${QT_QTNETWORK_INCLUDE_DIR}
-	   ${QT_QTTEST_INCLUDE_DIR}
-		 )
-
-
-SET (videoviewsrc
+SET (sourceFiles
 	videoitem.cpp
-	videointerface.cpp 
+	videointerface.cpp
     videoplugin.cpp
-		)
+)
 
-SET (plexicore_MOC
-  ${CMAKE_SOURCE_DIR}/plexycore/qt4/desktopwidget.cpp
-  ${CMAKE_SOURCE_DIR}/plexycore/qt4/pluginloader.cpp
-  ${CMAKE_SOURCE_DIR}/plexycore/qt4/widgetplugin.cpp
-  ${CMAKE_SOURCE_DIR}/plexycore/qt4/abstractplugininterface.cpp
-  ${CMAKE_SOURCE_DIR}/plexycore/qt4/baseplugin.cpp
-    )
+set(headerFiles
+	videoitem.h
+	videointerface.h
+    videoplugin.h
+)
 
-QT4_AUTOMOC( ${plexicore_MOC})
+set(QTMOC_SRCS
+	videoitem.h
+	videointerface.h
+    videoplugin.h
+	../../../plexycore/qt4/desktopwidget.h
+	../../../plexycore/qt4/pluginloader.h
+	../../../plexycore/qt4/widgetplugin.h
+	../../../plexycore/qt4/widgetinterface.h
+	../../../plexycore/qt4/abstractplugininterface.h
+	../../../plexycore/qt4/baseplugin.h
+	../../../plexycore/qt4/backdropplugin.h
+	../../../plexycore/qt4/dataplugin.h
+	../../../plexycore/qt4/datainterface.h
+	../../../plexycore/qt4/plexyconfig.h
+)
 
-add_library (videoview SHARED ${videoviewsrc} ${plexicore_MOC})
-QT4_AUTOMOC( ${videoviewsrc}) 
+qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
 
-#SET_TARGET_PROPERTIES(plexy
-#
-#	·       ·       PROPERTIES
-	#	#	·       ·       COMPILE_FLAGS ${CMAKE_SHARED_LIBRARY_CXX_FLAGS})
-#
+set(sourceFiles
+	${sourceFiles}
+	${headerFiles}
+)
 
-TARGET_LINK_LIBRARIES(
-	       videoview
-				qtviz
-			${QT_QTGUI_LIBRARY}
-	       ${OPENGL_LIBRARIES}
-	       ${QT_QTCORE_LIBRARY}
-	       ${QT_QTOPENGL_LIBRARY}
-       )
+set(libs
+	${QT_QTGUI_LIBRARY}
+	${OPENGL_LIBRARIES}
+	${QT_QTCORE_LIBRARY}
+	${QT_QTOPENGL_LIBRARY}
+)
+
+INCLUDE_DIRECTORIES(
+	${QT_INCLUDES}
+	${QT_QTOPENGL_INCLUDE_DIR}
+	${QT_QTNETWORK_INCLUDE_DIR}
+	${QT_QTTEST_INCLUDE_DIR}
+)
+
+add_library (videoview SHARED ${sourceFiles} ${QT_MOC_SRCS})
+
+target_link_libraries(
+	videoview
+	qtviz
+	${libs}
+)
 
 INSTALL(TARGETS videoview DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext/)
 install(FILES videoview.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups/)

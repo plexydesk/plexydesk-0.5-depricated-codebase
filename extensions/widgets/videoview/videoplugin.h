@@ -22,34 +22,33 @@
 #include <plexy.h>
 
 #include <QtCore>
-#include <abstractplugininterface.h>
 #include <datainterface.h>
-#include <widgetinterface.h>
-#include "videoitem.h"
 #include <widgetplugin.h>
+#include "videoitem.h"
 
 class VISIBLE_SYM VideoPlugin : public PlexyDesk::WidgetPlugin
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	VideoPlugin(QObject * object = 0);
-	virtual ~VideoPlugin();
-	virtual QGraphicsItem * item();
+    VideoPlugin(QObject * object = 0);
+    virtual ~VideoPlugin();
+    virtual QGraphicsItem * item();
 
 public slots:
-	void data(QVariant&);
-	void searchImage();
+    void data(QVariant&);
+    void searchImage();
 
 signals:
-		void change();
-		void sendData(QVariant&);
+    void change();
+    void sendData(QVariant&);
+
 private:
-	QLabel *flow ;
-	QWidget *base;
-	QLineEdit *search;
-	PlexyDesk::DataInterface *videoEngine;
-	PlexyDesk::VideoWidget *widget;
+    QLabel *flow ;
+    QWidget *base;
+    QLineEdit *search;
+    PlexyDesk::DataInterface *videoEngine;
+    PlexyDesk::VideoWidget *widget;
 };
 
 #endif

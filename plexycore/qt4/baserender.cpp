@@ -19,7 +19,6 @@
 #include "baserender.h"
 #include <QPaintEvent>
 #include <QPainter>
-#include <QtGui>
 #include <QtOpenGL>
 #include <QtCore/QtGlobal>
 
@@ -29,7 +28,6 @@
 
 namespace PlexyDesk
 {
-
     class BaseRender::Private
     {
     public:
@@ -157,5 +155,3 @@ namespace PlexyDesk
     }
 
 }    // namespace PlexyDesk
-
-#include "baserender.moc"

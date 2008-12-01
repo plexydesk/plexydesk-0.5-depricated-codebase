@@ -20,6 +20,8 @@
 #include "youtubedatainterface.h"
 #include <desktopwidget.h>
 #include <plexyconfig.h>
+
+#include <QtPlugin>
     
 YouTubeDataInterface::YouTubeDataInterface(QObject * object)
 {
@@ -35,4 +37,3 @@ PlexyDesk::DataPlugin *YouTubeDataInterface::instance()
 }
 
 Q_EXPORT_PLUGIN2(YouTubeDataInterface, YouTubeDataInterface)
-#include "youtubedatainterface.moc"

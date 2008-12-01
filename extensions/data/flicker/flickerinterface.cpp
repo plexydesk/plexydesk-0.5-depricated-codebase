@@ -20,7 +20,9 @@
 #include "flickerinterface.h"
 #include <desktopwidget.h>
 #include <plexyconfig.h>
-    
+
+#include <QtPlugin>
+
 FlickerInterface::FlickerInterface(QObject * object)
 {
 }
@@ -31,4 +33,4 @@ PlexyDesk::DataPlugin *FlickerInterface::instance()
 }
 
 Q_EXPORT_PLUGIN2(FlickerInterface, FlickerInterface)
-#include "flickerinterface.moc"
+

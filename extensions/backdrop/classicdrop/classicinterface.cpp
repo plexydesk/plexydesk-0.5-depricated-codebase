@@ -20,6 +20,8 @@
 #include "backdrop.h"
 #include <desktopwidget.h>
 
+#include <QtPlugin>
+
 ClassicBackdrop::ClassicBackdrop(QObject * object)
 {
 }
@@ -36,4 +38,3 @@ PlexyDesk::BasePlugin * ClassicBackdrop::instance()
 
 
 Q_EXPORT_PLUGIN2(ClassicBackdrop,ClassicBackdrop)
-#include "classicinterface.moc"

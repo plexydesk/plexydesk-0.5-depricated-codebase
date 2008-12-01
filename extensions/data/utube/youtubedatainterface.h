@@ -20,11 +20,9 @@
 #ifndef UINT_DATA_H
 #define UINT_DATA_H
 
-#include <QtCore>
 #include <plexy.h>
 #include <backdropinterface.h>
 #include <abstractplugininterface.h>
-#include <QtNetwork>
 #include <datainterface.h>
 #include <dataplugin.h>
 #include "utube.h" 

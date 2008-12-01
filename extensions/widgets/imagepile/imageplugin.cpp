@@ -19,9 +19,9 @@
 
 #include "imageplugin.h"
 
-#include <QtCore>
 #include <pluginloader.h>
-#include <QtGui>
+
+#include <QLineEdit>
 
 ImagePlugin::ImagePlugin(QObject * object)
 {
@@ -87,6 +87,3 @@ QGraphicsItem * ImagePlugin::item()
     PictureFlow * flow = new PictureFlow(0);
     return widget;//new PlexyDesk::ImagePluginWidget(QRectF(0, 0, 400, 200), flow);
 }
-
-
-#include "imageplugin.moc"

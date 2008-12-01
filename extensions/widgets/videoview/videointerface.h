@@ -25,13 +25,12 @@
 #include <abstractplugininterface.h>
 #include <datainterface.h>
 #include <widgetinterface.h>
-//#include "pictureflow.h"
 #include "videoitem.h"
 
 class VISIBLE_SYM VideoInterface :public PlexyDesk::WidgetInterface
 {
     Q_OBJECT
-    Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
+    Q_INTERFACES(PlexyDesk::WidgetInterface)
 
     public:
         VideoInterface(QObject * object=0);

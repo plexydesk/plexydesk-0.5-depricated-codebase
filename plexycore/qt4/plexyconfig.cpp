@@ -21,61 +21,58 @@
 
 namespace PlexyDesk
 {
-Config * Config::config = 0;
+    Config * Config::config = 0;
 
-Config * Config::getInstance()
-{
-    if (config == 0) {
-        return  new Config("plexydesk","plexydesktop");
-    } else {
-        return config;
+    Config * Config::getInstance()
+    {
+        if (config == 0) {
+            return  new Config("plexydesk","plexydesktop");
+        } else {
+            return config;
+        }
     }
-}
 
-Config::Config(const QString & organization, const QString & application, QObject * parent ): QSettings(organization, application, parent)
-{
-    proxyOn=false;
-    proxyURL="";
-    proxyUser="";
-    proxyPasswd="";
-    proxyPort=3128;
-    //CurrentWallpaper =  DesktopWidget::applicationDirPath() + "/share/plexy/skins/default/default.png";
-    //collitions detection
-    collitionOn = false;
-    read();
-    writeToFile();
-}
+    Config::Config(const QString & organization, const QString & application, QObject * parent ): QSettings(organization, application, parent)
+    {
+        proxyOn=false;
+        proxyURL="";
+        proxyUser="";
+        proxyPasswd="";
+        proxyPort=3128;
+        //CurrentWallpaper =  DesktopWidget::applicationDirPath() + "/share/plexy/skins/default/default.png";
+        //collitions detection
+        collitionOn = false;
+        read();
+        writeToFile();
+    }
 
-void Config::writeToFile () 
-{
-    setValue("proxyOn",proxyOn);
-    setValue("proxyURL",proxyURL);
-    setValue("proxyUser",proxyUser);
-    setValue("ProxyPasswd",proxyPasswd);
-    setValue("proxyPort",proxyPort);
-    qDebug()<<"write"<<CurrentWallpaper<<endl;
-    setValue("CurrentWallpaper", CurrentWallpaper);
-    setValue("collitionOn",collitionOn);
-    sync();
-}
-void Config::read()
-{
-    proxyOn = value("proxyOn").toInt();
-    proxyURL = value("proxyURL").toString();
-    proxyUser = value("proxyUser").toString();
-    proxyPasswd = value("proxyPasswd").toString();
-    proxyPort = value("proxyPort").toInt() ;
-    CurrentWallpaper = value("CurrentWallpaper").toString();
-    //collitions detection
-    collitionOn = false;
-}
+    void Config::writeToFile () 
+    {
+        setValue("proxyOn",proxyOn);
+        setValue("proxyURL",proxyURL);
+        setValue("proxyUser",proxyUser);
+        setValue("ProxyPasswd",proxyPasswd);
+        setValue("proxyPort",proxyPort);
+        qDebug()<<"write"<<CurrentWallpaper<<endl;
+        setValue("CurrentWallpaper", CurrentWallpaper);
+        setValue("collitionOn",collitionOn);
+        sync();
+    }
+    void Config::read()
+    {
+        proxyOn = value("proxyOn").toInt();
+        proxyURL = value("proxyURL").toString();
+        proxyUser = value("proxyUser").toString();
+        proxyPasswd = value("proxyPasswd").toString();
+        proxyPort = value("proxyPort").toInt() ;
+        CurrentWallpaper = value("CurrentWallpaper").toString();
+        //collitions detection
+        collitionOn = false;
+    }
 
-void Config::setWallpaper(const QString& str) 
-{
+    void Config::setWallpaper(const QString& str) 
+    {
         CurrentWallpaper = str;
         setValue("CurrentWallpaper", CurrentWallpaper);
+    }
 }
-
-}
-
-#include "plexyconfig.moc"

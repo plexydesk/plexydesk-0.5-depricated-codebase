@@ -20,7 +20,9 @@
 #include "ircengineinterface.h"
 #include <desktopwidget.h>
 #include <plexyconfig.h>
-    
+
+#include <QtPlugin>
+
 IRCInterface::IRCInterface(QObject * object)
 {
 }
@@ -34,4 +36,4 @@ or other plugins will expect this pointer
 }
 
 Q_EXPORT_PLUGIN2(IRCInterface, IRCInterface)
-#include "ircengineinterface.moc"
+

@@ -20,9 +20,8 @@
 #include "clock.h"
 #include "clockitem.h"
 #include "clockwidget.h"
-#include  <QtCore>
-#include  <QtGui>
 
+#include <QtPlugin>
 
 ClockInterface::ClockInterface(QObject * object)
 {
@@ -32,8 +31,7 @@ ClockInterface::ClockInterface(QObject * object)
 
 PlexyDesk::BasePlugin  * ClockInterface::instance()
 {
- return new Clock(this);
+    return new Clock(this);
 }
 
 Q_EXPORT_PLUGIN2(ClockInterface,ClockInterface)
-#include "clockinterface.moc"

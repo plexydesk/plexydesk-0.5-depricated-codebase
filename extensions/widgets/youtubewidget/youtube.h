@@ -1,7 +1,6 @@
 #ifndef PLEXY_YOUTUBE_H
 #define PLEXY_YOUTUBE_H
 
-#include <QtCore>
 #include <plexy.h>
 #include <widgetinterface.h>
 #include <widgetplugin.h>

@@ -19,26 +19,23 @@
 #ifndef FLICKER_DATA_I
 #define FLICKER_DATA_I
 
-#include <QtCore>
 #include <plexy.h>
 #include <backdropinterface.h>
 #include <abstractplugininterface.h>
-#include <QtNetwork>
 #include <datainterface.h>
 #include <dataplugin.h>
 #include "flicker.h" 
 
-class VISIBLE_SYM FlickerInterface :public PlexyDesk::DataInterface
+class VISIBLE_SYM FlickerInterface : public PlexyDesk::DataInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
-    public:
+public:
     FlickerInterface(QObject * object = 0);
     virtual ~FlickerInterface(){}
-          PlexyDesk::DataPlugin * instance();
+    PlexyDesk::DataPlugin * instance();
 
 };
-
 
 #endif

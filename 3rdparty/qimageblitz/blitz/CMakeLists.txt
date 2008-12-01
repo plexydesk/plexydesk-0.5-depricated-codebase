@@ -1,4 +1,5 @@
 project(blitz_lib) 
+
 include(CheckCXXSourceCompiles)
 include(CheckIncludeFile)
 
@@ -8,11 +9,11 @@ if (APPLE)
 endif (APPLE)
 
 include_directories(
-${CMAKE_SOURCE_DIR}  
-${blitz_lib_BINARY_DIR} 
-${QT_INCLUDE_DIR}
-${QT_QTCORE_INCLUDE_DIR}  
-${QT_QTGUI_INCLUDE_DIR}
+	${CMAKE_SOURCE_DIR}  
+	${blitz_lib_BINARY_DIR} 
+	${QT_INCLUDE_DIR}
+	${QT_QTCORE_INCLUDE_DIR}  
+	${QT_QTGUI_INCLUDE_DIR}
 )
 
 CHECK_INCLUDE_FILE(stdint.h HAVE_STDINT_H)

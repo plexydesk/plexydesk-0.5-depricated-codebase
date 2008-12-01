@@ -2,7 +2,6 @@
 #define PLEXY_YOUTUBE_I
 
 #include <plexy.h>
-#include <QtCore>
 
 #include <abstractplugininterface.h>
 #include <datainterface.h>

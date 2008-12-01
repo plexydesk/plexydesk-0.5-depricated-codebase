@@ -20,24 +20,23 @@
 #ifndef PLEXY_FAME_MIME_QT_H
 #define PLEXY_FAKE_MIME_QT_H
 
-#include <QtCore>
 #include <plexy.h>
 
 namespace PlexyDesk
 {
-class VISIBLE_SYM FakeMime
-{
-public:
-    static FakeMime*  getInstance();
-    ///these will be pure virtual on the real plexy desk
-    QString getType(const QString& path);
+    class VISIBLE_SYM FakeMime
+    {
+    public:
+        static FakeMime*  getInstance();
+        ///these will be pure virtual on the real plexy desk
+        QString getType(const QString& path);
 
-private:
-    static FakeMime * config;
-    FakeMime() {};
-    FakeMime(FakeMime &) {}
-    FakeMime& operator=(const FakeMime&);
-};
+    private:
+        static FakeMime * config;
+        FakeMime() {};
+        FakeMime(FakeMime &) {}
+        FakeMime& operator=(const FakeMime&);
+    };
 } // namespace PlexyDesk
 
 

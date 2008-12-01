@@ -19,7 +19,6 @@
 #ifndef VIDEIO_DATA_H
 #define VIDEIO_DATA_H 
 
-#include <QtCore>
 #include <plexy.h>
 #include <backdropinterface.h>
 #include <abstractplugininterface.h>

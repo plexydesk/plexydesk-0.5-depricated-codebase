@@ -19,7 +19,6 @@
 #ifndef PLEXY_WIDGET_DEMO_H
 #define PLEXY_WIDGET_DEMO_H
 
-#include <QtCore>
 #include <plexy.h>
 #include <widgetinterface.h>
 #include <widgetplugin.h>

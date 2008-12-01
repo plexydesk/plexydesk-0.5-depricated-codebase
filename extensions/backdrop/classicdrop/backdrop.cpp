@@ -58,5 +58,3 @@ void BgPlugin::render(QPainter *p,QRectF r)
 {
    	p->fillRect(r.x(),r.y(),r.width(),r.height(),paint);
 }
-
-#include "backdrop.moc"

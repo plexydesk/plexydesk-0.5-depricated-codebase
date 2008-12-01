@@ -19,7 +19,6 @@
 #ifndef PLEXY_CLASSIC_BACKDROP_I
 #define PLEXY_CLASSIC_BACKDROP_I
 
-#include <QtCore>
 #include <plexy.h>
 #include <backdropinterface.h>
 #include <datainterface.h>
@@ -27,7 +26,7 @@
 #include <abstractplugininterface.h>
 
 
-class VISIBLE_SYM ClassicBackdrop :public PlexyDesk::AbstractPluginInterface 
+class VISIBLE_SYM ClassicBackdrop : public PlexyDesk::AbstractPluginInterface 
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)

@@ -20,41 +20,42 @@
 #ifndef PLEXY_CONIFG_LINUX_QT_H
 #define PLEXY_CONIFG_LINUX_QT_H
 
-#include <QtCore>
-#include <QtNetwork>
 #include <plexy.h>
+
+#include <QSettings>
+#include <QNetworkProxy>
 
 namespace PlexyDesk
 {
-class VISIBLE_SYM Config : public QSettings
-{
-Q_OBJECT
-public:
-    static Config*  getInstance();
-    ///these will be pure virtual on the real plexy desk
-    void read();
-    void writeToFile();
-    QString MyPictures ;
-    QString MyMovies;
-    QString CurrentWallpaper;
-    bool proxyOn;
-    int proxyPort;
-    QNetworkProxy::ProxyType proxyType;
-    QString proxyURL;
-    QString proxyUser;
-    QString proxyPasswd;
-    bool collitionOn;
-    void setWallpaper(const QString& str);
-private:
-    Config(const QString & organization, const QString & application = QString(), QObject * parent = 0);
-    static Config * config;
-    Config()
+    class VISIBLE_SYM Config : public QSettings
     {
-        read();
+        Q_OBJECT
+    public:
+        static Config*  getInstance();
+        ///these will be pure virtual on the real plexy desk
+        void read();
+        void writeToFile();
+        QString MyPictures ;
+        QString MyMovies;
+        QString CurrentWallpaper;
+        bool proxyOn;
+        int proxyPort;
+        QNetworkProxy::ProxyType proxyType;
+        QString proxyURL;
+        QString proxyUser;
+        QString proxyPasswd;
+        bool collitionOn;
+        void setWallpaper(const QString& str);
+    private:
+        Config(const QString & organization, const QString & application = QString(), QObject * parent = 0);
+        static Config * config;
+        Config()
+        {
+            read();
+        };
+        Config(Config &) {}
+        Config& operator=(const Config&);
     };
-    Config(Config &) {}
-    Config& operator=(const Config&);
-};
 } // namespace PlexyDesk
 
 

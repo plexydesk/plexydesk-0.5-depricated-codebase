@@ -1,6 +1,23 @@
-SET (plexyircsrc irc.cpp )
-QT4_AUTOMOC(${plexyircsrc})
-add_library (plexyirc SHARED ${plexyircsrc})
+SET(sourceFiles
+	irc.cpp
+)
+
+set(headerFiles
+	irc.h
+)
+
+set(QTMOC_SRCS
+	irc.h
+)
+
+qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
+
+set(sourceFiles
+	${sourceFiles}
+	${headerFiles}
+)
+
+add_library (plexyirc SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 INCLUDE_DIRECTORIES(
     ${QT_INCLUDES}
@@ -9,13 +26,17 @@ INCLUDE_DIRECTORIES(
     ${QT_QTTEST_INCLUDE_DIR}
 )
 
-TARGET_LINK_LIBRARIES(
-    plexyirc
+set(libs
     ${QT_QTGUI_LIBRARY}
     ${QT_QTXML_LIBRARY}
     ${QT_QTCORE_LIBRARY}
 	${QT_QTNETWORK_LIBRARY}
     ${QT_QTSVG_LIBRARY}
+)
+
+TARGET_LINK_LIBRARIES(
+    plexyirc
+	${libs}
 )
 
 if(NOT WIN32)

@@ -8,40 +8,55 @@ INCLUDE_DIRECTORIES(
 	   ${QT_QTOPENGL_INCLUDE_DIR}
 	   ${QT_QTNETWORK_INCLUDE_DIR}
 	   ${QT_QTTEST_INCLUDE_DIR}
-		 )
+)
 
-SET (flickerenginesrc 	
+SET (sourceFiles
     flicker.cpp
     flickerinterface.cpp
-		)
+)
+
+set(headerFiles
+    flicker.h
+    flickerinterface.h
+)
+
+set(QTMOC_SRCS
+    flicker.h
+    flickerinterface.h
+	../../../plexycore/qt4/desktopwidget.h
+	../../../plexycore/qt4/pluginloader.h
+	../../../plexycore/qt4/widgetplugin.h
+	../../../plexycore/qt4/widgetinterface.h
+	../../../plexycore/qt4/abstractplugininterface.h
+	../../../plexycore/qt4/baseplugin.h
+	../../../plexycore/qt4/backdropplugin.h
+	../../../plexycore/qt4/dataplugin.h
+	../../../plexycore/qt4/datainterface.h
+	../../../plexycore/qt4/plexyconfig.h
+)
+
+qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
+
+set(sourceFiles
+	${sourceFiles}
+	${headerFiles}
+)
+
+set(libs
+	${QT_QTGUI_LIBRARY}
+	${OPENGL_LIBRARIES}
+	${QT_QTCORE_LIBRARY}
+	${QT_QTNETWORK_LIBRARY}
+	${QT_QTOPENGL_LIBRARY}
+)
 		
-SET (plexicore_MOC
-    ${CMAKE_SOURCE_DIR}/plexycore/qt4/pluginloader.cpp
-    ${CMAKE_SOURCE_DIR}/plexycore/qt4/abstractplugininterface.cpp
-    ${CMAKE_SOURCE_DIR}/plexycore/qt4/dataplugin.cpp
-    ${CMAKE_SOURCE_DIR}/plexycore/qt4/baseplugin.cpp
-    )
-    
-QT4_AUTOMOC( ${plexicore_MOC})
-
-add_library (flickerengine SHARED ${flickerenginesrc} ${plexicore_MOC})
-QT4_AUTOMOC( ${flickerenginesrc}) 
-
-#SET_TARGET_PROPERTIES(plexy
-#
-#	·       ·       PROPERTIES
-	#	#	·       ·       COMPILE_FLAGS ${CMAKE_SHARED_LIBRARY_CXX_FLAGS})
-#
+add_library (flickerengine SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
-	       flickerengine
-	       qtviz
-	       ${QT_QTGUI_LIBRARY}
-	       ${OPENGL_LIBRARIES}
-	       ${QT_QTCORE_LIBRARY}
-	       ${QT_QTNETWORK_LIBRARY}
-	       ${QT_QTOPENGL_LIBRARY}
-       )
+	flickerengine
+	qtviz
+	${libs}
+)
 
 INSTALL(TARGETS flickerengine DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext/)
 install(FILES flicker.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups/)

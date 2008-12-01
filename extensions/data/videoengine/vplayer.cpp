@@ -19,6 +19,11 @@
 
 #include "vplayer.h"
 
+#include <QLabel>
+#include <QTimer>
+#include <QFile>
+#include <QtDebug>
+
 #ifdef _MSC_VER
 extern "C"
 {
@@ -175,5 +180,3 @@ namespace PlexyDesk{
 		d->vidtimer->start(12);
 	}
 }
-
-#include "vplayer.moc"

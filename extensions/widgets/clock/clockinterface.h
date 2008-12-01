@@ -19,7 +19,6 @@
 #ifndef PLEXY_CLOCK_I
 #define PLEXY_CLOCK_I
 
-#include <QtCore>
 #include <plexy.h>
 #include <widgetinterface.h>
 

@@ -1035,5 +1035,3 @@ void PictureFlow::updateAnimation()
   d->animator->update();
   triggerRender();
 }  
-
-#include "pictureflow.moc"

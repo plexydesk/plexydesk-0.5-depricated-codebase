@@ -21,7 +21,6 @@
 
 #include <plexy.h>
 
-#include <QtCore>
 #include <abstractplugininterface.h>
 #include <datainterface.h>
 #include <widgetinterface.h>
@@ -29,7 +28,10 @@
 #include "imageitem.h"
 #include <widgetplugin.h>
 
-class VISIBLE_SYM ImagePlugin :public PlexyDesk::WidgetPlugin
+class QLineEdit;
+class QWidget;
+
+class VISIBLE_SYM ImagePlugin : public PlexyDesk::WidgetPlugin
 {
     Q_OBJECT
 
@@ -41,14 +43,14 @@ class VISIBLE_SYM ImagePlugin :public PlexyDesk::WidgetPlugin
         void data(QVariant&);
         void searchImage();
    signals:
-	void change();
+        void change();
         void sendData(QVariant&);
    private:
-	 PictureFlow * flow ;
-         QWidget * base;
-         QLineEdit * search;
-	 PlexyDesk::DataInterface * flickrEngine;
-	 PlexyDesk::ImagePileWidget * widget;
+        PictureFlow * flow ;
+        QWidget * base;
+        QLineEdit * search;
+	    PlexyDesk::DataInterface * flickrEngine;
+	    PlexyDesk::ImagePileWidget * widget;
 };
 
 #endif

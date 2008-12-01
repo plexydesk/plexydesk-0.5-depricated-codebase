@@ -21,6 +21,8 @@
 #include <desktopwidget.h>
 #include <plexyconfig.h>
 
+#include <QtPlugin>
+
 IVideoInterface::IVideoInterface(QObject * object)
 {
 }
@@ -31,5 +33,3 @@ PlexyDesk::DataPlugin *  IVideoInterface::instance()
 }
 
 Q_EXPORT_PLUGIN2(IVideoInterface,IVideoInterface)
-
-#include "ivideointerface.moc"

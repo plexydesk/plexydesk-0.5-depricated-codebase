@@ -19,31 +19,26 @@
 #ifndef IRC_DATA_H
 #define IRC_DATA_H
 
-#include <QtCore>
 #include <plexy.h>
 #include <backdropinterface.h>
 #include <abstractplugininterface.h>
-#include <QtNetwork>
 #include <datainterface.h>
 
 class VISIBLE_SYM IRCData :public PlexyDesk::DataPlugin
 {
     Q_OBJECT
 
-    public:
+public:
     IRCData(QObject * object = 0);
     virtual ~IRCData();
-          void init();
-    public slots:
+    void init();
+public slots:
     /* ID tells you the Qhttp id which youare pocessing
     */
- 	  void pushData(QVariant&);
-          void loadCallback(int ID, bool status);
-    signals:
-         void data(QVariant&);
-
-    private:
-
+ 	void pushData(QVariant&);
+    void loadCallback(int ID, bool status);
+signals:
+    void data(QVariant&);
 };
 
 

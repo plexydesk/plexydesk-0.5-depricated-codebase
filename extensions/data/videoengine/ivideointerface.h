@@ -19,12 +19,13 @@
 #ifndef VIDEO_DATA_I
 #define VIDEO_DATA_I
 
-#include <QtCore>
 #include <plexy.h>
 #include <backdropinterface.h>
 #include <abstractplugininterface.h>
 #include <datainterface.h>
 #include <dataplugin.h>
+
+#include <QObject>
 
 class VISIBLE_SYM IVideoInterface :public PlexyDesk::DataInterface
 {

@@ -27,9 +27,6 @@
 
 #include <desktopwidget.h>
 
-#include <QtCore>
-#include <QtGui>
-
 class QTimer;
 
 namespace PlexyDesk
