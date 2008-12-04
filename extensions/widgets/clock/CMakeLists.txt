@@ -14,7 +14,6 @@ SET(sourceFiles
 	clock.cpp
 	clockitem.cpp
 	clockwidget.cpp
-	clockinterface.cpp
 )
 
 set(headerFiles

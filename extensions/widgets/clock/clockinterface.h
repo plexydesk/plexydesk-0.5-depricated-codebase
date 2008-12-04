@@ -19,9 +19,13 @@
 #ifndef PLEXY_CLOCK_I
 #define PLEXY_CLOCK_I
 
+#include <QtCore>
 #include <plexy.h>
 #include <widgetinterface.h>
-
+#include "clockinterface.h"
+#include "clock.h"
+#include "clockitem.h"
+#include "clockwidget.h"
 
 class VISIBLE_SYM ClockInterface :public PlexyDesk::AbstractPluginInterface
 {
@@ -29,9 +33,9 @@ class VISIBLE_SYM ClockInterface :public PlexyDesk::AbstractPluginInterface
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
     public:
-    ClockInterface(QObject * object = 0);
-    PlexyDesk::BasePlugin * instance () ;
+    ClockInterface(QObject * object = 0){}
+    PlexyDesk::BasePlugin * instance () {return new Clock(this);}
 };
 
-
+Q_EXPORT_PLUGIN2(ClockInterface,ClockInterface)
 #endif
