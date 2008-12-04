@@ -14,11 +14,8 @@ INCLUDE_DIRECTORIES(
 SET(sourceFiles
 	abstractplugininterface.cpp
 	backdropinterface.cpp
-	backdropplugin.cpp
-	baseplugin.cpp
-	baserender.cpp
 	canvas.cpp
-	dataplugin.cpp
+   baserender.cpp
 	desktopview.cpp
 	desktopwidget.cpp
 	extensionfactory.cpp
@@ -29,7 +26,6 @@ SET(sourceFiles
 	plexyconfig.cpp
 	pluginloader.cpp
 	viewlayer.cpp
-	widgetplugin.cpp
 )
 
 set(headerFiles
