@@ -24,6 +24,7 @@
 
 #include <QSettings>
 #include <QNetworkProxy>
+#include <QStringList>
 
 namespace PlexyDesk
 {
@@ -44,6 +45,7 @@ namespace PlexyDesk
         QString proxyURL;
         QString proxyUser;
         QString proxyPasswd;
+        QStringList widgetList;
         bool collitionOn;
         void setWallpaper(const QString& str);
     private:

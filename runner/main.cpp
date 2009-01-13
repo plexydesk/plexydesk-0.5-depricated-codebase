@@ -39,6 +39,7 @@
 #include <fakemime.h>
 #include <datainterface.h>
 #include <canvas.h>
+#include <plexyconfig.h>
 
 using namespace PlexyDesk;
 
@@ -75,10 +76,16 @@ int main( int argc, char ** argv )
     PlexyDesk::PluginLoader *loader = new PlexyDesk::PluginLoader();
     loader->scanDisk();
     view->show();
+    QStringList list = PlexyDesk::Config::getInstance()->widgetList;
+
+    foreach (QString str, list) {
+        view->addExtension(str);
+    }
+//view->addExtension("plexyclock");
 /*
     view->addCoreExtension("videoview");
     view->addExtension("imagepil");
-    view->addExtension("plexyclock");
+
     view->addExtension("plexyyoutube");
     view->addExtension("plexyclock");
     view->addExtension("imagepil");

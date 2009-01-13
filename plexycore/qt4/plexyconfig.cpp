@@ -39,23 +39,28 @@ namespace PlexyDesk
         proxyUser="";
         proxyPasswd="";
         proxyPort=3128;
-        //CurrentWallpaper =  DesktopWidget::applicationDirPath() + "/share/plexy/skins/default/default.png";
+        read();
+        if (value("CurrentWallpaper").toString().isNull())
+        CurrentWallpaper =  DesktopWidget::applicationDirPath() + "/share/plexy/skins/default/default.png";
         //collitions detection
         collitionOn = false;
-        read();
+        qDebug()<<widgetList.count()<<endl;
+        if (widgetList.count() < 0 )
+        widgetList.append("plexyclock");
+
         writeToFile();
     }
 
     void Config::writeToFile () 
     {
-        setValue("proxyOn",proxyOn);
-        setValue("proxyURL",proxyURL);
-        setValue("proxyUser",proxyUser);
-        setValue("ProxyPasswd",proxyPasswd);
-        setValue("proxyPort",proxyPort);
-        qDebug()<<"write"<<CurrentWallpaper<<endl;
+        setValue("proxyOn", proxyOn);
+        setValue("proxyURL", proxyURL);
+        setValue("proxyUser", proxyUser);
+        setValue("ProxyPasswd", proxyPasswd);
+        setValue("proxyPort", proxyPort);
         setValue("CurrentWallpaper", CurrentWallpaper);
-        setValue("collitionOn",collitionOn);
+        setValue("collitionOn", collitionOn);
+        setValue("widgetList", widgetList);
         sync();
     }
     void Config::read()
@@ -66,6 +71,7 @@ namespace PlexyDesk
         proxyPasswd = value("proxyPasswd").toString();
         proxyPort = value("proxyPort").toInt() ;
         CurrentWallpaper = value("CurrentWallpaper").toString();
+        widgetList = value("widgetList").toStringList();
         //collitions detection
         collitionOn = false;
     }
