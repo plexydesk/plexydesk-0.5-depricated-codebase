@@ -20,20 +20,20 @@ set(headerFiles
 	backdrop.h
 	classicinterface.h
 )
-
+#XXX: Do we reall need this ??
 set(QTMOC_SRCS
 	backdrop.h
 	classicinterface.h
-	../../../plexycore/qt4/desktopwidget.h
-	../../../plexycore/qt4/pluginloader.h
-	../../../plexycore/qt4/widgetplugin.h
-	../../../plexycore/qt4/widgetinterface.h
-	../../../plexycore/qt4/abstractplugininterface.h
-	../../../plexycore/qt4/baseplugin.h
-	../../../plexycore/qt4/backdropplugin.h
-	../../../plexycore/qt4/dataplugin.h
-	../../../plexycore/qt4/datainterface.h
-	../../../plexycore/qt4/plexyconfig.h
+	../../../base/qt4/desktopwidget.h
+	../../../base/qt4/pluginloader.h
+	../../../base/qt4/widgetplugin.h
+	../../../base/qt4/widgetinterface.h
+	../../../base/qt4/abstractplugininterface.h
+	../../../base/qt4/baseplugin.h
+	../../../base/qt4/backdropplugin.h
+	../../../base/qt4/dataplugin.h
+	../../../base/qt4/datainterface.h
+	../../../base/qt4/plexyconfig.h
 )
 
 qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
@@ -50,7 +50,7 @@ set(libs
 	${QT_QTOPENGL_LIBRARY}
 )
 
-add_library (classicbackdrop SHARED ${sourceFiles} ${QT_MOC_SRCS})
+add_library (classicbackdrop SHARED ${sourceFiles})
 
 TARGET_LINK_LIBRARIES(
 	classicbackdrop
