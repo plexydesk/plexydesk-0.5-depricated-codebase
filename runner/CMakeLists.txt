@@ -19,23 +19,9 @@ SET(sourceFiles
 	main.cpp
 )
 
-set(QTMOC_SRCS
-	../plexycore/qt4/desktopwidget.h
-	../plexycore/qt4/pluginloader.h
-	../plexycore/qt4/widgetplugin.h
-	../plexycore/qt4/widgetinterface.h
-	../plexycore/qt4/abstractplugininterface.h
-	../plexycore/qt4/baseplugin.h
-	../plexycore/qt4/baserender.h
-	../plexycore/qt4/desktopview.h
-	../plexycore/qt4/canvas.h
-	../plexycore/qt4/backdropplugin.h
-	../plexycore/qt4/dataplugin.h
-	../plexycore/qt4/datainterface.h
-	../plexycore/qt4/plexyconfig.h
-)
+#set(QTMOC_SRCS)
 
-qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
+#qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
 
 IF(WIN32)
 SET(GUI_TYPE WIN32)

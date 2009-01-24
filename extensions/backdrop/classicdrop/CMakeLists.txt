@@ -24,16 +24,6 @@ set(headerFiles
 set(QTMOC_SRCS
 	backdrop.h
 	classicinterface.h
-	../../../base/qt4/desktopwidget.h
-	../../../base/qt4/pluginloader.h
-	../../../base/qt4/widgetplugin.h
-	../../../base/qt4/widgetinterface.h
-	../../../base/qt4/abstractplugininterface.h
-	../../../base/qt4/baseplugin.h
-	../../../base/qt4/backdropplugin.h
-	../../../base/qt4/dataplugin.h
-	../../../base/qt4/datainterface.h
-	../../../base/qt4/plexyconfig.h
 )
 
 qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
@@ -50,7 +40,7 @@ set(libs
 	${QT_QTOPENGL_LIBRARY}
 )
 
-add_library (classicbackdrop SHARED ${sourceFiles})
+add_library (classicbackdrop SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
 	classicbackdrop

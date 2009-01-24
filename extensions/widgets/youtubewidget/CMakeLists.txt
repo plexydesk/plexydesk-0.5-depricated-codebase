@@ -28,16 +28,6 @@ set(QTMOC_SRCS
 	youtube.h
 	youtubeinterface.h
 	youtubewidget.h
-	../../../plexycore/qt4/desktopwidget.h
-	../../../plexycore/qt4/pluginloader.h
-	../../../plexycore/qt4/widgetplugin.h
-	../../../plexycore/qt4/widgetinterface.h
-	../../../plexycore/qt4/abstractplugininterface.h
-	../../../plexycore/qt4/baseplugin.h
-	../../../plexycore/qt4/backdropplugin.h
-	../../../plexycore/qt4/dataplugin.h
-	../../../plexycore/qt4/datainterface.h
-	../../../plexycore/qt4/plexyconfig.h
 )
 
 qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
