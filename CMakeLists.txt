@@ -60,8 +60,8 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}
     ${CMAKE_BINARY_DIR}/extensions/widgets/clock
     ${CMAKE_BINARY_DIR}/plexylib
-    ${CMAKE_BINARY_DIR}/plexycore/qt4
-    ${CMAKE_BINARY_DIR}/plexycore/gtk
+    ${CMAKE_BINARY_DIR}/base/qt4
+    ${CMAKE_BINARY_DIR}/base/gtk
     ${CMAKE_BINARY_DIR}/extensions/backdrop/classicdrop
     ${CMAKE_BINARY_DIR}/extensions/widgets/demowidget
     ${CMAKE_BINARY_DIR}/extensions/widgets/welcome
@@ -82,7 +82,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/modules/QtWin/ 
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_SOURCE_DIR}/plexylib
-    ${CMAKE_SOURCE_DIR}/plexycore/qt4
+    ${CMAKE_SOURCE_DIR}/base/qt4
     ${CMAKE_SOURCE_DIR}/widgets/gtk
     ${CMAKE_SOURCE_DIR}/3rdparty/qimageblitz/blitz/
     ${CMAKE_SOURCE_DIR}/3rdparty/lqr/
@@ -97,7 +97,7 @@ INCLUDE_DIRECTORIES(
 
 
 add_subdirectory(plexylib)
-add_subdirectory(plexycore/qt4/)
+add_subdirectory(base/qt4/)
 add_subdirectory(extensions/backdrop/classicdrop)
 add_subdirectory(extensions/widgets/imagepile)
 add_subdirectory(data)
