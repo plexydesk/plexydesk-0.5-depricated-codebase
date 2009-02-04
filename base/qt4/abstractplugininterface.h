@@ -30,7 +30,6 @@ namespace PlexyDesk
     {
         Q_OBJECT
     public:
-        virtual void init() {};
         virtual BasePlugin * instance() = 0;
     };
 } // namespace PlexyDesk
