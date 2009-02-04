@@ -27,7 +27,7 @@
 #include "clockitem.h"
 #include "clockwidget.h"
 
-class VISIBLE_SYM ClockInterface :public PlexyDesk::WidgetInterface
+class ClockInterface :public PlexyDesk::WidgetInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)

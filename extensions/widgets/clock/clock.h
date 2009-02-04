@@ -24,7 +24,7 @@
 #include <widgetplugin.h>
 
 
-class VISIBLE_SYM Clock :public PlexyDesk::WidgetPlugin
+class Clock :public PlexyDesk::WidgetPlugin
 {
     Q_OBJECT
 

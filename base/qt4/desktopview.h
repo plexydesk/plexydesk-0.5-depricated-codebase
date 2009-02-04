@@ -38,8 +38,8 @@ namespace PlexyDesk
         void addCoreExtension(const QString& name);
         void addDesktopItem(QGraphicsItem * item);
         void enableOpenGL(bool);
-        public slots:
-            void backgroundChanged();
+    public slots:
+        void backgroundChanged();
 
     protected:
         void drawBackground(QPainter * painter, const QRectF& rect);
