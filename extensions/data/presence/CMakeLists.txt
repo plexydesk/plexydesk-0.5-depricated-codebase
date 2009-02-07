@@ -1,3 +1,4 @@
+find_package(TelepathyQt4)
 
 set(QT_USE_OPENGL TRUE)
 # -> this will cause cmake to include and link against the OpenGL module
