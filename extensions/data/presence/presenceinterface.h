@@ -24,7 +24,6 @@
 
 #include <datainterface.h>
 #include <dataplugin.h>
-#include "flicker.h"
 
 class PresenceInterface : public PlexyDesk::DataInterface
 {
