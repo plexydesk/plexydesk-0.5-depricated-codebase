@@ -9,6 +9,7 @@ INCLUDE_DIRECTORIES(
 	${QT_QTOPENGL_INCLUDE_DIR}
 	${QT_QTNETWORK_INCLUDE_DIR}
 	${QT_QTTEST_INCLUDE_DIR}
+	${TELEPATHY_QT4_INCLUDE_DIR}
 )
 
 SET(sourceFiles
@@ -37,16 +38,17 @@ set(libs
 	${OPENGL_LIBRARIES}
 	${QT_QTCORE_LIBRARY}
 	${QT_QTOPENGL_LIBRARY}
+	${TELEPATHY_QT4_LIBRARIES}
 )
 
-add_library (presence SHARED ${sourceFiles} ${QT_MOC_SRCS})
+add_library (presenceengine SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
-	presence
+	presenceengine
 	qtviz
 	${libs}
 )
 
-INSTALL(TARGETS presence DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext/)
+INSTALL(TARGETS presenceengine DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext/)
 install(FILES presence.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups/)
 

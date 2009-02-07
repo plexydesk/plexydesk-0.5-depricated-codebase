@@ -1,7 +1,7 @@
 /*******************************************************************************
 * This file is part of PlexyDesk.
-*  Maintained by : Siraj Razick <siraj@kde.org>
-*  Authored By  : Dariusz Mikulski <dariusz.mikulski@gmail.com>
+*  Maintained by : Dariusz Mikulski <dariusz.mikulski@gmail.com>
+*  Authored By  : 
 *
 *  PlexyDesk is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU Lesser General Public License as published by
@@ -21,6 +21,9 @@
 #define PRESENCE_H_
 
 #include <datainterface.h>
+#include <TelepathyQt4/Client/PendingOperation>
+
+class QDBusObjectPath;
 
 class VISIBLE_SYM PresenceData : public PlexyDesk::DataPlugin
 {
@@ -36,7 +39,15 @@ public:
 signals:
     void data(QVariant&);
 
+private slots:
+	void onAccountReady(Telepathy::Client::PendingOperation *operation);
+    void accountCreated(const QString &path);
+    void accountRemoved(const QString &path);
+    void accountValidityChanged(const QString &path, bool valid);
+
 private:
+	class PresenceDataPrivate;
+	PresenceDataPrivate * const d;
 };
 
 #endif //PRESENCE_H_

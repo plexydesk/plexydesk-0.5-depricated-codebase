@@ -1,0 +1,6 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Presence Data Engine
+Type=Engine
+Comment=Telepathy presence
+X-PLEXYDESK-Library=presenceengine
