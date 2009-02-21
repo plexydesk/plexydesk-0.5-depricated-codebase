@@ -41,11 +41,19 @@
 #include <canvas.h>
 #include <plexyconfig.h>
 
+/// internals
+#include "compwindow.h"
 using namespace PlexyDesk;
 
 int main( int argc, char ** argv )
 {
    QApplication app(argc,argv);
-
+   CompWindow win;
+   
+   if (win.isWmRunning()) 
+   {
+       qDebug()<<"Window manager Already running"<<endl;
+       return 0;
+   }
    return app.exec();
 }

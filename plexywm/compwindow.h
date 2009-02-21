@@ -15,9 +15,12 @@ class CompWindow : public QWidget
         CompWindow();
         ~CompWindow();
 
+        bool isWmRunning();
+
         void addWindow(Window id);
     private:
         void init();//setups  Atoms, registering ..etc
+        //utility 
         //data
         class Private;
         Private * const d;

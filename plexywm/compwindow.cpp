@@ -36,3 +36,15 @@ CompWindow::~CompWindow()
 {
     delete d;
 }
+
+//utility
+
+bool CompWindow::isWmRunning()
+{
+   Atom wmAtom;
+   wmAtom  = XInternAtom(d->mDisplay, "WM_S0",false);
+   bool hasWm =  XGetSelectionOwner(d->mDisplay, wmAtom) != None;
+   return  hasWm;
+}
+
+
