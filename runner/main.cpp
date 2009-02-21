@@ -56,7 +56,7 @@ int main( int argc, char ** argv )
     scene.setSceneRect(QDesktopWidget().availableGeometry());//TODO Resolution changes ?
 
     DesktopView *view = new DesktopView(&scene);
-    view->enableOpenGL(true);
+    view->enableOpenGL(false);
     QRect r = QDesktopWidget().availableGeometry();
     view->move(r.x(),r.y());
     view->resize(QDesktopWidget().availableGeometry().size());
