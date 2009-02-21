@@ -106,6 +106,7 @@ add_subdirectory(data)
 
 #add_subdirectory(extensions/widgets/demowidget)
 add_subdirectory(runner)
+add_subdirectory(plexywm)
 add_subdirectory(artwork)
 add_subdirectory(artwork/buttons)
 add_subdirectory(3rdparty/libmagic)
