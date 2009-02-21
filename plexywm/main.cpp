@@ -53,7 +53,7 @@ int main( int argc, char ** argv )
    if (win.isWmRunning()) 
    {
        qDebug()<<"Window manager Already running"<<endl;
-       return 0;
+    //   return 0;
    }
    return app.exec();
 }

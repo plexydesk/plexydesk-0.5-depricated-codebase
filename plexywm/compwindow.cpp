@@ -30,6 +30,10 @@ CompWindow::CompWindow():d(new Private)
 {
     d->mDisplay =  QX11Info::display();
     d->mRootWindow = QX11Info::appRootWindow();
+    //register
+    if (!isWmRunning()) {
+        registerWindowManager();
+    }
 }
 
 CompWindow::~CompWindow()
@@ -47,4 +51,22 @@ bool CompWindow::isWmRunning()
    return  hasWm;
 }
 
+void CompWindow::registerWindowManager()
+{
+    Atom wmAtom;
+    XSetWindowAttributes attrs;
+    attrs.override_redirect = True;
+    attrs.event_mask = PropertyChangeMask;
+
+    wmAtom = XInternAtom(d->mDisplay, "WM_S0", false);
+    Window  owner = XGetSelectionOwner(d->mDisplay, wmAtom);
+    Window  getOwner  = XCreateWindow(d->mDisplay, d->mRootWindow, -100, -100, 1, 1, 0, CopyFromParent,
+            CopyFromParent, (Visual*) CopyFromParent, CWOverrideRedirect | CWEventMask, & attrs);
+
+    if (owner != None)
+        XSelectInput (d->mDisplay, owner, StructureNotifyMask);
+
+    XSetSelectionOwner(d->mDisplay, wmAtom, getOwner, CurrentTime);
+
+}
 
