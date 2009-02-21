@@ -33,6 +33,9 @@ CompWindow::CompWindow():d(new Private)
     //register
     if (!isWmRunning()) {
         registerWindowManager();
+    } else {
+      qDebug()<<"Another Window manager already running.. "<<endl;
+      qApp->quit();
     }
 }
 
