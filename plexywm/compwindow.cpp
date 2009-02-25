@@ -54,7 +54,7 @@ bool CompWindow::isWmRunning()
    return  hasWm;
 }
 
-void CompWindow::registerWindowManager()
+bool CompWindow::registerWindowManager()
 {
     Atom wmAtom;
     XSetWindowAttributes attrs;
@@ -70,6 +70,28 @@ void CompWindow::registerWindowManager()
         XSelectInput (d->mDisplay, owner, StructureNotifyMask);
 
     XSetSelectionOwner(d->mDisplay, wmAtom, getOwner, CurrentTime);
+    
+    if (XGetSelectionOwner (d->mDisplay, wmAtom) != getOwner) {
+        qDebug() << "Error registering Window Manager"<<endl;
+        return false;
+    }
 
+    XClientMessageEvent cm;
+    cm.window = d->mRootWindow;
+    cm.message_type = XInternAtom(d->mDisplay, "MANAGER", false);
+    cm.type =  ClientMessage;
+    cm.format = 32;
+    cm.data.l[0] = CurrentTime;
+    cm.data.l[1] = wmAtom;
+
+    XSendEvent(d->mDisplay, d->mRootWindow, false, StructureNotifyMask, (XEvent*)&cm);
+    if (owner != None) {
+        XEvent event;
+        do {
+            XWindowEvent (d->mDisplay, owner, StructureNotifyMask, &event);
+            qDebug()<<"Waiting for current owner .."<<endl;
+        } while (event.type != DestroyNotify);
+    }
+    return true;
 }
 
