@@ -18,7 +18,7 @@ class CompWindow : public QWidget
         bool isWmRunning();
 
         void addWindow(Window id);
-        void registerWindowManager();
+        bool registerWindowManager();
     private:
         void init();//setups  Atoms, registering ..etc
         //utility 
