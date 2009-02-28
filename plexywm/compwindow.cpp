@@ -17,6 +17,7 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 #include "compwindow.h"
+#include "XAtoms.h"
 
 extern "C" {
 #include <X11/Xutil.h>
@@ -24,6 +25,8 @@ extern "C" {
 #include <X11/extensions/shape.h>
 #include <X11/cursorfont.h>
 #include <X11/extensions/Xcomposite.h>
+#include <X11/extensions/Xdamage.h>
+
 }
 #include <QX11Info>
 
@@ -41,6 +44,7 @@ class CompWindow::Private
 
         bool mCompositing;
         bool mManging;
+	XAtoms atoms; 
 
 };
 
@@ -94,11 +98,25 @@ void CompWindow::init()
    if(!registerWindowManager(d->mMainWin, cmAtom)) {
      qDebug()<<"Register Compsite failed"<<endl;
    }
+   registerAtoms();
+   if(checkExtensions()) {
+     qDebug()<<"Some or all extensions are missing or out dated, upgrade and check again, thanks ";
+   }
    
-    } else {
+   } else {
       qDebug()<<"Another Window manager already running.. "<<endl;
       qApp->quit();
     }
+}
+
+void CompWindow::registerAtoms()
+{
+ bool result = XInternAtoms (d->mDisplay,
+                       atom_names, sizeof (atom_names) / sizeof (atom_names[0]),
+                       false,
+                       d->atoms.a);
+ if(!result)
+   qDebug()<<"Registration of atoms:" <<atom_names<<"Failed"<<endl;
 }
 bool CompWindow::registerWindowManager(Window getOwner, Atom wmAtom)
 {
@@ -180,4 +198,42 @@ bool CompWindow::registerCompositeManager()
         } while (event.type != DestroyNotify);
     }
     return true;
+}
+
+
+bool CompWindow::checkExtensions()
+{
+    int opcode;
+    int composite_event, composite_error, xfixes_event, xfixes_error;
+    int shape_event, shape_error, damage_event, damage_error;
+    int composite_major, composite_minor;
+    
+    if (!XQueryExtension (d->mDisplay, COMPOSITE_NAME, &opcode,
+                          &composite_event, &composite_error)) {
+	qDebug()<<"missing composite extension\n";
+        return false;
+    }
+    XCompositeQueryVersion (d->mDisplay, &composite_major, &composite_minor);
+    if (composite_major == 0 && composite_minor < 2) {
+        qDebug()<<"libXcomposite too old, upgrade your package";
+        return false;
+    }
+
+   if (!XDamageQueryExtension (d->mDisplay, &damage_event, &damage_error)) {
+	qDebug()<<"Missing damage extension";
+        return false;
+    }
+    
+    if (!XFixesQueryExtension (d->mDisplay, &xfixes_event, &xfixes_error)) {
+	qDebug()<<"Missing XFixes extension";
+        return false;
+    }
+#if HAVE_XSHAPE
+    if (!XShapeQueryExtension (d->mDisplay, &shape_event, &shape_error)) {
+	qDebug()<<"Missing Shaped window extension";
+        return false;
+    }
+#endif
+
+   return true;
 }

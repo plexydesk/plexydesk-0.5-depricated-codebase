@@ -44,6 +44,7 @@ ADD_EXECUTABLE(plexydeskwm ${sourceFiles} ${QT_MOC_SRCS})
 TARGET_LINK_LIBRARIES(
 	plexydeskwm 
 	qtviz
+   Xcomposite
 	${libs}
 )
 

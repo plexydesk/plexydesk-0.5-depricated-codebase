@@ -38,7 +38,8 @@ class CompWindow : public QWidget
         void addWindow(Window id);
         bool registerWindowManager(Window newOwner, Atom atom);
 	bool registerCompositeManager();
-	
+	void registerAtoms();
+	bool checkExtensions();
     private:
         void init();//setups  Atoms, registering ..etc
         //utility 
