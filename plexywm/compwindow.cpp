@@ -95,3 +95,44 @@ bool CompWindow::registerWindowManager()
     return true;
 }
 
+
+bool CompWindow::registerCompositeManager()
+{
+    Atom wmAtom;
+    XSetWindowAttributes attrs;
+    attrs.override_redirect = True;
+    attrs.event_mask = PropertyChangeMask;
+
+    wmAtom = XInternAtom(d->mDisplay, "WM_S0", false);
+    Window  owner = XGetSelectionOwner(d->mDisplay, wmAtom);
+    Window  getOwner  = XCreateWindow(d->mDisplay, d->mRootWindow, -100, -100, 1, 1, 0, CopyFromParent,
+            CopyFromParent, (Visual*) CopyFromParent, CWOverrideRedirect | CWEventMask, & attrs);
+
+    if (owner != None)
+        XSelectInput (d->mDisplay, owner, StructureNotifyMask);
+
+    XSetSelectionOwner(d->mDisplay, wmAtom, getOwner, CurrentTime);
+
+    if (XGetSelectionOwner (d->mDisplay, wmAtom) != getOwner) {
+        qDebug() << "Error registering Window Manager"<<endl;
+        return false;
+    }
+
+    XClientMessageEvent cm;
+    cm.window = d->mRootWindow;
+    cm.message_type = XInternAtom(d->mDisplay, "MANAGER", false);
+    cm.type =  ClientMessage;
+    cm.format = 32;
+    cm.data.l[0] = CurrentTime;
+    cm.data.l[1] = wmAtom;
+
+    XSendEvent(d->mDisplay, d->mRootWindow, false, StructureNotifyMask, (XEvent*)&cm);
+    if (owner != None) {
+        XEvent event;
+        do {
+            XWindowEvent (d->mDisplay, owner, StructureNotifyMask, &event);
+            qDebug()<<"Waiting for current owner .."<<endl;
+        } while (event.type != DestroyNotify);
+    }
+    return true;
+}
