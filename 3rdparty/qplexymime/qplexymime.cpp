@@ -75,6 +75,7 @@ public:
 	QByteArray output;
 	QBuffer outputBuffer;
 	QXmlQuery query;
+	QFileInfo fileInfo;
 	
 	QPlexyMimePrivate()
 	{
@@ -100,7 +101,6 @@ public:
 	void setQuery(QString tmpQuery)
 	{
 		QString tmp = newQuery + tmpQuery;
-		qDebug() << tmp;
 		query.setQuery(newQuery + tmpQuery);
 	
 		if(!query.isValid())
@@ -131,8 +131,8 @@ QPlexyMime::~QPlexyMime()
 
 QString QPlexyMime::fromFileName (const QString& fileName)
 {
-	QFileInfo fileInfo(fileName);
-	QString ext = fileInfo.suffix();
+	d->fileInfo.setFile(fileName);
+	QString ext = d->fileInfo.suffix();
 	QString tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../@type/string()").arg(ext);
 	
 	d->setQuery(tmpQuery);
@@ -142,17 +142,32 @@ QString QPlexyMime::fromFileName (const QString& fileName)
 	
 	return result;
 }
-
+/*
 QString QPlexyMime::fromFile (const QString& fileName)
 {
-	return QString();
+	QFileInfo fileInfo(fileName);
+    if (fileInfo.isDir())
+	{
+		return("inode/directory");
+	}
+
+    QFile file(fileName);
+
+    if (!file.open(QIODevice::ReadOnly))
+		return(QString());
+
+	QString mimeType = fromFile(&file);
+
+    file.close();
+
+    return(mimeType);
 }
 
 QString QPlexyMime::fromFile (QFile *file)
 {
 	return QString();
 }
-
+*/
 QString QPlexyMime::genericIconName (const QString& mimeType)
 {
 	return QString();
@@ -185,12 +200,28 @@ QString QPlexyMime::alias (const QString& mimeType)
 
 QString QPlexyMime::genericIconName (void) const
 {
-	return QString();
+	QString ext = d->fileInfo.suffix();
+	QString tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../ns:generic-icon/@name/string()").arg(ext);
+	
+	d->setQuery(tmpQuery);
+	
+	QString result;
+	d->evaluate(result);
+	
+	return result;
 }
 
 QString QPlexyMime::expandedAcronym (void) const
 {
-	return QString();
+	QString ext = d->fileInfo.suffix();
+	QString tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../ns:expanded-acronym/string()").arg(ext);
+	
+	d->setQuery(tmpQuery);
+	
+	QString result;
+	d->evaluate(result);
+	
+	return result;
 }
 
 QString QPlexyMime::description (void) const

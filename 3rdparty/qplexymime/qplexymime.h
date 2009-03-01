@@ -31,10 +31,10 @@ public:
 	~QPlexyMime();
 
 	QString fromFileName (const QString& fileName);
-
+/*
 	QString fromFile (const QString& fileName);
 	QString fromFile (QFile *file);
-
+*/
 	QString genericIconName (const QString& mimeType);
 	QString expandedAcronym (const QString& mimeType);
 	QString description (const QString& mimeType);
