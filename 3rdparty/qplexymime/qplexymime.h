@@ -51,8 +51,8 @@ public:
 	QString alias (void) const;
 
 private:
-//	class Private;
-//	Private *d;
+	class QPlexyMimePrivate;
+	QPlexyMimePrivate *d;
 };
 
 

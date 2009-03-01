@@ -59,19 +59,88 @@ int main (int argc, char **argv)
 #include "qplexymime.h"
 
 #include <QString>
+#include <QStringList>
 #include <QFile>
+#include <QFileInfo>
+#include <QBuffer>
+#include <QtXmlPatterns/QXmlQuery>
+#include <QtDebug>
+
+class QPlexyMime::QPlexyMimePrivate
+{
+private:
+	QString newQuery;
+
+public:
+	QByteArray output;
+	QBuffer outputBuffer;
+	QXmlQuery query;
+	
+	QPlexyMimePrivate()
+	{
+		newQuery = QString("declare namespace ns = 'http://www.freedesktop.org/standards/shared-mime-info';\ndeclare variable $internalFile external;\n");
+	}
+	
+	void evaluate(QString &result)
+	{
+		if(!query.isValid())
+			return;
+		
+		query.evaluateTo(&result);
+	}
+	
+	void evaluate(QStringList &result)
+	{
+		if(!query.isValid())
+			return;
+		
+		query.evaluateTo(&result);
+	}
+
+	void setQuery(QString tmpQuery)
+	{
+		QString tmp = newQuery + tmpQuery;
+		qDebug() << tmp;
+		query.setQuery(newQuery + tmpQuery);
+	
+		if(!query.isValid())
+		{
+			qDebug() << "Invalid query" << tmpQuery;
+			return;
+		}
+	}
+};
 
 QPlexyMime::QPlexyMime (QObject *parent)
+	: d(new QPlexyMimePrivate)
 {
+	QFile sourceDocument(":/freedesktop.org.xml");
+	sourceDocument.open(QIODevice::ReadOnly);
+	
+	d->output = sourceDocument.readAll();
+
+    d->outputBuffer.setBuffer(&d->output);
+    d->outputBuffer.open(QIODevice::ReadOnly);
+	d->query.bindVariable("internalFile", &d->outputBuffer);
 }
 
 QPlexyMime::~QPlexyMime()
 {
+	delete d;
 }
 
 QString QPlexyMime::fromFileName (const QString& fileName)
 {
-	return QString();
+	QFileInfo fileInfo(fileName);
+	QString ext = fileInfo.suffix();
+	QString tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../@type/string()").arg(ext);
+	
+	d->setQuery(tmpQuery);
+	
+	QString result;
+	d->evaluate(result);
+	
+	return result;
 }
 
 QString QPlexyMime::fromFile (const QString& fileName)

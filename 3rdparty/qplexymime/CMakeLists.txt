@@ -3,8 +3,14 @@ include(${QT_USE_FILE})
 
 INCLUDE_DIRECTORIES(
 	${QT_INCLUDES}
-	${QT_XMLPATTERNS_INCLUDE_DIR}
+	${QT_QTXMLPATTERNS_INCLUDE_DIR}
 )
+
+SET(resourceFiles
+	qplexymime.qrc
+)
+
+QT4_ADD_RESOURCES(QT_RCC_SRCS ${resourceFiles})
 
 SET(sourceFiles
 	qplexymime.cpp
@@ -27,13 +33,10 @@ set(sourceFiles
 
 set(libs
 	${QT_QTGUI_LIBRARY}
-	${OPENGL_LIBRARIES}
-	${QT_QTCORE_LIBRARY}
-	${QT_QTOPENGL_LIBRARY}
-	${QT_XMLPATTERNS_LIBRARY}
+	${QT_QTXMLPATTERNS_LIBRARY}
 )
 
-add_library (plexymime SHARED ${sourceFiles} ${QT_MOC_SRCS})
+add_library (plexymime SHARED ${sourceFiles} ${QT_MOC_SRCS} ${QT_RCC_SRCS})
 
 TARGET_LINK_LIBRARIES(
 	plexymime
