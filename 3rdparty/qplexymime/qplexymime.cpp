@@ -270,16 +270,40 @@ QString QPlexyMime::subClassOf (void) const
 
 QString QPlexyMime::mimeType (void) const
 {
-	return QString();
+	QString ext = d->fileInfo.suffix();
+	QString tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../@type/string()").arg(ext);
+	
+	d->setQuery(tmpQuery);
+	
+	QString result;
+	d->evaluate(result);
+	
+	return result.simplified();
 }
 
 QString QPlexyMime::acronym (void) const
 {
-	return QString();
+	QString ext = d->fileInfo.suffix();
+	QString tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../ns:acronym/string()").arg(ext);
+	
+	d->setQuery(tmpQuery);
+	
+	QString result;
+	d->evaluate(result);
+	
+	return result.simplified();
 }
 
 QString QPlexyMime::alias (void) const
 {
-	return QString();
+	QString ext = d->fileInfo.suffix();
+	QString tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../ns:alias/@type/string()").arg(ext);
+	
+	d->setQuery(tmpQuery);
+	
+	QString result;
+	d->evaluate(result);
+	
+	return result.simplified();
 }
 
