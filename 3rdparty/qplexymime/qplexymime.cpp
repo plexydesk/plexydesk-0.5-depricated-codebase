@@ -140,7 +140,7 @@ QString QPlexyMime::fromFileName (const QString& fileName)
 	QString result;
 	d->evaluate(result);
 	
-	return result;
+	return result.simplified();
 }
 /*
 QString QPlexyMime::fromFile (const QString& fileName)
@@ -168,32 +168,32 @@ QString QPlexyMime::fromFile (QFile *file)
 	return QString();
 }
 */
-QString QPlexyMime::genericIconName (const QString& mimeType)
+QString QPlexyMime::genericIconNameMime (const QString& mimeType)
 {
 	return QString();
 }
 
-QString QPlexyMime::expandedAcronym (const QString& mimeType)
+QString QPlexyMime::expandedAcronymMime (const QString& mimeType)
 {
 	return QString();
 }
 
-QString QPlexyMime::description (const QString& mimeType)
+QString QPlexyMime::descriptionMime (const QString& mimeType)
 {
 	return QString();
 }
 
-QString QPlexyMime::subClassOf (const QString& mimeType)
+QString QPlexyMime::subClassOfMime (const QString& mimeType)
 {
 	return QString();
 }
 
-QString QPlexyMime::acronym (const QString& mimeType)
+QString QPlexyMime::acronymMime (const QString& mimeType)
 {
 	return QString();
 }
 
-QString QPlexyMime::alias (const QString& mimeType)
+QString QPlexyMime::aliasMime (const QString& mimeType)
 {
 	return QString();
 }
@@ -208,7 +208,7 @@ QString QPlexyMime::genericIconName (void) const
 	QString result;
 	d->evaluate(result);
 	
-	return result;
+	return result.simplified();
 }
 
 QString QPlexyMime::expandedAcronym (void) const
@@ -221,17 +221,51 @@ QString QPlexyMime::expandedAcronym (void) const
 	QString result;
 	d->evaluate(result);
 	
-	return result;
+	return result.simplified();
 }
 
-QString QPlexyMime::description (void) const
+QString QPlexyMime::description (const QString &lang) const
 {
-	return QString();
+	QString ext = d->fileInfo.suffix();
+	QString tmpQuery;
+	if(lang.isEmpty())
+		tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../ns:comment/string()").arg(ext);
+	else
+		tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../ns:comment[@xml:lang='%2']/string()").arg(ext).arg(lang);
+
+	d->setQuery(tmpQuery);
+	
+	QString retValue;
+	
+	if(lang.isEmpty())
+	{
+		QStringList result;
+		d->evaluate(result);
+		if(!result.isEmpty())
+			retValue = result.first();
+	}
+	else
+	{
+		QString result;
+		d->evaluate(result);
+		
+		retValue = result;
+	}
+	
+	return retValue.simplified();
 }
 
 QString QPlexyMime::subClassOf (void) const
 {
-	return QString();
+	QString ext = d->fileInfo.suffix();
+	QString tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../ns:sub-class-of/@type/string()").arg(ext);
+	
+	d->setQuery(tmpQuery);
+	
+	QString result;
+	d->evaluate(result);
+	
+	return result.simplified();
 }
 
 QString QPlexyMime::mimeType (void) const

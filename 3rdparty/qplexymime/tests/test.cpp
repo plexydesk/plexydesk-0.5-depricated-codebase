@@ -8,7 +8,10 @@ int main (int argc, char **argv)
 	QCoreApplication app(argc, argv);
 
 	QPlexyMime mime;
-	qDebug() << mime.fromFileName("test.pdf");
-	qDebug() << mime.genericIconName();
-	qDebug() << mime.expandedAcronym();
+	qDebug() << "From file name:" << mime.fromFileName("test.xspf");
+	qDebug() << "Gneric icon name:" << mime.genericIconName();
+	qDebug() << "Expanded acronym:" << mime.expandedAcronym();
+	qDebug() << "Description:" << mime.description();
+	qDebug() << "Description localized (uk):" << mime.description("uk");
+	qDebug() << "Subclass Of:" << mime.subClassOf();
 }

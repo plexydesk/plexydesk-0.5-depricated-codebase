@@ -35,16 +35,16 @@ public:
 	QString fromFile (const QString& fileName);
 	QString fromFile (QFile *file);
 */
-	QString genericIconName (const QString& mimeType);
-	QString expandedAcronym (const QString& mimeType);
-	QString description (const QString& mimeType);
-	QString subClassOf (const QString& mimeType);
-	QString acronym (const QString& mimeType);
-	QString alias (const QString& mimeType);
+	QString genericIconNameMime (const QString& mimeType);
+	QString expandedAcronymMime (const QString& mimeType);
+	QString descriptionMime (const QString& mimeType);
+	QString subClassOfMime (const QString& mimeType);
+	QString acronymMime (const QString& mimeType);
+	QString aliasMime (const QString& mimeType);
 
 	QString genericIconName (void) const;
 	QString expandedAcronym (void) const;
-	QString description (void) const;
+	QString description (const QString &lang = QString()) const;
 	QString subClassOf (void) const;
 	QString mimeType (void) const;
 	QString acronym (void) const;
