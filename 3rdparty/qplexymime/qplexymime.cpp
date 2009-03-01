@@ -109,6 +109,29 @@ public:
 			return;
 		}
 	}
+	
+	bool setGenericMime(const QString &mimeType)
+	{
+		if(mimeType.isEmpty())
+			return false;
+	
+		QString tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type[@type='%1']/ns:glob/@pattern/string()").arg(mimeType);
+		
+		setQuery(tmpQuery);
+	
+		QString result;
+		evaluate(result);
+		
+		if(result.isEmpty())
+			return false;
+		
+		QString extension = result.remove(0,1);
+		QString filename = QString("test") + extension;
+		
+		fileInfo.setFile(filename.simplified());
+		
+		return true;
+	}
 };
 
 QPlexyMime::QPlexyMime (QObject *parent)
@@ -168,33 +191,57 @@ QString QPlexyMime::fromFile (QFile *file)
 	return QString();
 }
 */
+
 QString QPlexyMime::genericIconNameMime (const QString& mimeType)
 {
+	if(d->setGenericMime(mimeType))
+	{
+		return genericIconName();
+	}
+
 	return QString();
 }
 
 QString QPlexyMime::expandedAcronymMime (const QString& mimeType)
 {
+	if(d->setGenericMime(mimeType))
+		return expandedAcronym();
+
 	return QString();
 }
 
-QString QPlexyMime::descriptionMime (const QString& mimeType)
+QString QPlexyMime::descriptionMime (const QString& mimeType, const QString &lang)
 {
+	if(d->setGenericMime(mimeType))
+		if(lang.isEmpty())
+			return description();
+		else
+			return description(lang);
+
 	return QString();
 }
 
 QString QPlexyMime::subClassOfMime (const QString& mimeType)
 {
+	if(d->setGenericMime(mimeType))
+		return subClassOf();
+
 	return QString();
 }
 
 QString QPlexyMime::acronymMime (const QString& mimeType)
 {
+	if(d->setGenericMime(mimeType))
+		return acronym();
+
 	return QString();
 }
 
 QString QPlexyMime::aliasMime (const QString& mimeType)
 {
+	if(d->setGenericMime(mimeType))
+		return alias();
+
 	return QString();
 }
 

@@ -37,7 +37,7 @@ public:
 */
 	QString genericIconNameMime (const QString& mimeType);
 	QString expandedAcronymMime (const QString& mimeType);
-	QString descriptionMime (const QString& mimeType);
+	QString descriptionMime (const QString& mimeType, const QString &lang = QString());
 	QString subClassOfMime (const QString& mimeType);
 	QString acronymMime (const QString& mimeType);
 	QString aliasMime (const QString& mimeType);

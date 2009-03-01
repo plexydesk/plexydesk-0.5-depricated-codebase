@@ -17,4 +17,13 @@ int main (int argc, char **argv)
 	qDebug() << "Mime type:" << mime.mimeType();
 	qDebug() << "Acronym:" << mime.acronym();
 	qDebug() << "Alias:" << mime.alias();
+
+	qDebug() << "***********************************************";
+        qDebug() << "Gneric icon name:" << mime.genericIconNameMime("application/rtf");
+        qDebug() << "Expanded acronym:" << mime.expandedAcronymMime("application/rtf");
+        qDebug() << "Description:" << mime.descriptionMime("application/rtf");
+        qDebug() << "Description localized (uk):" << mime.descriptionMime("application/rtf", "uk");
+        qDebug() << "Subclass Of:" << mime.subClassOfMime("application/rtf");
+        qDebug() << "Acronym:" << mime.acronymMime("application/rtf");
+        qDebug() << "Alias:" << mime.aliasMime("application/rtf");
 }
