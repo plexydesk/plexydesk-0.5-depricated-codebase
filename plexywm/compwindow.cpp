@@ -99,9 +99,10 @@ void CompWindow::init()
      qDebug()<<"Register Compsite failed"<<endl;
    }
    registerAtoms();
-   if(checkExtensions()) {
+   if(!checkExtensions()) {
      qDebug()<<"Some or all extensions are missing or out dated, upgrade and check again, thanks ";
    }
+   startOverlay();
    
    } else {
       qDebug()<<"Another Window manager already running.. "<<endl;
@@ -236,4 +237,17 @@ bool CompWindow::checkExtensions()
 #endif
 
    return true;
+}
+
+
+
+bool CompWindow::startOverlay()
+{
+ d->mOverlay = XCompositeGetOverlayWindow (d->mDisplay, d->mRootWindow);
+ if (!d->mOverlay) {
+   qDebug()<<"Overly window can not start"<<endl;
+ }
+
+ XReparentWindow (d->mDisplay, d->mMainWin, d->mOverlay, 0, 0);
+ 
 }
