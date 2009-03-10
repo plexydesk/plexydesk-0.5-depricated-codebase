@@ -48,10 +48,10 @@ class CompWindow::Private
 
 };
 
-CompWindow::CompWindow():d(new Private)
+CompWindow::CompWindow(int & argc, char ** argv):QApplication(argc, argv), d(new Private)
 {
     d->mDisplay =  QX11Info::display();
-    d->mRootWindow = QX11Info::appRootWindow();
+    d->mRootWindow = QApplication::desktop()->winId();
     //register
     init();
 }
@@ -59,6 +59,17 @@ CompWindow::CompWindow():d(new Private)
 CompWindow::~CompWindow()
 {
     delete d;
+}
+
+bool CompWindow::x11EventFilter( XEvent* event)
+{
+
+     switch (event->type) {
+         case MapRequest: qDebug()<<"Map Request"<<endl;break;
+         case LeaveNotify: qDebug()<<"Leave "<<endl;break;
+         case EnterNotify: qDebug()<<"Enter"<<endl;break;
+         case ReparentNotify: qDebug()<<"Reparent"<<endl;break;
+     }
 }
 
 //utility
@@ -73,6 +84,17 @@ bool CompWindow::isWmRunning()
 
 void CompWindow::init()
 {
+     XSelectInput(QX11Info::display(), QX11Info::appRootWindow(QX11Info::appScreen()), KeyPressMask
+             | KeyReleaseMask | ButtonPressMask | ButtonReleaseMask |
+                              KeymapStateMask | ButtonMotionMask | PointerMotionMask |
+                              EnterWindowMask | LeaveWindowMask | FocusChangeMask |
+                              VisibilityChangeMask |
+                                               ExposureMask | StructureNotifyMask |
+                                               SubstructureRedirectMask | SubstructureNotifyMask);
+
+   XClearWindow(QX11Info::display(), QX11Info::appRootWindow(QX11Info::appScreen()));
+   XSync(QX11Info::display(), false);
+
    if (!isWmRunning()) {
     XSetWindowAttributes attrs;
     attrs.override_redirect = True;
@@ -92,9 +114,8 @@ void CompWindow::init()
      qDebug()<<"Register window failed"<<endl;
    }
    Xutf8SetWMProperties (d->mDisplay, d->mMainWin, "plexydeskwm",
-			  "plexydeskwm", NULL, 0, NULL, NULL, NULL);
+          "plexydeskwm", NULL, 0, NULL, NULL, NULL);
    Atom cmAtom = XInternAtom(d->mDisplay, "_NET_WM_CM_S0", false);
-   
    if(!registerWindowManager(d->mMainWin, cmAtom)) {
      qDebug()<<"Register Compsite failed"<<endl;
    }
@@ -102,8 +123,7 @@ void CompWindow::init()
    if(!checkExtensions()) {
      qDebug()<<"Some or all extensions are missing or out dated, upgrade and check again, thanks ";
    }
-   startOverlay();
-   
+   //startOverlay();
    } else {
       qDebug()<<"Another Window manager already running.. "<<endl;
       qApp->quit();

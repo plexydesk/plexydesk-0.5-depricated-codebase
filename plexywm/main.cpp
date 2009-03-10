@@ -47,10 +47,9 @@ using namespace PlexyDesk;
 
 int main( int argc, char ** argv )
 {
-   QApplication app(argc,argv);
-   CompWindow win;
+   CompWindow app(argc,argv);
    
-   if (win.isWmRunning()) 
+   if (app.isWmRunning()) 
    {
    }
    return app.exec();

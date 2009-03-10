@@ -26,11 +26,11 @@ extern "C" {
 #include <X11/Xlib.h>
 }
 
-class CompWindow : public QWidget
+class CompWindow : public QApplication
 {
     Q_OBJECT
     public:
-        CompWindow();
+        CompWindow(int & argc, char ** argv);
         ~CompWindow();
 
         bool isWmRunning();
@@ -43,6 +43,7 @@ class CompWindow : public QWidget
 	bool checkExtensions();
     private:
         void init();//setups  Atoms, registering ..etc
+        bool x11EventFilter( XEvent* );
         //utility 
         //data
         class Private;
