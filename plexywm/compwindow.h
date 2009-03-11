@@ -37,10 +37,10 @@ class CompWindow : public QApplication
 
         void addWindow(Window id);
         bool registerWindowManager(Window newOwner, Atom atom);
-	bool registerCompositeManager();
-	void registerAtoms();
-	bool startOverlay();
-	bool checkExtensions();
+        bool registerCompositeManager();
+        void registerAtoms();
+        bool startOverlay();
+        bool checkExtensions();
     private:
         void init();//setups  Atoms, registering ..etc
         bool x11EventFilter( XEvent* );

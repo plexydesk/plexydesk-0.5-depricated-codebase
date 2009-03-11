@@ -123,7 +123,11 @@ void CompWindow::init()
    if(!checkExtensions()) {
      qDebug()<<"Some or all extensions are missing or out dated, upgrade and check again, thanks ";
    }
-   //startOverlay();
+   startOverlay();
+
+   Cursor normal = XCreateFontCursor(d->mDisplay, XC_left_ptr);
+   XDefineCursor(d->mDisplay, d->mRootWindow, normal);
+
    } else {
       qDebug()<<"Another Window manager already running.. "<<endl;
       qApp->quit();
@@ -269,5 +273,9 @@ bool CompWindow::startOverlay()
  }
 
  XReparentWindow (d->mDisplay, d->mMainWin, d->mOverlay, 0, 0);
- 
+ XserverRegion region;
+ XRectangle rect = { 0, 0, DisplayWidth(d->mDisplay, 0), DisplayHeight(d->mDisplay, 0) };
+ region = XFixesCreateRegion(d->mDisplay, &rect, 1);
+ XFixesSetWindowShapeRegion(d->mDisplay, d->mOverlay, ShapeBounding, 0, 0, region);
+ XFixesDestroyRegion(d->mDisplay, region);
 }
