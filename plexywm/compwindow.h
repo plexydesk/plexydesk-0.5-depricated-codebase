@@ -40,6 +40,7 @@ class CompWindow : public QApplication
         bool registerCompositeManager();
         void registerAtoms();
         bool startOverlay();
+        void setupWindows();
         bool checkExtensions();
     private:
         void init();//setups  Atoms, registering ..etc
