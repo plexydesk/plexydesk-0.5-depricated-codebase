@@ -57,7 +57,6 @@ CompWindow::CompWindow(int & argc, char ** argv):QApplication(argc, argv), d(new
 {
     d->mDisplay =  QX11Info::display();
     d->mRootWindow = QApplication::desktop()->winId();
-    //register
     init();
 }
 
