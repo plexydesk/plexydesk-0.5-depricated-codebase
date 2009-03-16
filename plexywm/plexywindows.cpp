@@ -20,7 +20,7 @@ PlexyWindows::PlexyWindows(Display* dsp, Window win, XWindowAttributes* attr, QW
                            :QWidget(parent, f)
 {
 qDebug()<<"Creating PlexyWindow";
-
+XSelectInput(dsp, win, (PropertyChangeMask | EnterWindowMask | FocusChangeMask));
 }
 
 int PlexyWindows::devType() const {

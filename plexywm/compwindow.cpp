@@ -50,7 +50,7 @@ public:
     bool mCompositing;
     bool mManging;
     XAtoms atoms;
-
+    QMap<Window, PlexyWindows*> windowMap;
 };
 
 CompWindow::CompWindow(int & argc, char ** argv):QApplication(argc, argv), d(new Private)
@@ -63,6 +63,18 @@ CompWindow::CompWindow(int & argc, char ** argv):QApplication(argc, argv), d(new
 CompWindow::~CompWindow()
 {
     delete d;
+}
+
+void CompWindow::addWindow(Window window)
+{
+    XWindowAttributes attrs;
+    if (!XGetWindowAttributes(d->mDisplay, window, &attrs)) {
+        qDebug()<<"Error adding windows, getting window attributes failed";
+        return;
+    }
+
+    PlexyWindows *  _window  = new PlexyWindows(d->mDisplay, window, &attrs);
+    d->windowMap[window] = _window;
 }
 
 bool CompWindow::x11EventFilter( XEvent* event)
@@ -88,6 +100,7 @@ bool CompWindow::x11EventFilter( XEvent* event)
         break;
     case CreateNotify :
         qDebug()<<"Create Notify";
+        addWindow(event->xcreatewindow.window);
         break;
     case  DestroyNotify:
         qDebug()<<"DestroyNotify";
@@ -112,6 +125,9 @@ bool CompWindow::x11EventFilter( XEvent* event)
         break;
     case FocusOut:
         qDebug()<<"FocusOut";
+        break;
+    case Expose:
+        qDebug()<<"Expose";
         break;
     }
 }
@@ -317,12 +333,28 @@ bool CompWindow::startOverlay()
         qDebug()<<"Overly window can not start"<<endl;
     }
 
+  XGCValues vals;
+  int x, y;
+  unsigned int cx, cy, cx_border, depth;
+
+  if (!XGetGeometry(d->mDisplay, d->mOverlay, &d->mRootWindow, &x, &y, &cx, &cy, &cx_border, &depth)) {
+     x =   0;  y =   0;
+    cx = 800; cy = 480;
+  }
+
+  vals.foreground = BlackPixel(d->mDisplay, 0);
+  vals.background = BlackPixel(d->mDisplay, 0);
+  GC gc = XCreateGC(d->mDisplay,  d->mOverlay, GCForeground | GCBackground, &vals);
+  XFillRectangle(d->mDisplay,  d->mOverlay, gc, x, y, cx, cy);
+  XFreeGC(d->mDisplay, gc);
+  XFlush(d->mDisplay);
     XReparentWindow (d->mDisplay, d->mMainWin, d->mOverlay, 0, 0);
     XserverRegion region;
     XRectangle rect = { 0, 0, DisplayWidth(d->mDisplay, 0), DisplayHeight(d->mDisplay, 0) };
     region = XFixesCreateRegion(d->mDisplay, &rect, 1);
     XFixesSetWindowShapeRegion(d->mDisplay, d->mOverlay, ShapeBounding, 0, 0, region);
     XFixesDestroyRegion(d->mDisplay, region);
+
 }
 
 
@@ -354,10 +386,10 @@ void CompWindow::setupWindows()
                 &nchildren);
 
     for (int i = 0; i < nchildren; i++) {
-        if (children[i] != d->mOverlay && children[i]
+        if (children[i]
                 != d->mMainWin) {
             qDebug()<<"Mapping windows"<<endl;
-            //    createChildWindow(children[i]);
+            addWindow(children[i]);
         }
 
         XFree (children);
