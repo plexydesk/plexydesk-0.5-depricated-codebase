@@ -15,12 +15,13 @@ INCLUDE_DIRECTORIES(
 
 include_directories(${CMAKE_SOURCE_DIR}/lib/)
 ########### source files ###############
-SET(sourceFiles
+SET(sourceFiles plexywindows.h plexywindows.cpp
 	main.cpp
    compwindow.cpp
+   plexywindows.cpp
 )
 
-set(QTMOC_SRCS compwindow.h)
+set(QTMOC_SRCS plexywindows.h compwindow.h)
 
 qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
 
