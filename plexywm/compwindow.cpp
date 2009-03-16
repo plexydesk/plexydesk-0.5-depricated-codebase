@@ -70,10 +70,12 @@ bool CompWindow::x11EventFilter( XEvent* event)
 
     switch (event->type) {
     case ClientMessage:
-        qDebug()<<"Client Message"<<endl;
+        qDebug()<<"Client Message"<<
+        event->xclient.data.l<<event->xclient.format<<event->xclient.message_type;
         break;
     case MapRequest:
         qDebug()<<"Map Request"<<endl;
+        XMapWindow(d->mDisplay, event->xmaprequest.window);
         break;
     case LeaveNotify:
         qDebug()<<"Leave "<<endl;
