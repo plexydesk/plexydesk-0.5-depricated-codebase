@@ -17,7 +17,7 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
-/*special credit goes to Pyrodesk project, the logic of plexydeskwm is based on 
+/*special credit goes to Pyrodesk project, the logic of plexydeskwm is based on
   pyrodesk's compzilla windows manager */
 
 #include "compwindow.h"
@@ -69,6 +69,9 @@ bool CompWindow::x11EventFilter( XEvent* event)
 {
 
     switch (event->type) {
+    case ClientMessage:
+        qDebug()<<"Client Message"<<endl;
+        break;
     case MapRequest:
         qDebug()<<"Map Request"<<endl;
         break;
@@ -80,6 +83,33 @@ bool CompWindow::x11EventFilter( XEvent* event)
         break;
     case ReparentNotify:
         qDebug()<<"Reparent"<<endl;
+        break;
+    case CreateNotify :
+        qDebug()<<"Create Notify";
+        break;
+    case  DestroyNotify:
+        qDebug()<<"DestroyNotify";
+        break;
+    case ConfigureNotify:
+        qDebug()<<"ConfigureNotify";
+        break;
+    case ConfigureRequest:
+        qDebug()<<"ConfigureRequest";
+        break;
+    case MapNotify :
+        qDebug()<<"MapNotify";
+        break;
+    case UnmapNotify :
+        qDebug()<<"UnmapNotify";
+        break;
+    case PropertyNotify :
+        qDebug()<<"PropertyNotify";
+        break;
+    case FocusIn :
+        qDebug()<<"FocusIn";
+        break;
+    case FocusOut:
+        qDebug()<<"FocusOut";
         break;
     }
 }
@@ -325,7 +355,7 @@ void CompWindow::setupWindows()
         if (children[i] != d->mOverlay && children[i]
                 != d->mMainWin) {
             qDebug()<<"Mapping windows"<<endl;
-        //    createChildWindow(children[i]);
+            //    createChildWindow(children[i]);
         }
 
         XFree (children);
