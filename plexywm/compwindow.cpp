@@ -33,6 +33,7 @@ extern "C" {
 
 }
 #include <QX11Info>
+#include "plexywindows.h"
 
 class CompWindow::Private
 {
