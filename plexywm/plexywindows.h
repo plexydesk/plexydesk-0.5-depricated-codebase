@@ -21,12 +21,16 @@
 #include <QtGui>
 #include <QWidget>
 
+extern "C" {
+#include <X11/Xlib.h>
+#include <X11/extensions/Xdamage.h>
+}
 
 class PlexyWindows : public QWidget
 {
   Q_OBJECT
 public:
-  PlexyWindows(QWidget * parent = 0, Qt::WindowFlags f = 0);
+  PlexyWindows(Display*d, Window w, XWindowAttributes *attr, QWidget * parent = 0, Qt::WindowFlags f = 0);
 virtual ~PlexyWindows(){}
 virtual int devType() const;
 virtual void setVisible(bool visible);

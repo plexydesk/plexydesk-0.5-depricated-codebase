@@ -16,8 +16,11 @@
 
 #include "plexywindows.h"
 
-PlexyWindows::PlexyWindows(QWidget *parent, Qt::WindowFlags f  ):QWidget(parent, f)
+PlexyWindows::PlexyWindows(Display* dsp, Window win, XWindowAttributes* attr, QWidget *parent, Qt::WindowFlags f  )
+                           :QWidget(parent, f)
 {
+qDebug()<<"Creating PlexyWindow";
+
 }
 
 int PlexyWindows::devType() const {
