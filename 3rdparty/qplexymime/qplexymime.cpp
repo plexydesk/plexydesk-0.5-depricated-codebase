@@ -66,6 +66,8 @@ int main (int argc, char **argv)
 #include <QtXmlPatterns/QXmlQuery>
 #include <QtDebug>
 
+namespace PlexyDesk{
+
 class QPlexyMime::QPlexyMimePrivate
 {
 private:
@@ -353,4 +355,4 @@ QString QPlexyMime::alias (void) const
 	
 	return result.simplified();
 }
-
+}

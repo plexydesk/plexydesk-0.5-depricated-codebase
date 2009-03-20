@@ -6,7 +6,7 @@
 int main (int argc, char **argv)
 {
 	QCoreApplication app(argc, argv);
-
+        using namespace PlexyDesk;
 	QPlexyMime mime;
 	qDebug() << "From file name:" << mime.fromFileName("test.rtf");
 	qDebug() << "Gneric icon name:" << mime.genericIconName();

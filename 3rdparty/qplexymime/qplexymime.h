@@ -21,6 +21,8 @@
 
 class QString;
 class QFile;
+namespace PlexyDesk
+{
 
 class QPlexyMime : public QObject
 {
@@ -55,4 +57,5 @@ private:
 	QPlexyMimePrivate *d;
 };
 
+} // namespace PlexyDesk
 

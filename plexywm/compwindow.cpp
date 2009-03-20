@@ -333,21 +333,21 @@ bool CompWindow::startOverlay()
         qDebug()<<"Overly window can not start"<<endl;
     }
 
-  XGCValues vals;
-  int x, y;
-  unsigned int cx, cy, cx_border, depth;
+    XGCValues vals;
+    int x, y;
+    unsigned int cx, cy, cx_border, depth;
 
-  if (!XGetGeometry(d->mDisplay, d->mOverlay, &d->mRootWindow, &x, &y, &cx, &cy, &cx_border, &depth)) {
-     x =   0;  y =   0;
-    cx = 800; cy = 480;
-  }
+    if (!XGetGeometry(d->mDisplay, d->mOverlay, &d->mRootWindow, &x, &y, &cx, &cy, &cx_border, &depth)) {
+     x = 0;  y =  0;
+     cx = 800; cy = 480;
+    }
 
-  vals.foreground = BlackPixel(d->mDisplay, 0);
-  vals.background = BlackPixel(d->mDisplay, 0);
-  GC gc = XCreateGC(d->mDisplay,  d->mOverlay, GCForeground | GCBackground, &vals);
-  XFillRectangle(d->mDisplay,  d->mOverlay, gc, x, y, cx, cy);
-  XFreeGC(d->mDisplay, gc);
-  XFlush(d->mDisplay);
+    vals.foreground = BlackPixel(d->mDisplay, 0);
+    vals.background = BlackPixel(d->mDisplay, 0);
+    GC gc = XCreateGC(d->mDisplay,  d->mOverlay, GCForeground | GCBackground, &vals);
+    XFillRectangle(d->mDisplay,  d->mOverlay, gc, x, y, cx, cy);
+    XFreeGC(d->mDisplay, gc);
+    XFlush(d->mDisplay);
     XReparentWindow (d->mDisplay, d->mMainWin, d->mOverlay, 0, 0);
     XserverRegion region;
     XRectangle rect = { 0, 0, DisplayWidth(d->mDisplay, 0), DisplayHeight(d->mDisplay, 0) };
