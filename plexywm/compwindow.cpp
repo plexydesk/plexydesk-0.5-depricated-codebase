@@ -69,10 +69,10 @@ void CompWindow::addWindow(Window window)
 {
     XWindowAttributes attrs;
     if (!XGetWindowAttributes(d->mDisplay, window, &attrs)) {
-        qDebug()<<"Error adding windows, getting window attributes failed";
+        qDebug()<<"Error adding windows, getting window attributes failed"<<endl;
         return;
-    }
-
+    }else 
+    qDebug()<<"Going -----------------"<<endl;
     PlexyWindows *  _window  = new PlexyWindows(d->mDisplay, window, &attrs);
     d->windowMap[window] = _window;
 }
@@ -80,14 +80,26 @@ void CompWindow::addWindow(Window window)
 bool CompWindow::x11EventFilter( XEvent* event)
 {
 
+
+     bool nomap = false;
+      foreach (PlexyWindows* _win, d->windowMap) {
+      if(_win->winId() == event->xmap.window) {
+          qDebug()<<"Already has a base"<<endl;
+          nomap = true;
+      }
+      else {
+          qDebug()<<"No Base";
+      }
+    }
+
     switch (event->type) {
     case ClientMessage:
         qDebug()<<"Client Message"<<
         event->xclient.data.l<<event->xclient.format<<event->xclient.message_type;
         break;
     case MapRequest:
-        qDebug()<<"Map Request"<<endl;
-        XMapWindow(d->mDisplay, event->xmaprequest.window);
+        qDebug()<<"Map Requesti-------->"<<endl;
+        //XMapWindow(d->mDisplay, event->xmaprequest.window);
         break;
     case LeaveNotify:
         qDebug()<<"Leave "<<endl;
@@ -100,11 +112,10 @@ bool CompWindow::x11EventFilter( XEvent* event)
         break;
     case CreateNotify :
         qDebug()<<"Create Notify";
-        addWindow(event->xcreatewindow.window);
         break;
     case  DestroyNotify:
         qDebug()<<"DestroyNotify";
-        break;
+       break;
     case ConfigureNotify:
         qDebug()<<"ConfigureNotify";
         break;
@@ -113,6 +124,8 @@ bool CompWindow::x11EventFilter( XEvent* event)
         break;
     case MapNotify :
         qDebug()<<"MapNotify";
+         if (!nomap)
+             addWindow(event->xmap.window);
         break;
     case UnmapNotify :
         qDebug()<<"UnmapNotify";
@@ -183,7 +196,7 @@ void CompWindow::init()
         if (!checkExtensions()) {
             qDebug()<<"Some or all extensions are missing or out dated, upgrade and check again, thanks ";
         }
-        startOverlay();
+        //startOverlay();
         setupWindows();
 
         Cursor normal = XCreateFontCursor(d->mDisplay, XC_left_ptr);
@@ -345,8 +358,6 @@ bool CompWindow::startOverlay()
     vals.foreground = BlackPixel(d->mDisplay, 0);
     vals.background = BlackPixel(d->mDisplay, 0);
     GC gc = XCreateGC(d->mDisplay,  d->mOverlay, GCForeground | GCBackground, &vals);
-    XFillRectangle(d->mDisplay,  d->mOverlay, gc, x, y, cx, cy);
-    XFreeGC(d->mDisplay, gc);
     XFlush(d->mDisplay);
     XReparentWindow (d->mDisplay, d->mMainWin, d->mOverlay, 0, 0);
     XserverRegion region;
@@ -392,7 +403,7 @@ void CompWindow::setupWindows()
             addWindow(children[i]);
         }
 
-        XFree (children);
+      //  XFree (children);
     }
     XUngrabServer (d->mDisplay);
 }

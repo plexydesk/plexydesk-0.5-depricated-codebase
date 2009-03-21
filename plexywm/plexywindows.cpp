@@ -15,12 +15,33 @@
 */
 
 #include "plexywindows.h"
+#include <QApplication>
 
 PlexyWindows::PlexyWindows(Display* dsp, Window win, XWindowAttributes* attr, QWidget *parent, Qt::WindowFlags f  )
                            :QWidget(parent, f)
 {
-qDebug()<<"Creating PlexyWindow";
+qDebug()<<"Creating PlexyWindow"<<endl;
 XSelectInput(dsp, win, (PropertyChangeMask | EnterWindowMask | FocusChangeMask));
+XGrabServer(dsp);
+XReparentWindow(dsp, win, winId(), 20, 20);
+XAddToSaveSet(dsp, win);
+
+Atom _net_active_window = XInternAtom(dsp , "_NET_ACTIVE_WINDOW", false);
+XClientMessageEvent xev;
+xev.type = ClientMessage;
+xev.window = win;
+xev.message_type = _net_active_window;
+xev.format = 32;
+xev.data.l[0] = 1;
+xev.data.l[1] = CurrentTime;
+xev.data.l[2] = 0;
+XSendEvent(dsp, QApplication::desktop()->winId(), False, StructureNotifyMask,
+        (XEvent *)&xev);
+
+XMapWindow(dsp, win);
+XSync(dsp, false);
+XUngrabServer(dsp);
+show();
 }
 
 int PlexyWindows::devType() const {
