@@ -80,7 +80,7 @@ void CompWindow::addWindow(Window window)
 bool CompWindow::x11EventFilter( XEvent* event)
 {
 
-
+//TODO don't map pop's
      bool nomap = false;
       foreach (PlexyWindows* _win, d->windowMap) {
       if(_win->winId() == event->xmap.window) {
