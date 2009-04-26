@@ -42,6 +42,7 @@ class CompWindow : public QApplication
         bool startOverlay();
         void setupWindows();
         bool checkExtensions();
+        Window GetEventXWindow (XEvent *xev);
     private:
         void init();//setups  Atoms, registering ..etc
         bool x11EventFilter( XEvent* );

@@ -71,11 +71,20 @@ set(QTMOC_SRCS
 	widgetinterface.h
 )
 
+#for now only dbus works only under linux
+IF (UNIX)
+QT4_ADD_DBUS_ADAPTOR(dbus_SRCS org.plexydesk.Config.xml
+                        plexyconfig.h PlexyDesk::Config)
+message(${dbus_SRCS})
+ENDIF(UNIX)
+
+
 qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
 
 set(sourceFiles
 	${sourceFiles}
 	${headerFiles}
+   ${dbus_SRCS}
 )
 
 set(libs
@@ -84,6 +93,7 @@ set(libs
     ${QT_QTCORE_LIBRARY}
     ${QT_QTOPENGL_LIBRARY}
     ${QT_QTSVG_LIBRARY}
+    ${QT_QTDBUS_LIBRARY}
 )
 
 add_library(qtviz SHARED ${sourceFiles} ${QT_MOC_SRCS})
@@ -93,7 +103,6 @@ TARGET_LINK_LIBRARIES(
     qimageblitz
 	${libs}
 )
-
 if (NOT WIN32)
     INSTALL(TARGETS qtviz DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/)
 elseif(WIN32)

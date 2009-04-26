@@ -34,6 +34,7 @@ extern "C" {
 }
 #include <QX11Info>
 #include "plexywindows.h"
+//#include <qq.h>
 
 class CompWindow::Private
 {
@@ -51,6 +52,13 @@ public:
     bool mManging;
     XAtoms atoms;
     QMap<Window, PlexyWindows*> windowMap;
+    //variables required for even mapping.. etc
+    int opcode;
+    int composite_event, composite_error, xfixes_event, xfixes_error;
+    int shape_event, shape_error, damage_event, damage_error;
+    int composite_major, composite_minor;
+
+
 };
 
 CompWindow::CompWindow(int & argc, char ** argv):QApplication(argc, argv), d(new Private)
@@ -71,78 +79,100 @@ void CompWindow::addWindow(Window window)
     if (!XGetWindowAttributes(d->mDisplay, window, &attrs)) {
         qDebug()<<"Error adding windows, getting window attributes failed"<<endl;
         return;
-    }else 
-    qDebug()<<"Going -----------------"<<endl;
-    PlexyWindows *  _window  = new PlexyWindows(d->mDisplay, window, &attrs);
-    d->windowMap[window] = _window;
+    } else
+        qDebug()<<"Going -----------------"<<endl;
+
+    //PlexyWindows *  _window  = new PlexyWindows(d->mDisplay, window, &attrs);
+    //d->windowMap[window] = _window;
 }
 
 bool CompWindow::x11EventFilter( XEvent* event)
 {
 
-//TODO don't map pop's
-     bool nomap = false;
-      foreach (PlexyWindows* _win, d->windowMap) {
-      if(_win->winId() == event->xmap.window) {
-          qDebug()<<"Already has a base"<<endl;
-          nomap = true;
-      }
-      else {
-          qDebug()<<"No Base";
-      }
-    }
+    Window xwin = GetEventXWindow (event);
+
 
     switch (event->type) {
     case ClientMessage:
-        qDebug()<<"Client Message"<<
-        event->xclient.data.l<<event->xclient.format<<event->xclient.message_type;
-        break;
-    case MapRequest:
-        qDebug()<<"Map Requesti-------->"<<endl;
-        //XMapWindow(d->mDisplay, event->xmaprequest.window);
-        break;
-    case LeaveNotify:
-        qDebug()<<"Leave "<<endl;
-        break;
-    case EnterNotify:
-        qDebug()<<"Enter"<<endl;
-        break;
-    case ReparentNotify:
-        qDebug()<<"Reparent"<<endl;
-        break;
-    case CreateNotify :
-        qDebug()<<"Create Notify";
-        break;
-    case  DestroyNotify:
-        qDebug()<<"DestroyNotify";
-       break;
-    case ConfigureNotify:
-        qDebug()<<"ConfigureNotify";
-        break;
-    case ConfigureRequest:
-        qDebug()<<"ConfigureRequest";
-        break;
-    case MapNotify :
-        qDebug()<<"MapNotify";
-         if (!nomap)
-             addWindow(event->xmap.window);
-        break;
-    case UnmapNotify :
-        qDebug()<<"UnmapNotify";
-        break;
-    case PropertyNotify :
-        qDebug()<<"PropertyNotify";
-        break;
-    case FocusIn :
-        qDebug()<<"FocusIn";
-        break;
-    case FocusOut:
-        qDebug()<<"FocusOut";
-        break;
-    case Expose:
-        qDebug()<<"Expose";
-        break;
+        qDebug()<<"Client Message"<<endl;
+        if (xwin == d->mRootWindow) {
+            qDebug()<<"RootWindow Massaging"<<endl;
+        } break;
+    case CreateNotify:
+        if (event->xcreatewindow.parent == d->mRootWindow) {
+            if (!XCheckTypedWindowEvent (d->mDisplay, xwin, DestroyNotify, event) &&
+                    !XCheckTypedWindowEvent (d->mDisplay, xwin, ReparentNotify, event)) {
+
+                qDebug()<<"Create Notify"<<endl;
+                addWindow(xwin);
+            }
+        }
     }
+    /*
+    //TODO don't map pop's
+         bool nomap = false;
+          foreach (PlexyWindows* _win, d->windowMap) {
+          if(_win->winId() == event->xmap.window) {
+              qDebug()<<"Already has a base"<<endl;
+              nomap = true;
+          }
+          else {
+              qDebug()<<"No Base";
+          }
+        }
+
+        switch (event->type) {
+        case ClientMessage:
+            qDebug()<<"Client Message"<<
+            event->xclient.data.l<<event->xclient.format<<event->xclient.message_type;
+            break;
+        case MapRequest:
+            qDebug()<<"Map Requesti-------->"<<endl;
+            //XMapWindow(d->mDisplay, event->xmaprequest.window);
+            break;
+        case LeaveNotify:
+            qDebug()<<"Leave "<<endl;
+            break;
+        case EnterNotify:
+            qDebug()<<"Enter"<<endl;
+            break;
+        case ReparentNotify:
+            qDebug()<<"Reparent"<<endl;
+            break;
+        case CreateNotify :
+            qDebug()<<"Create Notify";
+            break;
+        case  DestroyNotify:
+            qDebug()<<"DestroyNotify";
+           break;
+        case ConfigureNotify:
+            qDebug()<<"ConfigureNotify";
+            break;
+        case ConfigureRequest:
+            qDebug()<<"ConfigureRequest";
+            break;
+        case MapNotify :
+            qDebug()<<"MapNotify";
+            // if (!nomap)
+              //   addWindow(event->xmap.window);
+            break;
+        case UnmapNotify :
+            qDebug()<<"UnmapNotify";
+            break;
+        case PropertyNotify :
+            qDebug()<<"PropertyNotify";
+            break;
+        case FocusIn :
+            qDebug()<<"FocusIn";
+            break;
+        case FocusOut:
+            qDebug()<<"FocusOut";
+            break;
+        case Expose:
+            qDebug()<<"Expose";
+            break;
+        }
+        */
 }
 
 //utility
@@ -190,13 +220,15 @@ void CompWindow::init()
                               "plexydeskwm", NULL, 0, NULL, NULL, NULL);
         Atom cmAtom = XInternAtom(d->mDisplay, "_NET_WM_CM_S0", false);
         if (!registerWindowManager(d->mMainWin, cmAtom)) {
-            qDebug()<<"Register Compsite failed"<<endl;
+            qDebug()<<"Register Composite manager failed"<<endl;
         }
         registerAtoms();
         if (!checkExtensions()) {
             qDebug()<<"Some or all extensions are missing or out dated, upgrade and check again, thanks ";
         }
-        //startOverlay();
+
+
+        startOverlay();
         setupWindows();
 
         Cursor normal = XCreateFontCursor(d->mDisplay, XC_left_ptr);
@@ -312,23 +344,23 @@ bool CompWindow::checkExtensions()
         qDebug()<<"missing composite extension\n";
         return false;
     }
-    XCompositeQueryVersion (d->mDisplay, &composite_major, &composite_minor);
+    XCompositeQueryVersion (d->mDisplay, &d->composite_major, &composite_minor);
     if (composite_major == 0 && composite_minor < 2) {
         qDebug()<<"libXcomposite too old, upgrade your package";
         return false;
     }
 
-    if (!XDamageQueryExtension (d->mDisplay, &damage_event, &damage_error)) {
+    if (!XDamageQueryExtension (d->mDisplay, &d->damage_event, &d->damage_error)) {
         qDebug()<<"Missing damage extension";
         return false;
     }
 
-    if (!XFixesQueryExtension (d->mDisplay, &xfixes_event, &xfixes_error)) {
+    if (!XFixesQueryExtension (d->mDisplay, &d->xfixes_event, &d->xfixes_error)) {
         qDebug()<<"Missing XFixes extension";
         return false;
     }
 #if HAVE_XSHAPE
-    if (!XShapeQueryExtension (d->mDisplay, &shape_event, &shape_error)) {
+    if (!XShapeQueryExtension (d->mDisplay, &d->shape_event, &d->shape_error)) {
         qDebug()<<"Missing Shaped window extension";
         return false;
     }
@@ -345,14 +377,16 @@ bool CompWindow::startOverlay()
     if (!d->mOverlay) {
         qDebug()<<"Overly window can not start"<<endl;
     }
-
+    qDebug()<<"Start overlay"<<endl;
     XGCValues vals;
     int x, y;
     unsigned int cx, cy, cx_border, depth;
 
     if (!XGetGeometry(d->mDisplay, d->mOverlay, &d->mRootWindow, &x, &y, &cx, &cy, &cx_border, &depth)) {
-     x = 0;  y =  0;
-     cx = 800; cy = 480;
+        x = 0;
+        y =  0;
+        cx = 800;
+        cy = 480;
     }
 
     vals.foreground = BlackPixel(d->mDisplay, 0);
@@ -403,7 +437,52 @@ void CompWindow::setupWindows()
             addWindow(children[i]);
         }
 
-      //  XFree (children);
+        //  XFree (children);
     }
     XUngrabServer (d->mDisplay);
+}
+
+
+Window CompWindow::GetEventXWindow (XEvent *xev)
+{
+    switch (xev->type) {
+    case ClientMessage:
+        return xev->xclient.window;
+    case CreateNotify:
+        return xev->xcreatewindow.window;
+    case DestroyNotify:
+        return xev->xdestroywindow.window;
+    case ConfigureNotify:
+        return xev->xconfigure.window;
+    case ConfigureRequest:
+        return xev->xconfigurerequest.window;
+    case ReparentNotify:
+        return xev->xreparent.window;
+    case MapRequest:
+        return xev->xmaprequest.window;
+    case MapNotify:
+        return xev->xmap.window;
+    case UnmapNotify:
+        return xev->xunmap.window;
+    case PropertyNotify:
+        return xev->xproperty.window;
+    case FocusIn:
+    case FocusOut:
+        return xev->xfocus.window;
+    default:
+        if (xev->type == d->damage_event + XDamageNotify) {
+            XDamageNotifyEvent *damage_ev = (XDamageNotifyEvent *) xev;
+            return damage_ev->drawable;
+        }
+        else if (xev->type == d->xfixes_event + XFixesCursorNotify) {
+            XFixesCursorNotifyEvent *cursor_ev = (XFixesCursorNotifyEvent *) xev;
+            return cursor_ev->window;
+        }
+        else if (xev->type == d->shape_event + ShapeNotify) {
+            XShapeEvent *shape_ev = (XShapeEvent *) xev;
+            return shape_ev->window;
+        }
+    }
+
+    return None;
 }

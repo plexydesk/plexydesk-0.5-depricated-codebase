@@ -18,6 +18,7 @@
 *******************************************************************************/
 #include "plexyconfig.h"
 #include <desktopwidget.h>
+#include <configadaptor.h>
 
 namespace PlexyDesk
 {
@@ -47,8 +48,12 @@ namespace PlexyDesk
         qDebug()<<widgetList.count()<<endl;
         if (widgetList.count() < 0 )
         widgetList.append("plexyclock");
-
         writeToFile();
+        //register  with dbus
+        new ConfigAdaptor(this);
+        QDBusConnection dbus = QDBusConnection::sessionBus();
+        dbus.registerObject("/Configuration", this);
+        dbus.registerService("org.PlexyDesk.Config");
     }
 
     void Config::writeToFile () 
