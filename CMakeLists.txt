@@ -93,6 +93,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}/modules/libplexyirc/
     ${CMAKE_SOURCE_DIR}/modules/QtWin/
     ${CMAKE_BINARY_DIR}/3rdparty/mime/
+    ${CMAKE_SOURCE_DIR}/3rdparty/qplexyiconprovider/
 
     ${QT_INCLUDE_DIR}
 )
@@ -114,6 +115,7 @@ add_subdirectory(artwork/buttons)
 add_subdirectory(3rdparty/libmagic)
 add_subdirectory(3rdparty/mime)
 add_subdirectory(3rdparty/qplexymime)
+add_subdirectory(3rdparty/qplexyiconprovider)
 add_subdirectory(3rdparty/qimageblitz)
 #add_subdirectory(3rdparty/cair)
 if(NOT APPLE) 
