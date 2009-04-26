@@ -27,7 +27,8 @@ namespace PlexyDesk
     Config * Config::getInstance()
     {
         if (config == 0) {
-            return  new Config("plexydesk","plexydesktop");
+            config =  new Config("plexydesk","plexydesktop");
+            return config;
         } else {
             return config;
         }
