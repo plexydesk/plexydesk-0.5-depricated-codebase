@@ -34,7 +34,7 @@ ImagePlugin::ImagePlugin(QObject * object)
     base->resize(300,200);
 
     search = new QLineEdit(base);
-    search->setStyleSheet("border:1px solid ; font-style:strong ;padding-left:20px; background: black ; background-image:url(/usr/local/share/plexy/skins/default/flick/bg-search.png) ;background-repeat: no-repeat ;  color:black ");
+    search->setStyleSheet("border:1px solid ; font-style:strong ;padding-left:20px; background: white ; background-image:url(/usr/share/plexy/skins/default/flick/bg-search.png) ;background-repeat: no-repeat ;  color:black ");
     search->move(0,170);
     search->resize(300,30);
     search->show();
@@ -76,7 +76,7 @@ QGraphicsItem * ImagePlugin::item()
     PlexyDesk::PluginLoader * loader = new PlexyDesk::PluginLoader();
     loader->scanDisk();
     flickrEngine  = (PlexyDesk::DataInterface*) loader->instance("flickerengine");
-
+    delete loader;
     if (flickrEngine) {
         connect(flickrEngine,SIGNAL(data(QVariant&)),this,SLOT(data(QVariant&)));
         connect(this,SIGNAL(sendData(QVariant&)),flickrEngine,SLOT(pushData(QVariant&)));
