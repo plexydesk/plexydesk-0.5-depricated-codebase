@@ -49,6 +49,10 @@ namespace PlexyDesk
         bool collitionOn;
         public slots: 
         void setWallpaper(const QString& str);
+public slots:
+
+signals:
+       void configChanged();
     private:
         Config(const QString & organization, const QString & application = QString(), QObject * parent = 0);
         static Config * config;

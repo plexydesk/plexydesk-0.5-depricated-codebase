@@ -86,5 +86,6 @@ namespace PlexyDesk
     {
         CurrentWallpaper = str;
         setValue("CurrentWallpaper", CurrentWallpaper);
+        emit configChanged();
     }
 }

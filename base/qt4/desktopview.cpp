@@ -46,6 +46,7 @@ namespace PlexyDesk
         float column;
         float margin;
         Frame * frm;
+        bool openglOn;
     };
 
     bool getLessThanWidget(const QGraphicsItem* it1, const QGraphicsItem* it2)
@@ -64,6 +65,7 @@ namespace PlexyDesk
         setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
         setFrameStyle(QFrame::NoFrame);
         setAlignment(Qt::AlignLeft | Qt::AlignTop);
+        d->openglOn = false;
 
         /* init */
         d->bgPlugin  = static_cast<BackdropPlugin*>(PluginLoader::getInstance()->instance("classicbackdrop"));
@@ -72,6 +74,8 @@ namespace PlexyDesk
         d->row=d->column = 0.0; 
         d->margin = 10.0;
         d->layer = new ViewLayer();
+
+        connect(Config::getInstance(), SIGNAL(configChanged()), this, SLOT(backgroundChanged()));
     }
 
 
@@ -80,9 +84,11 @@ namespace PlexyDesk
         if (state) {
             setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
             setViewport(new QGLWidget(new QGLContext(QGL::StencilBuffer | QGL::AlphaChannel)));
+            d->openglOn = true;
         } else {
             setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
             setViewport(new QWidget);
+            d->openglOn = false;
         }
     }
     DesktopView::~DesktopView()
@@ -92,8 +98,24 @@ namespace PlexyDesk
 
     void DesktopView::backgroundChanged()
     {
+        if (d->bgPlugin) {
+            delete d->bgPlugin;
+        }
+        d->bgPlugin  =
+            static_cast<BackdropPlugin*>(PluginLoader::getInstance()->instance("classicbackdrop"));
+        if (!d->openglOn) {
+            setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+        }
+        setCacheMode(QGraphicsView::CacheNone);
         invalidateScene();
         scene()->update();
+        update();
+
+        if (!d->openglOn) {
+            setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
+        }
+
+        setCacheMode(QGraphicsView::CacheBackground);
     }
 
     /* 
