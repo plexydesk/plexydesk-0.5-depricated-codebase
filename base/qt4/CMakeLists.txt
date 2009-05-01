@@ -11,11 +11,11 @@ INCLUDE_DIRECTORIES(
 )
 
 
-SET(sourceFiles
+SET(sourceFiles icon.cpp
 	abstractplugininterface.cpp
 	backdropinterface.cpp
 	canvas.cpp
-   baserender.cpp
+         baserender.cpp
 	desktopview.cpp
 	desktopwidget.cpp
 	extensionfactory.cpp
@@ -51,6 +51,7 @@ set(headerFiles
 	viewlayer.h
 	widgetinterface.h
 	widgetplugin.h
+	icon.h
 )
 
 set(QTMOC_SRCS
@@ -69,6 +70,7 @@ set(QTMOC_SRCS
 	viewlayer.h
 	widgetplugin.h
 	widgetinterface.h
+	icon.h
 )
 
 #for now only dbus works only under linux
