@@ -33,6 +33,7 @@ set(sourceFiles
 
 set(libs
 	${QT_QTGUI_LIBRARY}
+        ${QT_QTCORE_LIBRARY}
 	${QT_QTXMLPATTERNS_LIBRARY}
 )
 
