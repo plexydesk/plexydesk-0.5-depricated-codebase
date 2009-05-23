@@ -71,13 +71,18 @@ namespace PlexyDesk
         d->bgPlugin  = static_cast<BackdropPlugin*>(PluginLoader::getInstance()->instance("classicbackdrop"));
         d->widgets = 0;
         d->gridLayout = new QGraphicsGridLayout();
-        d->row=d->column = 0.0; 
+        d->row=d->column = 0.0;
         d->margin = 10.0;
         d->layer = new ViewLayer();
 
         connect(Config::getInstance(), SIGNAL(configChanged()), this, SLOT(backgroundChanged()));
+        connect(Config::getInstance(), SIGNAL(widgetAdded()), this, SLOT(onNewWidget()));
     }
 
+    void DesktopView::onNewWidget()
+    {
+          addExtension(Config::getInstance()->widgetList.last());
+    }
 
     void DesktopView::enableOpenGL(bool state)
     {
@@ -118,7 +123,7 @@ namespace PlexyDesk
         setCacheMode(QGraphicsView::CacheBackground);
     }
 
-    /* 
+    /*
     Adds an Widget Extension to Plexy Desktop, give the widget
     name in string i.e "clock" or "radio", the internals will
     take care of the loading the widget plugin name is correct

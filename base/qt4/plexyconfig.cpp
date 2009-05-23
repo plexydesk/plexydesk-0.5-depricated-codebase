@@ -57,7 +57,7 @@ namespace PlexyDesk
         dbus.registerService("org.PlexyDesk.Config");
     }
 
-    void Config::writeToFile () 
+    void Config::writeToFile ()
     {
         setValue("proxyOn", proxyOn);
         setValue("proxyURL", proxyURL);
@@ -82,10 +82,18 @@ namespace PlexyDesk
         collitionOn = false;
     }
 
-    void Config::setWallpaper(const QString& str) 
+    void Config::setWallpaper(const QString& str)
     {
         CurrentWallpaper = str;
         setValue("CurrentWallpaper", CurrentWallpaper);
         emit configChanged();
+    }
+
+    void Config::addWidget(const QString& widget)
+    {
+        qDebug()<<widgetList<<endl;
+        widgetList.append(widget);
+         emit configChanged();
+         emit widgetAdded();
     }
 }

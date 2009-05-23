@@ -47,19 +47,23 @@ namespace PlexyDesk
         QString proxyPasswd;
         QStringList widgetList;
         bool collitionOn;
-        public slots: 
+        public slots:
         void setWallpaper(const QString& str);
+        void addWidget(const QString& widget);
 public slots:
 
 signals:
        void configChanged();
+       void widgetAdded();
+
     private:
         Config(const QString & organization, const QString & application = QString(), QObject * parent = 0);
         static Config * config;
         Config()
         {
             read();
-        };
+        }
+
         Config(Config &) {}
         Config& operator=(const Config&);
     };

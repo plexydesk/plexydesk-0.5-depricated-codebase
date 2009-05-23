@@ -40,6 +40,7 @@ namespace PlexyDesk
         void enableOpenGL(bool);
     public slots:
         void backgroundChanged();
+        void onNewWidget();
 
     protected:
         void drawBackground(QPainter * painter, const QRectF& rect);

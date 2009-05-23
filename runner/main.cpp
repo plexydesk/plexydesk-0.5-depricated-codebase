@@ -81,11 +81,11 @@ int main( int argc, char ** argv )
     foreach (QString str, list) {
         view->addExtension(str);
     }
-view->addExtension("plexyclock");
+
 /*
     view->addCoreExtension("videoview");
     view->addExtension("imagepil");
-
+    view->addExtension("plexyclock");
     view->addExtension("plexyyoutube");
     view->addExtension("plexyclock");
     view->addExtension("imagepil");
