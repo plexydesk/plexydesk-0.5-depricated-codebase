@@ -38,28 +38,28 @@ class YouTubeWidget:public DesktopWidget
 
     Q_OBJECT
 
-	public:
+        public:
         YouTubeWidget(const QRectF &rect, QWidget *widget = 0);
         virtual ~YouTubeWidget();
-	virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem * e, QWidget *);
-	virtual void wheelEvent(QGraphicsSceneWheelEvent * event);
-	void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
-	void setPath(QString);
-	void drawWidget();;
+        virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem * e, QWidget *);
+        virtual void wheelEvent(QGraphicsSceneWheelEvent * event);
+        void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
+        void setPath(QString);
+        void drawWidget();;
         /*
          virtual void mousePressEvent( QMouseEvent *e)
-	{
-		clickPos = e->pos();
-		setCursor(Qt::SizeAllCursor);
+        {
+                clickPos = e->pos();
+                setCursor(Qt::SizeAllCursor);
         }
         virtual void mouseMoveEvent( QMouseEvent *e)
-	{
-	move( e->globalPos() - clickPos );
-	}
-	virtual void mouseReleaseEvent(QMouseEvent *e)
-	{
-		setCursor(Qt::ArrowCursor);
-	}
+        {
+        move( e->globalPos() - clickPos );
+        }
+        virtual void mouseReleaseEvent(QMouseEvent *e)
+        {
+                setCursor(Qt::ArrowCursor);
+        }
 */
 
     public slots:
@@ -68,15 +68,20 @@ class YouTubeWidget:public DesktopWidget
     signals:
         void dataChanged();
 
-	private:
+        private:
 
-	int shade;
-	int moveY;	
-	QImage m_bg;
-    QImage mItem_bg;
+        //refactor
+        QRectF clip;
+        QRectF view;
 
-	QString prefix;
-	QPoint clickPos;
+
+        int shade;
+        int moveY;
+        QImage m_bg;
+        QImage mItem_bg;
+
+        QString prefix;
+        QPoint clickPos;
 
     PlexyDesk::DataInterface * utubeEngine;
 
