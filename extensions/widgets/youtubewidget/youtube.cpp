@@ -31,5 +31,5 @@ YouTube::~YouTube()
 
 QGraphicsItem * YouTube::item()
 {
-    return new PlexyDesk::YouTubeWidget(QRectF(0,0,400,400),0);
+    return new PlexyDesk::YouTubeWidget(QRectF(0,0,480,320),0);
 }

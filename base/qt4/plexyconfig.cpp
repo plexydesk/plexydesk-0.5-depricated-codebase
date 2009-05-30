@@ -48,7 +48,6 @@ namespace PlexyDesk
         collitionOn = false;
         qDebug()<<widgetList.count()<<endl;
         if (widgetList.count() < 0 )
-        widgetList.append("plexyclock");
         writeToFile();
         //register  with dbus
         new ConfigAdaptor(this);
@@ -91,9 +90,10 @@ namespace PlexyDesk
 
     void Config::addWidget(const QString& widget)
     {
-        qDebug()<<widgetList<<endl;
+     //TODO: Check if this is a valid widgetname
         widgetList.append(widget);
-         emit configChanged();
-         emit widgetAdded();
+        emit configChanged();
+        emit widgetAdded();
+        writeToFile();
     }
 }
