@@ -26,6 +26,7 @@ SET(sourceFiles icon.cpp
 	plexyconfig.cpp
 	pluginloader.cpp
 	viewlayer.cpp
+   grabber.cpp
 )
 
 set(headerFiles
@@ -52,6 +53,7 @@ set(headerFiles
 	widgetinterface.h
 	widgetplugin.h
 	icon.h
+   grabber.h
 )
 
 set(QTMOC_SRCS
@@ -71,6 +73,7 @@ set(QTMOC_SRCS
 	widgetplugin.h
 	widgetinterface.h
 	icon.h
+   grabber.h
 )
 
 #for now only dbus works only under linux
@@ -96,6 +99,7 @@ set(libs
     ${QT_QTOPENGL_LIBRARY}
     ${QT_QTSVG_LIBRARY}
     ${QT_QTDBUS_LIBRARY}
+    ${QT_QTNETWORK_LIBRARY}
 )
 
 add_library(qtviz SHARED ${sourceFiles} ${QT_MOC_SRCS})

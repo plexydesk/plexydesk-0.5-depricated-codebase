@@ -108,10 +108,6 @@ void YouTubeWidget::wheelEvent(QGraphicsSceneWheelEvent * event)
          if( abs(view.y()) > (view.bottom() - clip.height()) && numSteps < 0 )
              return;
          view.setY(view.y()+numSteps);
-
-
-         qDebug()<<view.bottom()<< ":"<<view.y()<<endl;
-
 }
 
 
@@ -144,51 +140,6 @@ void YouTubeWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e
          i += mItem_bg.height();
   }
     p->restore();
-    /*
-  QRectF r  = e->exposedRect;
-  p->setCompositionMode(QPainter::CompositionMode_Source);
-  p->fillRect(rect(), Qt::transparent);
-
-  p->drawImage (QRect(r.x(),r.y(),m_bg.width(),m_bg.height()),m_bg);
-  p->setCompositionMode(QPainter::CompositionMode_SourceOver);
-  p->setBackgroundMode(Qt::TransparentMode);
-  p->save ();
-  p->setRenderHint (QPainter::SmoothPixmapTransform);
-  if (shade == 0)
-    {
-      p->drawPixmap (m_bg.rect (), QPixmap ().fromImage(m_bg));
-      shade = 1;
-    }
-
-  p->restore ();
-  p->save();
-  p->setRenderHints(QPainter::SmoothPixmapTransform |QPainter::Antialiasing |QPainter::HighQualityAntialiasing);
-  QRect cliper (0,20,r.width(),r.height()-60);
-  p->setClipRect(cliper);
-  if(mVideos.size()>0){
-    int texty=moveY; int tagy=moveY+30;
-
-    //FIXME:
-    //use foreach
-    for (int i = 0; i < mVideos.size(); ++i) {
-        VideoEntity videoentity;
-        videoentity = (VideoEntity) mVideos.at(i);
-
-        p->drawImage( QRect(r.x()+10,tagy,mItem_bg.width(),mItem_bg.height()),mItem_bg);
-
-        p->setPen( QColor(255,255,255) );
-        p->setFont( QFont("Bitstream Charter",10,QFont::Bold) );
-        p->drawText(40,texty+60,300,30,Qt::AlignLeft,QString(videoentity.title) );
-
-        p->setPen( QColor(255,255,255) );
-        p->setFont( QFont("Bitstream Charter",9) );
-        p->drawText(40,texty+90,250,100,Qt::AlignLeft|Qt::TextWordWrap,QString(videoentity.desc) );
-
-        texty += mItem_bg.height(); tagy += mItem_bg.height();
-    }
-  }
-  p->restore();
-  */
 }
 
 
