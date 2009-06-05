@@ -81,7 +81,6 @@ int main( int argc, char ** argv )
     foreach (QString str, list) {
         view->addExtension(str);
     }
-
 /*
     view->addCoreExtension("videoview");
     view->addExtension("imagepil");

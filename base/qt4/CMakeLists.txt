@@ -107,6 +107,7 @@ add_library(qtviz SHARED ${sourceFiles} ${QT_MOC_SRCS})
 TARGET_LINK_LIBRARIES(
     qtviz
     qimageblitz
+    plexymime
 	${libs}
 )
 if (NOT WIN32)

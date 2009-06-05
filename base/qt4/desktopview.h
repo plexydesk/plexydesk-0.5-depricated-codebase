@@ -23,6 +23,9 @@
 
 #include <plexy.h>
 
+//TODO:
+//move out of base library
+
 namespace PlexyDesk
 {
     class VISIBLE_SYM DesktopView : public QGraphicsView
@@ -45,6 +48,7 @@ namespace PlexyDesk
     protected:
         void drawBackground(QPainter * painter, const QRectF& rect);
         void mousePressEvent(QMouseEvent *event);
+        void loadIcons();
     private:
         class Private;
         Private * const d;

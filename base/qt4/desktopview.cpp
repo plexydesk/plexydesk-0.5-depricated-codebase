@@ -26,9 +26,11 @@
 #include <widgetplugin.h>
 #include <viewlayer.h>
 #include <frameitem.h>
+#include <icon.h>
 
 #include <QGLWidget>
 #include <QGraphicsGridLayout>
+#include <QDir>
 
 namespace PlexyDesk
 {
@@ -47,6 +49,7 @@ namespace PlexyDesk
         float margin;
         Frame * frm;
         bool openglOn;
+        QList<Icon*> icons;
     };
 
     bool getLessThanWidget(const QGraphicsItem* it1, const QGraphicsItem* it2)
@@ -74,7 +77,7 @@ namespace PlexyDesk
         d->row=d->column = 0.0;
         d->margin = 10.0;
         d->layer = new ViewLayer();
-
+                loadIcons();
         connect(Config::getInstance(), SIGNAL(configChanged()), this, SLOT(backgroundChanged()));
         connect(Config::getInstance(), SIGNAL(widgetAdded()), this, SLOT(onNewWidget()));
     }
@@ -131,7 +134,6 @@ namespace PlexyDesk
 
     void DesktopView::addExtension(const QString& name)
     {
-
         d->widgets = static_cast<WidgetPlugin*>(PluginLoader::getInstance()->instance(name));
         if (d->widgets) {
             DesktopWidget * widget = (DesktopWidget*) d->widgets->item();
@@ -213,5 +215,32 @@ namespace PlexyDesk
 
         clickedItem->update();
     }
+
+   void DesktopView::loadIcons()
+   {
+       QDir desktop(QDir::homePath()+"/Desktop/");
+       desktop.setFilter(QDir::Files | QDir::NoDotAndDotDot);
+       desktop.setSorting(QDir::Size | QDir::Reversed);
+       QFileInfoList list = desktop.entryInfoList();
+       for (int i = 0; i < list.size(); ++i) {
+         QFileInfo fileInfo = list.at(i);
+         QPixmap iconpixmap (DesktopWidget::applicationDirPath() +
+            "/share/plexy/skins/widgets/widget01/Icon.png");
+         //TODO
+         //Shared pointer please
+         Icon * icon = new Icon(QRect(0,0,iconpixmap.width(),iconpixmap.height()));
+         icon->setContent(fileInfo.absoluteFilePath());
+         scene()->addItem(icon);
+         icon->setPos(d->row,d->column);
+         icon->show();
+         d->icons.append(icon);
+       }
+
+
+
+   }
+
 }
+
+
 
