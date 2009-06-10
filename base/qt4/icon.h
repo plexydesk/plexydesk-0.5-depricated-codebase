@@ -22,19 +22,23 @@
 #include <plexy.h>
 #include <plexyconfig.h>
 #include <desktopwidget.h>
+#include <iconprovider.h>
 namespace PlexyDesk
 {
    class VISIBLE_SYM Icon : public DesktopWidget
    {
        Q_OBJECT
    public:
-       Icon(const QRectF &rect, QWidget *embeddedWidget = 0);
+       Icon(IconProviderPtr icon, const QRectF &rect, QWidget *embeddedWidget = 0);
        virtual ~Icon();
        virtual void setContent(const QString& path);
        virtual bool isValid();
        virtual void paintBackSide(QPainter * painter,const QRectF& rect);
        virtual void paintViewSide(QPainter * painter,const QRectF& rect);
        virtual void paintDockView(QPainter * painter,const QRectF& rect);
+   public Q_SLOTS:
+       void onIconPixmap(const QPixmap& pixmap);
+
    private:
         class Private;
         Private * const d;

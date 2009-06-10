@@ -16,6 +16,7 @@
 
 #include "icon.h"
 #include <qplexymime.h>
+#include <iconprovider.h>
 #include <QPainter>
 
 namespace PlexyDesk
@@ -29,11 +30,13 @@ class Icon::Private
       QPixmap icon;
       QPlexyMime mime;
       bool valid;
+      IconProviderPtr iconprovider;
 };
 
-Icon::Icon(const QRectF &rect, QWidget *embeddedWidget) : DesktopWidget(rect), d(new Private)
+Icon::Icon(IconProviderPtr icon, const QRectF &rect, QWidget *embeddedWidget) : DesktopWidget(rect), d(new Private)
 {
     d->valid = false;
+    d->iconprovider = icon;
 }
 
 Icon::~Icon()
@@ -50,16 +53,21 @@ void Icon::setContent(const QString& path)
         QSettings setting(path,  QSettings::IniFormat);
         setting.beginGroup("Desktop Entry");
         iconname = setting.value("Icon","").toString();
-        qDebug()<<iconname<<endl;
         setting.endGroup();
         d->valid = true;
     } else {
         QString name = d->mime.genericIconName();
-        qDebug()<<name<<"=========="<<endl;
     }
-    d->icon = QPixmap(applicationDirPath()+"/share/app-install/icons/"+iconname+".png");
-    qDebug()<<d->icon.isNull()<<endl;
+   // d->icon = QPixmap(applicationDirPath()+"/share/app-install/icons/"+iconname+".png");
+    d->iconprovider->requestIcon(iconname, "32x32");
+    connect(d->iconprovider.data(),SIGNAL(iconPixmap(const QPixmap&)),this, SLOT(onIconPixmap(const QPixmap&)));
+}
 
+void Icon::onIconPixmap(const QPixmap& pixmap)
+{
+    if(!pixmap.isNull())  {
+      d->icon = pixmap;
+    }
 }
 
 bool Icon::isValid()

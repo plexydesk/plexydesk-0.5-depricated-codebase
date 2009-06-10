@@ -44,6 +44,9 @@ namespace PlexyDesk
         read();
         if (value("CurrentWallpaper").toString().isNull())
         CurrentWallpaper =  DesktopWidget::applicationDirPath() + "/share/plexy/skins/default/default.png";
+
+        if(value("iconTheme").toString().isNull())
+            iconTheme = "default";
         //collitions detection
         collitionOn = false;
         qDebug()<<widgetList.count()<<endl;
@@ -66,6 +69,7 @@ namespace PlexyDesk
         setValue("CurrentWallpaper", CurrentWallpaper);
         setValue("collitionOn", collitionOn);
         setValue("widgetList", widgetList);
+        setValue("iconTheme", iconTheme);
         sync();
     }
     void Config::read()
@@ -77,6 +81,7 @@ namespace PlexyDesk
         proxyPort = value("proxyPort").toInt() ;
         CurrentWallpaper = value("CurrentWallpaper").toString();
         widgetList = value("widgetList").toStringList();
+        iconTheme = value("iconTheme").toString();
         //collitions detection
         collitionOn = false;
     }

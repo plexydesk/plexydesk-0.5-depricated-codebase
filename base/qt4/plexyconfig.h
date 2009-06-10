@@ -47,6 +47,7 @@ namespace PlexyDesk
         QString proxyPasswd;
         QStringList widgetList;
         bool collitionOn;
+        QString iconTheme;
         public slots:
         void setWallpaper(const QString& str);
         void addWidget(const QString& widget);

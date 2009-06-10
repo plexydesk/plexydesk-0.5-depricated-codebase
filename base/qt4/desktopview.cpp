@@ -27,6 +27,7 @@
 #include <viewlayer.h>
 #include <frameitem.h>
 #include <icon.h>
+#include <iconprovider.h>
 
 #include <QGLWidget>
 #include <QGraphicsGridLayout>
@@ -50,6 +51,7 @@ namespace PlexyDesk
         Frame * frm;
         bool openglOn;
         QList<Icon*> icons;
+        IconProviderPtr iconprovider;
     };
 
     bool getLessThanWidget(const QGraphicsItem* it1, const QGraphicsItem* it2)
@@ -77,9 +79,12 @@ namespace PlexyDesk
         d->row=d->column = 0.0;
         d->margin = 10.0;
         d->layer = new ViewLayer();
-                loadIcons();
+        d->iconprovider =
+        IconProviderPtr(new IconProvider, &QObject::deleteLater);
+        loadIcons();
         connect(Config::getInstance(), SIGNAL(configChanged()), this, SLOT(backgroundChanged()));
         connect(Config::getInstance(), SIGNAL(widgetAdded()), this, SLOT(onNewWidget()));
+
     }
 
     void DesktopView::onNewWidget()
@@ -229,7 +234,7 @@ namespace PlexyDesk
          //TODO
          //Shared pointer please
 
-         Icon * icon = new Icon(QRect(0,0,iconpixmap.width(),iconpixmap.height()));
+         Icon * icon = new Icon(d->iconprovider, QRect(0,0,iconpixmap.width(),iconpixmap.height()));
          icon->setContent(fileInfo.absoluteFilePath());
          if(icon->isValid()) {
          scene()->addItem(icon);
