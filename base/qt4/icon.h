@@ -31,7 +31,7 @@ namespace PlexyDesk
        Icon(const QRectF &rect, QWidget *embeddedWidget = 0);
        virtual ~Icon();
        virtual void setContent(const QString& path);
-
+       virtual bool isValid();
        virtual void paintBackSide(QPainter * painter,const QRectF& rect);
        virtual void paintViewSide(QPainter * painter,const QRectF& rect);
        virtual void paintDockView(QPainter * painter,const QRectF& rect);

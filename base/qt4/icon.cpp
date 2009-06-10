@@ -28,10 +28,12 @@ class Icon::Private
       ~Private(){}
       QPixmap icon;
       QPlexyMime mime;
+      bool valid;
 };
 
 Icon::Icon(const QRectF &rect, QWidget *embeddedWidget) : DesktopWidget(rect), d(new Private)
 {
+    d->valid = false;
 }
 
 Icon::~Icon()
@@ -50,6 +52,7 @@ void Icon::setContent(const QString& path)
         iconname = setting.value("Icon","").toString();
         qDebug()<<iconname<<endl;
         setting.endGroup();
+        d->valid = true;
     } else {
         QString name = d->mime.genericIconName();
         qDebug()<<name<<"=========="<<endl;
@@ -59,17 +62,22 @@ void Icon::setContent(const QString& path)
 
 }
 
+bool Icon::isValid()
+{
+    return d->valid;
+}
+
 void Icon::paintBackSide(QPainter * painter,const QRectF& rect)
 {
         if(!d->icon.isNull()) {
          int x = (this->boundingRect().width() - d->icon.width())/2;
          painter->drawPixmap(QRect(x, x , d->icon.width(), d->icon.height()) , d->icon);
         }
-        DesktopWidget::paintDockView(painter, rect);
+       // DesktopWidget::paintDockView(painter, rect);
 }
 void Icon::paintViewSide(QPainter * painter,const QRectF& rect)
 {
-        DesktopWidget::paintDockView(painter, rect);
+       // DesktopWidget::paintDockView(painter, rect);
         if(!d->icon.isNull()) {
           int x = (this->boundingRect().width() - d->icon.width())/2;
           painter->drawPixmap(QRect(x, x , d->icon.width(), d->icon.height()) , d->icon);

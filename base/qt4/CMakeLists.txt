@@ -26,6 +26,7 @@ SET(sourceFiles icon.cpp
 	plexyconfig.cpp
 	pluginloader.cpp
 	viewlayer.cpp
+   iconprovider.cpp
 )
 
 set(headerFiles
@@ -52,6 +53,7 @@ set(headerFiles
 	widgetinterface.h
 	widgetplugin.h
 	icon.h
+   iconprovider.h
 )
 
 set(QTMOC_SRCS
@@ -71,6 +73,7 @@ set(QTMOC_SRCS
 	widgetplugin.h
 	widgetinterface.h
 	icon.h
+   iconprovider.h
 )
 
 #for now only dbus works only under linux

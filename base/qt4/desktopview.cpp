@@ -228,12 +228,17 @@ namespace PlexyDesk
             "/share/plexy/skins/widgets/widget01/Icon.png");
          //TODO
          //Shared pointer please
+
          Icon * icon = new Icon(QRect(0,0,iconpixmap.width(),iconpixmap.height()));
          icon->setContent(fileInfo.absoluteFilePath());
+         if(icon->isValid()) {
          scene()->addItem(icon);
          icon->setPos(d->row,d->column);
          icon->show();
          d->icons.append(icon);
+         } else {
+             delete icon;
+         }
        }
    }
 
