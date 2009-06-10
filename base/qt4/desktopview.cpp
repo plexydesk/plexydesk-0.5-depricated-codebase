@@ -235,9 +235,6 @@ namespace PlexyDesk
          icon->show();
          d->icons.append(icon);
        }
-
-
-
    }
 
 }

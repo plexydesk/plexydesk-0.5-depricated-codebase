@@ -50,6 +50,9 @@ void Icon::setContent(const QString& path)
         iconname = setting.value("Icon","").toString();
         qDebug()<<iconname<<endl;
         setting.endGroup();
+    } else {
+        QString name = d->mime.genericIconName();
+        qDebug()<<name<<"=========="<<endl;
     }
     d->icon = QPixmap(applicationDirPath()+"/share/app-install/icons/"+iconname+".png");
     qDebug()<<d->icon.isNull()<<endl;
@@ -59,7 +62,8 @@ void Icon::setContent(const QString& path)
 void Icon::paintBackSide(QPainter * painter,const QRectF& rect)
 {
         if(!d->icon.isNull()) {
-            painter->drawPixmap(QRect(rect.x(), rect.y() , 32, 32) , d->icon);
+         int x = (this->boundingRect().width() - d->icon.width())/2;
+         painter->drawPixmap(QRect(x, x , d->icon.width(), d->icon.height()) , d->icon);
         }
         DesktopWidget::paintDockView(painter, rect);
 }
@@ -67,14 +71,16 @@ void Icon::paintViewSide(QPainter * painter,const QRectF& rect)
 {
         DesktopWidget::paintDockView(painter, rect);
         if(!d->icon.isNull()) {
-            painter->drawPixmap(QRect(rect.x(), rect.y() , 32, 32) , d->icon);
+          int x = (this->boundingRect().width() - d->icon.width())/2;
+          painter->drawPixmap(QRect(x, x , d->icon.width(), d->icon.height()) , d->icon);
         }
 }
 void Icon::paintDockView(QPainter * painter,const QRectF& rect)
 {
     DesktopWidget::paintDockView(painter, rect);
    if(!d->icon.isNull()) {
-            painter->drawPixmap(QRect(rect.x(), rect.y() , 32, 32) , d->icon);
+         int x = (this->boundingRect().width() - d->icon.width())/2;
+         painter->drawPixmap(QRect(x, x , d->icon.width(), d->icon.height()) , d->icon);
     }
 }
 
