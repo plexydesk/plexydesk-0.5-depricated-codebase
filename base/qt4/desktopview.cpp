@@ -79,8 +79,7 @@ namespace PlexyDesk
         d->row=d->column = 0.0;
         d->margin = 10.0;
         d->layer = new ViewLayer();
-        d->iconprovider =
-        IconProviderPtr(new IconProvider, &QObject::deleteLater);
+        d->iconprovider = IconProviderPtr(new IconProvider, &QObject::deleteLater);
         loadIcons();
         connect(Config::getInstance(), SIGNAL(configChanged()), this, SLOT(backgroundChanged()));
         connect(Config::getInstance(), SIGNAL(widgetAdded()), this, SLOT(onNewWidget()));
@@ -223,7 +222,8 @@ namespace PlexyDesk
 
    void DesktopView::loadIcons()
    {
-       QDir desktop(QDir::homePath()+"/Desktop/");
+       QStringList xdgDesktopPath = QString(qgetenv("XDG_DATA_DIRS")).split(':');
+       QDir desktop(xdgDesktopPath.first());
        desktop.setFilter(QDir::Files | QDir::NoDotAndDotDot);
        desktop.setSorting(QDir::Size | QDir::Reversed);
        QFileInfoList list = desktop.entryInfoList();

@@ -2,6 +2,7 @@
 #include <plexyconfig.h>
 #include <QPixmap>
 #include <QSettings>
+#include <QString>
 
 namespace PlexyDesk
 {
@@ -55,7 +56,6 @@ void IconProvider::requestIcon(const QString& name, const QString& size)
     d->tasks.append(r);
     emit requestAdded();
 }
-
 
 void IconProvider::loadIcons()
 {
