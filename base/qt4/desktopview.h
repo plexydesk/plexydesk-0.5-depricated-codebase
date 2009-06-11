@@ -44,6 +44,7 @@ namespace PlexyDesk
     public slots:
         void backgroundChanged();
         void onNewWidget();
+        void showIcon(int);
 
     protected:
         void drawBackground(QPainter * painter, const QRectF& rect);

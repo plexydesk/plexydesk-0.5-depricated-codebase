@@ -47,7 +47,7 @@ Icon::~Icon()
 void Icon::setContent(const QString& path)
 {
     qDebug()<<d->mime.fromFileName(path)<<endl;
-     QString iconname;
+    QString iconname;
     if(d->mime.mimeType() == "application/x-desktop")
     {
         QSettings setting(path,  QSettings::IniFormat);

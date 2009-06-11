@@ -32,9 +32,40 @@
 #include <QGLWidget>
 #include <QGraphicsGridLayout>
 #include <QDir>
+#include <QFutureWatcher>
 
 namespace PlexyDesk
 {
+    class LoadIcon
+    {
+        public:
+            LoadIcon(IconProviderPtr p, float r, float c)
+                    : provider(p), row(r), column(c) {}
+
+            typedef Icon* result_type;
+
+            Icon *operator()(const QFileInfo &info)
+            {
+                QImage iconImage(DesktopWidget::applicationDirPath() + "/share/plexy/skins/widgets/widget01/Icon.png");
+                Icon * icon = new Icon(provider, QRect(0, 0, iconImage.width(), iconImage.height()));
+                icon->setContent(info.absoluteFilePath());
+                if(icon->isValid())
+                {
+                    icon->setPos(row, column);
+                    icon->show();
+                    return icon;
+                }
+                else
+                {
+                    return NULL;
+                }
+            }
+
+        IconProviderPtr provider;
+        float row;
+        float column;
+    };
+
     class  DesktopView::Private
     {
     public:
@@ -52,6 +83,7 @@ namespace PlexyDesk
         bool openglOn;
         QList<Icon*> icons;
         IconProviderPtr iconprovider;
+        QFutureWatcher<Icon*> *iconWatcher;
     };
 
     bool getLessThanWidget(const QGraphicsItem* it1, const QGraphicsItem* it2)
@@ -80,6 +112,8 @@ namespace PlexyDesk
         d->margin = 10.0;
         d->layer = new ViewLayer();
         d->iconprovider = IconProviderPtr(new IconProvider, &QObject::deleteLater);
+        d->iconWatcher = new QFutureWatcher<Icon*>(this);
+        connect(d->iconWatcher, SIGNAL(resultReadyAt(int)), SLOT(showIcon(int)));
         loadIcons();
         connect(Config::getInstance(), SIGNAL(configChanged()), this, SLOT(backgroundChanged()));
         connect(Config::getInstance(), SIGNAL(widgetAdded()), this, SLOT(onNewWidget()));
@@ -105,6 +139,8 @@ namespace PlexyDesk
     }
     DesktopView::~DesktopView()
     {
+        d->iconWatcher->cancel();
+        d->iconWatcher->waitForFinished();
         delete d;
     }
 
@@ -227,7 +263,10 @@ namespace PlexyDesk
        desktop.setFilter(QDir::Files | QDir::NoDotAndDotDot);
        desktop.setSorting(QDir::Size | QDir::Reversed);
        QFileInfoList list = desktop.entryInfoList();
-       for (int i = 0; i < list.size(); ++i) {
+
+       d->iconWatcher->setFuture(QtConcurrent::mapped(list, LoadIcon(d->iconprovider, d->row, d->column)));
+/*
+       for (int i = 0; i < list.size(); i++) {
          QFileInfo fileInfo = list.at(i);
          QPixmap iconpixmap (DesktopWidget::applicationDirPath() +
             "/share/plexy/skins/widgets/widget01/Icon.png");
@@ -244,6 +283,17 @@ namespace PlexyDesk
          } else {
              delete icon;
          }
+       }
+*/
+   }
+
+   void DesktopView::showIcon(int num)
+   {
+       Icon *icon = d->iconWatcher->resultAt(num);
+       if(icon)
+       {
+           scene()->addItem(icon);
+           d->icons.append(icon);
        }
    }
 
