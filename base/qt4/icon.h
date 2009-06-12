@@ -37,7 +37,7 @@ namespace PlexyDesk
        virtual void paintViewSide(QPainter * painter,const QRectF& rect);
        virtual void paintDockView(QPainter * painter,const QRectF& rect);
    public Q_SLOTS:
-       void onIconPixmap(const QPixmap& pixmap);
+       void onIconPixmap(const QPixmap& pixmap, uint);
 
    private:
         class Private;

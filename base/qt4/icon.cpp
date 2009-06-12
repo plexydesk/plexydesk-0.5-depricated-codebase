@@ -29,14 +29,18 @@ class Icon::Private
       ~Private(){}
       QPixmap icon;
       QPlexyMime mime;
+      QString text;
       bool valid;
       IconProviderPtr iconprovider;
+      uint id;
 };
 
 Icon::Icon(IconProviderPtr icon, const QRectF &rect, QWidget *embeddedWidget) : DesktopWidget(rect), d(new Private)
 {
     d->valid = false;
     d->iconprovider = icon;
+    d->id = 0;
+     connect(d->iconprovider.data(),SIGNAL(iconPixmap(const QPixmap&, uint)),this, SLOT(onIconPixmap(const QPixmap&, uint)));
 }
 
 Icon::~Icon()
@@ -58,16 +62,20 @@ void Icon::setContent(const QString& path)
     } else {
         QString name = d->mime.genericIconName();
     }
+    d->text = iconname;
    // d->icon = QPixmap(applicationDirPath()+"/share/app-install/icons/"+iconname+".png");
-    d->iconprovider->requestIcon(iconname, "32x32");
-    connect(d->iconprovider.data(),SIGNAL(iconPixmap(const QPixmap&)),this, SLOT(onIconPixmap(const QPixmap&)));
+    d->id = d->iconprovider->requestIcon(iconname, "32x32");
+    qDebug()<<"Registereding -> Id "<<iconname<<d->id<<endl;
+
 }
 
-void Icon::onIconPixmap(const QPixmap& pixmap)
+void Icon::onIconPixmap(const QPixmap& pixmap, uint id)
 {
+
     if(!pixmap.isNull())  {
-      d->icon = pixmap;
+      d->icon = d->iconprovider->getIcon(d->id);
     }
+    update();
 }
 
 bool Icon::isValid()
@@ -79,7 +87,7 @@ void Icon::paintBackSide(QPainter * painter,const QRectF& rect)
 {
         if(!d->icon.isNull()) {
          int x = (this->boundingRect().width() - d->icon.width())/2;
-         painter->drawPixmap(QRect(x, x , d->icon.width(), d->icon.height()) , d->icon);
+         painter->drawPixmap(QRect(x, x , d->icon.width(), d->icon.height()) , d->iconprovider->getIcon(d->id));
         }
        // DesktopWidget::paintDockView(painter, rect);
 }
@@ -88,7 +96,7 @@ void Icon::paintViewSide(QPainter * painter,const QRectF& rect)
        // DesktopWidget::paintDockView(painter, rect);
         if(!d->icon.isNull()) {
           int x = (this->boundingRect().width() - d->icon.width())/2;
-          painter->drawPixmap(QRect(x, x , d->icon.width(), d->icon.height()) , d->icon);
+          painter->drawPixmap(QRect(x, x , d->icon.width(), d->icon.height()) , d->iconprovider->getIcon(d->id));
         }
 }
 void Icon::paintDockView(QPainter * painter,const QRectF& rect)
@@ -96,7 +104,7 @@ void Icon::paintDockView(QPainter * painter,const QRectF& rect)
     DesktopWidget::paintDockView(painter, rect);
    if(!d->icon.isNull()) {
          int x = (this->boundingRect().width() - d->icon.width())/2;
-         painter->drawPixmap(QRect(x, x , d->icon.width(), d->icon.height()) , d->icon);
+         painter->drawPixmap(QRect(x, x , d->icon.width(), d->icon.height()) , d->iconprovider->getIcon(d->id));
     }
 }
 

@@ -2,6 +2,7 @@
 #include <plexyconfig.h>
 #include <QPixmap>
 #include <QSettings>
+#include <QQueue>
 
 namespace PlexyDesk
 {
@@ -11,7 +12,9 @@ public:
     Private() {}
     ~Private() {}
     QStringList iconpaths;
-    QList<Requests> tasks;
+    QQueue<Requests> tasks;
+    uint jobs;
+    QMap<uint, QPixmap> map;
 
 };
 
@@ -43,30 +46,35 @@ IconProvider::IconProvider():d(new Private)
     }
     d->iconpaths << "/usr/share/pixmaps"
     << "/usr/share/app-install/icons/";
-
+    d->jobs = 0;
     connect(this,SIGNAL(requestAdded()), this, SLOT(loadIcons()));
 }
 
-void IconProvider::requestIcon(const QString& name, const QString& size)
+uint IconProvider::requestIcon(const QString& name, const QString& size)
 {
     Requests r;
     r.name = name;
     r.size = size;
-    d->tasks.append(r);
+    r.id = d->jobs++;
+    d->tasks.enqueue(r);
+    qDebug()<<"adding"<<name<<r.id;
     emit requestAdded();
+
+    return r.id;
 }
 
 
 void IconProvider::loadIcons()
 {
     QPixmap pixmap ;
+    Requests current;
+
     foreach(QString path, d->iconpaths) {
         QDir dir(path);
         if (dir.exists()) {
             if (!d->tasks.isEmpty()) {
-                Requests current = d->tasks.first();
+                current = d->tasks.dequeue();
                 if(current.name.isEmpty()) {
-                        d->tasks.removeFirst();
                     return;
                 }
                 QString subpath = current.size + "/" + current.name + ".png";
@@ -84,11 +92,12 @@ void IconProvider::loadIcons()
 
     if (pixmap.isNull()) {
         qDebug()<<"Bad icon"<<endl;
-    } else
-        qDebug()<<"=========================== YAY icon found"<<endl;
+    }
 
-    emit iconPixmap(pixmap);
-    d->tasks.removeFirst();
+    qDebug()<<"=========================== Processing"<<current.name <<":"<<current.id<<endl;
+    d->map[current.id] = pixmap;
+
+    emit iconPixmap(pixmap, current.id);
 }
 
 QStringList IconProvider::getSubDir(const QString& path)
@@ -109,6 +118,11 @@ QStringList IconProvider::getSubDir(const QString& path)
     }
     paths.append("/usr/share/app-install/icons/");
     return paths;
+}
+
+QPixmap IconProvider::getIcon(uint id)
+{
+    return d->map[id];
 }
 
 }

@@ -14,6 +14,7 @@ class Requests
     QString name;
     QString size;
     bool valid;
+    uint id;
 };
 
 //typedef struct request Request;
@@ -25,13 +26,14 @@ class VISIBLE_SYM IconProvider : public QObject
     Q_OBJECT
 public:
      IconProvider ();
-     void requestIcon(const QString& name, const QString&);
+     uint requestIcon(const QString& name, const QString&);
      QStringList getSubDir(const QString& path);
+     QPixmap getIcon(uint id);
 public Q_SLOTS:
      void loadIcons();
      Q_SIGNALS:
      void requestAdded();
-     void iconPixmap(const QPixmap&);
+     void iconPixmap(const QPixmap&, uint);
 private:
         class Private;
         Private * const d;
