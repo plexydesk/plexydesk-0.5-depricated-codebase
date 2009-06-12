@@ -3,6 +3,7 @@
 #include <QPixmap>
 #include <QSettings>
 #include <QQueue>
+#include <QString>
 
 namespace PlexyDesk
 {
@@ -62,7 +63,6 @@ uint IconProvider::requestIcon(const QString& name, const QString& size)
 
     return r.id;
 }
-
 
 void IconProvider::loadIcons()
 {

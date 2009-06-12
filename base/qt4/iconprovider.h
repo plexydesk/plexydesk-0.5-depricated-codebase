@@ -5,21 +5,18 @@
 #include <config.h>
 #include <plexy.h>
 
-
 class Requests
 {
-    public:
-     Requests(){}
+public:
+    Requests(){}
 
     QString name;
     QString size;
     bool valid;
     uint id;
 };
-
-//typedef struct request Request;
-
-namespace PlexyDesk {
+namespace PlexyDesk
+{
 
 class VISIBLE_SYM IconProvider : public QObject
 {
@@ -37,10 +34,9 @@ public Q_SLOTS:
 private:
         class Private;
         Private * const d;
+    };
 
-};
-
-typedef QSharedPointer<IconProvider> IconProviderPtr;
+    typedef QSharedPointer<IconProvider> IconProviderPtr;
 }
 
 #endif // ICONPROVIDER_H
