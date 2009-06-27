@@ -24,15 +24,16 @@ namespace PlexyDesk
 
 class Icon::Private
 {
-    public:
-      Private(){}
-      ~Private(){}
-      QPixmap icon;
-      QPlexyMime mime;
-      QString text;
-      bool valid;
-      IconProviderPtr iconprovider;
-      uint id;
+public:
+    Private() {}
+    ~Private() {}
+    QPixmap icon;
+    QPlexyMime mime;
+    QString text;
+    bool valid;
+    IconProviderPtr iconprovider;
+    uint id;
+    IconJobPtr iconjob;
 };
 
 Icon::Icon(IconProviderPtr icon, const QRectF &rect, QWidget *embeddedWidget) : DesktopWidget(rect), d(new Private)
@@ -40,42 +41,42 @@ Icon::Icon(IconProviderPtr icon, const QRectF &rect, QWidget *embeddedWidget) : 
     d->valid = false;
     d->iconprovider = icon;
     d->id = 0;
-     connect(d->iconprovider.data(),SIGNAL(iconPixmap(const QPixmap&, uint)),this, SLOT(onIconPixmap(const QPixmap&, uint)));
+    // connect(d->iconprovider.data(),SIGNAL(iconPixmap(const QPixmap&, uint)),this, SLOT(onIconPixmap(const QPixmap&, uint)));
 }
+
 
 Icon::~Icon()
 {
-    qDebug()<<"Delete Icon"<<endl;
+    //qDebug()<<"Delete Icon"<<endl;
+}
+
+void Icon::loadIcon()
+{
+    d->icon = d->iconjob->Icon();
+    qDebug()<<"Load Icons ---"<<d->icon.isNull()<<endl;
+    update();
 }
 
 void Icon::setContent(const QString& path)
 {
-    qDebug()<<d->mime.fromFileName(path)<<endl;
+    d->mime.fromFileName(path);
     QString iconname;
-    if(d->mime.mimeType() == "application/x-desktop")
+    if (d->mime.mimeType() == "application/x-desktop")
     {
         QSettings setting(path,  QSettings::IniFormat);
         setting.beginGroup("Desktop Entry");
         iconname = setting.value("Icon","").toString();
         setting.endGroup();
+        qDebug()<<"Desktop File:" << iconname <<endl;
         d->valid = true;
+        d->iconjob = d->iconprovider->requestIcon(iconname, "32x32");
+        connect(d->iconjob.data(), SIGNAL(finished()), this, SLOT(loadIcon()));
     } else {
         QString name = d->mime.genericIconName();
     }
     d->text = iconname;
-   // d->icon = QPixmap(applicationDirPath()+"/share/app-install/icons/"+iconname+".png");
-    d->id = d->iconprovider->requestIcon(iconname, "32x32");
-    qDebug()<<"Registereding -> Id "<<iconname<<d->id<<endl;
+    // qDebug()<<"Registereding -> Id "<<iconname<<d->id<<endl;
 
-}
-
-void Icon::onIconPixmap(const QPixmap& pixmap, uint id)
-{
-
-    if(!pixmap.isNull())  {
-      d->icon = d->iconprovider->getIcon(d->id);
-    }
-    update();
 }
 
 bool Icon::isValid()
@@ -85,26 +86,26 @@ bool Icon::isValid()
 
 void Icon::paintBackSide(QPainter * painter,const QRectF& rect)
 {
-        if(!d->icon.isNull()) {
-         int x = (this->boundingRect().width() - d->icon.width())/2;
-         painter->drawPixmap(QRect(x, x , d->icon.width(), d->icon.height()) , d->iconprovider->getIcon(d->id));
-        }
-       // DesktopWidget::paintDockView(painter, rect);
+    if (!d->icon.isNull()) {
+        int x = (this->boundingRect().width() - d->icon.width())/2;
+        painter->drawPixmap(QRect(x, x , d->icon.width(), d->icon.height()) , d->icon);
+    }
+    // DesktopWidget::paintDockView(painter, rect);
 }
 void Icon::paintViewSide(QPainter * painter,const QRectF& rect)
 {
-       // DesktopWidget::paintDockView(painter, rect);
-        if(!d->icon.isNull()) {
-          int x = (this->boundingRect().width() - d->icon.width())/2;
-          painter->drawPixmap(QRect(x, x , d->icon.width(), d->icon.height()) , d->iconprovider->getIcon(d->id));
-        }
+    // DesktopWidget::paintDockView(painter, rect);
+    if (!d->icon.isNull()) {
+        int x = (this->boundingRect().width() - d->icon.width())/2;
+        painter->drawPixmap(QRect(x, x , d->icon.width(), d->icon.height()) , d->icon);
+    }
 }
 void Icon::paintDockView(QPainter * painter,const QRectF& rect)
 {
     DesktopWidget::paintDockView(painter, rect);
-   if(!d->icon.isNull()) {
-         int x = (this->boundingRect().width() - d->icon.width())/2;
-         painter->drawPixmap(QRect(x, x , d->icon.width(), d->icon.height()) , d->iconprovider->getIcon(d->id));
+    if (!d->icon.isNull()) {
+        int x = (this->boundingRect().width() - d->icon.width())/2;
+        painter->drawPixmap(QRect(x, x , d->icon.width(), d->icon.height()) , d->icon );
     }
 }
 

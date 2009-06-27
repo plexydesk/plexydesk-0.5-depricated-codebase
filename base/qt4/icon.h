@@ -23,26 +23,28 @@
 #include <plexyconfig.h>
 #include <desktopwidget.h>
 #include <iconprovider.h>
+#include <pendingjob.h>
+
 namespace PlexyDesk
 {
-   class VISIBLE_SYM Icon : public DesktopWidget
-   {
-       Q_OBJECT
-   public:
-       Icon(IconProviderPtr icon, const QRectF &rect, QWidget *embeddedWidget = 0);
-       virtual ~Icon();
-       virtual void setContent(const QString& path);
-       virtual bool isValid();
-       virtual void paintBackSide(QPainter * painter,const QRectF& rect);
-       virtual void paintViewSide(QPainter * painter,const QRectF& rect);
-       virtual void paintDockView(QPainter * painter,const QRectF& rect);
-   public Q_SLOTS:
-       void onIconPixmap(const QPixmap& pixmap, uint);
+class VISIBLE_SYM Icon : public DesktopWidget
+{
+    Q_OBJECT
+public:
+    Icon(IconProviderPtr icon, const QRectF &rect, QWidget *embeddedWidget = 0);
+    virtual ~Icon();
+    virtual void setContent(const QString& path);
+    virtual bool isValid();
+    virtual void paintBackSide(QPainter * painter,const QRectF& rect);
+    virtual void paintViewSide(QPainter * painter,const QRectF& rect);
+    virtual void paintDockView(QPainter * painter,const QRectF& rect);
+public Q_SLOTS:
+    void loadIcon();
 
-   private:
-        class Private;
-        Private * const d;
+private:
+    class Private;
+    Private * const d;
 
-    };
+};
 }
 #endif // ICON_H

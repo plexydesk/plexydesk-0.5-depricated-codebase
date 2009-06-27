@@ -4,17 +4,8 @@
 #include <QtCore>
 #include <config.h>
 #include <plexy.h>
+#include <iconjob.h>
 
-class Requests
-{
-public:
-    Requests(){}
-
-    QString name;
-    QString size;
-    bool valid;
-    uint id;
-};
 namespace PlexyDesk
 {
 
@@ -22,21 +13,14 @@ class VISIBLE_SYM IconProvider : public QObject
 {
     Q_OBJECT
 public:
-     IconProvider ();
-     uint requestIcon(const QString& name, const QString&);
-     QStringList getSubDir(const QString& path);
-     QPixmap getIcon(uint id);
-public Q_SLOTS:
-     void loadIcons();
-     Q_SIGNALS:
-     void requestAdded();
-     void iconPixmap(const QPixmap&, uint);
+    IconProvider ();
+    IconJobPtr requestIcon(const QString& name, const QString&);
 private:
-        class Private;
-        Private * const d;
-    };
+    class Private;
+    Private * const d;
+};
 
-    typedef QSharedPointer<IconProvider> IconProviderPtr;
+typedef QSharedPointer<IconProvider> IconProviderPtr;
 }
 
 #endif // ICONPROVIDER_H

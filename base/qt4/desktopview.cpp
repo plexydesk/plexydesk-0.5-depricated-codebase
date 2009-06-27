@@ -258,14 +258,14 @@ namespace PlexyDesk
 
    void DesktopView::loadIcons()
    {
-       QStringList xdgDesktopPath = QString(qgetenv("XDG_DATA_DIRS")).split(':');
-       QDir desktop(xdgDesktopPath.first());
+   //    QStringList xdgDesktopPath = QString(qgetenv("XDG_DATA_DIRS")).split(':');
+       QDir desktop(QDir::homePath()+"/Desktop");
        desktop.setFilter(QDir::Files | QDir::NoDotAndDotDot);
        desktop.setSorting(QDir::Size | QDir::Reversed);
        QFileInfoList list = desktop.entryInfoList();
 
-       d->iconWatcher->setFuture(QtConcurrent::mapped(list, LoadIcon(d->iconprovider, d->row, d->column)));
-/*
+     //  d->iconWatcher->setFuture(QtConcurrent::mapped(list, LoadIcon(d->iconprovider, d->row, d->column)));
+
        for (int i = 0; i < list.size(); i++) {
          QFileInfo fileInfo = list.at(i);
          QPixmap iconpixmap (DesktopWidget::applicationDirPath() +
@@ -284,7 +284,7 @@ namespace PlexyDesk
              delete icon;
          }
        }
-*/
+
    }
 
    void DesktopView::showIcon(int num)

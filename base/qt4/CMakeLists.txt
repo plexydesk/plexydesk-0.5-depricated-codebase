@@ -27,6 +27,8 @@ SET(sourceFiles icon.cpp
 	pluginloader.cpp
 	viewlayer.cpp
    iconprovider.cpp
+   pendingjob.cpp
+   iconjob.cpp
 )
 
 set(headerFiles
@@ -54,6 +56,8 @@ set(headerFiles
 	widgetplugin.h
 	icon.h
    iconprovider.h
+   pendingjob.h
+   iconjob.h
 )
 
 set(QTMOC_SRCS
@@ -74,6 +78,8 @@ set(QTMOC_SRCS
 	widgetinterface.h
 	icon.h
    iconprovider.h
+   pendingjob.h
+   iconjob.h
 )
 
 #for now only dbus works only under linux
