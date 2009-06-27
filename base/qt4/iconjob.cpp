@@ -55,14 +55,12 @@ void IconJob::requestIcon(const QString& name, const QString& size)
 
 void IconJob::handleJob()
 {
-    qDebug()<<"New Job Added"<<endl;
     foreach (QString path, d->iconpaths) {
         QDir dir(path);
         if (dir.exists()) {
             QString subpath = d->size + "/" + d->name + ".png";
             QStringList iconlist = getSubDir(path);
             foreach (QString icon, iconlist) {
-                qDebug()<<"Loading Icon"<<icon+"/"+d->name+".png"<<endl;
                 QFile iconfile(icon+"/"+d->name+".png");
                 if (iconfile.exists()) {
                     d->pixmap = QPixmap(icon+"/"+d->name+".png");
@@ -82,7 +80,6 @@ void IconJob::handleJob()
 
 QStringList IconJob::getSubDir(const QString& path)
 {
-    qDebug()<<path<<endl;
     QStringList rpaths;
     QStringList paths;
     QFile file (path+"/"+"index.theme");

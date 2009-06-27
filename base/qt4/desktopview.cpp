@@ -33,9 +33,12 @@
 #include <QGraphicsGridLayout>
 #include <QDir>
 #include <QFutureWatcher>
+#include <QPropertyAnimation>
 
 namespace PlexyDesk
 {
+    //FIXME:
+    //Threading can not happen here. move this code to iconjob handler
     class LoadIcon
     {
         public:
@@ -258,7 +261,6 @@ namespace PlexyDesk
 
    void DesktopView::loadIcons()
    {
-   //    QStringList xdgDesktopPath = QString(qgetenv("XDG_DATA_DIRS")).split(':');
        QDir desktop(QDir::homePath()+"/Desktop");
        desktop.setFilter(QDir::Files | QDir::NoDotAndDotDot);
        desktop.setSorting(QDir::Size | QDir::Reversed);
