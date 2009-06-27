@@ -47,7 +47,7 @@ Icon::Icon(IconProviderPtr icon, const QRectF &rect, QWidget *embeddedWidget) : 
 
 Icon::~Icon()
 {
-    //qDebug()<<"Delete Icon"<<endl;
+    delete d;
 }
 
 void Icon::loadIcon()
