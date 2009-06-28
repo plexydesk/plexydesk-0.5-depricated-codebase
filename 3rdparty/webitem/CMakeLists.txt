@@ -1,4 +1,4 @@
-PROJECT(Stefani)
+PROJECT(PlexyDesk)
 INCLUDE(CPack)
 FIND_PACKAGE(Qt4 REQUIRED)
 cmake_minimum_required(VERSION 2.6)
@@ -6,8 +6,6 @@ SET(LIB_MAJOR 0)
 SET(LIB_MINOR 1)
 SET(LIB_RELEASE SVNBUILD)
 SET(LIB_SUB_RELEASE 1)
-SET(APPLICATION_INTERNAL_VERSION "20081216")
-SET(APPLICATION_DATE "2008-01-01")
 
 cmake_policy(SET CMP0003 NEW)
 
@@ -31,4 +29,4 @@ INCLUDE_DIRECTORIES(
 LINK_DIRECTORIES ( ${WEBKIT_TRUNK}/WebKitBuild/${MODE}/lib  )
 
 add_subdirectory(lib)
-add_subdirectory(src)
+#add_subdirectory(src)

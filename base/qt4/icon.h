@@ -38,6 +38,7 @@ public:
     virtual void paintBackSide(QPainter * painter,const QRectF& rect);
     virtual void paintViewSide(QPainter * painter,const QRectF& rect);
     virtual void paintDockView(QPainter * painter,const QRectF& rect);
+    virtual void drawText(QPainter *painter, const QRectF& rect);
 public Q_SLOTS:
     void loadIcon();
 
