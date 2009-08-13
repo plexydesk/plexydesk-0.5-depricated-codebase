@@ -51,7 +51,7 @@ ADD_CUSTOM_TARGET(uninstall
 
 CONFIGURE_FILE(config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h )
 CONFIGURE_FILE(plexydesk.Doxyfile.cmake ${CMAKE_CURRENT_BINARY_DIR}/plexydesk.Doxyfile )
-
+CONFIGURE_FILE(org.plexydesk.daemon.service.in ${CMAKE_CURRENT_BINARY_DIR}/org.plexydesk.daemon.service)
 
 #pkg_check_modules(GTKMM gtkmm-2.4)
 #pkg_check_modules(CLUTTER clutter-0.5)
@@ -97,6 +97,8 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}/3rdparty/webitem/
     ${CMAKE_SOURCE_DIR}/3rdparty/webitem/lib/
     ${CMAKE_BINARY_DIR}/3rdparty/webitem/lib/
+    ${CMAKE_BINARY_DIR}/social/
+    ${CMAKE_SOURCE_DIR}/social/
 
     ${QT_INCLUDE_DIR}
 )
@@ -108,6 +110,7 @@ add_subdirectory(base/qt4/)
 add_subdirectory(extensions/backdrop/classicdrop)
 add_subdirectory(extensions/widgets/imagepile)
 add_subdirectory(data)
+add_subdirectory(social)
 
 
 #add_subdirectory(extensions/widgets/demowidget)
