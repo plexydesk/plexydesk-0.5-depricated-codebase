@@ -33,7 +33,7 @@
 #include <QGraphicsGridLayout>
 #include <QDir>
 #include <QFutureWatcher>
-#include <QPropertyAnimation>
+//#include <QPropertyAnimation>
 
 namespace PlexyDesk
 {
