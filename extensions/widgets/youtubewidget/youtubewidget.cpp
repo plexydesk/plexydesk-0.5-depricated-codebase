@@ -41,11 +41,10 @@ DesktopWidget(rect,widget)
   setDockImage(QPixmap(prefix + "icon.png"));
 
   PlexyDesk::DataInterface * utubeEngine = (PlexyDesk::DataInterface*)
-          PlexyDesk::PluginLoader::getInstance()->instance("utubeengine");
+  PlexyDesk::PluginLoader::getInstance()->instance("utubeengine");
 
   if (utubeEngine) {
       connect(utubeEngine,SIGNAL(data(QVariant&)),this,SLOT(data(QVariant&)));
-      //connect(utubeEngine,SIGNAL(success()),this,SLOT(drawItems()));
   }else {
       qDebug("DataSource Was Null");
   }
@@ -80,8 +79,8 @@ void YouTubeWidget::data(QVariant& data)
     emit dataChanged();
 }
 
-void
-        YouTubeWidget::drawWidget()
+void 
+YouTubeWidget::drawWidget()
 {
    m_bg = QImage (prefix + "bacground.png");
 
@@ -90,7 +89,7 @@ void
 }
 
 void
-        YouTubeWidget::drawItems()
+YouTubeWidget::drawItems()
 {
     update ();
 }
@@ -139,7 +138,7 @@ void YouTubeWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e
          p->drawImage( QRect(clip.x()+1,view.y()+i,mItem_bg.width(),mItem_bg.height()),mItem_bg);
          i += mItem_bg.height();
   }
-    p->restore();
+  p->restore();
 }
 
 
