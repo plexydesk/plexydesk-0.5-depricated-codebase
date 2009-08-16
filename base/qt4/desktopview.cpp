@@ -33,7 +33,9 @@
 #include <QGraphicsGridLayout>
 #include <QDir>
 #include <QFutureWatcher>
+#if QT_VERSION < 0x04600
 #include <QPropertyAnimation>
+#endif
 
 namespace PlexyDesk
 {
