@@ -18,6 +18,7 @@
 #define ICON_H
 
 #include <QGraphicsRectItem>
+#include <QGraphicsSceneMouseEvent>
 
 #include <plexy.h>
 #include <plexyconfig.h>
@@ -43,6 +44,8 @@ public Q_SLOTS:
     void loadIcon();
 
 private:
+
+    void mouseDoubleClickEvent (QGraphicsSceneMouseEvent * event);
     class Private;
     Private * const d;
 
