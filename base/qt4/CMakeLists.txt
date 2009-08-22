@@ -30,6 +30,7 @@ SET(sourceFiles icon.cpp
    pendingjob.cpp
    iconjob.cpp
    listview.cpp
+   httpjobhandler.cpp
 )
 
 set(headerFiles
@@ -60,6 +61,7 @@ set(headerFiles
    pendingjob.h
    iconjob.h
    listview.h
+   httpjobhandler.h
 )
 
 set(QTMOC_SRCS
@@ -83,6 +85,7 @@ set(QTMOC_SRCS
    pendingjob.h
    iconjob.h
    listview.h
+   httpjobhandler.h
 )
 
 #for now only dbus works only under linux
