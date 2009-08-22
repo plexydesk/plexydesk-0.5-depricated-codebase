@@ -77,8 +77,9 @@ void ListView::wheelEvent(QGraphicsSceneWheelEvent * event)
     d->view.setY(d->view.y()+numSteps);
 }
 
-void ListView::paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
+void ListView::paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem* e, QWidget* w)
 {
+    DesktopWidget::paintExtDockFace(painter, e, w);
 }
 
 void ListView::drawWidget()
