@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*******************************************************************************
 * This file is part of PlexyDesk.
 *  Maintained by : Siraj Razick <siraj@kde.org>
@@ -28,8 +27,8 @@ class HttpJobHandler::HttpJobHandlerPrivate
 {
 
 public:
-    HttpJobHandlerPrivate(){};
-    ~HttpJobHandlerPrivate(){};
+    HttpJobHandlerPrivate() {};
+    ~HttpJobHandlerPrivate() {};
     QNetworkAccessManager *manager;
     QByteArray data;
 };

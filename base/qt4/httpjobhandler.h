@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*******************************************************************************
 * This file is part of PlexyDesk.
 *  Maintained by : Siraj Razick <siraj@kde.org>
