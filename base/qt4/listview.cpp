@@ -13,7 +13,7 @@ public:
     QString prefix;
     QImage m_bg;
     QImage mItem_bg;
-    QList<ListItem> mItemList;
+    QList<ListItem*> mItemList;
 };
 
 ListView::ListView(const QRectF &rect, QWidget *win):
@@ -31,6 +31,16 @@ ListView::~ListView()
     delete d;
 }
 
+void ListView::clear()
+{
+    d->mItemList.clear();
+}
+
+void ListView::insert(ListItem* item)
+{
+    d->mItemList.append(item);
+}
+
 void ListView::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e, QWidget *)
 {
     QRectF r  = e->exposedRect;
@@ -46,15 +56,15 @@ void ListView::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e, QWi
     for (int i = 5 ; i < d->mItemList.size()* d->mItem_bg.height(); ) {
         if (vidcount>= d->mItemList.size())
             break;
-        ListItem videoentity;
+        ListItem* videoentity;
         videoentity = d->mItemList.at(vidcount++);
 
         p->setPen( QColor(255,255,255) );
         p->setFont( QFont("Bitstream Charter",10,QFont::Bold) );
-        p->drawText(40,d->view.y()+i+15,300,30,Qt::AlignLeft,QString(videoentity.title) );
+        p->drawText(40,d->view.y()+i+15,300,30,Qt::AlignLeft,QString(videoentity->title) );
 
         p->setFont( QFont("Bitstream Charter",8) );
-        p->drawText(40,d->view.y()+i+40,250,100,Qt::AlignLeft|Qt::TextWordWrap,QString(videoentity.desc) );
+        p->drawText(40,d->view.y()+i+40,250,100,Qt::AlignLeft|Qt::TextWordWrap,QString(videoentity->desc) );
 
         p->drawImage( QRect(d->clip.x()+1,d->view.y()+i,d->mItem_bg.width(),d->mItem_bg.height()),d->mItem_bg);
         i += d->mItem_bg.height();

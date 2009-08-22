@@ -30,6 +30,10 @@ public:
     virtual void paintExtFace(QPainter* painter, const QStyleOptionGraphicsItem*e, QWidget*);
     virtual void paintExtDockFace(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*);
     virtual void wheelEvent(QGraphicsSceneWheelEvent* event);
+    virtual void insert(ListItem *item);
+
+public Q_SLOTS:
+    void clear();
 
 private:
     //  void setPath(QString);
