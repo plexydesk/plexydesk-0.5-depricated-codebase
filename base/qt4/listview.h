@@ -12,12 +12,12 @@ namespace PlexyDesk
 class ListItem {
 
 public:
-        ListItem(){}
-        virtual ~ListItem(){}
-        QString title;
-        QString link;
-        QString desc;
-        QString thumb;
+    ListItem() {}
+    virtual ~ListItem() {}
+    QString title;
+    QString link;
+    QString desc;
+    QString thumb;
 };
 
 class VISIBLE_SYM ListView : public DesktopWidget
@@ -32,7 +32,7 @@ public:
     virtual void wheelEvent(QGraphicsSceneWheelEvent* event);
 
 private:
-  //  void setPath(QString);
+    //  void setPath(QString);
     void drawWidget();;
     class Private;
     Private * const d;
