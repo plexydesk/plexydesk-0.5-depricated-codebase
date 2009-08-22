@@ -4,9 +4,22 @@
 #include <QtGui> //todo: remove
 #include <plexyconfig.h>
 #include <desktopwidget.h>
+#include <QAbstractListModel>
 
 namespace PlexyDesk
 {
+
+class ListItem {
+
+public:
+        ListItem(){}
+        virtual ~ListItem(){}
+        QString title;
+        QString link;
+        QString desc;
+        QString thumb;
+};
+
 class VISIBLE_SYM ListView : public DesktopWidget
 {
     Q_OBJECT
