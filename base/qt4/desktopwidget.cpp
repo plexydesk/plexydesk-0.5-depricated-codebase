@@ -320,4 +320,4 @@ namespace PlexyDesk
         return QString(PLEXPREFIX);
 #endif
     }
-};//namespace PlexyDesk
+} //namespace PlexyDesk
