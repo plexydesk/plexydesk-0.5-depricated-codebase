@@ -26,6 +26,7 @@
 #include <pluginloader.h>
 
 #include <desktopwidget.h>
+#include <listview.h>
 
 class QTimer;
 
@@ -33,55 +34,41 @@ namespace PlexyDesk
 {
 
 
-class YouTubeWidget:public DesktopWidget
+class YouTubeWidget:public ListView
 {
 
     Q_OBJECT
 
-        public:
-        YouTubeWidget(const QRectF &rect, QWidget *widget = 0);
-        virtual ~YouTubeWidget();
-        virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem * e, QWidget *);
-        virtual void wheelEvent(QGraphicsSceneWheelEvent * event);
-        void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
-        void setPath(QString);
-        void drawWidget();;
-        /*
-         virtual void mousePressEvent( QMouseEvent *e)
-        {
-                clickPos = e->pos();
-                setCursor(Qt::SizeAllCursor);
-        }
-        virtual void mouseMoveEvent( QMouseEvent *e)
-        {
-        move( e->globalPos() - clickPos );
-        }
-        virtual void mouseReleaseEvent(QMouseEvent *e)
-        {
-                setCursor(Qt::ArrowCursor);
-        }
+public:
+    YouTubeWidget(const QRectF &rect, QWidget *widget = 0);
+    virtual ~YouTubeWidget();
+    /*
+    virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem * e, QWidget *);
+    virtual void wheelEvent(QGraphicsSceneWheelEvent * event);
+    void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
+    void setPath(QString);
+    void drawWidget();;
 */
+public Q_SLOTS:
+    void data(QVariant&);
+    void drawItems();
+Q_SIGNALS:
+    void dataChanged();
 
-    public slots:
-        void data(QVariant&);
-        void drawItems();
-    signals:
-        void dataChanged();
+private:
 
-        private:
-
-        //refactor
-        QRectF clip;
-        QRectF view;
+    //refactor
+    QRectF clip;
+    QRectF view;
 
 
-        int shade;
-        int moveY;
-        QImage m_bg;
-        QImage mItem_bg;
+    int shade;
+    int moveY;
+    QImage m_bg;
+    QImage mItem_bg;
 
-        QString prefix;
-        QPoint clickPos;
+    QString prefix;
+    QPoint clickPos;
 
     PlexyDesk::DataInterface * utubeEngine;
 

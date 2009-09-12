@@ -39,6 +39,7 @@ void ListView::clear()
 void ListView::insert(ListItem* item)
 {
     d->mItemList.append(item);
+    d->view.setHeight(d->mItemList.size()*d->mItem_bg.height());
 }
 
 void ListView::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e, QWidget *)
