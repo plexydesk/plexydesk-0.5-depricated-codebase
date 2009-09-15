@@ -87,7 +87,7 @@ namespace PlexyDesk {
         int isSpringed;
 
     } ; // End Class Particle
-}; // Namespace
+} // Namespace
 #endif
 
 
