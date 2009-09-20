@@ -29,6 +29,7 @@ SET(sourceFiles icon.cpp
    iconprovider.cpp
    pendingjob.cpp
    iconjob.cpp
+   httpjob.cpp
 )
 
 set(headerFiles
@@ -58,6 +59,7 @@ set(headerFiles
    iconprovider.h
    pendingjob.h
    iconjob.h
+   httpjob.h
 )
 
 set(QTMOC_SRCS
@@ -80,6 +82,7 @@ set(QTMOC_SRCS
    iconprovider.h
    pendingjob.h
    iconjob.h
+   httpjob.h
 )
 
 #for now only dbus works only under linux
