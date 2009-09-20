@@ -58,7 +58,9 @@ public:
     int shape_event, shape_error, damage_event, damage_error;
     int composite_major, composite_minor;
 
+   //variables
 
+    Window mManagerWindow;
 };
 
 CompWindow::CompWindow(int & argc, char ** argv):QApplication(argc, argv), d(new Private)
@@ -80,99 +82,15 @@ void CompWindow::addWindow(Window window)
         qDebug()<<"Error adding windows, getting window attributes failed"<<endl;
         return;
     } else
-        qDebug()<<"Going -----------------"<<endl;
+        qDebug()<<"Going"<<endl;
 
-    //PlexyWindows *  _window  = new PlexyWindows(d->mDisplay, window, &attrs);
-    //d->windowMap[window] = _window;
+    PlexyWindows *  _window  = new PlexyWindows(d->mDisplay, window, &attrs);
+    d->windowMap[window] = _window;
 }
 
 bool CompWindow::x11EventFilter( XEvent* event)
 {
-
-    Window xwin = GetEventXWindow (event);
-
-
-    switch (event->type) {
-    case ClientMessage:
-        qDebug()<<"Client Message"<<endl;
-        if (xwin == d->mRootWindow) {
-            qDebug()<<"RootWindow Massaging"<<endl;
-        } break;
-    case CreateNotify:
-        if (event->xcreatewindow.parent == d->mRootWindow) {
-            if (!XCheckTypedWindowEvent (d->mDisplay, xwin, DestroyNotify, event) &&
-                    !XCheckTypedWindowEvent (d->mDisplay, xwin, ReparentNotify, event)) {
-
-                qDebug()<<"Create Notify"<<endl;
-                addWindow(xwin);
-            }
-        }
-    }
-    /*
-    //TODO don't map pop's
-         bool nomap = false;
-          foreach (PlexyWindows* _win, d->windowMap) {
-          if(_win->winId() == event->xmap.window) {
-              qDebug()<<"Already has a base"<<endl;
-              nomap = true;
-          }
-          else {
-              qDebug()<<"No Base";
-          }
-        }
-
-        switch (event->type) {
-        case ClientMessage:
-            qDebug()<<"Client Message"<<
-            event->xclient.data.l<<event->xclient.format<<event->xclient.message_type;
-            break;
-        case MapRequest:
-            qDebug()<<"Map Requesti-------->"<<endl;
-            //XMapWindow(d->mDisplay, event->xmaprequest.window);
-            break;
-        case LeaveNotify:
-            qDebug()<<"Leave "<<endl;
-            break;
-        case EnterNotify:
-            qDebug()<<"Enter"<<endl;
-            break;
-        case ReparentNotify:
-            qDebug()<<"Reparent"<<endl;
-            break;
-        case CreateNotify :
-            qDebug()<<"Create Notify";
-            break;
-        case  DestroyNotify:
-            qDebug()<<"DestroyNotify";
-           break;
-        case ConfigureNotify:
-            qDebug()<<"ConfigureNotify";
-            break;
-        case ConfigureRequest:
-            qDebug()<<"ConfigureRequest";
-            break;
-        case MapNotify :
-            qDebug()<<"MapNotify";
-            // if (!nomap)
-              //   addWindow(event->xmap.window);
-            break;
-        case UnmapNotify :
-            qDebug()<<"UnmapNotify";
-            break;
-        case PropertyNotify :
-            qDebug()<<"PropertyNotify";
-            break;
-        case FocusIn :
-            qDebug()<<"FocusIn";
-            break;
-        case FocusOut:
-            qDebug()<<"FocusOut";
-            break;
-        case Expose:
-            qDebug()<<"Expose";
-            break;
-        }
-        */
+ //qDebug()<<Q_FUNC_INFO<<endl;
 }
 
 //utility
@@ -187,6 +105,7 @@ bool CompWindow::isWmRunning()
 
 void CompWindow::init()
 {
+    qDebug()<<Q_FUNC_INFO<<endl;
     XSelectInput(QX11Info::display(), QX11Info::appRootWindow(QX11Info::appScreen()), KeyPressMask
                  | KeyReleaseMask | ButtonPressMask | ButtonReleaseMask |
                  KeymapStateMask | ButtonMotionMask | PointerMotionMask |

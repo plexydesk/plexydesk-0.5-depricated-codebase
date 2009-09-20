@@ -34,7 +34,7 @@ class CompWindow : public QApplication
         ~CompWindow();
 
         bool isWmRunning();
-
+        void ReplaceSelectionOwner(Window newOwner, Atom atom);
         void addWindow(Window id);
         bool registerWindowManager(Window newOwner, Atom atom);
         bool registerCompositeManager();
@@ -46,7 +46,7 @@ class CompWindow : public QApplication
     private:
         void init();//setups  Atoms, registering ..etc
         bool x11EventFilter( XEvent* );
-        //utility 
+        //utility
         //data
         class Private;
         Private * const d;

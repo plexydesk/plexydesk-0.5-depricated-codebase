@@ -36,10 +36,18 @@ virtual ~PlexyWindows(){}
 void Destroyed ();
 void Mapped (bool override_redirect);
 void Unmapped ();
- void PropertyChanged (Atom prop, bool deleted);
-
-
-
+void RedirectWindow ();
+void bind();
+void PropertyChanged (Atom prop, bool deleted);
+void Configured (bool isNotify,
+                     int x, int y,
+                     int width, int height,
+                     int border,
+                     PlexyWindows *aboveWin,
+                     bool override_redirect);
+private:
+        class Private;
+        Private * const d;
 };
 
 #endif // PLEXYWINDOWS_H
