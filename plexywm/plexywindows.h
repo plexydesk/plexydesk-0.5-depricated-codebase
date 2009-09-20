@@ -28,26 +28,26 @@ extern "C" {
 
 class PlexyWindows : public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 public:
-  PlexyWindows(Display*d, Window w, XWindowAttributes *attr, QWidget * parent = 0, Qt::WindowFlags f = 0);
-virtual ~PlexyWindows(){}
+    PlexyWindows(Display*d, Window w, XWindowAttributes *attr, QWidget * parent = 0, Qt::WindowFlags f = 0);
+    virtual ~PlexyWindows() {}
 
-void Destroyed ();
-void Mapped (bool override_redirect);
-void Unmapped ();
-void RedirectWindow ();
-void bind();
-void PropertyChanged (Atom prop, bool deleted);
-void Configured (bool isNotify,
+    void Destroyed ();
+    void Mapped (bool override_redirect);
+    void Unmapped ();
+    void RedirectWindow ();
+    void bind();
+    void PropertyChanged (Atom prop, bool deleted);
+    void Configured (bool isNotify,
                      int x, int y,
                      int width, int height,
                      int border,
                      PlexyWindows *aboveWin,
                      bool override_redirect);
 private:
-        class Private;
-        Private * const d;
+    class Private;
+    Private * const d;
 };
 
 #endif // PLEXYWINDOWS_H

@@ -32,36 +32,36 @@ extern "C" {
 
 class PlexyWindows::Private
 {
-      public:
-           Private() {}
-           ~Private(){}
-           Damage damage;
-           Window window;
-           XWindowAttributes * attrib;
-           Display * display;
-           Pixmap pixmap;
-           bool isRedirected;
+public:
+    Private() {}
+    ~Private() {}
+    Damage damage;
+    Window window;
+    XWindowAttributes * attrib;
+    Display * display;
+    Pixmap pixmap;
+    bool isRedirected;
 
 };
 
 PlexyWindows::PlexyWindows(Display* dsp, Window win, XWindowAttributes* attr, QWidget *parent, Qt::WindowFlags f  )
-                           :QObject(parent), d(new Private)
+        :QObject(parent), d(new Private)
 {
-     XSelectInput (dsp, win, (PropertyChangeMask | EnterWindowMask | FocusChangeMask));
-     XShapeSelectInput (dsp, win, ShapeNotifyMask);
-     d->window = win;
-     d->display = dsp;
-     d->pixmap = None;
-     d->attrib = attr;
-     d->damage = XDamageCreate (dsp, win, XDamageReportRawRectangles);
-     d->isRedirected = false;
+    XSelectInput (dsp, win, (PropertyChangeMask | EnterWindowMask | FocusChangeMask));
+    XShapeSelectInput (dsp, win, ShapeNotifyMask);
+    d->window = win;
+    d->display = dsp;
+    d->pixmap = None;
+    d->attrib = attr;
+    d->damage = XDamageCreate (dsp, win, XDamageReportRawRectangles);
+    d->isRedirected = false;
 
-     if(attr->map_state == IsViewable) {
-         attr->map_state == IsUnmapped;
-         Mapped(attr->override_redirect);
-     }
+    if (attr->map_state == IsViewable) {
+        attr->map_state == IsUnmapped;
+        Mapped(attr->override_redirect);
+    }
 
-     qDebug()<<Q_FUNC_INFO<<endl;
+    qDebug()<<Q_FUNC_INFO<<endl;
 }
 
 void PlexyWindows::Destroyed ()
@@ -69,40 +69,40 @@ void PlexyWindows::Destroyed ()
 }
 void PlexyWindows::Mapped (bool override_redirect)
 {
-bind();
+    bind();
 }
 
 void PlexyWindows::bind()
 {
     RedirectWindow();
 
-    if(!d->pixmap) {
+    if (!d->pixmap) {
         XGrabServer(d->display);
         XGetWindowAttributes(d->display, d->window, d->attrib);
-          if (d->attrib->map_state == IsViewable) {
-         d->pixmap = XCompositeNameWindowPixmap (d->display, d->window);
-       if(d->pixmap == None) {
-           qDebug()<<"Bad Pixmap not created"<<endl;
-       } else {
-           qDebug()<<"Goodpixmap"<<endl;
-           QPixmap   pixmap = QPixmap::fromX11Pixmap(d->pixmap);
-           QImage img = pixmap.toImage();
-           img.save("snap.png");
-       }
-     }
-           XUngrabServer (d->display);
+        if (d->attrib->map_state == IsViewable) {
+            d->pixmap = XCompositeNameWindowPixmap (d->display, d->window);
+            if (d->pixmap == None) {
+                qDebug()<<"Bad Pixmap not created"<<endl;
+            } else {
+                qDebug()<<"Goodpixmap"<<endl;
+                QPixmap   pixmap = QPixmap::fromX11Pixmap(d->pixmap);
+                QImage img = pixmap.toImage();
+                img.save("snap.png");
+            }
+        }
+        XUngrabServer (d->display);
     }
 }
 
 void PlexyWindows::RedirectWindow ()
 {
-    if(d->isRedirected) {
+    if (d->isRedirected) {
         return;
     }
 
-     XCompositeRedirectWindow (d->display, d->window, CompositeRedirectManual);
-     d->isRedirected = true;
-     qDebug()<<Q_FUNC_INFO<<endl;
+    XCompositeRedirectWindow (d->display, d->window, CompositeRedirectManual);
+    d->isRedirected = true;
+    qDebug()<<Q_FUNC_INFO<<endl;
 }
 
 void PlexyWindows::Unmapped ()
@@ -112,8 +112,8 @@ void PlexyWindows::PropertyChanged (Atom prop, bool deleted)
 {
 }
 
- void PlexyWindows::Configured (bool isNotify,int x, int y,int width, int height,int border, PlexyWindows *aboveWin, bool override_redirect)
- {
- }
+void PlexyWindows::Configured (bool isNotify,int x, int y,int width, int height,int border, PlexyWindows *aboveWin, bool override_redirect)
+{
+}
 
 

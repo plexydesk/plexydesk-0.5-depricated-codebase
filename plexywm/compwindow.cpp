@@ -58,7 +58,7 @@ public:
     int shape_event, shape_error, damage_event, damage_error;
     int composite_major, composite_minor;
 
-   //variables
+    //variables
 
     Window mManagerWindow;
 };
@@ -90,7 +90,7 @@ void CompWindow::addWindow(Window window)
 
 bool CompWindow::x11EventFilter( XEvent* event)
 {
- //qDebug()<<Q_FUNC_INFO<<endl;
+//qDebug()<<Q_FUNC_INFO<<endl;
 }
 
 //utility

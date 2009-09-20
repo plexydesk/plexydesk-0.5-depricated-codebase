@@ -47,10 +47,10 @@ using namespace PlexyDesk;
 
 int main( int argc, char ** argv )
 {
-   CompWindow app(argc,argv);
-   
-   if (app.isWmRunning()) 
-   {
-   }
-   return app.exec();
+    CompWindow app(argc,argv);
+
+    if (app.isWmRunning())
+    {
+    }
+    return app.exec();
 }

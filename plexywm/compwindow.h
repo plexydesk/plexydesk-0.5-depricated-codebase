@@ -29,27 +29,27 @@ extern "C" {
 class CompWindow : public QApplication
 {
     Q_OBJECT
-    public:
-        CompWindow(int & argc, char ** argv);
-        ~CompWindow();
+public:
+    CompWindow(int & argc, char ** argv);
+    ~CompWindow();
 
-        bool isWmRunning();
-        void ReplaceSelectionOwner(Window newOwner, Atom atom);
-        void addWindow(Window id);
-        bool registerWindowManager(Window newOwner, Atom atom);
-        bool registerCompositeManager();
-        void registerAtoms();
-        bool startOverlay();
-        void setupWindows();
-        bool checkExtensions();
-        Window GetEventXWindow (XEvent *xev);
-    private:
-        void init();//setups  Atoms, registering ..etc
-        bool x11EventFilter( XEvent* );
-        //utility
-        //data
-        class Private;
-        Private * const d;
+    bool isWmRunning();
+    void ReplaceSelectionOwner(Window newOwner, Atom atom);
+    void addWindow(Window id);
+    bool registerWindowManager(Window newOwner, Atom atom);
+    bool registerCompositeManager();
+    void registerAtoms();
+    bool startOverlay();
+    void setupWindows();
+    bool checkExtensions();
+    Window GetEventXWindow (XEvent *xev);
+private:
+    void init();//setups  Atoms, registering ..etc
+    bool x11EventFilter( XEvent* );
+    //utility
+    //data
+    class Private;
+    Private * const d;
 };
 
 #endif
