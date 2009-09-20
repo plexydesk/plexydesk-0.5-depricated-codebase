@@ -91,7 +91,7 @@ void PlexyWindows::bind()
             }
         }
         XUngrabServer (d->display);
-    }
+   }
 }
 
 void PlexyWindows::RedirectWindow ()
@@ -116,8 +116,19 @@ void PlexyWindows::Configured (bool isNotify,int x, int y,int width, int height,
 {
 }
 
-void PlexyWindows::Damaged() 
+void PlexyWindows::Damaged(XRectangle *rect)
 {
     bind();
-   
+   if(!rect) {
+        XRectangle allrect = { d->attrib->x, d->attrib->y, d->attrib->width, d->attrib->height };
+        Damaged (&allrect);
+        return;
+    }
+
+    if(d->pixmap) {
+      QPixmap   pixmap = QPixmap::fromX11Pixmap(d->pixmap);
+                QImage img = pixmap.toImage();
+                img.save("snap.png");
+    }
+
 }
