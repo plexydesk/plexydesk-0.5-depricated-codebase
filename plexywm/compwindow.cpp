@@ -88,10 +88,6 @@ void CompWindow::addWindow(Window window)
     d->windowMap[window] = _window;
 }
 
-bool CompWindow::x11EventFilter( XEvent* event)
-{
-//qDebug()<<Q_FUNC_INFO<<endl;
-}
 
 //utility
 
@@ -405,3 +401,22 @@ Window CompWindow::GetEventXWindow (XEvent *xev)
 
     return None;
 }
+
+bool CompWindow::x11EventFilter( XEvent* event)
+{
+//qDebug()<<Q_FUNC_INFO<<endl;
+    XEvent * xev = (XEvent*) event;
+    Window  xwin = GetEventXWindow(xev);
+    PlexyWindows * win  = d->windowMap[xwin];
+    if (!win) return false;
+
+    switch (event->type) {
+        default:
+        d->damage_event = d->damage_event + XDamageNotify;
+        if (event->type == d->damage_event ) {
+        qDebug()<<"Damage Event"<<endl;
+        win->bind();
+        }
+    }
+}
+

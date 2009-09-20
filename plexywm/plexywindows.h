@@ -45,6 +45,7 @@ public:
                      int border,
                      PlexyWindows *aboveWin,
                      bool override_redirect);
+    void Damaged();
 private:
     class Private;
     Private * const d;

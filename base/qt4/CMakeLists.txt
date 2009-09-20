@@ -29,7 +29,6 @@ SET(sourceFiles icon.cpp
    iconprovider.cpp
    pendingjob.cpp
    iconjob.cpp
-   httpjob.cpp
    listview.cpp
 )
 
@@ -60,7 +59,6 @@ set(headerFiles
    iconprovider.h
    pendingjob.h
    iconjob.h
-   httpjob.h
    listview.h
 )
 
@@ -84,7 +82,6 @@ set(QTMOC_SRCS
    iconprovider.h
    pendingjob.h
    iconjob.h
-   httpjob.h
    listview.h
 )
 

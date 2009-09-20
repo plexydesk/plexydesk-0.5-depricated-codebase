@@ -116,4 +116,8 @@ void PlexyWindows::Configured (bool isNotify,int x, int y,int width, int height,
 {
 }
 
-
+void PlexyWindows::Damaged() 
+{
+    bind();
+   
+}
