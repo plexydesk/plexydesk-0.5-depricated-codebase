@@ -90,21 +90,18 @@ CompWindow::CompWindow(int & argc, char ** argv):QApplication(argc, argv), d(new
     d->canvasview= new PlexyDesk::DesktopView(d->scene);
 
     d->canvasview->setWindowFlags(Qt::X11BypassWindowManagerHint);
-     d->canvasview->enableOpenGL(false);
-     QRect r = QDesktopWidget().geometry();
-
-     //d->canvasview->move(r.x(),r.y());
-     d->canvasview->resize(QDesktopWidget().availableGeometry().size());
-     qDebug()<<"Desktop Size"<<d->scene->sceneRect () ;
+    d->canvasview->enableOpenGL(false);
+    QRect r = QDesktopWidget().geometry();
+    d->canvasview->resize(QDesktopWidget().availableGeometry().size());
 
     PlexyDesk::PluginLoader *loader = new PlexyDesk::PluginLoader();
     loader->scanDisk();
-     d->canvasview->show();
+    d->canvasview->show();
     QStringList list = PlexyDesk::Config::getInstance()->widgetList;
 
     foreach (QString str, list) {
-         d->canvasview->addExtension(str);
-     }
+        d->canvasview->addExtension(str);
+    }
 
     init();
 }
@@ -341,13 +338,9 @@ bool CompWindow::startOverlay()
     if (!XGetGeometry(d->mDisplay, d->mOverlay, &d->mRootWindow, &x, &y, &cx, &cy, &cx_border, &depth)) {
         x = 0;
         y =  0;
-        cx = 800;
-        cy = 480;
+        cx =  QDesktopWidget().geometry().width();
+        cy =  QDesktopWidget().geometry().height();
     }
-
-    //vals.foreground = BlackPixel(d->mDisplay, 0);
-    //vals.background = BlackPixel(d->mDisplay, 0);
-   // GC gc = XCreateGC(d->mDisplay,  d->mOverlay, GCForeground | GCBackground, &vals);
     XFlush(d->mDisplay);
     d->mMainWin = d->canvasview->winId();
     XReparentWindow (d->mDisplay, d->canvasview->viewport()->winId(), d->mOverlay, 0, 0);
@@ -391,7 +384,7 @@ void CompWindow::setupWindows()
         if (children[i]
                 != d->mMainWin) {
             qDebug()<<"Mapping windows"<<endl;
-            addWindow(children[i]);
+         //   addWindow(children[i]);
         }
 
         //  XFree (children);
@@ -446,19 +439,34 @@ Window CompWindow::GetEventXWindow (XEvent *xev)
 
 bool CompWindow::x11EventFilter( XEvent* event)
 {
-//qDebug()<<Q_FUNC_INFO<<endl;
     XEvent * xev = (XEvent*) event;
     Window  xwin = GetEventXWindow(xev);
+
     PlexyWindows * win  = d->windowMap[xwin];
-    if (!win) return false;
+    if (!win && event->type != d->damage_event) return false;
 
     switch (event->type) {
-        default:
+    case ClientMessage:
+      qDebug()<<"Client Message"<<endl;
+      break;
+    case CreateNotify:
+      if(xwin == d->canvasview->viewport()->winId()) {
+      }
+      if(!XCheckTypedWindowEvent (d->mDisplay, xwin, DestroyNotify, xev) &&
+         !XCheckTypedWindowEvent (d->mDisplay, xwin, ReparentNotify, xev)) {
+      addWindow(xwin);
+      }
+       qDebug()<<"Window Created"<<endl;
+       break;
+
+   case MapNotify:
+       qDebug()<<"New Map request"<<endl;
+       break;
+    default:
         d->damage_event = d->damage_event + XDamageNotify;
         if (event->type == d->damage_event ) {
-        qDebug()<<"Damage Event"<<endl;
-         XDamageNotifyEvent *damage_ev = (XDamageNotifyEvent *) xev;
-         win->Damaged (&damage_ev->area);
+            XDamageNotifyEvent *damage_ev = (XDamageNotifyEvent *) xev;
+            win->Damaged (&damage_ev->area);
         }
     }
 }
