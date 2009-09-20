@@ -40,6 +40,7 @@
 #include <datainterface.h>
 #include <canvas.h>
 #include <plexyconfig.h>
+#include <netwm.h>
 
 /// internals
 #include "compwindow.h"

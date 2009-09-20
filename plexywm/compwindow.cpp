@@ -37,6 +37,17 @@ extern "C" {
 #include "plexywindows.h"
 //#include <qq.h>
 
+//plexy
+#include <plexy.h>
+#include <baserender.h>
+#include <desktopview.h>
+#include <pluginloader.h>
+#include <fakemime.h>
+#include <datainterface.h>
+#include <canvas.h>
+#include <plexyconfig.h>
+#include <netwm.h>
+
 class CompWindow::Private
 {
 public:
@@ -49,7 +60,8 @@ public:
     Window mMainwinParent;
     Window mOverlay;
 
-    QGraphicsView * canvasview;
+    PlexyDesk::DesktopView * canvasview;
+    PlexyDesk::Canvas * scene;
 
     bool mCompositing;
     bool mManging;
@@ -70,10 +82,30 @@ CompWindow::CompWindow(int & argc, char ** argv):QApplication(argc, argv), d(new
 {
     d->mDisplay =  QX11Info::display();
     d->mRootWindow = QApplication::desktop()->winId();
-    d->canvasview = new QGraphicsView(new QGraphicsScene());
+    d->scene = new PlexyDesk::Canvas();
+    d->scene->setBackgroundBrush(Qt::NoBrush);
+    d->scene->setItemIndexMethod(QGraphicsScene::NoIndex);
+    d->scene->setSceneRect(QDesktopWidget().geometry());//TODO Resolution changes ?
+
+    d->canvasview= new PlexyDesk::DesktopView(d->scene);
+
     d->canvasview->setWindowFlags(Qt::X11BypassWindowManagerHint);
-    d->canvasview->resize(800,800);
-    d->canvasview->show();
+     d->canvasview->enableOpenGL(false);
+     QRect r = QDesktopWidget().geometry();
+
+     //d->canvasview->move(r.x(),r.y());
+     d->canvasview->resize(QDesktopWidget().availableGeometry().size());
+     qDebug()<<"Desktop Size"<<d->scene->sceneRect () ;
+
+    PlexyDesk::PluginLoader *loader = new PlexyDesk::PluginLoader();
+    loader->scanDisk();
+     d->canvasview->show();
+    QStringList list = PlexyDesk::Config::getInstance()->widgetList;
+
+    foreach (QString str, list) {
+         d->canvasview->addExtension(str);
+     }
+
     init();
 }
 
@@ -318,7 +350,7 @@ bool CompWindow::startOverlay()
    // GC gc = XCreateGC(d->mDisplay,  d->mOverlay, GCForeground | GCBackground, &vals);
     XFlush(d->mDisplay);
     d->mMainWin = d->canvasview->winId();
-    XReparentWindow (d->mDisplay, d->canvasview->winId(), d->mOverlay, 0, 0);
+    XReparentWindow (d->mDisplay, d->canvasview->viewport()->winId(), d->mOverlay, 0, 0);
     XserverRegion region;
     XRectangle rect = { 0, 0, DisplayWidth(d->mDisplay, 0), DisplayHeight(d->mDisplay, 0) };
     region = XFixesCreateRegion(d->mDisplay, &rect, 1);
