@@ -41,11 +41,12 @@ public:
     Display * display;
     Pixmap pixmap;
     bool isRedirected;
+    QPixmap plexypixmap;
 
 };
 
 PlexyWindows::PlexyWindows(Display* dsp, Window win, XWindowAttributes* attr, QWidget *parent, Qt::WindowFlags f  )
-        :QObject(parent), d(new Private)
+        :PlexyDesk::DesktopWidget(QRect(0,0,400,400)), d(new Private)
 {
     XSelectInput (dsp, win, (PropertyChangeMask | EnterWindowMask | FocusChangeMask));
     XShapeSelectInput (dsp, win, ShapeNotifyMask);
@@ -85,9 +86,7 @@ void PlexyWindows::bind()
                 qDebug()<<"Bad Pixmap not created"<<endl;
             } else {
                 qDebug()<<"Goodpixmap"<<endl;
-                QPixmap   pixmap = QPixmap::fromX11Pixmap(d->pixmap);
-                QImage img = pixmap.toImage();
-                img.save("snap.png");
+                d->plexypixmap = QPixmap::fromX11Pixmap(d->pixmap);
             }
         }
         XUngrabServer (d->display);
@@ -126,9 +125,15 @@ void PlexyWindows::Damaged(XRectangle *rect)
     }
 
     if(d->pixmap) {
-      QPixmap   pixmap = QPixmap::fromX11Pixmap(d->pixmap);
-                QImage img = pixmap.toImage();
-                img.save("snap.png");
+      d->plexypixmap = QPixmap::fromX11Pixmap(d->pixmap);
+      update();
+      qDebug()<<Q_FUNC_INFO<<endl;
     }
 
+}
+
+void PlexyWindows::paintViewSide(QPainter * painter,const QRectF& rect)
+{
+    qDebug()<<Q_FUNC_INFO<<endl;
+  painter->drawPixmap(rect.x(), rect.y(),rect.width(),rect.height(), d->plexypixmap);
 }

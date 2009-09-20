@@ -20,19 +20,21 @@
 #include <QtCore>
 #include <QtGui>
 #include <QWidget>
+#include <desktopwidget.h>
 
 extern "C" {
 #include <X11/Xlib.h>
 #include <X11/extensions/Xdamage.h>
 }
 
-class PlexyWindows : public QObject
+class PlexyWindows :  public PlexyDesk::DesktopWidget
 {
     Q_OBJECT
 public:
     PlexyWindows(Display*d, Window w, XWindowAttributes *attr, QWidget * parent = 0, Qt::WindowFlags f = 0);
     virtual ~PlexyWindows() {}
 
+    virtual void paintViewSide(QPainter * painter,const QRectF& rect);
     void Destroyed ();
     void Mapped (bool override_redirect);
     void Unmapped ();

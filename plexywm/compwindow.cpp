@@ -33,6 +33,7 @@ extern "C" {
 
 }
 #include <QX11Info>
+#include <QGraphicsView>
 #include "plexywindows.h"
 //#include <qq.h>
 
@@ -47,6 +48,8 @@ public:
     Window mMainWin;
     Window mMainwinParent;
     Window mOverlay;
+
+    QGraphicsView * canvasview;
 
     bool mCompositing;
     bool mManging;
@@ -67,6 +70,10 @@ CompWindow::CompWindow(int & argc, char ** argv):QApplication(argc, argv), d(new
 {
     d->mDisplay =  QX11Info::display();
     d->mRootWindow = QApplication::desktop()->winId();
+    d->canvasview = new QGraphicsView(new QGraphicsScene());
+    d->canvasview->setWindowFlags(Qt::X11BypassWindowManagerHint);
+    d->canvasview->resize(800,800);
+    d->canvasview->show();
     init();
 }
 
@@ -86,6 +93,8 @@ void CompWindow::addWindow(Window window)
 
     PlexyWindows *  _window  = new PlexyWindows(d->mDisplay, window, &attrs);
     d->windowMap[window] = _window;
+    d->canvasview->scene()->addItem(_window);
+    _window->show();
 }
 
 
@@ -304,11 +313,12 @@ bool CompWindow::startOverlay()
         cy = 480;
     }
 
-    vals.foreground = BlackPixel(d->mDisplay, 0);
-    vals.background = BlackPixel(d->mDisplay, 0);
-    GC gc = XCreateGC(d->mDisplay,  d->mOverlay, GCForeground | GCBackground, &vals);
+    //vals.foreground = BlackPixel(d->mDisplay, 0);
+    //vals.background = BlackPixel(d->mDisplay, 0);
+   // GC gc = XCreateGC(d->mDisplay,  d->mOverlay, GCForeground | GCBackground, &vals);
     XFlush(d->mDisplay);
-    XReparentWindow (d->mDisplay, d->mMainWin, d->mOverlay, 0, 0);
+    d->mMainWin = d->canvasview->winId();
+    XReparentWindow (d->mDisplay, d->canvasview->winId(), d->mOverlay, 0, 0);
     XserverRegion region;
     XRectangle rect = { 0, 0, DisplayWidth(d->mDisplay, 0), DisplayHeight(d->mDisplay, 0) };
     region = XFixesCreateRegion(d->mDisplay, &rect, 1);

@@ -16,7 +16,10 @@ INCLUDE_DIRECTORIES(
    ${X11_INCLUDE_DIR}
  )
 
-include_directories(${CMAKE_SOURCE_DIR}/lib/)
+include_directories(
+   ${CMAKE_SOURCE_DIR}/lib/
+   ${CMAKE_SOURCE_DIR}/base/qt4/
+   )
 ########### source files ###############
 SET(sourceFiles 
 	plexywindows.cpp
