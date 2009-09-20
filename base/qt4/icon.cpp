@@ -18,6 +18,7 @@
 #include <qplexymime.h>
 #include <iconprovider.h>
 #include <QPainter>
+#include <QProcess>
 
 namespace PlexyDesk
 {
@@ -34,6 +35,7 @@ public:
     IconProviderPtr iconprovider;
     uint id;
     IconJobPtr iconjob;
+    QString exe;
 };
 
 Icon::Icon(IconProviderPtr icon, const QRectF &rect, QWidget *embeddedWidget) : DesktopWidget(rect), d(new Private)
@@ -65,6 +67,7 @@ void Icon::setContent(const QString& path)
         setting.beginGroup("Desktop Entry");
         iconname = setting.value("Icon","").toString();
         d->text = setting.value("Name","").toString();
+        d->exe = setting.value("Exec", "").toString();
         setting.endGroup();
         d->valid = true;
         d->iconjob = d->iconprovider->requestIcon(iconname, "32x32");
@@ -122,5 +125,11 @@ void Icon::drawText(QPainter *painter, const QRectF& rect)
     painter->drawText ( tr, label, opt);
 }
 
+void Icon::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event)
+{
+    qDebug()<<"Running"<<d->exe<<endl;
+    QProcess::startDetached(d->exe);
+    DesktopWidget::mouseDoubleClickEvent(event);
+}
 
 }

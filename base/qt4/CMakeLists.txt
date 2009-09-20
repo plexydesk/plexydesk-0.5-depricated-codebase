@@ -15,7 +15,7 @@ SET(sourceFiles icon.cpp
 	abstractplugininterface.cpp
 	backdropinterface.cpp
 	canvas.cpp
-         baserender.cpp
+   baserender.cpp
 	desktopview.cpp
 	desktopwidget.cpp
 	extensionfactory.cpp
@@ -30,6 +30,7 @@ SET(sourceFiles icon.cpp
    pendingjob.cpp
    iconjob.cpp
    httpjob.cpp
+   listview.cpp
 )
 
 set(headerFiles
@@ -60,6 +61,7 @@ set(headerFiles
    pendingjob.h
    iconjob.h
    httpjob.h
+   listview.h
 )
 
 set(QTMOC_SRCS
@@ -83,6 +85,7 @@ set(QTMOC_SRCS
    pendingjob.h
    iconjob.h
    httpjob.h
+   listview.h
 )
 
 #for now only dbus works only under linux

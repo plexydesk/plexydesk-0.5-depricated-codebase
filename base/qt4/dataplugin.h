@@ -16,7 +16,7 @@ namespace PlexyDesk
     public slots:
         virtual void pushData(QVariant&) = 0;
     signals:
-        virtual void data(QVariant&)=0;
+        void data(QVariant&);
     };
 }
 #endif

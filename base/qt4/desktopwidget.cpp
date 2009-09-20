@@ -174,6 +174,7 @@ namespace PlexyDesk
 
     void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event)
     {
+        qDebug()<<"Double Click"<<endl;
         if (d->s == DOCK) {
             setState(NORMALSIDE);
             prepareGeometryChange();
@@ -192,6 +193,7 @@ namespace PlexyDesk
             }
             d->zoomout->start();
         }
+      QGraphicsItem::mouseDoubleClickEvent(event);
     }
 
     void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent * event)
@@ -318,4 +320,4 @@ namespace PlexyDesk
         return QString(PLEXPREFIX);
 #endif
     }
-};//namespace PlexyDesk
+} //namespace PlexyDesk

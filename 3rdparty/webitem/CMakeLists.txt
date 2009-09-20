@@ -16,7 +16,6 @@ SET(APPLICATION_MAIN_VERSION "0.${LIB_MAJOR}.${LIB_MINOR}.${LIB_RELEASE}")
 
 
 INCLUDE_DIRECTORIES(
-    ${WEBKIT_TRUNK}/WebKit/qt/Api/
     ${CMAKE_BINARY_DIR}
     ${CMAKE_BINARY_DIR}/lib
     ${CMAKE_BINARY_DIR}/src
@@ -26,7 +25,6 @@ INCLUDE_DIRECTORIES(
     ${QT_INCLUDE_DIR}
 )
 
-LINK_DIRECTORIES ( ${WEBKIT_TRUNK}/WebKitBuild/${MODE}/lib  )
 
 add_subdirectory(lib)
 #add_subdirectory(src)

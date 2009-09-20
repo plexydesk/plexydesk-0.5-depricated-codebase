@@ -1,5 +1,4 @@
 INCLUDE_DIRECTORIES(
-		   ${WEBKIT_TRUNK}/WebKit/qt/Api/
 		   ${QT_INCLUDES}
 		 )
 
@@ -15,10 +14,8 @@ qt4_automoc(qwebviewitem.cpp)
 
 ADD_LIBRARY (webqgv SHARED  ${webqgv_src})
 
-#LINK_DIRECTORIES ( ${WEBKIT_TRUNK}/WebKitBuild/${MODE}/lib  )
 TARGET_LINK_LIBRARIES(
         webqgv
-        QtWebKit
         ${QT_QTWEBKIT_LIBRARY}
         ${QT_QTGUI_LIBRARY}
         ${QT_QTCORE_LIBRARY}
