@@ -384,7 +384,7 @@ void CompWindow::setupWindows()
         if (children[i]
                 != d->mMainWin) {
             qDebug()<<"Mapping windows"<<endl;
-         //   addWindow(children[i]);
+           addWindow(children[i]);
         }
 
         //  XFree (children);
@@ -440,34 +440,33 @@ Window CompWindow::GetEventXWindow (XEvent *xev)
 bool CompWindow::x11EventFilter( XEvent* event)
 {
     XEvent * xev = (XEvent*) event;
+
+    if (xev->type == Expose || xev->type == VisibilityNotify) {
+        return false;
+    }
+
     Window  xwin = GetEventXWindow(xev);
-
     PlexyWindows * win  = d->windowMap[xwin];
-    if (!win && event->type != d->damage_event) return false;
 
-    switch (event->type) {
-    case ClientMessage:
-      qDebug()<<"Client Message"<<endl;
-      break;
-    case CreateNotify:
-      if(xwin == d->canvasview->viewport()->winId()) {
-      }
-      if(!XCheckTypedWindowEvent (d->mDisplay, xwin, DestroyNotify, xev) &&
-         !XCheckTypedWindowEvent (d->mDisplay, xwin, ReparentNotify, xev)) {
-      addWindow(xwin);
-      }
-       qDebug()<<"Window Created"<<endl;
-       break;
-
-   case MapNotify:
-       qDebug()<<"New Map request"<<endl;
-       break;
-    default:
-        d->damage_event = d->damage_event + XDamageNotify;
-        if (event->type == d->damage_event ) {
+    d->damage_event = d->damage_event + XDamageNotify;
+    if (event->type == d->damage_event ) {
             XDamageNotifyEvent *damage_ev = (XDamageNotifyEvent *) xev;
             win->Damaged (&damage_ev->area);
-        }
+            return false;
     }
+
+   if (event->type == CreateNotify) {
+       if (!XCheckTypedWindowEvent (d->mDisplay, xwin, DestroyNotify, xev) &&
+                !XCheckTypedWindowEvent (d->mDisplay, xwin, ReparentNotify, xev)) {
+                addWindow (xwin);
+            }
+   }
+
+   if (event->type ==  ReparentNotify ) {
+   qDebug()<<"Reparent"<<endl;
+   }
+
+    return false;
+
 }
 

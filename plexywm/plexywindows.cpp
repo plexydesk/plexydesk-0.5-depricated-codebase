@@ -62,7 +62,6 @@ PlexyWindows::PlexyWindows(Display* dsp, Window win, XWindowAttributes* attr, QW
         Mapped(attr->override_redirect);
     }
 
-    qDebug()<<Q_FUNC_INFO<<endl;
 }
 
 void PlexyWindows::Destroyed ()
@@ -101,7 +100,6 @@ void PlexyWindows::RedirectWindow ()
 
     XCompositeRedirectWindow (d->display, d->window, CompositeRedirectManual);
     d->isRedirected = true;
-    qDebug()<<Q_FUNC_INFO<<endl;
 }
 
 void PlexyWindows::Unmapped ()
@@ -128,14 +126,12 @@ void PlexyWindows::Damaged(XRectangle *rect)
       d->plexypixmap = QPixmap::fromX11Pixmap(d->pixmap);
     //  update(QRect(rect->x,rect->y,rect->width,rect->height));
       update();
-      qDebug()<<Q_FUNC_INFO<<endl;
     }
 
 }
 
 void PlexyWindows::paintViewSide(QPainter * painter,const QRectF& rect)
 {
-    qDebug()<<Q_FUNC_INFO<<endl;
   PlexyDesk::DesktopWidget::paintViewSide(painter, rect);
   painter->drawPixmap(rect.x()+20, rect.y()+20,d->plexypixmap.width(),d->plexypixmap.height(), d->plexypixmap);
 }
