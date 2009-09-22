@@ -382,9 +382,9 @@ void CompWindow::setupWindows()
 
     for (int i = 0; i < nchildren; i++) {
         if (children[i]
-                != d->mMainWin) {
+                !=  d->canvasview->viewport()->winId() && children[i] != d->mMainWin) {
             qDebug()<<"Mapping windows"<<endl;
-           addWindow(children[i]);
+            addWindow(children[i]);
         }
 
         //  XFree (children);
@@ -450,21 +450,59 @@ bool CompWindow::x11EventFilter( XEvent* event)
 
     d->damage_event = d->damage_event + XDamageNotify;
     if (event->type == d->damage_event ) {
-            XDamageNotifyEvent *damage_ev = (XDamageNotifyEvent *) xev;
-            win->Damaged (&damage_ev->area);
-            return false;
+        XDamageNotifyEvent *damage_ev = (XDamageNotifyEvent *) xev;
+        win->Damaged (&damage_ev->area);
+        return false;
     }
 
-   if (event->type == CreateNotify) {
-       if (!XCheckTypedWindowEvent (d->mDisplay, xwin, DestroyNotify, xev) &&
+    if (event->type ==  ClientMessage ) {
+        qDebug()<<"Client Message"<<endl;
+        if (xwin == d->mRootWindow) {
+            //TODO handle root client message
+            return false;
+        } else if (win) {
+            win->ClientMessaged(xev->xclient.message_type,
+                                xev->xclient.format,
+                                xev->xclient.data.l);
+            return false;
+        }
+    }
+    if (event->type == CreateNotify) {
+        if (!XCheckTypedWindowEvent (d->mDisplay, xwin, DestroyNotify, xev) &&
                 !XCheckTypedWindowEvent (d->mDisplay, xwin, ReparentNotify, xev)) {
-                addWindow (xwin);
-            }
-   }
+            addWindow (xwin);
+        }
+    }
 
-   if (event->type ==  ReparentNotify ) {
-   qDebug()<<"Reparent"<<endl;
-   }
+    if ( event->type ==  ConfigureNotify) {
+        while (XCheckTypedWindowEvent (d->mDisplay, xwin, ConfigureNotify, xev)) {
+            // Do nothing
+        }
+        win->Configured (true,
+                         xev->xconfigure.x,
+                         xev->xconfigure.y,
+                         xev->xconfigure.width,
+                         xev->xconfigure.height,
+                         xev->xconfigure.border_width,
+                         NULL,
+                         xev->xconfigure.override_redirect);
+        return false;
+    }
+
+    if (event->type == ConfigureRequest ) {
+        if (xev->xconfigurerequest.parent == d->mRootWindow) {
+            qDebug()<<"Found unmanaged window"<<endl;
+        } else {
+            qDebug()<<"Found unmanaged window"<<endl;
+        }
+
+    }
+
+
+
+    if (event->type ==  ReparentNotify ) {
+        // qDebug()<<"Reparent"<<endl;
+    }
 
     return false;
 

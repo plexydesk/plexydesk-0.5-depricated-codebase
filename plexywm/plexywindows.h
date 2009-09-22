@@ -48,6 +48,9 @@ public:
                      PlexyWindows *aboveWin,
                      bool override_redirect);
     void Damaged(XRectangle *rect);
+    void ClientMessaged (Atom type, int format, long *data/*[5]*/);
+    void Resized(int x, int y, int width, int height, int border);
+    void ReleaseWindow ();
 private:
     class Private;
     Private * const d;
