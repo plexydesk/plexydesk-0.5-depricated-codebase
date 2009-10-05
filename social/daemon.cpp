@@ -47,13 +47,13 @@ namespace PlexyDesk
     QStringList SocialDaemon::supportedMethods(const QString &pluginName)
     {
         SocialPlugin *instance = getPluginInstance(pluginName);
-        return instance->supportedMethods();//SocialPlugin.h must contain a method QStringList supportedMethods()
+       // return instance->supportedMethods();//SocialPlugin.h must contain a method QStringList supportedMethods()
     }
 
     QVariantMap SocialDaemon::data(const QString &pluginName, const QString &methodName, QVariantMap args)
     {
         SocialPlugin *socioPlugin = getPluginInstance(pluginName);
-        socioPlugin->data(methodName, args);//SocialPlugin.h must contain a method QVariantMap data(const QString &methodName, QVariantMap args)
+        //socioPlugin->data(methodName, args);//SocialPlugin.h must contain a method QVariantMap data(const QString &methodName, QVariantMap args)
     }
 }//namespace PlexyDesk
 

@@ -23,6 +23,7 @@
 #include <QList>
 #include <QStringList>
 #include <QVariantMap>
+#include <socialplugin.h>
 //#include <SocialPlugin.h>  <-----**********To be implemented*****************
 
 namespace PlexyDesk

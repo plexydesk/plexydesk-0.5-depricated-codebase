@@ -1,10 +1,9 @@
-#include "youtubeinterface.h"
 #include "sociotwitter.h"
 #include <pluginloader.h>
 
 #include <QtPlugin>
 
-YouTubeInterface::SocioTwitterInterface(QObject * object)
+SocioTwitterInterface::SocioTwitterInterface(QObject * object)
 {
 }
 

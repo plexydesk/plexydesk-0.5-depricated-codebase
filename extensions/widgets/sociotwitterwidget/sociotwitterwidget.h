@@ -15,8 +15,8 @@ namespace PlexyDesk
     	Q_OBJECT
 
 	public:
-    		SocioTwitterwidget(QWidget *parent = 0);
-    		virtual ~SocioTwitterwIdget();
+    		SocioTwitterwidget(const QRectF &rect, QWidget *widget);
+    		virtual ~SocioTwitterwidget();
 		//virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem * e, QWidget *);
         	//virtual void wheelEvent(QGraphicsSceneWheelEvent * event);
         	//void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
