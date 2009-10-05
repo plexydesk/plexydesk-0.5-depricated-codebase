@@ -443,6 +443,7 @@ bool CompWindow::x11EventFilter( XEvent* event)
         configureRequest(event);
         break;
     case ReparentNotify:
+        reparentNotify(event);
        break;
     case MapRequest:
        mapRequest(event);
@@ -491,3 +492,9 @@ void CompWindow::clientMsgNotify(XEvent* e)
 {
         qDebug() << Q_FUNC_INFO <<endl;
 }
+
+void CompWindow::reparentNotify(XEvent* e)
+{
+        qDebug() << Q_FUNC_INFO <<endl;
+}
+
