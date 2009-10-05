@@ -120,7 +120,7 @@ void CompWindow::addWindow(Window window)
     } else
         qDebug()<<"Going"<<endl;
 
-       if (attrs.c_class == InputOnly) {
+    if (attrs.c_class == InputOnly) {
         return;
     }
 
@@ -151,14 +151,14 @@ void CompWindow::init()
         attrs.event_mask = PropertyChangeMask;
 
         d->mManagerWindow = XCreateWindow (d->mDisplay,
-                                     d->mRootWindow,
-                                     -100, -100, 1, 1,
-                                     0,
-                                     CopyFromParent,
-                                     CopyFromParent,
-                                     (Visual *)CopyFromParent,
-                                     CWOverrideRedirect | CWEventMask,
-                                     &attrs);
+                                           d->mRootWindow,
+                                           -100, -100, 1, 1,
+                                           0,
+                                           CopyFromParent,
+                                           CopyFromParent,
+                                           (Visual *)CopyFromParent,
+                                           CWOverrideRedirect | CWEventMask,
+                                           &attrs);
         Atom wmAtom = XInternAtom(d->mDisplay, "WM_S0", false);
         if (!registerWindowManager(d->mManagerWindow, wmAtom)) {
             qDebug()<<"Register window failed"<<endl;
@@ -361,7 +361,7 @@ void CompWindow::setupWindows()
             addWindow(children[i]);
         }
 
-       // XFree (children);
+        // XFree (children);
     }
     XUngrabServer (d->mDisplay);
 }
@@ -428,15 +428,15 @@ bool CompWindow::x11EventFilter( XEvent* event)
         win->Damaged (&damage_ev->area);
         return false;
     }//done
-  switch (event->type) {
+    switch (event->type) {
     case ClientMessage:
-      clientMsgNotify(event);
-       break;
+        clientMsgNotify(event);
+        break;
     case CreateNotify:
-       createNotify(event);
+        createNotify(event);
         break;
     case DestroyNotify:
-       destroyNotify(event);
+        destroyNotify(event);
     case ConfigureNotify:
         break;
     case ConfigureRequest:
@@ -444,26 +444,27 @@ bool CompWindow::x11EventFilter( XEvent* event)
         break;
     case ReparentNotify:
         reparentNotify(event);
-       break;
+        break;
     case MapRequest:
-       mapRequest(event);
-      break;
+        mapRequest(event);
+        break;
     case MapNotify:
-      mapNotify(event);
-     break;
+        mapNotify(event);
+        break;
     case UnmapNotify:
-     unmapNotify(event);
-       break;
+        unmapNotify(event);
+        break;
     case PropertyNotify:
-       propertyNotify(event);
-      break;
+        propertyNotify(event);
+        break;
     case FocusIn:
     case FocusOut:
-        default: return false;
+    default:
+        return false;
     };
 
 
-  return false;
+    return false;
 }
 
 void CompWindow::destroyNotify(XEvent* event)
@@ -483,36 +484,36 @@ void CompWindow::configureNotify(XEvent* event)
 
 void CompWindow::mapRequest(XEvent* e)
 {
-        qDebug() << Q_FUNC_INFO <<endl;
+    qDebug() << Q_FUNC_INFO <<endl;
 }
 
 void CompWindow::createNotify(XEvent* e)
 {
-        qDebug() << Q_FUNC_INFO <<endl;
+    qDebug() << Q_FUNC_INFO <<endl;
 }
 
 void CompWindow::clientMsgNotify(XEvent* e)
 {
-        qDebug() << Q_FUNC_INFO <<endl;
+    qDebug() << Q_FUNC_INFO <<endl;
 }
 
 void CompWindow::reparentNotify(XEvent* e)
 {
-        qDebug() << Q_FUNC_INFO <<endl;
+    qDebug() << Q_FUNC_INFO <<endl;
 }
 
 void CompWindow::mapNotify(XEvent* e)
 {
-        qDebug() << Q_FUNC_INFO <<endl;
+    qDebug() << Q_FUNC_INFO <<endl;
 }
 
 void CompWindow::unmapNotify(XEvent* e)
 {
-        qDebug() << Q_FUNC_INFO <<endl;
+    qDebug() << Q_FUNC_INFO <<endl;
 }
 
 
 void CompWindow::propertyNotify(XEvent* e)
 {
-        qDebug() << Q_FUNC_INFO <<endl;
+    qDebug() << Q_FUNC_INFO <<endl;
 }
