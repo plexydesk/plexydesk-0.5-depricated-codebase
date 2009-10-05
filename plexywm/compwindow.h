@@ -32,7 +32,6 @@ class CompWindow : public QApplication
 public:
     CompWindow(int & argc, char ** argv);
     ~CompWindow();
-
     bool isWmRunning();
     void ReplaceSelectionOwner(Window newOwner, Atom atom);
     void addWindow(Window id);
@@ -44,6 +43,12 @@ public:
     bool checkExtensions();
     Window GetEventXWindow (XEvent *xev);
 private:
+    void destroyNotify(XEvent* event);
+    void configureRequest(XEvent* event);
+    void mapRequest(XEvent* e);
+    void createNotify(XEvent* e);
+    void clientMsgNotify(XEvent* e);
+    void configureNotify(XEvent* event);
     void init();//setups  Atoms, registering ..etc
     bool x11EventFilter( XEvent* );
     //utility

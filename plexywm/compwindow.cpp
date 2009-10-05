@@ -59,6 +59,7 @@ public:
     Window mMainWin;
     Window mMainwinParent;
     Window mOverlay;
+    Window mManagerWindow;
 
     PlexyDesk::DesktopView * canvasview;
     PlexyDesk::Canvas * scene;
@@ -74,8 +75,6 @@ public:
     int composite_major, composite_minor;
 
     //variables
-
-    Window mManagerWindow;
 };
 
 CompWindow::CompWindow(int & argc, char ** argv):QApplication(argc, argv), d(new Private)
@@ -106,6 +105,7 @@ CompWindow::CompWindow(int & argc, char ** argv):QApplication(argc, argv), d(new
     init();
 }
 
+
 CompWindow::~CompWindow()
 {
     delete d;
@@ -119,6 +119,10 @@ void CompWindow::addWindow(Window window)
         return;
     } else
         qDebug()<<"Going"<<endl;
+
+       if (attrs.c_class == InputOnly) {
+        return;
+    }
 
     PlexyWindows *  _window  = new PlexyWindows(d->mDisplay, window, &attrs);
     d->windowMap[window] = _window;
@@ -140,23 +144,13 @@ bool CompWindow::isWmRunning()
 void CompWindow::init()
 {
     qDebug()<<Q_FUNC_INFO<<endl;
-    XSelectInput(QX11Info::display(), QX11Info::appRootWindow(QX11Info::appScreen()), KeyPressMask
-                 | KeyReleaseMask | ButtonPressMask | ButtonReleaseMask |
-                 KeymapStateMask | ButtonMotionMask | PointerMotionMask |
-                 EnterWindowMask | LeaveWindowMask | FocusChangeMask |
-                 VisibilityChangeMask |
-                 ExposureMask | StructureNotifyMask |
-                 SubstructureRedirectMask | SubstructureNotifyMask);
-
-    XClearWindow(QX11Info::display(), QX11Info::appRootWindow(QX11Info::appScreen()));
-    XSync(QX11Info::display(), false);
 
     if (!isWmRunning()) {
         XSetWindowAttributes attrs;
         attrs.override_redirect = True;
         attrs.event_mask = PropertyChangeMask;
 
-        d->mMainWin = XCreateWindow (d->mDisplay,
+        d->mManagerWindow = XCreateWindow (d->mDisplay,
                                      d->mRootWindow,
                                      -100, -100, 1, 1,
                                      0,
@@ -166,13 +160,13 @@ void CompWindow::init()
                                      CWOverrideRedirect | CWEventMask,
                                      &attrs);
         Atom wmAtom = XInternAtom(d->mDisplay, "WM_S0", false);
-        if (!registerWindowManager(d->mMainWin, wmAtom)) {
+        if (!registerWindowManager(d->mManagerWindow, wmAtom)) {
             qDebug()<<"Register window failed"<<endl;
         }
-        Xutf8SetWMProperties (d->mDisplay, d->mMainWin, "plexydeskwm",
+        Xutf8SetWMProperties (d->mDisplay, d->mManagerWindow, "plexydeskwm",
                               "plexydeskwm", NULL, 0, NULL, NULL, NULL);
         Atom cmAtom = XInternAtom(d->mDisplay, "_NET_WM_CM_S0", false);
-        if (!registerWindowManager(d->mMainWin, cmAtom)) {
+        if (!registerWindowManager(d->mManagerWindow, cmAtom)) {
             qDebug()<<"Register Composite manager failed"<<endl;
         }
         registerAtoms();
@@ -204,13 +198,7 @@ void CompWindow::registerAtoms()
 }
 bool CompWindow::registerWindowManager(Window getOwner, Atom wmAtom)
 {
-    /*  Atom wmAtom;
-      XSetWindowAttributes attrs;
-      attrs.override_redirect = True;
-      attrs.event_mask = PropertyChangeMask;
 
-      wmAtom = XInternAtom(d->mDisplay, "WM_S0", false);
-      */
     Window  owner = XGetSelectionOwner(d->mDisplay, wmAtom);
 
     if (owner != None)
@@ -330,18 +318,7 @@ bool CompWindow::startOverlay()
     if (!d->mOverlay) {
         qDebug()<<"Overly window can not start"<<endl;
     }
-    qDebug()<<"Start overlay"<<endl;
-    XGCValues vals;
-    int x, y;
-    unsigned int cx, cy, cx_border, depth;
 
-    if (!XGetGeometry(d->mDisplay, d->mOverlay, &d->mRootWindow, &x, &y, &cx, &cy, &cx_border, &depth)) {
-        x = 0;
-        y =  0;
-        cx =  QDesktopWidget().geometry().width();
-        cy =  QDesktopWidget().geometry().height();
-    }
-    XFlush(d->mDisplay);
     d->mMainWin = d->canvasview->winId();
     XReparentWindow (d->mDisplay, d->canvasview->viewport()->winId(), d->mOverlay, 0, 0);
     XserverRegion region;
@@ -366,9 +343,6 @@ void CompWindow::setupWindows()
                     FocusChangeMask);
     XSelectInput (d->mDisplay, d->mRootWindow, ev_mask);
 
-
-    ev_mask &= ~(SubstructureRedirectMask);
-    XSelectInput (d->mDisplay, d->mRootWindow, ev_mask);
     Window root_notused, parent_notused;
     Window *children;
     unsigned int nchildren;
@@ -387,7 +361,7 @@ void CompWindow::setupWindows()
             addWindow(children[i]);
         }
 
-        //  XFree (children);
+       // XFree (children);
     }
     XUngrabServer (d->mDisplay);
 }
@@ -453,58 +427,67 @@ bool CompWindow::x11EventFilter( XEvent* event)
         XDamageNotifyEvent *damage_ev = (XDamageNotifyEvent *) xev;
         win->Damaged (&damage_ev->area);
         return false;
-    }
-
-    if (event->type ==  ClientMessage ) {
-        qDebug()<<"Client Message"<<endl;
-        if (xwin == d->mRootWindow) {
-            //TODO handle root client message
-            return false;
-        } else if (win) {
-            win->ClientMessaged(xev->xclient.message_type,
-                                xev->xclient.format,
-                                xev->xclient.data.l);
-            return false;
-        }
-    }
-    if (event->type == CreateNotify) {
-        if (!XCheckTypedWindowEvent (d->mDisplay, xwin, DestroyNotify, xev) &&
-                !XCheckTypedWindowEvent (d->mDisplay, xwin, ReparentNotify, xev)) {
-            addWindow (xwin);
-        }
-    }
-
-    if ( event->type ==  ConfigureNotify) {
-        while (XCheckTypedWindowEvent (d->mDisplay, xwin, ConfigureNotify, xev)) {
-            // Do nothing
-        }
-        win->Configured (true,
-                         xev->xconfigure.x,
-                         xev->xconfigure.y,
-                         xev->xconfigure.width,
-                         xev->xconfigure.height,
-                         xev->xconfigure.border_width,
-                         NULL,
-                         xev->xconfigure.override_redirect);
-        return false;
-    }
-
-    if (event->type == ConfigureRequest ) {
-        if (xev->xconfigurerequest.parent == d->mRootWindow) {
-            qDebug()<<"Found unmanaged window"<<endl;
-        } else {
-            qDebug()<<"Found unmanaged window"<<endl;
-        }
-
-    }
+    }//done
+  switch (event->type) {
+    case ClientMessage:
+      clientMsgNotify(event);
+       break;
+    case CreateNotify:
+       createNotify(event);
+        break;
+    case DestroyNotify:
+       destroyNotify(event);
+    case ConfigureNotify:
+        break;
+    case ConfigureRequest:
+        configureRequest(event);
+        break;
+    case ReparentNotify:
+       break;
+    case MapRequest:
+       mapRequest(event);
+      break;
+    case MapNotify:
+     break;
+    case UnmapNotify:
+       break;
+    case PropertyNotify:
+      break;
+    case FocusIn:
+    case FocusOut:
+        default: return false;
+    };
 
 
-
-    if (event->type ==  ReparentNotify ) {
-        // qDebug()<<"Reparent"<<endl;
-    }
-
-    return false;
-
+  return false;
 }
 
+void CompWindow::destroyNotify(XEvent* event)
+{
+    qDebug() << Q_FUNC_INFO << endl;
+}
+
+void CompWindow::configureRequest(XEvent* event)
+{
+    qDebug() << Q_FUNC_INFO <<endl;
+}
+
+void CompWindow::configureNotify(XEvent* event)
+{
+    qDebug() << Q_FUNC_INFO <<endl;
+}
+
+void CompWindow::mapRequest(XEvent* e)
+{
+        qDebug() << Q_FUNC_INFO <<endl;
+}
+
+void CompWindow::createNotify(XEvent* e)
+{
+        qDebug() << Q_FUNC_INFO <<endl;
+}
+
+void CompWindow::clientMsgNotify(XEvent* e)
+{
+        qDebug() << Q_FUNC_INFO <<endl;
+}

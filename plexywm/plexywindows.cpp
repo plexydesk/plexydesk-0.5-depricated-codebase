@@ -70,11 +70,19 @@ void PlexyWindows::Destroyed ()
 }
 void PlexyWindows::Mapped (bool override_redirect)
 {
+
+
+            d->attrib->map_state = IsViewable;
+            d->attrib->override_redirect = override_redirect;
+
+            qDebug()<< Q_FUNC_INFO <<endl;
+
     bind();
 }
 
 void PlexyWindows::bind()
 {
+    qDebug() <<  Q_FUNC_INFO<<endl;
     RedirectWindow();
 
     if (!d->pixmap) {
@@ -105,6 +113,12 @@ void PlexyWindows::RedirectWindow ()
 
 void PlexyWindows::Unmapped ()
 {
+      if (d->attrib->map_state != IsViewable)
+        return;
+
+    d->attrib->map_state = IsUnmapped;
+    ReleaseWindow ();
+
 }
 void PlexyWindows::PropertyChanged (Atom prop, bool deleted)
 {
@@ -118,7 +132,6 @@ void PlexyWindows::Configured (bool isNotify,int x, int y,int width, int height,
         unsigned changeMask =  CWX | CWY | CWWidth| CWHeight;
         XConfigureWindow (d->display, d->window, changeMask, &d->changeSet);
         if (d->attrib->border_width != 0)
-            bind();
         qDebug()<<Q_FUNC_INFO<<"Resize"<<endl;
     }
 
