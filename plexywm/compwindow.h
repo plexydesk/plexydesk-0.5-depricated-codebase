@@ -50,6 +50,9 @@ private:
     void clientMsgNotify(XEvent* e);
     void configureNotify(XEvent* event);
     void reparentNotify(XEvent * event);
+    void mapNotify(XEvent * event);
+    void unmapNotify(XEvent * event);
+    void propertyNotify(XEvent * event);
     void init();//setups  Atoms, registering ..etc
     bool x11EventFilter( XEvent* );
     //utility

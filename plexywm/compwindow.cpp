@@ -449,10 +449,13 @@ bool CompWindow::x11EventFilter( XEvent* event)
        mapRequest(event);
       break;
     case MapNotify:
+      mapNotify(event);
      break;
     case UnmapNotify:
+     unmapNotify(event);
        break;
     case PropertyNotify:
+       propertyNotify(event);
       break;
     case FocusIn:
     case FocusOut:
@@ -498,3 +501,18 @@ void CompWindow::reparentNotify(XEvent* e)
         qDebug() << Q_FUNC_INFO <<endl;
 }
 
+void CompWindow::mapNotify(XEvent* e)
+{
+        qDebug() << Q_FUNC_INFO <<endl;
+}
+
+void CompWindow::unmapNotify(XEvent* e)
+{
+        qDebug() << Q_FUNC_INFO <<endl;
+}
+
+
+void CompWindow::propertyNotify(XEvent* e)
+{
+        qDebug() << Q_FUNC_INFO <<endl;
+}
