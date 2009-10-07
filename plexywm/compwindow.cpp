@@ -117,8 +117,7 @@ void CompWindow::addWindow(Window window)
     if (!XGetWindowAttributes(d->mDisplay, window, &attrs)) {
         qDebug()<<"Error adding windows, getting window attributes failed"<<endl;
         return;
-    } else
-        qDebug()<<"Going"<<endl;
+    }
 
     if (attrs.c_class == InputOnly) {
         return;
@@ -128,6 +127,7 @@ void CompWindow::addWindow(Window window)
     d->windowMap[window] = _window;
     d->canvasview->scene()->addItem(_window);
     _window->show();
+    qDebug() << Q_FUNC_INFO << endl;
 }
 
 
@@ -467,8 +467,15 @@ bool CompWindow::x11EventFilter( XEvent* event)
     return false;
 }
 
-void CompWindow::destroyNotify(XEvent* event)
+void CompWindow::destroyNotify(XEvent* e)
 {
+    XEvent * xev = (XEvent*) e;
+    Window  xwin = GetEventXWindow(xev);
+    PlexyWindows * win  = d->windowMap[xwin];
+    d->windowMap.remove(xwin);
+    if (win)
+        delete win;
+
     qDebug() << Q_FUNC_INFO << endl;
 }
 
@@ -489,11 +496,32 @@ void CompWindow::mapRequest(XEvent* e)
 
 void CompWindow::createNotify(XEvent* e)
 {
+    XEvent * xev = (XEvent*) e;
+    Window  xwin = GetEventXWindow(xev);
+    PlexyWindows * win  = d->windowMap[xwin];
+
+    if (d->mMainWin == xwin) {
+        return;
+    }
+
+    if (xev->xcreatewindow.parent == d->mRootWindow) {
+        if (!win) {
+
+            if (!XCheckTypedWindowEvent (d->mDisplay, xwin, DestroyNotify, xev) &&
+                    !XCheckTypedWindowEvent (d->mDisplay, xwin, ReparentNotify, xev)) {
+                addWindow (xwin);
+            }
+        }
+    }
     qDebug() << Q_FUNC_INFO <<endl;
 }
 
 void CompWindow::clientMsgNotify(XEvent* e)
 {
+    XEvent * xev = (XEvent*) e;
+    Window  xwin = GetEventXWindow(xev);
+    PlexyWindows * win  = d->windowMap[xwin];
+
     qDebug() << Q_FUNC_INFO <<endl;
 }
 
