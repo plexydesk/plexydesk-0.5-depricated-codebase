@@ -425,7 +425,10 @@ bool CompWindow::x11EventFilter( XEvent* event)
     d->damage_event = d->damage_event + XDamageNotify;
     if (event->type == d->damage_event ) {
         XDamageNotifyEvent *damage_ev = (XDamageNotifyEvent *) xev;
-        win->Damaged (&damage_ev->area);
+        do {
+            win->Damaged (&damage_ev->area);
+        } while (XCheckTypedEvent (d->mDisplay, d->damage_event + XDamageNotify, xev));
+
         return false;
     }//done
     switch (event->type) {
