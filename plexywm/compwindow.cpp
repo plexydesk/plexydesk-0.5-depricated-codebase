@@ -479,18 +479,46 @@ void CompWindow::destroyNotify(XEvent* e)
     qDebug() << Q_FUNC_INFO << endl;
 }
 
-void CompWindow::configureRequest(XEvent* event)
+void CompWindow::configureRequest(XEvent* e)
 {
+    XEvent * xev = (XEvent*) e;
+    Window  xwin = GetEventXWindow(xev);
+    PlexyWindows * win  = d->windowMap[xwin];
+    if (xev->xconfigurerequest.parent == d->mRootWindow) {
+    }
     qDebug() << Q_FUNC_INFO <<endl;
 }
 
-void CompWindow::configureNotify(XEvent* event)
+void CompWindow::configureNotify(XEvent* e)
 {
+    XEvent * xev = (XEvent*) e;
+    Window  xwin = GetEventXWindow(xev);
+    PlexyWindows * win  = d->windowMap[xwin];
+    win->Configured(true,
+                    xev->xconfigure.x,
+                    xev->xconfigure.y,
+                    xev->xconfigure.width,
+                    xev->xconfigure.height,
+                    xev->xconfigure.border_width,
+                    0,
+                    xev->xconfigure.override_redirect);
+
     qDebug() << Q_FUNC_INFO <<endl;
 }
 
 void CompWindow::mapRequest(XEvent* e)
 {
+    XEvent * xev = (XEvent*) e;
+    Window  xwin = GetEventXWindow(xev);
+    PlexyWindows * win  = d->windowMap[xwin];
+
+    if (xev->xmaprequest.parent == d->mRootWindow) {
+        if (!XCheckTypedWindowEvent (d->mDisplay, xwin, UnmapNotify, xev)) {
+            XMapWindow (d->mDisplay, xwin);
+            qDebug() << Q_FUNC_INFO  << "XMaping" <<endl;
+        }
+    }
+
     qDebug() << Q_FUNC_INFO <<endl;
 }
 
@@ -532,6 +560,15 @@ void CompWindow::reparentNotify(XEvent* e)
 
 void CompWindow::mapNotify(XEvent* e)
 {
+    XEvent * xev = (XEvent*) e;
+    Window  xwin = GetEventXWindow(xev);
+    PlexyWindows * win  = d->windowMap[xwin];
+
+    if (win) {
+        if (!XCheckTypedWindowEvent (d->mDisplay, xwin, UnmapNotify, xev)) {
+            win->Mapped (xev->xmap.override_redirect);
+        }
+    }
     qDebug() << Q_FUNC_INFO <<endl;
 }
 

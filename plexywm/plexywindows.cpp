@@ -72,6 +72,9 @@ void PlexyWindows::Mapped (bool override_redirect)
 {
 
 
+        if (d->attrib->map_state == IsViewable || d->attrib->c_class == InputOnly)
+        return;
+
             d->attrib->map_state = IsViewable;
             d->attrib->override_redirect = override_redirect;
 
