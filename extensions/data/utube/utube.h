@@ -30,7 +30,7 @@
 //plexy
 #include <datainterface.h>
 
-class VISIBLE_SYM UtubeData : public PlexyDesk::DataPlugin 
+class UtubeData : public PlexyDesk::DataPlugin
 {
     Q_OBJECT
     
@@ -38,8 +38,6 @@ public:
     UtubeData( QObject * object = 0 );
     virtual ~UtubeData();
     void init();
-    virtual QGraphicsItem * item();// {};
-    virtual void render( QPainter *p,QRectF r );// {};
 
 public slots:
     void fetch();
