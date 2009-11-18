@@ -26,6 +26,7 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QString>
+#include <QList>
 
 #include "pendingjob.h"
 
@@ -42,16 +43,20 @@ public:
     HttpJobHandler(QObject * parent);
     ~HttpJobHandler();
     void getFile(const QUrl &url);
+    void postFile(const QUrl &url, const QByteArray &data);
     QByteArray readData() const;
 
 private:
     class HttpJobHandlerPrivate;
     HttpJobHandlerPrivate * const d;
-
+    bool validateUrl(const QUrl &url);
+    QList<QNetworkReply*> holder;
     QString msg, error;
 
 private slots:
     void onFinish(QNetworkReply* buffer);
+//    void authenticate(QNetworkReply*, QAuthenticator*); //when simple auth fails
+
 };
 } //namespace PlexyDesk
 #endif // HTTPJOBHANDLER_H
