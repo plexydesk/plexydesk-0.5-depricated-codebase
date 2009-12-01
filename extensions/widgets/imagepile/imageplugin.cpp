@@ -76,7 +76,7 @@ QGraphicsItem * ImagePlugin::item()
 
     PlexyDesk::PluginLoader * loader = new PlexyDesk::PluginLoader();
     loader->scanDisk();
-    flickrEngine  = (PlexyDesk::DataPlugin*) loader->instance("flickerengine");
+    flickrEngine  = qobject_cast<PlexyDesk::DataPlugin*>(loader->instance("flickerengine"));
     delete loader;
     if (flickrEngine) {
         connect(flickrEngine,SIGNAL(dataReady()),this,SLOT(onDataReady()));
