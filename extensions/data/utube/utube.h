@@ -38,6 +38,7 @@ public:
     UtubeData( QObject * object = 0 );
     virtual ~UtubeData();
     void init();
+    QVariantMap readAll();
 
 public slots:
     void fetch();
@@ -45,7 +46,6 @@ public slots:
     void readData( const QHttpResponseHeader & );
     void pushData(QVariant&) {}
 signals:
-    void data( QVariant& );
     void success();
 
 private:
@@ -66,6 +66,7 @@ private:
     QHttp *mHttp;
     int mConnectionId;
     QTimer *mRssTimer;
+    QVariant dataItem;
 };
 
 

@@ -134,8 +134,8 @@ void UtubeData::parseXml()
                 QVariant rssitem(mEntry);
 
                 //mRssEntries.append(rssitem);
-                
-                emit data( rssitem );
+                dataItem  = rssitem; 
+                emit dataReady();
 
                 //mTitleString.clear();
                 //mLinkString.clear();
@@ -166,4 +166,12 @@ void UtubeData::parseXml()
 
     //QVariant rss(mRssEntries);
     //emit data(rss);
+}
+
+
+QVariantMap UtubeData::readAll()
+{
+    QVariantMap map;
+    map["data"] = dataItem;
+   return map;
 }

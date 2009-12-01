@@ -50,8 +50,8 @@ public:
     void drawWidget();;
 */
 public Q_SLOTS:
-    void data(QVariant&);
     void drawItems();
+    void onDataReady();
 Q_SIGNALS:
     void dataChanged();
 
@@ -70,7 +70,7 @@ private:
     QString prefix;
     QPoint clickPos;
 
-    PlexyDesk::DataInterface * utubeEngine;
+    PlexyDesk::DataPlugin * utubeEngine;
 
     QList<VideoEntity> mVideos;
     QMap<QString,QVariant> mVariantMap;

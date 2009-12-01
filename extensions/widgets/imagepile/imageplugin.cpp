@@ -60,8 +60,9 @@ void ImagePlugin::searchImage ()
 }
 
 
-void ImagePlugin::data(QVariant& data)
+void ImagePlugin::onDataReady()
 {
+    QVariant data = flickrEngine->readAll()["image"];
     QImage wall(QImage::fromData(data.toByteArray()));
     flow->addSlide(wall);     
     flow->showNext();
@@ -75,10 +76,11 @@ QGraphicsItem * ImagePlugin::item()
 
     PlexyDesk::PluginLoader * loader = new PlexyDesk::PluginLoader();
     loader->scanDisk();
-    flickrEngine  = (PlexyDesk::DataInterface*) loader->instance("flickerengine");
+    flickrEngine  = (PlexyDesk::DataPlugin*) loader->instance("flickerengine");
     delete loader;
     if (flickrEngine) {
-        connect(flickrEngine,SIGNAL(data(QVariant&)),this,SLOT(data(QVariant&)));
+        connect(flickrEngine,SIGNAL(dataReady()),this,SLOT(onDataReady()));
+
         connect(this,SIGNAL(sendData(QVariant&)),flickrEngine,SLOT(pushData(QVariant&)));
     }else {
         qDebug()<<"DataSource Was Null"<<"ImagePlugin::ImagePlugin(QObject * object)"<<endl;;

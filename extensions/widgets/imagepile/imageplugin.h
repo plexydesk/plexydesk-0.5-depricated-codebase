@@ -41,6 +41,8 @@ class VISIBLE_SYM ImagePlugin : public PlexyDesk::WidgetPlugin
         virtual QGraphicsItem * item();// {};
     public slots:
         void data(QVariant&);
+        void onDataReady();
+
         void searchImage();
    signals:
         void change();
@@ -49,8 +51,8 @@ class VISIBLE_SYM ImagePlugin : public PlexyDesk::WidgetPlugin
         PictureFlow * flow ;
         QWidget * base;
         QLineEdit * search;
-	    PlexyDesk::DataInterface * flickrEngine;
-	    PlexyDesk::ImagePileWidget * widget;
+	PlexyDesk::DataPlugin * flickrEngine;
+	PlexyDesk::ImagePileWidget * widget;
 };
 
 #endif

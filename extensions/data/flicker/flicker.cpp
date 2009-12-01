@@ -123,7 +123,8 @@ void FlickerData::loadImages(int id, bool stat)
 
             if (!newWall.isNull()) {
                 QVariant image(img);
-                emit data(image);
+                dataItem = image;
+                emit dataReady();
             }else {
                 qDebug()<<"Invalid Image data"<<endl;
             }
@@ -134,4 +135,11 @@ void FlickerData::loadImages(int id, bool stat)
         imageTimer->start(5000);
     }
 
+}
+
+QVariantMap FlickerData::readAll()
+{
+ QVariantMap map;
+ map["image"] = dataItem;
+ return map;
 }

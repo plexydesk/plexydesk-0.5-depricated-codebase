@@ -35,11 +35,11 @@ namespace PlexyDesk
 YouTubeWidget::YouTubeWidget (const QRectF &rect, QWidget *widget):
 ListView(rect,widget)
 {
-  PlexyDesk::DataInterface * utubeEngine = (PlexyDesk::DataInterface*)
-  PlexyDesk::PluginLoader::getInstance()->instance("utubeengine");
+  utubeEngine = qobject_cast<PlexyDesk::DataPlugin*>(
+  PlexyDesk::PluginLoader::getInstance()->instance("utubeengine"));
 
   if (utubeEngine) {
-      connect(utubeEngine,SIGNAL(data(QVariant&)),this,SLOT(data(QVariant&)));
+      connect(utubeEngine, SIGNAL(dataReady()), this, SLOT(onDataReady()));
   }else {
       qDebug("DataSource Was Null");
   }
@@ -48,8 +48,9 @@ ListView(rect,widget)
 YouTubeWidget::~YouTubeWidget ()
 {}
 
-void YouTubeWidget::data(QVariant& data)
+void YouTubeWidget::onDataReady()
 {
+    QVariant data = utubeEngine->readAll()["data"];
     mVariantMap = data.toMap();
 
     VideoEntity videoentity;
@@ -71,4 +72,6 @@ void YouTubeWidget::data(QVariant& data)
 
     emit dataChanged();
 }
+
+
 } // namespace PlexyDesk

@@ -38,12 +38,11 @@ public:
     FlickerData(QObject * object = 0);
     virtual ~FlickerData();
     void init();
+    QVariantMap readAll();
 public slots:
     void loadImages(int, bool);
     void nextImage();
     void pushData(QVariant&);
-signals:
-    void data(QVariant&);
 
 private:
     QPixmap bg;
@@ -58,6 +57,7 @@ private:
     int slideCount;
     int currentSlide;
     QTimer * imageTimer;
+    QVariant dataItem;
 };
 
 
