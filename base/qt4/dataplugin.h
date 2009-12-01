@@ -6,10 +6,10 @@
 #include <baseplugin.h>
 #include <QVariantMap>
 
-/**
-    \class DataPlugin
+/*!
+\class PlexyDesk::DataPlugin
 
-    \brief Class which abstracts a data source
+\brief Class which abstracts a data source
 
     \section a PlexyDesk Data Plugin
       PlexyDesk data plugins are meant to abstract data source, such as data comming from
@@ -36,12 +36,12 @@
      be used, and provide the data from readAll method. look at the numours examples shiped with
      plexydesk extenstions folder to get started with writting your own. 
 
-     \fn DataPlugin::readAll()
+     \fn PlexyDesk::DataPlugin::readAll()
      \brief Provides the data of the plugin as a QVariantMap
      \returns The data as a Map of QVariant's
      \sa dataReady()
 
-     \fn DataPlugin::dataReady()
+     \fn PlexyDesk::DataPlugin::dataReady()
      \brief Signal emited when data is ready to be read
      \sa DataPlugin::readAll()
  **/
