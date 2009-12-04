@@ -56,11 +56,12 @@ RestData::~RestData()
     delete d;
 }
 
-void RestData::pushData(QVariant& param)
+void RestData::pushData(QVariant& arg)
 {
-    qDebug() << Q_FUNC_INFO ;
-    return;
-/*
+    qDebug() << Q_FUNC_INFO << arg;
+    ;
+    QVariantMap param = arg.toMap();
+
     QUrl url = param["url"].toUrl();
     int type = param["type"].toInt();
     QString par = param["params"].toString();
@@ -72,7 +73,7 @@ void RestData::pushData(QVariant& param)
     } else if (type == POST) {
         d->manager->post(QNetworkRequest(url), par.toAscii());
     }
-    */
+   
     //TODO
     //handle errors
 }
