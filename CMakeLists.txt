@@ -109,6 +109,7 @@ add_subdirectory(plexylib)
 add_subdirectory(base/qt4/)
 add_subdirectory(extensions/backdrop/classicdrop)
 add_subdirectory(extensions/widgets/imagepile)
+
 add_subdirectory(data)
 add_subdirectory(social)
 
@@ -148,9 +149,15 @@ add_subdirectory(modules/libplexyirc)
 add_subdirectory(extensions/data/rest/)
 add_subdirectory(extensions/widgets/twit/)
 #add_subdirectory(extensions/widgets/sociotwitterwidget)
+
+#windows
 if(FULL_DESKTOP)
 add_subdirectory(modules/QtWin)
 endif(FULL_DESKTOP)
 #if(WIN32)
 #add_subdirectory(extensions/widgets/wallpaper-win32)
 #endif(WIN32)
+
+
+#social
+add_subdirectory(social/accountsmanager/)
