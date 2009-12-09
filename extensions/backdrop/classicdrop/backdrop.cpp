@@ -25,7 +25,7 @@ BgPlugin::BgPlugin(QObject * object) : BackdropPlugin( object)
     bg = QPixmap(PlexyDesk::Config::getInstance()->CurrentWallpaper);
     width  = QDesktopWidget().screenGeometry().width();
     height = QDesktopWidget().screenGeometry().height();
-    
+
     img = QImage(width,height,QImage::Format_ARGB32_Premultiplied);
     QPainter p;
     p.begin(&img);
@@ -35,13 +35,12 @@ BgPlugin::BgPlugin(QObject * object) : BackdropPlugin( object)
 
 BgPlugin::~BgPlugin()
 {
-
 }
 
 void BgPlugin::data(QVariant& data)
 {
     QImage wall = data.value<QImage>();
-    if(wall.isNull())
+    if (wall.isNull())
     {
         wall = QImage::fromData(data.toByteArray());
     }
@@ -56,5 +55,5 @@ void BgPlugin::data(QVariant& data)
 
 void BgPlugin::render(QPainter *p,QRectF r)
 {
-   	p->fillRect(r.x(),r.y(),r.width(),r.height(),paint);
+    p->fillRect(r.x(),r.y(),r.width(),r.height(),paint);
 }

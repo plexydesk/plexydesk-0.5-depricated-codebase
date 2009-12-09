@@ -88,7 +88,7 @@ DesktopView::DesktopView(QGraphicsScene * scene, QWidget * parent):QGraphicsView
     d->iconprovider = IconProviderPtr(new IconProvider, &QObject::deleteLater);
     d->iconWatcher = new QFutureWatcher<Icon*>(this);
     connect(d->iconWatcher, SIGNAL(resultReadyAt(int)), SLOT(showIcon(int)));
-    loadIcons();
+    //loadIcons();
     connect(Config::getInstance(), SIGNAL(configChanged()), this, SLOT(backgroundChanged()));
     connect(Config::getInstance(), SIGNAL(widgetAdded()), this, SLOT(onNewWidget()));
 
