@@ -16,5 +16,6 @@ namespace PlexyDesk
             QDBusObjectPath createAccount(const QString &socialServiceName, const QString &displayName,
                                             const QString &userName, QVariantMap properties);
 
+            QString testSlot();
     };
 }

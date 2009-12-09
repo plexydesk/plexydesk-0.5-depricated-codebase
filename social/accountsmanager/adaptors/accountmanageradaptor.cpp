@@ -18,4 +18,9 @@ namespace PlexyDesk
         return QDBusObjectPath("/dummy/object/path/to/suppress/qdbus/warning/accmanadaptor"); // return irrelevant
     }
 
+    QString SocialAccountsManagerAdaptor::testSlot()
+    {
+        return "return from SocialAccountsManagerAdaptor::testSlot()";
+    }
+
 }
