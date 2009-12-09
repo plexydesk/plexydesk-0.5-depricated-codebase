@@ -34,7 +34,7 @@
 //plexy
 #include <plexy.h>
 #include <baserender.h>
-#include <desktopview.h>
+//#include <desktopview.h>
 #include <pluginloader.h>
 #include <fakemime.h>
 #include <datainterface.h>

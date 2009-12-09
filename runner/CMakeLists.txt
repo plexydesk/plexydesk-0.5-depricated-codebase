@@ -16,12 +16,13 @@ INCLUDE_DIRECTORIES(
 include_directories(${CMAKE_SOURCE_DIR}/lib/)
 ########### source files ###############
 SET(sourceFiles
+   desktopview.cpp
 	main.cpp
 )
 
-#set(QTMOC_SRCS)
+set(QTMOC_SRCS desktopview.h)
 
-#qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
+qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
 
 IF(WIN32)
 SET(GUI_TYPE WIN32)

@@ -40,7 +40,7 @@ extern "C" {
 //plexy
 #include <plexy.h>
 #include <baserender.h>
-#include <desktopview.h>
+//#include <desktopview.h>
 #include <pluginloader.h>
 #include <fakemime.h>
 #include <datainterface.h>
@@ -61,7 +61,7 @@ public:
     Window mOverlay;
     Window mManagerWindow;
 
-    PlexyDesk::DesktopView * canvasview;
+    QGraphicsView* canvasview;
     PlexyDesk::Canvas * scene;
 
     bool mCompositing;
@@ -81,15 +81,16 @@ CompWindow::CompWindow(int & argc, char ** argv):QApplication(argc, argv), d(new
 {
     d->mDisplay =  QX11Info::display();
     d->mRootWindow = QApplication::desktop()->winId();
+    
     d->scene = new PlexyDesk::Canvas();
     d->scene->setBackgroundBrush(Qt::NoBrush);
     d->scene->setItemIndexMethod(QGraphicsScene::NoIndex);
     d->scene->setSceneRect(QDesktopWidget().geometry());//TODO Resolution changes ?
 
-    d->canvasview= new PlexyDesk::DesktopView(d->scene);
+    d->canvasview= new QGraphicsView(d->scene);
 
     d->canvasview->setWindowFlags(Qt::X11BypassWindowManagerHint);
-    d->canvasview->enableOpenGL(false);
+    //d->canvasview->enableOpenGL(false);
     QRect r = QDesktopWidget().geometry();
     d->canvasview->resize(QDesktopWidget().availableGeometry().size());
 
@@ -97,10 +98,6 @@ CompWindow::CompWindow(int & argc, char ** argv):QApplication(argc, argv), d(new
     loader->scanDisk();
     d->canvasview->show();
     QStringList list = PlexyDesk::Config::getInstance()->widgetList;
-
-    foreach (QString str, list) {
-        d->canvasview->addExtension(str);
-    }
 
     init();
 }

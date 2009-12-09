@@ -16,7 +16,6 @@ SET(sourceFiles icon.cpp
 	backdropinterface.cpp
 	canvas.cpp
    baserender.cpp
-	desktopview.cpp
 	desktopwidget.cpp
 	extensionfactory.cpp
 	fakemime.cpp
@@ -42,7 +41,6 @@ set(headerFiles
 	canvas.h
 	datainterface.h
 	dataplugin.h
-	desktopview.h
 	desktopwidget.h
 	extensionfactory.h
 	fakemime.h
@@ -72,7 +70,6 @@ set(QTMOC_SRCS
 	canvas.h
 	datainterface.h
 	dataplugin.h
-	desktopview.h
 	desktopwidget.h
 	navigator.h
 	plexyconfig.h
