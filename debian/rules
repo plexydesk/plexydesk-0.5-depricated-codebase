@@ -11,12 +11,11 @@
 
 
 
-
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
 	# Add here commands to configure the package.
-	cmake -DCMAKE_INSTALL_PREFIX=/usr/lib/kde4 .
+	cmake -DCMAKE_INSTALL_PREFIX=/usr .
 	touch configure-stamp
 
 
@@ -49,6 +48,7 @@ install: build
 
 	# Add here commands to install the package into debian/plexydesk.
 	make DESTDIR=$(CURDIR)/debian/plexydesk install
+	
 
 
 # Build architecture-independent files here.
@@ -81,7 +81,7 @@ binary-arch: build install
 #	dh_perl
 #	dh_makeshlibs
 	dh_installdeb
-	dh_shlibdeps
+	dh_shlibdeps -Xengine -Xplexy
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
