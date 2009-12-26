@@ -41,11 +41,17 @@
 #include <canvas.h>
 #include <plexyconfig.h>
 
+#include "plexypanel.h"
+
 using namespace PlexyDesk;
 
 int main( int argc, char ** argv )
 {
     QApplication app(argc,argv);
+    PlexyPanel *panel = new PlexyPanel();
+    panel->show();
+
+
 #ifdef Q_WS_WIN
     QString pluginPath = app.applicationDirPath() + "/plugins/imageformats";
     app.addLibraryPath(pluginPath);
@@ -78,9 +84,11 @@ int main( int argc, char ** argv )
     view->show();
     QStringList list = PlexyDesk::Config::getInstance()->widgetList;
 
-    foreach (QString str, list) {
+        foreach (QString str, list) {
         view->addExtension(str);
     }
+
+    
 /*
     view->addCoreExtension("videoview");
     view->addExtension("imagepil");

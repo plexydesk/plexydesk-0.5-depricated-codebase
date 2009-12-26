@@ -55,7 +55,7 @@ PlexyWindows::PlexyWindows(Display* dsp, Window win, XWindowAttributes* attr, QW
     d->display = dsp;
     d->pixmap = None;
     d->attrib = *attr;
-    d->damage = XDamageCreate (dsp, win, XDamageReportRawRectangles);
+    d->damage = XDamageCreate (dsp, win, XDamageReportNonEmpty);
     d->isRedirected = false;
 
 
@@ -115,7 +115,7 @@ void PlexyWindows::RedirectWindow ()
      //   return;
     //}
 
-    XCompositeRedirectWindow (d->display, d->window, CompositeRedirectManual);
+    XCompositeRedirectWindow (d->display, d->window, CompositeRedirectAutomatic);
     d->isRedirected = true;
 }
 

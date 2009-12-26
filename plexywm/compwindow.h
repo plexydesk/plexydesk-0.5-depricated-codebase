@@ -43,6 +43,8 @@ public:
     bool checkExtensions();
     Window GetEventXWindow (XEvent *xev);
 private:
+    void input(Window w);
+    void getWindowType(Window w);
     void destroyNotify(XEvent* event);
     void configureRequest(XEvent* event);
     void mapRequest(XEvent* e);

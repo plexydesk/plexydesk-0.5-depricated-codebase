@@ -90,12 +90,16 @@ CompWindow::CompWindow(int & argc, char ** argv):QApplication(argc, argv), d(new
     d->canvasview= new QGraphicsView(d->scene);
 
     d->canvasview->setWindowFlags(Qt::X11BypassWindowManagerHint);
+  //  d->canvasview->setAttribute(Qt::WA_NoSystemBackground);
+  //  d->canvasview->setUpdatesEnabled(false);
+   // d->canvasview->setAutoFillBackground(false);
+   // d->canvasview->setBackgroundBrush(Qt::NoBrush);
+   // d->canvasview->setForegroundBrush(Qt::NoBrush);
+
     //d->canvasview->enableOpenGL(false);
     QRect r = QDesktopWidget().geometry();
     d->canvasview->resize(QDesktopWidget().availableGeometry().size());
 
-    PlexyDesk::PluginLoader *loader = new PlexyDesk::PluginLoader();
-    loader->scanDisk();
     d->canvasview->show();
     QStringList list = PlexyDesk::Config::getInstance()->widgetList;
 
@@ -317,15 +321,21 @@ bool CompWindow::startOverlay()
     }
 
     d->mMainWin = d->canvasview->winId();
-    XReparentWindow (d->mDisplay, d->canvasview->viewport()->winId(), d->mOverlay, 0, 0);
+    XReparentWindow (d->mDisplay, d->canvasview->winId(), d->mOverlay, 0, 0);
+    input(d->mOverlay);
+    input(d->canvasview->winId());
+   
+}
+
+void CompWindow::input(Window w)
+{
     XserverRegion region;
     XRectangle rect = { 0, 0, DisplayWidth(d->mDisplay, 0), DisplayHeight(d->mDisplay, 0) };
     region = XFixesCreateRegion(d->mDisplay, &rect, 1);
-    XFixesSetWindowShapeRegion(d->mDisplay, d->mOverlay, ShapeBounding, 0, 0, region);
+    XFixesSetWindowShapeRegion(d->mDisplay, w, ShapeBounding, 0, 0, 0);
+    XFixesSetWindowShapeRegion(d->mDisplay, w, ShapeInput, 0, 0, 0);
     XFixesDestroyRegion(d->mDisplay, region);
-
 }
-
 
 void CompWindow::setupWindows()
 {
@@ -343,6 +353,7 @@ void CompWindow::setupWindows()
     Window root_notused, parent_notused;
     Window *children;
     unsigned int nchildren;
+    XWindowAttributes attr;
 
     XQueryTree (d->mDisplay,
                 d->mRootWindow,
@@ -352,14 +363,16 @@ void CompWindow::setupWindows()
                 &nchildren);
 
     for (int i = 0; i < nchildren; i++) {
-        if (children[i]
-                !=  d->canvasview->viewport()->winId() && children[i] != d->mMainWin) {
-            qDebug()<<"Mapping windows"<<endl;
+        qDebug() << Q_FUNC_INFO ;
+
+        XGetWindowAttributes(QX11Info::display(), children[i], &attr);
+        if (attr.map_state == IsViewable && children[i] != d->canvasview->winId() && attr.width > 1 &&
+         attr.height > 1) {
             addWindow(children[i]);
         }
 
-        // XFree (children);
     }
+    XFree (children);
     XUngrabServer (d->mDisplay);
 }
 
@@ -411,13 +424,20 @@ Window CompWindow::GetEventXWindow (XEvent *xev)
 bool CompWindow::x11EventFilter( XEvent* event)
 {
     XEvent * xev = (XEvent*) event;
+    Window  xwin = GetEventXWindow(xev);
+    PlexyWindows * win  = d->windowMap[xwin];
 
-    if (xev->type == Expose || xev->type == VisibilityNotify) {
+
+         XVisibilityEvent desk_notify;
+        desk_notify.type       = VisibilityNotify;
+        desk_notify.send_event = True;
+        desk_notify.window     = xwin;
+        desk_notify.state      = VisibilityUnobscured;
+        XSendEvent( QX11Info::display(), xwin, true, VisibilityChangeMask, (XEvent*)&desk_notify);
+   if (xev->type == Expose || xev->type == VisibilityNotify) {
         return false;
     }
 
-    Window  xwin = GetEventXWindow(xev);
-    PlexyWindows * win  = d->windowMap[xwin];
 
     d->damage_event = d->damage_event + XDamageNotify;
     if (event->type == d->damage_event ) {
@@ -426,7 +446,7 @@ bool CompWindow::x11EventFilter( XEvent* event)
             win->Damaged (&damage_ev->area);
         } while (XCheckTypedEvent (d->mDisplay, d->damage_event + XDamageNotify, xev));
 
-        return false;
+        return true;
     }//done
     switch (event->type) {
     case ClientMessage:
@@ -494,6 +514,14 @@ void CompWindow::configureNotify(XEvent* e)
     XEvent * xev = (XEvent*) e;
     Window  xwin = GetEventXWindow(xev);
     PlexyWindows * win  = d->windowMap[xwin];
+    if (xwin == d->mOverlay) {
+        return;
+    }
+
+    if (e->xconfigure.override_redirect == True) {
+        return;
+    }
+
     win->Configured(true,
                     xev->xconfigure.x,
                     xev->xconfigure.y,
@@ -512,6 +540,10 @@ void CompWindow::mapRequest(XEvent* e)
     Window  xwin = GetEventXWindow(xev);
     PlexyWindows * win  = d->windowMap[xwin];
 
+    if (xwin == d->mOverlay) {
+        return;
+    }
+
     if (xev->xmaprequest.parent == d->mRootWindow) {
         if (!XCheckTypedWindowEvent (d->mDisplay, xwin, UnmapNotify, xev)) {
             XMapWindow (d->mDisplay, xwin);
@@ -522,18 +554,44 @@ void CompWindow::mapRequest(XEvent* e)
     qDebug() << Q_FUNC_INFO <<endl;
 }
 
+void CompWindow::getWindowType(Window w)
+{
+    Atom actual;
+    int format;
+    unsigned long n, left;
+    unsigned char *data;
+
+//XGetWindowProperty(QX11Info::display(), w, XAtoms["_NET_WM_WINDOW_TYPE"], 0L, 1L, False, XA_ATOM, &actual,
+  //          &format,&n, &left, &data);
+
+}
 void CompWindow::createNotify(XEvent* e)
 {
     XEvent * xev = (XEvent*) e;
     Window  xwin = GetEventXWindow(xev);
     PlexyWindows * win  = d->windowMap[xwin];
 
+    /*
     if (d->mMainWin == xwin) {
         return;
+    }
+*/
+    if (xwin == d->mOverlay) {
+        return;
+    }
+
+    if (xwin == d->canvasview->winId()) {
+        return;
+    }
+
+    if ( xwin == d->canvasview->viewport()->winId()) {
+        return;
+
     }
 
     if (xev->xcreatewindow.parent == d->mRootWindow) {
         if (!win) {
+
 
             if (!XCheckTypedWindowEvent (d->mDisplay, xwin, DestroyNotify, xev) &&
                     !XCheckTypedWindowEvent (d->mDisplay, xwin, ReparentNotify, xev)) {
@@ -575,6 +633,13 @@ void CompWindow::mapNotify(XEvent* e)
 void CompWindow::unmapNotify(XEvent* e)
 {
     qDebug() << Q_FUNC_INFO <<endl;
+    XEvent * xev = (XEvent*) e;
+    Window  xwin = GetEventXWindow(xev);
+    PlexyWindows * win  = d->windowMap[xwin];
+
+    if (xwin == d->mOverlay) {
+        return;
+    }
 }
 
 
