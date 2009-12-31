@@ -43,12 +43,12 @@
 #include <netwm.h>
 
 /// internals
-#include "compwindow.h"
+#include "windowmanager.h"
 using namespace PlexyDesk;
 
 int main( int argc, char ** argv )
 {
-    CompWindow app(argc,argv);
+    WindowManager app(argc,argv);
 
     if (app.isWmRunning())
     {

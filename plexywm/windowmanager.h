@@ -26,12 +26,12 @@ extern "C" {
 #include <X11/Xlib.h>
 }
 
-class CompWindow : public QApplication
+class WindowManager : public QApplication
 {
     Q_OBJECT
 public:
-    CompWindow(int & argc, char ** argv);
-    ~CompWindow();
+    WindowManager(int & argc, char ** argv);
+    ~WindowManager();
     bool isWmRunning();
     void ReplaceSelectionOwner(Window newOwner, Atom atom);
     void addWindow(Window id);

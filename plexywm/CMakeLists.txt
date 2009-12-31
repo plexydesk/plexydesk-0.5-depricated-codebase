@@ -22,12 +22,12 @@ include_directories(
    )
 ########### source files ###############
 SET(sourceFiles 
-	plexywindows.cpp
+	plexywindow.cpp
 	main.cpp
-	compwindow.cpp
+	windowmanager.cpp
 )
 
-set(QTMOC_SRCS plexywindows.h compwindow.h)
+set(QTMOC_SRCS plexywindow.h windowmanager.h)
 
 qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
 

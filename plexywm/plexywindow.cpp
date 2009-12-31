@@ -14,7 +14,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "plexywindows.h"
+#include "plexywindow.h"
 #include <QApplication>
 
 #include "XAtoms.h"

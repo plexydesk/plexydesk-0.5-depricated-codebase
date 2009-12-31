@@ -20,7 +20,7 @@
 /*special credit goes to Pyrodesk project, the logic of plexydeskwm is based on
   pyrodesk's compzilla windows manager */
 
-#include "compwindow.h"
+#include "windowmanager.h"
 #include "XAtoms.h"
 
 #include <netwm.h>
@@ -36,7 +36,7 @@ extern "C" {
 }
 #include <QX11Info>
 #include <QGraphicsView>
-#include "plexywindows.h"
+#include "plexywindow.h"
 //#include <qq.h>
 
 //plexy
@@ -50,7 +50,7 @@ extern "C" {
 #include <plexyconfig.h>
 #include <netwm.h>
 
-class CompWindow::Private
+class WindowManager::Private
 {
 public:
     Private() {}
@@ -79,7 +79,7 @@ public:
     //variables
 };
 
-CompWindow::CompWindow(int & argc, char ** argv):QApplication(argc, argv), d(new Private)
+WindowManager::WindowManager(int & argc, char ** argv):QApplication(argc, argv), d(new Private)
 {
     d->mDisplay =  QX11Info::display();
     d->mRootWindow = QApplication::desktop()->winId();
@@ -109,12 +109,12 @@ CompWindow::CompWindow(int & argc, char ** argv):QApplication(argc, argv), d(new
 }
 
 
-CompWindow::~CompWindow()
+WindowManager::~WindowManager()
 {
     delete d;
 }
 
-void CompWindow::addWindow(Window window)
+void WindowManager::addWindow(Window window)
 {
     XWindowAttributes attrs;
     if (!XGetWindowAttributes(d->mDisplay, window, &attrs)) {
@@ -140,7 +140,7 @@ void CompWindow::addWindow(Window window)
 
 //utility
 
-bool CompWindow::isWmRunning()
+bool WindowManager::isWmRunning()
 {
     Atom wmAtom;
     wmAtom  = XInternAtom(d->mDisplay, "WM_S0",false);
@@ -148,7 +148,7 @@ bool CompWindow::isWmRunning()
     return  hasWm;
 }
 
-void CompWindow::init()
+void WindowManager::init()
 {
     qDebug()<<Q_FUNC_INFO<<endl;
 
@@ -194,7 +194,7 @@ void CompWindow::init()
     }
 }
 
-void CompWindow::registerAtoms()
+void WindowManager::registerAtoms()
 {
     bool result = XInternAtoms (d->mDisplay,
                                 atom_names, sizeof (atom_names) / sizeof (atom_names[0]),
@@ -203,7 +203,7 @@ void CompWindow::registerAtoms()
     if (!result)
         qDebug()<<"Registration of atoms:" <<atom_names<<"Failed"<<endl;
 }
-bool CompWindow::registerWindowManager(Window getOwner, Atom wmAtom)
+bool WindowManager::registerWindowManager(Window getOwner, Atom wmAtom)
 {
 
     Window  owner = XGetSelectionOwner(d->mDisplay, wmAtom);
@@ -238,7 +238,7 @@ bool CompWindow::registerWindowManager(Window getOwner, Atom wmAtom)
 }
 
 
-bool CompWindow::registerCompositeManager()
+bool WindowManager::registerCompositeManager()
 {
     Atom wmAtom;
     XSetWindowAttributes attrs;
@@ -280,7 +280,7 @@ bool CompWindow::registerCompositeManager()
 }
 
 
-bool CompWindow::checkExtensions()
+bool WindowManager::checkExtensions()
 {
     int opcode;
     int composite_event, composite_error, xfixes_event, xfixes_error;
@@ -319,7 +319,7 @@ bool CompWindow::checkExtensions()
 
 
 
-bool CompWindow::startOverlay()
+bool WindowManager::startOverlay()
 {
     d->mOverlay = XCompositeGetOverlayWindow (d->mDisplay, d->mRootWindow);
     if (!d->mOverlay) {
@@ -333,7 +333,7 @@ bool CompWindow::startOverlay()
    
 }
 
-void CompWindow::input(Window w)
+void WindowManager::input(Window w)
 {
     XserverRegion region;
     XRectangle rect = { 0, 0, DisplayWidth(d->mDisplay, 0), DisplayHeight(d->mDisplay, 0) };
@@ -343,7 +343,7 @@ void CompWindow::input(Window w)
     XFixesDestroyRegion(d->mDisplay, region);
 }
 
-void CompWindow::setupWindows()
+void WindowManager::setupWindows()
 {
     XGrabServer (d->mDisplay);
 
@@ -383,7 +383,7 @@ void CompWindow::setupWindows()
 }
 
 
-Window CompWindow::GetEventXWindow (XEvent *xev)
+Window WindowManager::GetEventXWindow (XEvent *xev)
 {
     switch (xev->type) {
     case ClientMessage:
@@ -427,7 +427,7 @@ Window CompWindow::GetEventXWindow (XEvent *xev)
     return None;
 }
 
-bool CompWindow::x11EventFilter( XEvent* event)
+bool WindowManager::x11EventFilter( XEvent* event)
 {
     XEvent * xev = (XEvent*) event;
     Window  xwin = GetEventXWindow(xev);
@@ -493,7 +493,7 @@ bool CompWindow::x11EventFilter( XEvent* event)
     return false;
 }
 
-void CompWindow::destroyNotify(XEvent* e)
+void WindowManager::destroyNotify(XEvent* e)
 {
     XEvent * xev = (XEvent*) e;
     Window  xwin = GetEventXWindow(xev);
@@ -505,7 +505,7 @@ void CompWindow::destroyNotify(XEvent* e)
     qDebug() << Q_FUNC_INFO << endl;
 }
 
-void CompWindow::configureRequest(XEvent* e)
+void WindowManager::configureRequest(XEvent* e)
 {
     XEvent * xev = (XEvent*) e;
     Window  xwin = GetEventXWindow(xev);
@@ -515,7 +515,7 @@ void CompWindow::configureRequest(XEvent* e)
     qDebug() << Q_FUNC_INFO <<endl;
 }
 
-void CompWindow::configureNotify(XEvent* e)
+void WindowManager::configureNotify(XEvent* e)
 {
     XEvent * xev = (XEvent*) e;
     Window  xwin = GetEventXWindow(xev);
@@ -540,7 +540,7 @@ void CompWindow::configureNotify(XEvent* e)
     qDebug() << Q_FUNC_INFO <<endl;
 }
 
-void CompWindow::mapRequest(XEvent* e)
+void WindowManager::mapRequest(XEvent* e)
 {
     XEvent * xev = (XEvent*) e;
     Window  xwin = GetEventXWindow(xev);
@@ -560,7 +560,7 @@ void CompWindow::mapRequest(XEvent* e)
     qDebug() << Q_FUNC_INFO <<endl;
 }
 
-void CompWindow::getWindowType(Window w)
+void WindowManager::getWindowType(Window w)
 {
     Atom actual;
     int format;
@@ -571,7 +571,7 @@ void CompWindow::getWindowType(Window w)
   //          &format,&n, &left, &data);
 
 }
-void CompWindow::createNotify(XEvent* e)
+void WindowManager::createNotify(XEvent* e)
 {
     XEvent * xev = (XEvent*) e;
     Window  xwin = GetEventXWindow(xev);
@@ -608,7 +608,7 @@ void CompWindow::createNotify(XEvent* e)
     qDebug() << Q_FUNC_INFO <<endl;
 }
 
-void CompWindow::clientMsgNotify(XEvent* e)
+void WindowManager::clientMsgNotify(XEvent* e)
 {
     XEvent * xev = (XEvent*) e;
     Window  xwin = GetEventXWindow(xev);
@@ -617,12 +617,12 @@ void CompWindow::clientMsgNotify(XEvent* e)
     qDebug() << Q_FUNC_INFO <<endl;
 }
 
-void CompWindow::reparentNotify(XEvent* e)
+void WindowManager::reparentNotify(XEvent* e)
 {
     qDebug() << Q_FUNC_INFO <<endl;
 }
 
-void CompWindow::mapNotify(XEvent* e)
+void WindowManager::mapNotify(XEvent* e)
 {
     XEvent * xev = (XEvent*) e;
     Window  xwin = GetEventXWindow(xev);
@@ -636,7 +636,7 @@ void CompWindow::mapNotify(XEvent* e)
     qDebug() << Q_FUNC_INFO <<endl;
 }
 
-void CompWindow::unmapNotify(XEvent* e)
+void WindowManager::unmapNotify(XEvent* e)
 {
     qDebug() << Q_FUNC_INFO <<endl;
     XEvent * xev = (XEvent*) e;
@@ -649,7 +649,7 @@ void CompWindow::unmapNotify(XEvent* e)
 }
 
 
-void CompWindow::propertyNotify(XEvent* e)
+void WindowManager::propertyNotify(XEvent* e)
 {
     qDebug() << Q_FUNC_INFO <<endl;
 }
