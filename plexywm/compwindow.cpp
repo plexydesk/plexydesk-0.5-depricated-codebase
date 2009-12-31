@@ -23,6 +23,8 @@
 #include "compwindow.h"
 #include "XAtoms.h"
 
+#include <netwm.h>
+
 extern "C" {
 #include <X11/Xutil.h>
 #include <X11/Xatom.h>
@@ -123,6 +125,10 @@ void CompWindow::addWindow(Window window)
     if (attrs.c_class == InputOnly) {
         return;
     }
+
+    NETWinInfo info(QX11Info::display(), window, QX11Info::appRootWindow(), 0);
+    qDebug() << Q_FUNC_INFO << info.name()  << " :  " << info.iconName();
+
 
     PlexyWindows *  _window  = new PlexyWindows(d->mDisplay, window, &attrs);
     d->windowMap[window] = _window;

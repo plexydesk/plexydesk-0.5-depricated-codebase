@@ -48,10 +48,6 @@ using namespace PlexyDesk;
 int main( int argc, char ** argv )
 {
     QApplication app(argc,argv);
-    PlexyPanel *panel = new PlexyPanel();
-    panel->show();
-
-
 #ifdef Q_WS_WIN
     QString pluginPath = app.applicationDirPath() + "/plugins/imageformats";
     app.addLibraryPath(pluginPath);
