@@ -89,21 +89,7 @@ WindowManager::WindowManager(int & argc, char ** argv):QApplication(argc, argv),
     d->scene->setItemIndexMethod(QGraphicsScene::NoIndex);
     d->scene->setSceneRect(QDesktopWidget().geometry());//TODO Resolution changes ?
 
-    d->canvasview= new QGraphicsView(d->scene);
-
-    d->canvasview->setWindowFlags(Qt::X11BypassWindowManagerHint);
-  //  d->canvasview->setAttribute(Qt::WA_NoSystemBackground);
-  //  d->canvasview->setUpdatesEnabled(false);
-   // d->canvasview->setAutoFillBackground(false);
-   // d->canvasview->setBackgroundBrush(Qt::NoBrush);
-   // d->canvasview->setForegroundBrush(Qt::NoBrush);
-
-    //d->canvasview->enableOpenGL(false);
-    QRect r = QDesktopWidget().geometry();
-    d->canvasview->resize(QDesktopWidget().availableGeometry().size());
-
-    d->canvasview->show();
-    QStringList list = PlexyDesk::Config::getInstance()->widgetList;
+        QStringList list = PlexyDesk::Config::getInstance()->widgetList;
 
     init();
 }
@@ -325,6 +311,19 @@ bool WindowManager::startOverlay()
     if (!d->mOverlay) {
         qDebug()<<"Overly window can not start"<<endl;
     }
+    d->canvasview = new QGraphicsView(d->scene);
+
+    d->canvasview->setWindowFlags(Qt::X11BypassWindowManagerHint);
+  //  d->canvasview->setAttribute(Qt::WA_NoSystemBackground);
+  //  d->canvasview->setUpdatesEnabled(false);
+   // d->canvasview->setAutoFillBackground(false);
+   // d->canvasview->setForegroundBrush(Qt::NoBrush);
+
+    QRect r = QDesktopWidget().geometry();
+    d->canvasview->resize(QDesktopWidget().availableGeometry().size());
+
+    d->canvasview->show();
+
 
     d->mMainWin = d->canvasview->winId();
     XReparentWindow (d->mDisplay, d->canvasview->winId(), d->mOverlay, 0, 0);
@@ -511,6 +510,10 @@ void WindowManager::configureRequest(XEvent* e)
     Window  xwin = GetEventXWindow(xev);
     PlexyWindows * win  = d->windowMap[xwin];
     if (xev->xconfigurerequest.parent == d->mRootWindow) {
+        qDebug() << Q_FUNC_INFO << "Has Parent";
+        while (XCheckTypedWindowEvent (d->mDisplay, xwin, ConfigureRequest, xev)) {
+            qDebug() << Q_FUNC_INFO << ": " << "Do nothing";
+        }
     }
     qDebug() << Q_FUNC_INFO <<endl;
 }
