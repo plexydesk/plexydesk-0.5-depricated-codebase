@@ -2,17 +2,18 @@
 
 namespace PlexyDesk
 {
-class PendingJob::Private {
-    public:
-    Private(){}
-    ~Private(){}
+class PendingJob::Private
+{
+public:
+    Private() {}
+    ~Private() {}
     bool done;
     bool iserror;
     QString error;
     QString message;
 };
 
-PendingJob::PendingJob(QObject* parent):QObject(parent), d(new Private)
+PendingJob::PendingJob(QObject* parent): QObject(parent), d(new Private)
 {
     d->done = false;
     d->iserror = false;
@@ -20,7 +21,7 @@ PendingJob::PendingJob(QObject* parent):QObject(parent), d(new Private)
 
 bool PendingJob::isError()
 {
-   return d->iserror;
+    return d->iserror;
 }
 
 QString PendingJob::errorName() const
@@ -30,7 +31,7 @@ QString PendingJob::errorName() const
 
 QString PendingJob::errorMessage() const
 {
-   return d->message;
+    return d->message;
 }
 
 void PendingJob::setFinished(bool status, QString &error, const QString &message)

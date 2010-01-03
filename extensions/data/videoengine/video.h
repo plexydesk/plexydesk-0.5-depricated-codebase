@@ -17,7 +17,7 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 #ifndef VIDEIO_DATA_H
-#define VIDEIO_DATA_H 
+#define VIDEIO_DATA_H
 
 #include <plexy.h>
 #include <backdropinterface.h>
@@ -25,24 +25,24 @@
 #include <datainterface.h>
 #include "vplayer.h"
 
-class VISIBLE_SYM VideoData :public PlexyDesk::DataPlugin
+class VISIBLE_SYM VideoData : public PlexyDesk::DataPlugin
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	VideoData(QObject *parent = 0);
-	virtual ~VideoData();
-	void init();
+    VideoData(QObject *parent = 0);
+    virtual ~VideoData();
+    void init();
 
 public slots:
-	void pushData(QVariant&);
-	void grab(QImage & );
+    void pushData(QVariant&);
+    void grab(QImage &);
 
 signals:
-		void data(QVariant&);
+    void data(QVariant&);
 
 private:
-	PlexyDesk::VPlayer * vplayer;
+    PlexyDesk::VPlayer * vplayer;
 };
 
 

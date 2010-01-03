@@ -7,24 +7,24 @@
 #include "sociotwitterinterface.h"
 
 
-namespace PlexyDesk 
+namespace PlexyDesk
 {
-    class SocioTwitterwidget:public DesktopWidget
+class SocioTwitterwidget: public DesktopWidget
 
-    {
-    	Q_OBJECT
+{
+    Q_OBJECT
 
-	public:
-    		SocioTwitterwidget(const QRectF &rect, QWidget *widget);
-    		virtual ~SocioTwitterwidget();
-		//virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem * e, QWidget *);
-        	//virtual void wheelEvent(QGraphicsSceneWheelEvent * event);
-        	//void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
-		void setPath(QString);
-        	void drawWidget();;
+public:
+    SocioTwitterwidget(const QRectF &rect, QWidget *widget);
+    virtual ~SocioTwitterwidget();
+    //virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem * e, QWidget *);
+    //virtual void wheelEvent(QGraphicsSceneWheelEvent * event);
+    //void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
+    void setPath(QString);
+    void drawWidget();;
 
-	//private:
-    	//	Ui::SocioTwitterClass *ui;
-    };
+    //private:
+    //  Ui::SocioTwitterClass *ui;
+};
 }
 #endif // SOCIOTWITTER_H

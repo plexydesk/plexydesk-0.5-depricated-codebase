@@ -25,21 +25,21 @@
 #include <abstractplugininterface.h>
 #include <datainterface.h>
 #include <dataplugin.h>
-#include "utube.h" 
+#include "utube.h"
 
 /**
  * \class Youtube API Interface for Plexydesk
- * \brief 
+ * \brief
  */
 class YouTubeDataInterface : public PlexyDesk::DataInterface
 {
-  Q_OBJECT
-  Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
-  
+    Q_OBJECT
+    Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
+
 public:
-  YouTubeDataInterface(QObject *parent = 0);
-  ~YouTubeDataInterface();
-  PlexyDesk::DataPlugin * instance();
+    YouTubeDataInterface(QObject *parent = 0);
+    ~YouTubeDataInterface();
+    PlexyDesk::DataPlugin * instance();
 private:
 };
 

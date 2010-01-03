@@ -13,24 +13,24 @@
 
 /**
  * \class Canvas
- * \brief 
+ * \brief
  */
 namespace PlexyDesk
 {
-    class VISIBLE_SYM Canvas : public QGraphicsScene
-    {
-        Q_OBJECT
-    public:
-        Canvas ( QObject * parent = 0 );
-        virtual ~Canvas();
-    protected:
-        virtual void drawBackground ( QPainter * painter, const QRectF & rect );
-        virtual void dropEvent( QGraphicsSceneDragDropEvent * event ); 
-        virtual void dragEnterEvent(QGraphicsSceneDragDropEvent *event);
-    private:
-        class Private;
-        Private * const d;
-    };
+class VISIBLE_SYM Canvas : public QGraphicsScene
+{
+    Q_OBJECT
+public:
+    Canvas(QObject * parent = 0);
+    virtual ~Canvas();
+protected:
+    virtual void drawBackground(QPainter * painter, const QRectF & rect);
+    virtual void dropEvent(QGraphicsSceneDragDropEvent * event);
+    virtual void dragEnterEvent(QGraphicsSceneDragDropEvent *event);
+private:
+    class Private;
+    Private * const d;
+};
 } /* PlexyDesk */
 
 

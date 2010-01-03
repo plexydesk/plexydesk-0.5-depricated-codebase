@@ -24,14 +24,14 @@
 
 namespace PlexyDesk
 {
-    class VISIBLE_SYM WidgetInterface : public AbstractPluginInterface
-    {
-        Q_OBJECT
-    public:
-        void init() {}
-        WidgetInterface() {}
-        ~WidgetInterface() {}
-    };
+class VISIBLE_SYM WidgetInterface : public AbstractPluginInterface
+{
+    Q_OBJECT
+public:
+    void init() {}
+    WidgetInterface() {}
+    ~WidgetInterface() {}
+};
 } // namespace PlexyDesk
 
 Q_DECLARE_INTERFACE(PlexyDesk::WidgetInterface, "org.plexydesk.WidgetInterface")

@@ -27,15 +27,17 @@
 #include "clockitem.h"
 #include "clockwidget.h"
 
-class ClockInterface :public PlexyDesk::WidgetInterface
+class ClockInterface : public PlexyDesk::WidgetInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
-    public:
-    ClockInterface(QObject * object = 0){}
-    PlexyDesk::BasePlugin * instance () {return new Clock(this);}
+public:
+    ClockInterface(QObject * object = 0) {}
+    PlexyDesk::BasePlugin * instance() {
+        return new Clock(this);
+    }
 };
 
-Q_EXPORT_PLUGIN2(ClockInterface,ClockInterface)
+Q_EXPORT_PLUGIN2(ClockInterface, ClockInterface)
 #endif

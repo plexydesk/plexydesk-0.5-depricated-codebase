@@ -19,22 +19,22 @@
 #include "rss.h"
 #include <desktopwidget.h>
 
-RssData::RssData( QObject * object )
+RssData::RssData(QObject * object)
 {
     init();
-    mRssTimer = new QTimer( this );
-    connect( mRssTimer,SIGNAL( timeout() ),this,SLOT( fetch() ) );
-    mRssTimer->start( 1000*60*60 );
+    mRssTimer = new QTimer(this);
+    connect(mRssTimer, SIGNAL(timeout()), this, SLOT(fetch()));
+    mRssTimer->start(1000*60*60);
 }
 
 void  RssData::init()
 {
-    mHttp = new QHttp( this );
-    connect( mHttp, SIGNAL( readyRead( const QHttpResponseHeader & ) ),
-            this, SLOT( readData( const QHttpResponseHeader & ) ) );
+    mHttp = new QHttp(this);
+    connect(mHttp, SIGNAL(readyRead(const QHttpResponseHeader &)),
+            this, SLOT(readData(const QHttpResponseHeader &)));
 
-    connect( mHttp, SIGNAL( requestFinished( int, bool ) ),
-            this, SLOT( finished( int, bool ) ) );
+    connect(mHttp, SIGNAL(requestFinished(int, bool)),
+            this, SLOT(finished(int, bool)));
     fetch();
 }
 
@@ -50,32 +50,31 @@ void RssData::fetch()
 
     mXml.clear();
 
-    QUrl url( "mHttp://labs.trolltech.com/blogs/feed" );
+    QUrl url("mHttp://labs.trolltech.com/blogs/feed");
 
-    mHttp->setHost( url.host() );
-    mConnectionId = mHttp->get( url.path() );
+    mHttp->setHost(url.host());
+    mConnectionId = mHttp->get(url.path());
 }
 
-void RssData::readData( const QHttpResponseHeader &resp )
+void RssData::readData(const QHttpResponseHeader &resp)
 {
-    if (resp.statusCode() != 200){
+    if (resp.statusCode() != 200) {
         mHttp->abort();
         qDebug() << "RSS: Error." << endl;
-    }else {
-        mXml.addData( mHttp->readAll() );
+    } else {
+        mXml.addData(mHttp->readAll());
         parseXml();
     }
 }
 
-void RssData::finished( int id, bool error )
+void RssData::finished(int id, bool error)
 {
     if (error) {
-        qDebug() << "RSS: Received error during HTTP fetch." <<endl;
-    }
-    else if (id == mConnectionId) {
-        qDebug() << "RSS: HTTP fetch Success." <<endl;
-        QVariant rss( mRssEntries );
-        emit data( rss );
+        qDebug() << "RSS: Received error during HTTP fetch." << endl;
+    } else if (id == mConnectionId) {
+        qDebug() << "RSS: HTTP fetch Success." << endl;
+        QVariant rss(mRssEntries);
+        emit data(rss);
     }
 }
 
@@ -86,7 +85,7 @@ void RssData::parseXml()
     while (!mXml.atEnd()) {
         mXml.readNext();
         if (mXml.isStartElement()) {
-            if (mXml.name() == "item"){
+            if (mXml.name() == "item") {
                 mLinkString = mXml.attributes().value("rss:about").toString();
             }
             mCurrentTag = mXml.name().toString();
@@ -111,19 +110,17 @@ void RssData::parseXml()
         } else if (mXml.isCharacters() && !mXml.isWhitespace()) {
             if (mCurrentTag == "title") {
                 mTitleString += mXml.text().toString();
-            }
-            else if (mCurrentTag == "link") {
+            } else if (mCurrentTag == "link") {
                 mLinkString += mXml.text().toString();
-            }
-            else if (mCurrentTag == "description") {
+            } else if (mCurrentTag == "description") {
                 mDescString += mXml.text().toString();
             }
         }
     }
 
     if (mXml.error() && mXml.error() !=
-        QXmlStreamReader::PrematureEndOfDocumentError) {
-        qDebug()<< "XML ERROR:" << mXml.lineNumber() << ": " <<
+            QXmlStreamReader::PrematureEndOfDocumentError) {
+        qDebug() << "XML ERROR:" << mXml.lineNumber() << ": " <<
         mXml.errorString();
         mHttp->abort();
         return;
@@ -145,9 +142,9 @@ QGraphicsItem * RssData::item()
     return NULL;
 }
 
-void RssData::render( QPainter *p,QRectF r )
+void RssData::render(QPainter *p, QRectF r)
 {
 }
 
-Q_EXPORT_PLUGIN2(RssData,RssData)
+Q_EXPORT_PLUGIN2(RssData, RssData)
 #include "rss.moc"

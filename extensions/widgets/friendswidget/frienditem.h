@@ -43,38 +43,39 @@
 #include <QPixmap>
 #include <QImage>
 
-namespace PlexyDesk {
+namespace PlexyDesk
+{
 
 class FriendItem : public QObject, public QGraphicsItem
 {
     Q_OBJECT
 
-    public:
-        FriendItem(QGraphicsItem * parent);
-        virtual ~FriendItem();
-        QRectF boundingRect() const;
+public:
+    FriendItem(QGraphicsItem * parent);
+    virtual ~FriendItem();
+    QRectF boundingRect() const;
 
-        void mousePressEvent(QGraphicsSceneMouseEvent *event);
-        void setIcon(QPixmap m);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void setIcon(QPixmap m);
 
-        void setName(const QString& name);
-        QString name() const;
+    void setName(const QString& name);
+    QString name() const;
 
-        void paint(QPainter *painter,
-                   const QStyleOptionGraphicsItem *option,
-                   QWidget *widget);
+    void paint(QPainter *painter,
+               const QStyleOptionGraphicsItem *option,
+               QWidget *widget);
 
-    signals:
-        void clicked();
+signals:
+    void clicked();
 
-    private:
-        int mShade;
+private:
+    int mShade;
 
-        QImage mPanel;
-        QRectF mRect;
+    QImage mPanel;
+    QRectF mRect;
 
-        QString mName;
-        QPixmap mIcon;
+    QString mName;
+    QPixmap mIcon;
 };
 
 }

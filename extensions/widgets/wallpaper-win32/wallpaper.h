@@ -26,7 +26,7 @@
 class VISIBLE_SYM WallpaperChange : public PlexyDesk::DataPlugin
 {
     Q_OBJECT
-        Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
+    Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
 public:
     void init() {}

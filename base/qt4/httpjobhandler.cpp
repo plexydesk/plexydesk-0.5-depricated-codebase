@@ -35,9 +35,10 @@ public:
 };
 
 HttpJobHandler::HttpJobHandler(QObject * parent) : PendingJob(parent), d(new HttpJobHandlerPrivate)
-{	qDebug()<<"HttpJobHandler::HttpJobHandler()";
+{
+    qDebug() << "HttpJobHandler::HttpJobHandler()";
     d->manager = new QNetworkAccessManager(this);
-    qDebug()<< "I'm in httpjobhandler constructor";
+    qDebug() << "I'm in httpjobhandler constructor";
     //connect the finished signal coming from QNetworkAccessManager with onFinish.
     connect(d->manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onFinish(QNetworkReply*)));
     //When authentication fialed this can be used to provide credentials (auth only)
@@ -45,7 +46,8 @@ HttpJobHandler::HttpJobHandler(QObject * parent) : PendingJob(parent), d(new Htt
 }
 
 void HttpJobHandler::getFile(const QUrl &url)
-{		qDebug()<<"HttpJobHandler::getFile()";
+{
+    qDebug() << "HttpJobHandler::getFile()";
     if (validateUrl(url)) {
         QNetworkReply* reply = d->manager->get(QNetworkRequest(url));
         holder.append(reply);
@@ -56,7 +58,8 @@ void HttpJobHandler::getFile(const QUrl &url)
 }
 
 void HttpJobHandler::postFile(const QUrl &url, const QByteArray  &data)
-{		qDebug()<<"HttpJobHandler::postFile()";
+{
+    qDebug() << "HttpJobHandler::postFile()";
     if (validateUrl(url)) {
         QNetworkReply* reply = d->manager->post(QNetworkRequest(url), data);
         holder.append(reply);
@@ -65,21 +68,20 @@ void HttpJobHandler::postFile(const QUrl &url, const QByteArray  &data)
 }
 
 bool HttpJobHandler::validateUrl(const QUrl &url)
-{ 	qDebug()<<"HttpJobHandler::validateUrl()";
+{
+    qDebug() << "HttpJobHandler::validateUrl()";
 
     if (url.path().isEmpty()) {
         msg = "Empty URL";
         error = "The URL was empty";
         setFinished(true, msg, error);
         return false;
-    }
-    else if (!url.isValid()) {
+    } else if (!url.isValid()) {
         msg = "Invalid URL";
         error = "The URL was not in valid format";
         setFinished(true, msg, error);
         return false;
-    }
-    else if (url.scheme() != "http" && url.scheme() != "https") {
+    } else if (url.scheme() != "http" && url.scheme() != "https") {
         msg = "Unsupported Protocol";
         error = "The URL was not http/s.";
         setFinished(true, msg, error);
@@ -90,13 +92,14 @@ bool HttpJobHandler::validateUrl(const QUrl &url)
 }
 
 void HttpJobHandler::onFinish(QNetworkReply* reply)
-{	qDebug()<<"HttpJobHandler::onFinish()";
+{
+    qDebug() << "HttpJobHandler::onFinish()";
 
 
     QVariant statusCodeV = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
 
 
-    if (statusCodeV.toInt()==200) { //statuscode 200 means we are OK. Page not found is not taken as error.
+    if (statusCodeV.toInt() == 200) { //statuscode 200 means we are OK. Page not found is not taken as error.
         d->data = reply->readAll();
 
         msg = "200";
@@ -116,14 +119,15 @@ void HttpJobHandler::onFinish(QNetworkReply* reply)
 /*
 void HttpJobHandler::authenticate(QNetworkReply *reply, QAuthenticator *auth)
 {
-	qDebug()<< "httpjobhandler: Need Autentication bitch.";
-	qDebug()<< reply->readAll();
-	auth->setUser("plexydesk");//put uname pw when testing
-	auth->setPassword("plexytest");
+    qDebug()<< "httpjobhandler: Need Autentication bitch.";
+    qDebug()<< reply->readAll();
+    auth->setUser("plexydesk");//put uname pw when testing
+    auth->setPassword("plexytest");
 } */
 
 QByteArray HttpJobHandler::readData() const
-{	qDebug()<<"HttpJobHandler::readData()";
+{
+    qDebug() << "HttpJobHandler::readData()";
 
     return d->data;
 }

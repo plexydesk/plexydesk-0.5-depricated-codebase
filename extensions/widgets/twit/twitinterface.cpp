@@ -10,7 +10,7 @@ TwitInterface::TwitInterface(QObject * object)
 
 PlexyDesk::BasePlugin * TwitInterface::instance()
 {
-	return new Twit(this);
+    return new Twit(this);
 }
 
-Q_EXPORT_PLUGIN2(TwitInterface,TwitInterface)
+Q_EXPORT_PLUGIN2(TwitInterface, TwitInterface)

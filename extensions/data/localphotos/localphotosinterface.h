@@ -25,17 +25,17 @@
 #include <abstractplugininterface.h>
 #include <datainterface.h>
 #include <dataplugin.h>
-#include "localphotos.h" 
+#include "localphotos.h"
 
-class VISIBLE_SYM LPhotosInterface :public PlexyDesk::DataInterface
+class VISIBLE_SYM LPhotosInterface : public PlexyDesk::DataInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
-    public:
+public:
     LPhotosInterface(QObject * object = 0);
-    virtual ~LPhotosInterface(){}
-          PlexyDesk::DataPlugin * instance();
+    virtual ~LPhotosInterface() {}
+    PlexyDesk::DataPlugin * instance();
 
 };
 

@@ -25,14 +25,14 @@
 
 namespace PlexyDesk
 {
-    class VISIBLE_SYM BackdropInterface : public AbstractPluginInterface
-    {
-    public:
-        void init() {}
-        BackdropInterface() {}
-        virtual ~BackdropInterface() {}
-        virtual BasePlugin * instance() = 0;
-    };
+class VISIBLE_SYM BackdropInterface : public AbstractPluginInterface
+{
+public:
+    void init() {}
+    BackdropInterface() {}
+    virtual ~BackdropInterface() {}
+    virtual BasePlugin * instance() = 0;
+};
 } // namespace PlexyDesk
 
 Q_DECLARE_INTERFACE(PlexyDesk::BackdropInterface, "org.plexydesk.BackdropInterface")

@@ -27,17 +27,17 @@
 #include <datainterface.h>
 #include <dataplugin.h>
 
-class IRCInterface :public PlexyDesk::DataInterface
+class IRCInterface : public PlexyDesk::DataInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
-    public:
-      IRCInterface(QObject * object = 0);
-      virtual ~IRCInterface(){}
-      
-      /* this will return a valid data plugin pointer*/
-      PlexyDesk::DataPlugin * instance();
+public:
+    IRCInterface(QObject * object = 0);
+    virtual ~IRCInterface() {}
+
+    /* this will return a valid data plugin pointer*/
+    PlexyDesk::DataPlugin * instance();
 
 };
 

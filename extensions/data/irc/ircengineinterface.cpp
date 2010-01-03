@@ -29,10 +29,10 @@ IRCInterface::IRCInterface(QObject * object)
 
 PlexyDesk::DataPlugin *IRCInterface::instance()
 {
-/* this is the plugin we are returning since plexy core 
-or other plugins will expect this pointer
-*/
-	return new IRCData();
+    /* this is the plugin we are returning since plexy core
+    or other plugins will expect this pointer
+    */
+    return new IRCData();
 }
 
 Q_EXPORT_PLUGIN2(IRCInterface, IRCInterface)

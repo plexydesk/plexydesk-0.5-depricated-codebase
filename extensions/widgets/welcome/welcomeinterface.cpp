@@ -29,8 +29,8 @@ WelcomeInterface::WelcomeInterface(QObject * object)
 PlexyDesk::BasePlugin  * WelcomeInterface::instance()
 {
 // return new Clock(this);
-   return  new Welcome(this);
+    return  new Welcome(this);
 }
 
-Q_EXPORT_PLUGIN2(WelcomeInterface,WelcomeInterface)
+Q_EXPORT_PLUGIN2(WelcomeInterface, WelcomeInterface)
 #include "welcomeinterface.moc"

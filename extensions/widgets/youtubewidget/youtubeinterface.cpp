@@ -10,7 +10,7 @@ YouTubeInterface::YouTubeInterface(QObject * object)
 
 PlexyDesk::BasePlugin * YouTubeInterface::instance()
 {
-	return new YouTube(this);
+    return new YouTube(this);
 }
 
-Q_EXPORT_PLUGIN2(YouTubeInterface,YouTubeInterface)
+Q_EXPORT_PLUGIN2(YouTubeInterface, YouTubeInterface)

@@ -80,8 +80,7 @@ public:
        Returns the size of the array.
      **/
 
-    int size() const
-    {
+    int size() const {
         return sz;
     }
 
@@ -102,8 +101,7 @@ private:
    @internal
 **/
 
-struct NETRootInfoPrivate
-{
+struct NETRootInfoPrivate {
     // information about the X server
     Display *display;
     NETSize rootSize;
@@ -139,8 +137,7 @@ struct NETRootInfoPrivate
    @internal
 **/
 
-struct NETWinInfoPrivate
-{
+struct NETWinInfoPrivate {
     Display *display;
     Window window, root;
     NET::MappingState mapping_state;

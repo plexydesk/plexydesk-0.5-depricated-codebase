@@ -25,14 +25,14 @@
 //#include "wellcomeitem.h"
 
 
-class VISIBLE_SYM WelcomeInterface :public PlexyDesk::AbstractPluginInterface
+class VISIBLE_SYM WelcomeInterface : public PlexyDesk::AbstractPluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
-    public:
-       WelcomeInterface(QObject * object = 0);
-       PlexyDesk::BasePlugin * instance () ;
+public:
+    WelcomeInterface(QObject * object = 0);
+    PlexyDesk::BasePlugin * instance() ;
 };
 
 

@@ -26,22 +26,22 @@
 #include <QtNetwork>
 #include <datainterface.h>
 
-class VISIBLE_SYM ExampleData :public PlexyDesk::DataPlugin
+class VISIBLE_SYM ExampleData : public PlexyDesk::DataPlugin
 {
     Q_OBJECT
 
-    public:
+public:
     ExampleData(QObject * object = 0);
     virtual ~ExampleData();
-          void init();
-    public slots:
+    void init();
+public slots:
     /* ID tells you the Qhttp id which youare pocessing
     */
-          void loadCallback(int ID, bool status);
-    signals:
-         void data(QVariant&);
+    void loadCallback(int ID, bool status);
+signals:
+    void data(QVariant&);
 
-    private:
+private:
     QPixmap bg;
     QImage img;
     QBrush paint;

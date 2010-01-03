@@ -56,32 +56,33 @@
 
 class QTimer;
 
-namespace PlexyDesk {
+namespace PlexyDesk
+{
 
 class FriendsWidget : public DesktopWidget
 {
     Q_OBJECT
 
-    public:
-        FriendsWidget(const QRectF &rect, QWidget *widget = 0);
-        virtual ~FriendsWidget();
-        virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *e, QWidget *w);
-        virtual void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *e, QWidget *w);
-        virtual void paintExtBackFace(QPainter *painter, const QStyleOptionGraphicsItem *e , QWidget *w);
-        void setPath(const QString& path);
-        void drawFriendsWidget();
+public:
+    FriendsWidget(const QRectF &rect, QWidget *widget = 0);
+    virtual ~FriendsWidget();
+    virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *e, QWidget *w);
+    virtual void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *e, QWidget *w);
+    virtual void paintExtBackFace(QPainter *painter, const QStyleOptionGraphicsItem *e , QWidget *w);
+    void setPath(const QString& path);
+    void drawFriendsWidget();
 
-    private:
-        int mShade;
+private:
+    int mShade;
 
-        QPixmap mUser;
-        QImage m_main_bg;
+    QPixmap mUser;
+    QImage m_main_bg;
 
-        QString mPrefix;
-        QPoint mClickPos;
+    QString mPrefix;
+    QPoint mClickPos;
 
-        QMap<QString, QGraphicsItem*> mItems;
-        QMap<QString, QGraphicsItem*> mActions;
+    QMap<QString, QGraphicsItem*> mItems;
+    QMap<QString, QGraphicsItem*> mActions;
 };
 
 } // namespace PlexyDesk

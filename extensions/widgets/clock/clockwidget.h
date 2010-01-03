@@ -20,62 +20,62 @@
 
 #ifndef CLOCK
 #define CLOCK
-    
+
 #include <desktopwidget.h>
-    
+
 #include <QTime>
-    
+
 namespace PlexyDesk
 {
-    class ClockWidget:public DesktopWidget
-    {
-        Q_OBJECT
+class ClockWidget: public DesktopWidget
+{
+    Q_OBJECT
 
-    public:
-        ClockWidget (const QRectF &rect, QWidget *widget = 0);
-        virtual ~ClockWidget();
-        virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem * e, QWidget *);
-        void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
-        void setPath(QString);
-        void drawClockWidget();
-        public slots:
-            void drawSeconds();
+public:
+    ClockWidget(const QRectF &rect, QWidget *widget = 0);
+    virtual ~ClockWidget();
+    virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem * e, QWidget *);
+    void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
+    void setPath(QString);
+    void drawClockWidget();
+public slots:
+    void drawSeconds();
 
-    private:
-        QTimer  * sec_timer;
-        QTimer  * mins_timer;
-        QTimer  * hours_timer;
+private:
+    QTimer  * sec_timer;
+    QTimer  * mins_timer;
+    QTimer  * hours_timer;
 
-        QPixmap  _secs_hand;
-        QPixmap  _mins_hand;
-        QPixmap  _hour_hand;
+    QPixmap  _secs_hand;
+    QPixmap  _mins_hand;
+    QPixmap  _hour_hand;
 
-        QStringList _hour_path;
-        QStringList _mins_path;
-        QStringList _secs_path;
+    QStringList _hour_path;
+    QStringList _mins_path;
+    QStringList _secs_path;
 
-        QImage _clock_bg;
-        QImage _bg;
-        QString prefix;
+    QImage _clock_bg;
+    QImage _bg;
+    QString prefix;
 
-        double _secs;
-        double _mins;
-        double _hour;
+    double _secs;
+    double _mins;
+    double _hour;
 
 
-        int seconds;
-        int s_a;
-        QTime time;
-        QPoint clickPos;
-        QPixmap face;
-        QImage gloss;
-        QPixmap thedot;
-        int shade;
-        QImage lens;
-        QPixmap date;
+    int seconds;
+    int s_a;
+    QTime time;
+    QPoint clickPos;
+    QPixmap face;
+    QImage gloss;
+    QPixmap thedot;
+    int shade;
+    QImage lens;
+    QPixmap date;
 
-    };
-    
+};
+
 } // namespace PlexyDesk
 #endif
-    
+

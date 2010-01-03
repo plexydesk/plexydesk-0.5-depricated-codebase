@@ -26,7 +26,7 @@
 #include <QtNetwork>
 #include <datainterface.h>
 
-class VISIBLE_SYM RestData :public PlexyDesk::DataPlugin
+class VISIBLE_SYM RestData : public PlexyDesk::DataPlugin
 {
     Q_OBJECT
 

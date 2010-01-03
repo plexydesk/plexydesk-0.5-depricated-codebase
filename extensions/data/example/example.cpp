@@ -21,45 +21,45 @@
 #include <plexyconfig.h>
 
 
-    
+
 ExampleData::ExampleData(QObject * object)
 {
-        slideCount = 0;
-        currentSlide = 0;
-        searchkey = "fresh morning";
-	    http = new QHttp(this);
-        init();
-        imageTimer = new QTimer(this);
-        connect(imageTimer,SIGNAL(timeout()),this,SLOT(nextImage()));
+    slideCount = 0;
+    currentSlide = 0;
+    searchkey = "fresh morning";
+    http = new QHttp(this);
+    init();
+    imageTimer = new QTimer(this);
+    connect(imageTimer, SIGNAL(timeout()), this, SLOT(nextImage()));
 }
 
 void  ExampleData::init()
 {
 
-	 if(PlexyDesk::Config::getInstance()->proxyOn){ 
-	     QNetworkProxy NtProxy(PlexyDesk::Config::getInstance()->proxyType,
-		                   PlexyDesk::Config::getInstance()->proxyURL,
-                                   PlexyDesk::Config::getInstance()->proxyPort,
-                                   PlexyDesk::Config::getInstance()->proxyUser,
-                                   PlexyDesk::Config::getInstance()->proxyPasswd
-			           );
+    if (PlexyDesk::Config::getInstance()->proxyOn) {
+        QNetworkProxy NtProxy(PlexyDesk::Config::getInstance()->proxyType,
+                              PlexyDesk::Config::getInstance()->proxyURL,
+                              PlexyDesk::Config::getInstance()->proxyPort,
+                              PlexyDesk::Config::getInstance()->proxyUser,
+                              PlexyDesk::Config::getInstance()->proxyPasswd
+                             );
 
-              http->setProxy(NtProxy);
-	      QNetworkProxy::setApplicationProxy(NtProxy);
-	}
-	
-         connect(http, SIGNAL(requestFinished(int, bool)),
-                       SLOT(loadCallback(int, bool)));
+        http->setProxy(NtProxy);
+        QNetworkProxy::setApplicationProxy(NtProxy);
+    }
 
-	 http->setHost("www.flickr.com");    
+    connect(http, SIGNAL(requestFinished(int, bool)),
+            SLOT(loadCallback(int, bool)));
+
+    http->setHost("www.flickr.com");
     /*note 1 we are saving the request ID , so will call this in loadCallback*/
-    
-     requestID= http->get(QString("/search/?w=all&q=%1&m=text").arg(searchkey));
+
+    requestID = http->get(QString("/search/?w=all&q=%1&m=text").arg(searchkey));
 }
 
 ExampleData::~ExampleData()
 {
-        delete http;
+    delete http;
 }
 
 void ExampleData::pushData(QVariant& str)
@@ -71,11 +71,11 @@ void ExampleData::pushData(QVariant& str)
 
 void ExampleData::loadCallback(int id, bool stat)
 {
-   if(id == requestID ) /* this is a id we know  , and set on init() */ {
-     if (stat) /*our request had no errors*/ {
-        qDebug()<<http->readAll()<<endl; //print all the data we got from url
-     }
-   }
+    if (id == requestID) { /* this is a id we know  , and set on init() */
+        if (stat) { /*our request had no errors*/
+            qDebug() << http->readAll() << endl; //print all the data we got from url
+        }
+    }
 
 }
 

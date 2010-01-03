@@ -49,137 +49,137 @@
 class PictureFlowPrivate;
 
 /*!
-  Class PictureFlow implements an image show widget with animation effect 
-  like Apple's CoverFlow (in iTunes and iPod). Images are arranged in form 
-  of slides, one main slide is shown at the center with few slides on 
-  the left and right sides of the center slide. When the next or previous 
-  slide is brought to the front, the whole slides flow to the right or 
-  the right with smooth animation effect; until the new slide is finally 
+  Class PictureFlow implements an image show widget with animation effect
+  like Apple's CoverFlow (in iTunes and iPod). Images are arranged in form
+  of slides, one main slide is shown at the center with few slides on
+  the left and right sides of the center slide. When the next or previous
+  slide is brought to the front, the whole slides flow to the right or
+  the right with smooth animation effect; until the new slide is finally
   placed at the center.
 
- */ 
+ */
 class PictureFlow : public QWidget
 {
-Q_OBJECT
+    Q_OBJECT
 
-  Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor)
-  Q_PROPERTY(QSize slideSize READ slideSize WRITE setSlideSize)
-  Q_PROPERTY(int slideCount READ slideCount)
-  Q_PROPERTY(int centerIndex READ centerIndex WRITE setCenterIndex)
+    Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor)
+    Q_PROPERTY(QSize slideSize READ slideSize WRITE setSlideSize)
+    Q_PROPERTY(int slideCount READ slideCount)
+    Q_PROPERTY(int centerIndex READ centerIndex WRITE setCenterIndex)
 
 public:
-  /*!
-    Creates a new PictureFlow widget.
-  */  
-  PictureFlow(QWidget* parent = 0);
+    /*!
+      Creates a new PictureFlow widget.
+    */
+    PictureFlow(QWidget* parent = 0);
 
-  /*!
-    Destroys the widget.
-  */
-  ~PictureFlow();
+    /*!
+      Destroys the widget.
+    */
+    ~PictureFlow();
 
-  QColor backgroundColor() const;
+    QColor backgroundColor() const;
 
-  void setBackgroundColor(const QColor& c);
+    void setBackgroundColor(const QColor& c);
 
-  /*!
-    Returns the dimension of each slide (in pixels).
-  */  
-  QSize slideSize() const;
+    /*!
+      Returns the dimension of each slide (in pixels).
+    */
+    QSize slideSize() const;
 
-  /*!
-    Sets the dimension of each slide (in pixels).
-  */  
-  void setSlideSize(QSize size);
+    /*!
+      Sets the dimension of each slide (in pixels).
+    */
+    void setSlideSize(QSize size);
 
-  /*!
-    Returns the total number of slides.
-  */
-  int slideCount() const;
+    /*!
+      Returns the total number of slides.
+    */
+    int slideCount() const;
 
-  /*!
-    Returns QImage of specified slide.
-  */  
-  QImage slide(int index) const;
+    /*!
+      Returns QImage of specified slide.
+    */
+    QImage slide(int index) const;
 
-  /*!
-    Returns the index of slide currently shown in the middle of the viewport.
-  */  
-  int centerIndex() const;
+    /*!
+      Returns the index of slide currently shown in the middle of the viewport.
+    */
+    int centerIndex() const;
 
 public slots:
 
-  /*!
-    Adds a new slide.
-  */  
-  void addSlide(const QImage& image);
+    /*!
+      Adds a new slide.
+    */
+    void addSlide(const QImage& image);
 
-  /*!
-    Adds a new slide.
-  */  
-  void addSlide(const QPixmap& pixmap);
+    /*!
+      Adds a new slide.
+    */
+    void addSlide(const QPixmap& pixmap);
 
-  /*!
-    Sets an image for specified slide. If the slide already exists,
-    it will be replaced.
-  */  
-  void setSlide(int index, const QImage& image);
+    /*!
+      Sets an image for specified slide. If the slide already exists,
+      it will be replaced.
+    */
+    void setSlide(int index, const QImage& image);
 
-  /*!
-    Sets a pixmap for specified slide. If the slide already exists,
-    it will be replaced.
-  */  
-  void setSlide(int index, const QPixmap& pixmap);
+    /*!
+      Sets a pixmap for specified slide. If the slide already exists,
+      it will be replaced.
+    */
+    void setSlide(int index, const QPixmap& pixmap);
 
-  /*!
-    Sets slide to be shown in the middle of the viewport. No animation 
-    effect will be produced, unlike using showSlide.
-  */  
-  void setCenterIndex(int index);
+    /*!
+      Sets slide to be shown in the middle of the viewport. No animation
+      effect will be produced, unlike using showSlide.
+    */
+    void setCenterIndex(int index);
 
-  /*!
-    Clears all slides.
-  */
-  void clear();
+    /*!
+      Clears all slides.
+    */
+    void clear();
 
-  /*!
-    Shows previous slide using animation effect.
-  */
-  void showPrevious();
+    /*!
+      Shows previous slide using animation effect.
+    */
+    void showPrevious();
 
-  /*!
-    Shows next slide using animation effect.
-  */
-  void showNext();
+    /*!
+      Shows next slide using animation effect.
+    */
+    void showNext();
 
-  /*!
-    Go to specified slide using animation effect.
-  */
-  void showSlide(int index);
+    /*!
+      Go to specified slide using animation effect.
+    */
+    void showSlide(int index);
 
-  /*!
-    Rerender the widget. Normally this function will be automatically invoked
-    whenever necessary, e.g. during the transition animation.
-  */
-  void render();
+    /*!
+      Rerender the widget. Normally this function will be automatically invoked
+      whenever necessary, e.g. during the transition animation.
+    */
+    void render();
 
-  /*!
-    Schedules a rendering update. Unlike render(), this function does not cause
-    immediate rendering.
-  */  
-  void triggerRender();
+    /*!
+      Schedules a rendering update. Unlike render(), this function does not cause
+      immediate rendering.
+    */
+    void triggerRender();
 
 
 protected:
-  void paintEvent(QPaintEvent *event);
-  void keyPressEvent(QKeyEvent* event);
-  void resizeEvent(QResizeEvent* event);
+    void paintEvent(QPaintEvent *event);
+    void keyPressEvent(QKeyEvent* event);
+    void resizeEvent(QResizeEvent* event);
 
 private slots:
-  void updateAnimation();
+    void updateAnimation();
 
 private:
-  PictureFlowPrivate* d;
+    PictureFlowPrivate* d;
 };
 
 #endif // PICTUREFLOW_H

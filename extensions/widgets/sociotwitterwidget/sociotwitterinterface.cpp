@@ -9,7 +9,7 @@ SocioTwitterInterface::SocioTwitterInterface(QObject * object)
 
 PlexyDesk::BasePlugin * SocioTwitterInterface::instance()
 {
-	return new SocioTwitter(this);
+    return new SocioTwitter(this);
 }
 
-Q_EXPORT_PLUGIN2(SocioTwitterInterface,SocioTwitterInterface)
+Q_EXPORT_PLUGIN2(SocioTwitterInterface, SocioTwitterInterface)

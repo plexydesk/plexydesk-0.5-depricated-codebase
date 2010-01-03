@@ -24,16 +24,17 @@
 
 namespace PlexyDesk
 {
-class VideoEntity {
-    
-    public:
-        VideoEntity();
-        virtual ~VideoEntity();
-        
-        QString title;
-        QString link;
-        QString desc;
-        QString thumb;
+class VideoEntity
+{
+
+public:
+    VideoEntity();
+    virtual ~VideoEntity();
+
+    QString title;
+    QString link;
+    QString desc;
+    QString thumb;
 };
 }
 #endif

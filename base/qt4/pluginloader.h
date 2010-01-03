@@ -27,44 +27,43 @@
 
 namespace PlexyDesk
 {
-    class VISIBLE_SYM PluginLoader : public QObject
-    {
-        Q_OBJECT
+class VISIBLE_SYM PluginLoader : public QObject
+{
+    Q_OBJECT
 
-    public:
-        typedef QHash <QString,AbstractPluginInterface*> Interface;
+public:
+    typedef QHash <QString, AbstractPluginInterface*> Interface;
 
-        PluginLoader();
-        virtual ~PluginLoader();
+    PluginLoader();
+    virtual ~PluginLoader();
 
-        static PluginLoader * getInstance();
+    static PluginLoader * getInstance();
 
-        QStringList listPlugins(const QString& types);
-        BasePlugin * instance(const QString& name);
-        void scanDisk();
+    QStringList listPlugins(const QString& types);
+    BasePlugin * instance(const QString& name);
+    void scanDisk();
 
-        QString applicationDirPath()
-        {
+    QString applicationDirPath() {
 #ifdef Q_WS_WIN
-            return QString(QCoreApplication::applicationDirPath() + "/..");
+        return QString(QCoreApplication::applicationDirPath() + "/..");
 #else
-            return QString(PLEXPREFIX);
+        return QString(PLEXPREFIX);
 #endif
-        }
+    }
 
-    protected:
-        void loadDesktop(const QString& path);
-        void load(const QString& _interface, const QString& plugin);
+protected:
+    void loadDesktop(const QString& path);
+    void load(const QString& _interface, const QString& plugin);
 
-    private:
-        class Private;
-        Private * const d ;
+private:
+    class Private;
+    Private * const d ;
 #ifdef Q_WS_WIN
-        static PluginLoader *mInstance;
+    static PluginLoader *mInstance;
 #else
-        static VISIBLE_SYM PluginLoader * mInstance;
+    static VISIBLE_SYM PluginLoader * mInstance;
 #endif
-    };
+};
 
 } // namespace PlexDesk
 

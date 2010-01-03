@@ -3,7 +3,7 @@
 void Frame::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
 {
 
-    render.render(painter,rect());
+    render.render(painter, rect());
     /*
         painter->save();
         painter->setRenderHint(QPainter::Antialiasing,false);

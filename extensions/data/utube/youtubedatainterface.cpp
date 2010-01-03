@@ -22,18 +22,18 @@
 #include <plexyconfig.h>
 
 #include <QtPlugin>
-    
+
 YouTubeDataInterface::YouTubeDataInterface(QObject * object)
 {
 }
 
-YouTubeDataInterface::~YouTubeDataInterface ()
+YouTubeDataInterface::~YouTubeDataInterface()
 {
 }
 
 PlexyDesk::DataPlugin *YouTubeDataInterface::instance()
 {
-	return new UtubeData();
+    return new UtubeData();
 }
 
 Q_EXPORT_PLUGIN2(YouTubeDataInterface, YouTubeDataInterface)

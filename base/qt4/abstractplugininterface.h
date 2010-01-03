@@ -26,12 +26,12 @@
 
 namespace PlexyDesk
 {
-    class VISIBLE_SYM AbstractPluginInterface : public QObject
-    {
-        Q_OBJECT
-    public:
-        virtual BasePlugin * instance() = 0;
-    };
+class VISIBLE_SYM AbstractPluginInterface : public QObject
+{
+    Q_OBJECT
+public:
+    virtual BasePlugin * instance() = 0;
+};
 } // namespace PlexyDesk
 
 Q_DECLARE_INTERFACE(PlexyDesk::AbstractPluginInterface, "org.plexydesk.PluginInterface")

@@ -29,31 +29,31 @@ FlickerData::FlickerData(QObject * object)
     currentSlide = 0;
     searchkey = "fresh morning";
     http = new QHttp(this);
-    //	init();
+    //  init();
     imageTimer = new QTimer(this);
-    connect(imageTimer,SIGNAL(timeout()),this,SLOT(nextImage()));
+    connect(imageTimer, SIGNAL(timeout()), this, SLOT(nextImage()));
 }
 
 void  FlickerData::init()
 {
 
-    if(PlexyDesk::Config::getInstance()->proxyOn){ 
+    if (PlexyDesk::Config::getInstance()->proxyOn) {
         QNetworkProxy NtProxy(PlexyDesk::Config::getInstance()->proxyType,
-            PlexyDesk::Config::getInstance()->proxyURL,
-            PlexyDesk::Config::getInstance()->proxyPort,
-            PlexyDesk::Config::getInstance()->proxyUser,
-            PlexyDesk::Config::getInstance()->proxyPasswd
-            );
+                              PlexyDesk::Config::getInstance()->proxyURL,
+                              PlexyDesk::Config::getInstance()->proxyPort,
+                              PlexyDesk::Config::getInstance()->proxyUser,
+                              PlexyDesk::Config::getInstance()->proxyPasswd
+                             );
 
         http->setProxy(NtProxy);
         QNetworkProxy::setApplicationProxy(NtProxy);
     }
 
     connect(http, SIGNAL(requestFinished(int, bool)),
-        SLOT(loadImages(int, bool)));
+            SLOT(loadImages(int, bool)));
 
-    http->setHost("www.flickr.com");    
-    requestID= http->get(QString("/search/?w=all&q=%1&m=text").arg(searchkey));
+    http->setHost("www.flickr.com");
+    requestID = http->get(QString("/search/?w=all&q=%1&m=text").arg(searchkey));
 }
 
 FlickerData::~FlickerData()
@@ -65,13 +65,13 @@ void FlickerData::nextImage()
 {
 
     QString hostURL = images.at(currentSlide);
-    QString host  (hostURL.mid(7,23));
-    QString fileName (hostURL.mid(24+6,hostURL.length()+1));
+    QString host(hostURL.mid(7, 23));
+    QString fileName(hostURL.mid(24 + 6, hostURL.length() + 1));
 
     http->setHost(host);
     dataID = http->get(fileName);
     currentSlide++;
-    if (currentSlide > slideCount-1) {
+    if (currentSlide > slideCount - 1) {
         currentSlide = 0;
         imageTimer->stop();
     }
@@ -93,29 +93,29 @@ void FlickerData::loadImages(int id, bool stat)
             const char *data = ba.constData();
             const int len = 30;
             int i = 0;
-            while (i < ba.size()-5) {
+            while (i < ba.size() - 5) {
                 if (data[i] == '.') {
                     if (data[i+1] == 'j' && data[i+2] == 'p'
-                        && data[i+3] == 'g' && data[i+4] == '\"') {
-                            int j = i;
-                            while (j > 0 && data[j] != '\"') --j;
-                            QByteArray addr(ba.mid(j+1, i-j+3));
-                            char farmID = addr.at(11);
-                            QByteArray serverID (addr.mid(30,4));
-                            addr = addr.replace(QByteArray("_m"),QByteArray("_o"));
-                            images<< QString(addr);
+                            && data[i+3] == 'g' && data[i+4] == '\"') {
+                        int j = i;
+                        while (j > 0 && data[j] != '\"') --j;
+                        QByteArray addr(ba.mid(j + 1, i - j + 3));
+                        char farmID = addr.at(11);
+                        QByteArray serverID(addr.mid(30, 4));
+                        addr = addr.replace(QByteArray("_m"), QByteArray("_o"));
+                        images << QString(addr);
                     }
                 }
                 ++i;
             }
         }
-        if ( images.size() > 0) {
+        if (images.size() > 0) {
             slideCount = images.count();
             imageTimer->start(5000);
         }
     }
 
-    if (id >  requestID ) {
+    if (id >  requestID) {
         if (http->bytesAvailable() > 0) {
 
             QByteArray img = http->readAll();
@@ -125,13 +125,13 @@ void FlickerData::loadImages(int id, bool stat)
                 QVariant image(img);
                 dataItem = image;
                 emit dataReady();
-            }else {
-                qDebug()<<"Invalid Image data"<<endl;
+            } else {
+                qDebug() << "Invalid Image data" << endl;
             }
         }
     }
 
-    if (id == slideCount -1) {
+    if (id == slideCount - 1) {
         imageTimer->start(5000);
     }
 
@@ -139,7 +139,7 @@ void FlickerData::loadImages(int id, bool stat)
 
 QVariantMap FlickerData::readAll()
 {
- QVariantMap map;
- map["image"] = dataItem;
- return map;
+    QVariantMap map;
+    map["image"] = dataItem;
+    return map;
 }

@@ -27,19 +27,19 @@
 #include "frameitem.h"
 
 
-class VISIBLE_SYM Welcome :public PlexyDesk::WidgetPlugin
+class VISIBLE_SYM Welcome : public PlexyDesk::WidgetPlugin
 {
     Q_OBJECT
 
-    public:
-        Welcome(QObject * object = 0);
-        virtual ~Welcome();
-        virtual QGraphicsItem * item();
-    private:
-        WellcomeItem * icon1;
-        WellcomeItem * icon2;
-        WellcomeItem * icon3;
-        Frame * frm;
+public:
+    Welcome(QObject * object = 0);
+    virtual ~Welcome();
+    virtual QGraphicsItem * item();
+private:
+    WellcomeItem * icon1;
+    WellcomeItem * icon2;
+    WellcomeItem * icon3;
+    Frame * frm;
 };
 
 

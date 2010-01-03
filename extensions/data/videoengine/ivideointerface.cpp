@@ -29,7 +29,7 @@ IVideoInterface::IVideoInterface(QObject * object)
 
 PlexyDesk::DataPlugin *  IVideoInterface::instance()
 {
-	return new VideoData();
+    return new VideoData();
 }
 
-Q_EXPORT_PLUGIN2(IVideoInterface,IVideoInterface)
+Q_EXPORT_PLUGIN2(IVideoInterface, IVideoInterface)

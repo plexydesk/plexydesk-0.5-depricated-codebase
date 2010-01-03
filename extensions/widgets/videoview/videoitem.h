@@ -28,25 +28,25 @@
 
 namespace PlexyDesk
 {
-    class VideoWidget: public DesktopWidget
-    {
-        Q_OBJECT
-    public:
-        VideoWidget(const QRectF &rect, QWidget *embeddedWidget = 0);
-        virtual ~VideoWidget();
-        void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
-        void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
-        void setFrameImage(QImage& img);
-        QRectF boundingRect() const;
-        void setCoverPic(QImage img);
+class VideoWidget: public DesktopWidget
+{
+    Q_OBJECT
+public:
+    VideoWidget(const QRectF &rect, QWidget *embeddedWidget = 0);
+    virtual ~VideoWidget();
+    void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
+    void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
+    void setFrameImage(QImage& img);
+    QRectF boundingRect() const;
+    void setCoverPic(QImage img);
 
-    signals:
-        void swtch();
+signals:
+    void swtch();
 
-    private:
-        QImage cover;
-        QImage video;
-    };
+private:
+    QImage cover;
+    QImage video;
+};
 } // namespace PlexyDesk
 
 #endif

@@ -27,20 +27,20 @@
 namespace PlexyDesk
 {
 
-    class WidgetItem: public DesktopWidget
-    {
+class WidgetItem: public DesktopWidget
+{
 
     Q_OBJECT
-        public:
-        WidgetItem(const QRectF &rect, QWidget *embeddedWidget = 0);
-        virtual ~WidgetItem();
-        void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
-        void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
-        QRectF boundingRect() const;
-        private:
-	QImage dateImg;
+public:
+    WidgetItem(const QRectF &rect, QWidget *embeddedWidget = 0);
+    virtual ~WidgetItem();
+    void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
+    void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
+    QRectF boundingRect() const;
+private:
+    QImage dateImg;
 
-    };
+};
 
 
 } // namespace PlexyDesk

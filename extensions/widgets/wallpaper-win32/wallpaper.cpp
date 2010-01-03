@@ -34,7 +34,7 @@ QGraphicsItem * WallpaperChange::item()
     button->move(10, 10);
     connect(button, SIGNAL(clicked(bool)), this, SLOT(changeWallpaper(bool)));
 
-    return new WallpaperWidget(QRectF(0,0,340,240), button);
+    return new WallpaperWidget(QRectF(0, 0, 340, 240), button);
 }
 
 void WallpaperChange::pushData(QVariant&)

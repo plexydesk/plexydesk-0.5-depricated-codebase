@@ -29,7 +29,7 @@ FlickerInterface::FlickerInterface(QObject * object)
 
 PlexyDesk::DataPlugin *FlickerInterface::instance()
 {
-	return new FlickerData();
+    return new FlickerData();
 }
 
 Q_EXPORT_PLUGIN2(FlickerInterface, FlickerInterface)

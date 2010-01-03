@@ -30,7 +30,7 @@
 
 class QHttp;
 
-class VISIBLE_SYM FlickerData :public PlexyDesk::DataPlugin
+class VISIBLE_SYM FlickerData : public PlexyDesk::DataPlugin
 {
     Q_OBJECT
 

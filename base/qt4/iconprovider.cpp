@@ -17,7 +17,7 @@ public:
 };
 
 
-IconProvider::IconProvider():d(new Private)
+IconProvider::IconProvider(): d(new Private)
 {
 }
 

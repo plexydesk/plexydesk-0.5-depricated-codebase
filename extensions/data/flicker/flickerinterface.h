@@ -24,7 +24,7 @@
 #include <abstractplugininterface.h>
 #include <datainterface.h>
 #include <dataplugin.h>
-#include "flicker.h" 
+#include "flicker.h"
 
 class VISIBLE_SYM FlickerInterface : public PlexyDesk::DataInterface
 {
@@ -33,7 +33,7 @@ class VISIBLE_SYM FlickerInterface : public PlexyDesk::DataInterface
 
 public:
     FlickerInterface(QObject * object = 0);
-    virtual ~FlickerInterface(){}
+    virtual ~FlickerInterface() {}
     PlexyDesk::DataPlugin * instance();
 
 };

@@ -27,15 +27,15 @@
 
 #include <QObject>
 
-class VISIBLE_SYM IVideoInterface :public PlexyDesk::DataInterface
+class VISIBLE_SYM IVideoInterface : public PlexyDesk::DataInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
-    public:
-        IVideoInterface(QObject * object = 0);
-        virtual ~IVideoInterface(){}
-        PlexyDesk::DataPlugin * instance();
+public:
+    IVideoInterface(QObject * object = 0);
+    virtual ~IVideoInterface() {}
+    PlexyDesk::DataPlugin * instance();
 
 };
 

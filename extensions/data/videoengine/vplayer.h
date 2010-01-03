@@ -27,26 +27,26 @@
 
 namespace PlexyDesk
 {
-    class VISIBLE_SYM VPlayer : public QObject
-    {
-        Q_OBJECT
-       
-        public :
-            VPlayer(QObject *parent= 0);
-            ~VPlayer();
-            void setFileName(const QString& Path);
-        public slots:
-	    void decode();
-        signals:
-	    void videoDone();
-	    void frameReady(QImage & img);
-	
-       protected:
-            void init();
-       private:
-           class Private;
-           Private * const d;
-    };
+class VISIBLE_SYM VPlayer : public QObject
+{
+    Q_OBJECT
+
+public :
+    VPlayer(QObject *parent = 0);
+    ~VPlayer();
+    void setFileName(const QString& Path);
+public slots:
+    void decode();
+signals:
+    void videoDone();
+    void frameReady(QImage & img);
+
+protected:
+    void init();
+private:
+    class Private;
+    Private * const d;
+};
 
 }
 #endif

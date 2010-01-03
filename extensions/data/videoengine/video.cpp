@@ -34,7 +34,7 @@ void VideoData::pushData(QVariant& data)
 void  VideoData::init()
 {
     vplayer = new PlexyDesk::VPlayer();
-    connect(vplayer,SIGNAL(frameReady(QImage&)),this,SLOT(grab(QImage&)));
+    connect(vplayer, SIGNAL(frameReady(QImage&)), this, SLOT(grab(QImage&)));
 }
 
 VideoData::~VideoData()
@@ -43,7 +43,7 @@ VideoData::~VideoData()
 
 void VideoData::grab(QImage & img)
 {
-    if (! img.isNull() ) {
+    if (! img.isNull()) {
         QVariant frame = img;
         emit data(frame);
     }

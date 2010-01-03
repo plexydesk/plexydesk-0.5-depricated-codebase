@@ -26,22 +26,22 @@
 namespace PlexyDesk
 {
 
-    class ImagePileWidget: public DesktopWidget
-    {
-        Q_OBJECT
-    public:
-        ImagePileWidget(const QRectF &rect, QWidget *embeddedWidget = 0);
-        virtual ~ImagePileWidget();
-        void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
-        void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
-        QRectF boundingRect() const;
-        void setCoverPic(QImage img);
-    signals:
-        void swtch();
+class ImagePileWidget: public DesktopWidget
+{
+    Q_OBJECT
+public:
+    ImagePileWidget(const QRectF &rect, QWidget *embeddedWidget = 0);
+    virtual ~ImagePileWidget();
+    void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
+    void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
+    QRectF boundingRect() const;
+    void setCoverPic(QImage img);
+signals:
+    void swtch();
 
-    private:
-        QImage cover;
-    };
+private:
+    QImage cover;
+};
 
 
 } // namespace PlexyDesk

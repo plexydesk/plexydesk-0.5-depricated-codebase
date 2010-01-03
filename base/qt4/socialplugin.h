@@ -7,16 +7,16 @@
 
 namespace PlexyDesk
 {
-    class VISIBLE_SYM SocialPlugin : public BasePlugin
-    {
-        Q_OBJECT
-    public :
-        SocialPlugin(QObject  * object = 0) {}
-        virtual ~SocialPlugin() {}
-    public slots:
-        virtual void pushSocial(QVariant&) = 0;
-    signals:
-        virtual void data(QVariant&)=0;
-    };
+class VISIBLE_SYM SocialPlugin : public BasePlugin
+{
+    Q_OBJECT
+public :
+    SocialPlugin(QObject  * object = 0) {}
+    virtual ~SocialPlugin() {}
+public slots:
+    virtual void pushSocial(QVariant&) = 0;
+signals:
+    virtual void data(QVariant&) = 0;
+};
 }
 #endif

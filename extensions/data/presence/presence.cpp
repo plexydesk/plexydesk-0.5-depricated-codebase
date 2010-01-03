@@ -1,7 +1,7 @@
 /*******************************************************************************
 * This file is part of PlexyDesk.
 *  Maintained by : Dariusz Mikulski <dariusz.mikulski@gmail.com>
-*  Authored By  : 
+*  Authored By  :
 *
 *  PlexyDesk is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU Lesser General Public License as published by
@@ -29,25 +29,24 @@
 
 class PresenceData::PresenceDataPrivate
 {
-	PresenceData *parent;
+    PresenceData *parent;
 public:
-	PresenceDataPrivate(PresenceData *p) : parent(p) {}
+    PresenceDataPrivate(PresenceData *p) : parent(p) {}
 
-	Telepathy::Client::AccountManager * m_accountManager;
+    Telepathy::Client::AccountManager * m_accountManager;
 
-	void createAccountDataSource(const QString &path)
-	{
-		qDebug() << "createAccountDataSource called";
-		qDebug() << path;
-	    Telepathy::Client::Account *account = accountFromPath(path);
+    void createAccountDataSource(const QString &path) {
+        qDebug() << "createAccountDataSource called";
+        qDebug() << path;
+        Telepathy::Client::Account *account = accountFromPath(path);
 
-	    QString source;
-	    source = account->uniqueIdentifier();
+        QString source;
+        source = account->uniqueIdentifier();
 
-	    Telepathy::SimplePresence sp = account->currentPresence();
+        Telepathy::SimplePresence sp = account->currentPresence();
 
         QVariant vsp;
-	    vsp.setValue(sp);
+        vsp.setValue(sp);
 
         QVariantMap datas;
         datas.insert(source, vsp);
@@ -55,26 +54,24 @@ public:
         QVariant sendData;
         sendData.setValue(datas);
         emit parent->data(sendData);
-	}
+    }
 
-	void removeAccountDataSource(const QString &path)
-	{
-		qDebug() << "removeAccountDataSource called";
-		qDebug() << path;
+    void removeAccountDataSource(const QString &path) {
+        qDebug() << "removeAccountDataSource called";
+        qDebug() << path;
 
-		Telepathy::Client::Account *account = accountFromPath(path);
-		QString identifier = account->uniqueIdentifier();
-		//parent->removeSource(identifier);
-	}
+        Telepathy::Client::Account *account = accountFromPath(path);
+        QString identifier = account->uniqueIdentifier();
+        //parent->removeSource(identifier);
+    }
 
-	Telepathy::Client::Account *accountFromPath(const QString &path)
-	{
-		return m_accountManager->accountForPath(path);
-	}
+    Telepathy::Client::Account *accountFromPath(const QString &path) {
+        return m_accountManager->accountForPath(path);
+    }
 };
 
 PresenceData::PresenceData(QObject * parent)
-    : d(new PresenceDataPrivate(this))
+        : d(new PresenceDataPrivate(this))
 {
     // Register custom types:
     Telepathy::registerTypes();
@@ -85,7 +82,7 @@ PresenceData::PresenceData(QObject * parent)
  */
 PresenceData::~PresenceData()
 {
-	delete d;
+    delete d;
 }
 
 /**
@@ -98,28 +95,27 @@ void PresenceData::init()
      * check that we are connected to the session
      * bus OK.
      */
-    if (!QDBusConnection::sessionBus().isConnected())
-    {
+    if (!QDBusConnection::sessionBus().isConnected()) {
         qDebug() << "PresenceEngine::init(): cannot connect to session bus.";
     }
 
-   /*
-    * set up the dbus accountmanager object
-    * which will provide all the data to this
-    * data engine.
-    */
+    /*
+     * set up the dbus accountmanager object
+     * which will provide all the data to this
+     * data engine.
+     */
     d->m_accountManager =
-    	new Telepathy::Client::AccountManager(QDBusConnection::sessionBus());
+        new Telepathy::Client::AccountManager(QDBusConnection::sessionBus());
 
     /*
      * connect signal from the account manager
      * to waiting when it's ready
      */
     connect(d->m_accountManager->becomeReady(),
-    		SIGNAL(finished(Telepathy::Client::PendingOperation*)),
-    		this,
-    		SLOT(onAccountReady(Telepathy::Client::PendingOperation*))
-    		);
+            SIGNAL(finished(Telepathy::Client::PendingOperation*)),
+            this,
+            SLOT(onAccountReady(Telepathy::Client::PendingOperation*))
+           );
 
     /*
      * connect signals from the account manager
@@ -140,12 +136,11 @@ void PresenceData::init()
 
 void PresenceData::onAccountReady(Telepathy::Client::PendingOperation *operation)
 {
-	qDebug() << "onAccountReady() called";
-	if(operation->isError())
-	{
-		qDebug() << operation->errorName() << ": " << operation->errorMessage();
-		return;
-	}
+    qDebug() << "onAccountReady() called";
+    if (operation->isError()) {
+        qDebug() << operation->errorName() << ": " << operation->errorMessage();
+        return;
+    }
 
     QStringList pathList = d->m_accountManager->allAccountPaths();
     qDebug() << "All Account Paths: " << pathList.size();
@@ -161,8 +156,7 @@ void PresenceData::onAccountReady(Telepathy::Client::PendingOperation *operation
      * create a datasource for each
      * of the accounts we got in the list.
      */
-    foreach(const QString &path, pathList)
-    {
+    foreach(const QString &path, pathList) {
         d->createAccountDataSource(path);
     }
 }
@@ -189,7 +183,7 @@ void PresenceData::accountCreated(const QString &path)
  */
 void PresenceData::accountValidityChanged(const QString &path, bool valid)
 {
-	Q_UNUSED(valid);
+    Q_UNUSED(valid);
     qDebug() << "accountValidityChanged() called";
     /*
      * slot called when an account has
@@ -216,6 +210,6 @@ void PresenceData::accountRemoved(const QString &path)
 
 void PresenceData::pushData(QVariant& v)
 {
-    
+
 }
 

@@ -22,15 +22,15 @@
 #include <plexyconfig.h>
 
 
-    
+
 LPhotosInterface::LPhotosInterface(QObject * object)
 {
 }
 
 PlexyDesk::DataPlugin *  LPhotosInterface::instance()
 {
- return new LPhotoData();
+    return new LPhotoData();
 }
 
-Q_EXPORT_PLUGIN2(LPhotosInterface,LPhotosInterface)
+Q_EXPORT_PLUGIN2(LPhotosInterface, LPhotosInterface)
 #include "localphotosinterface.moc"

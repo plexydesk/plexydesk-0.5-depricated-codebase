@@ -16,9 +16,9 @@
       flicker, a website or even your own local disk. The plugin would emit dataReady() signal
       when the data has been collected or if a data item is ready. once it's ready the client
       can read the abstracted data from readAll() function which returns a QVariantMap of data.
-      
+
       When you are required to pass data to the plugin you should use pushData method provided by
-      the plugin, this can be used for telling the plugin which youtube feeds you are interested in, 
+      the plugin, this can be used for telling the plugin which youtube feeds you are interested in,
       or telling it which images to display from flicker. Code snippets below illustrates how
       plugins can be used from a client application.
 
@@ -34,7 +34,7 @@
      When you need to provide a plugin of you own, simply inhert this and write a class and wrapp
      the class in a DataPlugin interface. Emit dataReady() signal when you data source is ready to
      be used, and provide the data from readAll method. look at the numours examples shiped with
-     plexydesk extenstions folder to get started with writting your own. 
+     plexydesk extenstions folder to get started with writting your own.
 
      \fn PlexyDesk::DataPlugin::readAll()
      \brief Provides the data of the plugin as a QVariantMap

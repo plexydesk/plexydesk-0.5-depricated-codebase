@@ -23,37 +23,37 @@
 
 namespace PlexyDesk
 {
-    ClockItem::ClockItem(const QRectF &rect, QWidget *widget ):DesktopWidget(rect,widget)
-    {
-        setDockImage(QPixmap(applicationDirPath() + "/share/plexy/skins/widgets/widget01/schedulepng.png"));
-    }
+ClockItem::ClockItem(const QRectF &rect, QWidget *widget): DesktopWidget(rect, widget)
+{
+    setDockImage(QPixmap(applicationDirPath() + "/share/plexy/skins/widgets/widget01/schedulepng.png"));
+}
 
-    ClockItem::~ClockItem()
-    {
+ClockItem::~ClockItem()
+{
 
-    }
+}
 
-    void ClockItem::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
-    {
-    }
+void ClockItem::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
+{
+}
 
-    void ClockItem::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
-    {
+void ClockItem::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
+{
 
-        p->setRenderHints(QPainter::SmoothPixmapTransform |QPainter::Antialiasing |QPainter::HighQualityAntialiasing);
+    p->setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing | QPainter::HighQualityAntialiasing);
 
-        p->setPen(QColor(255,255,255));
-        p->setFont(QFont("Bitstream Charter",15));
-        p->drawText(QRect(20,25,160,160), Qt::AlignTop ,QDate::shortMonthName(QDate::currentDate().month() ) ) ;
+    p->setPen(QColor(255, 255, 255));
+    p->setFont(QFont("Bitstream Charter", 15));
+    p->drawText(QRect(20, 25, 160, 160), Qt::AlignTop , QDate::shortMonthName(QDate::currentDate().month())) ;
 
-        p->setPen(QColor(0,0,255));
-        p->setFont(QFont("Bitstream Charter",50));
-        p->drawText(QRect(20,40,160,160), Qt::AlignTop ,QString("%1").arg(QDate::currentDate().day() )  )  ;
-    }
+    p->setPen(QColor(0, 0, 255));
+    p->setFont(QFont("Bitstream Charter", 50));
+    p->drawText(QRect(20, 40, 160, 160), Qt::AlignTop , QString("%1").arg(QDate::currentDate().day()))  ;
+}
 
-    QRectF ClockItem::boundingRect() const
-    {
-        return rect();
-    }
+QRectF ClockItem::boundingRect() const
+{
+    return rect();
+}
 
 } // namespace PlexyDesk

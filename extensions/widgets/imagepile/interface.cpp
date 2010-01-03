@@ -32,4 +32,4 @@ PlexyDesk::BasePlugin* Interface::instance()
     return new ImagePlugin();
 }
 
-Q_EXPORT_PLUGIN2(Interface,Interface)
+Q_EXPORT_PLUGIN2(Interface, Interface)

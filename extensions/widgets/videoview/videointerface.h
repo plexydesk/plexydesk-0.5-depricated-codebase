@@ -27,14 +27,14 @@
 #include <widgetinterface.h>
 #include "videoitem.h"
 
-class VISIBLE_SYM VideoInterface :public PlexyDesk::WidgetInterface
+class VISIBLE_SYM VideoInterface : public PlexyDesk::WidgetInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::WidgetInterface)
 
-    public:
-        VideoInterface(QObject * object=0);
-        PlexyDesk::BasePlugin* instance ();
+public:
+    VideoInterface(QObject * object = 0);
+    PlexyDesk::BasePlugin* instance();
 };
 
 #endif

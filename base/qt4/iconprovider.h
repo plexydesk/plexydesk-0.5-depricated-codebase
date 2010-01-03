@@ -13,7 +13,7 @@ class VISIBLE_SYM IconProvider : public QObject
 {
     Q_OBJECT
 public:
-    IconProvider ();
+    IconProvider();
     IconJobPtr requestIcon(const QString& name, const QString&);
 private:
     class Private;

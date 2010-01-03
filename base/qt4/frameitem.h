@@ -8,13 +8,12 @@
 #include <config.h>
 #include <plexy.h>
 
-class VISIBLE_SYM Frame :public  QGraphicsRectItem
+class VISIBLE_SYM Frame : public  QGraphicsRectItem
 {
 public:
-    Frame(const QRectF& rect,QGraphicsItem * parent = 0):QGraphicsRectItem(rect,parent)
-    {
+    Frame(const QRectF& rect, QGraphicsItem * parent = 0): QGraphicsRectItem(rect, parent) {
         setFlag(QGraphicsItem::ItemIsMovable , true);
-        render.load(QString(PLEXPREFIX)+"/share/plexy/skins/default/welcome/welcome.svg");
+        render.load(QString(PLEXPREFIX) + "/share/plexy/skins/default/welcome/welcome.svg");
     }
     void  paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
 private:

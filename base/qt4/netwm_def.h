@@ -59,8 +59,7 @@
   @author Bradley T. Hughes <bhughes@trolltech.com>
 **/
 
-struct NETPoint
-{
+struct NETPoint {
     /**
        Constructor to initialize this point to 0,0.
     **/
@@ -87,8 +86,7 @@ struct NETPoint
   @author Bradley T. Hughes <bhughes@trolltech.com>
 **/
 
-struct NETSize
-{
+struct NETSize {
     /**
        Constructor to initialize this size to 0x0
     **/
@@ -111,8 +109,7 @@ struct NETSize
    NETRect is only used by the NET API. Usually QRect is the
    appropriate class for representing a rectangle.
 **/
-struct NETRect
-{
+struct NETRect {
     /**
        Position of the rectangle.
 
@@ -140,8 +137,7 @@ struct NETRect
    appropriate class for representing an icon.
 **/
 
-struct NETIcon
-{
+struct NETIcon {
     /**
        Constructor to initialize this icon to 0x0 with data=0
     **/
@@ -172,8 +168,7 @@ struct NETIcon
    See the _NET_WM_STRUT_PARTIAL property in the NETWM spec.
 **/
 
-struct NETExtendedStrut
-{
+struct NETExtendedStrut {
     /**
        Constructor to initialize this struct to 0,0,0,0
     **/
@@ -215,8 +210,7 @@ struct NETExtendedStrut
    property in the NETWM spec.
 **/
 
-struct NETStrut
-{
+struct NETStrut {
     /**
        Constructor to initialize this struct to 0,0,0,0
     **/
@@ -269,8 +263,7 @@ public:
        application.
     **/
 
-    enum Role
-    {
+    enum Role {
         Client,
         WindowManager
     };
@@ -300,13 +293,12 @@ public:
        decorations. This is for windows that would normally use either override_redirect
        or Motif hints to give no decorations.  This is a KDE extension to the
        _NET_WM_WINDOW_TYPE mechanism.
-       
+
        @li TopMenu indicates a toplevel menu (AKA macmenu). This is a KDE extension to the
        _NET_WM_WINDOW_TYPE mechanism.
     **/
 
-    enum WindowType
-    {
+    enum WindowType {
         Unknown  = -1,
         Normal   = 0,
         Desktop  = 1,
@@ -326,22 +318,21 @@ public:
         for the properties argument of the NETRootInfo constructor.
         @since 3.2
     **/
-    enum WindowTypeMask
-    {
-        NormalMask   = 1<<0,
-        DesktopMask  = 1<<1,
-        DockMask     = 1<<2,
-        ToolbarMask  = 1<<3,
-        MenuMask     = 1<<4,
-        DialogMask   = 1<<5,
-        OverrideMask = 1<<6,
-        TopMenuMask  = 1<<7,
-        UtilityMask  = 1<<8,
-        SplashMask   = 1<<9
+    enum WindowTypeMask {
+        NormalMask   = 1 << 0,
+        DesktopMask  = 1 << 1,
+        DockMask     = 1 << 2,
+        ToolbarMask  = 1 << 3,
+        MenuMask     = 1 << 4,
+        DialogMask   = 1 << 5,
+        OverrideMask = 1 << 6,
+        TopMenuMask  = 1 << 7,
+        UtilityMask  = 1 << 8,
+        SplashMask   = 1 << 9
     };
 
     // KDE4 move to WindowTypeMask
-    enum { AllTypesMask = 0LU-1 };
+    enum { AllTypesMask = 0LU - 1 };
 
     /**
      * Returns true if the given window type matches the mask given
@@ -381,7 +372,7 @@ public:
        @li KeepBelow indicates that a window should be below most windows (but above any desktop windows).
 
        @li StaysOnTop is an obsolete name for KeepAbove.
-       
+
        @li DemandsAttention there was an attempt to activate this window, but the window manager prevented
            this. E.g. taskbar should mark such window specially to bring user's attention to this window.
            Only the window manager is allowed to change it.
@@ -390,22 +381,21 @@ public:
        should avoid setting these states themselves.
     **/
 
-    enum State
-    {
-        Modal        = 1<<0,
-        Sticky       = 1<<1,
-        MaxVert      = 1<<2,
-        MaxHoriz     = 1<<3,
+    enum State {
+        Modal        = 1 << 0,
+        Sticky       = 1 << 1,
+        MaxVert      = 1 << 2,
+        MaxHoriz     = 1 << 3,
         Max = MaxVert | MaxHoriz,
-        Shaded       = 1<<4,
-        SkipTaskbar  = 1<<5,
-        KeepAbove    = 1<<6, ///< @since 3.2
+        Shaded       = 1 << 4,
+        SkipTaskbar  = 1 << 5,
+        KeepAbove    = 1 << 6, ///< @since 3.2
         StaysOnTop   = KeepAbove, // NOT STANDARD
-        SkipPager    = 1<<7,
-        Hidden       = 1<<8, ///< @since 3.2
-        FullScreen   = 1<<9, ///< @since 3.2
-        KeepBelow    = 1<<10, ///< @since 3.2
-        DemandsAttention = 1<<11  ///< @since 3.2
+        SkipPager    = 1 << 7,
+        Hidden       = 1 << 8, ///< @since 3.2
+        FullScreen   = 1 << 9, ///< @since 3.2
+        KeepBelow    = 1 << 10, ///< @since 3.2
+        DemandsAttention = 1 << 11  ///< @since 3.2
     };
 
     /**
@@ -427,8 +417,7 @@ public:
        @li KeyboardMove (movement via keyboard)
     **/
 
-    enum Direction
-    {
+    enum Direction {
         TopLeft      = 0,
         Top          = 1,
         TopRight     = 2,
@@ -467,8 +456,7 @@ public:
     **/
 
     // KDE4 aaarghl, this doesn't map correctly to Xlib #defines
-    enum MappingState
-    {
+    enum MappingState {
         Visible, // ie. NormalState
         Withdrawn,
         Iconic
@@ -478,19 +466,18 @@ public:
       Actions that can be done with a window (_NET_WM_ALLOWED_ACTIONS).
       @since 3.2
     **/
-    enum Action
-    {
-        ActionMove           = 1<<0,
-        ActionResize         = 1<<1,
-        ActionMinimize       = 1<<2,
-        ActionShade          = 1<<3,
-        ActionStick          = 1<<4,
-        ActionMaxVert        = 1<<5,
-        ActionMaxHoriz       = 1<<6,
+    enum Action {
+        ActionMove           = 1 << 0,
+        ActionResize         = 1 << 1,
+        ActionMinimize       = 1 << 2,
+        ActionShade          = 1 << 3,
+        ActionStick          = 1 << 4,
+        ActionMaxVert        = 1 << 5,
+        ActionMaxHoriz       = 1 << 6,
         ActionMax            = ActionMaxVert | ActionMaxHoriz,
-        ActionFullScreen     = 1<<7,
-        ActionChangeDesktop  = 1<<8,
-        ActionClose          = 1<<9
+        ActionFullScreen     = 1 << 7,
+        ActionChangeDesktop  = 1 << 8,
+        ActionClose          = 1 << 9
     };
 
     /**
@@ -539,46 +526,45 @@ public:
        @li WMKDEFrameStrut
     **/
 
-    enum Property
-    {
+    enum Property {
         // root
-        Supported             = 1<<0,
-        ClientList            = 1<<1,
-        ClientListStacking    = 1<<2,
-        NumberOfDesktops      = 1<<3,
-        DesktopGeometry       = 1<<4,
-        DesktopViewport       = 1<<5,
-        CurrentDesktop        = 1<<6,
-        DesktopNames          = 1<<7,
-        ActiveWindow          = 1<<8,
-        WorkArea              = 1<<9,
-        SupportingWMCheck     = 1<<10,
-        VirtualRoots          = 1<<11,
-        KDESystemTrayWindows  = 1<<12, // NOT STANDARD
-        CloseWindow           = 1<<13,
-        WMMoveResize          = 1<<14,
+        Supported             = 1 << 0,
+        ClientList            = 1 << 1,
+        ClientListStacking    = 1 << 2,
+        NumberOfDesktops      = 1 << 3,
+        DesktopGeometry       = 1 << 4,
+        DesktopViewport       = 1 << 5,
+        CurrentDesktop        = 1 << 6,
+        DesktopNames          = 1 << 7,
+        ActiveWindow          = 1 << 8,
+        WorkArea              = 1 << 9,
+        SupportingWMCheck     = 1 << 10,
+        VirtualRoots          = 1 << 11,
+        KDESystemTrayWindows  = 1 << 12, // NOT STANDARD
+        CloseWindow           = 1 << 13,
+        WMMoveResize          = 1 << 14,
 
         // window
-        WMName                = 1<<15,
-        WMVisibleName         = 1<<16,
-        WMDesktop             = 1<<17,
-        WMWindowType          = 1<<18,
-        WMState               = 1<<19,
-        WMStrut               = 1<<20,
-        WMIconGeometry        = 1<<21,
-        WMIcon                = 1<<22,
-        WMPid                 = 1<<23,
-        WMHandledIcons        = 1<<24,
-        WMPing                = 1<<25,
-        WMKDESystemTrayWinFor = 1<<26, // NOT STANDARD
-        XAWMState             = 1<<27, // NOT STANDARD
-        WMFrameExtents        = 1<<28, ///< @since 3.5
+        WMName                = 1 << 15,
+        WMVisibleName         = 1 << 16,
+        WMDesktop             = 1 << 17,
+        WMWindowType          = 1 << 18,
+        WMState               = 1 << 19,
+        WMStrut               = 1 << 20,
+        WMIconGeometry        = 1 << 21,
+        WMIcon                = 1 << 22,
+        WMPid                 = 1 << 23,
+        WMHandledIcons        = 1 << 24,
+        WMPing                = 1 << 25,
+        WMKDESystemTrayWinFor = 1 << 26, // NOT STANDARD
+        XAWMState             = 1 << 27, // NOT STANDARD
+        WMFrameExtents        = 1 << 28, ///< @since 3.5
         WMKDEFrameStrut       = WMFrameExtents, // NOT STANDARD
 
         // Need to be reordered
-        WMIconName            = 1<<29,
-        WMVisibleIconName     = 1<<30,
-        WMGeometry       = 1<<31
+        WMIconName            = 1 << 29,
+        WMVisibleIconName     = 1 << 30,
+        WMGeometry       = 1 << 31
     };
 
     /**
@@ -599,26 +585,25 @@ public:
         @li WM2WindowClass  WM_CLASS
         @li WM2WindowRole   WM_WINDOW_ROLE
         @li WM2ClientMachine WM_CLIENT_MACHINE
-        
+
         @since 3.2
 
     **/
-    enum Property2
-    {
-        WM2UserTime            = 1<<0,
-        WM2StartupId           = 1<<1,
-        WM2TransientFor        = 1<<2,
-        WM2GroupLeader         = 1<<3,
-        WM2AllowedActions      = 1<<4,
-        WM2RestackWindow       = 1<<5,
-        WM2MoveResizeWindow    = 1<<6,
-        WM2ExtendedStrut       = 1<<7,
-        WM2TakeActivity        = 1<<8,
-        WM2KDETemporaryRules   = 1<<9,  // NOT STANDARD
-        WM2WindowClass         = 1<<10, ///< @since 3.3
-        WM2WindowRole          = 1<<11, ///< @since 3.3
-        WM2ClientMachine       = 1<<12, ///< @since 3.3
-        WM2ShowingDesktop      = 1<<13  ///< @since 3.5
+    enum Property2 {
+        WM2UserTime            = 1 << 0,
+        WM2StartupId           = 1 << 1,
+        WM2TransientFor        = 1 << 2,
+        WM2GroupLeader         = 1 << 3,
+        WM2AllowedActions      = 1 << 4,
+        WM2RestackWindow       = 1 << 5,
+        WM2MoveResizeWindow    = 1 << 6,
+        WM2ExtendedStrut       = 1 << 7,
+        WM2TakeActivity        = 1 << 8,
+        WM2KDETemporaryRules   = 1 << 9,  // NOT STANDARD
+        WM2WindowClass         = 1 << 10, ///< @since 3.3
+        WM2WindowRole          = 1 << 11, ///< @since 3.3
+        WM2ClientMachine       = 1 << 12, ///< @since 3.3
+        WM2ShowingDesktop      = 1 << 13  ///< @since 3.5
     };
 
     /**
@@ -635,8 +620,7 @@ public:
        @since 3.2
     **/
     // must match the values for data.l[0] field in _NET_ACTIVE_WINDOW message
-    enum RequestSource
-    {
+    enum RequestSource {
         FromUnknown, // internal
         FromApplication,
         FromTool

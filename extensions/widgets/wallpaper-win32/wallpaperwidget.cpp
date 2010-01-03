@@ -20,8 +20,8 @@
 #include <QtCore>
 #include <QtGui>
 
-WallpaperWidget::WallpaperWidget(const QRectF &rect, QWidget *widget )
-:PlexyDesk::DesktopWidget(rect,widget)
+WallpaperWidget::WallpaperWidget(const QRectF &rect, QWidget *widget)
+        : PlexyDesk::DesktopWidget(rect, widget)
 {
 }
 
@@ -36,11 +36,11 @@ void WallpaperWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem *
 
 void WallpaperWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
 {
-    p->setRenderHints(QPainter::SmoothPixmapTransform |QPainter::Antialiasing |QPainter::HighQualityAntialiasing);
+    p->setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing | QPainter::HighQualityAntialiasing);
 
-    p->setPen(QColor(255,255,255));
+    p->setPen(QColor(255, 255, 255));
     p->setFont(QFont("Bitstream Charter", 9));
-    p->drawText(QRect(8,5,64,64), Qt::AlignCenter, "Wallpaper");
+    p->drawText(QRect(8, 5, 64, 64), Qt::AlignCenter, "Wallpaper");
 }
 
 void WallpaperWidget::paintExtBackFace(QPainter *p, const QStyleOptionGraphicsItem * e, QWidget *widget)

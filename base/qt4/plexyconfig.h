@@ -28,46 +28,45 @@
 
 namespace PlexyDesk
 {
-    class VISIBLE_SYM Config : public QSettings
-    {
-        Q_OBJECT
-    public:
-        static Config*  getInstance();
-        ///these will be pure virtual on the real plexy desk
-        void read();
-        void writeToFile();
-        QString MyPictures ;
-        QString MyMovies;
-        QString CurrentWallpaper;
-        bool proxyOn;
-        int proxyPort;
-        QNetworkProxy::ProxyType proxyType;
-        QString proxyURL;
-        QString proxyUser;
-        QString proxyPasswd;
-        QStringList widgetList;
-        bool collitionOn;
-        QString iconTheme;
-        public slots:
-        void setWallpaper(const QString& str);
-        void addWidget(const QString& widget);
+class VISIBLE_SYM Config : public QSettings
+{
+    Q_OBJECT
+public:
+    static Config*  getInstance();
+    ///these will be pure virtual on the real plexy desk
+    void read();
+    void writeToFile();
+    QString MyPictures ;
+    QString MyMovies;
+    QString CurrentWallpaper;
+    bool proxyOn;
+    int proxyPort;
+    QNetworkProxy::ProxyType proxyType;
+    QString proxyURL;
+    QString proxyUser;
+    QString proxyPasswd;
+    QStringList widgetList;
+    bool collitionOn;
+    QString iconTheme;
+public slots:
+    void setWallpaper(const QString& str);
+    void addWidget(const QString& widget);
 public slots:
 
 signals:
-       void configChanged();
-       void widgetAdded();
+    void configChanged();
+    void widgetAdded();
 
-    private:
-        Config(const QString & organization, const QString & application = QString(), QObject * parent = 0);
-        static Config * config;
-        Config()
-        {
-            read();
-        }
+private:
+    Config(const QString & organization, const QString & application = QString(), QObject * parent = 0);
+    static Config * config;
+    Config() {
+        read();
+    }
 
-        Config(Config &) {}
-        Config& operator=(const Config&);
-    };
+    Config(Config &) {}
+    Config& operator=(const Config&);
+};
 } // namespace PlexyDesk
 
 

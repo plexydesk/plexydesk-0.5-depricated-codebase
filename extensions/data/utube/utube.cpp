@@ -21,24 +21,24 @@
 
 #include <QTimer>
 
-UtubeData::UtubeData( QObject * object )
+UtubeData::UtubeData(QObject * object)
 {
     init();
-    mRssTimer = new QTimer( this );
-    connect( mRssTimer,SIGNAL( timeout() ),this,SLOT( fetch() ) );
+    mRssTimer = new QTimer(this);
+    connect(mRssTimer, SIGNAL(timeout()), this, SLOT(fetch()));
     //mRssTimer->start( 1000*60*60 );
 }
 
 void  UtubeData::init()
 {
-    mHttp = new QHttp( this );
-    connect( mHttp, SIGNAL( readyRead( const QHttpResponseHeader & ) ),
-            this, SLOT( readData( const QHttpResponseHeader & ) ) );
+    mHttp = new QHttp(this);
+    connect(mHttp, SIGNAL(readyRead(const QHttpResponseHeader &)),
+            this, SLOT(readData(const QHttpResponseHeader &)));
 
-    connect( mHttp, SIGNAL( requestFinished( int, bool ) ),
-            this, SLOT( finished( int, bool ) ) );
-    
-    if(PlexyDesk::Config::getInstance()->proxyOn){
+    connect(mHttp, SIGNAL(requestFinished(int, bool)),
+            this, SLOT(finished(int, bool)));
+
+    if (PlexyDesk::Config::getInstance()->proxyOn) {
         QNetworkProxy NtProxy(PlexyDesk::Config::getInstance()->proxyType,
                               PlexyDesk::Config::getInstance()->proxyURL,
                               PlexyDesk::Config::getInstance()->proxyPort,
@@ -48,10 +48,10 @@ void  UtubeData::init()
 
         mHttp->setProxy(NtProxy);
         QNetworkProxy::setApplicationProxy(NtProxy);
-        qDebug() << "UtubeData::init()" << "Proxy state" 
-                 << PlexyDesk::Config::getInstance()->proxyOn<<endl;
+        qDebug() << "UtubeData::init()" << "Proxy state"
+        << PlexyDesk::Config::getInstance()->proxyOn << endl;
     }
-    
+
     fetch();
 }
 
@@ -66,36 +66,35 @@ void UtubeData::fetch()
     qDebug() << "UTUBE: Fetching XML..." << endl;
 
     mXml.clear();
-    
+
     //qDebug() << url.toString();
 
-    mHttp->setHost( "gdata.youtube.com" );
+    mHttp->setHost("gdata.youtube.com");
     mConnectionId = mHttp->get(
-QString("/feeds/api/videos?vq=%1&max-results=20&orderby=viewCount&alt=rss").
-arg("kbfx") );
-   
+                        QString("/feeds/api/videos?vq=%1&max-results=20&orderby=viewCount&alt=rss").
+                        arg("kbfx"));
+
 }
 
-void UtubeData::readData( const QHttpResponseHeader &resp )
+void UtubeData::readData(const QHttpResponseHeader &resp)
 {
-    if (resp.statusCode() != 200){
+    if (resp.statusCode() != 200) {
         mHttp->abort();
         qDebug() << "UTUBE: Error." << endl;
-    }else {
-        mXml.addData( mHttp->readAll() );
+    } else {
+        mXml.addData(mHttp->readAll());
         parseXml();
     }
 }
 
-void UtubeData::finished( int id, bool error )
+void UtubeData::finished(int id, bool error)
 {
     if (error) {
-        qDebug() << "UTUBE: Received error during HTTP fetch." <<endl;
+        qDebug() << "UTUBE: Received error during HTTP fetch." << endl;
         //mRssTimer->start( 2000 );
         //fetch();
-    }
-    else if (id == mConnectionId) {
-        qDebug() << "UTUBE: HTTP fetch Success." <<endl;
+    } else if (id == mConnectionId) {
+        qDebug() << "UTUBE: HTTP fetch Success." << endl;
         //QVariant rss( mRssEntries );
         //emit data( rss );
         emit success();
@@ -110,16 +109,16 @@ void UtubeData::parseXml()
         mXml.readNext();
         if (mXml.isStartElement()) {
             //if (mXml.name() == "item"){
-                //mLinkString = mXml.attributes().value("rss:about").toString();
+            //mLinkString = mXml.attributes().value("rss:about").toString();
             //}
             mCurrentTag = mXml.name().toString();
         } else if (mXml.isEndElement()) {
             //qDebug() << mXml.name().toString()<<" ::: " << endl;
             if (mXml.name() == "item") {
-                
+
                 mVideoID = (mLinkString.split("v=")).at(1);
-                mThumbString = "http://img.youtube.com/vi/"+mVideoID+"/1.jpg";
-                
+                mThumbString = "http://img.youtube.com/vi/" + mVideoID + "/1.jpg";
+
                 //qDebug() << "UTUBE: " << mThumbString << " : " << endl;
 
                 //mEntry.clear();
@@ -128,13 +127,13 @@ void UtubeData::parseXml()
                 mEntry["link"] = mLinkString;
                 mEntry["description"] = mDescString;
                 mEntry["thumb"] = mThumbString; //97 130
-                
+
                 //mThumbString = mThumbString.split(QRegExp("\\s+"));
 
                 QVariant rssitem(mEntry);
 
                 //mRssEntries.append(rssitem);
-                dataItem  = rssitem; 
+                dataItem  = rssitem;
                 emit dataReady();
 
                 //mTitleString.clear();
@@ -146,19 +145,17 @@ void UtubeData::parseXml()
         } else if (mXml.isCharacters() && !mXml.isWhitespace()) {
             if (mCurrentTag == "title") {
                 mTitleString = mXml.text().toString();
-            }
-            else if (mCurrentTag == "link") {
+            } else if (mCurrentTag == "link") {
                 mLinkString = mXml.text().toString();
-            }
-            else if (mCurrentTag == "description") {
+            } else if (mCurrentTag == "description") {
                 mDescString = mXml.text().toString();
             }
         }
     }
 
     if (mXml.error() && mXml.error() !=
-        QXmlStreamReader::PrematureEndOfDocumentError) {
-        qDebug()<< "UTUBE: XML ERROR:" << mXml.lineNumber() << ": " <<
+            QXmlStreamReader::PrematureEndOfDocumentError) {
+        qDebug() << "UTUBE: XML ERROR:" << mXml.lineNumber() << ": " <<
         mXml.errorString();
         mHttp->abort();
         return;
@@ -173,5 +170,5 @@ QVariantMap UtubeData::readAll()
 {
     QVariantMap map;
     map["data"] = dataItem;
-   return map;
+    return map;
 }

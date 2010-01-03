@@ -34,36 +34,36 @@
 namespace PlexyDesk
 {
 
-TwitWidget::TwitWidget (const QRectF &rect, QWidget *widget):
-ListView(rect,widget)
+TwitWidget::TwitWidget(const QRectF &rect, QWidget *widget):
+        ListView(rect, widget)
 {
-   
-  utubeEngine = (PlexyDesk::DataPlugin*)
-  PlexyDesk::PluginLoader::getInstance()->instance("restengine");
 
-  mMap.insert("url", QUrl("http://twitter.com/statuses/user_timeline.xml"));
-  mMap.insert("type", 1);//post
-  mMap.insert("user", "sirajrazick");
-  mMap.insert("pass", "");
-  QVariant arg = QVariant(mMap);
-  utubeEngine->pushData(arg);
+    utubeEngine = (PlexyDesk::DataPlugin*)
+                  PlexyDesk::PluginLoader::getInstance()->instance("restengine");
 
-  if (utubeEngine) {
-      connect(utubeEngine,SIGNAL(dataReady()),this,SLOT(onDataReady()));
-      //connect(this ,SIGNAL(newData(QVariantMap&)), utubeEngine->instance(),SLOT(pushData(QVariantMap&)));
-      //  qDebug() << Q_FUNC_INFO << utubeEngine;
-      //utubeEngine->inst;pushData(mMap);
-  }else {
-      qDebug("DataSource Was Null");
-  }
+    mMap.insert("url", QUrl("http://twitter.com/statuses/user_timeline.xml"));
+    mMap.insert("type", 1);//post
+    mMap.insert("user", "sirajrazick");
+    mMap.insert("pass", "");
+    QVariant arg = QVariant(mMap);
+    utubeEngine->pushData(arg);
+
+    if (utubeEngine) {
+        connect(utubeEngine, SIGNAL(dataReady()), this, SLOT(onDataReady()));
+        //connect(this ,SIGNAL(newData(QVariantMap&)), utubeEngine->instance(),SLOT(pushData(QVariantMap&)));
+        //  qDebug() << Q_FUNC_INFO << utubeEngine;
+        //utubeEngine->inst;pushData(mMap);
+    } else {
+        qDebug("DataSource Was Null");
+    }
 }
 
-TwitWidget::~TwitWidget ()
+TwitWidget::~TwitWidget()
 {}
 
 void TwitWidget::onDataReady()
 {
-   // qDebug() << utubeEngine->readAll();
+    // qDebug() << utubeEngine->readAll();
     QXmlQuery query;
     QBuffer input;
     QByteArray data = utubeEngine->readAll()["data"].toByteArray();
@@ -82,11 +82,11 @@ void TwitWidget::onDataReady()
     query.setQuery(precon + "for $i in doc($Timeline)/statuses/status/text return <text>{$i}</text> ");
     query.evaluateTo(&serializer);
     QString allText(out);
-    QString newText = allText.replace("<text><text>", "^^~").replace("</text></text>","");
+    QString newText = allText.replace("<text><text>", "^^~").replace("</text></text>", "");
 
     QStringList items = newText.split("^^~");
 
-    foreach (QString title, items) {
+    foreach(QString title, items) {
         if (title.isEmpty()) {
             continue;
         }
@@ -99,28 +99,28 @@ void TwitWidget::onDataReady()
 void TwitWidget::data(QVariantMap& data)
 {
     qDebug() << Q_FUNC_INFO << data["data"];
-    
-/*
-    mVariantMap = data.toMap();
 
-    VideoEntity videoentity;
-    videoentity.title = (mVariantMap["title"]).toString();
-    videoentity.link = (mVariantMap["link"]).toString();
-    videoentity.desc = (mVariantMap["description"]).toString();
-    videoentity.thumb = (mVariantMap["thumb"]).toString();
+    /*
+        mVariantMap = data.toMap();
 
-    mVideos.append(videoentity);
-    view.setHeight(mVideos.size()*mItem_bg.height());
+        VideoEntity videoentity;
+        videoentity.title = (mVariantMap["title"]).toString();
+        videoentity.link = (mVariantMap["link"]).toString();
+        videoentity.desc = (mVariantMap["description"]).toString();
+        videoentity.thumb = (mVariantMap["thumb"]).toString();
 
-    ListItem * item = new ListItem();
-    item->title = videoentity.title;
-    item->link = videoentity.link;
-    item->desc = videoentity.desc;
-    item->thumb = videoentity.thumb;
+        mVideos.append(videoentity);
+        view.setHeight(mVideos.size()*mItem_bg.height());
 
-    insert(item);
+        ListItem * item = new ListItem();
+        item->title = videoentity.title;
+        item->link = videoentity.link;
+        item->desc = videoentity.desc;
+        item->thumb = videoentity.thumb;
 
-    emit dataChanged();
-    */
+        insert(item);
+
+        emit dataChanged();
+        */
 }
 } // namespace PlexyDesk

@@ -33,5 +33,5 @@ Clock::~Clock()
 
 QGraphicsItem * Clock::item()
 {
-    return new  PlexyDesk::ClockWidget(QRectF(0,0,210,210),0);
+    return new  PlexyDesk::ClockWidget(QRectF(0, 0, 210, 210), 0);
 }

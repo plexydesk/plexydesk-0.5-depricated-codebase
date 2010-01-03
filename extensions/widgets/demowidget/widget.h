@@ -24,12 +24,12 @@
 #include <widgetinterface.h>
 
 
-class VISIBLE_SYM WidgetDemo :public PlexyDesk::WidgetInterface
+class VISIBLE_SYM WidgetDemo : public PlexyDesk::WidgetInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::WidgetInterface)
 
-    public:
+public:
     WidgetDemo(QObject * object = 0);
     virtual ~WidgetDemo();
     virtual QGraphicsItem * item();// {};

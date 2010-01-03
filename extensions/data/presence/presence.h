@@ -1,7 +1,7 @@
 /*******************************************************************************
 * This file is part of PlexyDesk.
 *  Maintained by : Dariusz Mikulski <dariusz.mikulski@gmail.com>
-*  Authored By  : 
+*  Authored By  :
 *
 *  PlexyDesk is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU Lesser General Public License as published by
@@ -40,14 +40,14 @@ signals:
     void data(QVariant&);
 
 private slots:
-	void onAccountReady(Telepathy::Client::PendingOperation *operation);
+    void onAccountReady(Telepathy::Client::PendingOperation *operation);
     void accountCreated(const QString &path);
     void accountRemoved(const QString &path);
     void accountValidityChanged(const QString &path, bool valid);
 
 private:
-	class PresenceDataPrivate;
-	PresenceDataPrivate * const d;
+    class PresenceDataPrivate;
+    PresenceDataPrivate * const d;
 };
 
 #endif //PRESENCE_H_

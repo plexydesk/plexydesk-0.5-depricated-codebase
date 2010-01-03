@@ -8,19 +8,18 @@
 
 namespace PlexyDesk
 {
-    class VISIBLE_SYM BasePlugin : public QObject
-    {
-        Q_OBJECT
-    public:
-        BasePlugin(QObject *parent = 0): QObject(parent) {}
-        QString applicationDirPath()
-        {
+class VISIBLE_SYM BasePlugin : public QObject
+{
+    Q_OBJECT
+public:
+    BasePlugin(QObject *parent = 0): QObject(parent) {}
+    QString applicationDirPath() {
 #ifdef Q_WS_WIN
-            return QString(QCoreApplication::applicationDirPath() + "/..");
+        return QString(QCoreApplication::applicationDirPath() + "/..");
 #else
-            return QString(PLEXPREFIX);
+        return QString(PLEXPREFIX);
 #endif
-        }
+    }
 };
 } // namespace PlexyDesk
 

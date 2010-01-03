@@ -24,14 +24,14 @@
 #include <widgetplugin.h>
 
 
-class Clock :public PlexyDesk::WidgetPlugin
+class Clock : public PlexyDesk::WidgetPlugin
 {
     Q_OBJECT
 
-    public:
-        Clock(QObject * object = 0);
-        virtual ~Clock();
-        QGraphicsItem* item();
+public:
+    Clock(QObject * object = 0);
+    virtual ~Clock();
+    QGraphicsItem* item();
 };
 
 

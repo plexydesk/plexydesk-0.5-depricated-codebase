@@ -25,14 +25,14 @@
 
 namespace PlexyDesk
 {
-    class VISIBLE_SYM SocialInterface : public AbstractPluginInterface
-    {
-        Q_OBJECT
-    public:
-        void init() {}
-        virtual ~SocialInterface() {}
-        virtual SocialPlugin * instance() = 0;
-    };
+class VISIBLE_SYM SocialInterface : public AbstractPluginInterface
+{
+    Q_OBJECT
+public:
+    void init() {}
+    virtual ~SocialInterface() {}
+    virtual SocialPlugin * instance() = 0;
+};
 } // namespace PlexyDesk
 
 Q_DECLARE_INTERFACE(PlexyDesk::SocialInterface, "org.plexydesk.SocialInterface")

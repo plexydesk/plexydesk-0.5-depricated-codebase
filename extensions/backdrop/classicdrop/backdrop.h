@@ -27,14 +27,14 @@
 #include <backdropplugin.h>
 
 
-class BgPlugin :public PlexyDesk::BackdropPlugin
+class BgPlugin : public PlexyDesk::BackdropPlugin
 {
     Q_OBJECT
 
 public:
     BgPlugin(QObject * object = 0);
     virtual ~BgPlugin();
-    void render(QPainter *p,QRectF r);
+    void render(QPainter *p, QRectF r);
 public slots:
     void data(QVariant&);
     void pushData(QVariant&) {}

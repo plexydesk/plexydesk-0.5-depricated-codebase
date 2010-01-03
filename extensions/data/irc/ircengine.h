@@ -24,7 +24,7 @@
 #include <abstractplugininterface.h>
 #include <datainterface.h>
 
-class VISIBLE_SYM IRCData :public PlexyDesk::DataPlugin
+class VISIBLE_SYM IRCData : public PlexyDesk::DataPlugin
 {
     Q_OBJECT
 
@@ -35,7 +35,7 @@ public:
 public slots:
     /* ID tells you the Qhttp id which youare pocessing
     */
- 	void pushData(QVariant&);
+    void pushData(QVariant&);
     void loadCallback(int ID, bool status);
 signals:
     void data(QVariant&);

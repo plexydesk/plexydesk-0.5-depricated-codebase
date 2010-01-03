@@ -27,7 +27,7 @@
 #include <cv.h>
 #include <highgui.h>
 
-class VISIBLE_SYM WebCamData :public PlexyDesk::DataPlugin
+class VISIBLE_SYM WebCamData : public PlexyDesk::DataPlugin
 {
     Q_OBJECT
 

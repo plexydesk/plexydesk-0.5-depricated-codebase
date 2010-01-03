@@ -28,21 +28,21 @@ ImagePlugin::ImagePlugin(QObject * object)
     base = new QWidget();
 
     flow = new PictureFlow(base);
-    flow->setSlideSize(QSize(320/2, 240/2));
-    flow->resize(300,170);
-    flow->move(0,0);
-    base->resize(300,200);
+    flow->setSlideSize(QSize(320 / 2, 240 / 2));
+    flow->resize(300, 170);
+    flow->move(0, 0);
+    base->resize(300, 200);
 
     search = new QLineEdit(base);
     search->setStyleSheet("border:1px solid ; font-style:strong ;padding-left:20px; background: white ; background-image:url(/usr/share/plexy/skins/default/flick/bg-search.png) ;background-repeat: no-repeat ;  color:black ");
-    search->move(0,170);
-    search->resize(300,30);
+    search->move(0, 170);
+    search->resize(300, 30);
     search->show();
-    connect (search , SIGNAL(returnPressed ()) , this , SLOT(searchImage () ) );
+    connect(search , SIGNAL(returnPressed()) , this , SLOT(searchImage()));
 
-    widget =  new PlexyDesk::ImagePileWidget(QRectF(0, 0, 340,240), base);
+    widget =  new PlexyDesk::ImagePileWidget(QRectF(0, 0, 340, 240), base);
 
-    base->move(20,20);
+    base->move(20, 20);
 }
 
 ImagePlugin::~ImagePlugin()
@@ -50,9 +50,9 @@ ImagePlugin::~ImagePlugin()
     delete flow;
 }
 
-void ImagePlugin::searchImage ()
+void ImagePlugin::searchImage()
 {
-    qDebug()<<"Searching"<<endl;
+    qDebug() << "Searching" << endl;
     search->setEnabled(false);
     flow->setFocus(Qt::TabFocusReason);
     QVariant data(search->text());
@@ -64,7 +64,7 @@ void ImagePlugin::onDataReady()
 {
     QVariant data = flickrEngine->readAll()["image"];
     QImage wall(QImage::fromData(data.toByteArray()));
-    flow->addSlide(wall);     
+    flow->addSlide(wall);
     flow->showNext();
     search->setEnabled(true);
     widget->setCoverPic(wall);
@@ -79,11 +79,11 @@ QGraphicsItem * ImagePlugin::item()
     flickrEngine  = qobject_cast<PlexyDesk::DataPlugin*>(loader->instance("flickerengine"));
     delete loader;
     if (flickrEngine) {
-        connect(flickrEngine,SIGNAL(dataReady()),this,SLOT(onDataReady()));
+        connect(flickrEngine, SIGNAL(dataReady()), this, SLOT(onDataReady()));
 
-        connect(this,SIGNAL(sendData(QVariant&)),flickrEngine,SLOT(pushData(QVariant&)));
-    }else {
-        qDebug()<<"DataSource Was Null"<<"ImagePlugin::ImagePlugin(QObject * object)"<<endl;;
+        connect(this, SIGNAL(sendData(QVariant&)), flickrEngine, SLOT(pushData(QVariant&)));
+    } else {
+        qDebug() << "DataSource Was Null" << "ImagePlugin::ImagePlugin(QObject * object)" << endl;;
     }
 
     PictureFlow * flow = new PictureFlow(0);

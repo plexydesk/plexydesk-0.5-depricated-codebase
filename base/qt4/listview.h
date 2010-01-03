@@ -9,7 +9,8 @@
 namespace PlexyDesk
 {
 
-class ListItem {
+class ListItem
+{
 
 public:
     ListItem() {}

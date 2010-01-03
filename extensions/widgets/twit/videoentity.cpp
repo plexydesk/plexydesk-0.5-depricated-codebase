@@ -21,13 +21,13 @@
 
 namespace PlexyDesk
 {
-    VideoEntity::VideoEntity()
-    {
-        title = "";
-        link = "";
-        desc = "";
-        thumb = "";
-    }
+VideoEntity::VideoEntity()
+{
+    title = "";
+    link = "";
+    desc = "";
+    thumb = "";
+}
 
-    VideoEntity::~VideoEntity(){}
+VideoEntity::~VideoEntity() {}
 }

@@ -25,21 +25,21 @@
 
 Welcome::Welcome(QObject * object)
 {
-    frm = new Frame(QRect(0,0,140 * 4 ,128*3));
-    icon1 = new WellcomeItem(QRect(0,0,128,256),frm);
+    frm = new Frame(QRect(0, 0, 140 * 4 , 128*3));
+    icon1 = new WellcomeItem(QRect(0, 0, 128, 256), frm);
     icon1->setName("");
     icon1->setIcon(QPixmap(applicationDirPath() + "/share/plexy/skins/default/welcome/kfm_home.png"));
-    icon1->setPos(60,70);
+    icon1->setPos(60, 70);
 
-    icon2 = new WellcomeItem(QRect(0,0,128,256),frm);
+    icon2 = new WellcomeItem(QRect(0, 0, 128, 256), frm);
     icon2->setName("");
     icon2->setIcon(QPixmap(applicationDirPath() + "/share/plexy/skins/default/welcome/colors.png"));
-    icon2->setPos(220,70);
+    icon2->setPos(220, 70);
 
-    icon3 = new WellcomeItem(QRect(0,0,128,256),frm);
+    icon3 = new WellcomeItem(QRect(0, 0, 128, 256), frm);
     icon3->setName("");
     icon3->setIcon(QPixmap(applicationDirPath() + "/share/plexy/skins/default/welcome/gnome_apps.png"));
-    icon3->setPos(380,70);
+    icon3->setPos(380, 70);
 
 
 }
@@ -51,7 +51,7 @@ Welcome::~Welcome()
 
 QGraphicsItem * Welcome::item()
 {
-   return  frm; 
+    return  frm;
 }
 
 #include "plugin.moc"

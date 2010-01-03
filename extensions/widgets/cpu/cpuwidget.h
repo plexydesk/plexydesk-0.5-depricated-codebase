@@ -29,51 +29,51 @@ namespace PlexyDesk
 {
 
 
-class CpuWidget:public DesktopWidget
+class CpuWidget: public DesktopWidget
 {
 
     Q_OBJECT
 
-	public:
-	
-	    CpuWidget(const QRectF &rect, QWidget *widget = 0);
-	    virtual ~CpuWidget();
-	    virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem * e, QWidget *);
-	    void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
-	    void setPath(QString);
-	    void drawCpuWidget();
-	    void getBaseData();
-	    void getNxtData();
-	
-	public slots:
-	    void drawMeter();
-	
-	private:
-	    QTimer  *meter_timer;
-	    long user_a;
-	    long nice_a;
-	    long sys_a;
-	    long idle_a;
+public:
 
-	    long user_b;
-	    long nice_b;
-	    long sys_b;
-	    long idle_b;
+    CpuWidget(const QRectF &rect, QWidget *widget = 0);
+    virtual ~CpuWidget();
+    virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem * e, QWidget *);
+    void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
+    void setPath(QString);
+    void drawCpuWidget();
+    void getBaseData();
+    void getNxtData();
 
-	    long usage;
-	    long total;
+public slots:
+    void drawMeter();
 
-	    double percen;
+private:
+    QTimer  *meter_timer;
+    long user_a;
+    long nice_a;
+    long sys_a;
+    long idle_a;
 
-	    int shade;
-	
-	    QPixmap  _meter_hand;
-	    QPixmap thedot;
-     	QImage _cpu_bg;
-	    QImage gloss;
+    long user_b;
+    long nice_b;
+    long sys_b;
+    long idle_b;
 
-     	QString prefix;
-	    QPoint clickPos;
+    long usage;
+    long total;
+
+    double percen;
+
+    int shade;
+
+    QPixmap  _meter_hand;
+    QPixmap thedot;
+    QImage _cpu_bg;
+    QImage gloss;
+
+    QString prefix;
+    QPoint clickPos;
 };
 
 } // namespace PlexyDesk

@@ -24,11 +24,11 @@
 #include <widgetinterface.h>
 #include <widgetplugin.h>
 
-class VISIBLE_SYM Cpu :public PlexyDesk::WidgetPlugin
+class VISIBLE_SYM Cpu : public PlexyDesk::WidgetPlugin
 {
     Q_OBJECT
 
-    public:
+public:
     Cpu(QObject * object = 0);
     virtual ~Cpu();
     virtual QGraphicsItem * item();// {};

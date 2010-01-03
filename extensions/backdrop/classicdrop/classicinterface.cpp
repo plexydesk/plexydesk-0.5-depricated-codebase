@@ -37,4 +37,4 @@ PlexyDesk::BasePlugin * ClassicBackdrop::instance()
 }
 
 
-Q_EXPORT_PLUGIN2(ClassicBackdrop,ClassicBackdrop)
+Q_EXPORT_PLUGIN2(ClassicBackdrop, ClassicBackdrop)

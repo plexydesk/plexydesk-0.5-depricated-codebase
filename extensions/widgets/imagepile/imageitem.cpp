@@ -23,36 +23,36 @@
 
 namespace PlexyDesk
 {
-    ImagePileWidget::ImagePileWidget(const QRectF &rect, QWidget *widget ):DesktopWidget(rect,widget)
-    {
-        setDockImage(QPixmap(applicationDirPath() + "/share/plexy/skins/widgets/widget01/pila.png"));
-        cover = QImage(200,200,QImage::Format_ARGB32_Premultiplied);
-    }
-    
-    ImagePileWidget::~ImagePileWidget()
-    {
-    }
+ImagePileWidget::ImagePileWidget(const QRectF &rect, QWidget *widget): DesktopWidget(rect, widget)
+{
+    setDockImage(QPixmap(applicationDirPath() + "/share/plexy/skins/widgets/widget01/pila.png"));
+    cover = QImage(200, 200, QImage::Format_ARGB32_Premultiplied);
+}
 
-    
-    void ImagePileWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
-    {
-		
-    }
+ImagePileWidget::~ImagePileWidget()
+{
+}
 
-    void ImagePileWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
-    {
-        QRectF r = e->exposedRect;
-        p->drawImage(QRectF(20,20,r.width()-40,r.height()-40) , cover);
-    }
 
-    QRectF ImagePileWidget::boundingRect() const
-    {
-        return rect();
-    }
+void ImagePileWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
+{
 
-    void ImagePileWidget::setCoverPic(QImage img)
-    {
-        cover = img;
-    }
+}
+
+void ImagePileWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
+{
+    QRectF r = e->exposedRect;
+    p->drawImage(QRectF(20, 20, r.width() - 40, r.height() - 40) , cover);
+}
+
+QRectF ImagePileWidget::boundingRect() const
+{
+    return rect();
+}
+
+void ImagePileWidget::setCoverPic(QImage img)
+{
+    cover = img;
+}
 
 } // namespace PlexyDesk

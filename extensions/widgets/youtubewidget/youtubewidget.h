@@ -34,7 +34,7 @@ namespace PlexyDesk
 {
 
 
-class YouTubeWidget:public ListView
+class YouTubeWidget: public ListView
 {
 
     Q_OBJECT
@@ -48,7 +48,7 @@ public:
     void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
     void setPath(QString);
     void drawWidget();;
-*/
+    */
 public Q_SLOTS:
     void drawItems();
     void onDataReady();
@@ -73,7 +73,7 @@ private:
     PlexyDesk::DataPlugin * utubeEngine;
 
     QList<VideoEntity> mVideos;
-    QMap<QString,QVariant> mVariantMap;
+    QMap<QString, QVariant> mVariantMap;
 };
 
 } // namespace PlexyDesk

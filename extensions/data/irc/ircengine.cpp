@@ -20,7 +20,7 @@
 #include <desktopwidget.h>
 #include <plexyconfig.h>
 
-    
+
 IRCData::IRCData(QObject * object)
 {
 }

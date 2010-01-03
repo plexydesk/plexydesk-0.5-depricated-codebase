@@ -36,16 +36,16 @@ public:
     virtual ~Icon();
     virtual void setContent(const QString& path);
     virtual bool isValid();
-    virtual void paintBackSide(QPainter * painter,const QRectF& rect);
-    virtual void paintViewSide(QPainter * painter,const QRectF& rect);
-    virtual void paintDockView(QPainter * painter,const QRectF& rect);
+    virtual void paintBackSide(QPainter * painter, const QRectF& rect);
+    virtual void paintViewSide(QPainter * painter, const QRectF& rect);
+    virtual void paintDockView(QPainter * painter, const QRectF& rect);
     virtual void drawText(QPainter *painter, const QRectF& rect);
 public Q_SLOTS:
     void loadIcon();
 
 private:
 
-    void mouseDoubleClickEvent (QGraphicsSceneMouseEvent * event);
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event);
     class Private;
     Private * const d;
 

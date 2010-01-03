@@ -6,14 +6,14 @@
 #include <widgetplugin.h>
 #include "sociotwitterinterface.h"
 
-class VISIBLE_SYM SocioTwitter:public PlexyDesk::WidgetPlugin
+class VISIBLE_SYM SocioTwitter: public PlexyDesk::WidgetPlugin
 {
     Q_OBJECT
 
-    public:
-        SocioTwitter(QObject * object = 0);
-        virtual ~SocioTwitter();
-        QGraphicsItem * item();
+public:
+    SocioTwitter(QObject * object = 0);
+    virtual ~SocioTwitter();
+    QGraphicsItem * item();
 };
 
 #endif

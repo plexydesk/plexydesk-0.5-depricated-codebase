@@ -45,14 +45,15 @@
 #include <QPaintEvent>
 #include <QStyleOptionGraphicsItem>
 
-namespace PlexyDesk {
+namespace PlexyDesk
+{
 
 FriendItem::FriendItem(QGraphicsItem * parent)
 {
-	mShade = 0;
-	setParentItem(parent);
-	mPanel = QImage(QString(PLEXPREFIX) + "/theme/skins/default/widget/friendswidget/panel.png");
-	mIcon = QPixmap(QString(PLEXPREFIX) + "/theme/skins/default/widget/friendswidget/face.png");
+    mShade = 0;
+    setParentItem(parent);
+    mPanel = QImage(QString(PLEXPREFIX) + "/theme/skins/default/widget/friendswidget/panel.png");
+    mIcon = QPixmap(QString(PLEXPREFIX) + "/theme/skins/default/widget/friendswidget/face.png");
 }
 
 FriendItem::~FriendItem()
@@ -61,7 +62,7 @@ FriendItem::~FriendItem()
 
 QRectF FriendItem::boundingRect() const
 {
-	return QRectF(0, 0, 183, 53);
+    return QRectF(0, 0, 183, 53);
 }
 
 void FriendItem::paint(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *widget)
@@ -89,7 +90,7 @@ void FriendItem::paint(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *
     p->restore();
 
     p->save();
-    p->drawPixmap (QRect(8, 10, mIcon.width(), mIcon.height()), QPixmap(mIcon));
+    p->drawPixmap(QRect(8, 10, mIcon.width(), mIcon.height()), QPixmap(mIcon));
     p->restore();
 
     p->setRenderHints(QPainter::SmoothPixmapTransform |
@@ -103,22 +104,22 @@ void FriendItem::paint(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *
 
 void FriendItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-  emit clicked();
+    emit clicked();
 }
 
 void FriendItem::setName(const QString& name)
 {
-	mName = name;
+    mName = name;
 }
 
 void FriendItem::setIcon(QPixmap m)
 {
-	mIcon = m;
+    mIcon = m;
 }
 
 QString FriendItem::name() const
 {
-	return mName;
+    return mName;
 }
 
 }// namespace PlexyDesk
