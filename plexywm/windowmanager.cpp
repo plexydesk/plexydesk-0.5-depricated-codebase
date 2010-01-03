@@ -514,6 +514,8 @@ void WindowManager::configureRequest(XEvent* e)
         while (XCheckTypedWindowEvent (d->mDisplay, xwin, ConfigureRequest, xev)) {
             qDebug() << Q_FUNC_INFO << ": " << "Do nothing";
         }
+
+
     }
     qDebug() << Q_FUNC_INFO <<endl;
 }

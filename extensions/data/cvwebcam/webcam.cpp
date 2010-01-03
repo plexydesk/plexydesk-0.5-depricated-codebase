@@ -193,13 +193,24 @@ void WebCamData::trackFace()
    cvCamShift(d->prob, d->faceRect,
            cvTermCriteria(CV_TERMCRIT_EPS | CV_TERMCRIT_ITER, 10, 1),
            &comps, &box);
+ 
+   d->faceRect = comps.rect; 
+
+  
+   int radius = cvRound((d->faceRect.width + d->faceRect.height)*0.25);
+   CvPoint center;
+   center.x = cvRound(d->faceRect.x + d->faceRect.width*0.5);
+   center.y = cvRound(d->faceRect.y + d->faceRect.height*0.5);
+   
    qDebug() << Q_FUNC_INFO
        << comps.rect.x
        << comps.rect.y
        << comps.rect.width
        << comps.rect.height
-       << box.angle;
-   d->faceRect = comps.rect;
+       << box.angle
+       << center.x
+       << center.y
+       << radius;
 }
 
 
