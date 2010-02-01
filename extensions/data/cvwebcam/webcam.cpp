@@ -49,7 +49,20 @@ void WebCamData::grab()
     }
     d->data = cvQueryFrame(d->mCaptureData);
 
-    qDebug() << Q_FUNC_INFO << d->data->width << " x "  << d->data->height;
+    int size = d->data->width * d->data->height;
+    unsigned char* end = (unsigned char*) d->data->imageData + (3*size);
+    unsigned char* source = (unsigned char*) d->data->imageData;
+    unsigned char* dest = new unsigned char[4*size];
+
+    do {
+        memcpy (dest, source, 3);
+        dest += 4;
+        source += 3;
+    } while ( source < end);
+
+    QImage img(source, d->data->width, d->data->height, QImage::Format_RGB32);
+
+    qDebug() << Q_FUNC_INFO << d->data->width << " x "  << d->data->height << ":IS "<< img.isNull();
 }
 
 void  WebCamData::init()
