@@ -84,6 +84,9 @@ int main( int argc, char ** argv )
         view->addExtension(str);
     }
 
+    PlexyDesk::DataPlugin* utubeEngine = (PlexyDesk::DataPlugin*)
+    PlexyDesk::PluginLoader::getInstance()->instance("webcamengine");
+
     
 /*
     view->addCoreExtension("videoview");

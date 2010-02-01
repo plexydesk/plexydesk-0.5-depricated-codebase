@@ -1,0 +1,6 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Open Cv Webcame engine 
+Type=Engine
+Comment=Provides web came images using open cv high ui
+X-PLEXYDESK-Library=webcamengine

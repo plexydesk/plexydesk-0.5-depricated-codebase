@@ -158,7 +158,9 @@ endif(FULL_DESKTOP)
 #if(WIN32)
 #add_subdirectory(extensions/widgets/wallpaper-win32)
 #endif(WIN32)
-
-
+if(OpenCV_FOUND)
+ 
+add_subdirectory(extensions/data/cvwebcam/)
+endif(OpenCV_FOUND)
 #social
 add_subdirectory(social/accountsmanager/)
