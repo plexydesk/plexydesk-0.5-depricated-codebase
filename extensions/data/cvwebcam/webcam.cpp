@@ -45,7 +45,8 @@ WebCamData::WebCamData(QObject * object):d(new Private)
 
 void WebCamData::grab()
 {
-    if (d->data) {
+    if (!d->mCaptureData) {
+        return;
     }
     d->data = cvQueryFrame(d->mCaptureData);
 
@@ -61,8 +62,11 @@ void WebCamData::grab()
     } while ( source < end);
 
     QImage img(source, d->data->width, d->data->height, QImage::Format_RGB32);
-
-    qDebug() << Q_FUNC_INFO << d->data->width << " x "  << d->data->height << ":IS "<< img.isNull();
+    d->dataMap.clear();
+    d->dataMap["rawImage"] = d->data->imageData;
+    d->dataMap["qimage"] = img;
+    qDebug() << Q_FUNC_INFO << d->data->width << " x "  << d->data->height;
+    Q_EMIT dataReady();
 }
 
 void  WebCamData::init()
