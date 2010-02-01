@@ -76,6 +76,9 @@ void WebCamData::grab()
     }
 
     d->data = cvQueryFrame(d->mCaptureData);
+    if (!d->data) {
+     return;
+    }
 /*
     int size = d->data->width * d->data->height;
     unsigned char* end = (unsigned char*) d->data->imageData + (3*size);
