@@ -44,6 +44,8 @@ private Q_SLOTS:
     void grab();
 private:
     QRect detectFace(const char* faceData);
+    void trackFace();
+    void updateHugeImage(const IplImage*);
 
     class Private;
     Private * const d;

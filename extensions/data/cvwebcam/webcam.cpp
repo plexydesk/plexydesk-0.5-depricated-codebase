@@ -35,18 +35,37 @@ class WebCamData::Private
         CvHaarClassifierCascade* mCascade;
         CvMemStorage* mFaceStore;
         CvSeq* mFaceSeq;
+        CvRect faceRect;
+        bool hasFace;
+
+        //
+        IplImage* hsvImage;
+        IplImage* mask;
+        IplImage* hueImage;
+        IplImage* prob;
+
+        CvHistogram* histogram;
+
 };
 
 WebCamData::WebCamData(QObject * object):d(new Private)
 {
     d->data = 0;
+    d->hasFace = false;
     d->mCascade = 0;
     d->mFaceSeq = 0;
     d->mFaceStore = 0;
+
+    d->hsvImage = 0;
+    d->mask = 0;
+    d->hueImage = 0;
+    d->prob = 0;
+    d->histogram = 0;
     d->timer = new QTimer(this);
     qDebug() << Q_FUNC_INFO 
         << ": " << "Start webcam ";
     d->mCaptureData = cvCaptureFromCAM(-1); 
+      
     init();
 }
 
@@ -55,8 +74,9 @@ void WebCamData::grab()
     if (!d->mCaptureData) {
         return;
     }
-    d->data = cvQueryFrame(d->mCaptureData);
 
+    d->data = cvQueryFrame(d->mCaptureData);
+/*
     int size = d->data->width * d->data->height;
     unsigned char* end = (unsigned char*) d->data->imageData + (3*size);
     unsigned char* source = (unsigned char*) d->data->imageData;
@@ -67,11 +87,11 @@ void WebCamData::grab()
         dest += 4;
         source += 3;
     } while ( source < end);
-
-    QImage img(source, d->data->width, d->data->height, QImage::Format_RGB32);
+*/
+   //// QImage img(source, d->data->width, d->data->height, QImage::Format_RGB32);
     d->dataMap.clear();
     d->dataMap["rawImage"] = d->data->imageData;
-    d->dataMap["qimage"] = img;
+    //d->dataMap["qimage"] = img;
     qDebug() << Q_FUNC_INFO << d->data->width << " x "  << d->data->height;
     d->dataMap["faceRect"] = detectFace(OPENCV_ROOT
             "/share/opencv/haarcascades/haarcascade_frontalface_default.xml");
@@ -93,6 +113,14 @@ void  WebCamData::init()
 
 QRect WebCamData::detectFace(const char* faceData)
 {
+    if (d->hasFace) {
+        trackFace();
+        return QRect();
+    }
+
+    if (d->mFaceStore) {
+        cvReleaseMemStorage(&d->mFaceStore);
+    }
     d->mFaceStore = cvCreateMemStorage(0);
     d->mCascade = (CvHaarClassifierCascade*)cvLoad(faceData);
     if (!d->mCascade) {
@@ -111,12 +139,65 @@ QRect WebCamData::detectFace(const char* faceData)
    if (d->mFaceSeq && d->mFaceSeq->total) {
        rect = (CvRect*) cvGetSeqElem(d->mFaceSeq, 0);
        qDebug() << rect->x << rect->y << rect->width << rect->height;
+       d->hasFace = true;
+       //histogram
+       float max = 0.f;
+       float range[]  = {0, 180};
+       float* ranges = range;
+       int bins = 30;
+       d->hsvImage = cvCreateImage(cvGetSize(d->data), 8, 3);
+       d->hueImage = cvCreateImage(cvGetSize(d->data), 8, 1);
+       d->mask = cvCreateImage(cvGetSize(d->data), 8, 1);
+       d->prob = cvCreateImage(cvGetSize(d->data), 8, 1);
+       d->histogram = cvCreateHist(1, &bins, CV_HIST_ARRAY, &ranges, 1);
+
+       updateHugeImage(d->data);
+
+       cvSetImageROI(d->hueImage, *rect);
+       cvSetImageROI(d->mask, *rect);
+       cvCalcHist(&d->hueImage, d->histogram, 0, d->mask);
+       cvGetMinMaxHistValue(d->histogram, 0, &max, 0, 0);
+       cvConvertScale(d->histogram->bins, d->histogram->bins, max? 255.0/max : 0, 0);
+       cvResetImageROI(d->hueImage);
+       cvResetImageROI(d->mask);
+
+       d->faceRect = *rect;
+
        return QRect(rect->x, rect->y, rect->width, rect->height);
    }
 
 
    return QRect();
 
+}
+
+void WebCamData::trackFace()
+{
+   CvConnectedComp comps; 
+   updateHugeImage(d->data);
+
+   cvCalcBackProject(&d->hueImage, d->prob, d->histogram);
+   cvAnd(d->prob, d->mask, d->prob, 0);
+   CvBox2D box;
+   cvCamShift(d->prob, d->faceRect,
+           cvTermCriteria(CV_TERMCRIT_EPS | CV_TERMCRIT_ITER, 10, 1),
+           &comps, &box);
+   qDebug() << Q_FUNC_INFO
+       << comps.rect.x
+       << comps.rect.y
+       << comps.rect.width
+       << comps.rect.height
+       << box.angle;
+   d->faceRect = comps.rect;
+}
+
+
+void WebCamData::updateHugeImage(const IplImage* img)
+{
+    cvCvtColor(img, d->hsvImage, CV_BGR2HSV);
+    cvInRangeS(d->hsvImage, cvScalar(0, 55, MIN(65,256), 0),
+            cvScalar(180, 256, MAX(65,255), 0), d->mask);
+    cvSplit(d->hsvImage, d->hueImage, 0, 0, 0);
 }
 
 WebCamData::~WebCamData()
