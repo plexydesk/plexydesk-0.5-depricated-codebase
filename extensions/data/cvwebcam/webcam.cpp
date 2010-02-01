@@ -20,6 +20,7 @@
 #include <desktopwidget.h>
 #include <plexyconfig.h>
 #include <QTimer>
+#include <config.h>
 
 
 class WebCamData::Private
@@ -31,11 +32,17 @@ class WebCamData::Private
         QVariantMap dataMap;
         QTimer * timer;
         IplImage * data;
+        CvHaarClassifierCascade* mCascade;
+        CvMemStorage* mFaceStore;
+        CvSeq* mFaceSeq;
 };
 
 WebCamData::WebCamData(QObject * object):d(new Private)
 {
     d->data = 0;
+    d->mCascade = 0;
+    d->mFaceSeq = 0;
+    d->mFaceStore = 0;
     d->timer = new QTimer(this);
     qDebug() << Q_FUNC_INFO 
         << ": " << "Start webcam ";
@@ -66,19 +73,49 @@ void WebCamData::grab()
     d->dataMap["rawImage"] = d->data->imageData;
     d->dataMap["qimage"] = img;
     qDebug() << Q_FUNC_INFO << d->data->width << " x "  << d->data->height;
+    d->dataMap["faceRect"] = detectFace(OPENCV_ROOT
+            "/share/opencv/haarcascades/haarcascade_frontalface_default.xml");
     Q_EMIT dataReady();
 }
 
 void  WebCamData::init()
 {
+    qDebug() << Q_FUNC_INFO << OPENCV_ROOT;
 
-    qDebug() << Q_FUNC_INFO;
     if (d->mCaptureData) {
         connect(d->timer, SIGNAL(timeout()), this , SLOT(grab()));
         d->timer->start(1000/30);
     } else {
         qDebug() << Q_FUNC_INFO << ":" << "Capture from webcame failed";
     }
+
+}
+
+QRect WebCamData::detectFace(const char* faceData)
+{
+    d->mFaceStore = cvCreateMemStorage(0);
+    d->mCascade = (CvHaarClassifierCascade*)cvLoad(faceData);
+    if (!d->mCascade) {
+        qDebug() << Q_FUNC_INFO << ": " << "Error incorrect Haar classifier cascade";
+        return QRect();
+    }
+
+    CvRect* rect = 0;
+    int faceSize = d->data->width/5;
+    d->mFaceSeq = cvHaarDetectObjects(d->data,
+            d->mCascade, d->mFaceStore, 1.1, 6,
+            CV_HAAR_DO_CANNY_PRUNING,
+            cvSize(faceSize, faceSize));
+   qDebug() << "Number of Faces Detected" << d->mFaceSeq->total;
+
+   if (d->mFaceSeq && d->mFaceSeq->total) {
+       rect = (CvRect*) cvGetSeqElem(d->mFaceSeq, 0);
+       qDebug() << rect->x << rect->y << rect->width << rect->height;
+       return QRect(rect->x, rect->y, rect->width, rect->height);
+   }
+
+
+   return QRect();
 
 }
 

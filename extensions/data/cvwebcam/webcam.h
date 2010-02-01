@@ -43,6 +43,7 @@ public Q_SLOTS:
 private Q_SLOTS:
     void grab();
 private:
+    QRect detectFace(const char* faceData);
 
     class Private;
     Private * const d;
