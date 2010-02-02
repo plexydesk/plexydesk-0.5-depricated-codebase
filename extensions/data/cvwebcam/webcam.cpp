@@ -92,7 +92,6 @@ void WebCamData::grab()
     } while ( source < end);
 */
    //// QImage img(source, d->data->width, d->data->height, QImage::Format_RGB32);
-    d->dataMap.clear();
     detectFace(OPENCV_ROOT
             "/share/opencv/haarcascades/haarcascade_frontalface_default.xml");
 }
@@ -107,20 +106,17 @@ void  WebCamData::init()
     } else {
         qDebug() << Q_FUNC_INFO << ":" << "Capture from webcame failed";
     }
+    
+    d->mCascade = (CvHaarClassifierCascade*)cvLoad(OPENCV_ROOT
+            "/share/opencv/haarcascades/haarcascade_frontalface_default.xml");
+
+    d->mFaceStore = cvCreateMemStorage(0);
 
 }
 
 QRect WebCamData::detectFace(const char* faceData)
 {
-    if (d->mFaceStore) {
-        cvReleaseMemStorage(&d->mFaceStore);
-    }
 
-    if (d->mCascade) {
-        cvReleaseHaarClassifierCascade(&d->mCascade);
-    }
-    d->mFaceStore = cvCreateMemStorage(0);
-    d->mCascade = (CvHaarClassifierCascade*)cvLoad(faceData);
     if (!d->mCascade) {
         qDebug() << Q_FUNC_INFO << ": " << "Error incorrect Haar classifier cascade";
         return QRect();
@@ -169,6 +165,7 @@ QRect WebCamData::detectFace(const char* faceData)
        d->faceRect = *rect;
        */
 
+       d->dataMap.clear();
        d->dataMap["z"] = QVariant(radius);
        d->dataMap["x"] = QVariant(center.x);
        d->dataMap["y"] = QVariant(center.y);
