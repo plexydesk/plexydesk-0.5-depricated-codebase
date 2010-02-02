@@ -117,6 +117,10 @@ void  WebCamData::init()
 QRect WebCamData::detectFace(const char* faceData)
 {
 
+    if (d->hasFace) {
+        trackFace();
+        return QRect();
+    }
     if (!d->mCascade) {
         qDebug() << Q_FUNC_INFO << ": " << "Error incorrect Haar classifier cascade";
         return QRect();
@@ -141,7 +145,7 @@ QRect WebCamData::detectFace(const char* faceData)
 
        //qDebug() << "Radius : " << radius << " X: " << center.x << "Y : " << center.y;
        //histogram
-       /*
+       
        float max = 0.f;
        float range[]  = {0, 180};
        float* ranges = range;
@@ -163,13 +167,14 @@ QRect WebCamData::detectFace(const char* faceData)
        cvResetImageROI(d->mask);
 
        d->faceRect = *rect;
-       */
-
+      
+/*
        d->dataMap.clear();
        d->dataMap["z"] = QVariant(radius);
        d->dataMap["x"] = QVariant(center.x);
        d->dataMap["y"] = QVariant(center.y);
        Q_EMIT dataReady();
+       */
    }
 
 
