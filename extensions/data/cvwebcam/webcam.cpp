@@ -93,12 +93,8 @@ void WebCamData::grab()
 */
    //// QImage img(source, d->data->width, d->data->height, QImage::Format_RGB32);
     d->dataMap.clear();
-    d->dataMap["rawImage"] = d->data->imageData;
-    //d->dataMap["qimage"] = img;
-    qDebug() << Q_FUNC_INFO << d->data->width << " x "  << d->data->height;
-    d->dataMap["faceRect"] = detectFace(OPENCV_ROOT
+    detectFace(OPENCV_ROOT
             "/share/opencv/haarcascades/haarcascade_frontalface_default.xml");
-    Q_EMIT dataReady();
 }
 
 void  WebCamData::init()
@@ -116,13 +112,12 @@ void  WebCamData::init()
 
 QRect WebCamData::detectFace(const char* faceData)
 {
-    if (d->hasFace) {
-        trackFace();
-        return QRect();
-    }
-
     if (d->mFaceStore) {
         cvReleaseMemStorage(&d->mFaceStore);
+    }
+
+    if (d->mCascade) {
+        cvReleaseHaarClassifierCascade(&d->mCascade);
     }
     d->mFaceStore = cvCreateMemStorage(0);
     d->mCascade = (CvHaarClassifierCascade*)cvLoad(faceData);
@@ -137,13 +132,20 @@ QRect WebCamData::detectFace(const char* faceData)
             d->mCascade, d->mFaceStore, 1.1, 6,
             CV_HAAR_DO_CANNY_PRUNING,
             cvSize(faceSize, faceSize));
-   qDebug() << "Number of Faces Detected" << d->mFaceSeq->total;
+//   qDebug() << "Number of Faces Detected" << d->mFaceSeq->total;
 
    if (d->mFaceSeq && d->mFaceSeq->total) {
        rect = (CvRect*) cvGetSeqElem(d->mFaceSeq, 0);
-       qDebug() << rect->x << rect->y << rect->width << rect->height;
        d->hasFace = true;
+
+       int radius = cvRound((rect->width + rect->height)*0.25);
+       CvPoint center;
+       center.x = cvRound(rect->x + rect->width*0.5);
+       center.y = cvRound(rect->y + rect->height*0.5);
+
+       //qDebug() << "Radius : " << radius << " X: " << center.x << "Y : " << center.y;
        //histogram
+       /*
        float max = 0.f;
        float range[]  = {0, 180};
        float* ranges = range;
@@ -165,8 +167,12 @@ QRect WebCamData::detectFace(const char* faceData)
        cvResetImageROI(d->mask);
 
        d->faceRect = *rect;
+       */
 
-       return QRect(rect->x, rect->y, rect->width, rect->height);
+       d->dataMap["z"] = QVariant(radius);
+       d->dataMap["x"] = QVariant(center.x);
+       d->dataMap["y"] = QVariant(center.y);
+       Q_EMIT dataReady();
    }
 
 
