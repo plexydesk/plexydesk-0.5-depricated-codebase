@@ -52,7 +52,6 @@ public:
     */
 public Q_SLOTS:
     void data(QVariantMap&);
-    void drawItems();
     void onDataReady();
 Q_SIGNALS:
     void dataChanged();

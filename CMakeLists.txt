@@ -112,8 +112,12 @@ add_subdirectory(extensions/backdrop/classicdrop)
 add_subdirectory(extensions/widgets/imagepile)
 
 add_subdirectory(data)
+IF (NOT APPLE)
+IF (UNIX)
 add_subdirectory(social)
-
+add_subdirectory(social/accountsmanager/)
+ENDIF (UNIX)
+ENDIF (NOT APPLE)
 
 #add_subdirectory(extensions/widgets/demowidget)
 add_subdirectory(runner)
@@ -163,4 +167,3 @@ if(OpenCV_FOUND)
 add_subdirectory(extensions/data/cvwebcam/)
 endif(OpenCV_FOUND)
 #social
-add_subdirectory(social/accountsmanager/)

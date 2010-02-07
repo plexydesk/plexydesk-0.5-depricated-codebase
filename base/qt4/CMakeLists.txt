@@ -15,7 +15,7 @@ SET(sourceFiles icon.cpp
 	abstractplugininterface.cpp
 	backdropinterface.cpp
 	canvas.cpp
-   baserender.cpp
+        baserender.cpp
 	desktopwidget.cpp
 	extensionfactory.cpp
 	fakemime.cpp
@@ -25,11 +25,11 @@ SET(sourceFiles icon.cpp
 	plexyconfig.cpp
 	pluginloader.cpp
 	viewlayer.cpp
-   iconprovider.cpp
-   pendingjob.cpp
-   iconjob.cpp
-   listview.cpp
-   httpjobhandler.cpp
+        iconprovider.cpp
+        pendingjob.cpp
+        iconjob.cpp
+        listview.cpp
+        httpjobhandler.cpp
 )
 
 set(headerFiles
@@ -55,11 +55,11 @@ set(headerFiles
 	widgetinterface.h
 	widgetplugin.h
 	icon.h
-   iconprovider.h
-   pendingjob.h
-   iconjob.h
-   listview.h
-   httpjobhandler.h
+        iconprovider.h
+        pendingjob.h
+        iconjob.h
+        listview.h
+        httpjobhandler.h
 )
 
 set(QTMOC_SRCS
@@ -78,20 +78,23 @@ set(QTMOC_SRCS
 	widgetplugin.h
 	widgetinterface.h
 	icon.h
-   iconprovider.h
-   pendingjob.h
-   iconjob.h
-   listview.h
-   httpjobhandler.h
+        iconprovider.h
+        pendingjob.h
+        iconjob.h
+        listview.h
+        httpjobhandler.h
 )
 
 #for now only dbus works only under linux
+IF (NOT APPLE)
 IF (UNIX)
 QT4_ADD_DBUS_ADAPTOR(dbus_SRCS org.plexydesk.Config.xml
                         plexyconfig.h PlexyDesk::Config)
+set (DBUS_LIB ${QT_QTDBUS_LIBRARY})
 message(${dbus_SRCS})
 ENDIF(UNIX)
 
+ENDIF (NOT APPLE)
 
 qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
 
@@ -107,7 +110,7 @@ set(libs
     ${QT_QTCORE_LIBRARY}
     ${QT_QTOPENGL_LIBRARY}
     ${QT_QTSVG_LIBRARY}
-    ${QT_QTDBUS_LIBRARY}
+    ${DBUS_LIB}
     ${QT_QTNETWORK_LIBRARY}
 )
 

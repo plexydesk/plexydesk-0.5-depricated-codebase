@@ -17,11 +17,10 @@ include_directories(${CMAKE_SOURCE_DIR}/lib/)
 ########### source files ###############
 SET(sourceFiles
    desktopview.cpp
-   plexypanel.cpp
-	main.cpp
+   main.cpp
 )
 
-set(QTMOC_SRCS desktopview.h plexypanel.h)
+set(QTMOC_SRCS desktopview.h)
 
 qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
 
