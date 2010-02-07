@@ -8,7 +8,6 @@
 #include <baseplugin.h>
 #include <backdropplugin.h>
 #include <widgetplugin.h>
-#include <frameitem.h>
 
 
 /**

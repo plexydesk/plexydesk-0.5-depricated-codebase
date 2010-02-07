@@ -19,8 +19,6 @@ SET(sourceFiles icon.cpp
 	desktopwidget.cpp
 	extensionfactory.cpp
 	fakemime.cpp
-	frameitem.cpp
-	navigator.cpp
 	netwm.cpp
 	plexyconfig.cpp
 	pluginloader.cpp
@@ -44,8 +42,6 @@ set(headerFiles
 	desktopwidget.h
 	extensionfactory.h
 	fakemime.h
-	frameitem.h
-	navigator.h
 	netwm.h
 	netwm_def.h
 	netwm_p.h
@@ -71,7 +67,6 @@ set(QTMOC_SRCS
 	datainterface.h
 	dataplugin.h
 	desktopwidget.h
-	navigator.h
 	plexyconfig.h
 	pluginloader.h
 	viewlayer.h
