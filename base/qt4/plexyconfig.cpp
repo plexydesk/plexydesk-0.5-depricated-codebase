@@ -18,7 +18,9 @@
 *******************************************************************************/
 #include "plexyconfig.h"
 #include <desktopwidget.h>
+#ifdef Q_WS_X11
 #include <configadaptor.h>
+#endif
 
 namespace PlexyDesk
 {
@@ -53,10 +55,12 @@ Config::Config(const QString & organization, const QString & application, QObjec
     if (widgetList.count() < 0)
         writeToFile();
     //register  with dbus
+#ifdef Q_WS_X11
     new ConfigAdaptor(this);
     QDBusConnection dbus = QDBusConnection::sessionBus();
     dbus.registerObject("/Configuration", this);
     dbus.registerService("org.PlexyDesk.Config");
+#endif
 }
 
 void Config::writeToFile()

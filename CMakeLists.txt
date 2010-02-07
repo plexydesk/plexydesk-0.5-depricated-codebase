@@ -1,17 +1,12 @@
 PROJECT(PlexyDesktop)
 #siraj@kde.org
-#LGPL2
-
-
+#LGPL3
 SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmakemodules)
-
 INCLUDE(CPack)
 FIND_PACKAGE(Qt4 REQUIRED)
 FIND_PACKAGE(FFMPEG) #optional
 FIND_PACKAGE(OpenCV)
 FIND_PACKAGE(OpenGL REQUIRED)
-
-
 cmake_minimum_required(VERSION 2.4)
 
 SET(LIB_MAJOR 0)
@@ -66,13 +61,11 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/extensions/backdrop/classicdrop
     ${CMAKE_BINARY_DIR}/extensions/widgets/demowidget
     ${CMAKE_BINARY_DIR}/extensions/widgets/welcome
-    #    ${CMAKE_BINARY_DIR}/extensions/widgets/videowiget
     ${CMAKE_BINARY_DIR}/extensions/widgets/cpu
     ${CMAKE_BINARY_DIR}/extensions/widgets/friendswidget
     ${CMAKE_BINARY_DIR}/extensions/widgets/imagepile
     ${CMAKE_BINARY_DIR}/extensions/widgets/youtubewidget
     ${CMAKE_BINARY_DIR}/extensions/widgets/videoview
-#	${CMAKE_BINARY_DIR}/extensions/widgets/sdlvideoview
     ${CMAKE_BINARY_DIR}/extensions/widgets/wallpaper-win32
     ${CMAKE_BINARY_DIR}/extensions/data/presence
     ${CMAKE_BINARY_DIR}/extensions/data/flicker
@@ -100,7 +93,6 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/3rdparty/webitem/lib/
     ${CMAKE_BINARY_DIR}/social/
     ${CMAKE_SOURCE_DIR}/social/
-
     ${QT_INCLUDE_DIR}
 )
 
@@ -112,8 +104,12 @@ add_subdirectory(extensions/backdrop/classicdrop)
 add_subdirectory(extensions/widgets/imagepile)
 
 add_subdirectory(data)
+IF (NOT APPLE)
+IF (UNIX)
 add_subdirectory(social)
-
+add_subdirectory(social/accountsmanager/)
+ENDIF (UNIX)
+ENDIF (NOT APPLE)
 
 #add_subdirectory(extensions/widgets/demowidget)
 add_subdirectory(runner)
@@ -163,4 +159,3 @@ if(OpenCV_FOUND)
 add_subdirectory(extensions/data/cvwebcam/)
 endif(OpenCV_FOUND)
 #social
-add_subdirectory(social/accountsmanager/)
