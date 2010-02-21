@@ -169,12 +169,7 @@ QRect WebCamData::detectFace(const char* faceData)
         d->faceRect = *rect;
 
         /*
-               d->dataMap.clear();
-               d->dataMap["z"] = QVariant(radius);
-               d->dataMap["x"] = QVariant(center.x);
-               d->dataMap["y"] = QVariant(center.y);
-               Q_EMIT dataReady();
-               */
+                      */
     }
 
 
@@ -201,7 +196,7 @@ void WebCamData::trackFace()
     CvPoint center;
     center.x = cvRound(d->faceRect.x + d->faceRect.width * 0.5);
     center.y = cvRound(d->faceRect.y + d->faceRect.height * 0.5);
-
+/*
     qDebug() << Q_FUNC_INFO
     << comps.rect.x
     << comps.rect.y
@@ -211,6 +206,14 @@ void WebCamData::trackFace()
     << center.x
     << center.y
     << radius;
+    */
+    d->dataMap.clear();
+    d->dataMap["z"] = QVariant(radius);
+    d->dataMap["x"] = QVariant(center.x);
+    d->dataMap["y"] = QVariant(center.y);
+    d->dataMap["angle"] = QVariant(box.angle);
+    Q_EMIT dataReady();
+
 }
 
 
