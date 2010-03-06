@@ -44,7 +44,7 @@ ADD_EXECUTABLE(plexydesk ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
 	plexydesk 
-	qtviz
+	plexydeskcore
 	${libs}
 )
 

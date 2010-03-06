@@ -48,7 +48,7 @@ add_library (plexytwit SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
 	plexytwit
-	qtviz
+	plexydeskcore
 	${libs}
 )
 

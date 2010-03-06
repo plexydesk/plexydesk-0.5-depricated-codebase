@@ -31,20 +31,15 @@ class Canvas::Private
 public:
     Private() {}
     ~Private() {}
-    AbstractPluginInterface * bIface ;
-    BackdropPlugin * bgPlugin;
 };
 
 Canvas::Canvas(QObject * parent): QGraphicsScene(parent), d(new Private)
 {
-    //  d->bgPlugin  = static_cast<BackdropPlugin*>(PluginLoader::getInstance()->instance("classicbackdrop"));
-    //setAcceptDrops(true);
-
 }
 
 Canvas::~Canvas()
 {
-
+    delete d;
 }
 
 void Canvas::dropEvent(QGraphicsSceneDragDropEvent * event)
@@ -58,22 +53,7 @@ void Canvas::dragEnterEvent(QGraphicsSceneDragDropEvent *event)
     if (event->mimeData()->hasUrls()) {
         Config::getInstance()->setWallpaper(event->mimeData()->urls().at(0).toString(QUrl::StripTrailingSlash | QUrl::RemoveScheme));
     }
-    //QGraphicsScene::dragEnterEvent(event);
 }
 
-void Canvas::drawBackground(QPainter * painter, const QRectF & rect)
-{
-    /*
-    painter->setCompositionMode(QPainter::CompositionMode_Source);
-    painter->fillRect(rect, Qt::transparent);
-    painter->save();
-    painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
-    painter->setClipRect(rect);
-    if (d->bgPlugin) {
-    d->bgPlugin->render(painter,QRectF(rect.x(),rect.y(),rect.width(),rect.height()));
-    }
-    painter->restore();
-    */
-}
 } /* PlexyDesk */
 

@@ -2,14 +2,7 @@
 #define _CANVAS_H_
 
 #include <QGraphicsScene>
-
-#include <backdropinterface.h>
-#include <pluginloader.h>
-#include <baseplugin.h>
-#include <backdropplugin.h>
-#include <widgetplugin.h>
-#include <frameitem.h>
-
+#include <plexyconfig.h>
 
 /**
  * \class Canvas
@@ -24,7 +17,6 @@ public:
     Canvas(QObject * parent = 0);
     virtual ~Canvas();
 protected:
-    virtual void drawBackground(QPainter * painter, const QRectF & rect);
     virtual void dropEvent(QGraphicsSceneDragDropEvent * event);
     virtual void dragEnterEvent(QGraphicsSceneDragDropEvent *event);
 private:

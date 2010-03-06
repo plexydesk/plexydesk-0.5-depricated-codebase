@@ -111,16 +111,16 @@ set(libs
     ${QT_QTNETWORK_LIBRARY}
 )
 
-add_library(qtviz SHARED ${sourceFiles} ${QT_MOC_SRCS})
+add_library(plexydeskcore SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
-    qtviz
+    plexydeskcore
     qimageblitz
     plexymime
 	${libs}
 )
 if (NOT WIN32)
-    INSTALL(TARGETS qtviz DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/)
+    INSTALL(TARGETS plexydeskcore DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/)
 elseif(WIN32)
-    INSTALL(TARGETS qtviz DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/)
+    INSTALL(TARGETS plexydeskcore DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/)
 endif(NOT WIN32)

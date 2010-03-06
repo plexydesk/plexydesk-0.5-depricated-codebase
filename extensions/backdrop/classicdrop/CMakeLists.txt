@@ -44,7 +44,7 @@ add_library (classicbackdrop SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
 	classicbackdrop
-	qtviz
+	plexydeskcore
 	${libs}
 )
 

@@ -44,7 +44,7 @@ add_library (restengine SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
 	restengine
-	qtviz
+	plexydeskcore
 	${libs}
 )
 

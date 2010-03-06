@@ -26,23 +26,23 @@
 int main (int argc, char **argv)
 {
 	QCoreApplication app(argc, argv);
-	
+
 	QFile sourceDocument("freedesktop.org.xml");
 	if(!sourceDocument.open(QIODevice::ReadOnly))
 		return 0;
-	
+
 	QString newQuery("declare namespace ns = 'http://www.freedesktop.org/standards/shared-mime-info';\ndeclare variable $internalFile external;\n");
 	newQuery += QString("doc($internalFile)/ns:mime-info/ns:mime-type[@type='application/andrew-inset']/ns:comment/string()");
-	
+
 	QByteArray output = sourceDocument.readAll();
 
     QBuffer outputBuffer(&output);
-    outputBuffer.open(QIODevice::ReadOnly);	
-	
+    outputBuffer.open(QIODevice::ReadOnly);
+
 	QXmlQuery query;
 	query.bindVariable("internalFile", &outputBuffer);
 	query.setQuery(newQuery);
-	
+
 	if(!query.isValid())
 	{
 		qDebug() << "Query is not valid";
@@ -51,9 +51,9 @@ int main (int argc, char **argv)
 
 	QStringList result;
 	query.evaluateTo(&result);
-	
+
 	qDebug() << result;
-					 
+
 */
 
 #include "qplexymime.h"
@@ -65,107 +65,109 @@ int main (int argc, char **argv)
 #include <QBuffer>
 #include <QtXmlPatterns/QXmlQuery>
 #include <QtDebug>
+#include <plexyconfig.h>
 
-namespace PlexyDesk{
+
+namespace PlexyDesk {
 
 class QPlexyMime::QPlexyMimePrivate
 {
 private:
-	QString newQuery;
+    QString newQuery;
 
 public:
-	QByteArray output;
-	QBuffer outputBuffer;
-	QXmlQuery query;
-	QFileInfo fileInfo;
-	
-	QPlexyMimePrivate()
-	{
-		newQuery = QString("declare namespace ns = 'http://www.freedesktop.org/standards/shared-mime-info';\ndeclare variable $internalFile external;\n");
-	}
-	
-	void evaluate(QString &result)
-	{
-		if(!query.isValid())
-			return;
-		
-		query.evaluateTo(&result);
-	}
-	
-	void evaluate(QStringList &result)
-	{
-		if(!query.isValid())
-			return;
-		
-		query.evaluateTo(&result);
-	}
+    QByteArray output;
+    QBuffer outputBuffer;
+    QXmlQuery query;
+    QFileInfo fileInfo;
 
-	void setQuery(QString tmpQuery)
-	{
-		QString tmp = newQuery + tmpQuery;
-		query.setQuery(newQuery + tmpQuery);
-	
-		if(!query.isValid())
-		{
-			qDebug() << "Invalid query" << tmpQuery;
-			return;
-		}
-	}
-	
-	bool setGenericMime(const QString &mimeType)
-	{
-		if(mimeType.isEmpty())
-			return false;
-	
-		QString tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type[@type='%1']/ns:glob/@pattern/string()").arg(mimeType);
-		
-		setQuery(tmpQuery);
-	
-		QString result;
-		evaluate(result);
-		
-		if(result.isEmpty())
-			return false;
-		
-		QString extension = result.remove(0,1);
-		QString filename = QString("test") + extension;
-		
-		fileInfo.setFile(filename.simplified());
-		
-		return true;
-	}
+    QPlexyMimePrivate()
+    {
+        newQuery = QString("declare namespace ns = 'http://www.freedesktop.org/standards/shared-mime-info';\ndeclare variable $internalFile external;\n");
+    }
+
+    void evaluate(QString &result)
+    {
+        if (!query.isValid())
+            return;
+
+        query.evaluateTo(&result);
+    }
+
+    void evaluate(QStringList &result)
+    {
+        if (!query.isValid())
+            return;
+
+        query.evaluateTo(&result);
+    }
+
+    void setQuery(QString tmpQuery)
+    {
+        QString tmp = newQuery + tmpQuery;
+        query.setQuery(newQuery + tmpQuery);
+
+        if (!query.isValid())
+        {
+            qDebug() << "Invalid query" << tmpQuery;
+            return;
+        }
+    }
+
+    bool setGenericMime(const QString &mimeType)
+    {
+        if (mimeType.isEmpty())
+            return false;
+
+        QString tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type[@type='%1']/ns:glob/@pattern/string()").arg(mimeType);
+
+        setQuery(tmpQuery);
+
+        QString result;
+        evaluate(result);
+
+        if (result.isEmpty())
+            return false;
+
+        QString extension = result.remove(0,1);
+        QString filename = QString("test") + extension;
+
+        fileInfo.setFile(filename.simplified());
+
+        return true;
+    }
 };
 
 QPlexyMime::QPlexyMime (QObject *parent)
-	: d(new QPlexyMimePrivate)
+        : d(new QPlexyMimePrivate)
 {
-	QFile sourceDocument(":/freedesktop.org.xml");
-	sourceDocument.open(QIODevice::ReadOnly);
-	
-	d->output = sourceDocument.readAll();
+    QFile sourceDocument( QString(PLEXPREFIX) + "/mime/freedesktop.org.xml");
+    sourceDocument.open(QIODevice::ReadOnly);
+
+    d->output = sourceDocument.readAll();
 
     d->outputBuffer.setBuffer(&d->output);
     d->outputBuffer.open(QIODevice::ReadOnly);
-	d->query.bindVariable("internalFile", &d->outputBuffer);
+    d->query.bindVariable("internalFile", &d->outputBuffer);
 }
 
 QPlexyMime::~QPlexyMime()
 {
-	delete d;
+    delete d;
 }
 
 QString QPlexyMime::fromFileName (const QString& fileName)
 {
-	d->fileInfo.setFile(fileName);
-	QString ext = d->fileInfo.suffix();
-	QString tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../@type/string()").arg(ext);
-	
-	d->setQuery(tmpQuery);
-	
-	QString result;
-	d->evaluate(result);
-	
-	return result.simplified();
+    d->fileInfo.setFile(fileName);
+    QString ext = d->fileInfo.suffix();
+    QString tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../@type/string()").arg(ext);
+
+    d->setQuery(tmpQuery);
+
+    QString result;
+    d->evaluate(result);
+    qDebug() << Q_FUNC_INFO  << result.simplified();
+    return result.simplified();
 }
 /*
 QString QPlexyMime::fromFile (const QString& fileName)
@@ -196,163 +198,163 @@ QString QPlexyMime::fromFile (QFile *file)
 
 QString QPlexyMime::genericIconNameMime (const QString& mimeType)
 {
-	if(d->setGenericMime(mimeType))
-	{
-		return genericIconName();
-	}
+    if (d->setGenericMime(mimeType))
+    {
+        return genericIconName();
+    }
 
-	return QString();
+    return QString();
 }
 
 QString QPlexyMime::expandedAcronymMime (const QString& mimeType)
 {
-	if(d->setGenericMime(mimeType))
-		return expandedAcronym();
+    if (d->setGenericMime(mimeType))
+        return expandedAcronym();
 
-	return QString();
+    return QString();
 }
 
 QString QPlexyMime::descriptionMime (const QString& mimeType, const QString &lang)
 {
-	if(d->setGenericMime(mimeType))
-		if(lang.isEmpty())
-			return description();
-		else
-			return description(lang);
+    if (d->setGenericMime(mimeType))
+        if (lang.isEmpty())
+            return description();
+        else
+            return description(lang);
 
-	return QString();
+    return QString();
 }
 
 QString QPlexyMime::subClassOfMime (const QString& mimeType)
 {
-	if(d->setGenericMime(mimeType))
-		return subClassOf();
+    if (d->setGenericMime(mimeType))
+        return subClassOf();
 
-	return QString();
+    return QString();
 }
 
 QString QPlexyMime::acronymMime (const QString& mimeType)
 {
-	if(d->setGenericMime(mimeType))
-		return acronym();
+    if (d->setGenericMime(mimeType))
+        return acronym();
 
-	return QString();
+    return QString();
 }
 
 QString QPlexyMime::aliasMime (const QString& mimeType)
 {
-	if(d->setGenericMime(mimeType))
-		return alias();
+    if (d->setGenericMime(mimeType))
+        return alias();
 
-	return QString();
+    return QString();
 }
 
 QString QPlexyMime::genericIconName (void) const
 {
-	QString ext = d->fileInfo.suffix();
-	QString tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../ns:generic-icon/@name/string()").arg(ext);
-	
-	d->setQuery(tmpQuery);
-	
-	QString result;
-	d->evaluate(result);
-	
-	return result.simplified();
+    QString ext = d->fileInfo.suffix();
+    QString tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../ns:generic-icon/@name/string()").arg(ext);
+
+    d->setQuery(tmpQuery);
+
+    QString result;
+    d->evaluate(result);
+
+    return result.simplified();
 }
 
 QString QPlexyMime::expandedAcronym (void) const
 {
-	QString ext = d->fileInfo.suffix();
-	QString tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../ns:expanded-acronym/string()").arg(ext);
-	
-	d->setQuery(tmpQuery);
-	
-	QString result;
-	d->evaluate(result);
-	
-	return result.simplified();
+    QString ext = d->fileInfo.suffix();
+    QString tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../ns:expanded-acronym/string()").arg(ext);
+
+    d->setQuery(tmpQuery);
+
+    QString result;
+    d->evaluate(result);
+
+    return result.simplified();
 }
 
 QString QPlexyMime::description (const QString &lang) const
 {
-	QString ext = d->fileInfo.suffix();
-	QString tmpQuery;
-	if(lang.isEmpty())
-		tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../ns:comment/string()").arg(ext);
-	else
-		tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../ns:comment[@xml:lang='%2']/string()").arg(ext).arg(lang);
+    QString ext = d->fileInfo.suffix();
+    QString tmpQuery;
+    if (lang.isEmpty())
+        tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../ns:comment/string()").arg(ext);
+    else
+        tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../ns:comment[@xml:lang='%2']/string()").arg(ext).arg(lang);
 
-	d->setQuery(tmpQuery);
-	
-	QString retValue;
-	
-	if(lang.isEmpty())
-	{
-		QStringList result;
-		d->evaluate(result);
-		if(!result.isEmpty())
-			retValue = result.first();
-	}
-	else
-	{
-		QString result;
-		d->evaluate(result);
-		
-		retValue = result;
-	}
-	
-	return retValue.simplified();
+    d->setQuery(tmpQuery);
+
+    QString retValue;
+
+    if (lang.isEmpty())
+    {
+        QStringList result;
+        d->evaluate(result);
+        if (!result.isEmpty())
+            retValue = result.first();
+    }
+    else
+    {
+        QString result;
+        d->evaluate(result);
+
+        retValue = result;
+    }
+
+    return retValue.simplified();
 }
 
 QString QPlexyMime::subClassOf (void) const
 {
-	QString ext = d->fileInfo.suffix();
-	QString tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../ns:sub-class-of/@type/string()").arg(ext);
-	
-	d->setQuery(tmpQuery);
-	
-	QString result;
-	d->evaluate(result);
-	
-	return result.simplified();
+    QString ext = d->fileInfo.suffix();
+    QString tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../ns:sub-class-of/@type/string()").arg(ext);
+
+    d->setQuery(tmpQuery);
+
+    QString result;
+    d->evaluate(result);
+
+    return result.simplified();
 }
 
 QString QPlexyMime::mimeType (void) const
 {
-	QString ext = d->fileInfo.suffix();
-	QString tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../@type/string()").arg(ext);
-	
-	d->setQuery(tmpQuery);
-	
-	QString result;
-	d->evaluate(result);
-	
-	return result.simplified();
+    QString ext = d->fileInfo.suffix();
+    QString tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../@type/string()").arg(ext);
+
+    d->setQuery(tmpQuery);
+
+    QString result;
+    d->evaluate(result);
+
+    return result.simplified();
 }
 
 QString QPlexyMime::acronym (void) const
 {
-	QString ext = d->fileInfo.suffix();
-	QString tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../ns:acronym/string()").arg(ext);
-	
-	d->setQuery(tmpQuery);
-	
-	QString result;
-	d->evaluate(result);
-	
-	return result.simplified();
+    QString ext = d->fileInfo.suffix();
+    QString tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../ns:acronym/string()").arg(ext);
+
+    d->setQuery(tmpQuery);
+
+    QString result;
+    d->evaluate(result);
+
+    return result.simplified();
 }
 
 QString QPlexyMime::alias (void) const
 {
-	QString ext = d->fileInfo.suffix();
-	QString tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../ns:alias/@type/string()").arg(ext);
-	
-	d->setQuery(tmpQuery);
-	
-	QString result;
-	d->evaluate(result);
-	
-	return result.simplified();
+    QString ext = d->fileInfo.suffix();
+    QString tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../ns:alias/@type/string()").arg(ext);
+
+    d->setQuery(tmpQuery);
+
+    QString result;
+    d->evaluate(result);
+
+    return result.simplified();
 }
 }

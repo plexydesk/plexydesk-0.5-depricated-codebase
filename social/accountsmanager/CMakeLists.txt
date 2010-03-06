@@ -64,7 +64,7 @@ ADD_EXECUTABLE(socialplexyaccountman ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
 	socialplexyaccountman 
-	qtviz
+	plexydeskcore
 	${libs}
 	${QT_QTSQL_LIBRARY}
 )

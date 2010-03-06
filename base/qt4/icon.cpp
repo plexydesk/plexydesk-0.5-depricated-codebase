@@ -36,6 +36,7 @@ public:
     uint id;
     IconJobPtr iconjob;
     QString exe;
+    QString path;
 };
 
 Icon::Icon(IconProviderPtr icon, const QRectF &rect, QWidget *embeddedWidget) : DesktopWidget(rect), d(new Private)
@@ -43,6 +44,7 @@ Icon::Icon(IconProviderPtr icon, const QRectF &rect, QWidget *embeddedWidget) : 
     d->valid = false;
     d->iconprovider = icon;
     d->id = 0;
+    connect(this, SIGNAL(pathSet()), this, SLOT(loadContent()));
 }
 
 
@@ -51,18 +53,13 @@ Icon::~Icon()
     delete d;
 }
 
-void Icon::loadIcon()
-{
-    d->icon = d->iconjob->Icon();
-    update();
-}
 
-void Icon::setContent(const QString& path)
+void Icon::loadContent()
 {
-    d->mime.fromFileName(path);
+    d->mime.fromFileName(d->path);
     QString iconname;
     if (d->mime.mimeType() == "application/x-desktop") {
-        QSettings setting(path,  QSettings::IniFormat);
+        QSettings setting(d->path,  QSettings::IniFormat);
         setting.beginGroup("Desktop Entry");
         iconname = setting.value("Icon", "").toString();
         d->text = setting.value("Name", "").toString();
@@ -73,8 +70,20 @@ void Icon::setContent(const QString& path)
         connect(d->iconjob.data(), SIGNAL(finished()), this, SLOT(loadIcon()));
     } else {
         QString name = d->mime.genericIconName();
+        qDebug() << Q_FUNC_INFO << name;
     }
 
+}
+void Icon::loadIcon()
+{
+    d->icon = d->iconjob->Icon();
+    update();
+}
+
+void Icon::setContent(const QString& path)
+{
+    d->path = path;
+    Q_EMIT pathSet();
 }
 
 bool Icon::isValid()

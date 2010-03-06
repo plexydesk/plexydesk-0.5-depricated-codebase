@@ -44,7 +44,7 @@ add_library (utubeengine SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
 	utubeengine
-	qtviz
+	plexydeskcore
 	${libs}
 )
 

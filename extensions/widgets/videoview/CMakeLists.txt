@@ -49,7 +49,7 @@ add_library (videoview SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 target_link_libraries(
 	videoview
-	qtviz
+	plexydeskcore
 	${libs}
 )
 

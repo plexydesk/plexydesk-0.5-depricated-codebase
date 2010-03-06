@@ -49,7 +49,7 @@ add_library (imagepil SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
 	imagepil
-	qtviz
+	plexydeskcore
 	${libs}
 )
 

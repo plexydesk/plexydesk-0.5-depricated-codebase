@@ -47,7 +47,7 @@ add_library (plexyclock SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
 	plexyclock
-	qtviz
+	plexydeskcore
 	${libs}
 )
 

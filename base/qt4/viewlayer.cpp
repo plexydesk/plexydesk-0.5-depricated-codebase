@@ -9,7 +9,7 @@ public:
     ~Private() {}
 
     typedef QList <DesktopWidget*> List;
-    typedef QMap <QString, List*> Layer;
+    typedef QHash <QString, List*> Layer;
 
     Layer layer;
     List * currentList;
@@ -36,7 +36,6 @@ void ViewLayer::addItem(const QString& layerName, DesktopWidget * item)
     }
 }
 
-
 void ViewLayer::showLayer(const QString& layername)
 {
     if (!d->layer.contains(layername)) {
@@ -56,6 +55,11 @@ void ViewLayer::showLayer(const QString& layername)
             }
         }
     }
+}
+
+QStringList ViewLayer::layerIndex() const
+{
+   return d->layer.keys();
 }
 
 } // namespace PlexyDesk

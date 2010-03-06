@@ -42,7 +42,7 @@ ADD_EXECUTABLE(socialplexydaemon ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
 	socialplexydaemon 
-	qtviz
+	plexydeskcore
 	${libs}
 )
 include(PkgConfigGetVar)

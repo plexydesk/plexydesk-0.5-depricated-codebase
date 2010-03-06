@@ -38,11 +38,10 @@ namespace PlexyDesk
         SocialPlugin* getPluginInstance(const QString &pluginName);
     public:
         SocialDaemon(QApplication *parent);
-    public slots:
+    public Q_SLOTS:
         QStringList getPluginsList();
         QStringList supportedMethods(const QString &pluginName);
         QVariantMap data(const QString &pluginName, const QString &methodName, QVariantMap args);
-
 
     };
 } //namespace PlexyDesk

@@ -42,6 +42,9 @@ public:
     virtual void drawText(QPainter *painter, const QRectF& rect);
 public Q_SLOTS:
     void loadIcon();
+    void loadContent();
+Q_SIGNALS:
+    void pathSet();
 
 private:
 

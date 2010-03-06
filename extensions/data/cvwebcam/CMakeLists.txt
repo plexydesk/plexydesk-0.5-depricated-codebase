@@ -46,7 +46,7 @@ add_library (webcamengine SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
 	webcamengine
-	qtviz
+	plexydeskcore
 	${libs}
 )
 

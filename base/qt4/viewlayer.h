@@ -27,12 +27,9 @@ public:
 
     void showLayer(const QString& layer);
 
-private:
-    typedef QList <DesktopWidget*> List;
-    typedef QMap <QString, List*> Layer;
+    QStringList layerIndex() const;
 
-    Layer layer;
-    List * currentList;
+private:
     class Private;
     Private * const d;
 };

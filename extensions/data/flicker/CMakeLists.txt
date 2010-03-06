@@ -44,7 +44,7 @@ add_library (flickerengine SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
 	flickerengine
-	qtviz
+	plexydeskcore
 	${libs}
 )
 
