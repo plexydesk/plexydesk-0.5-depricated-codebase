@@ -50,7 +50,6 @@ public:
     void drawWidget();;
     */
 public Q_SLOTS:
-    void drawItems();
     void onDataReady();
 Q_SIGNALS:
     void dataChanged();

@@ -17,7 +17,6 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 #include "desktopview.h"
-#include "navigator.h"
 #include <desktopwidget.h>
 #include <backdropinterface.h>
 #include <pluginloader.h>
@@ -25,7 +24,6 @@
 #include <backdropplugin.h>
 #include <widgetplugin.h>
 #include <viewlayer.h>
-#include <frameitem.h>
 #include <icon.h>
 #include <iconprovider.h>
 
@@ -53,7 +51,6 @@ public:
     float row;
     float column;
     float margin;
-    Frame * frm;
     bool openglOn;
     QList<Icon*> icons;
     IconProviderPtr iconprovider;

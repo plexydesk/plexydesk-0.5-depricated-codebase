@@ -40,7 +40,6 @@ public:
     virtual ~ImagePlugin();
     virtual QGraphicsItem * item();// {};
 public slots:
-    void data(QVariant&);
     void onDataReady();
 
     void searchImage();

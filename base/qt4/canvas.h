@@ -3,6 +3,12 @@
 
 #include <QGraphicsScene>
 #include <plexyconfig.h>
+#include <backdropinterface.h>
+#include <pluginloader.h>
+#include <baseplugin.h>
+#include <backdropplugin.h>
+#include <widgetplugin.h>
+
 
 /**
  * \class Canvas
