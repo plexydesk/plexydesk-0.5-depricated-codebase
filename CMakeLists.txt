@@ -157,6 +157,6 @@ endif(FULL_DESKTOP)
 if(OpenCV_FOUND)
  
 add_subdirectory(extensions/data/cvwebcam/)
-add_subdirectory(headtrack)
+#add_subdirectory(headtrack)
 endif(OpenCV_FOUND)
 #social

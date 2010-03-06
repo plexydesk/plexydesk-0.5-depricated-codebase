@@ -15,7 +15,7 @@ SET(sourceFiles icon.cpp
 	abstractplugininterface.cpp
 	backdropinterface.cpp
 	canvas.cpp
-        baserender.cpp
+   baserender.cpp
 	desktopwidget.cpp
 	extensionfactory.cpp
 	fakemime.cpp
@@ -23,11 +23,11 @@ SET(sourceFiles icon.cpp
 	plexyconfig.cpp
 	pluginloader.cpp
 	viewlayer.cpp
-        iconprovider.cpp
-        pendingjob.cpp
-        iconjob.cpp
-        listview.cpp
-        httpjobhandler.cpp
+   iconprovider.cpp
+   pendingjob.cpp
+   iconjob.cpp
+   listview.cpp
+   httpjobhandler.cpp
 )
 
 set(headerFiles
@@ -51,11 +51,11 @@ set(headerFiles
 	widgetinterface.h
 	widgetplugin.h
 	icon.h
-        iconprovider.h
-        pendingjob.h
-        iconjob.h
-        listview.h
-        httpjobhandler.h
+   iconprovider.h
+   pendingjob.h
+   iconjob.h
+   listview.h
+   httpjobhandler.h
 )
 
 set(QTMOC_SRCS
@@ -73,11 +73,11 @@ set(QTMOC_SRCS
 	widgetplugin.h
 	widgetinterface.h
 	icon.h
-        iconprovider.h
-        pendingjob.h
-        iconjob.h
-        listview.h
-        httpjobhandler.h
+   iconprovider.h
+   pendingjob.h
+   iconjob.h
+   listview.h
+   httpjobhandler.h
 )
 
 #for now only dbus works only under linux
