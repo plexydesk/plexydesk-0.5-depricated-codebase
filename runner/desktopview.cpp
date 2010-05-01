@@ -84,8 +84,8 @@ DesktopView::DesktopView(QGraphicsScene * scene, QWidget * parent):QGraphicsView
     d->layer = new ViewLayer();
     d->iconprovider = IconProviderPtr(new IconProvider, &QObject::deleteLater);
     d->iconWatcher = new QFutureWatcher<Icon*>(this);
-    connect(d->iconWatcher, SIGNAL(resultReadyAt(int)), SLOT(showIcon(int)));
-    loadIcons();
+
+    QTimer::singleShot(100, this, SLOT(loadIcons()));
     connect(Config::getInstance(), SIGNAL(configChanged()), this, SLOT(backgroundChanged()));
     connect(Config::getInstance(), SIGNAL(widgetAdded()), this, SLOT(onNewWidget()));
 
@@ -229,6 +229,7 @@ void DesktopView::setTopMostWidget(const QPoint &pt)
 
 void DesktopView::loadIcons()
 {
+    qDebug()<< Q_FUNC_INFO << "Loading Icons";
     QDir desktop(QDir::homePath()+"/Desktop");
     desktop.setFilter(QDir::Files | QDir::NoDotAndDotDot);
     desktop.setSorting(QDir::Size | QDir::Reversed);

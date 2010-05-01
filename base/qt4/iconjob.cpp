@@ -31,8 +31,9 @@ IconJob::IconJob(QObject * parent) : PendingJob(parent), d(new Private)
     }
 
     d->iconpaths << "/usr/share/pixmaps/"
-    << "/usr/share/app-install/icons/";
-    connect(this, SIGNAL(newJob()), this , SLOT(handleJob()));
+            << "/usr/share/app-install/icons/";
+
+    connect(this, SIGNAL(newJob()), this , SLOT(handleJob()), Qt::DirectConnection);
 }
 
 IconJob::~IconJob()
@@ -50,7 +51,7 @@ void IconJob::requestIcon(const QString& name, const QString& size)
     d->size = size;
     d->name = name;
 
-    emit newJob();
+    QMetaObject::invokeMethod(this, "newJob", Qt::DirectConnection);
 }
 
 void IconJob::handleJob()

@@ -83,7 +83,7 @@ void Icon::loadIcon()
 void Icon::setContent(const QString& path)
 {
     d->path = path;
-    Q_EMIT pathSet();
+    QMetaObject::invokeMethod(this, "pathSet", Qt::DirectConnection);
 }
 
 bool Icon::isValid()

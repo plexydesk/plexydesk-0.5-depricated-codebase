@@ -41,15 +41,17 @@ namespace PlexyDesk
         void addCoreExtension(const QString& name);
         void addDesktopItem(QGraphicsItem * item);
         void enableOpenGL(bool);
+
     public slots:
         void backgroundChanged();
         void onNewWidget();
         void showIcon(int);
+        void loadIcons();
 
     protected:
         void drawBackground(QPainter * painter, const QRectF& rect);
         void mousePressEvent(QMouseEvent *event);
-        void loadIcons();
+
     private:
         class Private;
         Private * const d;
