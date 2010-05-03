@@ -26,11 +26,13 @@
 #include <viewlayer.h>
 #include <icon.h>
 #include <iconprovider.h>
+#include <qplexymime.h>
 
 #include <QGLWidget>
 #include <QGraphicsGridLayout>
 #include <QDir>
 #include <QFutureWatcher>
+#include <QtDebug>
 
 #if QT_VERSION < 0x04600
 #include <QPropertyAnimation>
@@ -55,6 +57,7 @@ public:
     QList<Icon*> icons;
     IconProviderPtr iconprovider;
     QFutureWatcher<Icon*> *iconWatcher;
+    QPlexyMime *mime;
 };
 
 bool getLessThanWidget(const QGraphicsItem* it1, const QGraphicsItem* it2)
@@ -76,6 +79,7 @@ DesktopView::DesktopView(QGraphicsScene * scene, QWidget * parent):QGraphicsView
     d->openglOn = false;
 
     /* init */
+    d->mime = new QPlexyMime(this);
     d->bgPlugin  = static_cast<BackdropPlugin*>(PluginLoader::getInstance()->instance("classicbackdrop"));
     d->widgets = 0;
     d->gridLayout = new QGraphicsGridLayout();
@@ -243,18 +247,30 @@ void DesktopView::loadIcons()
         //TODO
         //Shared pointer please
 
-        Icon * icon = new Icon(d->iconprovider, QRect(0,0,iconpixmap.width(),iconpixmap.height()));
+        Icon * icon = new Icon(d->iconprovider, d->mime, QRect(0,0,iconpixmap.width(),iconpixmap.height()));
+        connect(icon, SIGNAL(iconLoaded()), this, SLOT(iconLoaded()));
         icon->setContent(fileInfo.absoluteFilePath());
-        if (icon->isValid()) {
-            scene()->addItem(icon);
-            icon->setPos(d->row,d->column);
-            icon->show();
-            d->icons.append(icon);
-        } else {
-            delete icon;
-        }
+        d->icons.append(icon);
     }
+}
 
+void DesktopView::iconLoaded()
+{
+    Icon *icon = qobject_cast<Icon*>(sender());
+
+    if (icon->isValid()) {
+        scene()->addItem(icon);
+        icon->setPos(d->row,d->column);
+        icon->show();
+    } else {
+        int index = d->icons.indexOf(icon);
+        if(index == -1)
+        {
+            qWarning("Cannot found icon index!");
+            return;
+        }
+        d->icons.removeAt(index);
+    }
 }
 
 void DesktopView::showIcon(int num)

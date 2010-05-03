@@ -28,7 +28,7 @@ public:
     Private() {}
     ~Private() {}
     QPixmap icon;
-    QPlexyMime mime;
+    QPlexyMime *mime;
     QString text;
     bool valid;
     IconProviderPtr iconprovider;
@@ -38,14 +38,15 @@ public:
     QString path;
 };
 
-Icon::Icon(IconProviderPtr icon, const QRectF &rect, QWidget *embeddedWidget) : DesktopWidget(rect), d(new Private)
+Icon::Icon(IconProviderPtr icon, QPlexyMime* mime, const QRectF &rect, QWidget *embeddedWidget) : DesktopWidget(rect), d(new Private)
 {
     d->valid = false;
     d->iconprovider = icon;
     d->id = 0;
+    d->mime = mime;
     connect(this, SIGNAL(pathSet()), this, SLOT(loadContent()));
-    connect(&d->mime, SIGNAL(fromFileNameMime(const MimePairType)), this, SLOT(fromFileNameMime(const MimePairType)));
-    connect(&d->mime, SIGNAL(genericIconNameMime(const MimePairType)), this, SLOT(genericIconNameMime(const MimePairType)));
+    connect(d->mime, SIGNAL(fromFileNameMime(const MimePairType)), this, SLOT(fromFileNameMime(const MimePairType)));
+    connect(d->mime, SIGNAL(genericIconNameMime(const MimePairType)), this, SLOT(genericIconNameMime(const MimePairType)));
 }
 
 Icon::~Icon()
@@ -55,7 +56,7 @@ Icon::~Icon()
 
 void Icon::loadContent()
 {
-    d->mime.fromFileName(d->path);
+    d->mime->fromFileName(d->path);
 }
 
 void Icon::fromFileNameMime(const MimePairType mimePair)
@@ -72,14 +73,16 @@ void Icon::fromFileNameMime(const MimePairType mimePair)
         d->valid = true;
         d->iconjob = d->iconprovider->requestIcon(iconname, "32x32");
         connect(d->iconjob.data(), SIGNAL(finished()), this, SLOT(loadIcon()));
+        emit iconLoaded();
     } else {
-        d->mime.genericIconName(mimePair.second);
+        d->mime->genericIconName(mimePair.second);
     }
 }
 
 void Icon::genericIconNameMime(const MimePairType mimePair)
 {
     qDebug() << Q_FUNC_INFO << mimePair;
+    emit iconLoaded();
 }
 
 void Icon::loadIcon()

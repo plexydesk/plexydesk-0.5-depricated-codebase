@@ -33,7 +33,7 @@ class VISIBLE_SYM Icon : public DesktopWidget
 {
     Q_OBJECT
 public:
-    Icon(IconProviderPtr icon, const QRectF &rect, QWidget *embeddedWidget = 0);
+    Icon(IconProviderPtr icon, QPlexyMime *mime, const QRectF &rect, QWidget *embeddedWidget = 0);
     virtual ~Icon();
     virtual void setContent(const QString& path);
     virtual bool isValid();
@@ -50,6 +50,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void pathSet();
+    void iconLoaded();
 
 private:
 

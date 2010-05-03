@@ -47,6 +47,7 @@ namespace PlexyDesk
         void onNewWidget();
         void showIcon(int);
         void loadIcons();
+        void iconLoaded();
 
     protected:
         void drawBackground(QPainter * painter, const QRectF& rect);
