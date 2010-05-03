@@ -25,6 +25,7 @@
 #include <desktopwidget.h>
 #include <iconprovider.h>
 #include <pendingjob.h>
+#include <qplexymime.h>
 
 namespace PlexyDesk
 {
@@ -40,9 +41,13 @@ public:
     virtual void paintViewSide(QPainter * painter, const QRectF& rect);
     virtual void paintDockView(QPainter * painter, const QRectF& rect);
     virtual void drawText(QPainter *painter, const QRectF& rect);
+
 public Q_SLOTS:
     void loadIcon();
     void loadContent();
+    void fromFileNameMime(const MimePairType);
+    void genericIconNameMime(const MimePairType);
+
 Q_SIGNALS:
     void pathSet();
 

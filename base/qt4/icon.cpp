@@ -15,7 +15,6 @@
 */
 
 #include "icon.h"
-#include <qplexymime.h>
 #include <iconprovider.h>
 #include <QPainter>
 #include <QProcess>
@@ -45,20 +44,25 @@ Icon::Icon(IconProviderPtr icon, const QRectF &rect, QWidget *embeddedWidget) : 
     d->iconprovider = icon;
     d->id = 0;
     connect(this, SIGNAL(pathSet()), this, SLOT(loadContent()));
+    connect(&d->mime, SIGNAL(fromFileNameMime(const MimePairType)), this, SLOT(fromFileNameMime(const MimePairType)));
+    connect(&d->mime, SIGNAL(genericIconNameMime(const MimePairType)), this, SLOT(genericIconNameMime(const MimePairType)));
 }
-
 
 Icon::~Icon()
 {
     delete d;
 }
 
-
 void Icon::loadContent()
 {
     d->mime.fromFileName(d->path);
+}
+
+void Icon::fromFileNameMime(const MimePairType mimePair)
+{
     QString iconname;
-    if (d->mime.mimeType() == "application/x-desktop") {
+
+    if (mimePair.second == "application/x-desktop") {
         QSettings setting(d->path,  QSettings::IniFormat);
         setting.beginGroup("Desktop Entry");
         iconname = setting.value("Icon", "").toString();
@@ -69,11 +73,15 @@ void Icon::loadContent()
         d->iconjob = d->iconprovider->requestIcon(iconname, "32x32");
         connect(d->iconjob.data(), SIGNAL(finished()), this, SLOT(loadIcon()));
     } else {
-        QString name = d->mime.genericIconName();
-        qDebug() << Q_FUNC_INFO << name;
+        d->mime.genericIconName(mimePair.second);
     }
-
 }
+
+void Icon::genericIconNameMime(const MimePairType mimePair)
+{
+    qDebug() << Q_FUNC_INFO << mimePair;
+}
+
 void Icon::loadIcon()
 {
     d->icon = d->iconjob->Icon();

@@ -7,10 +7,22 @@ INCLUDE_DIRECTORIES(
 
 SET(sourceFiles
 	test.cpp
+        testmime.cpp
 )
 
+set(headerFiles
+        testmime.h
+)
+
+set(QTMOC_SRCS
+        testmime.h
+)
+
+qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
+
 set(sourceFiles
-	${sourceFiles}
+        ${sourceFiles}
+        ${headerFiles}
 )
 
 set(libs
@@ -18,7 +30,7 @@ set(libs
 	${QT_QTXMLPATTERNS_LIBRARY}
 )
 
-ADD_EXECUTABLE(plexymimetest ${sourceFiles})
+ADD_EXECUTABLE(plexymimetest ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
 	plexymimetest
