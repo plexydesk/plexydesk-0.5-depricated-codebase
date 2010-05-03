@@ -92,7 +92,6 @@ DesktopView::DesktopView(QGraphicsScene * scene, QWidget * parent):QGraphicsView
     QTimer::singleShot(100, this, SLOT(loadIcons()));
     connect(Config::getInstance(), SIGNAL(configChanged()), this, SLOT(backgroundChanged()));
     connect(Config::getInstance(), SIGNAL(widgetAdded()), this, SLOT(onNewWidget()));
-
 }
 
 void DesktopView::onNewWidget()
@@ -252,6 +251,14 @@ void DesktopView::loadIcons()
         icon->setContent(fileInfo.absoluteFilePath());
         d->icons.append(icon);
     }
+
+    if(d->icons.isEmpty())
+        return;
+
+    Icon *icon = d->icons.first();
+    connect(d->mime, SIGNAL(fromFileNameMime(const MimePairType)), icon, SLOT(fromFileNameMime(const MimePairType)));
+    connect(d->mime, SIGNAL(genericIconNameMime(const MimePairType)), icon, SLOT(genericIconNameMime(const MimePairType)));
+    icon->loadContent();
 }
 
 void DesktopView::iconLoaded()
@@ -271,6 +278,20 @@ void DesktopView::iconLoaded()
         }
         d->icons.removeAt(index);
     }
+
+    if(d->icons.isEmpty())
+        return;
+
+    icon->disconnect();
+    int index = d->icons.indexOf(icon);
+    index++;
+    if(index > d->icons.size())
+        return;
+
+    Icon *nextIcon = d->icons.value(index);
+    connect(d->mime, SIGNAL(fromFileNameMime(const MimePairType)), nextIcon, SLOT(fromFileNameMime(const MimePairType)));
+    connect(d->mime, SIGNAL(genericIconNameMime(const MimePairType)), nextIcon, SLOT(genericIconNameMime(const MimePairType)));
+    nextIcon->loadContent();
 }
 
 void DesktopView::showIcon(int num)

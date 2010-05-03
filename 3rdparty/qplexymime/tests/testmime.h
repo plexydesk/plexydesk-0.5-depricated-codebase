@@ -36,7 +36,7 @@ public:
 public slots:
     void startTest();
     void cannotFound(const QString, const QString);
-    void fromFileNameMime(const MimePairType);
+    void fromFileNameMime(const MimePairType, const QObject *obj);
     void genericIconNameMime(const MimePairType);
     void expandedAcronymMime(const MimePairType);
     void descriptionWithLang(const MimeWithLangType);

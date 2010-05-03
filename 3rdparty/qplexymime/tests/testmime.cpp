@@ -58,7 +58,7 @@ void TestMime::startTest()
                 mMime->fromFileName(dirIterator->fileInfo().fileName());
             }
     }
-
+/*
     for(int i=0; i<100; i++) {
     mMime->fromFileName("test.ez");
     mMime->fromFileName("test.exe");
@@ -77,6 +77,7 @@ void TestMime::startTest()
     mMime->fromFileName("test.bmp");
     mMime->fromFileName("test.pdf");
 }
+*/
 
 }
 
@@ -85,8 +86,11 @@ void TestMime::cannotFound(const QString error, const QString str)
     qDebug() << error << str;
 }
 
-void TestMime::fromFileNameMime(const MimePairType mimeType)
+void TestMime::fromFileNameMime(const MimePairType mimeType, const QObject *obj)
 {
+    if(this != qobject_cast<const TestMime*>(obj))
+        return;
+
     if(mimeType.second.isEmpty())
         return;
 

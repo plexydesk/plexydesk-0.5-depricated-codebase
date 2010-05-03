@@ -44,9 +44,7 @@ Icon::Icon(IconProviderPtr icon, QPlexyMime* mime, const QRectF &rect, QWidget *
     d->iconprovider = icon;
     d->id = 0;
     d->mime = mime;
-    connect(this, SIGNAL(pathSet()), this, SLOT(loadContent()));
-    connect(d->mime, SIGNAL(fromFileNameMime(const MimePairType)), this, SLOT(fromFileNameMime(const MimePairType)));
-    connect(d->mime, SIGNAL(genericIconNameMime(const MimePairType)), this, SLOT(genericIconNameMime(const MimePairType)));
+    //connect(this, SIGNAL(pathSet()), this, SLOT(loadContent()));
 }
 
 Icon::~Icon()
@@ -74,6 +72,8 @@ void Icon::fromFileNameMime(const MimePairType mimePair)
         d->iconjob = d->iconprovider->requestIcon(iconname, "32x32");
         connect(d->iconjob.data(), SIGNAL(finished()), this, SLOT(loadIcon()));
         emit iconLoaded();
+        qDebug() << Q_FUNC_INFO << mimePair;
+
     } else {
         d->mime->genericIconName(mimePair.second);
     }
@@ -94,7 +94,7 @@ void Icon::loadIcon()
 void Icon::setContent(const QString& path)
 {
     d->path = path;
-    QMetaObject::invokeMethod(this, "pathSet", Qt::DirectConnection);
+    //QMetaObject::invokeMethod(this, "pathSet", Qt::DirectConnection);
 }
 
 bool Icon::isValid()

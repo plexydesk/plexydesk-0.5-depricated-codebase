@@ -195,6 +195,7 @@ void QPlexyMime::internalFromFileName(const QString &fileName)
 
     if(result->isEmpty())
     {
+        qWarning("Cannot found mime for specified filename.");
         emit cannotFound("Cannot found mime for specified filename.", fileName);
         return;
     }
