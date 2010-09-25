@@ -1,7 +1,5 @@
-
-set(QT_USE_OPENGL TRUE)
-# -> this will cause cmake to include and link against the OpenGL module
-include(${QT_USE_FILE})
+SET(QT_USE_OPENGL TRUE)
+INCLUDE(${QT_USE_FILE})
 
 INCLUDE_DIRECTORIES(
     ${QT_INCLUDES}
@@ -12,17 +10,17 @@ INCLUDE_DIRECTORIES(
 
 
 SET(sourceFiles icon.cpp
-	abstractplugininterface.cpp
-	backdropinterface.cpp
-	canvas.cpp
+   abstractplugininterface.cpp
+   backdropinterface.cpp
+   canvas.cpp
    baserender.cpp
-	desktopwidget.cpp
-	extensionfactory.cpp
-	fakemime.cpp
-	netwm.cpp
-	plexyconfig.cpp
-	pluginloader.cpp
-	viewlayer.cpp
+   desktopwidget.cpp
+   extensionfactory.cpp
+   fakemime.cpp
+   netwm.cpp
+   plexyconfig.cpp
+   pluginloader.cpp
+   viewlayer.cpp
    iconprovider.cpp
    pendingjob.cpp
    iconjob.cpp
@@ -30,27 +28,27 @@ SET(sourceFiles icon.cpp
    httpjobhandler.cpp
 )
 
-set(headerFiles
-	abstractplugininterface.h
-	backdropinterface.h
-	backdropplugin.h
-	baseplugin.h
-	baserender.h
-	canvas.h
-	datainterface.h
-	dataplugin.h
-	desktopwidget.h
-	extensionfactory.h
-	fakemime.h
-	netwm.h
-	netwm_def.h
-	netwm_p.h
-	plexyconfig.h
-	pluginloader.h
-	viewlayer.h
-	widgetinterface.h
-	widgetplugin.h
-	icon.h
+SET(headerFiles
+   abstractplugininterface.h
+   backdropinterface.h
+   backdropplugin.h
+   baseplugin.h
+   baserender.h
+   canvas.h
+   datainterface.h
+   dataplugin.h
+   desktopwidget.h
+   extensionfactory.h
+   fakemime.h
+   netwm.h
+   netwm_def.h
+   netwm_p.h
+   plexyconfig.h
+   pluginloader.h
+   viewlayer.h
+   widgetinterface.h
+   widgetplugin.h
+   icon.h
    iconprovider.h
    pendingjob.h
    iconjob.h
@@ -58,21 +56,21 @@ set(headerFiles
    httpjobhandler.h
 )
 
-set(QTMOC_SRCS
-	abstractplugininterface.h
-	backdropplugin.h
-	baseplugin.h
-	baserender.h
-	canvas.h
-	datainterface.h
-	dataplugin.h
-	desktopwidget.h
-	plexyconfig.h
-	pluginloader.h
-	viewlayer.h
-	widgetplugin.h
-	widgetinterface.h
-	icon.h
+SET(QTMOC_SRCS
+   abstractplugininterface.h
+   backdropplugin.h
+   baseplugin.h
+   baserender.h
+   canvas.h
+   datainterface.h
+   dataplugin.h
+   desktopwidget.h
+   plexyconfig.h
+   pluginloader.h
+   viewlayer.h
+   widgetplugin.h
+   widgetinterface.h
+   icon.h
    iconprovider.h
    pendingjob.h
    iconjob.h
@@ -85,21 +83,21 @@ IF (NOT APPLE)
 IF (UNIX)
 QT4_ADD_DBUS_ADAPTOR(dbus_SRCS org.plexydesk.Config.xml
                         plexyconfig.h PlexyDesk::Config)
-set (DBUS_LIB ${QT_QTDBUS_LIBRARY})
-message(${dbus_SRCS})
+SET (DBUS_LIB ${QT_QTDBUS_LIBRARY})
+MESSAGE(${dbus_SRCS})
 ENDIF(UNIX)
 
 ENDIF (NOT APPLE)
 
 qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
 
-set(sourceFiles
-	${sourceFiles}
-	${headerFiles}
+SET(sourceFiles
+   ${sourceFiles}
+   ${headerFiles}
    ${dbus_SRCS}
 )
 
-set(libs
+SET(libs
     ${QT_QTGUI_LIBRARY}
     ${OPENGL_LIBRARIES}
     ${QT_QTCORE_LIBRARY}
@@ -109,16 +107,16 @@ set(libs
     ${QT_QTNETWORK_LIBRARY}
 )
 
-add_library(plexydeskcore SHARED ${sourceFiles} ${QT_MOC_SRCS})
+ADD_LIBRARY(plexydeskcore SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
     plexydeskcore
     qimageblitz
     plexymime
-	${libs}
+    ${libs}
 )
-if (NOT WIN32)
+IF (NOT WIN32)
     INSTALL(TARGETS plexydeskcore DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/)
-elseif(WIN32)
+ELSEIF(WIN32)
     INSTALL(TARGETS plexydeskcore DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/)
-endif(NOT WIN32)
+ENDIF(NOT WIN32)

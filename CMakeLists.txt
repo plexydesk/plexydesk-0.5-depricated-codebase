@@ -1,13 +1,15 @@
-PROJECT(PlexyDesktop)
 #siraj@kde.org
 #LGPL3
+PROJECT(PlexyDesktop)
+
 SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmakemodules)
-INCLUDE(CPack)
 FIND_PACKAGE(Qt4 REQUIRED)
 FIND_PACKAGE(FFMPEG) #optional
 FIND_PACKAGE(OpenCV)
 FIND_PACKAGE(OpenGL REQUIRED)
 cmake_minimum_required(VERSION 2.4)
+
+INCLUDE(CPack)
 
 SET(LIB_MAJOR 0)
 SET(LIB_MINOR 1)
@@ -22,7 +24,7 @@ INCLUDE_DIRECTORIES (
         ${CMAKE_SOURCE_DIR}
         ${CMAKE_BINARY_DIR}
         )
-        
+
 IF(MSVC80)
   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
   SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MP")
@@ -48,9 +50,6 @@ ADD_CUSTOM_TARGET(uninstall
 CONFIGURE_FILE(config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h )
 CONFIGURE_FILE(plexydesk.Doxyfile.cmake ${CMAKE_CURRENT_BINARY_DIR}/plexydesk.Doxyfile )
 CONFIGURE_FILE(org.plexydesk.daemon.service.in ${CMAKE_CURRENT_BINARY_DIR}/org.plexydesk.daemon.service)
-
-#pkg_check_modules(GTKMM gtkmm-2.4)
-#pkg_check_modules(CLUTTER clutter-0.5)
 
 INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}
@@ -96,67 +95,62 @@ INCLUDE_DIRECTORIES(
     ${QT_INCLUDE_DIR}
 )
 
+ADD_SUBDIRECTORY(plexylib)
+ADD_SUBDIRECTORY(base/qt4/)
+ADD_SUBDIRECTORY(extensions/backdrop/classicdrop)
+ADD_SUBDIRECTORY(extensions/widgets/imagepile)
 
-
-add_subdirectory(plexylib)
-add_subdirectory(base/qt4/)
-add_subdirectory(extensions/backdrop/classicdrop)
-add_subdirectory(extensions/widgets/imagepile)
-
-add_subdirectory(data)
+ADD_SUBDIRECTORY(data)
 IF (NOT APPLE)
 IF (UNIX)
-add_subdirectory(social)
-add_subdirectory(social/accountsmanager/)
+ADD_SUBDIRECTORY(social)
+ADD_SUBDIRECTORY(social/accountsmanager/)
 ENDIF (UNIX)
 ENDIF (NOT APPLE)
 
 #add_subdirectory(extensions/widgets/demowidget)
-add_subdirectory(runner)
-if(NOT APPLE)
-add_subdirectory(plexywm)
-endif(NOT APPLE)
-add_subdirectory(artwork)
-add_subdirectory(3rdparty/libmagic)
-add_subdirectory(3rdparty/mime)
-add_subdirectory(3rdparty/qplexymime)
-add_subdirectory(3rdparty/webitem)
-#add_subdirectory(3rdparty/qplexyicon/provider)
-add_subdirectory(3rdparty/qimageblitz)
-#add_subdirectory(3rdparty/cair)
-if(NOT APPLE) 
-if(FFMPEG_FOUND)
-add_subdirectory(extensions/data/videoengine/)
-endif(FFMPEG_FOUND)
-#add_subdirectory(extensions/widgets/cpu)
-endif(NOT APPLE)
+ADD_SUBDIRECTORY(runner)
+IF(NOT APPLE)
+ADD_SUBDIRECTORY(plexywm)
+ENDIF(NOT APPLE)
+ADD_SUBDIRECTORY(artwork)
+ADD_SUBDIRECTORY(3rdparty/libmagic)
+ADD_SUBDIRECTORY(3rdparty/mime)
+ADD_SUBDIRECTORY(3rdparty/qplexymime)
+ADD_SUBDIRECTORY(3rdparty/webitem)
+ADD_SUBDIRECTORY(3rdparty/qimageblitz)
+#ADD_SUBDIRECTORY(3rdparty/cair)
+IF(NOT APPLE) 
+IF(FFMPEG_FOUND)
+ADD_SUBDIRECTORY(extensions/data/videoengine/)
+ENDIF(FFMPEG_FOUND)
+#ADD_SUBDIRECTORY(extensions/widgets/cpu) // TODO : port this
+ENDIF(NOT APPLE)
 
-add_subdirectory(extensions/widgets/clock)
-#add_subdirectory(extensions/widgets/welcome)
-add_subdirectory(extensions/widgets/videoview)
-#add_subdirectory(extensions/widgets/sdlvideoview)
-#add_subdirectory(extensions/widgets/friendswidget)
-add_subdirectory(extensions/widgets/youtubewidget)
-#add_subdirectory(extensions/data/presence)
-add_subdirectory(extensions/data/flicker)
-#add_subdirectory(extensions/data/rss)
-add_subdirectory(extensions/data/utube)
-#add_subdirectory(extensions/data/irc)
-add_subdirectory(modules/libplexyirc)
-add_subdirectory(extensions/data/rest/)
-add_subdirectory(extensions/widgets/twit/)
-#add_subdirectory(extensions/widgets/sociotwitterwidget)
+ADD_SUBDIRECTORY(extensions/widgets/clock)
+ADD_SUBDIRECTORY(extensions/widgets/videoview)
+#ADD_SUBDIRECTORY(extensions/widgets/friendswidget) // TODO : port this
+ADD_SUBDIRECTORY(extensions/widgets/youtubewidget)
+#ADD_SUBDIRECTORY(extensions/data/presence) // TODO : port this
+ADD_SUBDIRECTORY(extensions/data/flicker)
+#ADD_SUBDIRECTORY(extensions/data/rss) // TODO : port this and clean ups
+ADD_SUBDIRECTORY(extensions/data/utube)
+#ADD_SUBDIRECTORY(extensions/data/irc) // TODO : port this move it out of main
+ADD_SUBDIRECTORY(modules/libplexyirc)
+ADD_SUBDIRECTORY(extensions/data/rest/)
+ADD_SUBDIRECTORy(extensions/widgets/twit/)
+#ADD_SUBDIRECTORY(extensions/widgets/sociotwitterwidget) // TODO : port this
 
 #windows
-if(FULL_DESKTOP)
-add_subdirectory(modules/QtWin)
-endif(FULL_DESKTOP)
-#if(WIN32)
-#add_subdirectory(extensions/widgets/wallpaper-win32)
-#endif(WIN32)
-if(OpenCV_FOUND)
+IF(FULL_DESKTOP)
+ADD_SUBDIRECTORY(modules/QtWin)
+ENDIF(FULL_DESKTOP)
+#IF(WIN32)
+#ADD_SUBDIRECTORY(extensions/widgets/wallpaper-win32) // TODO : port this
+#ENDIF(WIN32)
+IF(OpenCV_FOUND)
  
-add_subdirectory(extensions/data/cvwebcam/)
-#add_subdirectory(headtrack)
-endif(OpenCV_FOUND)
-#social
+ADD_SUBDIRECTORY(extensions/data/cvwebcam/)
+#ADD_SUBDIRECTORY(headtrack) // TODO : remove
+ENDIF(OpenCV_FOUND)
+#social // TODO : review o.o
