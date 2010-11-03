@@ -59,10 +59,9 @@ int main( int argc, char ** argv )
 
     DesktopView *view = new DesktopView(&scene);
     view->enableOpenGL(false);
-    QRect r = QDesktopWidget().availableGeometry();
-    view->move(r.x(),r.y());
-    view->resize(QDesktopWidget().availableGeometry().size());
-    qDebug()<<scene.sceneRect () ;
+    QRect r = QDesktopWidget().geometry();
+    view->move(r.x(), r.y());
+    view->resize(QDesktopWidget().geometry().size());
 #ifdef Q_WS_WIN
     /// \brief: remove plexy from taskbar
     view->move(0, 0);

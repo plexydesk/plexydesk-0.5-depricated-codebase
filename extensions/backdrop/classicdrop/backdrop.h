@@ -26,27 +26,28 @@
 #include <config.h>
 #include <backdropplugin.h>
 
-
 class BgPlugin : public PlexyDesk::BackdropPlugin
 {
     Q_OBJECT
 
 public:
-    BgPlugin(QObject * object = 0);
+    BgPlugin(QObject *object = 0);
     virtual ~BgPlugin();
     void render(QPainter *p, QRectF r);
-public slots:
-    void data(QVariant&);
-    void pushData(QVariant&) {}
-signals:
+
+public Q_SLOTS:
+    void data(QVariant &);
+    void pushData(QVariant &) {}
+
+Q_SIGNALS:
     void dataChange();
+
 private:
-    QPixmap bg;
-    QImage img;
-    QBrush paint;
-    int width;
-    int height;
+    QPixmap mBackgroundPixmap;
+    QImage mBackgroundImage;
+    QBrush mBackgroundBurush;
+    int mImageWidth;
+    int mImageHeight;
 };
 
-
-#endif
+#endif //PLEXY_CLASSIC_BACKDROP_H
