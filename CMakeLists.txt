@@ -129,16 +129,18 @@ ENDIF(NOT APPLE)
 
 ADD_SUBDIRECTORY(extensions/widgets/clock)
 ADD_SUBDIRECTORY(extensions/widgets/videoview)
-#ADD_SUBDIRECTORY(extensions/widgets/friendswidget) // TODO : port this
 ADD_SUBDIRECTORY(extensions/widgets/youtubewidget)
-#ADD_SUBDIRECTORY(extensions/data/presence) // TODO : port this
 ADD_SUBDIRECTORY(extensions/data/flicker)
-#ADD_SUBDIRECTORY(extensions/data/rss) // TODO : port this and clean ups
 ADD_SUBDIRECTORY(extensions/data/utube)
-#ADD_SUBDIRECTORY(extensions/data/irc) // TODO : port this move it out of main
 ADD_SUBDIRECTORY(modules/libplexyirc)
 ADD_SUBDIRECTORY(extensions/data/rest/)
 ADD_SUBDIRECTORy(extensions/widgets/twit/)
+
+#unported
+#ADD_SUBDIRECTORY(extensions/widgets/friendswidget) // TODO : port this
+#ADD_SUBDIRECTORY(extensions/data/presence) // TODO : port this
+#ADD_SUBDIRECTORY(extensions/data/rss) // TODO : port this and clean ups
+#ADD_SUBDIRECTORY(extensions/data/irc) // TODO : port this move it out of main
 #ADD_SUBDIRECTORY(extensions/widgets/sociotwitterwidget) // TODO : port this
 
 #windows
