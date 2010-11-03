@@ -60,7 +60,6 @@ void Icon::loadContent()
 void Icon::fromFileNameMime(const MimePairType mimePair)
 {
     QString iconname;
-
     if (mimePair.second == "application/x-desktop") {
         QSettings setting(d->path,  QSettings::IniFormat);
         setting.beginGroup("Desktop Entry");
@@ -73,7 +72,6 @@ void Icon::fromFileNameMime(const MimePairType mimePair)
         connect(d->iconjob.data(), SIGNAL(finished()), this, SLOT(loadIcon()));
         emit iconLoaded();
         qDebug() << Q_FUNC_INFO << mimePair;
-
     } else {
         d->mime->genericIconName(mimePair.second);
     }
@@ -125,7 +123,6 @@ void Icon::paintDockView(QPainter * painter, const QRectF& rect)
         int x = (this->boundingRect().width() - d->icon.width()) / 2;
         painter->drawPixmap(QRect(x, x , d->icon.width(), d->icon.height()) , d->icon);
     }
-
     drawText(painter, rect);
 }
 
@@ -135,10 +132,8 @@ void Icon::drawText(QPainter *painter, const QRectF& rect)
     float y = boundingRect().height() - x;// - (d->icon.height() +x );
     QTextOption opt;
     opt.setAlignment(Qt::AlignHCenter);
-
     QFontMetrics fm(painter->font());
     QString label = fm.elidedText(d->text, Qt::ElideRight, boundingRect().width());
-
     QRectF tr = QRectF(0.0, y, boundingRect().width(), boundingRect().height() -
                        (d->icon.height()));
     painter->drawText(tr, label, opt);

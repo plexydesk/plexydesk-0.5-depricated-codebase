@@ -46,9 +46,7 @@ void ViewLayer::showLayer(const QString& layername)
                 d->currentList->at(i)->hide();
             }
         }
-
         d->currentList  = d->layer[layername];
-
         for (int i = 0; i < d->currentList->size(); i++) {
             if (d->currentList->at(i)) {
                 d->currentList->at(i)->show();
@@ -59,7 +57,7 @@ void ViewLayer::showLayer(const QString& layername)
 
 QStringList ViewLayer::layerIndex() const
 {
-   return d->layer.keys();
+    return d->layer.keys();
 }
 
 } // namespace PlexyDesk

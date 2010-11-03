@@ -13,17 +13,17 @@ class VISIBLE_SYM ViewLayer : public  QObject
 {
     Q_OBJECT
 public:
-    ViewLayer(QObject* object = 0);
+    ViewLayer(QObject *object = 0);
 
     virtual ~ViewLayer();
 
-    /** \brief Adds a DesktopWid to a given layer
-    *  \param layerName is is the layer to add the item to, if the
-    *  layer dose not exisit a new layer defined by the layerName is
-    *  created.
-    *  \param item is the widget we wish to add
-    * */
-    void addItem(const QString& layerName , DesktopWidget * item);
+    /**\brief Adds a DesktopWid to a given layer
+    * \param layerName is is the layer to add the item to, if the
+    * layer dose not exisit a new layer defined by the layerName is
+    * created.
+    * \param item is the widget we wish to add
+    **/
+    void addItem(const QString& layerName , DesktopWidget *item);
 
     void showLayer(const QString& layer);
 
@@ -31,7 +31,7 @@ public:
 
 private:
     class Private;
-    Private * const d;
+    Private *const d;
 };
 } // namespace PlexyDesk
 

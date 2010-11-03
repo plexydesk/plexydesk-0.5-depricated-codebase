@@ -38,7 +38,7 @@
 
 namespace PlexyDesk
 {
-class VISIBLE_SYM DesktopWidget : public QObject, public QGraphicsRectItem
+class PLEXYDESK_EXPORT DesktopWidget : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
     Q_ENUMS(State)

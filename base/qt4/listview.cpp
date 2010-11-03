@@ -59,14 +59,11 @@ void ListView::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e, QWi
             break;
         ListItem* videoentity;
         videoentity = d->mItemList.at(vidcount++);
-
         p->setPen(QColor(255, 255, 255));
         p->setFont(QFont("Bitstream Charter", 10, QFont::Bold));
         p->drawText(40, d->view.y() + i + 15, 300, 30, Qt::AlignLeft, QString(videoentity->title));
-
         p->setFont(QFont("Bitstream Charter", 8));
         p->drawText(40, d->view.y() + i + 40, 250, 100, Qt::AlignLeft | Qt::TextWordWrap, QString(videoentity->desc));
-
         p->drawImage(QRect(d->clip.x() + 1, d->view.y() + i, d->mItem_bg.width(), d->mItem_bg.height()), d->mItem_bg);
         i += d->mItem_bg.height();
     }
@@ -79,7 +76,6 @@ void ListView::wheelEvent(QGraphicsSceneWheelEvent * event)
     int numDegrees = event->delta() / 2 ;
     int numSteps = numDegrees / 15;
     int expectedY = d->view.y();
-
     if (expectedY == 0 && numSteps > 0) {
         return;
     }

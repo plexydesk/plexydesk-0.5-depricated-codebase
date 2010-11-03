@@ -28,7 +28,7 @@
 namespace PlexyDesk
 {
 template <class T>
-class VISIBLE_SYM ExtensionProducer
+class PLEXYDESK_EXPORT ExtensionProducer
 {
 public:
     T * instance(const QString& name, QObject *obj) {

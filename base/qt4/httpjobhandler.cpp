@@ -52,7 +52,6 @@ void HttpJobHandler::getFile(const QUrl &url)
         QNetworkReply* reply = d->manager->get(QNetworkRequest(url));
         holder.append(reply);
     }
-
     //fetch required file using QNetworkAccessManager
     //d->manager->get(QNetworkRequest(url));
 }
@@ -64,13 +63,11 @@ void HttpJobHandler::postFile(const QUrl &url, const QByteArray  &data)
         QNetworkReply* reply = d->manager->post(QNetworkRequest(url), data);
         holder.append(reply);
     }
-
 }
 
 bool HttpJobHandler::validateUrl(const QUrl &url)
 {
     qDebug() << "HttpJobHandler::validateUrl()";
-
     if (url.path().isEmpty()) {
         msg = "Empty URL";
         error = "The URL was empty";
@@ -87,31 +84,22 @@ bool HttpJobHandler::validateUrl(const QUrl &url)
         setFinished(true, msg, error);
         return false;
     }
-
     return true;
 }
 
 void HttpJobHandler::onFinish(QNetworkReply* reply)
 {
     qDebug() << "HttpJobHandler::onFinish()";
-
-
     QVariant statusCodeV = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
-
-
     if (statusCodeV.toInt() == 200) { //statuscode 200 means we are OK. Page not found is not taken as error.
         d->data = reply->readAll();
-
         msg = "200";
         error = "200";
         setFinished(false, msg, error);
-    }
-
-    else {
+    } else {
         d->data = reply->readAll(); //make server reply available to caller.
         msg = statusCodeV.toString();
         error = "Error fetching data";
-
         setFinished(true, msg, error);
     }
 }
@@ -128,7 +116,6 @@ void HttpJobHandler::authenticate(QNetworkReply *reply, QAuthenticator *auth)
 QByteArray HttpJobHandler::readData() const
 {
     qDebug() << "HttpJobHandler::readData()";
-
     return d->data;
 }
 

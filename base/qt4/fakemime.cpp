@@ -39,7 +39,6 @@ QString FakeMime::getType(const QString& file)
     QStringList splits = file.split(".");
     QString ext =  splits.at(1);
     return ext;
-
 }
 }
 

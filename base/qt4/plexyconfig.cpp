@@ -46,7 +46,6 @@ Config::Config(const QString & organization, const QString & application, QObjec
     read();
     if (value("CurrentWallpaper").toString().isNull())
         CurrentWallpaper =  DesktopWidget::applicationDirPath() + "/share/plexy/skins/default/default.png";
-
     if (value("iconTheme").toString().isNull())
         iconTheme = "default";
     //collitions detection

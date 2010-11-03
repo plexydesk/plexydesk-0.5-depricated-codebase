@@ -47,7 +47,7 @@
  **/
 namespace PlexyDesk
 {
-class VISIBLE_SYM DataPlugin : public BasePlugin
+class PLEXYDESK_EXPORT DataPlugin : public BasePlugin
 {
     Q_OBJECT
 public :

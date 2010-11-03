@@ -24,15 +24,12 @@ IconJob::IconJob(QObject * parent) : PendingJob(parent), d(new Private)
     */
     d->iconpaths << QDir::homePath() + "/.icons/" + Config::getInstance()->iconTheme + "/"
     ;
-
     QStringList xdg = QString(qgetenv("XDG_DATA_DIRS")).split(':');
     foreach(QString path, xdg) {
         d->iconpaths << path + "/icons/" + Config::getInstance()->iconTheme + "/";
     }
-
     d->iconpaths << "/usr/share/pixmaps/"
-            << "/usr/share/app-install/icons/";
-
+    << "/usr/share/app-install/icons/";
     connect(this, SIGNAL(newJob()), this , SLOT(handleJob()), Qt::DirectConnection);
 }
 
@@ -50,7 +47,6 @@ void IconJob::requestIcon(const QString& name, const QString& size)
 {
     d->size = size;
     d->name = name;
-
     QMetaObject::invokeMethod(this, "newJob", Qt::DirectConnection);
 }
 
@@ -73,7 +69,6 @@ void IconJob::handleJob()
                     }
                 }
             }
-
         }
     }
 }
@@ -91,7 +86,6 @@ QStringList IconJob::getSubDir(const QString& path)
             indexfile.value("Directories", "").toStringList();
         indexfile.endGroup();
     }
-
     foreach(QString _rpath, rpaths) {
         paths.append(path + "/" + _rpath);
     }

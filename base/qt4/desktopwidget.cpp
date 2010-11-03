@@ -61,7 +61,6 @@ DesktopWidget::DesktopWidget(const QRectF &rect , QWidget *widget):
         d->proxyWidget->setWidget(widget);
         d->proxyWidget->show();
     }
-
     d->backdrop = true;
     d->opacity = 1.0;
     d->panel = QPixmap(applicationDirPath() +
@@ -80,7 +79,6 @@ DesktopWidget::DesktopWidget(const QRectF &rect , QWidget *widget):
     d->s = NORMALSIDE;
     d->angle = 0;
     d->angleHide = 0;
-
     ///zoom in settings
     d->zoomin = new QTimeLine(150 , this);
     d->zoomin->setFrameRange(120 , 150);
@@ -88,7 +86,6 @@ DesktopWidget::DesktopWidget(const QRectF &rect , QWidget *widget):
             this , SLOT(zoomIn(int)));
     connect(d->zoomin , SIGNAL(finished()) ,
             this , SLOT(zoomDone()));
-
     //zoom out
     d->zoomout = new QTimeLine(150 , this);
     d->zoomout->setFrameRange(0, 150);
@@ -97,7 +94,6 @@ DesktopWidget::DesktopWidget(const QRectF &rect , QWidget *widget):
     connect(d->zoomout , SIGNAL(finished()) ,
             this , SLOT(zoomDone()));
     d->zoomin->start();
-
     //spin
     d->spintimer = new QTimer(this);
     connect(d->spintimer , SIGNAL(timeout()) , this, SLOT(spin()));
@@ -182,7 +178,6 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event)
         if (d->proxyWidget) {
             d->proxyWidget->show();
         }
-
         d->zoomin->start();
     } else {
         setState(DOCK);
@@ -205,7 +200,6 @@ void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent * event)
 
 void DesktopWidget::spin()
 {
-
     d->angle += 18;
     setCacheMode(ItemCoordinateCache);
     QPointF center = boundingRect().center();
@@ -214,7 +208,6 @@ void DesktopWidget::spin()
     mat.rotate(d->angle, Qt::YAxis);
     mat.translate(- center.x() ,  - center.y());
     setTransform(mat);
-
     if (d->angle >= 180) {
         if (state() == BACKSIDE) {
             setState(NORMALSIDE);
@@ -255,7 +248,6 @@ void DesktopWidget::configState(DesktopWidget::State s)
         setRect(0, 0, d->panel.width(), d->panel.height());
     }
     d->s = s;
-
     if (d->proxyWidget) {
         d->proxyWidget->hide();
     }
@@ -292,10 +284,8 @@ void DesktopWidget::paintDockView(QPainter * p, const QRectF& rect)
 
 void DesktopWidget::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
 {
-
     if (isObscured())
         return;
-
     if (!painter->isActive())
         return;
     painter->setOpacity(d->opacity);

@@ -25,7 +25,7 @@
 
 namespace PlexyDesk
 {
-class VISIBLE_SYM DataInterface : public AbstractPluginInterface
+class PLEXYDESK_EXPORT DataInterface : public AbstractPluginInterface
 {
     Q_OBJECT
 public:

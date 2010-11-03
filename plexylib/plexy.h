@@ -67,6 +67,7 @@
 #ifdef __SYSTEM_HAVE_GCC_VISIBILITY
 #define HIDDEN_SYM __attribute__ ((visibility("hidden")))
 #define VISIBLE_SYM __attribute__ ((visibility("default")))
+#define PLEXYDESK_EXPORT __attribute__ ((visibility("default")))
 #endif
 #endif 
 
@@ -83,6 +84,11 @@
     extern "C" { void *setup_##name(){return new sym;}}
 
 #define  Q_UINT32 unsigned int 
+
+#ifdef Q_WS_WIN
+static QString windowsPath = QCoreApplication::applicationDirPath() + QStringLatin1("/..");
+#define PLEXPREFIX =  windowsPath
+#endif
 
 namespace Plexy
 {

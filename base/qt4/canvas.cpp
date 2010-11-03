@@ -44,15 +44,14 @@ Canvas::~Canvas()
 
 void Canvas::dropEvent(QGraphicsSceneDragDropEvent * event)
 {
-    if(event)
+    if (event)
         event->accept();
 }
 
 void Canvas::dragEnterEvent(QGraphicsSceneDragDropEvent *event)
 {
-    if(!event)
+    if (!event)
         return;
-
     event->acceptProposedAction();
     if (event->mimeData()->hasUrls()) {
         Config::getInstance()->setWallpaper(event->mimeData()->urls().at(0).toString(QUrl::StripTrailingSlash | QUrl::RemoveScheme));

@@ -31,28 +31,29 @@ class QString;
 
 namespace PlexyDesk
 {
-class VISIBLE_SYM BaseRender : public QGLWidget
-{
-    Q_OBJECT
-public:
-    typedef QMap<QString, QPixmap*> CacheDict;
+    class PLEXYDESK_EXPORT BaseRender : public QGLWidget
+    {
+        Q_OBJECT
+    public:
+        typedef QMap<QString, QPixmap *> CacheDict;
 
-    BaseRender(QWidget * parent = 0, const QGLWidget * shareWidget = 0, Qt::WindowFlags f = 0);
-    virtual ~BaseRender();
-    void resetViewport(int width, int height);
-    void resetOverlay(int width, int height);
+        BaseRender(QWidget * parent = 0,
+                   const QGLWidget *shareWidget = 0,
+                   Qt::WindowFlags f = 0);
+        virtual ~BaseRender();
 
-protected:
-    void initializeGL();
-    void resizeGL(int width, int height);
-    //    void paintGL();
-    void paintEvent(QPaintEvent *);
-    void drawWallpaper() {};
+        void resetViewport(int width, int height);
+        void resetOverlay(int width, int height);
 
-private:
-    class Private;
-    Private * const d ;
-};
+    protected:
+        void initializeGL();
+        void resizeGL(int width, int height);
+        void paintEvent(QPaintEvent *event);
+
+    private:
+       class Private;
+        Private * const d ;
+    };
 
 } // namespace #ifndef
 #endif
