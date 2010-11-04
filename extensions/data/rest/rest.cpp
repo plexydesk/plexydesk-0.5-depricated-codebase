@@ -1,8 +1,7 @@
 /*******************************************************************************
 * This file is part of PlexyDesk.
 *  Maintained by : Siraj Razick <siraj@kde.org>
-*  Authored By  :
-*
+*  Authored By  : *
 *  PlexyDesk is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU Lesser General Public License as published by
 *  the Free Software Foundation, either version 3 of the License, or
@@ -37,7 +36,6 @@ public:
 
 RestData::RestData(QObject * object): d(new Private)
 {
-
     d->manager = new QNetworkAccessManager(this);
     connect(d->manager, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(replyFinished(QNetworkReply*)));
@@ -86,8 +84,7 @@ void RestData::replyFinished(QNetworkReply* reply)
 
 void RestData::handleAuth(QNetworkReply * r, QAuthenticator * auth)
 {
-    qDebug() << Q_FUNC_INFO ;
-
+    qDebug() << Q_FUNC_INFO << d->user << ":" << d->pass;
     auth->setUser(d->user);
     auth->setPassword(d->pass);
 }

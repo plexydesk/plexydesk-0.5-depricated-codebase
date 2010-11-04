@@ -31,28 +31,26 @@
 #include <QXmlQuery>
 #include <QXmlSerializer>
 
-namespace PlexyDesk
-{
+namespace PlexyDesk{
 
 TwitWidget::TwitWidget(const QRectF &rect, QWidget *widget):
-        ListView(rect, widget)
+        PlexyDesk::ListView(rect, widget)
 {
-
     utubeEngine = (PlexyDesk::DataPlugin*)
                   PlexyDesk::PluginLoader::getInstance()->instance("restengine");
 
-    mMap.insert("url", QUrl("http://twitter.com/statuses/user_timeline.xml"));
+    QString account;
+    QString pass;
+    readConfig(account, pass);
+    mMap.insert("url", QUrl("http://identi.ca/api/statuses/user_timeline.xml"));
     mMap.insert("type", 1);//post
-    mMap.insert("user", "sirajrazick");
-    mMap.insert("pass", "");
+    mMap.insert("user", account);
+    mMap.insert("pass", pass);
     QVariant arg = QVariant(mMap);
     utubeEngine->pushData(arg);
 
     if (utubeEngine) {
         connect(utubeEngine, SIGNAL(dataReady()), this, SLOT(onDataReady()));
-        //connect(this ,SIGNAL(newData(QVariantMap&)), utubeEngine->instance(),SLOT(pushData(QVariantMap&)));
-        //  qDebug() << Q_FUNC_INFO << utubeEngine;
-        //utubeEngine->inst;pushData(mMap);
     } else {
         qDebug("DataSource Was Null");
     }
@@ -63,10 +61,10 @@ TwitWidget::~TwitWidget()
 
 void TwitWidget::onDataReady()
 {
-    // qDebug() << utubeEngine->readAll();
     QXmlQuery query;
     QBuffer input;
     QByteArray data = utubeEngine->readAll()["data"].toByteArray();
+    qDebug() << Q_FUNC_INFO << data;
     input.setBuffer(&data);
     input.open(QIODevice::ReadWrite);
     input.seek(0);
@@ -96,6 +94,16 @@ void TwitWidget::onDataReady()
         Q_EMIT dataChanged();
     }
 }
+
+void TwitWidget::readConfig(QString& user,
+        QString& pass)
+{
+    Config::getInstance()->beginGroup("twitter");
+    user = Config::getInstance()->value("account").toString();
+    pass = Config::getInstance()->value("password").toString();
+    Config::getInstance()->endGroup();
+}
+
 void TwitWidget::data(QVariantMap& data)
 {
     qDebug() << Q_FUNC_INFO << data["data"];
@@ -123,4 +131,4 @@ void TwitWidget::data(QVariantMap& data)
         emit dataChanged();
         */
 }
-} // namespace PlexyDesk
+}

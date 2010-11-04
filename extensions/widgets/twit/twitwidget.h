@@ -29,27 +29,16 @@
 #include <listview.h>
 
 class QTimer;
+namespace PlexyDesk{
 
-namespace PlexyDesk
+class TwitWidget: public PlexyDesk::ListView
 {
-
-
-class TwitWidget: public ListView
-{
-
     Q_OBJECT
-
 public:
     TwitWidget(const QRectF &rect, QWidget *widget = 0);
     virtual ~TwitWidget();
+    void readConfig(QString &user, QString &pass);
 
-    /*
-    virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem * e, QWidget *);
-    virtual void wheelEvent(QGraphicsSceneWheelEvent * event);
-    void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
-    void setPath(QString);
-    void drawWidget();;
-    */
 public Q_SLOTS:
     void data(QVariantMap&);
     void onDataReady();
@@ -58,28 +47,19 @@ Q_SIGNALS:
     void newData(QVariantMap&);
 
 private:
-
-    //refactor
     QRectF clip;
     QRectF view;
-
-
     int shade;
     int moveY;
     QImage m_bg;
     QImage mItem_bg;
-
     QString prefix;
     QPoint clickPos;
-
     PlexyDesk::DataPlugin * utubeEngine;
-
     QList<VideoEntity> mVideos;
     QMap<QString, QVariant> mVariantMap;
     QVariantMap mMap;
     PlexyDesk::DataPlugin * plugin;
 };
-
-} // namespace PlexyDesk
 #endif
-
+}
