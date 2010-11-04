@@ -52,14 +52,12 @@ void  RestData::init()
 
 RestData::~RestData()
 {
-    qDebug() << Q_FUNC_INFO ;
     delete d;
 }
 
 void RestData::pushData(QVariant& arg)
 {
     qDebug() << Q_FUNC_INFO << arg;
-    ;
     QVariantMap param = arg.toMap();
 
     QUrl url = param["url"].toUrl();
@@ -74,8 +72,8 @@ void RestData::pushData(QVariant& arg)
         d->manager->post(QNetworkRequest(url), par.toAscii());
     }
 
-    //TODO
-    //handle errors
+    // TODO:
+    // handle errors
 }
 
 void RestData::replyFinished(QNetworkReply* reply)
@@ -93,7 +91,6 @@ void RestData::handleAuth(QNetworkReply * r, QAuthenticator * auth)
     auth->setUser(d->user);
     auth->setPassword(d->pass);
 }
-
 
 QVariantMap RestData::readAll()
 {

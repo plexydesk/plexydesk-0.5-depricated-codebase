@@ -28,44 +28,45 @@
 
 namespace PlexyDesk
 {
-class VISIBLE_SYM Config : public QSettings
-{
-    Q_OBJECT
-public:
-    static Config*  getInstance();
-    ///these will be pure virtual on the real plexy desk
-    void read();
-    void writeToFile();
-    QString MyPictures ;
-    QString MyMovies;
-    QString CurrentWallpaper;
-    bool proxyOn;
-    int proxyPort;
-    QNetworkProxy::ProxyType proxyType;
-    QString proxyURL;
-    QString proxyUser;
-    QString proxyPasswd;
-    QStringList widgetList;
-    bool collitionOn;
-    QString iconTheme;
-public slots:
-    void setWallpaper(const QString& str);
-    void addWidget(const QString& widget);
-public slots:
+    class PLEXYDESK_EXPORT Config : public QSettings
+    {
+       Q_OBJECT
+    public:
+        static Config*  getInstance();
+        void read();
+        void writeToFile();
 
-signals:
-    void configChanged();
-    void widgetAdded();
+        QString MyPictures ;
+        QString MyMovies;
+        QString CurrentWallpaper;
+        bool proxyOn;
+        int proxyPort;
+        QNetworkProxy::ProxyType proxyType;
+        QString proxyURL;
+        QString proxyUser;
+        QString proxyPasswd;
+        QStringList widgetList;
+        bool collitionOn;
+        QString iconTheme;
 
-private:
-    Config(const QString & organization, const QString & application = QString(), QObject * parent = 0);
-    static Config * config;
-    Config() {
-        read();
-    }
+     public Q_SLOTS:
+        void setWallpaper(const QString& str);
+        void addWidget(const QString& widget);
 
-    Config(Config &) {}
-    Config& operator=(const Config&);
+    Q_SIGNALS:
+        void configChanged();
+        void widgetAdded();
+    private:
+        Config(const QString & organization, const QString & application = QString(), QObject * parent = 0);
+        static Config * config;
+
+        Config() 
+        {
+            read();
+        }
+
+       Config(Config &) {}
+       Config& operator=(const Config&);
 };
 } // namespace PlexyDesk
 

@@ -36,7 +36,9 @@ Config * Config::getInstance()
     }
 }
 
-Config::Config(const QString & organization, const QString & application, QObject * parent): QSettings(organization, application, parent)
+Config::Config(const QString &organization,
+        const QString &application, QObject *parent):
+    QSettings(organization, application, parent)
 {
     proxyOn = false;
     proxyURL = "";
@@ -44,22 +46,40 @@ Config::Config(const QString & organization, const QString & application, QObjec
     proxyPasswd = "";
     proxyPort = 3128;
     read();
-    if (value("CurrentWallpaper").toString().isNull())
+
+    if (value("CurrentWallpaper").toString().isNull()) {
         CurrentWallpaper =  DesktopWidget::applicationDirPath() + "/share/plexy/skins/default/default.png";
-    if (value("iconTheme").toString().isNull())
+    }
+
+    if (value("iconTheme").toString().isNull()) {
         iconTheme = "default";
-    //collitions detection
+    }
+
     collitionOn = false;
-    qDebug() << widgetList.count() << endl;
-    if (widgetList.count() < 0)
+
+    if (widgetList.count() < 0) {
         writeToFile();
-    //register  with dbus
+    }
 #ifdef Q_WS_X11
+    // register  with dbus
     new ConfigAdaptor(this);
     QDBusConnection dbus = QDBusConnection::sessionBus();
     dbus.registerObject("/Configuration", this);
     dbus.registerService("org.PlexyDesk.Config");
 #endif
+}
+
+void Config::read()
+{
+    proxyOn = value("proxyOn").toInt();
+    proxyURL = value("proxyURL").toString();
+    proxyUser = value("proxyUser").toString();
+    proxyPasswd = value("proxyPasswd").toString();
+    proxyPort = value("proxyPort").toInt() ;
+    CurrentWallpaper = value("CurrentWallpaper").toString();
+    widgetList = value("widgetList").toStringList();
+    iconTheme = value("iconTheme").toString();
+    collitionOn = false;
 }
 
 void Config::writeToFile()
@@ -74,19 +94,6 @@ void Config::writeToFile()
     setValue("widgetList", widgetList);
     setValue("iconTheme", iconTheme);
     sync();
-}
-void Config::read()
-{
-    proxyOn = value("proxyOn").toInt();
-    proxyURL = value("proxyURL").toString();
-    proxyUser = value("proxyUser").toString();
-    proxyPasswd = value("proxyPasswd").toString();
-    proxyPort = value("proxyPort").toInt() ;
-    CurrentWallpaper = value("CurrentWallpaper").toString();
-    widgetList = value("widgetList").toStringList();
-    iconTheme = value("iconTheme").toString();
-    //collitions detection
-    collitionOn = false;
 }
 
 void Config::setWallpaper(const QString& str)

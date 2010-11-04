@@ -26,7 +26,7 @@
 #include <QtNetwork>
 #include <datainterface.h>
 
-class VISIBLE_SYM RestData : public PlexyDesk::DataPlugin
+class RestData : public PlexyDesk::DataPlugin
 {
     Q_OBJECT
 
@@ -38,13 +38,12 @@ public:
 
 public Q_SLOTS:
     void pushData(QVariant& data);
-    void replyFinished(QNetworkReply* reply);
-    void handleAuth(QNetworkReply*, QAuthenticator*);
+    void replyFinished(QNetworkReply *reply);
+    void handleAuth(QNetworkReply *, QAuthenticator *);
 
 private:
     class Private;
-    Private * const d;
+    Private *const d;
 };
-
 
 #endif
