@@ -18,20 +18,18 @@
 *******************************************************************************/
 
 #include "httpjobhandler.h"
-
-#include <plexyconfig.h>
 #include <QAuthenticator>
+#include <plexyconfig.h>
 
 namespace PlexyDesk
 {
 class HttpJobHandler::HttpJobHandlerPrivate
 {
-
 public:
     HttpJobHandlerPrivate() {};
-    ~HttpJobHandlerPrivate() {};
     QNetworkAccessManager *manager;
     QByteArray data;
+    ~HttpJobHandlerPrivate() {};
 };
 
 HttpJobHandler::HttpJobHandler(QObject * parent) : PendingJob(parent), d(new HttpJobHandlerPrivate)
@@ -41,33 +39,29 @@ HttpJobHandler::HttpJobHandler(QObject * parent) : PendingJob(parent), d(new Htt
     qDebug() << "I'm in httpjobhandler constructor";
     //connect the finished signal coming from QNetworkAccessManager with onFinish.
     connect(d->manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onFinish(QNetworkReply*)));
-    //When authentication fialed this can be used to provide credentials (auth only)
-    //connect(d->manager, SIGNAL(authenticationRequired(QNetworkReply *, QAuthenticator *)), this, SLOT(authenticate(QNetworkReply *, QAuthenticator *)));
 }
 
 void HttpJobHandler::getFile(const QUrl &url)
 {
     qDebug() << "HttpJobHandler::getFile()";
-    if (validateUrl(url)) {
+    if (isValidUrl(url)) {
         QNetworkReply* reply = d->manager->get(QNetworkRequest(url));
         holder.append(reply);
     }
-    //fetch required file using QNetworkAccessManager
-    //d->manager->get(QNetworkRequest(url));
 }
 
 void HttpJobHandler::postFile(const QUrl &url, const QByteArray  &data)
 {
     qDebug() << "HttpJobHandler::postFile()";
-    if (validateUrl(url)) {
+    if (isValidUrl(url)) {
         QNetworkReply* reply = d->manager->post(QNetworkRequest(url), data);
         holder.append(reply);
     }
 }
 
-bool HttpJobHandler::validateUrl(const QUrl &url)
+bool HttpJobHandler::isValidUrl(const QUrl &url)
 {
-    qDebug() << "HttpJobHandler::validateUrl()";
+    qDebug() << "HttpJobHandler::isValidUrl()";
     if (url.path().isEmpty()) {
         msg = "Empty URL";
         error = "The URL was empty";
@@ -78,7 +72,7 @@ bool HttpJobHandler::validateUrl(const QUrl &url)
         error = "The URL was not in valid format";
         setFinished(true, msg, error);
         return false;
-    } else if (url.scheme() != "http" && url.scheme() != "https") {
+    } else if (url.scheme() != "http" || url.scheme() != "https") {
         msg = "Unsupported Protocol";
         error = "The URL was not http/s.";
         setFinished(true, msg, error);
@@ -103,15 +97,6 @@ void HttpJobHandler::onFinish(QNetworkReply* reply)
         setFinished(true, msg, error);
     }
 }
-
-/*
-void HttpJobHandler::authenticate(QNetworkReply *reply, QAuthenticator *auth)
-{
-    qDebug()<< "httpjobhandler: Need Autentication bitch.";
-    qDebug()<< reply->readAll();
-    auth->setUser("plexydesk");//put uname pw when testing
-    auth->setPassword("plexytest");
-} */
 
 QByteArray HttpJobHandler::readData() const
 {

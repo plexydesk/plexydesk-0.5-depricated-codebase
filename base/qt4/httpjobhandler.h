@@ -20,18 +20,17 @@
 #ifndef HTTPJOBHANDLER_H
 #define HTTPJOBHANDLER_H
 
-#include <QObject>
-#include <QNetworkAccessManager>
-#include <QUrl>
-#include <QNetworkRequest>
-#include <QNetworkReply>
-#include <QString>
-#include <QList>
-
 #include "pendingjob.h"
+#include <QList>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
+#include <QObject>
+#include <QString>
+#include <QUrl>
 
-class QNetworkAccessManager;
 class QByteArray;
+class QNetworkAccessManager;
 
 namespace PlexyDesk
 {
@@ -41,22 +40,20 @@ class VISIBLE_SYM HttpJobHandler: public PendingJob
     Q_OBJECT
 public:
     HttpJobHandler(QObject * parent);
-    ~HttpJobHandler();
     void getFile(const QUrl &url);
     void postFile(const QUrl &url, const QByteArray &data);
     QByteArray readData() const;
+    ~HttpJobHandler();
 
 private:
-    class HttpJobHandlerPrivate;
-    HttpJobHandlerPrivate * const d;
-    bool validateUrl(const QUrl &url);
     QList<QNetworkReply*> holder;
     QString msg, error;
+    bool isValidUrl(const QUrl &url);
+    class HttpJobHandlerPrivate;
+    HttpJobHandlerPrivate * const d;
 
 private slots:
     void onFinish(QNetworkReply* buffer);
-//    void authenticate(QNetworkReply*, QAuthenticator*); //when simple auth fails
-
 };
 } //namespace PlexyDesk
 #endif // HTTPJOBHANDLER_H
