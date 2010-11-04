@@ -17,15 +17,15 @@
 #ifndef ICON_H
 #define ICON_H
 
-#include <QGraphicsRectItem>
-#include <QGraphicsSceneMouseEvent>
-
-#include <plexy.h>
-#include <plexyconfig.h>
 #include <desktopwidget.h>
 #include <iconprovider.h>
 #include <pendingjob.h>
+#include <plexy.h>
+#include <plexyconfig.h>
 #include <qplexymime.h>
+
+#include <QGraphicsRectItem>
+#include <QGraphicsSceneMouseEvent>
 
 namespace PlexyDesk
 {

@@ -17,10 +17,10 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 #include <backdropinterface.h>
-#include <plexy.h>
 #include <config.h>
-#include <pluginloader.h>
 #include <datainterface.h>
+#include <plexy.h>
+#include <pluginloader.h>
 
 namespace PlexyDesk
 {

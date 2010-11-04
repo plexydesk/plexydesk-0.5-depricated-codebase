@@ -1,10 +1,12 @@
 #ifndef BASE_PLUGIN_H
 #define BASE_PLUGIN_H
 
+#include <plexy.h>
+
+#include <QCoreApplication>
 #include <QObject>
 #include <QString>
-#include <QCoreApplication>
-#include <plexy.h>
+
 
 namespace PlexyDesk
 {

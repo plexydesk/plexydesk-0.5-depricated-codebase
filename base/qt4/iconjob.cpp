@@ -2,7 +2,6 @@
 #include <plexyconfig.h>
 #include <QPixmap>
 
-
 namespace PlexyDesk
 {
 class IconJob::Private

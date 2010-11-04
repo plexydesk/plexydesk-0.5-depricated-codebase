@@ -1,8 +1,9 @@
 #ifndef PENDINGJOB_H
 #define PENDINGJOB_H
-#include <plexy.h>
-#include <QtCore>
 
+#include <plexy.h>
+
+#include <QtCore>
 
 namespace PlexyDesk
 {

@@ -17,10 +17,11 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 #include "baserender.h"
+
 #include <QPaintEvent>
 #include <QPainter>
-#include <QtOpenGL>
 #include <QtCore/QtGlobal>
+#include <QtOpenGL>
 
 #ifdef Q_WS_WIN
 #define GL_MULTISAMPLE 0x809D

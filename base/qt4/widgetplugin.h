@@ -2,8 +2,8 @@
 #ifndef PLEXY_WIDGET_PLUGIN_H
 #define PLEXY_WIDGET_PLUGIN_H
 
-#include <plexy.h>
 #include <baseplugin.h>
+#include <plexy.h>
 
 class QGraphicsItem;
 

@@ -19,9 +19,9 @@
 #ifndef PLEXY_BASE_PLUGIN_h
 #define PLEXY_BASE_PLUGIN_h
 
-
-#include <plexy.h>
 #include <baseplugin.h>
+#include <plexy.h>
+
 #include <QObject>
 
 namespace PlexyDesk

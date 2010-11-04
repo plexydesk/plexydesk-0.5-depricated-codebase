@@ -18,8 +18,10 @@
 *******************************************************************************/
 
 #include "httpjobhandler.h"
-#include <QAuthenticator>
 #include <plexyconfig.h>
+
+#include <QAuthenticator>
+
 
 namespace PlexyDesk
 {

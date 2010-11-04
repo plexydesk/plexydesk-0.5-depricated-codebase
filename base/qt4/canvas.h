@@ -1,13 +1,14 @@
 #ifndef _CANVAS_H_
 #define _CANVAS_H_
 
-#include <QGraphicsScene>
-#include <plexyconfig.h>
 #include <backdropinterface.h>
-#include <pluginloader.h>
-#include <baseplugin.h>
 #include <backdropplugin.h>
+#include <baseplugin.h>
+#include <plexyconfig.h>
+#include <pluginloader.h>
 #include <widgetplugin.h>
+
+#include <QGraphicsScene>
 
 namespace PlexyDesk
 {

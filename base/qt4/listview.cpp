@@ -1,4 +1,5 @@
 #include "listview.h"
+
 #include <QImage>
 
 namespace PlexyDesk

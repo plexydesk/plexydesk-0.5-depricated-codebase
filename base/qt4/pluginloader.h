@@ -19,9 +19,9 @@
 #ifndef PLUGIN_LOADER_H
 #define PLUGIN_LOADER_H
 
-#include <plexy.h>
 #include <abstractplugininterface.h>
 #include <baseplugin.h>
+#include <plexy.h>
 
 #include <QHash>
 
@@ -66,6 +66,4 @@ private:
 };
 
 } // namespace PlexDesk
-
-
 #endif

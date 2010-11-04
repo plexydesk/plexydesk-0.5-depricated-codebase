@@ -1,11 +1,10 @@
-
 #ifndef VIEW_LAYER_H
 #define VIEW_LAYER_H
 
 #include <config.h>
 
-#include <plexy.h>
 #include <desktopwidget.h>
+#include <plexy.h>
 
 namespace PlexyDesk
 {

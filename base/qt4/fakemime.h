@@ -38,7 +38,4 @@ private:
     FakeMime& operator=(const FakeMime&);
 };
 } // namespace PlexyDesk
-
-
-
 #endif

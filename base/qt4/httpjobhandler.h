@@ -21,6 +21,7 @@
 #define HTTPJOBHANDLER_H
 
 #include "pendingjob.h"
+
 #include <QList>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>

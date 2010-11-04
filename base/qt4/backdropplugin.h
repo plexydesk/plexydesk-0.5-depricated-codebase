@@ -20,9 +20,9 @@
 #ifndef PLEXY_BACK_PLUGIN_H
 #define PLEXY_BACK_PLUGIN_H
 
-#include <plexy.h>
-#include <config.h>
 #include <baseplugin.h>
+#include <config.h>
+#include <plexy.h>
 
 class QPainter;
 class QVariant;

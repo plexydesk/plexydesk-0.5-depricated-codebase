@@ -1,10 +1,11 @@
 #ifndef LISTVIEW_H
 #define LISTVIEW_H
 
-#include <QtGui> //todo: remove
-#include <plexyconfig.h>
 #include <desktopwidget.h>
+#include <plexyconfig.h>i
+
 #include <QAbstractListModel>
+#include <QtGui> //TODO: remove
 
 namespace PlexyDesk
 {

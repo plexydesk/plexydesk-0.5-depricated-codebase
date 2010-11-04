@@ -20,7 +20,9 @@
 #define PLEXY_DESK_BASE_RENDER_H
 
 #include <plexy.h>
+
 #include <QGLWidget>
+
 #ifdef Q_WS_X11
 #include <GL/gl.h>
 #include <GL/glu.h>

@@ -22,8 +22,8 @@
 
 #include <plexy.h>
 
-#include <QSettings>
 #include <QNetworkProxy>
+#include <QSettings>
 #include <QStringList>
 
 namespace PlexyDesk
@@ -69,7 +69,4 @@ namespace PlexyDesk
        Config& operator=(const Config&);
 };
 } // namespace PlexyDesk
-
-
-
 #endif

@@ -1,10 +1,11 @@
 #ifndef ICONPROVIDER_H
 #define ICONPROVIDER_H
 
-#include <QtCore>
 #include <config.h>
-#include <plexy.h>
 #include <iconjob.h>
+#include <plexy.h>
+
+#include <QtCore>
 
 namespace PlexyDesk
 {

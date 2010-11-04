@@ -19,13 +19,13 @@
 #include "desktopwidget.h"
 #include <plexy.h>
 
+#include <QCoreApplication>
 #include <QGraphicsProxyWidget>
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 #include <QTimeLine>
 #include <QTimer>
-#include <QCoreApplication>
 
 namespace PlexyDesk
 {
@@ -156,12 +156,10 @@ void DesktopWidget::setBackFaceImage(QPixmap img)
     d->back = img;
 }
 
-
 void DesktopWidget::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
     QGraphicsRectItem::hoverEnterEvent(event);
 }
-
 
 void  DesktopWidget::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
 {
@@ -237,7 +235,6 @@ void DesktopWidget::setState(DesktopWidget::State s)
     d->s = s;
 }
 
-
 void DesktopWidget::configState(DesktopWidget::State s)
 {
     resetMatrix();
@@ -252,7 +249,6 @@ void DesktopWidget::configState(DesktopWidget::State s)
         d->proxyWidget->hide();
     }
 }
-
 
 void DesktopWidget::paintBackSide(QPainter * p, const QRectF& rect)
 {

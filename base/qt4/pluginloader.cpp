@@ -19,11 +19,11 @@
 #include "pluginloader.h"
 #include "extensionfactory.h"
 
-#include <QStringList>
-#include <QPluginLoader>
 #include <QDebug>
 #include <QDir>
+#include <QPluginLoader>
 #include <QSettings>
+#include <QStringList>
 
 
 namespace PlexyDesk

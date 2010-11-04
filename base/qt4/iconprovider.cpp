@@ -1,8 +1,9 @@
 #include "iconprovider.h"
 #include <plexyconfig.h>
+
 #include <QPixmap>
-#include <QSettings>
 #include <QQueue>
+#include <QSettings>
 #include <QString>
 
 namespace PlexyDesk
@@ -16,7 +17,6 @@ public:
 
 };
 
-
 IconProvider::IconProvider(): d(new Private)
 {
 }
@@ -28,6 +28,5 @@ IconJobPtr IconProvider::requestIcon(const QString& name, const QString& size)
     obj->requestIcon(name, size);
     return obj;
 }
-
 
 }

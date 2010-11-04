@@ -16,6 +16,7 @@
 
 #include "icon.h"
 #include <iconprovider.h>
+
 #include <QPainter>
 #include <QProcess>
 
