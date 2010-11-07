@@ -1,6 +1,7 @@
+#include <daemon.h>
+
 #include <QApplication>
 #include <QDBusConnection>
-#include <daemon.h>
 //dbus-send --session --print-reply --dest=org.plexydesk.social /services
 //local.socioplexy.Configuration.display
 

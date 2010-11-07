@@ -1,5 +1,6 @@
-#include <QApplication>
 #include "accountmanager.h"
+
+#include <QApplication>
 
 int main(int argc, char *argv[])
 {

@@ -18,11 +18,12 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
-#include <QtDBus>
-#include <QDBusConnection>
 #include <pluginloader.h>
+
+#include <QDBusConnection>
 #include <QDebug>
 #include <QStringList>
+#include <QtDBus>
 
 namespace PlexyDesk
 {
@@ -56,4 +57,3 @@ namespace PlexyDesk
         //socioPlugin->data(methodName, args);//SocialPlugin.h must contain a method QVariantMap data(const QString &methodName, QVariantMap args)
     }
 }//namespace PlexyDesk
-

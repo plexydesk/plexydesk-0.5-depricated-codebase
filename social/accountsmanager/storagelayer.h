@@ -18,32 +18,33 @@
  *Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include <QObject>
-#include <QSqlQuery>
-#include <QSqlDatabase>
-#include <QVariant>
 #include "storagelayerinterface.h"
+
+#include <QObject>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QVariant>
 
 namespace PlexyDesk
 {
-    class SocialStorageLayer : public StorageLayerInterface
-    {
-        Q_OBJECT;
-        public:
-            SocialStorageLayer(QObject *parent=0);
-            void open();
-            void close() ;
+class SocialStorageLayer : public StorageLayerInterface
+{
+    Q_OBJECT;
+public:
+    SocialStorageLayer(QObject *parent=0);
+    void open();
+    void close() ;
 
-            QStringList listAccounts() ;
-            QVariantMap readAccount(const QString &id);
-            bool removeAccount(const QString &id);
-            bool writeAccount(const QString &id, const QVariantMap &data);
-            bool updateAccount(const QString &id, const QString &propertyName, const QVariant &value);
+    QStringList listAccounts() ;
+    QVariantMap readAccount(const QString &id);
+    bool removeAccount(const QString &id);
+    bool writeAccount(const QString &id, const QVariantMap &data);
+    bool updateAccount(const QString &id, const QString &propertyName, const QVariant &value);
 
-        private:
-            void setDatabasePath(const QString &path);
-            void createTables();
+private:
+    void setDatabasePath(const QString &path);
+    void createTables();
 
-            //QString generatePasswordHash();
-    };
+    //QString generatePasswordHash();
+};
 }

@@ -16,6 +16,9 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
+
+#include <socialplugin.h>
+
 #include <QApplication>
 #include <QDBusAbstractAdaptor>
 #include <QObject>
@@ -23,8 +26,6 @@
 #include <QList>
 #include <QStringList>
 #include <QVariantMap>
-#include <socialplugin.h>
-//#include <SocialPlugin.h>  <-----**********To be implemented*****************
 
 namespace PlexyDesk
 {
