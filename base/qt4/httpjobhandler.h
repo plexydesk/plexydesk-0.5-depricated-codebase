@@ -47,8 +47,8 @@ public:
     ~HttpJobHandler();
 
 private:
-    QList<QNetworkReply*> holder;
-    QString msg, error;
+    QList<QNetworkReply*> m_holder;
+    QString m_msg, m_error;
     bool isValidUrl(const QUrl &url);
     class HttpJobHandlerPrivate;
     HttpJobHandlerPrivate * const d;

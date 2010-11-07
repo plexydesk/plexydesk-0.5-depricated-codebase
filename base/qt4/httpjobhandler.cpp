@@ -48,7 +48,7 @@ void HttpJobHandler::getFile(const QUrl &url)
     qDebug() << "HttpJobHandler::getFile()";
     if (isValidUrl(url)) {
         QNetworkReply* reply = d->manager->get(QNetworkRequest(url));
-        holder.append(reply);
+        m_holder.append(reply);
     }
 }
 
@@ -57,7 +57,7 @@ void HttpJobHandler::postFile(const QUrl &url, const QByteArray  &data)
     qDebug() << "HttpJobHandler::postFile()";
     if (isValidUrl(url)) {
         QNetworkReply* reply = d->manager->post(QNetworkRequest(url), data);
-        holder.append(reply);
+        m_holder.append(reply);
     }
 }
 
@@ -65,19 +65,19 @@ bool HttpJobHandler::isValidUrl(const QUrl &url)
 {
     qDebug() << "HttpJobHandler::isValidUrl()";
     if (url.path().isEmpty()) {
-        msg = "Empty URL";
-        error = "The URL was empty";
-        setFinished(true, msg, error);
+        m_msg = "Empty URL";
+        m_error = "The URL was empty";
+        setFinished(true, m_msg, m_error);
         return false;
     } else if (!url.isValid()) {
-        msg = "Invalid URL";
-        error = "The URL was not in valid format";
-        setFinished(true, msg, error);
+        m_msg = "Invalid URL";
+        m_error = "The URL was not in valid format";
+        setFinished(true, m_msg, m_error);
         return false;
     } else if (url.scheme() != "http" || url.scheme() != "https") {
-        msg = "Unsupported Protocol";
-        error = "The URL was not http/s.";
-        setFinished(true, msg, error);
+        m_msg = "Unsupported Protocol";
+        m_error = "The URL was not http/s.";
+        setFinished(true, m_msg, m_error);
         return false;
     }
     return true;
@@ -89,14 +89,14 @@ void HttpJobHandler::onFinish(QNetworkReply* reply)
     QVariant statusCodeV = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
     if (statusCodeV.toInt() == 200) { //statuscode 200 means we are OK. Page not found is not taken as error.
         d->data = reply->readAll();
-        msg = "200";
-        error = "200";
-        setFinished(false, msg, error);
+        m_msg = "200";
+        m_error = "200";
+        setFinished(false, m_msg, m_error);
     } else {
         d->data = reply->readAll(); //make server reply available to caller.
-        msg = statusCodeV.toString();
-        error = "Error fetching data";
-        setFinished(true, msg, error);
+        m_msg = statusCodeV.toString();
+        m_error = "Error fetching data";
+        setFinished(true, m_msg, m_error);
     }
 }
 

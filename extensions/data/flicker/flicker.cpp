@@ -37,10 +37,10 @@ FlickerData::FlickerData(QObject * object)
 void  FlickerData::init()
 {
 
-    if (PlexyDesk::Config::getInstance()->proxyOn) {
+    if (PlexyDesk::Config::getInstance()->m_proxyOn) {
         QNetworkProxy NtProxy(PlexyDesk::Config::getInstance()->proxyType,
                               PlexyDesk::Config::getInstance()->proxyURL,
-                              PlexyDesk::Config::getInstance()->proxyPort,
+                              PlexyDesk::Config::getInstance()->m_proxyPort,
                               PlexyDesk::Config::getInstance()->proxyUser,
                               PlexyDesk::Config::getInstance()->proxyPasswd
                              );

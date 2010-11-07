@@ -41,11 +41,11 @@ Config::Config(const QString &organization,
         const QString &application, QObject *parent):
     QSettings(organization, application, parent)
 {
-    proxyOn = false;
+    m_proxyOn = false;
     proxyURL = "";
     proxyUser = "";
     proxyPasswd = "";
-    proxyPort = 3128;
+    m_proxyPort = 3128;
     read();
 
     if (value("CurrentWallpaper").toString().isNull()) {
@@ -56,7 +56,7 @@ Config::Config(const QString &organization,
         iconTheme = "default";
     }
 
-    collitionOn = false;
+    m_collisionOn = false;
 
     if (widgetList.count() < 0) {
         writeToFile();
@@ -72,26 +72,26 @@ Config::Config(const QString &organization,
 
 void Config::read()
 {
-    proxyOn = value("proxyOn").toInt();
+    m_proxyOn = value("proxyOn").toInt();
     proxyURL = value("proxyURL").toString();
     proxyUser = value("proxyUser").toString();
     proxyPasswd = value("proxyPasswd").toString();
-    proxyPort = value("proxyPort").toInt() ;
+    m_proxyPort = value("proxyPort").toInt() ;
     CurrentWallpaper = value("CurrentWallpaper").toString();
     widgetList = value("widgetList").toStringList();
     iconTheme = value("iconTheme").toString();
-    collitionOn = false;
+    m_collisionOn = false;
 }
 
 void Config::writeToFile()
 {
-    setValue("proxyOn", proxyOn);
+    setValue("proxyOn", m_proxyOn);
     setValue("proxyURL", proxyURL);
     setValue("proxyUser", proxyUser);
     setValue("ProxyPasswd", proxyPasswd);
-    setValue("proxyPort", proxyPort);
+    setValue("proxyPort", m_proxyPort);
     setValue("CurrentWallpaper", CurrentWallpaper);
-    setValue("collitionOn", collitionOn);
+    setValue("collisionOn", m_collisionOn);
     setValue("widgetList", widgetList);
     setValue("iconTheme", iconTheme);
     sync();

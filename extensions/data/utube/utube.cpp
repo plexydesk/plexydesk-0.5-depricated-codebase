@@ -38,10 +38,10 @@ void  UtubeData::init()
     connect(mHttp, SIGNAL(requestFinished(int, bool)),
             this, SLOT(finished(int, bool)));
 
-    if (PlexyDesk::Config::getInstance()->proxyOn) {
+    if (PlexyDesk::Config::getInstance()->m_proxyOn) {
         QNetworkProxy NtProxy(PlexyDesk::Config::getInstance()->proxyType,
                               PlexyDesk::Config::getInstance()->proxyURL,
-                              PlexyDesk::Config::getInstance()->proxyPort,
+                              PlexyDesk::Config::getInstance()->m_proxyPort,
                               PlexyDesk::Config::getInstance()->proxyUser,
                               PlexyDesk::Config::getInstance()->proxyPasswd
                              );
@@ -49,7 +49,7 @@ void  UtubeData::init()
         mHttp->setProxy(NtProxy);
         QNetworkProxy::setApplicationProxy(NtProxy);
         qDebug() << "UtubeData::init()" << "Proxy state"
-        << PlexyDesk::Config::getInstance()->proxyOn << endl;
+        << PlexyDesk::Config::getInstance()->m_proxyOn << endl;
     }
 
     fetch();

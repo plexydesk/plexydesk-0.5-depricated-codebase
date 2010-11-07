@@ -39,14 +39,14 @@ namespace PlexyDesk
         QString MyPictures ;
         QString MyMovies;
         QString CurrentWallpaper;
-        bool proxyOn;
-        int proxyPort;
+        bool m_proxyOn;
+        int m_proxyPort;
         QNetworkProxy::ProxyType proxyType;
         QString proxyURL;
         QString proxyUser;
         QString proxyPasswd;
         QStringList widgetList;
-        bool collitionOn;
+        bool m_collisionOn;
         QString iconTheme;
 
      public Q_SLOTS:
