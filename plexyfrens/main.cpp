@@ -61,6 +61,7 @@ int main( int argc, char ** argv )
     view->enableOpenGL(false);
     view->move(rect.x(), rect.y());
     view->resize(rect.width(), rect.height());
+    view->setSceneRect(rect);
     PlexyDesk::PluginLoader *loader = new PlexyDesk::PluginLoader();
     loader->scanDisk();
     view->show();

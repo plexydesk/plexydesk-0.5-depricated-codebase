@@ -1,7 +1,6 @@
 /*******************************************************************************
 * This file is part of PlexyDesk.
 *  Maintained by : Siraj Razick <siraj@kde.org>
-*  Authored By  : Lahiru Lakmal <llahiru@gmail.com>
 *
 *  PlexyDesk is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU Lesser General Public License as published by
@@ -23,6 +22,8 @@
 #include <pluginloader.h>
 #include <desktopwidget.h>
 #include <qwebviewitem.h>
+#include <QNetworkAccessManager>
+#include <QNetworkCookieJar>
 
 class QTimer;
 namespace PlexyDesk{
@@ -41,8 +42,16 @@ public:
 public Q_SLOTS:
     void data(QVariantMap&);
     void onDataReady();
+    void onLoadeFinished(bool ok);
+    void onLoadProgress(int progress);
+    void onLoadStarted();
+    void onUrlChanged(const QUrl &url);
 private:
       QWebViewItem *mView;
+      int mProgressValue;
+      QNetworkAccessManager *mNtManager;
+      QNetworkCookieJar *mCookie;
+      bool mLoggedIn;
 };
 #endif
 }

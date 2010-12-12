@@ -88,7 +88,6 @@ QWebViewItem::QWebViewItem(const QRectF &rect, QGraphicsItem * parent)
     qDebug() << Q_FUNC_INFO << rect;
     d = new QWebViewItemPrivate(this);
     d->opacity  = 1.0;
-//    setFlag (QGraphicsItem::ItemIsMovable , false);
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
     setFlag(QGraphicsItem::ItemIsFocusable, true);
     setAcceptsHoverEvents (true);
@@ -96,13 +95,6 @@ QWebViewItem::QWebViewItem(const QRectF &rect, QGraphicsItem * parent)
     // FIXME:should take a rect as argument
     d->previewCache = QPixmap(rect.width(), rect.height());
     setRect(rect);
-    setCacheMode(NoCache);
-    // FIXME goes out side the item
-    d->fadeline = new QTimeLine(500,this);
-    d->fadeline->setFrameRange(0, 100);
-    connect(d->fadeline, SIGNAL(frameChanged (int)), this, SLOT(changeOpacity(int)));
-    //QWebHitTestResult test;
-    //qDebug()<<test.boundingBox()<<endl;
 }
 
 void QWebViewItem::changeOpacity(int frm)
@@ -479,17 +471,18 @@ void QWebViewItem::paint ( QPainter * painter, const QStyleOptionGraphicsItem * 
     if (!painter->isActive())
         return;
 
-    //qDebug()<<option->exposedRect<<endl;
     painter->setClipping(true);
-    painter->setOpacity(d->opacity);
-    painter->setRenderHint(QPainter::Antialiasing, false);
-    painter->setRenderHint(QPainter::TextAntialiasing, false);
-    painter->setRenderHint(QPainter::HighQualityAntialiasing, false);
-    painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
+    painter->setOpacity(this->opacity());
+    painter->setRenderHint(QPainter::Antialiasing, true);
+    painter->setRenderHint(QPainter::TextAntialiasing, true);
+    painter->setRenderHint(QPainter::HighQualityAntialiasing, true);
+    painter->setRenderHint(QPainter::SmoothPixmapTransform, true);
     QWebFrame *frame = d->page->mainFrame();
-    frame->render(painter, QRegion(QRect(option->exposedRect.x(),option->exposedRect.y(),option->exposedRect.width(),option->exposedRect.height())));
+    frame->render(painter, QRegion(QRect(option->exposedRect.x(),
+                    option->exposedRect.y(),
+                    option->exposedRect.width(),
+                    option->exposedRect.height())));
     painter->setClipRect(rect());
-
 }
 
 /*!
