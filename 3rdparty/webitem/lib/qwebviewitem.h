@@ -56,7 +56,7 @@ class QWEBKIT_EXPORT QWebViewItem : public QObject,  public QGraphicsRectItem
     Q_PROPERTY(bool modified READ isModified)
     Q_PROPERTY(qreal textSizeMultiplier READ textSizeMultiplier WRITE setTextSizeMultiplier)
 public:
-    explicit QWebViewItem(QGraphicsItem * parent = 0);
+    explicit QWebViewItem(const QRectF &rect, QGraphicsItem * parent = 0);
     virtual ~QWebViewItem();
 
     QWebPage *page() const;

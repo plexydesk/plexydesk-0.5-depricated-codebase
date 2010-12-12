@@ -95,7 +95,6 @@ INCLUDE_DIRECTORIES(
     ${QT_INCLUDE_DIR}
 )
 
-ADD_SUBDIRECTORY(plexylib)
 ADD_SUBDIRECTORY(base/qt4/)
 ADD_SUBDIRECTORY(extensions/backdrop/classicdrop)
 ADD_SUBDIRECTORY(extensions/widgets/imagepile)
@@ -110,6 +109,7 @@ ENDIF (NOT APPLE)
 
 #add_subdirectory(extensions/widgets/demowidget)
 ADD_SUBDIRECTORY(runner)
+ADD_SUBDIRECTORY(plexyfrens)
 IF(NOT APPLE)
 ADD_SUBDIRECTORY(plexywm)
 ENDIF(NOT APPLE)
@@ -134,7 +134,11 @@ ADD_SUBDIRECTORY(extensions/data/flicker)
 ADD_SUBDIRECTORY(extensions/data/utube)
 ADD_SUBDIRECTORY(modules/libplexyirc)
 ADD_SUBDIRECTORY(extensions/data/rest/)
-ADD_SUBDIRECTORy(extensions/widgets/twit/)
+ADD_SUBDIRECTORY(extensions/widgets/twit/)
+
+#facebook
+
+ADD_SUBDIRECTORY(extensions/facebook/authwin)
 
 #unported
 #ADD_SUBDIRECTORY(extensions/widgets/friendswidget) // TODO : port this
