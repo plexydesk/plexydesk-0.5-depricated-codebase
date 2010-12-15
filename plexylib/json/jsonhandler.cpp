@@ -1,5 +1,4 @@
 #include "jsonhandler.h"
-#include "JSON_parser.h"
 #include <QScriptValueIterator>
 
 JsonHandler::JsonHandler()
