@@ -74,6 +74,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/extensions/data/videoengine 
     ${CMAKE_BINARY_DIR}/modules/libplexyirc/ 
     ${CMAKE_BINARY_DIR}/modules/QtWin/ 
+    ${CMAKE_BINARY_DIR}/plexylib/json/
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_SOURCE_DIR}/plexylib
     ${CMAKE_SOURCE_DIR}/base/qt4
@@ -82,6 +83,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}/3rdparty/lqr/
     ${CMAKE_SOURCE_DIR}/3rdparty/mime/
     ${CMAKE_SOURCE_DIR}/3rdparty/qplexymime
+    ${CMAKE_SOURCE_DIR}/plexylib/json/
     ${CMAKE_BINARY_DIR}/3rdparty/qplexymime
     ${CMAKE_SOURCE_DIR}/modules/libplexyirc/
     ${CMAKE_SOURCE_DIR}/modules/QtWin/
@@ -108,6 +110,7 @@ ENDIF (UNIX)
 ENDIF (NOT APPLE)
 
 #add_subdirectory(extensions/widgets/demowidget)
+ADD_SUBDIRECTORY(plexylib/json)
 ADD_SUBDIRECTORY(runner)
 ADD_SUBDIRECTORY(plexyfrens)
 IF(NOT APPLE)

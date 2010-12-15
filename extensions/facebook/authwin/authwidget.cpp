@@ -28,8 +28,6 @@
 #include <QXmlSerializer>
 #include <QColor>
 #include <QPalette>
-
-
 #include "facebookdata.h"
 #include "authwidget.h"
 
@@ -38,6 +36,8 @@ namespace PlexyDesk{
 AuthWidget::AuthWidget(const QRectF &rect, QWidget *widget):
         PlexyDesk::DesktopWidget(rect, widget)
 {
+    mJsonHandle = new JsonHandler();
+    const QString token = tokenFromConfig();
     mLoggedIn = false;
     mNtManager = new QNetworkAccessManager(this);
     mCookie = new QNetworkCookieJar(this);
@@ -51,14 +51,24 @@ AuthWidget::AuthWidget(const QRectF &rect, QWidget *widget):
     connect(mView, SIGNAL(loadProgress(int)), this, SLOT(onLoadProgress(int)));
     connect(mView, SIGNAL(loadStarted()), this, SLOT(onLoadStarted()));
     connect(mView, SIGNAL(urlChanged(const QUrl &)), this, SLOT(onUrlChanged(const QUrl &)));
-    mView->setUrl(QUrl(QLatin1String("https://graph.facebook.com/oauth/authorize?client_" \
-                "id=170356722999159&redirect_uri=http://www.facebook.com/connect" \
-                "/login_success.html&type=user_agent&display=popup")));
+    if (token.isEmpty()) {
+        mView->setUrl(QUrl(QLatin1String("https://graph.facebook.com/oauth/authorize?client_" \
+                    "id=170356722999159&redirect_uri=http://www.facebook.com/connect" \
+                    "/login_success.html&type=user_agent&display=popup")));
+    } else {
+        this->configState(DesktopWidget::DOCK);
+        this->setVisible(false);
+        QNetworkRequest request;
+        request.setUrl(QUrl("https://graph.facebook.com/me/feed?access_token="+token));
+        mReply = mNtManager->get(request);
+        connect(mReply, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
+    }
     mProgressValue = 10;
 }
 
 AuthWidget::~AuthWidget()
 {
+    delete mJsonHandle;
 }
 
 void AuthWidget::paintExtFace(QPainter *painter,
@@ -172,5 +182,29 @@ void AuthWidget::readConfig(QString& user,
 void AuthWidget::data(QVariantMap& data)
 {
     qDebug() << Q_FUNC_INFO << data["data"];
+}
+
+void AuthWidget::onReadyRead()
+{
+    JsonData result = mJsonHandle->parse(mReply->readAll());
+    if (result.type() == JsonData::Error) {
+        this->setVisible(true);
+        configState(DesktopWidget::NORMALSIDE);
+        mView->setVisible(false);
+        mView->setUrl(QUrl(QLatin1String("https://graph.facebook.com/oauth/authorize?client_" \
+                    "id=170356722999159&redirect_uri=http://www.facebook.com/connect" \
+                    "/login_success.html&type=user_agent&display=popup")));
+
+    }
+}
+
+QString AuthWidget::tokenFromConfig() const
+{
+    PlexyDesk::Config *config = PlexyDesk::Config::getInstance();
+    config->beginGroup("facebook_plugin");
+    QString token = config->value("access_token").toString();
+    config->endGroup();
+    qDebug() << Q_FUNC_INFO << token;
+    return token;
 }
 }

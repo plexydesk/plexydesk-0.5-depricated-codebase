@@ -20,10 +20,13 @@
 #define PLEXY_FB_WIDGET_H
 #include <datainterface.h>
 #include <pluginloader.h>
+#include <jsonhandler.h>
 #include <desktopwidget.h>
 #include <qwebviewitem.h>
 #include <QNetworkAccessManager>
 #include <QNetworkCookieJar>
+#include <QNetworkRequest>
+#include <QNetworkReply>
 
 class QTimer;
 namespace PlexyDesk{
@@ -46,12 +49,16 @@ public Q_SLOTS:
     void onLoadProgress(int progress);
     void onLoadStarted();
     void onUrlChanged(const QUrl &url);
+    void onReadyRead();
 private:
+      QString tokenFromConfig() const;
       QWebViewItem *mView;
       int mProgressValue;
       QNetworkAccessManager *mNtManager;
       QNetworkCookieJar *mCookie;
       bool mLoggedIn;
+      JsonHandler *mJsonHandle;
+      QNetworkReply *mReply;
 };
 #endif
 }
