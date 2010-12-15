@@ -1,0 +1,3 @@
+FILE(GLOB THEME *.png fbicons/*.svg)
+
+INSTALL(FILES ${THEME}  DESTINATION ${CMAKE_INSTALL_PREFIX}/theme/default/)

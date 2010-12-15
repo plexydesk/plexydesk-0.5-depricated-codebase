@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="64px"
+   height="64px"
+   id="svg23773"
+   sodipodi:version="0.32"
+   inkscape:version="0.45.1"
+   sodipodi:docbase="C:\Users\james\Desktop\Facebook svg icons"
+   sodipodi:docname="groups.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="C:\Users\james\Desktop\Facebook svg icons\groups.png"
+   inkscape:export-xdpi="720"
+   inkscape:export-ydpi="720">
+  <defs
+     id="defs23775" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="5.5"
+     inkscape:cx="32"
+     inkscape:cy="32"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:document-units="px"
+     inkscape:grid-bbox="true"
+     inkscape:window-width="765"
+     inkscape:window-height="575"
+     inkscape:window-x="362"
+     inkscape:window-y="226" />
+  <metadata
+     id="metadata23778">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <g
+       id="g23783"
+       transform="translate(1.7272662,-5.6666587)">
+      <path
+         sodipodi:nodetypes="ccccccc"
+         id="path22802"
+         d="M 23.833146,58.328474 L 61.601207,58.328474 L 61.601207,52.979421 C 61.601207,48.976076 45.881984,51.611207 50.210738,35.59491 C 55.628808,15.548103 31.254773,15.549667 36.672416,35.59491 C 41.004985,51.625358 23.833146,48.913498 23.833146,52.979421 L 23.833146,58.328474 z "
+         style="fill:#343a5d;fill-opacity:1;fill-rule:evenodd;stroke:#07082b;stroke-width:1.34305298px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         sodipodi:nodetypes="ccccccc"
+         id="path18805"
+         d="M -0.99469164,58.267425 L 40.20683,58.267425 L 40.20683,52.432079 C 40.20683,48.064822 23.058589,50.939491 27.780864,33.467157 C 33.691482,11.597949 7.1016344,11.599656 13.01179,33.467157 C 17.738229,50.954922 -0.99469164,47.996555 -0.99469164,52.432079 L -0.99469164,58.267425 z "
+         style="fill:#a1b0cd;fill-opacity:1;fill-rule:evenodd;stroke:#3b5998;stroke-width:1.46514857px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    </g>
+  </g>
+</svg>
