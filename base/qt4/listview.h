@@ -2,8 +2,7 @@
 #define LISTVIEW_H
 
 #include <desktopwidget.h>
-#include <plexyconfig.h>i
-
+#include <plexyconfig.h>
 #include <QAbstractListModel>
 #include <QtGui> //TODO: remove
 
@@ -22,7 +21,7 @@ public:
     QString thumb;
 };
 
-class VISIBLE_SYM ListView : public DesktopWidget
+class PLEXYDESK_EXPORT ListView : public DesktopWidget
 {
     Q_OBJECT
 

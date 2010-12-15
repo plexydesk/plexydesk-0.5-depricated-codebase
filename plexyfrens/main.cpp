@@ -67,6 +67,7 @@ int main( int argc, char ** argv )
     view->show();
     QStringList list = PlexyDesk::Config::getInstance()->widgetList;
 
+    view->addAuthExtension(QLatin1String("plexywelcome"));
     view->addAuthExtension(QLatin1String("plexyauth"));
 
     return app.exec();

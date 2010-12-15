@@ -59,7 +59,7 @@ AuthWidget::AuthWidget(const QRectF &rect, QWidget *widget):
         this->configState(DesktopWidget::DOCK);
         this->setVisible(false);
         QNetworkRequest request;
-        request.setUrl(QUrl("https://graph.facebook.com/me/feed?access_token="+token));
+        request.setUrl(QUrl("https://graph.facebook.com/19292868552_118464504835613?access_token="+token));
         mReply = mNtManager->get(request);
         connect(mReply, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
     }

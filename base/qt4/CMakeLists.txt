@@ -25,6 +25,7 @@ SET(sourceFiles icon.cpp
    pendingjob.cpp
    iconjob.cpp
    listview.cpp
+   imagecache.cpp
    httpjobhandler.cpp
 )
 
@@ -53,6 +54,7 @@ SET(headerFiles
    pendingjob.h
    iconjob.h
    listview.h
+   imagecache.h
    httpjobhandler.h
 )
 
@@ -75,6 +77,7 @@ SET(QTMOC_SRCS
    pendingjob.h
    iconjob.h
    listview.h
+   imagecache.h
    httpjobhandler.h
 )
 

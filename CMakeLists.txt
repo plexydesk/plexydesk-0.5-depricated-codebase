@@ -74,7 +74,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/extensions/data/videoengine 
     ${CMAKE_BINARY_DIR}/modules/libplexyirc/ 
     ${CMAKE_BINARY_DIR}/modules/QtWin/ 
-    ${CMAKE_BINARY_DIR}/plexylib/json/
+    ${CMAKE_BINARY_DIR}/plexylib/fbjson/
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_SOURCE_DIR}/plexylib
     ${CMAKE_SOURCE_DIR}/base/qt4
@@ -83,7 +83,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}/3rdparty/lqr/
     ${CMAKE_SOURCE_DIR}/3rdparty/mime/
     ${CMAKE_SOURCE_DIR}/3rdparty/qplexymime
-    ${CMAKE_SOURCE_DIR}/plexylib/json/
+    ${CMAKE_SOURCE_DIR}/plexylib/fbjson/
     ${CMAKE_BINARY_DIR}/3rdparty/qplexymime
     ${CMAKE_SOURCE_DIR}/modules/libplexyirc/
     ${CMAKE_SOURCE_DIR}/modules/QtWin/
@@ -110,13 +110,14 @@ ENDIF (UNIX)
 ENDIF (NOT APPLE)
 
 #add_subdirectory(extensions/widgets/demowidget)
-ADD_SUBDIRECTORY(plexylib/json)
+ADD_SUBDIRECTORY(plexylib/fbjson)
 ADD_SUBDIRECTORY(runner)
 ADD_SUBDIRECTORY(plexyfrens)
 IF(NOT APPLE)
 ADD_SUBDIRECTORY(plexywm)
 ENDIF(NOT APPLE)
 ADD_SUBDIRECTORY(artwork)
+ADD_SUBDIRECTORY(artwork/plexyfren_theme/default/)
 ADD_SUBDIRECTORY(3rdparty/libmagic)
 ADD_SUBDIRECTORY(3rdparty/mime)
 ADD_SUBDIRECTORY(3rdparty/qplexymime)
@@ -142,6 +143,7 @@ ADD_SUBDIRECTORY(extensions/widgets/twit/)
 #facebook
 
 ADD_SUBDIRECTORY(extensions/facebook/authwin)
+ADD_SUBDIRECTORY(extensions/facebook/welcome)
 
 #unported
 #ADD_SUBDIRECTORY(extensions/widgets/friendswidget) // TODO : port this
