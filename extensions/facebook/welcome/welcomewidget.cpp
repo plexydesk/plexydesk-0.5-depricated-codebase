@@ -91,7 +91,7 @@ WelcomeWidget::~WelcomeWidget()
 
 QPixmap WelcomeWidget::fromSvg(QRectF _rect, const QString& file)
 {
-  Split::ImageCache * cache = Split::ImageCache::instance();
+  PlexyDesk::ImageCache * cache = PlexyDesk::ImageCache::instance();
   QImage pixmap(_rect.width(), _rect.height(), QImage::Format_ARGB32_Premultiplied);
   QPainter painter;
   painter.begin(&pixmap);
