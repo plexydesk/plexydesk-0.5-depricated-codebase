@@ -20,15 +20,12 @@
 #define PLEXY_DESKTOP_VIEW_H
 
 #include <QGraphicsView>
-
 #include <plexy.h>
 
-//TODO:
-//move out of base library
 
 namespace PlexyDesk
 {
-    class VISIBLE_SYM DesktopView : public QGraphicsView
+    class PLEXYDESK_EXPORTS DesktopView : public QGraphicsView
     {
         Q_OBJECT
     public:
@@ -58,6 +55,6 @@ namespace PlexyDesk
         Private * const d;
         void setTopMostWidget(const QPoint &pt);
     };
-} // namespace #ifndef
+}
 
 #endif
