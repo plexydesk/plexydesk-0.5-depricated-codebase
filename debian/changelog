@@ -1,3 +1,10 @@
+plexydesk (0.2.1) unstable; urgency=low
+ 
+  * Working Debian files
+  * Facebook application skeleton
+
+ -- Siraj Razick <sirajrazick@plexydesk.org>  Sat, 15 jan 2011 20:07:12 +0330
+
 plexydesk (0.01alpha) unstable; urgency=low
 
   * Initial Release.
