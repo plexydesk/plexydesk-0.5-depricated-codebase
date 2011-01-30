@@ -30,8 +30,8 @@ class WindowManager : public QApplication
 {
     Q_OBJECT
 public:
-    WindowManager(int & argc, char ** argv);
-    ~WindowManager();
+    WindowManager(int &argc, char **argv);
+    virtual ~WindowManager();
     bool isWmRunning();
     void ReplaceSelectionOwner(Window newOwner, Atom atom);
     void addWindow(Window id);
@@ -45,22 +45,20 @@ public:
 private:
     void input(Window w);
     void getWindowType(Window w);
-    void destroyNotify(XEvent* event);
-    void configureRequest(XEvent* event);
-    void mapRequest(XEvent* e);
-    void createNotify(XEvent* e);
-    void clientMsgNotify(XEvent* e);
-    void configureNotify(XEvent* event);
-    void reparentNotify(XEvent * event);
-    void mapNotify(XEvent * event);
-    void unmapNotify(XEvent * event);
-    void propertyNotify(XEvent * event);
+    void destroyNotify(XEvent *event);
+    void configureRequest(XEvent *event);
+    void mapRequest(XEvent *e);
+    void createNotify(XEvent *e);
+    void clientMsgNotify(XEvent *e);
+    void configureNotify(XEvent *event);
+    void reparentNotify(XEvent *event);
+    void mapNotify(XEvent *event);
+    void unmapNotify(XEvent *event);
+    void propertyNotify(XEvent *event);
     void init();//setups  Atoms, registering ..etc
-    bool x11EventFilter( XEvent* );
-    //utility
-    //data
+    bool x11EventFilter(XEvent *);
     class Private;
-    Private * const d;
+    Private *const d;
 };
 
 #endif

@@ -31,10 +31,10 @@ class PlexyWindows :  public PlexyDesk::DesktopWidget
 {
     Q_OBJECT
 public:
-    PlexyWindows(Display*d, Window w, XWindowAttributes *attr, QWidget * parent = 0, Qt::WindowFlags f = 0);
+    PlexyWindows(Display *d, Window w, XWindowAttributes *attr, QWidget *parent = 0, Qt::WindowFlags f = 0);
     virtual ~PlexyWindows() {}
 
-    virtual void paintViewSide(QPainter * painter,const QRectF& rect);
+    virtual void paintViewSide(QPainter *painter,const QRectF &rect);
     void Destroyed ();
     void Mapped (bool override_redirect);
     void Unmapped ();
@@ -53,7 +53,7 @@ public:
     void ReleaseWindow ();
 private:
     class Private;
-    Private * const d;
+    Private *const d;
 };
 
 #endif // PLEXYWINDOWS_H
