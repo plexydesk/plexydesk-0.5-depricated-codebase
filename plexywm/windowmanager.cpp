@@ -26,13 +26,14 @@
 #include <netwm.h>
 
 extern "C" {
+#include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/Xatom.h>
 #include <X11/extensions/shape.h>
 #include <X11/cursorfont.h>
 #include <X11/extensions/Xcomposite.h>
 #include <X11/extensions/Xdamage.h>
-
+#include <X11/extensions/Xrender.h>
 }
 #include <QX11Info>
 #include <QGraphicsView>
@@ -88,9 +89,6 @@ WindowManager::WindowManager(int & argc, char ** argv):QApplication(argc, argv),
     d->scene->setBackgroundBrush(Qt::NoBrush);
     d->scene->setItemIndexMethod(QGraphicsScene::NoIndex);
     d->scene->setSceneRect(QDesktopWidget().geometry());//TODO Resolution changes ?
-
-        QStringList list = PlexyDesk::Config::getInstance()->widgetList;
-
     init();
 }
 
@@ -137,7 +135,25 @@ bool WindowManager::isWmRunning()
 void WindowManager::init()
 {
     qDebug()<<Q_FUNC_INFO<<endl;
+ 
+    // register compositor
 
+    if (not checkExtensions()) {
+        qDebug() << "Error setting up plexywm";
+    }
+    Window window;
+    Atom atom;
+
+    window = XCreateSimpleWindow(d->mDisplay,
+            RootWindow(d->mDisplay, 0), 0, 0, 1, 1, 0,
+            None,
+            None);
+    atom = XInternAtom (d->mDisplay, "_NET_WM_CM_S0", False);
+    XSetSelectionOwner (d->mDisplay, atom, window, 0);
+
+    startOverlay();
+
+/*
     if (!isWmRunning()) {
         XSetWindowAttributes attrs;
         attrs.override_redirect = True;
@@ -178,6 +194,7 @@ void WindowManager::init()
         qDebug()<<"Another Window manager already running.. "<<endl;
         qApp->quit();
     }
+*/
 }
 
 void WindowManager::registerAtoms()
@@ -307,6 +324,28 @@ bool WindowManager::checkExtensions()
 
 bool WindowManager::startOverlay()
 {
+    qDebug() << Q_FUNC_INFO;
+
+    Picture rootPicture;
+    int scr = DefaultScreen(d->mDisplay);
+    XRenderPictureAttributes pa;
+    d->mRootWindow = RootWindow(d->mDisplay, scr);
+
+    int rootWidth = DisplayWidth(d->mDisplay, scr);
+    int rootHeight = DisplayHeight(d->mDisplay, scr);
+    pa.subwindow_mode = IncludeInferiors;
+
+    qDebug() << Q_FUNC_INFO << "width:" << rootWidth << " height:" << rootHeight;
+    rootPicture = XRenderCreatePicture(d->mDisplay,
+            d->mRootWindow,
+            XRenderFindVisualFormat(d->mDisplay, DefaultVisual(d->mDisplay, scr)),
+            CPSubwindowMode,
+            &pa);
+
+    //bg 
+    setupWindows();
+   
+/*
     d->mOverlay = XCompositeGetOverlayWindow (d->mDisplay, d->mRootWindow);
     if (!d->mOverlay) {
         qDebug()<<"Overly window can not start"<<endl;
@@ -329,7 +368,7 @@ bool WindowManager::startOverlay()
     XReparentWindow (d->mDisplay, d->canvasview->winId(), d->mOverlay, 0, 0);
     input(d->mOverlay);
     input(d->canvasview->winId());
-   
+*/
 }
 
 void WindowManager::input(Window w)
@@ -346,13 +385,12 @@ void WindowManager::setupWindows()
 {
     XGrabServer (d->mDisplay);
 
-    long ev_mask = (SubstructureRedirectMask |
-                    SubstructureNotifyMask |
+    XCompositeRedirectSubwindows (d->mDisplay, d->mRootWindow, CompositeRedirectManual);
+    
+    long ev_mask = (SubstructureNotifyMask |
                     StructureNotifyMask |
-                    ResizeRedirectMask |
-                    PropertyChangeMask
-                    |
-                    FocusChangeMask);
+                    ExposureMask |
+                    PropertyChangeMask);
     XSelectInput (d->mDisplay, d->mRootWindow, ev_mask);
 
     Window root_notused, parent_notused;
@@ -368,13 +406,15 @@ void WindowManager::setupWindows()
                 &nchildren);
 
     for (int i = 0; i < nchildren; i++) {
-        qDebug() << Q_FUNC_INFO ;
-
-        XGetWindowAttributes(QX11Info::display(), children[i], &attr);
-        if (attr.map_state == IsViewable && children[i] != d->canvasview->winId() && attr.width > 1 &&
-         attr.height > 1) {
-            addWindow(children[i]);
-        }
+        qDebug() << Q_FUNC_INFO << i;
+    XWindowAttributes attrib;
+    if (not XGetWindowAttributes(QX11Info::display(), children[i], &attr)) {
+        qDebug() << Q_FUNC_INFO << "Failed to get window attribute";
+    }
+        //if (attr.map_state == IsViewable && children[i] != d->canvasview->winId() && attr.width > 1 &&
+         //attr.height > 1) {
+            //addWindow(children[i]);
+        //}
 
     }
     XFree (children);
