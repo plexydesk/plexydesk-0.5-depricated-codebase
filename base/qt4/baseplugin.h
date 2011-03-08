@@ -6,6 +6,7 @@
 #include <QCoreApplication>
 #include <QObject>
 #include <QString>
+#include <QSettings>
 
 
 namespace PlexyDesk
@@ -22,6 +23,11 @@ namespace PlexyDesk
         QString applicationDirPath() const
         {
             return QString(PLEXPREFIX);
+        }
+
+        QHash<QString, QString> metaData() const
+        {
+
         }
     };
 } // namespace PlexyDesk

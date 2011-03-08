@@ -42,7 +42,7 @@ namespace PlexyDesk
 
     QStringList SocialDaemon::getPluginsList()
     {
-        return PluginLoader::getInstance()->listPlugins("social");
+        return PluginLoader::getInstance()->listPlugins("Social");
     }
 
     QStringList SocialDaemon::supportedMethods(const QString &pluginName)

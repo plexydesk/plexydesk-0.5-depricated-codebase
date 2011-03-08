@@ -37,6 +37,7 @@ public:
     ~Private() {}
     Interface groups;
     QString prefix;
+    QHash<QString, QStringList> mDict;
 };
 
 PluginLoader::PluginLoader(): d(new Private)
@@ -60,7 +61,7 @@ PluginLoader* PluginLoader::getInstance()
 
 QStringList PluginLoader::listPlugins(const QString& types)
 {
-    return d->groups.keys();
+    return d->mDict[types];
 }
 
 BasePlugin *PluginLoader::instance(const QString& name)
@@ -89,6 +90,19 @@ void PluginLoader::load(const QString & interface, const QString & pluginName)
         Iface = qobject_cast<AbstractPluginInterface*> (plugin);
         d->groups[pluginName] = Iface;
         qDebug() << "PluginLoader::load" << "Loading.." << Iface << pluginName << endl;
+
+        const QStringList dictKeys = d->mDict.keys();
+        if (!dictKeys.contains(interface)) {
+            QStringList list;
+            list << pluginName;
+            d->mDict[interface] = list;
+        } else {
+            QStringList list;
+            list = d->mDict[interface];
+            list << pluginName;
+            d->mDict[interface] = list;
+        }
+
     } else {
         qDebug() << loader.errorString() << endl;;
     }
