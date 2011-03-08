@@ -94,6 +94,8 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/3rdparty/webitem/lib/
     ${CMAKE_BINARY_DIR}/social/
     ${CMAKE_SOURCE_DIR}/social/
+    ${CMAKE_SOURCE_DIR}/social/libs/service/
+    ${CMAKE_BINARY_DIR}/social/libs/service/
     ${QT_INCLUDE_DIR}
 )
 
@@ -141,7 +143,8 @@ ADD_SUBDIRECTORY(extensions/data/rest/)
 ADD_SUBDIRECTORY(extensions/widgets/twit/)
 
 #facebook
-
+ADD_SUBDIRECTORY(social)
+ADD_SUBDIRECTORY(social/libs/service)
 ADD_SUBDIRECTORY(extensions/facebook/authwin)
 ADD_SUBDIRECTORY(extensions/facebook/welcome)
 
