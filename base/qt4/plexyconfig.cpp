@@ -25,9 +25,9 @@
 
 namespace PlexyDesk
 {
-Config * Config::config = 0;
+Config *Config::config = 0;
 
-Config * Config::getInstance()
+Config *Config::getInstance()
 {
     if (config == 0) {
         config =  new Config("plexydesk", "plexydesktop");
@@ -97,14 +97,14 @@ void Config::writeToFile()
     sync();
 }
 
-void Config::setWallpaper(const QString& str)
+void Config::setWallpaper(const QString &str)
 {
     CurrentWallpaper = str;
     setValue("CurrentWallpaper", CurrentWallpaper);
     emit configChanged();
 }
 
-void Config::addWidget(const QString& widget)
+void Config::addWidget(const QString &widget)
 {
     //TODO: Check if this is a valid widgetname
     widgetList.append(widget);

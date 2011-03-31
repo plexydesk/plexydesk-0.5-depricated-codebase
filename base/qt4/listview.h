@@ -11,14 +11,13 @@ namespace PlexyDesk
 
 class ListItem
 {
-
-public:
-    ListItem() {}
-    virtual ~ListItem() {}
-    QString title;
-    QString link;
-    QString desc;
-    QString thumb;
+    public:
+        ListItem() {}
+        virtual ~ListItem() {}
+        QString title;
+        QString link;
+        QString desc;
+        QString thumb;
 };
 
 class PLEXYDESK_EXPORT ListView : public DesktopWidget
@@ -34,14 +33,13 @@ public:
     virtual void paintExtDockFace(QPainter *painter, 
             const QStyleOptionGraphicsItem *item, 
             QWidget *widget);
-    virtual void wheelEvent(QGraphicsSceneWheelEvent* event);
+    virtual void wheelEvent(QGraphicsSceneWheelEvent *event);
     virtual void insert(ListItem *item);
 
 public Q_SLOTS:
     void clear();
 
 private:
-    //  void setPath(QString);
     void drawWidget();;
     class Private;
     Private *const d;

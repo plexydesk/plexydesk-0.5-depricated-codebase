@@ -4,7 +4,7 @@
 namespace PlexyDesk
 {
 
-ImageCache * ImageCache::staticObject = NULL;
+ImageCache *ImageCache::staticObject = NULL;
 
 class ImageCache::Private
 {
@@ -22,7 +22,7 @@ void ImageCache::clear()
     d->map.clear();
 }
 
-ImageCache * ImageCache::instance() {
+ImageCache *ImageCache::instance() {
     if (!staticObject)
         return new ImageCache();
 
@@ -39,7 +39,7 @@ ImageCache::~ImageCache()
     delete d;
 }
 
-void ImageCache::load(const QString& themename)
+void ImageCache::load(const QString &themename)
 {
     QString prefix("");
 #ifdef Q_WS_WIN
@@ -59,12 +59,12 @@ void ImageCache::load(const QString& themename)
     }
 }
 
-QPixmap ImageCache::get(const QString& name)
+QPixmap ImageCache::get(const QString &name)
 {
     return d->map[name];
 }
 
-bool ImageCache::drawSvg(QPainter* p, QRectF rect, const QString& file)
+bool ImageCache::drawSvg(QPainter *p, QRectF rect, const QString &file)
 {
     QString svgFile = d->fileHash[file];
     qDebug() << Q_FUNC_INFO << svgFile;

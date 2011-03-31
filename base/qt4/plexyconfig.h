@@ -21,7 +21,6 @@
 #define PLEXY_CONIFG_LINUX_QT_H
 
 #include <plexy.h>
-
 #include <QNetworkProxy>
 #include <QSettings>
 #include <QStringList>
@@ -32,7 +31,7 @@ namespace PlexyDesk
     {
        Q_OBJECT
     public:
-        static Config*  getInstance();
+        static Config *getInstance();
         void read();
         void writeToFile();
 
@@ -50,23 +49,18 @@ namespace PlexyDesk
         QString iconTheme;
 
      public Q_SLOTS:
-        void setWallpaper(const QString& str);
-        void addWidget(const QString& widget);
+        void setWallpaper(const QString &str);
+        void addWidget(const QString &widget);
 
     Q_SIGNALS:
         void configChanged();
         void widgetAdded();
     private:
-        Config(const QString & organization, const QString & application = QString(), QObject * parent = 0);
+        Config(const QString &organization, const QString &application = QString(), QObject *parent = 0);
         static Config * config;
-
-        Config() 
-        {
-            read();
-        }
-
-       Config(Config &) {}
-       Config& operator=(const Config&);
-};
+        Config() { read();}
+        Config(Config &) {}
+        Config& operator=(const Config&);
+    };
 } // namespace PlexyDesk
 #endif

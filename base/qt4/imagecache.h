@@ -12,19 +12,19 @@ class PLEXYDESK_EXPORT ImageCache : public QObject
 {
     Q_OBJECT
 public:
-    virtual ~ImageCache ();
-    void load(const QString& themename);
-    QPixmap get(const QString& name);
+    virtual ~ImageCache();
+    void load(const QString &themename);
+    QPixmap get(const QString &name);
     static ImageCache *instance();
     void clear();
     bool drawSvg(QPainter *painter,
             QRectF rect, const QString &str);
 
 private:
-    ImageCache () ;
+    ImageCache() ;
     class Private;
     Private * const d ;
-    static ImageCache * staticObject;
+    static ImageCache *staticObject;
 };
 }
 
