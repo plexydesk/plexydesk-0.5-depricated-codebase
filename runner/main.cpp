@@ -83,5 +83,9 @@ int main( int argc, char ** argv )
         view->addExtension(str);
     }
 
+    /* load the panel : do it as a new process later */
+    PlexyPanel *panel = new PlexyPanel();
+    panel->show();
+
     return app.exec();
 }
