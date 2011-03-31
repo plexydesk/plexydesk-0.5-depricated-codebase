@@ -45,19 +45,14 @@ class  DesktopView::Private
 public:
     Private() {}
     ~Private() {}
-    AbstractPluginInterface * bIface ;
-    BackdropPlugin * bgPlugin;
-    WidgetPlugin * widgets;
+    AbstractPluginInterface *bIface ;
+    BackdropPlugin *bgPlugin;
     QGraphicsGridLayout * gridLayout;
     ViewLayer *  layer;
     float row;
     float column;
     float margin;
     bool openglOn;
-    QList<Icon*> icons;
-    IconProviderPtr iconprovider;
-    QFutureWatcher<Icon*> *iconWatcher;
-    QPlexyMime *mime;
 };
 
 bool getLessThanWidget(const QGraphicsItem* it1, const QGraphicsItem* it2)
@@ -79,17 +74,12 @@ DesktopView::DesktopView(QGraphicsScene * scene, QWidget * parent):QGraphicsView
     d->openglOn = false;
 
     /* init */
-    d->mime = new QPlexyMime(this);
     d->bgPlugin  = static_cast<BackdropPlugin*>(PluginLoader::getInstance()->instance("classicbackdrop"));
-    d->widgets = 0;
     d->gridLayout = new QGraphicsGridLayout();
     d->row=d->column = 0.0;
     d->margin = 10.0;
     d->layer = new ViewLayer();
-    d->iconprovider = IconProviderPtr(new IconProvider, &QObject::deleteLater);
-    d->iconWatcher = new QFutureWatcher<Icon*>(this);
 
-    QTimer::singleShot(100, this, SLOT(loadIcons()));
     connect(Config::getInstance(), SIGNAL(configChanged()), this, SLOT(backgroundChanged()));
     connect(Config::getInstance(), SIGNAL(widgetAdded()), this, SLOT(onNewWidget()));
 }
@@ -113,8 +103,6 @@ void DesktopView::enableOpenGL(bool state)
 }
 DesktopView::~DesktopView()
 {
-    d->iconWatcher->cancel();
-    d->iconWatcher->waitForFinished();
     delete d;
 }
 
@@ -148,9 +136,9 @@ take care of the loading the widget plugin name is correct
 
 void DesktopView::addExtension(const QString& name)
 {
-    d->widgets = static_cast<WidgetPlugin*>(PluginLoader::getInstance()->instance(name));
-    if (d->widgets) {
-        DesktopWidget * widget = (DesktopWidget*) d->widgets->item();
+    WidgetPlugin *provider = static_cast<WidgetPlugin*>(PluginLoader::getInstance()->instance(name));
+    if (provider) {
+        DesktopWidget * widget = (DesktopWidget*) provider->item();
         if (widget) {
             widget->configState(DesktopWidget::DOCK);
             scene()->addItem(widget);
@@ -159,22 +147,21 @@ void DesktopView::addExtension(const QString& name)
             d->layer->addItem("Widgets",widget);
         }
     }
-
+    delete provider;
 }
 
 void DesktopView::addCoreExtension(const QString& name)
 {
-
-    d->widgets = static_cast<WidgetPlugin*>(PluginLoader::getInstance()->instance(name));
-    if (d->widgets) {
-        QGraphicsRectItem  * widget = (QGraphicsRectItem*) d->widgets->item();
+   WidgetPlugin *provider = static_cast<WidgetPlugin*>(PluginLoader::getInstance()->instance(name));
+    if (provider) {
+        QGraphicsRectItem  *widget = (QGraphicsRectItem*) provider->item();
         if (widget) {
             scene()->addItem(widget);
             widget->setPos(d->row,d->column);
             d->row += widget->boundingRect().width();
         }
     }
-
+    delete provider;
 }
 /*
 //small speed up , try if the speed is too low
@@ -229,81 +216,6 @@ void DesktopView::setTopMostWidget(const QPoint &pt)
 
     clickedItem->update();
 }
-
-void DesktopView::loadIcons()
-{
-    qDebug()<< Q_FUNC_INFO << "Loading Icons";
-    QDir desktop(QDir::homePath()+"/Desktop");
-    desktop.setFilter(QDir::Files | QDir::NoDotAndDotDot);
-    desktop.setSorting(QDir::Size | QDir::Reversed);
-    QFileInfoList list = desktop.entryInfoList();
-
-
-    for (int i = 0; i < list.size(); i++) {
-        QFileInfo fileInfo = list.at(i);
-        QPixmap iconpixmap (DesktopWidget::applicationDirPath() +
-                            "/share/plexy/skins/widgets/widget01/Icon.png");
-        //TODO
-        //Shared pointer please
-
-        Icon * icon = new Icon(d->iconprovider, d->mime, QRect(0,0,iconpixmap.width(),iconpixmap.height()));
-        connect(icon, SIGNAL(iconLoaded()), this, SLOT(iconLoaded()));
-        icon->setContent(fileInfo.absoluteFilePath());
-        d->icons.append(icon);
-    }
-
-    if(d->icons.isEmpty())
-        return;
-
-    Icon *icon = d->icons.first();
-    connect(d->mime, SIGNAL(fromFileNameMime(const MimePairType)), icon, SLOT(fromFileNameMime(const MimePairType)));
-    connect(d->mime, SIGNAL(genericIconNameMime(const MimePairType)), icon, SLOT(genericIconNameMime(const MimePairType)));
-    icon->loadContent();
-}
-
-void DesktopView::iconLoaded()
-{
-    Icon *icon = qobject_cast<Icon*>(sender());
-
-    if (icon->isValid()) {
-        scene()->addItem(icon);
-        icon->setPos(d->row,d->column);
-        icon->show();
-    } else {
-        int index = d->icons.indexOf(icon);
-        if(index == -1)
-        {
-            qWarning("Cannot found icon index!");
-            return;
-        }
-        d->icons.removeAt(index);
-    }
-
-    if(d->icons.isEmpty())
-        return;
-
-    icon->disconnect();
-    int index = d->icons.indexOf(icon);
-    index++;
-    if(index > d->icons.size())
-        return;
-
-    Icon *nextIcon = d->icons.value(index);
-    connect(d->mime, SIGNAL(fromFileNameMime(const MimePairType)), nextIcon, SLOT(fromFileNameMime(const MimePairType)));
-    connect(d->mime, SIGNAL(genericIconNameMime(const MimePairType)), nextIcon, SLOT(genericIconNameMime(const MimePairType)));
-    nextIcon->loadContent();
-}
-
-void DesktopView::showIcon(int num)
-{
-    Icon *icon = d->iconWatcher->resultAt(num);
-    if (icon)
-    {
-        scene()->addItem(icon);
-        d->icons.append(icon);
-    }
-}
-
 }
 
 

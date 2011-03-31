@@ -29,30 +29,27 @@ namespace PlexyDesk
     {
         Q_OBJECT
     public:
-        DesktopView(QGraphicsScene * scene = new QGraphicsScene(), QWidget * parent = 0);
+        DesktopView(QGraphicsScene *scene = new QGraphicsScene(), QWidget *parent = 0);
         virtual ~DesktopView();
 
         void addWallpaper(const QString& path);
-        void addRender(QGraphicsScene * scene);
+        void addRender(QGraphicsScene *scene);
         void addExtension(const QString& name);
-        void addCoreExtension(const QString& name);
-        void addDesktopItem(QGraphicsItem * item);
+        void addCoreExtension(const QString &name);
+        void addDesktopItem(QGraphicsItem *item);
         void enableOpenGL(bool);
 
     public slots:
         void backgroundChanged();
         void onNewWidget();
-        void showIcon(int);
-        void loadIcons();
-        void iconLoaded();
 
     protected:
-        void drawBackground(QPainter * painter, const QRectF& rect);
+        void drawBackground(QPainter *painter, const QRectF &rect);
         void mousePressEvent(QMouseEvent *event);
 
     private:
         class Private;
-        Private * const d;
+        Private *const d;
         void setTopMostWidget(const QPoint &pt);
     };
 }
