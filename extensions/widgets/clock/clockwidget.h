@@ -36,6 +36,7 @@ public:
     virtual ~ClockWidget();
     virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem * e, QWidget *);
     void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
+    void paintExtBackFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
     void setPath(QString);
     void drawClockWidget();
 public slots:

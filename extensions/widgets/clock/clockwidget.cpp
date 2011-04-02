@@ -28,6 +28,7 @@
 #include <QTimer>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
+#include <QDateTime>
 
 namespace PlexyDesk
 {
@@ -179,13 +180,28 @@ void ClockWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e ,
                    date.width(), date.height()), date);
 }
 
-void ClockWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget *)
+void ClockWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem *e , QWidget *)
 {
     p->setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing | QPainter::HighQualityAntialiasing);
 
     p->setPen(QColor(255, 255, 255));
     p->setFont(QFont("Bitstream Charter", 15));
     p->drawText(QRect(8, 5, 64, 64), Qt::AlignCenter , "Clock") ;
+}
+
+void ClockWidget::paintExtBackFace(QPainter *p, const QStyleOptionGraphicsItem *e , QWidget *)
+{
+    p->setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing | QPainter::HighQualityAntialiasing);
+
+    p->setPen(QColor(255, 255, 255));
+    p->setFont(QFont("Bitstream Charter", 15));
+    p->drawText(QRect(20, 25, 160, 160), Qt::AlignTop,
+            QDateTime::currentDateTime().toString(QLatin1String("MMMM dd yyyy")));
+
+    p->setPen(QColor(255, 203, 255));
+    p->setFont(QFont("Bitstream Charter", 20));
+    p->drawText(QRect(20, 80, 160, 160), Qt::AlignCenter ,
+            QString("%1").arg(QDateTime::currentDateTime().toString(QLatin1String("h:m:s"))));
 }
 
 } // namespace PlexyDesk
