@@ -24,8 +24,8 @@
 #include <backdropplugin.h>
 #include <widgetplugin.h>
 #include <viewlayer.h>
-#include <icon.h>
-#include <iconprovider.h>
+#include "icon.h"
+#include "iconprovider.h"
 #include <qplexymime.h>
 
 #include <QGLWidget>

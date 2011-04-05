@@ -41,9 +41,9 @@ ADD_EXECUTABLE(socialplexydaemon ${sourceFiles} ${QT_MOC_SRCS})
 #KDE4_ADD_PLUGIN(plexydesk ${raptor_plasmoid_PART_SRCS})
 
 TARGET_LINK_LIBRARIES(
-	socialplexydaemon 
-	plexydeskcore
-	${libs}
+   socialplexydaemon
+   plexydeskcore
+   ${libs}
 )
 include(PkgConfigGetVar)
 dbus_add_activation_service(org.plexydesk.social.service.in)

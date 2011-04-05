@@ -9,7 +9,7 @@ INCLUDE_DIRECTORIES(
 )
 
 
-SET(sourceFiles icon.cpp
+SET(sourceFiles
    abstractplugininterface.cpp
    backdropinterface.cpp
    canvas.cpp
@@ -21,9 +21,7 @@ SET(sourceFiles icon.cpp
    plexyconfig.cpp
    pluginloader.cpp
    viewlayer.cpp
-   iconprovider.cpp
    pendingjob.cpp
-   iconjob.cpp
    listview.cpp
    imagecache.cpp
    httpjobhandler.cpp
@@ -49,10 +47,7 @@ SET(headerFiles
    viewlayer.h
    widgetinterface.h
    widgetplugin.h
-   icon.h
-   iconprovider.h
    pendingjob.h
-   iconjob.h
    listview.h
    imagecache.h
    httpjobhandler.h
@@ -72,10 +67,7 @@ SET(QTMOC_SRCS
    viewlayer.h
    widgetplugin.h
    widgetinterface.h
-   icon.h
-   iconprovider.h
    pendingjob.h
-   iconjob.h
    listview.h
    imagecache.h
    httpjobhandler.h
@@ -114,7 +106,6 @@ ADD_LIBRARY(plexydeskcore SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
     plexydeskcore
-    qimageblitz
     plexymime
     ${libs}
 )
