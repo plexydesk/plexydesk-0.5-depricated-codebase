@@ -1,0 +1,619 @@
+From 52f8f0c3fd092532597953f1f379fb28f05a208e Mon Sep 17 00:00:00 2001
+From: varuna <vrlekamwasam@gmail.com>
+Date: Mon, 5 Oct 2009 20:46:31 +0530
+Subject: [PATCH] The patch after the header creation
+
+---
+ .../widgets/weatherplugin/weatherinterface.h       |   40 ++++---
+ .../widgets/weatherplugin/weatherinterface.h.orig  |   41 ++++++
+ extensions/widgets/weatherplugin/weatherplugin.cpp |   69 ++++++-----
+ .../widgets/weatherplugin/weatherplugin.cpp.orig   |  134 ++++++++++++++++++++
+ extensions/widgets/weatherplugin/weatherplugin.h   |   39 ++++--
+ .../widgets/weatherplugin/weatherplugin.h.orig     |   74 +++++++++++
+ .../weatherplugin/weatherplugininterface.cpp       |   20 +++
+ .../widgets/weatherplugin/weatherplugininterface.h |   26 ++++-
+ .../weatherplugin/weatherplugininterface.h.orig    |   33 +++++
+ 9 files changed, 415 insertions(+), 61 deletions(-)
+ create mode 100644 extensions/widgets/weatherplugin/weatherinterface.h.orig
+ create mode 100644 extensions/widgets/weatherplugin/weatherplugin.cpp.orig
+ create mode 100644 extensions/widgets/weatherplugin/weatherplugin.h.orig
+ create mode 100644 extensions/widgets/weatherplugin/weatherplugininterface.h.orig
+
+diff --git a/extensions/widgets/weatherplugin/weatherinterface.h b/extensions/widgets/weatherplugin/weatherinterface.h
+index f0a69c2..b0b471b 100644
+--- a/extensions/widgets/weatherplugin/weatherinterface.h
++++ b/extensions/widgets/weatherplugin/weatherinterface.h
+@@ -1,13 +1,23 @@
++/*******************************************************************************
++* This file is part of PlexyDesk.
++*  Maintained by : Siraj Razick <siraj@kde.org>
++*  Authored By  : Sri Lanka Institute of Information Technology
++*
++*  PlexyDesk is free software: you can redistribute it and/or modify
++*  it under the terms of the GNU Lesser General Public License as published by
++*  the Free Software Foundation, either version 3 of the License, or
++*  (at your option) any later version.
++*
++*  PlexyDesk is distributed in the hope that it will be useful,
++*  but WITHOUT ANY WARRANTY; without even the implied warranty of
++*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++*  GNU Lesser General Public License for more details.
++*
++*  You should have received a copy of the GNU General Public License
++*  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
++*******************************************************************************/
++
++
+ #ifndef WEATHERINTERFACE_H
+ #define WEATHERINTERFACE_H
+ 
+@@ -17,11 +27,11 @@
+ class WeatherInterface
+ {
+ 
+-    public:
+-       virtual ~WeatherInterface(){}
+-       virtual QVariantMap getweather()=0;
+-       virtual QVariantMap data(const QString &methodName, QVariantMap args)=0;
+-       virtual QStringList supportedMethods()=0;
++public:
++    virtual ~WeatherInterface() {}
++    virtual QVariantMap getweather()=0;
++    virtual QVariantMap data(const QString &methodName, QVariantMap args)=0;
++    virtual QStringList supportedMethods()=0;
+ 
+ };
+ 
+diff --git a/extensions/widgets/weatherplugin/weatherinterface.h.orig b/extensions/widgets/weatherplugin/weatherinterface.h.orig
+new file mode 100644
+index 0000000..9848dac
+--- /dev/null
++++ b/extensions/widgets/weatherplugin/weatherinterface.h.orig
+@@ -0,0 +1,41 @@
++/*******************************************************************************
++* This file is part of PlexyDesk.
++*  Maintained by : Siraj Razick <siraj@kde.org>
++*  Authored By  : Sri Lanka Institute of Information Technology
++*
++*  PlexyDesk is free software: you can redistribute it and/or modify
++*  it under the terms of the GNU Lesser General Public License as published by
++*  the Free Software Foundation, either version 3 of the License, or
++*  (at your option) any later version.
++*
++*  PlexyDesk is distributed in the hope that it will be useful,
++*  but WITHOUT ANY WARRANTY; without even the implied warranty of
++*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++*  GNU Lesser General Public License for more details.
++*
++*  You should have received a copy of the GNU General Public License
++*  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
++*******************************************************************************/
++
++ 
++#ifndef WEATHERINTERFACE_H
++#define WEATHERINTERFACE_H
++
++#include <QObject>
++#include <QtPlugin>
++#include <httpjobhandler.h>
++class WeatherInterface
++{
++
++    public:
++       virtual ~WeatherInterface(){}
++       virtual QVariantMap getweather()=0;
++       virtual QVariantMap data(const QString &methodName, QVariantMap args)=0;
++       virtual QStringList supportedMethods()=0;
++
++};
++
++
++
++
++#endif
+diff --git a/extensions/widgets/weatherplugin/weatherplugin.cpp b/extensions/widgets/weatherplugin/weatherplugin.cpp
+index 761fe53..ca0f548 100644
+--- a/extensions/widgets/weatherplugin/weatherplugin.cpp
++++ b/extensions/widgets/weatherplugin/weatherplugin.cpp
+@@ -1,11 +1,22 @@
++/*******************************************************************************
++* This file is part of PlexyDesk.
++*  Maintained by : Siraj Razick <siraj@kde.org>
++*  Authored By  : Sri Lanka Institute of Information Technology
++*
++*  PlexyDesk is free software: you can redistribute it and/or modify
++*  it under the terms of the GNU Lesser General Public License as published by
++*  the Free Software Foundation, either version 3 of the License, or
++*  (at your option) any later version.
++*
++*  PlexyDesk is distributed in the hope that it will be useful,
++*  but WITHOUT ANY WARRANTY; without even the implied warranty of
++*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++*  GNU Lesser General Public License for more details.
++*
++*  You should have received a copy of the GNU General Public License
++*  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
++*******************************************************************************/
++
+ 
+ #include <QXmlQuery>
+ #include "weatherplugin.h"
+@@ -19,9 +30,9 @@ const QUrl WeatherPlugin::WEATHER_FROM_CITYCODE_URL("http://www.google.com/ig/ap
+ 
+ WeatherPlugin::WeatherPlugin(QObject * parent) : SocialPlugin(parent)
+ {
+-   
+-     job = new HttpJobHandler(this);
+-     connect(job,SIGNAL(finished()),this,SLOT(listen()));
++
++    job = new HttpJobHandler(this);
++    connect(job,SIGNAL(finished()),this,SLOT(listen()));
+ }
+ 
+ 
+@@ -30,7 +41,7 @@ void WeatherPlugin::listen()
+ {
+     if (job->isError())
+     {
+-        weatherError = job->errorName();       
++        weatherError = job->errorName();
+     }
+     else
+     {
+@@ -39,7 +50,7 @@ void WeatherPlugin::listen()
+ }
+ void WeatherPlugin::getXml(const QUrl &url)
+ {
+-     job->getFile(url);
++    job->getFile(url);
+ 
+ }
+ 
+@@ -50,7 +61,7 @@ QVariantMap WeatherPlugin::getweather()
+     qDebug()<<"WeatherPlugin::getweather() success!!!";
+     getXml(WEATHER_FROM_CITYCODE_URL);
+     QBuffer buffer;
+-    while(weatherXml.size() == 0){
++    while (weatherXml.size() == 0) {
+         QTest::qWait(1000);
+     }
+ 
+@@ -76,23 +87,23 @@ QVariantMap WeatherPlugin::getweather()
+     qDebug()<< "query to get current weather status condition " <<query.evaluateTo(&currentUrl);
+ 
+     weatherXml.clear();
+-    
+-    
++
++
+ //20191003
+ 
+-        QVariantMap result;
++    QVariantMap result;
++
++    result["temp"] = QVariant(temp);
++    result["humidity"] = QVariant(humidity);
++    result["wind"] = QVariant(windspeed);
++    result["current"] = QVariant(currentUrl);
++    /*
++            QList<QVariant> list;
++            list << QVariant(temp);
++            list << QVariant(rain);
++            list << QVariant(windspeed);
++            result = QVariant(list);*/
+ 
+-	result["temp"] = QVariant(temp);
+-	result["humidity"] = QVariant(humidity);
+-	result["wind"] = QVariant(windspeed);
+-        result["current"] = QVariant(currentUrl);  
+-/*
+-        QList<QVariant> list;
+-        list << QVariant(temp);
+-        list << QVariant(rain);
+-        list << QVariant(windspeed);       
+-        result = QVariant(list);*/
+-    
+ 
+     return result;
+ }
+@@ -103,7 +114,7 @@ QVariantMap WeatherPlugin::getweather()
+ QVariantMap WeatherPlugin::data(const QString &methodName, QVariantMap args)
+ {
+     QVariantMap sendData;
+-    if("getweather" == "getweather"){
++    if ("getweather" == "getweather") {
+         sendData = this->getweather();
+ 
+ 
+diff --git a/extensions/widgets/weatherplugin/weatherplugin.cpp.orig b/extensions/widgets/weatherplugin/weatherplugin.cpp.orig
+new file mode 100644
+index 0000000..87968cf
+--- /dev/null
++++ b/extensions/widgets/weatherplugin/weatherplugin.cpp.orig
+@@ -0,0 +1,134 @@
++/*******************************************************************************
++* This file is part of PlexyDesk.
++*  Maintained by : Siraj Razick <siraj@kde.org>
++*  Authored By  : Sri Lanka Institute of Information Technology
++*
++*  PlexyDesk is free software: you can redistribute it and/or modify
++*  it under the terms of the GNU Lesser General Public License as published by
++*  the Free Software Foundation, either version 3 of the License, or
++*  (at your option) any later version.
++*
++*  PlexyDesk is distributed in the hope that it will be useful,
++*  but WITHOUT ANY WARRANTY; without even the implied warranty of
++*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++*  GNU Lesser General Public License for more details.
++*
++*  You should have received a copy of the GNU General Public License
++*  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
++*******************************************************************************/
++
++
++#include <QXmlQuery>
++#include "weatherplugin.h"
++#include <QBuffer>
++#include <QTest>
++#include <QDebug>
++using namespace PlexyDesk;
++
++const QUrl WeatherPlugin::WEATHER_FROM_CITYCODE_URL("http://www.google.com/ig/api?weather=colombo");
++//const QUrl WeatherPlugin::WEATHER_FROM_CITYCODE_URL("http://A5586308892.api.wxbug.net/getLiveCompactWeatherRSS.aspx?ACode=A5586308892&cityCode=69683&UnitType=&OutputType=xml");
++
++WeatherPlugin::WeatherPlugin(QObject * parent) : SocialPlugin(parent)
++{
++   
++     job = new HttpJobHandler(this);
++     connect(job,SIGNAL(finished()),this,SLOT(listen()));
++}
++
++
++
++void WeatherPlugin::listen()
++{
++    if (job->isError())
++    {
++        weatherError = job->errorName();       
++    }
++    else
++    {
++        weatherXml = job->readData();
++    }
++}
++void WeatherPlugin::getXml(const QUrl &url)
++{
++     job->getFile(url);
++
++}
++
++//14391003
++
++QVariantMap WeatherPlugin::getweather()
++{
++    qDebug()<<"WeatherPlugin::getweather() success!!!";
++    getXml(WEATHER_FROM_CITYCODE_URL);
++    QBuffer buffer;
++    while(weatherXml.size() == 0){
++        QTest::qWait(1000);
++    }
++
++    buffer.setBuffer(&weatherXml);
++    buffer.open(QIODevice::ReadOnly);
++
++    QXmlQuery query;
++    query.setFocus(&buffer);
++
++    QStringList temp,humidity,windspeed,currentUrl;
++    QString tweetOut;
++    query.setQuery("for $x in //xml_api_reply/weather/current_conditions  return string($x /temp_c/@data)");
++    //query.setQuery("for $x in //current_conditions return string{data($x/temp_c)}");
++    qDebug() << "query to get temperature" <<query.evaluateTo(&temp);
++    qDebug()<<temp;
++    query.setQuery("for $x in //xml_api_reply/weather/current_conditions  return string($x /humidity/@data)");
++    qDebug() << "query to get humidity volume" <<query.evaluateTo(&humidity);
++
++    query.setQuery("for $x in //xml_api_reply/weather/current_conditions  return string($x /wind_condition/@data)");
++    qDebug() << "query to get condition of wind" <<query.evaluateTo(&windspeed);
++
++    query.setQuery("for $x in //xml_api_reply/weather/current_conditions  return string($x /condition/@data)");
++    qDebug()<< "query to get current weather status condition " <<query.evaluateTo(&currentUrl);
++
++    weatherXml.clear();
++    
++    
++//20191003
++
++        QVariantMap result;
++
++	result["temp"] = QVariant(temp);
++	result["humidity"] = QVariant(humidity);
++	result["wind"] = QVariant(windspeed);
++        result["current"] = QVariant(currentUrl);  
++/*
++        QList<QVariant> list;
++        list << QVariant(temp);
++        list << QVariant(rain);
++        list << QVariant(windspeed);       
++        result = QVariant(list);*/
++    
++
++    return result;
++}
++
++//20251003
++
++
++QVariantMap WeatherPlugin::data(const QString &methodName, QVariantMap args)
++{
++    QVariantMap sendData;
++    if("getweather" == "getweather"){
++        sendData = this->getweather();
++
++
++        return sendData;
++
++    }
++    else
++        return sendData;
++}
++
++QStringList WeatherPlugin::supportedMethods()
++{
++    qDebug()<<"WeatherPlugin::supportedMethods() called";
++    QStringList list;
++    list <<"getweather";
++    return list;
++}
+diff --git a/extensions/widgets/weatherplugin/weatherplugin.h b/extensions/widgets/weatherplugin/weatherplugin.h
+index 00a614e..d20c48c 100644
+--- a/extensions/widgets/weatherplugin/weatherplugin.h
++++ b/extensions/widgets/weatherplugin/weatherplugin.h
+@@ -1,11 +1,22 @@
++/*******************************************************************************
++* This file is part of PlexyDesk.
++*  Maintained by : Siraj Razick <siraj@kde.org>
++*  Authored By  : Sri Lanka Institute of Information Technology
++*
++*  PlexyDesk is free software: you can redistribute it and/or modify
++*  it under the terms of the GNU Lesser General Public License as published by
++*  the Free Software Foundation, either version 3 of the License, or
++*  (at your option) any later version.
++*
++*  PlexyDesk is distributed in the hope that it will be useful,
++*  but WITHOUT ANY WARRANTY; without even the implied warranty of
++*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++*  GNU Lesser General Public License for more details.
++*
++*  You should have received a copy of the GNU General Public License
++*  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
++*******************************************************************************/
++
+ 
+ 
+ #ifndef WEATHERPLUGIN_H
+@@ -28,21 +39,21 @@ class WeatherPlugin : public PlexyDesk::SocialPlugin, WeatherInterface
+ {
+ 
+     Q_OBJECT;
+- private:
++private:
+     QString weatherData;
+     PlexyDesk::HttpJobHandler *job;
+     QByteArray weatherXml;
+     QString weatherError;
+ 
+-    
++
+     bool readyToBeRead;
+ 
+-     void getXml(const QUrl &url);
+-    
++    void getXml(const QUrl &url);
++
+ 
+ 
+ 
+- public:
++public:
+     WeatherPlugin(QObject *parent=0);
+ 
+ 
+@@ -50,7 +61,7 @@ class WeatherPlugin : public PlexyDesk::SocialPlugin, WeatherInterface
+ 
+ 
+ 
+-  public slots:
++public slots:
+     QVariantMap getweather();
+     QStringList supportedMethods();
+     QVariantMap data(const QString &methodName, QVariantMap args);
+diff --git a/extensions/widgets/weatherplugin/weatherplugin.h.orig b/extensions/widgets/weatherplugin/weatherplugin.h.orig
+new file mode 100644
+index 0000000..7829691
+--- /dev/null
++++ b/extensions/widgets/weatherplugin/weatherplugin.h.orig
+@@ -0,0 +1,74 @@
++/*******************************************************************************
++* This file is part of PlexyDesk.
++*  Maintained by : Siraj Razick <siraj@kde.org>
++*  Authored By  : Sri Lanka Institute of Information Technology
++*
++*  PlexyDesk is free software: you can redistribute it and/or modify
++*  it under the terms of the GNU Lesser General Public License as published by
++*  the Free Software Foundation, either version 3 of the License, or
++*  (at your option) any later version.
++*
++*  PlexyDesk is distributed in the hope that it will be useful,
++*  but WITHOUT ANY WARRANTY; without even the implied warranty of
++*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++*  GNU Lesser General Public License for more details.
++*
++*  You should have received a copy of the GNU General Public License
++*  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
++*******************************************************************************/
++
++
++
++#ifndef WEATHERPLUGIN_H
++#define WEATHERPLUGIN_H
++
++#include <QObject>
++#include <QString>
++#include <QUrl>
++//#include <QNetworkReply>
++//#include "pendingjob.h"
++#include <httpjobhandler.h>
++#include <baseplugin.h>
++#include <abstractplugininterface.h>
++#include "weatherinterface.h"
++#include <socialplugin.h>
++//#include <QtXmlPatterns>
++
++
++class WeatherPlugin : public PlexyDesk::SocialPlugin, WeatherInterface
++{
++
++    Q_OBJECT;
++ private:
++    QString weatherData;
++    PlexyDesk::HttpJobHandler *job;
++    QByteArray weatherXml;
++    QString weatherError;
++
++    
++    bool readyToBeRead;
++
++     void getXml(const QUrl &url);
++    
++
++
++
++ public:
++    WeatherPlugin(QObject *parent=0);
++
++
++    static const QUrl WEATHER_FROM_CITYCODE_URL;
++
++
++
++  public slots:
++    QVariantMap getweather();
++    QStringList supportedMethods();
++    QVariantMap data(const QString &methodName, QVariantMap args);
++
++private slots:
++    void listen();
++
++};
++
++#endif
+diff --git a/extensions/widgets/weatherplugin/weatherplugininterface.cpp b/extensions/widgets/weatherplugin/weatherplugininterface.cpp
+index acea0c8..c87ae89 100644
+--- a/extensions/widgets/weatherplugin/weatherplugininterface.cpp
++++ b/extensions/widgets/weatherplugin/weatherplugininterface.cpp
+@@ -1,3 +1,23 @@
++/*******************************************************************************
++* This file is part of PlexyDesk.
++*  Maintained by : Siraj Razick <siraj@kde.org>
++*  Authored By  : Sri Lanka Institute of Information Technology
++*
++*  PlexyDesk is free software: you can redistribute it and/or modify
++*  it under the terms of the GNU Lesser General Public License as published by
++*  the Free Software Foundation, either version 3 of the License, or
++*  (at your option) any later version.
++*
++*  PlexyDesk is distributed in the hope that it will be useful,
++*  but WITHOUT ANY WARRANTY; without even the implied warranty of
++*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++*  GNU Lesser General Public License for more details.
++*
++*  You should have received a copy of the GNU General Public License
++*  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
++*******************************************************************************/
++
++
+ #include "weatherplugininterface.h"
+ #include <QtPlugin>
+ #include <pluginloader.h>
+diff --git a/extensions/widgets/weatherplugin/weatherplugininterface.h b/extensions/widgets/weatherplugin/weatherplugininterface.h
+index 9731bda..9d72935 100644
+--- a/extensions/widgets/weatherplugin/weatherplugininterface.h
++++ b/extensions/widgets/weatherplugin/weatherplugininterface.h
+@@ -1,3 +1,23 @@
++/*******************************************************************************
++* This file is part of PlexyDesk.
++*  Maintained by : Siraj Razick <siraj@kde.org>
++*  Authored By  : Sri Lanka Institute of Information Technology
++*
++*  PlexyDesk is free software: you can redistribute it and/or modify
++*  it under the terms of the GNU Lesser General Public License as published by
++*  the Free Software Foundation, either version 3 of the License, or
++*  (at your option) any later version.
++*
++*  PlexyDesk is distributed in the hope that it will be useful,
++*  but WITHOUT ANY WARRANTY; without even the implied warranty of
++*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++*  GNU Lesser General Public License for more details.
++*
++*  You should have received a copy of the GNU General Public License
++*  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
++*******************************************************************************/
++
++
+ #include <QObject>
+ #include <abstractplugininterface.h>
+ 
+@@ -7,7 +27,7 @@ class WeatherPluginInterface : public PlexyDesk::AbstractPluginInterface
+     Q_OBJECT
+     Q_INTERFACES(PlexyDesk::AbstractPluginInterface);
+ 
+-    public :
+-        WeatherPluginInterface(QObject *parent=0);
+-        PlexyDesk::BasePlugin* instance();
++public :
++    WeatherPluginInterface(QObject *parent=0);
++    PlexyDesk::BasePlugin* instance();
+ };
+diff --git a/extensions/widgets/weatherplugin/weatherplugininterface.h.orig b/extensions/widgets/weatherplugin/weatherplugininterface.h.orig
+new file mode 100644
+index 0000000..eb28aab
+--- /dev/null
++++ b/extensions/widgets/weatherplugin/weatherplugininterface.h.orig
+@@ -0,0 +1,33 @@
++/*******************************************************************************
++* This file is part of PlexyDesk.
++*  Maintained by : Siraj Razick <siraj@kde.org>
++*  Authored By  : Sri Lanka Institute of Information Technology
++*
++*  PlexyDesk is free software: you can redistribute it and/or modify
++*  it under the terms of the GNU Lesser General Public License as published by
++*  the Free Software Foundation, either version 3 of the License, or
++*  (at your option) any later version.
++*
++*  PlexyDesk is distributed in the hope that it will be useful,
++*  but WITHOUT ANY WARRANTY; without even the implied warranty of
++*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++*  GNU Lesser General Public License for more details.
++*
++*  You should have received a copy of the GNU General Public License
++*  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
++*******************************************************************************/
++
++
++#include <QObject>
++#include <abstractplugininterface.h>
++
++
++class WeatherPluginInterface : public PlexyDesk::AbstractPluginInterface
++{
++    Q_OBJECT
++    Q_INTERFACES(PlexyDesk::AbstractPluginInterface);
++
++    public :
++        WeatherPluginInterface(QObject *parent=0);
++        PlexyDesk::BasePlugin* instance();
++};
+-- 
+1.6.0.4
+
