@@ -143,7 +143,6 @@ ADD_SUBDIRECTORY(extensions/data/rest/)
 ADD_SUBDIRECTORY(extensions/widgets/twit/)
 
 #facebook
-ADD_SUBDIRECTORY(social)
 ADD_SUBDIRECTORY(social/libs/service)
 ADD_SUBDIRECTORY(extensions/facebook/authwin)
 ADD_SUBDIRECTORY(extensions/facebook/welcome)
