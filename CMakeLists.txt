@@ -6,6 +6,7 @@ SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmakemodules)
 FIND_PACKAGE(Qt4 REQUIRED)
 FIND_PACKAGE(FFMPEG) #optional
 FIND_PACKAGE(OpenCV)
+FIND_PACKAGE(QImageBlitz REQUIRED)
 FIND_PACKAGE(OpenGL REQUIRED)
 cmake_minimum_required(VERSION 2.4)
 
@@ -56,7 +57,9 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/extensions/widgets/clock
     ${CMAKE_BINARY_DIR}/plexylib
     ${CMAKE_BINARY_DIR}/base/qt4
+    ${CMAKE_BINARY_DIR}/runner/
     ${CMAKE_BINARY_DIR}/base/gtk
+    ${QIMAGE_BLITZ_INCLUDE_DIR}
     ${CMAKE_BINARY_DIR}/extensions/backdrop/classicdrop
     ${CMAKE_BINARY_DIR}/extensions/widgets/demowidget
     ${CMAKE_BINARY_DIR}/extensions/widgets/welcome
@@ -78,8 +81,8 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_SOURCE_DIR}/plexylib
     ${CMAKE_SOURCE_DIR}/base/qt4
+    ${CMAKE_SOURCE_DIR}/runner
     ${CMAKE_SOURCE_DIR}/widgets/gtk
-    ${CMAKE_SOURCE_DIR}/3rdparty/qimageblitz/blitz/
     ${CMAKE_SOURCE_DIR}/3rdparty/lqr/
     ${CMAKE_SOURCE_DIR}/3rdparty/mime/
     ${CMAKE_SOURCE_DIR}/3rdparty/qplexymime
@@ -94,10 +97,10 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/3rdparty/webitem/lib/
     ${CMAKE_BINARY_DIR}/social/
     ${CMAKE_SOURCE_DIR}/social/
-    ${CMAKE_SOURCE_DIR}/panel/
-    ${CMAKE_BINARY_DIR}/panel/	
     ${CMAKE_SOURCE_DIR}/social/libs/service/
     ${CMAKE_BINARY_DIR}/social/libs/service/
+    ${CMAKE_BINARY_DIR}/panel/
+    ${CMAKE_SOURCE_DIR}/panel/
     ${QT_INCLUDE_DIR}
 )
 
@@ -108,26 +111,24 @@ ADD_SUBDIRECTORY(extensions/widgets/imagepile)
 ADD_SUBDIRECTORY(data)
 IF (NOT APPLE)
 IF (UNIX)
+ADD_SUBDIRECTORY(panel)
 ADD_SUBDIRECTORY(social)
 ADD_SUBDIRECTORY(social/accountsmanager/)
-ADD_SUBDIRECTORY(panel)
 ENDIF (UNIX)
 ENDIF (NOT APPLE)
 
 #add_subdirectory(extensions/widgets/demowidget)
 ADD_SUBDIRECTORY(plexylib/fbjson)
 ADD_SUBDIRECTORY(runner)
-ADD_SUBDIRECTORY(plexyfrens)
-IF(NOT APPLE)
-ADD_SUBDIRECTORY(plexywm)
-ENDIF(NOT APPLE)
+#IF(NOT APPLE)
+#ADD_SUBDIRECTORY(plexywm)
+#ENDIF(NOT APPLE)
 ADD_SUBDIRECTORY(artwork)
 ADD_SUBDIRECTORY(artwork/plexyfren_theme/default/)
 ADD_SUBDIRECTORY(3rdparty/libmagic)
 ADD_SUBDIRECTORY(3rdparty/mime)
 ADD_SUBDIRECTORY(3rdparty/qplexymime)
 ADD_SUBDIRECTORY(3rdparty/webitem)
-ADD_SUBDIRECTORY(3rdparty/qimageblitz)
 #ADD_SUBDIRECTORY(3rdparty/cair)
 IF(NOT APPLE) 
 IF(FFMPEG_FOUND)
@@ -146,12 +147,11 @@ ADD_SUBDIRECTORY(extensions/data/rest/)
 ADD_SUBDIRECTORY(extensions/widgets/twit/)
 
 #facebook
-ADD_SUBDIRECTORY(panel)
-ADD_SUBDIRECTORY(social)
 ADD_SUBDIRECTORY(social/libs/service)
 ADD_SUBDIRECTORY(extensions/facebook/authwin)
+IF(QIMAGE_BLITZ_FOUND)
 ADD_SUBDIRECTORY(extensions/facebook/welcome)
-
+ENDIF(QIMAGE_BLITZ_FOUND)
 #unported
 #ADD_SUBDIRECTORY(extensions/widgets/friendswidget) // TODO : port this
 #ADD_SUBDIRECTORY(extensions/data/presence) // TODO : port this
