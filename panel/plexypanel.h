@@ -7,7 +7,7 @@ class PlexyPanel : public QWidget
 {
     Q_OBJECT
 public:
-    PlexyPanel(QWidget * parent = 0, Qt::WindowFlags f = 0);
+    PlexyPanel(QWidget *parent = 0, Qt::WindowFlags f = 0);
     virtual ~PlexyPanel();
 
 private slots:
