@@ -21,49 +21,54 @@
 #define PLEXY_CONIFG_LINUX_QT_H
 
 #include <plexy.h>
+
 #include <QNetworkProxy>
 #include <QSettings>
 #include <QStringList>
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT Config : public QSettings
-{
-    Q_OBJECT
-public:
-    static Config *getInstance();
-    void read();
-    void writeToFile();
+    class PLEXYDESK_EXPORT Config : public QSettings
+    {
+       Q_OBJECT
+    public:
+        static Config*  getInstance();
+        void read();
+        void writeToFile();
 
-    QString MyPictures;
-    QString MyMovies;
-    QString CurrentWallpaper;
-    bool m_proxyOn;
-    int m_proxyPort;
-    QNetworkProxy::ProxyType proxyType;
-    QString proxyURL;
-    QString proxyUser;
-    QString proxyPasswd;
-    QStringList widgetList;
-    bool m_collisionOn;
-    QString iconTheme;
+        QString MyPictures ;
+        QString MyMovies;
+        QString CurrentWallpaper;
+        bool m_proxyOn;
+        int m_proxyPort;
+        QNetworkProxy::ProxyType proxyType;
+        QString proxyURL;
+        QString proxyUser;
+        QString proxyPasswd;
+        QStringList widgetList;
+        bool m_collisionOn;
+        QString iconTheme;
+     
+    public Q_SLOTS:
+        void setWallpaper(const QString &str);
+        void addWidget(const QString &widget);
+        void changeLayer();
 
-public Q_SLOTS:
-    void setWallpaper(const QString &str);
-    void addWidget(const QString &widget);
+    Q_SIGNALS:
+        void configChanged();
+        void widgetAdded();
+        void layerChange();
+    private:
+        Config(const QString &organization, const QString &application = QString(), QObject *parent = 0);
+        static Config *config;
 
-Q_SIGNALS:
-    void configChanged();
-    void widgetAdded();
-private:
-    Config(const QString &organization, const QString &application = QString(), QObject *parent = 0);
-    static Config *config;
-    Config() {
-        read();
-    }
-    Config(Config &) {
-    }
-    Config &operator=(const Config &);
+        Config() 
+        {
+            read();
+        }
+
+       Config(Config &) {}
+       Config& operator=(const Config &);
 };
 } // namespace PlexyDesk
 #endif

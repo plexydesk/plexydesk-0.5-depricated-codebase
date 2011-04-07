@@ -11,5 +11,7 @@
     <method name="addWidget">
       <arg name="widget" type="s" direction="in"/>
     </method>
+    <method name="changeLayer">
+    </method>	
   </interface>
 </node>

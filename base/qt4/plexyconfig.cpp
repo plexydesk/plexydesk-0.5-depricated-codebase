@@ -25,12 +25,12 @@
 
 namespace PlexyDesk
 {
-Config *Config::config = 0;
+Config * Config::config = 0;
 
-Config *Config::getInstance()
+Config * Config::getInstance()
 {
     if (config == 0) {
-        config = new Config("plexydesk", "plexydesktop");
+        config =  new Config("plexydesk", "plexydesktop");
         return config;
     } else {
         return config;
@@ -38,7 +38,7 @@ Config *Config::getInstance()
 }
 
 Config::Config(const QString &organization,
-     const QString &application, QObject *parent) :
+        const QString &application, QObject *parent):
     QSettings(organization, application, parent)
 {
     m_proxyOn = false;
@@ -49,7 +49,7 @@ Config::Config(const QString &organization,
     read();
 
     if (value("CurrentWallpaper").toString().isNull()) {
-        CurrentWallpaper = DesktopWidget::applicationDirPath() + "/share/plexy/skins/default/default.png";
+        CurrentWallpaper =  DesktopWidget::applicationDirPath() + "/share/plexy/skins/default/default.png";
     }
 
     if (value("iconTheme").toString().isNull()) {
@@ -76,7 +76,7 @@ void Config::read()
     proxyURL = value("proxyURL").toString();
     proxyUser = value("proxyUser").toString();
     proxyPasswd = value("proxyPasswd").toString();
-    m_proxyPort = value("proxyPort").toInt();
+    m_proxyPort = value("proxyPort").toInt() ;
     CurrentWallpaper = value("CurrentWallpaper").toString();
     widgetList = value("widgetList").toStringList();
     iconTheme = value("iconTheme").toString();
@@ -111,5 +111,11 @@ void Config::addWidget(const QString &widget)
     emit configChanged();
     emit widgetAdded();
     writeToFile();
+}
+
+void Config::changeLayer()
+{
+	qDebug()<<Q_FUNC_INFO;
+	emit layerChange();
 }
 }

@@ -8,7 +8,7 @@
 
 namespace PlexyDesk
 {
-class VISIBLE_SYM ViewLayer : public QObject
+class PLEXYDESK_EXPORT ViewLayer : public  QObject
 {
     Q_OBJECT
 public:
@@ -17,21 +17,26 @@ public:
     virtual ~ViewLayer();
 
     /**\brief Adds a DesktopWid to a given layer
-     * \param layerName is is the layer to add the item to, if the
-     * layer dose not exisit a new layer defined by the layerName is
-     * created.
-     * \param item is the widget we wish to add
-     **/
-    void addItem(const QString &layerName, DesktopWidget *item);
+    * \param layerName is is the layer to add the item to, if the
+    * layer dose not exisit a new layer defined by the layerName is
+    * created.
+    * \param item is the widget we wish to add
+    **/
+    void addItem(const QString& layerName , DesktopWidget *item);
 
-    void showLayer(const QString &layer);
+    void showLayer(const QString& layer);
+    void hideLayer(const QString& layer);
+    //void switchLayer(int switchTo = 1);
 
     QStringList layerIndex() const;
+public slots:
+    void switchLayer();	
 
 private:
     class Private;
     Private *const d;
+    Private *const p;
 };
-} // namespace PlexyDesk
+}// namespace PlexyDesk
 
 #endif
