@@ -6,7 +6,7 @@
 #  QIMAGE_BLITZ_LIBRARY - Where libkbfxcommon.so resides
 #
 
-FIND_PATH(QIMAGE_BLITZ_INCLUDE_DIR qimageblitz.h
+FIND_PATH(QIMAGE_BLITZ_INCLUDE_DIR qimageblitz/qimageblitz.h
   PATHS
   ${INCLUDE_SEARCH_PATHES}
 )
