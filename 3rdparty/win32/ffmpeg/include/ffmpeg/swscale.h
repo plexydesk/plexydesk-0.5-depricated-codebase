@@ -30,10 +30,10 @@
 #include "avutil.h"
 
 #define AV_STRINGIFY(s)         AV_TOSTRING(s)
-#define AV_TOSTRING(s) #s
+#define AV_TOSTRING(s) # s
 
 #define LIBSWSCALE_VERSION_INT  ((0<<16)+(5<<8)+0)
-#define LIBSWSCALE_VERSION      0.5.0
+#define LIBSWSCALE_VERSION      0.5 .0
 #define LIBSWSCALE_BUILD        LIBSWSCALE_VERSION_INT
 
 #define LIBSWSCALE_IDENT        "SwS" AV_STRINGIFY(LIBSWSCALE_VERSION)
@@ -104,15 +104,15 @@ struct SwsContext;
 void sws_freeContext(struct SwsContext *swsContext);
 
 struct SwsContext *sws_getContext(int srcW, int srcH, int srcFormat, int dstW, int dstH, int dstFormat, int flags,
-                                  SwsFilter *srcFilter, SwsFilter *dstFilter, double *param);
-int sws_scale(struct SwsContext *context, uint8_t* src[], int srcStride[], int srcSliceY,
-              int srcSliceH, uint8_t* dst[], int dstStride[]);
-int sws_scale_ordered(struct SwsContext *context, uint8_t* src[], int srcStride[], int srcSliceY,
-                      int srcSliceH, uint8_t* dst[], int dstStride[]) attribute_deprecated;
+ SwsFilter *srcFilter, SwsFilter *dstFilter, double *param);
+int sws_scale(struct SwsContext *context, uint8_t *src[], int srcStride[], int srcSliceY,
+ int srcSliceH, uint8_t *dst[], int dstStride[]);
+int sws_scale_ordered(struct SwsContext *context, uint8_t *src[], int srcStride[], int srcSliceY,
+ int srcSliceH, uint8_t *dst[], int dstStride[]) attribute_deprecated;
 
 
 int sws_setColorspaceDetails(struct SwsContext *c, const int inv_table[4], int srcRange, const int table[4], int dstRange, int brightness, int contrast, int saturation);
-int sws_getColorspaceDetails(struct SwsContext *c, int **inv_table, int *srcRange, int **table, int *dstRange, int *brightness, int *contrast, int *saturation);
+int sws_getColorspaceDetails(struct SwsContext *c, int * *inv_table, int *srcRange, int * *table, int *dstRange, int *brightness, int *contrast, int *saturation);
 SwsVector *sws_getGaussianVec(double variance, double quality);
 SwsVector *sws_getConstVec(double c, int length);
 SwsVector *sws_getIdentityVec(void);
@@ -128,14 +128,14 @@ void sws_printVec(SwsVector *a);
 void sws_freeVec(SwsVector *a);
 
 SwsFilter *sws_getDefaultFilter(float lumaGBlur, float chromaGBlur,
-                                float lumaSarpen, float chromaSharpen,
-                                float chromaHShift, float chromaVShift,
-                                int verbose);
+ float lumaSarpen, float chromaSharpen,
+ float chromaHShift, float chromaVShift,
+ int verbose);
 void sws_freeFilter(SwsFilter *filter);
 
 struct SwsContext *sws_getCachedContext(struct SwsContext *context,
-                                        int srcW, int srcH, int srcFormat,
-                                        int dstW, int dstH, int dstFormat, int flags,
-                                        SwsFilter *srcFilter, SwsFilter *dstFilter, double *param);
+ int srcW, int srcH, int srcFormat,
+ int dstW, int dstH, int dstFormat, int flags,
+ SwsFilter *srcFilter, SwsFilter *dstFilter, double *param);
 
 #endif /* FFMPEG_SWSCALE_H */

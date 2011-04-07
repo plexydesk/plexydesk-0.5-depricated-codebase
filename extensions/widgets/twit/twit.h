@@ -5,14 +5,14 @@
 #include <widgetinterface.h>
 #include <widgetplugin.h>
 
-class VISIBLE_SYM Twit: public PlexyDesk::WidgetPlugin
+class VISIBLE_SYM Twit : public PlexyDesk::WidgetPlugin
 {
     Q_OBJECT
 
 public:
-    Twit(QObject * object = 0);
+    Twit(QObject *object = 0);
     virtual ~Twit();
-    QGraphicsItem * item();
+    QGraphicsItem *item();
 };
 
 #endif

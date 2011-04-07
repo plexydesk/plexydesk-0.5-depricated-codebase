@@ -3,7 +3,7 @@
 #include "wellcomeitem.moc"
 
 class
-        WellcomeItem::Private
+WellcomeItem::Private
 {
 public:
     Private() {
@@ -12,7 +12,7 @@ public:
     Private() {
     }
     int height;
-    int  width;
+    int width;
     QString text;
     QString comment;
     QString tooltip;
@@ -33,12 +33,12 @@ public:
 };
 
 
-WellcomeItem::WellcomeItem(const QRectF &rect, QGraphicsItem * parent): QGraphicsRectItem(rect, parent),
-        d(new Private)
+WellcomeItem::WellcomeItem(const QRectF &rect, QGraphicsItem *parent) : QGraphicsRectItem(rect, parent),
+                                                                        d(new Private)
 {
     //TODO
     d->height = 128;
-    d->width =  128;
+    d->width = 128;
     d->size = QSize(d->width, d->height);
     d->iconPixmap = QPixmap();
     d->opacity = 1.0f;
@@ -46,7 +46,7 @@ WellcomeItem::WellcomeItem(const QRectF &rect, QGraphicsItem * parent): QGraphic
     d->timeline.setFrameRange(0, 120);
     d->timeline.setCurveShape(QTimeLine::EaseInCurve);
     connect(&d->timeline, SIGNAL(frameChanged(int)), this,
-            SLOT(zoom(int)));
+     SLOT(zoom(int)));
     d->blured = false;
     d->refimg = QImage(d->size, QImage::Format_ARGB32_Premultiplied);
     d->refimg = reflection(d->refimg);
@@ -59,7 +59,7 @@ WellcomeItem::~WellcomeItem()
     delete d;
 }
 
-QImage WellcomeItem::reflection(QImage & img)
+QImage WellcomeItem::reflection(QImage &img)
 {
     QImage reflect = img.mirrored(0, 1);
     QPainter p(&reflect);
@@ -76,25 +76,25 @@ QImage WellcomeItem::reflection(QImage & img)
     return reflect;
 }
 
-void WellcomeItem::paintItem(QPainter * painter,
-                             const QRectF rect)
+void WellcomeItem::paintItem(QPainter *painter,
+ const QRectF rect)
 {
     painter->setRenderHint(QPainter::SmoothPixmapTransform, true);
 
     QRectF source(0, 0, d->width, d->height);
     if (!d->iconPixmap.isNull()) {
         painter->
-        drawPixmap(int
-                   (((int) source.width() - d->iconPixmap.width()) / 2),
-                   int (((int) source.height() -
-                         d->iconPixmap.height()) / 2),
-                   d->iconPixmap.height(), d->iconPixmap.width(),
-                   d->iconPixmap);
+            drawPixmap(int
+             (((int) source.width() - d->iconPixmap.width()) / 2),
+         int (((int) source.height() -
+                 d->iconPixmap.height()) / 2),
+         d->iconPixmap.height(), d->iconPixmap.width(),
+         d->iconPixmap);
     }
 }
-void WellcomeItem::paint(QPainter * painter,
-                         const QStyleOptionGraphicsItem * option,
-                         QWidget * widget)
+void WellcomeItem::paint(QPainter *painter,
+ const QStyleOptionGraphicsItem *option,
+ QWidget *widget)
 {
     Q_UNUSED(widget);
     painter->save();
@@ -103,7 +103,7 @@ void WellcomeItem::paint(QPainter * painter,
     //  painter->fillRect(option->exposedRect, Qt::transparent);
     //  painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
     this->paintItem(painter, option->exposedRect);
-    painter->drawImage(QPoint((d->width -  d->iconPixmap.width()) / 2 , d->iconPixmap.height()) , d->refimg);
+    painter->drawImage(QPoint((d->width -  d->iconPixmap.width()) / 2, d->iconPixmap.height()), d->refimg);
     painter->restore();
 }
 
@@ -119,7 +119,7 @@ QString WellcomeItem::loadSvg(MouseState state)
 
 //Events
 
-void WellcomeItem::hoverEnterEvent(QGraphicsSceneHoverEvent * event)
+void WellcomeItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
     Q_UNUSED(event);
     d->state = OVER;
@@ -130,7 +130,7 @@ void WellcomeItem::hoverEnterEvent(QGraphicsSceneHoverEvent * event)
     emit clicked();
 }
 
-void WellcomeItem::hoverMoveEvent(QGraphicsSceneHoverEvent * event)
+void WellcomeItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 {
     Q_UNUSED(event);
     d->state = OVER;
@@ -138,7 +138,7 @@ void WellcomeItem::hoverMoveEvent(QGraphicsSceneHoverEvent * event)
 
 }
 
-void WellcomeItem::hoverLeaveEvent(QGraphicsSceneHoverEvent * event)
+void WellcomeItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
     Q_UNUSED(event);
     d->state = REGULAR;
@@ -154,7 +154,7 @@ QString WellcomeItem::name() const
     return d->text;
 }
 
-void WellcomeItem::setName(const QString & name)
+void WellcomeItem::setName(const QString &name)
 {
     d->text = name;
 }

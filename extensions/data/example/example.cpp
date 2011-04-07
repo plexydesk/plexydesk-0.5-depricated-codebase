@@ -22,7 +22,7 @@
 
 
 
-ExampleData::ExampleData(QObject * object)
+ExampleData::ExampleData(QObject *object)
 {
     slideCount = 0;
     currentSlide = 0;
@@ -33,23 +33,23 @@ ExampleData::ExampleData(QObject * object)
     connect(imageTimer, SIGNAL(timeout()), this, SLOT(nextImage()));
 }
 
-void  ExampleData::init()
+void ExampleData::init()
 {
 
     if (PlexyDesk::Config::getInstance()->proxyOn) {
         QNetworkProxy NtProxy(PlexyDesk::Config::getInstance()->proxyType,
-                              PlexyDesk::Config::getInstance()->proxyURL,
-                              PlexyDesk::Config::getInstance()->proxyPort,
-                              PlexyDesk::Config::getInstance()->proxyUser,
-                              PlexyDesk::Config::getInstance()->proxyPasswd
-                             );
+         PlexyDesk::Config::getInstance()->proxyURL,
+         PlexyDesk::Config::getInstance()->proxyPort,
+         PlexyDesk::Config::getInstance()->proxyUser,
+         PlexyDesk::Config::getInstance()->proxyPasswd
+         );
 
         http->setProxy(NtProxy);
         QNetworkProxy::setApplicationProxy(NtProxy);
     }
 
     connect(http, SIGNAL(requestFinished(int, bool)),
-            SLOT(loadCallback(int, bool)));
+     SLOT(loadCallback(int, bool)));
 
     http->setHost("www.flickr.com");
     /*note 1 we are saving the request ID , so will call this in loadCallback*/
@@ -62,7 +62,7 @@ ExampleData::~ExampleData()
     delete http;
 }
 
-void ExampleData::pushData(QVariant& str)
+void ExampleData::pushData(QVariant &str)
 {
     http->abort();
     searchkey = str.toString();

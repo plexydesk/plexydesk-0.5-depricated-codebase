@@ -112,7 +112,7 @@
 //      replaced with standard pointers.
 //  - Added three new functions: CAIR_Grayscale(), CAIR_Edge(), and CAIR_Energy(), which give the grayscale, edge detection,
 //      and energy maps of a source image.
-//  - Add_Path() and Remove_Path() now maintain Grayscale during resizing. This gave a performance boost with no real 
+//  - Add_Path() and Remove_Path() now maintain Grayscale during resizing. This gave a performance boost with no real
 //      quality reduction; special thanks to Brett Taylor.
 //  - Edge_Detect() now handles the boundries seperately for a performance boost.
 //  - Add_Path() and Remove_Path() no longer refill unchanged portions of an image since CML Resize's are no longer destructive.
@@ -142,8 +142,8 @@ using namespace std;
 
 struct pixel
 {
-	int x;
-	int y;
+    int x;
+    int y;
 };
 
 /*****************************************************************************************
@@ -152,97 +152,97 @@ struct pixel
 //for the grayscale threads, so they know what to work on and how much of the image to do
 struct Gray_Params
 {
-	CML_color * Source;
-	CML_gray * Dest;
-	int top_x;
-	int top_y;
-	int bot_x;
-	int bot_y;
+    CML_color *Source;
+    CML_gray *Dest;
+    int top_x;
+    int top_y;
+    int bot_x;
+    int bot_y;
 };
 
-CML_byte Grayscale_Pixel( CML_RGBA * pixel )
+CML_byte Grayscale_Pixel( CML_RGBA *pixel )
 {
-	return (CML_byte)floor( ( 299 * pixel->red +
-							  587 * pixel->green +
-							  114 * pixel->blue ) / 1000.0 );
+    return (CML_byte)floor( ( 299 * pixel->red +
+         587 * pixel->green +
+         114 * pixel->blue ) / 1000.0 );
 }
 
 //Our thread function for the Grayscale
-void * Gray_Quadrant( void * area )
+void *Gray_Quadrant( void *area )
 {
-	Gray_Params gray_area = (*((Gray_Params *)area));
+    Gray_Params gray_area = (*((Gray_Params *)area));
 
-	CML_byte gray = 0;
+    CML_byte gray = 0;
 
-	for( int y = gray_area.top_y; y <= gray_area.bot_y; y++ )
-	{
-		for( int x = gray_area.top_x; x <= gray_area.bot_x; x++ )
-		{
-			gray = Grayscale_Pixel( &(*(gray_area.Source))(x,y) );
+    for( int y = gray_area.top_y; y <= gray_area.bot_y; y++ )
+    {
+        for( int x = gray_area.top_x; x <= gray_area.bot_x; x++ )
+        {
+            gray = Grayscale_Pixel( &(*(gray_area.Source))(x, y) );
 
-			(*(gray_area.Dest))(x,y) = gray;
-		}
-	}
+             (*(gray_area.Dest))(x, y) = gray;
+        }
+    }
 
-	return NULL;
+    return NULL;
 } //end Gray_Quadrant()
 
 
 //Sort-of does a RGB->YUV conversion (actually, just RGB->Y)
 //This is multi-threaded to 4 threads, spliting the image into 4 quadrants
-void Grayscale_Image( CML_color * Source, CML_gray * Dest )
+void Grayscale_Image( CML_color *Source, CML_gray *Dest )
 {
-	pthread_t gray_threads[4];
-	Gray_Params thread_params[4];
+    pthread_t gray_threads[4];
+    Gray_Params thread_params[4];
 
-	//top left quadrant
-	thread_params[0].Source = Source;
-	thread_params[0].Dest = Dest;
-	thread_params[0].top_x = 0;
-	thread_params[0].top_y = 0;
-	thread_params[0].bot_x = (*Source).Width() / 2;
-	thread_params[0].bot_y = (*Source).Height() / 2;
+    //top left quadrant
+    thread_params[0].Source = Source;
+    thread_params[0].Dest = Dest;
+    thread_params[0].top_x = 0;
+    thread_params[0].top_y = 0;
+    thread_params[0].bot_x = (*Source).Width() / 2;
+    thread_params[0].bot_y = (*Source).Height() / 2;
 
-	//top right quadrant
-	thread_params[1].Source = Source;
-	thread_params[1].Dest = Dest;
-	thread_params[1].top_x = thread_params[0].bot_x + 1;
-	thread_params[1].top_y = 0;
-	thread_params[1].bot_x = (*Source).Width() - 1;
-	thread_params[1].bot_y = thread_params[0].bot_y;
+    //top right quadrant
+    thread_params[1].Source = Source;
+    thread_params[1].Dest = Dest;
+    thread_params[1].top_x = thread_params[0].bot_x + 1;
+    thread_params[1].top_y = 0;
+    thread_params[1].bot_x = (*Source).Width() - 1;
+    thread_params[1].bot_y = thread_params[0].bot_y;
 
-	//bottom left quadrant
-	thread_params[2].Source = Source;
-	thread_params[2].Dest = Dest;
-	thread_params[2].top_x = 0;
-	thread_params[2].top_y = thread_params[0].bot_y + 1;
-	thread_params[2].bot_x = thread_params[0].bot_x;
-	thread_params[2].bot_y = (*Source).Height() - 1;
+    //bottom left quadrant
+    thread_params[2].Source = Source;
+    thread_params[2].Dest = Dest;
+    thread_params[2].top_x = 0;
+    thread_params[2].top_y = thread_params[0].bot_y + 1;
+    thread_params[2].bot_x = thread_params[0].bot_x;
+    thread_params[2].bot_y = (*Source).Height() - 1;
 
-	//bottom right quadrant
-	thread_params[3].Source = Source;
-	thread_params[3].Dest = Dest;
-	thread_params[3].top_x = thread_params[1].top_x;
-	thread_params[3].top_y = thread_params[2].top_y;
-	thread_params[3].bot_x = thread_params[1].bot_x;
-	thread_params[3].bot_y = thread_params[2].bot_y;
+    //bottom right quadrant
+    thread_params[3].Source = Source;
+    thread_params[3].Dest = Dest;
+    thread_params[3].top_x = thread_params[1].top_x;
+    thread_params[3].top_y = thread_params[2].top_y;
+    thread_params[3].bot_x = thread_params[1].bot_x;
+    thread_params[3].bot_y = thread_params[2].bot_y;
 
-	//create the four threads
-	for( int i = 0; i < 4; i++ )
-	{
-		int rc = pthread_create( &gray_threads[i], NULL, Gray_Quadrant, (void *)&thread_params[i] );
-		if( rc != 0 )
-		{
-			cout << endl << "CAIR: Grayscale_Image(): FATAL ERROR! Unable to spawn thread!" << endl;
-			exit(1);
-		}
-	}
+    //create the four threads
+    for( int i = 0; i < 4; i++ )
+    {
+        int rc = pthread_create( &gray_threads[i], NULL, Gray_Quadrant, (void *)&thread_params[i] );
+        if( rc != 0 )
+        {
+            cout << endl << "CAIR: Grayscale_Image(): FATAL ERROR! Unable to spawn thread!" << endl;
+            exit(1);
+        }
+    }
 
-	//now wait for them to come back to us
-	pthread_join( gray_threads[0], NULL );
-	pthread_join( gray_threads[1], NULL );
-	pthread_join( gray_threads[2], NULL );
-	pthread_join( gray_threads[3], NULL );
+    //now wait for them to come back to us
+    pthread_join( gray_threads[0], NULL );
+    pthread_join( gray_threads[1], NULL );
+    pthread_join( gray_threads[2], NULL );
+    pthread_join( gray_threads[3], NULL );
 
 } //end Grayscale_Image()
 
@@ -254,202 +254,202 @@ enum edge_safe { SAFE, UNSAFE };
 //for the edge detection threads, works in a similar way as the grayscale params
 struct Edge_Params
 {
-	CML_gray * Source;
-	CML_int * Dest;
-	int top_x;
-	int top_y;
-	int bot_x;
-	int bot_y;
-	edge_safe safety;
-	CAIR_convolution conv;
+    CML_gray *Source;
+    CML_int *Dest;
+    int top_x;
+    int top_y;
+    int bot_x;
+    int bot_y;
+    edge_safe safety;
+    CAIR_convolution conv;
 };
 
 //returns the convolution value of the pixel Source[x][y] with one of the kernels.
 //Several kernels are avaialable, each with their strengths and weaknesses. The edge_safe
 //param will use the slower, but safer Get() method of the CML.
-int Convolve_Pixel( CML_gray * Source, int x, int y, edge_safe safety, CAIR_convolution convolution)
+int Convolve_Pixel( CML_gray *Source, int x, int y, edge_safe safety, CAIR_convolution convolution)
 {
-	int conv = 0;
+    int conv = 0;
 
-	switch( convolution )
-	{
-	case PREWITT:
-		if( safety == SAFE )
-		{
-			conv = abs( (*Source).Get(x+1,y+1) + (*Source).Get(x+1,y) + (*Source).Get(x+1,y-1) //x part of the prewitt
-					   -(*Source).Get(x-1,y-1) - (*Source).Get(x-1,y) - (*Source).Get(x-1,y+1) ) +
-				   abs( (*Source).Get(x+1,y+1) + (*Source).Get(x,y+1) + (*Source).Get(x-1,y+1) //y part of the prewitt
-					   -(*Source).Get(x+1,y-1) - (*Source).Get(x,y-1) - (*Source).Get(x-1,y-1) );
-		}
-		else
-		{
-			conv = abs( (*Source)(x+1,y+1) + (*Source)(x+1,y) + (*Source)(x+1,y-1) //x part of the prewitt
-					   -(*Source)(x-1,y-1) - (*Source)(x-1,y) - (*Source)(x-1,y+1) ) +
-				   abs( (*Source)(x+1,y+1) + (*Source)(x,y+1) + (*Source)(x-1,y+1) //y part of the prewitt
-					   -(*Source)(x+1,y-1) - (*Source)(x,y-1) - (*Source)(x-1,y-1) );
-		}
-		break;
+    switch( convolution )
+    {
+    case PREWITT:
+        if( safety == SAFE )
+        {
+            conv = abs( (*Source).Get(x+1, y+1) + (*Source).Get(x+1, y) + (*Source).Get(x+1, y-1) //x part of the prewitt
+             -(*Source).Get(x-1, y-1) - (*Source).Get(x-1, y) - (*Source).Get(x-1, y+1) ) +
+             abs( (*Source).Get(x+1, y+1) + (*Source).Get(x, y+1) + (*Source).Get(x-1, y+1)    //y part of the prewitt
+             -(*Source).Get(x+1, y-1) - (*Source).Get(x, y-1) - (*Source).Get(x-1, y-1) );
+        }
+        else
+        {
+            conv = abs( (*Source)(x+1, y+1) + (*Source)(x+1, y) + (*Source)(x+1, y-1) //x part of the prewitt
+             -(*Source)(x-1, y-1) - (*Source)(x-1, y) - (*Source)(x-1, y+1) ) +
+             abs( (*Source)(x+1, y+1) + (*Source)(x, y+1) + (*Source)(x-1, y+1)    //y part of the prewitt
+             -(*Source)(x+1, y-1) - (*Source)(x, y-1) - (*Source)(x-1, y-1) );
+        }
+        break;
 
-	 case V_SQUARE:
-		if( safety == SAFE )
-		{
-			conv = (*Source).Get(x+1,y+1) + (*Source).Get(x+1,y) + (*Source).Get(x+1,y-1) //x part of the prewitt
-				  -(*Source).Get(x-1,y-1) - (*Source).Get(x-1,y) - (*Source).Get(x-1,y+1);
-			conv *= conv;
-		}
-		else
-		{
-			conv = (*Source)(x+1,y+1) + (*Source)(x+1,y) + (*Source)(x+1,y-1) //x part of the prewitt
-				  -(*Source)(x-1,y-1) - (*Source)(x-1,y) - (*Source)(x-1,y+1);
-			conv *= conv;
-		}
-		break;
+    case V_SQUARE:
+        if( safety == SAFE )
+        {
+            conv = (*Source).Get(x+1, y+1) + (*Source).Get(x+1, y) + (*Source).Get(x+1, y-1) //x part of the prewitt
+             -(*Source).Get(x-1, y-1) - (*Source).Get(x-1, y) - (*Source).Get(x-1, y+1);
+            conv *= conv;
+        }
+        else
+        {
+            conv = (*Source)(x+1, y+1) + (*Source)(x+1, y) + (*Source)(x+1, y-1) //x part of the prewitt
+             -(*Source)(x-1, y-1) - (*Source)(x-1, y) - (*Source)(x-1, y+1);
+            conv *= conv;
+        }
+        break;
 
-	 case V1:
-		if( safety == SAFE )
-		{
-			conv =  abs( (*Source).Get(x+1,y+1) + (*Source).Get(x+1,y) + (*Source).Get(x+1,y-1) //x part of the prewitt
-						-(*Source).Get(x-1,y-1) - (*Source).Get(x-1,y) - (*Source).Get(x-1,y+1) );
-		}
-		else
-		{
-			conv = abs( (*Source)(x+1,y+1) + (*Source)(x+1,y) + (*Source)(x+1,y-1) //x part of the prewitt
-					   -(*Source)(x-1,y-1) - (*Source)(x-1,y) - (*Source)(x-1,y+1) ) ;
-		}
-		break;
-	
-	 case SOBEL:
-		if( safety == SAFE )
-		{
-			conv = abs( (*Source).Get(x+1,y+1) + (2 * (*Source).Get(x+1,y)) + (*Source).Get(x+1,y-1) //x part of the sobel
-					   -(*Source).Get(x-1,y-1) - (2 * (*Source).Get(x-1,y)) - (*Source).Get(x-1,y+1) ) +
-				   abs( (*Source).Get(x+1,y+1) + (2 * (*Source).Get(x,y+1)) + (*Source).Get(x-1,y+1) //y part of the sobel
-					   -(*Source).Get(x+1,y-1) - (2 * (*Source).Get(x,y-1)) - (*Source).Get(x-1,y-1) );
-		}
-		else
-		{
-			conv = abs( (*Source)(x+1,y+1) + (2 * (*Source)(x+1,y)) + (*Source)(x+1,y-1) //x part of the sobel
-					   -(*Source)(x-1,y-1) - (2 * (*Source)(x-1,y)) - (*Source)(x-1,y+1) ) +
-				   abs( (*Source)(x+1,y+1) + (2 * (*Source)(x,y+1)) + (*Source)(x-1,y+1) //y part of the sobel
-					   -(*Source)(x+1,y-1) - (2 * (*Source)(x,y-1)) - (*Source)(x-1,y-1) );
-		}
-		break;
+    case V1:
+        if( safety == SAFE )
+        {
+            conv = abs( (*Source).Get(x+1, y+1) + (*Source).Get(x+1, y) + (*Source).Get(x+1, y-1) //x part of the prewitt
+             -(*Source).Get(x-1, y-1) - (*Source).Get(x-1, y) - (*Source).Get(x-1, y+1) );
+        }
+        else
+        {
+            conv = abs( (*Source)(x+1, y+1) + (*Source)(x+1, y) + (*Source)(x+1, y-1) //x part of the prewitt
+             -(*Source)(x-1, y-1) - (*Source)(x-1, y) - (*Source)(x-1, y+1) );
+        }
+        break;
 
-	case LAPLACIAN:
-		if( safety == SAFE )
-		{
-			conv = abs( (*Source).Get(x+1,y) + (*Source).Get(x-1,y) + (*Source).Get(x,y+1) + (*Source).Get(x,y-1)
-					   -(4 * (*Source).Get(x,y)) );
-		}
-		else
-		{
-			conv = abs( (*Source)(x+1,y) + (*Source)(x-1,y) + (*Source)(x,y+1) + (*Source)(x,y-1)
-					   -(4 * (*Source)(x,y)) );
-		}
-		break;
-	}
-	return conv;
+    case SOBEL:
+        if( safety == SAFE )
+        {
+            conv = abs( (*Source).Get(x+1, y+1) + (2 * (*Source).Get(x+1, y)) + (*Source).Get(x+1, y-1) //x part of the sobel
+             -(*Source).Get(x-1, y-1) - (2 * (*Source).Get(x-1, y)) - (*Source).Get(x-1, y+1) ) +
+             abs( (*Source).Get(x+1, y+1) + (2 * (*Source).Get(x, y+1)) + (*Source).Get(x-1, y+1)    //y part of the sobel
+             -(*Source).Get(x+1, y-1) - (2 * (*Source).Get(x, y-1)) - (*Source).Get(x-1, y-1) );
+        }
+        else
+        {
+            conv = abs( (*Source)(x+1, y+1) + (2 * (*Source)(x+1, y)) + (*Source)(x+1, y-1) //x part of the sobel
+             -(*Source)(x-1, y-1) - (2 * (*Source)(x-1, y)) - (*Source)(x-1, y+1) ) +
+             abs( (*Source)(x+1, y+1) + (2 * (*Source)(x, y+1)) + (*Source)(x-1, y+1)    //y part of the sobel
+             -(*Source)(x+1, y-1) - (2 * (*Source)(x, y-1)) - (*Source)(x-1, y-1) );
+        }
+        break;
+
+    case LAPLACIAN:
+        if( safety == SAFE )
+        {
+            conv = abs( (*Source).Get(x+1, y) + (*Source).Get(x-1, y) + (*Source).Get(x, y+1) + (*Source).Get(x, y-1)
+             -(4 * (*Source).Get(x, y)) );
+        }
+        else
+        {
+            conv = abs( (*Source)(x+1, y) + (*Source)(x-1, y) + (*Source)(x, y+1) + (*Source)(x, y-1)
+             -(4 * (*Source)(x, y)) );
+        }
+        break;
+    }
+    return conv;
 }
 
 //This is multi-threaded to 4 threads, spliting the image into 4 quadrants
-void * Edge_Quadrant( void * area )
+void *Edge_Quadrant( void *area )
 {
-	Edge_Params edge_area = (*((Edge_Params *)area));
+    Edge_Params edge_area = (*((Edge_Params *)area));
 
-	for( int y = edge_area.top_y; y <= edge_area.bot_y; y++ )
-	{
-		for( int x = edge_area.top_x; x <= edge_area.bot_x; x++ )
-		{
-			(*(edge_area.Dest))(x,y) = Convolve_Pixel( edge_area.Source, x, y, edge_area.safety, edge_area.conv);
-		}
-	}
+    for( int y = edge_area.top_y; y <= edge_area.bot_y; y++ )
+    {
+        for( int x = edge_area.top_x; x <= edge_area.bot_x; x++ )
+        {
+             (*(edge_area.Dest))(x, y) = Convolve_Pixel( edge_area.Source, x, y, edge_area.safety, edge_area.conv);
+        }
+    }
 
-	return NULL;
+    return NULL;
 }
 
 //Performs full edge detection on Source with one of the kernels.
-void Edge_Detect( CML_gray * Source, CML_int * Dest, CAIR_convolution conv )
+void Edge_Detect( CML_gray *Source, CML_int *Dest, CAIR_convolution conv )
 {
-	//There is no easy solution to the boundries. Calling the same boundry pixel to convolve itself against seems actually better
-	//than padding the image with zeros or 255's.
-	//Calling itself induces a "ringing" into the near edge of the image. Padding can lead to a darker or lighter edge.
-	//The only "good" solution is to have the entire one-pixel wide edge not included in the edge detected image.
-	//This would reduce the size of the image by 2 pixels in both directions, something that is unacceptable here.
+    //There is no easy solution to the boundries. Calling the same boundry pixel to convolve itself against seems actually better
+    //than padding the image with zeros or 255's.
+    //Calling itself induces a "ringing" into the near edge of the image. Padding can lead to a darker or lighter edge.
+    //The only "good" solution is to have the entire one-pixel wide edge not included in the edge detected image.
+    //This would reduce the size of the image by 2 pixels in both directions, something that is unacceptable here.
 
-	pthread_t edge_threads[4];
-	Edge_Params thread_params[5];
+    pthread_t edge_threads[4];
+    Edge_Params thread_params[5];
 
-	for( int i = 0; i < 4; i++ )
-	{
-		thread_params[i].Source = Source;
-		thread_params[i].Dest = Dest;
-		thread_params[i].safety = UNSAFE;
-		thread_params[i].conv = conv;
-	}
+    for( int i = 0; i < 4; i++ )
+    {
+        thread_params[i].Source = Source;
+        thread_params[i].Dest = Dest;
+        thread_params[i].safety = UNSAFE;
+        thread_params[i].conv = conv;
+    }
 
-	//top left quadrant
-	thread_params[0].top_x = 1;
-	thread_params[0].top_y = 1;
-	thread_params[0].bot_x = (*Source).Width() / 2;
-	thread_params[0].bot_y = (*Source).Height() / 2;
+    //top left quadrant
+    thread_params[0].top_x = 1;
+    thread_params[0].top_y = 1;
+    thread_params[0].bot_x = (*Source).Width() / 2;
+    thread_params[0].bot_y = (*Source).Height() / 2;
 
-	//top right quadrant
-	thread_params[1].top_x = thread_params[0].bot_x + 1;
-	thread_params[1].top_y = 1;
-	thread_params[1].bot_x = (*Source).Width() - 2;
-	thread_params[1].bot_y = thread_params[0].bot_y;
+    //top right quadrant
+    thread_params[1].top_x = thread_params[0].bot_x + 1;
+    thread_params[1].top_y = 1;
+    thread_params[1].bot_x = (*Source).Width() - 2;
+    thread_params[1].bot_y = thread_params[0].bot_y;
 
-	//bottom left quadrant
-	thread_params[2].top_x = 1;
-	thread_params[2].top_y = thread_params[0].bot_y + 1;
-	thread_params[2].bot_x = thread_params[0].bot_x;
-	thread_params[2].bot_y = (*Source).Height() - 2;
+    //bottom left quadrant
+    thread_params[2].top_x = 1;
+    thread_params[2].top_y = thread_params[0].bot_y + 1;
+    thread_params[2].bot_x = thread_params[0].bot_x;
+    thread_params[2].bot_y = (*Source).Height() - 2;
 
-	//bottom right quadrant
+    //bottom right quadrant
 
-	thread_params[3].top_x = thread_params[1].top_x;
-	thread_params[3].top_y = thread_params[2].top_y;
-	thread_params[3].bot_x = thread_params[1].bot_x;
-	thread_params[3].bot_y = thread_params[2].bot_y;
+    thread_params[3].top_x = thread_params[1].top_x;
+    thread_params[3].top_y = thread_params[2].top_y;
+    thread_params[3].bot_x = thread_params[1].bot_x;
+    thread_params[3].bot_y = thread_params[2].bot_y;
 
-	//create the four threads
-	for( int i = 0; i < 4; i++ )
-	{
-		int rc = pthread_create( &edge_threads[i], NULL, Edge_Quadrant, (void *)&thread_params[i] );
-		if( rc != 0 )
-		{
-			cout << endl << "CAIR: Edge_Detect(): FATAL ERROR! Unable to spawn thread!" << endl;
-			exit(1);
-		}
-	}
+    //create the four threads
+    for( int i = 0; i < 4; i++ )
+    {
+        int rc = pthread_create( &edge_threads[i], NULL, Edge_Quadrant, (void *)&thread_params[i] );
+        if( rc != 0 )
+        {
+            cout << endl << "CAIR: Edge_Detect(): FATAL ERROR! Unable to spawn thread!" << endl;
+            exit(1);
+        }
+    }
 
-	//while those are running we can go back and do the boundry pixels with the extra safety checks
-	thread_params[4] = thread_params[0];
-	thread_params[4].top_x = 0;
-	thread_params[4].top_y = 0;
-	thread_params[4].bot_x = (*Source).Width() - 1;
-	thread_params[4].bot_y = 0;
-	thread_params[4].safety = SAFE;
-	Edge_Quadrant( &thread_params[4] );
+    //while those are running we can go back and do the boundry pixels with the extra safety checks
+    thread_params[4] = thread_params[0];
+    thread_params[4].top_x = 0;
+    thread_params[4].top_y = 0;
+    thread_params[4].bot_x = (*Source).Width() - 1;
+    thread_params[4].bot_y = 0;
+    thread_params[4].safety = SAFE;
+    Edge_Quadrant( &thread_params[4] );
 
-	thread_params[4].top_y = (*Source).Height() - 1;
-	thread_params[4].bot_y = (*Source).Height() - 1;
-	Edge_Quadrant( &thread_params[4] );
+    thread_params[4].top_y = (*Source).Height() - 1;
+    thread_params[4].bot_y = (*Source).Height() - 1;
+    Edge_Quadrant( &thread_params[4] );
 
-	thread_params[4].bot_x = 0;
-	thread_params[4].top_y = 0;
-	Edge_Quadrant( &thread_params[4] );
+    thread_params[4].bot_x = 0;
+    thread_params[4].top_y = 0;
+    Edge_Quadrant( &thread_params[4] );
 
-	thread_params[4].top_x = (*Source).Width() - 1;
-	thread_params[4].top_y = 0;
-	thread_params[4].bot_x = (*Source).Width() - 1;
-	Edge_Quadrant( &thread_params[4] );
+    thread_params[4].top_x = (*Source).Width() - 1;
+    thread_params[4].top_y = 0;
+    thread_params[4].bot_x = (*Source).Width() - 1;
+    Edge_Quadrant( &thread_params[4] );
 
-	//now wait on them
-	for( int i = 0; i < 4; i++ )
-	{
-		pthread_join( edge_threads[i], NULL );
-	}
+    //now wait on them
+    for( int i = 0; i < 4; i++ )
+    {
+        pthread_join( edge_threads[i], NULL );
+    }
 
 } //end Edge_Detect()
 
@@ -460,62 +460,62 @@ void Edge_Detect( CML_gray * Source, CML_int * Dest, CAIR_convolution conv )
 struct Energy_Params
 
 {
-	vector<pthread_mutex_t> * Mine;
-	vector<pthread_mutex_t> * Not_Mine;
-	pthread_mutex_t * Lock_Done_mutex;
-	pthread_cond_t * Lock_Done;
-	pthread_mutex_t * Good_to_Go;
-	CML_int * Edge;
-	CML_int * Weights;
-	CML_int * Energy_Map;
-	int top_x;
-	int bot_x;
-	vector<pixel> * Path; // if Path is NULL, it is a complete calculation, otherwise a partial calculation, based on the Path
+    vector<pthread_mutex_t> *Mine;
+    vector<pthread_mutex_t> *Not_Mine;
+    pthread_mutex_t *Lock_Done_mutex;
+    pthread_cond_t *Lock_Done;
+    pthread_mutex_t *Good_to_Go;
+    CML_int *Edge;
+    CML_int *Weights;
+    CML_int *Energy_Map;
+    int top_x;
+    int bot_x;
+    vector<pixel> *Path;  // if Path is NULL, it is a complete calculation, otherwise a partial calculation, based on the Path
 };
 
-#define MIN(X,Y) ((X) < (Y) ? (X) : (Y))
-#define MAX(X,Y) ((X) > (Y) ? (X) : (Y))
+#define MIN(X, Y) ((X) < (Y) ? (X) : (Y))
+#define MAX(X, Y) ((X) > (Y) ? (X) : (Y))
 
 //Simple fuction returning the minimum of three values.
 inline int min_of_three( int x, int y, int z )
 {
-	int min = y;
+    int min = y;
 
-	if( x < min )
-	{
-		min = x;
-	}
-	if( z < min )
-	{
-		return z;
-	}
+    if( x < min )
+    {
+        min = x;
+    }
+    if( z < min )
+    {
+        return z;
+    }
 
-	return min;
+    return min;
 }
 
 //This calculates a minimum energy path from the given start point (min_x) and the energy map.
 //Note: Path better be of proper size.
-void Generate_Path( CML_int * Energy, int min_x, vector<pixel> * Path )
+void Generate_Path( CML_int *Energy, int min_x, vector<pixel> *Path )
 {
-	pixel min;
-	int x = min_x;
-	for( int y = (*Energy).Height() - 1; y >= 0; y-- ) //builds from bottom up
-	{
-		min.x = x; //assume the minimum is straight up
-		min.y = y;
+    pixel min;
+    int x = min_x;
+    for( int y = (*Energy).Height() - 1; y >= 0; y-- ) //builds from bottom up
+    {
+        min.x = x; //assume the minimum is straight up
+        min.y = y;
 
-		if( (*Energy).Get( x-1, y, MAX ) < (*Energy).Get( min.x, min.y, MAX ) ) //check to see if min is up-left
-		{
-			min.x = x - 1;
-		}
-		if( (*Energy).Get( x+1, y, MAX ) < (*Energy).Get( min.x, min.y, MAX ) ) //up-right
-		{
-			min.x = x + 1;
-		}
-		
-		(*Path)[y] = min;
-		x = min.x;
-	}
+        if( (*Energy).Get( x-1, y, MAX ) < (*Energy).Get( min.x, min.y, MAX ) ) //check to see if min is up-left
+        {
+            min.x = x - 1;
+        }
+        if( (*Energy).Get( x+1, y, MAX ) < (*Energy).Get( min.x, min.y, MAX ) ) //up-right
+        {
+            min.x = x + 1;
+        }
+
+         (*Path)[y] = min;
+        x = min.x;
+    }
 }
 
 //threading procedure for Energy Map
@@ -553,275 +553,275 @@ void Generate_Path( CML_int * Energy, int min_x, vector<pixel> * Path )
 //The thread responsible for those values must lock those mutexes first before the other thread can try.
 //This limits one thread only getting about 2 rows ahead of the other thread before it finds itself blocked.
 
-void * Energy_Left( void * area )
+void *Energy_Left( void *area )
 {
-	Energy_Params energy_area = (*((Energy_Params *)area));
-	int energy = 0;// current calculated enery
-	int min_x = 0,max_x = 0;
-	vector<pixel> * Path = energy_area.Path;
+    Energy_Params energy_area = (*((Energy_Params *)area));
+    int energy = 0; // current calculated enery
+    int min_x = 0, max_x = 0;
+    vector<pixel> *Path = energy_area.Path;
 
-	if( Path == NULL || (*Path)[0].y < 0 )
-	{
-		min_x = energy_area.top_x;
-		max_x = energy_area.bot_x;
-	}
-	else
-	{
-		min_x = MAX( (*Path)[0].x-3, energy_area.top_x );
-		max_x = MIN( (*Path)[0].x+2, energy_area.bot_x );	
-	}
+    if( Path == NULL || (*Path)[0].y < 0 )
+    {
+        min_x = energy_area.top_x;
+        max_x = energy_area.bot_x;
+    }
+    else
+    {
+        min_x = MAX( (*Path)[0].x-3, energy_area.top_x );
+        max_x = MIN( (*Path)[0].x+2, energy_area.bot_x );
+    }
 
-	//lock our mutexes
-	for( int i = 0; i < (int)(*(energy_area.Mine)).size(); i++ )
-		pthread_mutex_lock( &(*(energy_area.Mine))[i] );
-
-
-	//signal we are done
-	pthread_mutex_lock( energy_area.Lock_Done_mutex );
-	pthread_cond_signal( energy_area.Lock_Done );
-	pthread_mutex_unlock( energy_area.Lock_Done_mutex );
-
-	//wait until we are good to go
-	pthread_mutex_lock( energy_area.Good_to_Go );
-
-	//set the first row with the correct energy
-	for( int x = min_x; x <= max_x; x++ )
-		(*(energy_area.Energy_Map))(x,0) = (*(energy_area.Edge))(x,0) + (*(energy_area.Weights))(x,0);
-
-	//now signal that one is done
-	pthread_mutex_unlock( &(*(energy_area.Mine))[0] );
-
-	for( int y = 1; y < (*(energy_area.Edge)).Height(); y++ )
-	{
-		min_x=MAX( min_x-1, energy_area.top_x );
-		max_x=MIN( max_x+1, energy_area.bot_x );
-
-		for( int x = min_x; x <= max_x; x++ ) 
-		{
-			if( x == energy_area.top_x )
-			{
-			   energy = MIN( (*(energy_area.Energy_Map))(energy_area.top_x,y-1), (*(energy_area.Energy_Map))(energy_area.top_x+1,y-1) )
-						   + (*(energy_area.Edge))(energy_area.top_x,y) + (*(energy_area.Weights))(energy_area.top_x,y);
-			}
-			else
-			{	    
-				if( x == energy_area.bot_x )//get access to the bad pixel (the one not maintained by us)
-					pthread_mutex_lock( &(*(energy_area.Not_Mine))[y-1] );
+    //lock our mutexes
+    for( int i = 0; i < (int)(*(energy_area.Mine)).size(); i++ )
+        pthread_mutex_lock( &(*(energy_area.Mine))[i] );
 
 
-				//grab the minimum of straight up, up left, or up right
-				energy = min_of_three( (*(energy_area.Energy_Map))(x-1,y-1),
-									   (*(energy_area.Energy_Map))(x,y-1),
-									   (*(energy_area.Energy_Map))(x+1,y-1) )
-						 + (*(energy_area.Edge))(x,y) + (*(energy_area.Weights))(x,y);
-			}
+    //signal we are done
+    pthread_mutex_lock( energy_area.Lock_Done_mutex );
+    pthread_cond_signal( energy_area.Lock_Done );
+    pthread_mutex_unlock( energy_area.Lock_Done_mutex );
 
-			//now we have the energy
-			if((*(energy_area.Energy_Map))(x,y) == energy && Path != NULL )
-			{
-				if(x == min_x && (*Path)[y].x>min_x+3 )min_x++;
-				if(x == max_x && (*Path)[y].x<max_x-2 )max_x--;
-			}
-			else
-			{ //set the energy of the pixel
-				 (*(energy_area.Energy_Map))(x,y) = energy;
-			} 			
-		}
-		pthread_mutex_unlock( &(*(energy_area.Mine))[y] );
-	}
+    //wait until we are good to go
+    pthread_mutex_lock( energy_area.Good_to_Go );
 
-	return NULL;
+    //set the first row with the correct energy
+    for( int x = min_x; x <= max_x; x++ )
+         (*(energy_area.Energy_Map))(x, 0) = (*(energy_area.Edge))(x, 0) + (*(energy_area.Weights))(x, 0);
+
+    //now signal that one is done
+    pthread_mutex_unlock( &(*(energy_area.Mine))[0] );
+
+    for( int y = 1; y < (*(energy_area.Edge)).Height(); y++ )
+    {
+        min_x = MAX( min_x-1, energy_area.top_x );
+        max_x = MIN( max_x+1, energy_area.bot_x );
+
+        for( int x = min_x; x <= max_x; x++ )
+        {
+            if( x == energy_area.top_x )
+            {
+                energy = MIN( (*(energy_area.Energy_Map))(energy_area.top_x, y-1), (*(energy_area.Energy_Map))(energy_area.top_x+1, y-1) )
+                 + (*(energy_area.Edge))(energy_area.top_x, y) + (*(energy_area.Weights))(energy_area.top_x, y);
+            }
+            else
+            {
+                if( x == energy_area.bot_x ) //get access to the bad pixel (the one not maintained by us)
+                    pthread_mutex_lock( &(*(energy_area.Not_Mine))[y-1] );
+
+
+                //grab the minimum of straight up, up left, or up right
+                energy = min_of_three( (*(energy_area.Energy_Map))(x-1, y-1),
+                     (*(energy_area.Energy_Map))(x, y-1),
+                     (*(energy_area.Energy_Map))(x+1, y-1) )
+                 + (*(energy_area.Edge))(x, y) + (*(energy_area.Weights))(x, y);
+            }
+
+            //now we have the energy
+            if((*(energy_area.Energy_Map))(x, y) == energy && Path != NULL )
+            {
+                if(x == min_x && (*Path)[y].x>min_x+3 ) min_x++;
+                if(x == max_x && (*Path)[y].x<max_x-2 ) max_x--;
+            }
+            else
+            { //set the energy of the pixel
+                 (*(energy_area.Energy_Map))(x, y) = energy;
+            }
+        }
+        pthread_mutex_unlock( &(*(energy_area.Mine))[y] );
+    }
+
+    return NULL;
 } //end Energy_Left()
 
 
-void * Energy_Right( void * area )
+void *Energy_Right( void *area )
 {
-	Energy_Params energy_area = (*((Energy_Params *)area));
-	int energy = 0;// current calculated enery
-	int min_x = 0,max_x = 0;
-	vector<pixel> * Path = energy_area.Path;
+    Energy_Params energy_area = (*((Energy_Params *)area));
+    int energy = 0; // current calculated enery
+    int min_x = 0, max_x = 0;
+    vector<pixel> *Path = energy_area.Path;
 
-	if( Path == NULL )
-	{
-		min_x = energy_area.top_x;
-		max_x = energy_area.bot_x;
-	}
-	else
-	{
-		min_x = MAX( (*Path)[0].x-3, energy_area.top_x );
-		max_x = MIN( (*Path)[0].x+2, energy_area.bot_x );	
-	}
+    if( Path == NULL )
+    {
+        min_x = energy_area.top_x;
+        max_x = energy_area.bot_x;
+    }
+    else
+    {
+        min_x = MAX( (*Path)[0].x-3, energy_area.top_x );
+        max_x = MIN( (*Path)[0].x+2, energy_area.bot_x );
+    }
 
-	//lock our mutexes
-	for( int i = 0; i < (int)(*(energy_area.Mine)).size(); i++ )
-		pthread_mutex_lock( &(*(energy_area.Mine))[i] );
+    //lock our mutexes
+    for( int i = 0; i < (int)(*(energy_area.Mine)).size(); i++ )
+        pthread_mutex_lock( &(*(energy_area.Mine))[i] );
 
-	//signal we are done
-	pthread_mutex_lock( energy_area.Lock_Done_mutex );
-	pthread_cond_signal( energy_area.Lock_Done );
-	pthread_mutex_unlock( energy_area.Lock_Done_mutex );
+    //signal we are done
+    pthread_mutex_lock( energy_area.Lock_Done_mutex );
+    pthread_cond_signal( energy_area.Lock_Done );
+    pthread_mutex_unlock( energy_area.Lock_Done_mutex );
 
-	//wait until we are good to go
-	pthread_mutex_lock( energy_area.Good_to_Go );
+    //wait until we are good to go
+    pthread_mutex_lock( energy_area.Good_to_Go );
 
-	//set the first row with the correct energy
-	for( int x = min_x; x <= max_x; x++ )
-		(*(energy_area.Energy_Map))(x,0) = (*(energy_area.Edge))(x,0) + (*(energy_area.Weights))(x,0);
+    //set the first row with the correct energy
+    for( int x = min_x; x <= max_x; x++ )
+         (*(energy_area.Energy_Map))(x, 0) = (*(energy_area.Edge))(x, 0) + (*(energy_area.Weights))(x, 0);
 
-	//now signal that one is done
-	pthread_mutex_unlock( &(*(energy_area.Mine))[0] );
+    //now signal that one is done
+    pthread_mutex_unlock( &(*(energy_area.Mine))[0] );
 
-	for( int y = 1; y < (*(energy_area.Edge)).Height(); y++ )
-	{
-		min_x = MAX( min_x-1, energy_area.top_x );
-		max_x = MIN( max_x+1, energy_area.bot_x );
+    for( int y = 1; y < (*(energy_area.Edge)).Height(); y++ )
+    {
+        min_x = MAX( min_x-1, energy_area.top_x );
+        max_x = MIN( max_x+1, energy_area.bot_x );
 
-		for( int x = min_x ; x <= max_x; x++ ) //+1 because we handle that seperately
-		{
-			if( x == energy_area.bot_x )
-			{
-			   energy = MIN( (*(energy_area.Energy_Map))(energy_area.bot_x,y-1), (*(energy_area.Energy_Map))(energy_area.bot_x-1,y-1) )
-						   + (*(energy_area.Edge))(energy_area.bot_x,y) + (*(energy_area.Weights))(energy_area.bot_x,y);
-			}
-			else
-			{	    
-				if(x == energy_area.top_x )//get access to the bad pixel (the one not maintained by us)
-					pthread_mutex_lock( &(*(energy_area.Not_Mine))[y-1] );
+        for( int x = min_x; x <= max_x; x++ )  //+1 because we handle that seperately
+        {
+            if( x == energy_area.bot_x )
+            {
+                energy = MIN( (*(energy_area.Energy_Map))(energy_area.bot_x, y-1), (*(energy_area.Energy_Map))(energy_area.bot_x-1, y-1) )
+                 + (*(energy_area.Edge))(energy_area.bot_x, y) + (*(energy_area.Weights))(energy_area.bot_x, y);
+            }
+            else
+            {
+                if(x == energy_area.top_x ) //get access to the bad pixel (the one not maintained by us)
+                    pthread_mutex_lock( &(*(energy_area.Not_Mine))[y-1] );
 
 
-			//grab the minimum of straight up, up left, or up right
-			energy = min_of_three( (*(energy_area.Energy_Map))(x-1,y-1),
-								   (*(energy_area.Energy_Map))(x,y-1),
-								   (*(energy_area.Energy_Map))(x+1,y-1) )
-					 + (*(energy_area.Edge))(x,y) + (*(energy_area.Weights))(x,y);
-			}
+                //grab the minimum of straight up, up left, or up right
+                energy = min_of_three( (*(energy_area.Energy_Map))(x-1, y-1),
+                     (*(energy_area.Energy_Map))(x, y-1),
+                     (*(energy_area.Energy_Map))(x+1, y-1) )
+                 + (*(energy_area.Edge))(x, y) + (*(energy_area.Weights))(x, y);
+            }
 
-			//now we have the energy
-			if( (*(energy_area.Energy_Map))(x,y) == energy && Path != NULL )
-			{
-				if( x == min_x && (*Path)[y].x > x+3 ) min_x++;
-				if( x == max_x && (*Path)[y].x < x-2 ) max_x--;
-			}
-			else
-			{//set the energy of the pixel
-				 (*(energy_area.Energy_Map))(x,y) = energy;
-			}
-		} 
-		pthread_mutex_unlock( &(*(energy_area.Mine))[y] );// could be put in the loop for faster a releasing of the mutex, but to be VERY carefull (use a boolean on the previous lock) 
-	}
-	return NULL;
+            //now we have the energy
+            if( (*(energy_area.Energy_Map))(x, y) == energy && Path != NULL )
+            {
+                if( x == min_x && (*Path)[y].x > x+3 ) min_x++;
+                if( x == max_x && (*Path)[y].x < x-2 ) max_x--;
+            }
+            else
+            { //set the energy of the pixel
+                 (*(energy_area.Energy_Map))(x, y) = energy;
+            }
+        }
+        pthread_mutex_unlock( &(*(energy_area.Mine))[y] ); // could be put in the loop for faster a releasing of the mutex, but to be VERY carefull (use a boolean on the previous lock)
+    }
+    return NULL;
 } //end Energy_Right()
 
 //Calculates the energy map from Edge, adding in Weights where needed. The Path is used to determine how much of the
 //given Map is to remain unchanged. A Path of NULL will cause the Map to be fully recalculated.
-void Energy_Map( CML_int * Edge, CML_int * Weights, CML_int * Map, vector<pixel> * Path )
+void Energy_Map( CML_int *Edge, CML_int *Weights, CML_int *Map, vector<pixel> *Path )
 {
-	pthread_t energy_threads[2];
-	Energy_Params thread_params[2];
+    pthread_t energy_threads[2];
+    Energy_Params thread_params[2];
 
-	//signals need a mutex to prevent lost signals
-	pthread_mutex_t Lock_Done_mutex = PTHREAD_MUTEX_INITIALIZER;
-	pthread_cond_t Lock_Done = PTHREAD_COND_INITIALIZER;
+    //signals need a mutex to prevent lost signals
+    pthread_mutex_t Lock_Done_mutex = PTHREAD_MUTEX_INITIALIZER;
+    pthread_cond_t Lock_Done = PTHREAD_COND_INITIALIZER;
 
-	//good to go mutuexes
-	pthread_mutex_t Good1 = PTHREAD_MUTEX_INITIALIZER;
-	pthread_mutex_t Good2 = PTHREAD_MUTEX_INITIALIZER;
+    //good to go mutuexes
+    pthread_mutex_t Good1 = PTHREAD_MUTEX_INITIALIZER;
+    pthread_mutex_t Good2 = PTHREAD_MUTEX_INITIALIZER;
 
-	//two arrays of mutexes, keep the trouble areas safe
-	vector<pthread_mutex_t> Left_mutexes ( (*Edge).Height() );
-	vector<pthread_mutex_t> Right_mutexes ( (*Edge).Height() );
+    //two arrays of mutexes, keep the trouble areas safe
+    vector<pthread_mutex_t> Left_mutexes ( (*Edge).Height() );
+    vector<pthread_mutex_t> Right_mutexes ( (*Edge).Height() );
 
-	for( int k = 0; k < (*Edge).Height(); k++ )
-	{
-		pthread_mutex_init( &Left_mutexes[k], NULL );
-		pthread_mutex_init( &Right_mutexes[k], NULL );
-	}
+    for( int k = 0; k < (*Edge).Height(); k++ )
+    {
+        pthread_mutex_init( &Left_mutexes[k], NULL );
+        pthread_mutex_init( &Right_mutexes[k], NULL );
+    }
 
-	//set the paramaters
-	//left side
-	thread_params[0].Edge = Edge;
-	thread_params[0].Weights = Weights;
-	thread_params[0].Energy_Map = Map;
-	thread_params[0].Lock_Done_mutex = &Lock_Done_mutex;
-	thread_params[0].Lock_Done = &Lock_Done;
-	thread_params[0].Path = Path;
-	thread_params[0].Good_to_Go = &Good1;
-	thread_params[0].Mine = &Left_mutexes;
-	thread_params[0].Not_Mine = &Right_mutexes;
-	thread_params[0].top_x = 0;
-	thread_params[0].bot_x = (*Edge).Width() / 2;
+    //set the paramaters
+    //left side
+    thread_params[0].Edge = Edge;
+    thread_params[0].Weights = Weights;
+    thread_params[0].Energy_Map = Map;
+    thread_params[0].Lock_Done_mutex = &Lock_Done_mutex;
+    thread_params[0].Lock_Done = &Lock_Done;
+    thread_params[0].Path = Path;
+    thread_params[0].Good_to_Go = &Good1;
+    thread_params[0].Mine = &Left_mutexes;
+    thread_params[0].Not_Mine = &Right_mutexes;
+    thread_params[0].top_x = 0;
+    thread_params[0].bot_x = (*Edge).Width() / 2;
 
-	//the right side
-	thread_params[1] = thread_params[0];
-	thread_params[1].Mine = &Right_mutexes;
-	thread_params[1].Not_Mine = &Left_mutexes;
-	thread_params[1].Good_to_Go = &Good2;
-	thread_params[1].top_x = thread_params[0].bot_x + 1;
-	thread_params[1].bot_x = (*Edge).Width() - 1;
+    //the right side
+    thread_params[1] = thread_params[0];
+    thread_params[1].Mine = &Right_mutexes;
+    thread_params[1].Not_Mine = &Left_mutexes;
+    thread_params[1].Good_to_Go = &Good2;
+    thread_params[1].top_x = thread_params[0].bot_x + 1;
+    thread_params[1].bot_x = (*Edge).Width() - 1;
 
-	//lock what we need
-	pthread_mutex_lock( &Good1 );
-	pthread_mutex_lock( &Good2 );
-	pthread_mutex_lock( &Lock_Done_mutex ); //make sure to lock it so other thread doesn't signal when we aren't waiting!
+    //lock what we need
+    pthread_mutex_lock( &Good1 );
+    pthread_mutex_lock( &Good2 );
+    pthread_mutex_lock( &Lock_Done_mutex ); //make sure to lock it so other thread doesn't signal when we aren't waiting!
 
-	//create the threads
-	int rc = pthread_create( &energy_threads[0], NULL, Energy_Left, (void *)&thread_params[0] );
-	if( rc != 0 )
-	{
-		cout << endl << "CAIR: Energy_Path(): FATAL ERROR! Unable to spawn thread!" << endl;
-		exit(1);
-	}
-	pthread_cond_wait( &Lock_Done, &Lock_Done_mutex );
+    //create the threads
+    int rc = pthread_create( &energy_threads[0], NULL, Energy_Left, (void *)&thread_params[0] );
+    if( rc != 0 )
+    {
+        cout << endl << "CAIR: Energy_Path(): FATAL ERROR! Unable to spawn thread!" << endl;
+        exit(1);
+    }
+    pthread_cond_wait( &Lock_Done, &Lock_Done_mutex );
 
-	rc = pthread_create( &energy_threads[1], NULL, Energy_Right, (void *)&thread_params[1] );
-	if( rc != 0 )
-	{
-		cout << endl << "CAIR: Energy_Path(): FATAL ERROR! Unable to spawn thread!" << endl;
-		exit(1);
-	}
-	pthread_cond_wait( &Lock_Done, &Lock_Done_mutex );
-
-
-	//now both threads have thier mutexes locked, ready for them to start
-	pthread_mutex_unlock( &Good1 );
-	pthread_mutex_unlock( &Good2 );
+    rc = pthread_create( &energy_threads[1], NULL, Energy_Right, (void *)&thread_params[1] );
+    if( rc != 0 )
+    {
+        cout << endl << "CAIR: Energy_Path(): FATAL ERROR! Unable to spawn thread!" << endl;
+        exit(1);
+    }
+    pthread_cond_wait( &Lock_Done, &Lock_Done_mutex );
 
 
-	//now wait on them
-	pthread_join( energy_threads[0], NULL );
-	pthread_join( energy_threads[1], NULL );
+    //now both threads have thier mutexes locked, ready for them to start
+    pthread_mutex_unlock( &Good1 );
+    pthread_mutex_unlock( &Good2 );
+
+
+    //now wait on them
+    pthread_join( energy_threads[0], NULL );
+    pthread_join( energy_threads[1], NULL );
 } //end Energy_Map()
 
 //Energy_Path() generates the least energy Path of the Edge and Weights and returns the total energy of that path.
 //This uses a dynamic programming method to easily calculate the path and energy map (see wikipedia for a good example).
 //Weights should be of the same size as Edge, Path should be of proper length (the height of Edge).
-int Energy_Path( CML_int * Edge, CML_int * Weights, CML_int * Energy, vector<pixel> * Path, bool first_time )
+int Energy_Path( CML_int *Edge, CML_int *Weights, CML_int *Energy, vector<pixel> *Path, bool first_time )
 {
-	(*Energy).Resize_Width( (*Edge).Width() );
+     (*Energy).Resize_Width( (*Edge).Width() );
 
-	//calculate the energy map
-	if( first_time == true )
-	{
-		Energy_Map( Edge, Weights, Energy, NULL);
-	}
-	else
-	{
-		Energy_Map( Edge, Weights, Energy, Path);
-	}
+    //calculate the energy map
+    if( first_time == true )
+    {
+        Energy_Map( Edge, Weights, Energy, NULL);
+    }
+    else
+    {
+        Energy_Map( Edge, Weights, Energy, Path);
+    }
 
-	//find minimum path start
-	int min_x = 0;
-	for( int x = 0; x < (*Energy).Width(); x++ )
-	{
-		if( (*Energy)(x, (*Energy).Height() - 1 ) < (*Energy)(min_x, (*Energy).Height() - 1 ) )
-		{
-			min_x = x;
-		}
-	}
+    //find minimum path start
+    int min_x = 0;
+    for( int x = 0; x < (*Energy).Width(); x++ )
+    {
+        if( (*Energy)(x, (*Energy).Height() - 1 ) < (*Energy)(min_x, (*Energy).Height() - 1 ) )
+        {
+            min_x = x;
+        }
+    }
 
-	//generate the path back from the energy map
-	Generate_Path( Energy, min_x, Path );
-	return (*Energy)( min_x, (*Energy).Height() - 1 );
+    //generate the path back from the energy map
+    Generate_Path( Energy, min_x, Path );
+    return (*Energy)( min_x, (*Energy).Height() - 1 );
 }
 
 
@@ -832,340 +832,340 @@ int Energy_Path( CML_int * Edge, CML_int * Weights, CML_int * Energy, vector<pix
 //averages two pixels and returns the values
 CML_RGBA Average_Pixels( CML_RGBA Pixel1, CML_RGBA Pixel2 )
 {
-	CML_RGBA average;
+    CML_RGBA average;
 
-	average.alpha = ( Pixel1.alpha + Pixel2.alpha ) / 2;
-	average.blue = ( Pixel1.blue + Pixel2.blue ) / 2;
-	average.green = ( Pixel1.green + Pixel2.green ) / 2;
-	average.red = ( Pixel1.red + Pixel2.red ) / 2;
+    average.alpha = ( Pixel1.alpha + Pixel2.alpha ) / 2;
+    average.blue = ( Pixel1.blue + Pixel2.blue ) / 2;
+    average.green = ( Pixel1.green + Pixel2.green ) / 2;
+    average.red = ( Pixel1.red + Pixel2.red ) / 2;
 
-	return average;
+    return average;
 }
 
 struct Add_Params
 {
-	CML_color * Source;
-	vector<pixel> * Path;
-	CML_int * Weights;
-	CML_int * AWeights;
-	CML_int * Edge;
-	CML_int * Energy;
-	CAIR_convolution conv;
-	CML_gray * Grayscale;
-	int add_weight;
-	int top_x;
-	int top_y;
-	int bot_x;
-	int bot_y;
+    CML_color *Source;
+    vector<pixel> *Path;
+    CML_int *Weights;
+    CML_int *AWeights;
+    CML_int *Edge;
+    CML_int *Energy;
+    CAIR_convolution conv;
+    CML_gray *Grayscale;
+    int add_weight;
+    int top_x;
+    int top_y;
+    int bot_x;
+    int bot_y;
 };
 
 //This works like Remove_Quadrant, stripes across the image.
-void * Add_Quadrant( void * area )
+void *Add_Quadrant( void *area )
 {
-	Add_Params add_area = (*((Add_Params *)area));
+    Add_Params add_area = (*((Add_Params *)area));
 
-	for( int y = add_area.top_y; y <= add_area.bot_y; y++ )
-	{
-		int add = (*(add_area.Path))[y].x;
+    for( int y = add_area.top_y; y <= add_area.bot_y; y++ )
+    {
+        int add = (*(add_area.Path))[y].x;
 
-		//shift over everyone to the right
-		(*(add_area.Source)).Shift_Row( add, y, 1 );
-		(*(add_area.AWeights)).Shift_Row( add, y, 1 );
-		(*(add_area.Weights)).Shift_Row( add, y, 1 );
-		(*(add_area.Grayscale)).Shift_Row( add, y, 1 );
-		(*(add_area.Energy)).Shift_Row( add, y, 1 );
-		
-		//go back and set the added pixel
-		(*(add_area.Source))(add,y) = Average_Pixels( (*(add_area.Source))(add,y), (*(add_area.Source)).Get(add-1,y));
-		(*(add_area.Weights))(add,y) = ( (*(add_area.Weights))(add,y) + (*(add_area.Weights)).Get(add-1,y) ) / 2;
-		(*(add_area.Grayscale))(add,y) = Grayscale_Pixel( &(*(add_area.Source))(add,y) );
+        //shift over everyone to the right
+         (*(add_area.Source)).Shift_Row( add, y, 1 );
+         (*(add_area.AWeights)).Shift_Row( add, y, 1 );
+         (*(add_area.Weights)).Shift_Row( add, y, 1 );
+         (*(add_area.Grayscale)).Shift_Row( add, y, 1 );
+         (*(add_area.Energy)).Shift_Row( add, y, 1 );
 
-		(*(add_area.AWeights))(add,y) = add_area.add_weight; //the new path
-		if( add < (*(add_area.AWeights)).Width() )
-		{
-			(*(add_area.AWeights))(add+1,y) += add_area.add_weight; //the previous least-energy path
-		}
-	}
-	return NULL;
+        //go back and set the added pixel
+         (*(add_area.Source))(add, y) = Average_Pixels( (*(add_area.Source))(add, y), (*(add_area.Source)).Get(add-1, y));
+         (*(add_area.Weights))(add, y) = ( (*(add_area.Weights))(add, y) + (*(add_area.Weights)).Get(add-1, y) ) / 2;
+         (*(add_area.Grayscale))(add, y) = Grayscale_Pixel( &(*(add_area.Source))(add, y) );
+
+         (*(add_area.AWeights))(add, y) = add_area.add_weight; //the new path
+        if( add < (*(add_area.AWeights)).Width() )
+        {
+             (*(add_area.AWeights))(add+1, y) += add_area.add_weight; //the previous least-energy path
+        }
+    }
+    return NULL;
 }
 
 //Adjusts the area around the added path by recalculating only the edge values that will change.
 //This assumes no larger than a 3x3 kernel for the convolution. A larger kernel will require more pixels to be adjusted.
-void * Add_Edge( void * area )
+void *Add_Edge( void *area )
 {
-	Add_Params add_area = (*((Add_Params *)area));
+    Add_Params add_area = (*((Add_Params *)area));
 
-	for( int y = add_area.top_y; y <= add_area.bot_y; y++ )
-	{
-		int add = (*(add_area.Path))[y].x;
-		edge_safe safety = UNSAFE;
-		if( (y <= 3) || (y >= (*(add_area.Edge)).Height() - 4) || (add <= 3) || (add >= (*(add_area.Edge)).Width() - 4) )
-		{
-			safety = SAFE;
-		}
+    for( int y = add_area.top_y; y <= add_area.bot_y; y++ )
+    {
+        int add = (*(add_area.Path))[y].x;
+        edge_safe safety = UNSAFE;
+        if( (y <= 3) || (y >= (*(add_area.Edge)).Height() - 4) || (add <= 3) || (add >= (*(add_area.Edge)).Width() - 4) )
+        {
+            safety = SAFE;
+        }
 
-		(*(add_area.Edge)).Shift_Row( add, y, 1 );
+         (*(add_area.Edge)).Shift_Row( add, y, 1 );
 
-		//these checks assume a convolution kernel no larger than 3x3
-		if( (add - 1) >= 0 )
-		{
-			(*(add_area.Edge))(add-1,y) = Convolve_Pixel( add_area.Grayscale, add-1, y, safety, add_area.conv );
+        //these checks assume a convolution kernel no larger than 3x3
+        if( (add - 1) >= 0 )
+        {
+             (*(add_area.Edge))(add-1, y) = Convolve_Pixel( add_area.Grayscale, add-1, y, safety, add_area.conv );
 
-			if( (add - 2) >= 0 )
-			{
-				(*(add_area.Edge))(add-2,y) = Convolve_Pixel( add_area.Grayscale, add-2, y, safety, add_area.conv );
+            if( (add - 2) >= 0 )
+            {
+                 (*(add_area.Edge))(add-2, y) = Convolve_Pixel( add_area.Grayscale, add-2, y, safety, add_area.conv );
 
-				if( (add - 3) >= 0 )
-				{
-					(*(add_area.Edge))(add-3,y) = Convolve_Pixel( add_area.Grayscale, add-3, y, safety, add_area.conv );
-				}
-			}
-		}
+                if( (add - 3) >= 0 )
+                {
+                     (*(add_area.Edge))(add-3, y) = Convolve_Pixel( add_area.Grayscale, add-3, y, safety, add_area.conv );
+                }
+            }
+        }
 
-		//no checks on these since they will always be there
-		(*(add_area.Edge))(add,y) = Convolve_Pixel( add_area.Grayscale, add, y, safety, add_area.conv );
-		(*(add_area.Edge))(add+1,y) = Convolve_Pixel( add_area.Grayscale, add+1, y, safety, add_area.conv );
+        //no checks on these since they will always be there
+         (*(add_area.Edge))(add, y) = Convolve_Pixel( add_area.Grayscale, add, y, safety, add_area.conv );
+         (*(add_area.Edge))(add+1, y) = Convolve_Pixel( add_area.Grayscale, add+1, y, safety, add_area.conv );
 
-		if( (add + 2) < (*(add_area.Edge)).Width() )
-		{
-			(*(add_area.Edge))(add+2,y) = Convolve_Pixel( add_area.Grayscale, add+2, y, safety, add_area.conv );
+        if( (add + 2) < (*(add_area.Edge)).Width() )
+        {
+             (*(add_area.Edge))(add+2, y) = Convolve_Pixel( add_area.Grayscale, add+2, y, safety, add_area.conv );
 
-			if( (add + 3) < (*(add_area.Edge)).Width() )
-			{
-				(*(add_area.Edge))(add+3,y) = Convolve_Pixel( add_area.Grayscale, add+3, y, safety, add_area.conv );
-			}
-		}
-	}
-	return NULL;
+            if( (add + 3) < (*(add_area.Edge)).Width() )
+            {
+                 (*(add_area.Edge))(add+3, y) = Convolve_Pixel( add_area.Grayscale, add+3, y, safety, add_area.conv );
+            }
+        }
+    }
+    return NULL;
 }
 
 //Adds Path into Source, storing the result in Dest.
 //AWeights is used to store the enlarging artifical weights.
-void Add_Path( CML_color * Source, vector<pixel> * Path, CML_int * Weights, CML_int * Edge, CML_gray * Grayscale, CML_int * AWeights,CML_int * Energy, int add_weight, CAIR_convolution conv )
+void Add_Path( CML_color *Source, vector<pixel> *Path, CML_int *Weights, CML_int *Edge, CML_gray *Grayscale, CML_int *AWeights, CML_int *Energy, int add_weight, CAIR_convolution conv )
 {
-	(*Source).Resize_Width( (*Source).Width() + 1 );
-	(*AWeights).Resize_Width( (*Source).Width() );
-	(*Weights).Resize_Width( (*Source).Width() );
-	(*Edge).Resize_Width( (*Source).Width() );
-	(*Grayscale).Resize_Width( (*Source).Width() );
-	(*Energy).Resize_Width( (*Source).Width() );
+     (*Source).Resize_Width( (*Source).Width() + 1 );
+     (*AWeights).Resize_Width( (*Source).Width() );
+     (*Weights).Resize_Width( (*Source).Width() );
+     (*Edge).Resize_Width( (*Source).Width() );
+     (*Grayscale).Resize_Width( (*Source).Width() );
+     (*Energy).Resize_Width( (*Source).Width() );
 
-	pthread_t add_threads[4];
-	Add_Params thread_params[4];
+    pthread_t add_threads[4];
+    Add_Params thread_params[4];
 
-	//top strip, goes all the way across the image, but only 1/4 of its height
-	thread_params[0].Source = Source;
-	thread_params[0].Path = Path;
-	thread_params[0].Weights = Weights;
-	thread_params[0].AWeights = AWeights;
-	thread_params[0].Edge = Edge;
-	thread_params[0].conv = conv;
-	thread_params[0].Grayscale = Grayscale;
-	thread_params[0].Energy = Energy;
-	thread_params[0].add_weight = add_weight;
-	thread_params[0].top_x = 0;
-	thread_params[0].top_y = 0;
-	thread_params[0].bot_x = (*Source).Width() - 1;
-	thread_params[0].bot_y = (*Source).Height() / 4;
+    //top strip, goes all the way across the image, but only 1/4 of its height
+    thread_params[0].Source = Source;
+    thread_params[0].Path = Path;
+    thread_params[0].Weights = Weights;
+    thread_params[0].AWeights = AWeights;
+    thread_params[0].Edge = Edge;
+    thread_params[0].conv = conv;
+    thread_params[0].Grayscale = Grayscale;
+    thread_params[0].Energy = Energy;
+    thread_params[0].add_weight = add_weight;
+    thread_params[0].top_x = 0;
+    thread_params[0].top_y = 0;
+    thread_params[0].bot_x = (*Source).Width() - 1;
+    thread_params[0].bot_y = (*Source).Height() / 4;
 
-	//top middle strip, going to reuse the first one since its mostly the same
-	thread_params[1] = thread_params[0];
-	thread_params[1].top_y = thread_params[0].bot_y + 1;
-	thread_params[1].bot_y = thread_params[0].bot_y * 2;
+    //top middle strip, going to reuse the first one since its mostly the same
+    thread_params[1] = thread_params[0];
+    thread_params[1].top_y = thread_params[0].bot_y + 1;
+    thread_params[1].bot_y = thread_params[0].bot_y * 2;
 
-	//bottom middle strip
-	thread_params[2] = thread_params[0];
-	thread_params[2].top_y = thread_params[1].bot_y + 1;
-	thread_params[2].bot_y = thread_params[0].bot_y * 3;
+    //bottom middle strip
+    thread_params[2] = thread_params[0];
+    thread_params[2].top_y = thread_params[1].bot_y + 1;
+    thread_params[2].bot_y = thread_params[0].bot_y * 3;
 
-	//bottom strip
-	thread_params[3] = thread_params[0];
-	thread_params[3].top_y = thread_params[2].bot_y + 1;
-	thread_params[3].bot_y = (*Source).Height() - 1;
+    //bottom strip
+    thread_params[3] = thread_params[0];
+    thread_params[3].top_y = thread_params[2].bot_y + 1;
+    thread_params[3].bot_y = (*Source).Height() - 1;
 
-	//create the four threads
-	for( int i = 0; i < 4; i++ )
-	{
-		int rc = pthread_create( &add_threads[i], NULL, Add_Quadrant, (void *)&thread_params[i] );
-		if( rc != 0 )
-		{
-			cout << endl << "CAIR: Add_Path(): FATAL ERROR! Unable to spawn thread!" << endl;
-			exit(1);
-		}
-	}
-	//now wait on them
-	pthread_join( add_threads[0], NULL );
-	pthread_join( add_threads[1], NULL );
-	pthread_join( add_threads[2], NULL );
-	pthread_join( add_threads[3], NULL );
+    //create the four threads
+    for( int i = 0; i < 4; i++ )
+    {
+        int rc = pthread_create( &add_threads[i], NULL, Add_Quadrant, (void *)&thread_params[i] );
+        if( rc != 0 )
+        {
+            cout << endl << "CAIR: Add_Path(): FATAL ERROR! Unable to spawn thread!" << endl;
+            exit(1);
+        }
+    }
+    //now wait on them
+    pthread_join( add_threads[0], NULL );
+    pthread_join( add_threads[1], NULL );
+    pthread_join( add_threads[2], NULL );
+    pthread_join( add_threads[3], NULL );
 
-	//create the four more threads
-	//We have to wait until the Source image is correctly shifted to avoid bad things from happening when we edge detect.
-	//We may try to get a value on the bounderies of the threads before the row is shifted.
-	for( int i = 0; i < 4; i++ )
-	{
-		int rc = pthread_create( &add_threads[i], NULL, Add_Edge, (void *)&thread_params[i] );
-		if( rc != 0 )
-		{
-			cout << endl << "CAIR: Add_Path(): FATAL ERROR! Unable to spawn thread!" << endl;
-			exit(1);
-		}
-	}
-	//now wait on them again
-	pthread_join( add_threads[0], NULL );
-	pthread_join( add_threads[1], NULL );
-	pthread_join( add_threads[2], NULL );
-	pthread_join( add_threads[3], NULL );
+    //create the four more threads
+    //We have to wait until the Source image is correctly shifted to avoid bad things from happening when we edge detect.
+    //We may try to get a value on the bounderies of the threads before the row is shifted.
+    for( int i = 0; i < 4; i++ )
+    {
+        int rc = pthread_create( &add_threads[i], NULL, Add_Edge, (void *)&thread_params[i] );
+        if( rc != 0 )
+        {
+            cout << endl << "CAIR: Add_Path(): FATAL ERROR! Unable to spawn thread!" << endl;
+            exit(1);
+        }
+    }
+    //now wait on them again
+    pthread_join( add_threads[0], NULL );
+    pthread_join( add_threads[1], NULL );
+    pthread_join( add_threads[2], NULL );
+    pthread_join( add_threads[3], NULL );
 
 } //end Add_Path()
 
 
 struct AddW_Params
 {
-	CML_int * Add1;
-	CML_int * Add2;
-	CML_int * Sum;
-	int top_y;
-	int bot_y;
+    CML_int *Add1;
+    CML_int *Add2;
+    CML_int *Sum;
+    int top_y;
+    int bot_y;
 };
 
-void * AddW_Quadrant( void * area )
+void *AddW_Quadrant( void *area )
 {
-	AddW_Params add_area = (*((AddW_Params *)area));
+    AddW_Params add_area = (*((AddW_Params *)area));
 
-	for( int y = add_area.top_y; y < add_area.bot_y; y++ )
-	{
-		for( int x = 0; x < (*(add_area.Add1)).Width(); x++ )
-		{
-			(*(add_area.Sum))(x,y) = (*(add_area.Add1))(x,y) + (*(add_area.Add2))(x,y);
-		}
-	}
-	return NULL;
+    for( int y = add_area.top_y; y < add_area.bot_y; y++ )
+    {
+        for( int x = 0; x < (*(add_area.Add1)).Width(); x++ )
+        {
+             (*(add_area.Sum))(x, y) = (*(add_area.Add1))(x, y) + (*(add_area.Add2))(x, y);
+        }
+    }
+    return NULL;
 }
 
 //Adds the two weight matrircies, Weights and the artifical weight, into Sum.
 //This is so the new-path artificial weight doesn't poullute our input Weight matrix.
 //Only two-way threaded because its so simple.
-void Add_Weights( CML_int * Add1, CML_int * Add2, CML_int * Sum )
+void Add_Weights( CML_int *Add1, CML_int *Add2, CML_int *Sum )
 {
-	 (*Sum).Resize_Width( (*Add1).Width() );
+     (*Sum).Resize_Width( (*Add1).Width() );
 
-	 pthread_t add_threads[2];
-	 AddW_Params thread_params[2];
+    pthread_t add_threads[2];
+    AddW_Params thread_params[2];
 
-	 thread_params[0].Add1 = Add1;
-	 thread_params[0].Add2 = Add2;
-	 thread_params[0].Sum = Sum;
-	 thread_params[0].top_y = 0;
-	 thread_params[0].bot_y = (*Add1).Height() / 2;
+    thread_params[0].Add1 = Add1;
+    thread_params[0].Add2 = Add2;
+    thread_params[0].Sum = Sum;
+    thread_params[0].top_y = 0;
+    thread_params[0].bot_y = (*Add1).Height() / 2;
 
-	 thread_params[1] = thread_params[0];
-	 thread_params[1].top_y = thread_params[0].bot_y;
-	 thread_params[1].bot_y = (*Add1).Height();
+    thread_params[1] = thread_params[0];
+    thread_params[1].top_y = thread_params[0].bot_y;
+    thread_params[1].bot_y = (*Add1).Height();
 
-	for( int i = 0; i < 2; i++ )
-	{
-		int rc = pthread_create( &add_threads[i], NULL, AddW_Quadrant, (void *)&thread_params[i] );
-		if( rc != 0 )
-		{
-			cout << endl << "CAIR: Add_Weights(): FATAL ERROR! Unable to spawn thread!" << endl;
-			exit(1);
-		}
-	}
+    for( int i = 0; i < 2; i++ )
+    {
+        int rc = pthread_create( &add_threads[i], NULL, AddW_Quadrant, (void *)&thread_params[i] );
+        if( rc != 0 )
+        {
+            cout << endl << "CAIR: Add_Weights(): FATAL ERROR! Unable to spawn thread!" << endl;
+            exit(1);
+        }
+    }
 
-	//now wait on them
-	pthread_join( add_threads[0], NULL );
-	pthread_join( add_threads[1], NULL );
+    //now wait on them
+    pthread_join( add_threads[0], NULL );
+    pthread_join( add_threads[1], NULL );
 }
 
 //Performs non-destructive Reserving for weights.
-void Reserve_Weights( CML_int * Weights, int goal_x )
+void Reserve_Weights( CML_int *Weights, int goal_x )
 {
-	CML_int temp( (*Weights).Width(), (*Weights).Height() );
+    CML_int temp( (*Weights).Width(), (*Weights).Height() );
 
-	temp = (*Weights);
+    temp = (*Weights);
 
-	(*Weights).Reserve( goal_x, (*Weights).Height() );
+     (*Weights).Reserve( goal_x, (*Weights).Height() );
 
-	for( int y = 0; y < temp.Height(); y++ )
-	{
-		for( int x = 0; x < temp.Width(); x++ )
-		{
-			(*Weights)(x,y) = temp(x,y);
-		}
-	}
+    for( int y = 0; y < temp.Height(); y++ )
+    {
+        for( int x = 0; x < temp.Width(); x++ )
+        {
+             (*Weights)(x, y) = temp(x, y);
+        }
+    }
 }
 
 //Performs a simple copy, but preserves Reserve'ed memory.
 //For copying Source back into some other image.
-void Copy_Reserved( CML_color * Source, CML_color * Dest )
+void Copy_Reserved( CML_color *Source, CML_color *Dest )
 {
-	for( int y = 0; y < (*Source).Height(); y++ )
-	{
-		for( int x = 0; x < (*Source).Width(); x++ )
-		{
-			(*Dest)(x,y) = (*Source)(x,y);
-		}
-	}
+    for( int y = 0; y < (*Source).Height(); y++ )
+    {
+        for( int x = 0; x < (*Source).Width(); x++ )
+        {
+             (*Dest)(x, y) = (*Source)(x, y);
+        }
+    }
 }
 
 //Adds some paths to Source and outputs into Dest.
 //This doesn't work anything like the paper describes, mostly because they probably forgot to mention a key point:
 //Added paths need a high weight so they are not chosen again, or so thier neighbors are less likely to be chosen.
-//For each new path, the energy of the image and its least-energy path is calculated. 
-//To prevent the same path from being chosen and to prevent merging paths from being chosen, 
-//additonal weight is placed to the old least-energy path and the new inserted path. Having 
+//For each new path, the energy of the image and its least-energy path is calculated.
+//To prevent the same path from being chosen and to prevent merging paths from being chosen,
+//additonal weight is placed to the old least-energy path and the new inserted path. Having
 //a very large add_weight will cause the algorithm to work more like a linear algorithm, evenly distributing new paths.
 //Having a very small weight will cause stretching. I provide this as a paramater mainly because I don't know if someone
 //will see a need for it, so I might of well leave it in.
-bool CAIR_Add( CML_color * Source, CML_int * Weights, int goal_x, int add_weight, CAIR_convolution conv, CML_color * Dest, ProgressPtr p )
+bool CAIR_Add( CML_color *Source, CML_int *Weights, int goal_x, int add_weight, CAIR_convolution conv, CML_color *Dest, ProgressPtr p )
 {
-	CML_gray Grayscale( (*Source).Width(), (*Source).Height() );
+    CML_gray Grayscale( (*Source).Width(), (*Source).Height() );
 
-	int adds = goal_x - (*Source).Width();
-	CML_int art_weight( (*Source).Width(), (*Source).Height() ); //artifical path weight
-	CML_int sum_weight( (*Source).Width(), (*Source).Height() ); //the sum of Weights and the artifical weight
-	CML_int Edge( (*Source).Width(), (*Source).Height() );
-	CML_int Energy( (*Source).Width(), (*Source).Height() );
-	vector<pixel> Min_Path ( (*Source).Height() );
+    int adds = goal_x - (*Source).Width();
+    CML_int art_weight( (*Source).Width(), (*Source).Height() ); //artifical path weight
+    CML_int sum_weight( (*Source).Width(), (*Source).Height() ); //the sum of Weights and the artifical weight
+    CML_int Edge( (*Source).Width(), (*Source).Height() );
+    CML_int Energy( (*Source).Width(), (*Source).Height() );
+    vector<pixel> Min_Path ( (*Source).Height() );
 
-	//increase thier reserved size as we enlarge. non-destructive resizes would be too slow
-	(*Dest).D_Resize( (*Source).Width(), (*Source).Height() );
-	(*Dest).Reserve( goal_x, (*Source).Height() );
-	Grayscale.Reserve( goal_x, (*Source).Height() );
-	Edge.Reserve( goal_x, (*Source).Height() );
-	Energy.Reserve( goal_x, (*Source).Height() );
-	Reserve_Weights( Weights, goal_x );
-	art_weight.Reserve( goal_x, (*Source).Height() );
-	sum_weight.Reserve( goal_x, (*Source).Height() );
+    //increase thier reserved size as we enlarge. non-destructive resizes would be too slow
+     (*Dest).D_Resize( (*Source).Width(), (*Source).Height() );
+     (*Dest).Reserve( goal_x, (*Source).Height() );
+    Grayscale.Reserve( goal_x, (*Source).Height() );
+    Edge.Reserve( goal_x, (*Source).Height() );
+    Energy.Reserve( goal_x, (*Source).Height() );
+    Reserve_Weights( Weights, goal_x );
+    art_weight.Reserve( goal_x, (*Source).Height() );
+    sum_weight.Reserve( goal_x, (*Source).Height() );
 
-	//clear the new weight
-	art_weight.Fill( 0 );
+    //clear the new weight
+    art_weight.Fill( 0 );
 
-	//have to do this first to get it started
-	Copy_Reserved( Source, Dest );
-	Grayscale_Image( Source, &Grayscale );
-	Edge_Detect( &Grayscale, &Edge, conv );
+    //have to do this first to get it started
+    Copy_Reserved( Source, Dest );
+    Grayscale_Image( Source, &Grayscale );
+    Edge_Detect( &Grayscale, &Edge, conv );
 
 
-	for( int i = 0; i < adds; i++ )
-	{
-		//If you're going to maintain some sort of progress counter/bar, here's where you would do it!
-		if(!p(i)) return false;
+    for( int i = 0; i < adds; i++ )
+    {
+        //If you're going to maintain some sort of progress counter/bar, here's where you would do it!
+        if(!p(i)) return false;
 
-                Add_Weights( Weights, &art_weight, &sum_weight );
-		if( i == 0 )
-		{
-			Energy_Path( &Edge, &sum_weight, &Energy, &Min_Path, true );
-		}
-		else
-		{
-			Energy_Path( &Edge, &sum_weight, &Energy, &Min_Path, false );
-		}
-		Add_Path( Dest, &Min_Path, Weights, &Edge, &Grayscale, &art_weight, &Energy, add_weight, conv );
+        Add_Weights( Weights, &art_weight, &sum_weight );
+        if( i == 0 )
+        {
+            Energy_Path( &Edge, &sum_weight, &Energy, &Min_Path, true );
+        }
+        else
+        {
+            Energy_Path( &Edge, &sum_weight, &Energy, &Min_Path, false );
+        }
+        Add_Path( Dest, &Min_Path, Weights, &Edge, &Grayscale, &art_weight, &Energy, add_weight, conv );
 
-	}
-        return true;
+    }
+    return true;
 } //end CAIR_Add()
 
 /*****************************************************************************************
@@ -1173,223 +1173,223 @@ bool CAIR_Add( CML_color * Source, CML_int * Weights, int goal_x, int add_weight
 *****************************************************************************************/
 struct Remove_Params
 {
-	CML_color * Source;
-	vector<pixel> * Path;
-	CML_int * Weights;
-	CML_int * Edge;
-	CAIR_convolution conv;
-	CML_int * Energy_Map;
-	CML_gray * Grayscale;
-	CML_int * Energy;
-	int top_x;
-	int top_y;
-	int bot_x;
-	int bot_y;
+    CML_color *Source;
+    vector<pixel> *Path;
+    CML_int *Weights;
+    CML_int *Edge;
+    CAIR_convolution conv;
+    CML_int *Energy_Map;
+    CML_gray *Grayscale;
+    CML_int *Energy;
+    int top_x;
+    int top_y;
+    int bot_x;
+    int bot_y;
 };
 
 //more multi-threaded goodness
 //the areas are not quadrants, rather, more like strips, but I keep the name convention
-void * Remove_Quadrant( void * area )
+void *Remove_Quadrant( void *area )
 {
-	Remove_Params remove_area = (*((Remove_Params *)area));
+    Remove_Params remove_area = (*((Remove_Params *)area));
 
-	for( int y = remove_area.top_y; y <= remove_area.bot_y; y++ )
-	{
-		//reduce each row by one, the removed pixel
-		int remove = (*(remove_area.Path))[y].x;
+    for( int y = remove_area.top_y; y <= remove_area.bot_y; y++ )
+    {
+        //reduce each row by one, the removed pixel
+        int remove = (*(remove_area.Path))[y].x;
 
-		//now, bounds check the assignments
-		if( (remove - 1) > 0 )
-		{
-			if( (*(remove_area.Weights))(remove,y) >= 0 ) //otherwise area marked for removal, don't blend
-			{
-				//average removed pixel back in
-				(*(remove_area.Source))(remove-1,y) = Average_Pixels( (*(remove_area.Source))(remove,y), (*(remove_area.Source)).Get(remove-1,y) );
-			}
-			(*(remove_area.Grayscale))(remove-1,y) = Grayscale_Pixel( &(*(remove_area.Source))(remove-1,y) );
-		}
+        //now, bounds check the assignments
+        if( (remove - 1) > 0 )
+        {
+            if( (*(remove_area.Weights))(remove, y) >= 0 ) //otherwise area marked for removal, don't blend
+            {
+                //average removed pixel back in
+                 (*(remove_area.Source))(remove-1, y) = Average_Pixels( (*(remove_area.Source))(remove, y), (*(remove_area.Source)).Get(remove-1, y) );
+            }
+             (*(remove_area.Grayscale))(remove-1, y) = Grayscale_Pixel( &(*(remove_area.Source))(remove-1, y) );
+        }
 
-		if( (remove + 1) < (*(remove_area.Source)).Width() )
-		{
-			if( (*(remove_area.Weights))(remove,y) >= 0 ) //otherwise area marked for removal, don't blend
-			{
-				//average removed pixel back in
-				(*(remove_area.Source))(remove+1,y) = Average_Pixels( (*(remove_area.Source))(remove,y), (*(remove_area.Source)).Get(remove+1,y) );
-			}
-			(*(remove_area.Grayscale))(remove+1,y) = Grayscale_Pixel( &(*(remove_area.Source))(remove+1,y) );
-		}
+        if( (remove + 1) < (*(remove_area.Source)).Width() )
+        {
+            if( (*(remove_area.Weights))(remove, y) >= 0 ) //otherwise area marked for removal, don't blend
+            {
+                //average removed pixel back in
+                 (*(remove_area.Source))(remove+1, y) = Average_Pixels( (*(remove_area.Source))(remove, y), (*(remove_area.Source)).Get(remove+1, y) );
+            }
+             (*(remove_area.Grayscale))(remove+1, y) = Grayscale_Pixel( &(*(remove_area.Source))(remove+1, y) );
+        }
 
-		//shift everyone over
-		(*(remove_area.Source)).Shift_Row( remove + 1, y, -1 );
-		(*(remove_area.Grayscale)).Shift_Row( remove + 1, y, -1 );
-		(*(remove_area.Weights)).Shift_Row( remove + 1, y, -1 );
-		(*(remove_area.Energy)).Shift_Row( remove + 1, y, -1 );//to be recalculated ...
-	}
+        //shift everyone over
+         (*(remove_area.Source)).Shift_Row( remove + 1, y, -1 );
+         (*(remove_area.Grayscale)).Shift_Row( remove + 1, y, -1 );
+         (*(remove_area.Weights)).Shift_Row( remove + 1, y, -1 );
+         (*(remove_area.Energy)).Shift_Row( remove + 1, y, -1 ); //to be recalculated ...
+    }
 
-	return NULL;
+    return NULL;
 } //end Remove_Quadrant()
 
 //Readjust the edge values around the removed path.
-void * Remove_Edge( void * area )
+void *Remove_Edge( void *area )
 {
-	Remove_Params remove_area = (*((Remove_Params *)area));
+    Remove_Params remove_area = (*((Remove_Params *)area));
 
-	//correct the edge values that have changed around the removed path
-	for( int y = remove_area.top_y; y <= remove_area.bot_y; y++ )
-	{
-		int remove = (*(remove_area.Path))[y].x;
-		edge_safe safety = UNSAFE;
-		if( (y <= 3) || (y >= (*(remove_area.Edge)).Height() - 4) || (remove <= 3) || (remove >= (*(remove_area.Edge)).Width() - 4) )
-		{
-			safety = SAFE;
-		}
+    //correct the edge values that have changed around the removed path
+    for( int y = remove_area.top_y; y <= remove_area.bot_y; y++ )
+    {
+        int remove = (*(remove_area.Path))[y].x;
+        edge_safe safety = UNSAFE;
+        if( (y <= 3) || (y >= (*(remove_area.Edge)).Height() - 4) || (remove <= 3) || (remove >= (*(remove_area.Edge)).Width() - 4) )
+        {
+            safety = SAFE;
+        }
 
-		//these checks assume a convolution kernel no larger than 3x3
-		if( (remove - 3) >= 0 )
-		{
-			(*(remove_area.Edge))(remove-3,y) = Convolve_Pixel( remove_area.Grayscale, remove-3, y, safety, remove_area.conv );
+        //these checks assume a convolution kernel no larger than 3x3
+        if( (remove - 3) >= 0 )
+        {
+             (*(remove_area.Edge))(remove-3, y) = Convolve_Pixel( remove_area.Grayscale, remove-3, y, safety, remove_area.conv );
 
-			if( (remove - 2) >= 0 )
-			{
-				(*(remove_area.Edge))(remove-2,y) = Convolve_Pixel( remove_area.Grayscale, remove-2, y, safety, remove_area.conv );
+            if( (remove - 2) >= 0 )
+            {
+                 (*(remove_area.Edge))(remove-2, y) = Convolve_Pixel( remove_area.Grayscale, remove-2, y, safety, remove_area.conv );
 
-				if( (remove - 1) >= 0 )
-				{
-					(*(remove_area.Edge))(remove-1,y) = Convolve_Pixel( remove_area.Grayscale, remove-1, y, safety, remove_area.conv );
-				}
-			}
-		}
-		
-		if( (remove + 1) < (*(remove_area.Source)).Width() )
-		{
-			(*(remove_area.Edge))(remove+1,y) = Convolve_Pixel( remove_area.Grayscale, remove, y, safety, remove_area.conv );
+                if( (remove - 1) >= 0 )
+                {
+                     (*(remove_area.Edge))(remove-1, y) = Convolve_Pixel( remove_area.Grayscale, remove-1, y, safety, remove_area.conv );
+                }
+            }
+        }
 
-			if( (remove + 2) < (*(remove_area.Source)).Width() )
-			{
-				(*(remove_area.Edge))(remove+2,y) = Convolve_Pixel( remove_area.Grayscale, remove+1, y, safety, remove_area.conv );
+        if( (remove + 1) < (*(remove_area.Source)).Width() )
+        {
+             (*(remove_area.Edge))(remove+1, y) = Convolve_Pixel( remove_area.Grayscale, remove, y, safety, remove_area.conv );
 
-				if( (remove + 3) < (*(remove_area.Source)).Width() )
-				{
-					(*(remove_area.Edge))(remove+3,y) = Convolve_Pixel( remove_area.Grayscale, remove+2, y, safety, remove_area.conv );
-				}
-			}
-		}
+            if( (remove + 2) < (*(remove_area.Source)).Width() )
+            {
+                 (*(remove_area.Edge))(remove+2, y) = Convolve_Pixel( remove_area.Grayscale, remove+1, y, safety, remove_area.conv );
 
-		//now we can safely shift
-		(*(remove_area.Edge)).Shift_Row( remove + 1, y, -1 );
-	}
-	return NULL;
+                if( (remove + 3) < (*(remove_area.Source)).Width() )
+                {
+                     (*(remove_area.Edge))(remove+3, y) = Convolve_Pixel( remove_area.Grayscale, remove+2, y, safety, remove_area.conv );
+                }
+            }
+        }
+
+        //now we can safely shift
+         (*(remove_area.Edge)).Shift_Row( remove + 1, y, -1 );
+    }
+    return NULL;
 } //end Remove_Edge()
 
 
 //Removes the requested path from the Edge, Weights, and the image itself.
 //Edge and the image have the path blended back into the them.
 //Weights and Edge better match the dimentions of Source! Path needs to be the same length as the height of the image!
-void Remove_Path( CML_color * Source, vector<pixel> * Path, CML_int * Weights, CML_int * Edge, CML_gray * Grayscale, CML_int * Energy, CAIR_convolution conv )
+void Remove_Path( CML_color *Source, vector<pixel> *Path, CML_int *Weights, CML_int *Edge, CML_gray *Grayscale, CML_int *Energy, CAIR_convolution conv )
 {
-	pthread_t remove_threads[4];
-	Remove_Params thread_params[4];
+    pthread_t remove_threads[4];
+    Remove_Params thread_params[4];
 
-	//top strip, goes all the way across the image, but only 1/4 of its height
-	thread_params[0].Source = Source;
-	thread_params[0].Path = Path;
-	thread_params[0].Weights = Weights;
-	thread_params[0].Edge = Edge;
-	thread_params[0].conv = conv;
-	thread_params[0].Grayscale = Grayscale;
-	thread_params[0].Energy = Energy;
-	thread_params[0].top_x = 0;
-	thread_params[0].top_y = 0;
-	thread_params[0].bot_x = (*Source).Width() - 1;
-	thread_params[0].bot_y = (*Source).Height() / 4;
+    //top strip, goes all the way across the image, but only 1/4 of its height
+    thread_params[0].Source = Source;
+    thread_params[0].Path = Path;
+    thread_params[0].Weights = Weights;
+    thread_params[0].Edge = Edge;
+    thread_params[0].conv = conv;
+    thread_params[0].Grayscale = Grayscale;
+    thread_params[0].Energy = Energy;
+    thread_params[0].top_x = 0;
+    thread_params[0].top_y = 0;
+    thread_params[0].bot_x = (*Source).Width() - 1;
+    thread_params[0].bot_y = (*Source).Height() / 4;
 
-	//top middle strip, going to reuse the first one since its mostly the same
-	thread_params[1] = thread_params[0];
-	thread_params[1].top_y = thread_params[0].bot_y + 1;
-	thread_params[1].bot_y = thread_params[0].bot_y * 2;
+    //top middle strip, going to reuse the first one since its mostly the same
+    thread_params[1] = thread_params[0];
+    thread_params[1].top_y = thread_params[0].bot_y + 1;
+    thread_params[1].bot_y = thread_params[0].bot_y * 2;
 
-	//bottom middle strip
-	thread_params[2] = thread_params[0];
-	thread_params[2].top_y = thread_params[1].bot_y + 1;
-	thread_params[2].bot_y = thread_params[0].bot_y * 3;
+    //bottom middle strip
+    thread_params[2] = thread_params[0];
+    thread_params[2].top_y = thread_params[1].bot_y + 1;
+    thread_params[2].bot_y = thread_params[0].bot_y * 3;
 
-	//bottom strip
-	thread_params[3] = thread_params[0];
-	thread_params[3].top_y = thread_params[2].bot_y + 1;
-	thread_params[3].bot_y = (*Source).Height() - 1;
+    //bottom strip
+    thread_params[3] = thread_params[0];
+    thread_params[3].top_y = thread_params[2].bot_y + 1;
+    thread_params[3].bot_y = (*Source).Height() - 1;
 
-	//create the four threads
-	for( int i = 0; i < 4; i++ )
-	{
-		int rc = pthread_create( &remove_threads[i], NULL, Remove_Quadrant, (void *)&thread_params[i] );
-		if( rc != 0 )
-		{
-			cout << endl << "CAIR: Remove_Path(): FATAL ERROR! Unable to spawn thread!" << endl;
-			exit(1);
-		}
-	}
-	//now wait on them
-	pthread_join( remove_threads[0], NULL );
-	pthread_join( remove_threads[1], NULL );
-	pthread_join( remove_threads[2], NULL );
-	pthread_join( remove_threads[3], NULL );
+    //create the four threads
+    for( int i = 0; i < 4; i++ )
+    {
+        int rc = pthread_create( &remove_threads[i], NULL, Remove_Quadrant, (void *)&thread_params[i] );
+        if( rc != 0 )
+        {
+            cout << endl << "CAIR: Remove_Path(): FATAL ERROR! Unable to spawn thread!" << endl;
+            exit(1);
+        }
+    }
+    //now wait on them
+    pthread_join( remove_threads[0], NULL );
+    pthread_join( remove_threads[1], NULL );
+    pthread_join( remove_threads[2], NULL );
+    pthread_join( remove_threads[3], NULL );
 
-	//now we can safely resize everyone down
-	(*Source).Resize_Width( (*Source).Width() - 1 );
-	(*Weights).Resize_Width( (*Source).Width() );
-	(*Grayscale).Resize_Width( (*Source).Width() );
+    //now we can safely resize everyone down
+     (*Source).Resize_Width( (*Source).Width() - 1 );
+     (*Weights).Resize_Width( (*Source).Width() );
+     (*Grayscale).Resize_Width( (*Source).Width() );
 
-	//create four more threads that handle the edge
-	for( int i = 0; i < 4; i++ )
-	{
-		int rc = pthread_create( &remove_threads[i], NULL, Remove_Edge, (void *)&thread_params[i] );
-		if( rc != 0 )
-		{
-			cout << endl << "CAIR: Remove_Path(): FATAL ERROR! Unable to spawn thread!" << endl;
-			exit(1);
-		}
-	}
-	//now wait on them, ... again
-	pthread_join( remove_threads[0], NULL );
-	pthread_join( remove_threads[1], NULL );
-	pthread_join( remove_threads[2], NULL );
-	pthread_join( remove_threads[3], NULL );
+    //create four more threads that handle the edge
+    for( int i = 0; i < 4; i++ )
+    {
+        int rc = pthread_create( &remove_threads[i], NULL, Remove_Edge, (void *)&thread_params[i] );
+        if( rc != 0 )
+        {
+            cout << endl << "CAIR: Remove_Path(): FATAL ERROR! Unable to spawn thread!" << endl;
+            exit(1);
+        }
+    }
+    //now wait on them, ... again
+    pthread_join( remove_threads[0], NULL );
+    pthread_join( remove_threads[1], NULL );
+    pthread_join( remove_threads[2], NULL );
+    pthread_join( remove_threads[3], NULL );
 
-	(*Edge).Resize_Width( (*Source).Width() );
+     (*Edge).Resize_Width( (*Source).Width() );
 } //end Remove_Path()
 
 
 //Removes all requested vertical paths form the image.
-bool CAIR_Remove( CML_color * Source, CML_int * Weights, int goal_x, CAIR_convolution conv , CML_color * Dest, ProgressPtr p )
+bool CAIR_Remove( CML_color *Source, CML_int *Weights, int goal_x, CAIR_convolution conv, CML_color *Dest, ProgressPtr p )
 {
-	CML_gray Grayscale( (*Source).Width(), (*Source).Height() );
+    CML_gray Grayscale( (*Source).Width(), (*Source).Height() );
 
-	int removes = (*Source).Width() - goal_x;
-	CML_int Edge( (*Source).Width(), (*Source).Height() );
-	CML_int Energy( (*Source).Width(), (*Source).Height() );
-	vector<pixel> Min_Path ( (*Source).Height() );
+    int removes = (*Source).Width() - goal_x;
+    CML_int Edge( (*Source).Width(), (*Source).Height() );
+    CML_int Energy( (*Source).Width(), (*Source).Height() );
+    vector<pixel> Min_Path ( (*Source).Height() );
 
-	//setup the images
-	(*Dest) = (*Source);
-	Grayscale_Image( Source, &Grayscale );
-	Edge_Detect( &Grayscale, &Edge, conv );
+    //setup the images
+     (*Dest) = (*Source);
+    Grayscale_Image( Source, &Grayscale );
+    Edge_Detect( &Grayscale, &Edge, conv );
 
-	for( int i = 0; i < removes; i++ )
-	{
-		//If you're going to maintain some sort of progress counter/bar, here's where you would do it!
-		if(!p(i)) return false;
+    for( int i = 0; i < removes; i++ )
+    {
+        //If you're going to maintain some sort of progress counter/bar, here's where you would do it!
+        if(!p(i)) return false;
 
-		if( i == 0 )
-		{
-			Energy_Path( &Edge, Weights, &Energy, &Min_Path, true );
-		}
-		else
-		{
-			Energy_Path( &Edge, Weights, &Energy, &Min_Path, false );
-		}
-		Remove_Path( Dest, &Min_Path, Weights, &Edge, &Grayscale, &Energy, conv );
-	}
-	return true;
+        if( i == 0 )
+        {
+            Energy_Path( &Edge, Weights, &Energy, &Min_Path, true );
+        }
+        else
+        {
+            Energy_Path( &Edge, Weights, &Energy, &Min_Path, false );
+        }
+        Remove_Path( Dest, &Min_Path, Weights, &Edge, &Grayscale, &Energy, conv );
+    }
+    return true;
 } //end CAIR_Remove()
 
 /*****************************************************************************************
@@ -1400,192 +1400,192 @@ bool CAIR_Remove( CML_color * Source, CML_int * Weights, int goal_x, CAIR_convol
 //and a large negative value will remove it. Do not exceed the limits of int's, as this will cause an overflow. I would suggest
 //a safe range of -2,000,000 to 2,000,000 (this is a maximum guideline, much smaller weights will work just as well for most images).
 //Weights must be the same size as Source. It will be scaled  with Source as paths are removed or added. Dest is the output,
-//and as such has no constraints (its contents will be destroyed, just so you know). 
-//To prevent the same path from being chosen during an add, and to prevent merging paths from being chosen during an add, 
-//additonal weight is placed to the old least-energy path and the new inserted path. Having  a very large add_weight 
-//will cause the algorithm to work more like a linear algorithm. Having a very small add_weight will cause stretching. 
-//A weight of greater than 25 should prevent stretching, but may not evenly distribute paths through an area. 
+//and as such has no constraints (its contents will be destroyed, just so you know).
+//To prevent the same path from being chosen during an add, and to prevent merging paths from being chosen during an add,
+//additonal weight is placed to the old least-energy path and the new inserted path. Having  a very large add_weight
+//will cause the algorithm to work more like a linear algorithm. Having a very small add_weight will cause stretching.
+//A weight of greater than 25 should prevent stretching, but may not evenly distribute paths through an area.
 //Note: Weights does affect path adding, so a large negative weight will atract the most paths. Also, if add_weight is too large,
 //it may eventually force new paths into areas marked for protection. I am unsure of an exact ratio on such things at this time.
 //The internal order is this: remove horizontal, remove vertical, add horizontal, add vertical.
-//CAIR can use multiple convolution methods to determine the image energy. 
+//CAIR can use multiple convolution methods to determine the image energy.
 //Prewitt and Sobel are close to each other in results and represent the "traditional" edge detection.
 //V_SQUARE and V1 can produce some of the better quality results, but may remove from large objects to do so. Do note that V_SQUARE
 //produces much larger edge values, any may require larger weight values (by about an order of magnitude) for effective operation.
 //Laplacian is a second-derivative operator, and can limit some artifcats while generating others.
-bool CAIR( CML_color * Source, CML_int * Weights, int goal_x, int goal_y, int add_weight, CAIR_convolution conv , CML_color * Dest, ProgressPtr p )
+bool CAIR( CML_color *Source, CML_int *Weights, int goal_x, int goal_y, int add_weight, CAIR_convolution conv, CML_color *Dest, ProgressPtr p )
 {
-	//if no change, then just copy to the source to the destination
-	if( (goal_x == (*Source).Width()) && (goal_y == (*Source).Height() ) )
-	{
-		(*Dest) = (*Source);
-		return false;
-	}
+    //if no change, then just copy to the source to the destination
+    if( (goal_x == (*Source).Width()) && (goal_y == (*Source).Height() ) )
+    {
+         (*Dest) = (*Source);
+        return false;
+    }
 
-	CML_color Temp( 1, 1 );
-	Temp = (*Source);
-	if( goal_x < (*Source).Width() )
-	{
-		if(!CAIR_Remove( Source, Weights, goal_x, conv, Dest, p )) return false;
-		Temp = (*Dest);
-	}
+    CML_color Temp( 1, 1 );
+    Temp = (*Source);
+    if( goal_x < (*Source).Width() )
+    {
+        if(!CAIR_Remove( Source, Weights, goal_x, conv, Dest, p )) return false;
+        Temp = (*Dest);
+    }
 
-	if( goal_y < (*Source).Height() )
-	{
-		//remove horiztonal paths
-		//works like above, except hand it a rotated image AND weights
-		CML_color TSource( 1, 1 );
-		CML_color TDest( 1, 1 );
-		CML_int TWeights( 1, 1 );
-		TSource.Transpose( &Temp );
-		TWeights.Transpose( Weights );
+    if( goal_y < (*Source).Height() )
+    {
+        //remove horiztonal paths
+        //works like above, except hand it a rotated image AND weights
+        CML_color TSource( 1, 1 );
+        CML_color TDest( 1, 1 );
+        CML_int TWeights( 1, 1 );
+        TSource.Transpose( &Temp );
+        TWeights.Transpose( Weights );
 
-		if(!CAIR_Remove( &TSource, &TWeights, goal_y, conv, &TDest, p )) return false;
-		
-		//store back the transposed info
-		(*Dest).Transpose( &TDest );
-		(*Weights).Transpose( &TWeights );
-		Temp = (*Dest);
-	}
+        if(!CAIR_Remove( &TSource, &TWeights, goal_y, conv, &TDest, p )) return false;
 
-	if( goal_x > (*Source).Width() )
-	{
-		if(!CAIR_Add( &Temp, Weights, goal_x, add_weight, conv, Dest, p )) return false;
-		Temp = (*Dest); //incase we resize in the y direction
-	}
-	if( goal_y > (*Source).Height() )
-	{
-		//add horiztonal paths
-		//works like above, except hand it a rotated image
-		CML_color TSource( 1, 1 );
-		CML_color TDest( 1, 1 );
-		CML_int TWeights( 1, 1 );
-		TSource.Transpose( &Temp );
-		TWeights.Transpose( Weights );
+        //store back the transposed info
+         (*Dest).Transpose( &TDest );
+         (*Weights).Transpose( &TWeights );
+        Temp = (*Dest);
+    }
 
-		if(!CAIR_Add( &TSource, &TWeights, goal_y, add_weight, conv, &TDest, p )) return false;
-		
-		//store back the transposed info
-		(*Dest).Transpose( &TDest );
-		(*Weights).Transpose( &TWeights );
-	}
-	return true;
+    if( goal_x > (*Source).Width() )
+    {
+        if(!CAIR_Add( &Temp, Weights, goal_x, add_weight, conv, Dest, p )) return false;
+        Temp = (*Dest); //incase we resize in the y direction
+    }
+    if( goal_y > (*Source).Height() )
+    {
+        //add horiztonal paths
+        //works like above, except hand it a rotated image
+        CML_color TSource( 1, 1 );
+        CML_color TDest( 1, 1 );
+        CML_int TWeights( 1, 1 );
+        TSource.Transpose( &Temp );
+        TWeights.Transpose( Weights );
+
+        if(!CAIR_Add( &TSource, &TWeights, goal_y, add_weight, conv, &TDest, p )) return false;
+
+        //store back the transposed info
+         (*Dest).Transpose( &TDest );
+         (*Weights).Transpose( &TWeights );
+    }
+    return true;
 } //end CAIR()
 
 /*****************************************************************************************
 **                                        E X T R A S                                   **
 *****************************************************************************************/
 //Simple function that generates the grayscale image of Source and places the result in Dest.
-void CAIR_Grayscale( CML_color * Source, CML_color * Dest )
+void CAIR_Grayscale( CML_color *Source, CML_color *Dest )
 {
-	CML_gray gray( (*Source).Width(), (*Source).Height() );
-	Grayscale_Image( Source, &gray );
+    CML_gray gray( (*Source).Width(), (*Source).Height() );
+    Grayscale_Image( Source, &gray );
 
-	(*Dest).D_Resize( (*Source).Width(), (*Source).Height() );
+     (*Dest).D_Resize( (*Source).Width(), (*Source).Height() );
 
-	for( int x = 0; x < (*Source).Width(); x++ )
-	{
-		for( int y = 0; y < (*Source).Height(); y++ )
-		{
-			(*Dest)(x,y).red = gray(x,y);
-			(*Dest)(x,y).green = gray(x,y);
-			(*Dest)(x,y).blue = gray(x,y);
-			(*Dest)(x,y).alpha = (*Source)(x,y).alpha;
-		}
-	}
+    for( int x = 0; x < (*Source).Width(); x++ )
+    {
+        for( int y = 0; y < (*Source).Height(); y++ )
+        {
+             (*Dest)(x, y).red = gray(x, y);
+             (*Dest)(x, y).green = gray(x, y);
+             (*Dest)(x, y).blue = gray(x, y);
+             (*Dest)(x, y).alpha = (*Source)(x, y).alpha;
+        }
+    }
 }
 
 //Simple function that generates the edge-detection image of Source and stores it in Dest.
-void CAIR_Edge( CML_color * Source, CAIR_convolution conv, CML_color * Dest )
+void CAIR_Edge( CML_color *Source, CAIR_convolution conv, CML_color *Dest )
 {
-	CML_gray gray( (*Source).Width(), (*Source).Height() );
-	Grayscale_Image( Source, &gray );
+    CML_gray gray( (*Source).Width(), (*Source).Height() );
+    Grayscale_Image( Source, &gray );
 
-	CML_int edge( (*Source).Width(), (*Source).Height() );
-	Edge_Detect( &gray, &edge, conv );
+    CML_int edge( (*Source).Width(), (*Source).Height() );
+    Edge_Detect( &gray, &edge, conv );
 
-	(*Dest).D_Resize( (*Source).Width(), (*Source).Height() );
+     (*Dest).D_Resize( (*Source).Width(), (*Source).Height() );
 
-	for( int x = 0; x < (*Source).Width(); x++ )
-	{
-		for( int y = 0; y < (*Source).Height(); y++ )
-		{
-			int value = edge(x,y);
+    for( int x = 0; x < (*Source).Width(); x++ )
+    {
+        for( int y = 0; y < (*Source).Height(); y++ )
+        {
+            int value = edge(x, y);
 
-			if( value > 255 )
-			{
-				value = 255;
-			}
+            if( value > 255 )
+            {
+                value = 255;
+            }
 
-			(*Dest)(x,y).red = (CML_byte)value;
-			(*Dest)(x,y).green = (CML_byte)value;
-			(*Dest)(x,y).blue = (CML_byte)value;
-			(*Dest)(x,y).alpha = (*Source)(x,y).alpha;
-		}
-	}
+             (*Dest)(x, y).red = (CML_byte)value;
+             (*Dest)(x, y).green = (CML_byte)value;
+             (*Dest)(x, y).blue = (CML_byte)value;
+             (*Dest)(x, y).alpha = (*Source)(x, y).alpha;
+        }
+    }
 }
 
 //Simple function that generates the vertical energy map of Source placing it into Dest.
 //All values are scaled down to their relative gray value. Weights are assumed all zero.
-void CAIR_V_Energy( CML_color * Source, CAIR_convolution conv, CML_color * Dest )
+void CAIR_V_Energy( CML_color *Source, CAIR_convolution conv, CML_color *Dest )
 {
-	CML_gray gray( (*Source).Width(), (*Source).Height() );
-	Grayscale_Image( Source, &gray );
+    CML_gray gray( (*Source).Width(), (*Source).Height() );
+    Grayscale_Image( Source, &gray );
 
-	CML_int edge( (*Source).Width(), (*Source).Height() );
-	Edge_Detect( &gray, &edge, conv );
+    CML_int edge( (*Source).Width(), (*Source).Height() );
+    Edge_Detect( &gray, &edge, conv );
 
-	CML_int energy( edge.Width(), edge.Height() );
-	CML_int weights( edge.Width(), edge.Height() );
-	weights.Fill(0);
+    CML_int energy( edge.Width(), edge.Height() );
+    CML_int weights( edge.Width(), edge.Height() );
+    weights.Fill(0);
 
-	//calculate the energy map
-	Energy_Map( &edge, &weights, &energy, NULL );
+    //calculate the energy map
+    Energy_Map( &edge, &weights, &energy, NULL );
 
-	int max_energy = 0; //find the maximum energy value
-	for( int x = 0; x < energy.Width(); x++ )
-	{
-		for( int y = 0; y < energy.Height(); y++ )
-		{
-			if( energy(x,y) > max_energy )
-			{
-				max_energy = energy(x,y);
-			}
-		}
-	}
-	
-	(*Dest).D_Resize( (*Source).Width(), (*Source).Height() );
+    int max_energy = 0; //find the maximum energy value
+    for( int x = 0; x < energy.Width(); x++ )
+    {
+        for( int y = 0; y < energy.Height(); y++ )
+        {
+            if( energy(x, y) > max_energy )
+            {
+                max_energy = energy(x, y);
+            }
+        }
+    }
 
-	for( int x = 0; x < energy.Width(); x++ )
-	{
-		for( int y = 0; y < energy.Height(); y++ )
-		{
-			//scale the gray value down so we can get a realtive gray value for the energy level
-			int value = (int)(((double)energy(x,y) / max_energy) * 255);
-			if( value < 0 )
-			{
-				value = 0;
-			}
+     (*Dest).D_Resize( (*Source).Width(), (*Source).Height() );
 
-			(*Dest)(x,y).red = (CML_byte)value;
-			(*Dest)(x,y).green = (CML_byte)value;
-			(*Dest)(x,y).blue = (CML_byte)value;
-			(*Dest)(x,y).alpha = (*Source)(x,y).alpha;
-		}
-	}
+    for( int x = 0; x < energy.Width(); x++ )
+    {
+        for( int y = 0; y < energy.Height(); y++ )
+        {
+            //scale the gray value down so we can get a realtive gray value for the energy level
+            int value = (int)(((double)energy(x, y) / max_energy) * 255);
+            if( value < 0 )
+            {
+                value = 0;
+            }
+
+             (*Dest)(x, y).red = (CML_byte)value;
+             (*Dest)(x, y).green = (CML_byte)value;
+             (*Dest)(x, y).blue = (CML_byte)value;
+             (*Dest)(x, y).alpha = (*Source)(x, y).alpha;
+        }
+    }
 } //end CAIR_V_Energy()
 
 //Simple function that generates the horizontal energy map of Source placing it into Dest.
 //All values are scaled down to their relative gray value. Weights are assumed all zero.
-void CAIR_H_Energy( CML_color * Source, CAIR_convolution conv, CML_color * Dest )
+void CAIR_H_Energy( CML_color *Source, CAIR_convolution conv, CML_color *Dest )
 {
-	CML_color Tsource( 1, 1 );
-	CML_color Tdest( 1, 1 );
+    CML_color Tsource( 1, 1 );
+    CML_color Tdest( 1, 1 );
 
-	Tsource.Transpose( Source );
-	CAIR_V_Energy( &Tsource, conv, &Tdest );
+    Tsource.Transpose( Source );
+    CAIR_V_Energy( &Tsource, conv, &Tdest );
 
-	(*Dest).Transpose( &Tdest );
+     (*Dest).Transpose( &Tdest );
 }
 
 //Experimental automatic object removal.
@@ -1594,74 +1594,74 @@ void CAIR_H_Energy( CML_color * Source, CAIR_convolution conv, CML_color * Dest 
 //VERTICAL will force the function to remove all negative weights in the veritcal direction; likewise for HORIZONTAL.
 //Because some conditions may cause the function not to remove all negative weights in one pass, max_attempts lets the function
 //go through the remoal process as many times as you're willing.
-void CAIR_Removal( CML_color * Source, CML_int * Weights, CAIR_direction choice, int max_attempts, int add_weight, CAIR_convolution conv, CML_color * Dest, ProgressPtr p )
+void CAIR_Removal( CML_color *Source, CML_int *Weights, CAIR_direction choice, int max_attempts, int add_weight, CAIR_convolution conv, CML_color *Dest, ProgressPtr p )
 {
-	int negative_x = 0;
-	int negative_y = 0;
-	CML_color Temp( 1, 1 );
-	Temp = (*Source);
+    int negative_x = 0;
+    int negative_y = 0;
+    CML_color Temp( 1, 1 );
+    Temp = (*Source);
 
-	for( int i = 0; i < max_attempts; i++ )
-	{
-		negative_x = 0;
-		negative_y = 0;
+    for( int i = 0; i < max_attempts; i++ )
+    {
+        negative_x = 0;
+        negative_y = 0;
 
-		//count how many negative columns exist
-		for( int x = 0; x < (*Weights).Width(); x++ )
-		{
-			for( int y = 0; y < (*Weights).Height(); y++ )
-			{
-				if( (*Weights)(x,y) < 0 )
-				{
-					negative_x++;
-					break; //only breaks the inner loop
-				}
-			}
-		}
+        //count how many negative columns exist
+        for( int x = 0; x < (*Weights).Width(); x++ )
+        {
+            for( int y = 0; y < (*Weights).Height(); y++ )
+            {
+                if( (*Weights)(x, y) < 0 )
+                {
+                    negative_x++;
+                    break; //only breaks the inner loop
+                }
+            }
+        }
 
-		//count how many negative rows exist
-		for( int y = 0; y < (*Weights).Height(); y++ )
-		{
-			for( int x = 0; x < (*Weights).Width(); x++ )
-			{
-				if( (*Weights)(x,y) < 0 )
-				{
-					negative_y++;
-					break;
-				}
-			}
-		}
+        //count how many negative rows exist
+        for( int y = 0; y < (*Weights).Height(); y++ )
+        {
+            for( int x = 0; x < (*Weights).Width(); x++ )
+            {
+                if( (*Weights)(x, y) < 0 )
+                {
+                    negative_y++;
+                    break;
+                }
+            }
+        }
 
-		switch( choice )
-		{
-		case AUTO :
-			//remove in the direction that has the least to remove
-			if( negative_y < negative_x )
-			{
-				if(!CAIR( &Temp, Weights, Temp.Width(), Temp.Height() - negative_y, add_weight, conv, Dest, p )) return;
-				Temp = (*Dest);
-			}
-			else
-			{
-				if(!CAIR( &Temp, Weights, Temp.Width() - negative_x, Temp.Height(), add_weight, conv, Dest, p )) return;
-				Temp = (*Dest);
-			}
-			break;
+        switch( choice )
+        {
+        case AUTO:
+            //remove in the direction that has the least to remove
+            if( negative_y < negative_x )
+            {
+                if(!CAIR( &Temp, Weights, Temp.Width(), Temp.Height() - negative_y, add_weight, conv, Dest, p )) return;
+                Temp = (*Dest);
+            }
+            else
+            {
+                if(!CAIR( &Temp, Weights, Temp.Width() - negative_x, Temp.Height(), add_weight, conv, Dest, p )) return;
+                Temp = (*Dest);
+            }
+            break;
 
-		case HORIZONTAL :
-			if(!CAIR( &Temp, Weights, Temp.Width(), Temp.Height() - negative_y, add_weight, conv, Dest, p )) return;
-			Temp = (*Dest);
-			break;
+        case HORIZONTAL:
+            if(!CAIR( &Temp, Weights, Temp.Width(), Temp.Height() - negative_y, add_weight, conv, Dest, p )) return;
+            Temp = (*Dest);
+            break;
 
-		case VERTICAL :
-			if(!CAIR( &Temp, Weights, Temp.Width() - negative_x, Temp.Height(), add_weight, conv, Dest, p )) return;
-			Temp = (*Dest);
-			break;
-		}
-	}
+        case VERTICAL:
+            if(!CAIR( &Temp, Weights, Temp.Width() - negative_x, Temp.Height(), add_weight, conv, Dest, p )) return;
+            Temp = (*Dest);
+            break;
+        }
+    }
 
-	//now expand back out to the origional
-	CAIR( &Temp, Weights, (*Source).Width(), (*Source).Height(), add_weight, conv, Dest, p );
+    //now expand back out to the origional
+    CAIR( &Temp, Weights, (*Source).Width(), (*Source).Height(), add_weight, conv, Dest, p );
 } //end CAIR_Removal()
 
 //Precompute removals in the x direction. Map will hold the largest width the corisponding pixel is still visible.
@@ -1670,73 +1670,73 @@ void CAIR_Removal( CML_color * Source, CML_int * Weights, CAIR_direction choice,
 //doesn't work all that well and generates significant artifacts. This function is intended for "content-aware multi-size images" as mentioned
 //in the doctors' presentation. The next logical step would be to encode Map into an existing image format. Then, using a function like
 //CAIR_Map_Resize() the image can be resized on a client machine with very little overhead.
-void CAIR_Image_Map( CML_color * Source, CML_int * Weights, CAIR_convolution conv, CML_int * Map )
+void CAIR_Image_Map( CML_color *Source, CML_int *Weights, CAIR_convolution conv, CML_int *Map )
 {
-	(*Map).D_Resize( (*Source).Width(), (*Source).Height() );
-	(*Map).Fill( 0 );
+     (*Map).D_Resize( (*Source).Width(), (*Source).Height() );
+     (*Map).Fill( 0 );
 
-	CML_color Temp( 1, 1 );
-	Temp = (*Source);
-	CML_int Temp_Weights( 1, 1 );
-	Temp_Weights = (*Weights); //don't change Weights since there is no change to the image
+    CML_color Temp( 1, 1 );
+    Temp = (*Source);
+    CML_int Temp_Weights( 1, 1 );
+    Temp_Weights = (*Weights); //don't change Weights since there is no change to the image
 
-	for( int i = Temp.Width(); i > 3; i-- ) //3 is the minimum safe amount with 3x3 convolution kernels without causing problems
-	{
-		//grayscale
-		CML_gray Grayscale( Temp.Width(), Temp.Height() );
-		Grayscale_Image( &Temp, &Grayscale );
+    for( int i = Temp.Width(); i > 3; i-- ) //3 is the minimum safe amount with 3x3 convolution kernels without causing problems
+    {
+        //grayscale
+        CML_gray Grayscale( Temp.Width(), Temp.Height() );
+        Grayscale_Image( &Temp, &Grayscale );
 
-		//edge detect
-		CML_int Edge( Temp.Width(), Temp.Height() );
-		Edge_Detect( &Grayscale, &Edge, conv );
+        //edge detect
+        CML_int Edge( Temp.Width(), Temp.Height() );
+        Edge_Detect( &Grayscale, &Edge, conv );
 
-		//find the energy values
-		vector<pixel> Path( Temp.Height() );
-		CML_int Energy( Temp.Width(), Temp.Height() );
-		Energy_Path( &Edge, &Temp_Weights, &Energy, &Path, true );
+        //find the energy values
+        vector<pixel> Path( Temp.Height() );
+        CML_int Energy( Temp.Width(), Temp.Height() );
+        Energy_Path( &Edge, &Temp_Weights, &Energy, &Path, true );
 
-		Remove_Path( &Temp, &Path, &Temp_Weights, &Edge, &Grayscale, &Energy, conv );
+        Remove_Path( &Temp, &Path, &Temp_Weights, &Edge, &Grayscale, &Energy, conv );
 
-		//now set the corisponding map value with the resolution
-		for( int y = 0; y < Temp.Height(); y++ )
-		{
-			int index = 0;
-			int offset = Path[y].x;
+        //now set the corisponding map value with the resolution
+        for( int y = 0; y < Temp.Height(); y++ )
+        {
+            int index = 0;
+            int offset = Path[y].x;
 
-			while( (*Map)(index,y) != 0 ) index++; //find the pixel that is in location zero (first unused)
-			while( offset > 0 )
-			{
-				if( (*Map)(index,y) == 0 ) //find the correct x index
-				{
-					offset--;
-				}
-				index++;
-			}
-			while( (*Map)(index,y) != 0 ) index++; //if the current and subsequent pixels have been removed
+            while( (*Map)(index, y) != 0 ) index++;  //find the pixel that is in location zero (first unused)
+            while( offset > 0 )
+            {
+                if( (*Map)(index, y) == 0 ) //find the correct x index
+                {
+                    offset--;
+                }
+                index++;
+            }
+            while( (*Map)(index, y) != 0 ) index++;  //if the current and subsequent pixels have been removed
 
-			(*Map)(index,y) = i; //this is now the smallest resolution this pixel will be visible
-		}
-	}
+             (*Map)(index, y) = i; //this is now the smallest resolution this pixel will be visible
+        }
+    }
 } //end CAIR_Image_Map()
 
 //An "example" function on how to decode the Map to quickly resize an image. This is only for the width, since multi-directional
 //resizing produces significant artifacts. Do note this will produce different results than standard CAIR(), because this resize doesn't
 //average pixels back into the image as does CAIR(). This function could be multi-threaded much like Remove_Path() for even faster performance.
-void CAIR_Map_Resize( CML_color * Source, CML_int * Map, int goal_x, CML_color * Dest )
+void CAIR_Map_Resize( CML_color *Source, CML_int *Map, int goal_x, CML_color *Dest )
 {
-	(*Dest).D_Resize( goal_x, (*Source).Height() );
+     (*Dest).D_Resize( goal_x, (*Source).Height() );
 
-	for( int y = 0; y < (*Source).Height(); y++ )
-	{
-		int input_x = 0; //map the Source's pixels to the Dests smaller size
-		for( int x = 0; x < goal_x; x++ )
-		{
-			while( (*Map)(input_x,y) > goal_x ) input_x++; //skip past pixels not in this resolution
+    for( int y = 0; y < (*Source).Height(); y++ )
+    {
+        int input_x = 0; //map the Source's pixels to the Dests smaller size
+        for( int x = 0; x < goal_x; x++ )
+        {
+            while( (*Map)(input_x, y) > goal_x ) input_x++;  //skip past pixels not in this resolution
 
-			(*Dest)(x,y) = (*Source)(input_x,y);
-			input_x++;
-		}
-	}
+             (*Dest)(x, y) = (*Source)(input_x, y);
+            input_x++;
+        }
+    }
 }
 
 /*****************************************************************************************
@@ -1746,63 +1746,63 @@ void CAIR_Map_Resize( CML_color * Source, CML_int * Map, int goal_x, CML_color *
 //will determine which direction has the least amount of energy and then removes in that direction. This is only done
 //for removal, since enlarging will not benifit, although this function will perform addition just like CAIR().
 //Inputs are the same as CAIR(), except quality is assumed to be always one.
-void CAIR_HD( CML_color * Source, CML_int * Weights, int goal_x, int goal_y, int add_weight, CAIR_convolution conv, CML_color * Dest, ProgressPtr p )
+void CAIR_HD( CML_color *Source, CML_int *Weights, int goal_x, int goal_y, int add_weight, CAIR_convolution conv, CML_color *Dest, ProgressPtr p )
 {
-	//if no change, then just copy to the source to the destination
-	if( (goal_x == (*Source).Width()) && (goal_y == (*Source).Height() ) )
-	{
-		(*Dest) = (*Source);
-		return;
-	}
+    //if no change, then just copy to the source to the destination
+    if( (goal_x == (*Source).Width()) && (goal_y == (*Source).Height() ) )
+    {
+         (*Dest) = (*Source);
+        return;
+    }
 
-	CML_color Temp( 1, 1 );
-	CML_color TTemp( 1, 1 );
+    CML_color Temp( 1, 1 );
+    CML_color TTemp( 1, 1 );
 
-	//to start the loop
-	(*Dest) = (*Source);
+    //to start the loop
+     (*Dest) = (*Source);
 
-	//do this loop when we can remove in either direction
-	while( ((*Dest).Width() > goal_x) && ((*Dest).Height() > goal_y) )
-	{
-		Temp = (*Dest);
-		TTemp.Transpose( Dest );
+    //do this loop when we can remove in either direction
+    while( ((*Dest).Width() > goal_x) && ((*Dest).Height() > goal_y) )
+    {
+        Temp = (*Dest);
+        TTemp.Transpose( Dest );
 
-		//grayscale the normal and transposed
-		CML_gray Grayscale( Temp.Width(), Temp.Height() );
-		CML_gray TGrayscale( TTemp.Width(), TTemp.Height() );
-		Grayscale_Image( &Temp, &Grayscale );
-		Grayscale_Image( &TTemp, &TGrayscale );
+        //grayscale the normal and transposed
+        CML_gray Grayscale( Temp.Width(), Temp.Height() );
+        CML_gray TGrayscale( TTemp.Width(), TTemp.Height() );
+        Grayscale_Image( &Temp, &Grayscale );
+        Grayscale_Image( &TTemp, &TGrayscale );
 
-		//edge detect
-		CML_int Edge( Temp.Width(), Temp.Height() );
-		CML_int TEdge( TTemp.Width(), TTemp.Height() );
-		Edge_Detect( &Grayscale, &Edge, conv );
-		Edge_Detect( &TGrayscale, &TEdge, conv );
+        //edge detect
+        CML_int Edge( Temp.Width(), Temp.Height() );
+        CML_int TEdge( TTemp.Width(), TTemp.Height() );
+        Edge_Detect( &Grayscale, &Edge, conv );
+        Edge_Detect( &TGrayscale, &TEdge, conv );
 
-		//find the energy values
-		CML_int TWeights( 1, 1 );
-		TWeights.Transpose( Weights );
-		vector<pixel> Path(Temp.Height());
-		vector<pixel> TPath(TTemp.Height());
-		CML_int Energy( Temp.Width(), Temp.Height() );
-		CML_int TEnergy( TTemp.Width(), TTemp.Height() );
-		int energy_x = Energy_Path( &Edge, Weights, &Energy, &Path, true );
-		int energy_y = Energy_Path( &TEdge, &TWeights, &TEnergy, &TPath, true );
+        //find the energy values
+        CML_int TWeights( 1, 1 );
+        TWeights.Transpose( Weights );
+        vector<pixel> Path(Temp.Height());
+        vector<pixel> TPath(TTemp.Height());
+        CML_int Energy( Temp.Width(), Temp.Height() );
+        CML_int TEnergy( TTemp.Width(), TTemp.Height() );
+        int energy_x = Energy_Path( &Edge, Weights, &Energy, &Path, true );
+        int energy_y = Energy_Path( &TEdge, &TWeights, &TEnergy, &TPath, true );
 
-		if( energy_y < energy_x )
-		{
-			Remove_Path( &TTemp, &TPath, &TWeights, &TEdge, &TGrayscale, &TEnergy, conv );
-			(*Dest).Transpose( &TTemp );
-			(*Weights).Transpose( &TWeights );
-		}
-		else
-		{
-			Remove_Path( &Temp, &Path, Weights, &Edge, &Grayscale, &Energy, conv );
-			(*Dest) = Temp;
-		}
-	}
+        if( energy_y < energy_x )
+        {
+            Remove_Path( &TTemp, &TPath, &TWeights, &TEdge, &TGrayscale, &TEnergy, conv );
+             (*Dest).Transpose( &TTemp );
+             (*Weights).Transpose( &TWeights );
+        }
+        else
+        {
+            Remove_Path( &Temp, &Path, Weights, &Edge, &Grayscale, &Energy, conv );
+             (*Dest) = Temp;
+        }
+    }
 
-	//one dimension is the now on the goal, so finish off the other direction
-	Temp = (*Dest);
-	CAIR( &Temp, Weights, goal_x, goal_y, add_weight, conv, Dest, p );
+    //one dimension is the now on the goal, so finish off the other direction
+    Temp = (*Dest);
+    CAIR( &Temp, Weights, goal_x, goal_y, add_weight, conv, Dest, p );
 } //end CAIR_HD()

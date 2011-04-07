@@ -43,19 +43,20 @@ class QWebViewItemPrivate
 {
 public:
     QWebViewItemPrivate(QWebViewItem *view)
-            : view(view)
-            , page(0)
+        : view(view)
+          , page(0)
 #ifndef QT_NO_CURSOR
-            , cursorSetByWebCore(false)
-            , usesWebCoreCursor(false)
+          , cursorSetByWebCore(false)
+          , usesWebCoreCursor(false)
 #endif
-    {}
+    {
+    }
 
     QWebViewItem *view;
     QWebPage *page;
     QRect viewRect;
     float opacity;
-    QTimeLine * fadeline;
+    QTimeLine *fadeline;
     QPixmap previewCache;
 
 
@@ -68,7 +69,7 @@ public:
     bool cursorSetByWebCore;
     bool usesWebCoreCursor;
 
-    void setCursor(const QCursor& newCursor)
+    void setCursor(const QCursor &newCursor)
     {
         webCoreCursor = newCursor;
 
@@ -82,12 +83,12 @@ public:
 #endif
 };
 
-QWebViewItem::QWebViewItem(const QRectF &rect, QGraphicsItem * parent)
-        : QGraphicsRectItem(rect, parent)
+QWebViewItem::QWebViewItem(const QRectF &rect, QGraphicsItem *parent)
+    : QGraphicsRectItem(rect, parent)
 {
     qDebug() << Q_FUNC_INFO << rect;
     d = new QWebViewItemPrivate(this);
-    d->opacity  = 1.0;
+    d->opacity = 1.0;
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
     setFlag(QGraphicsItem::ItemIsFocusable, true);
     setAcceptsHoverEvents (true);
@@ -122,7 +123,7 @@ QPixmap QWebViewItem::getPreview(bool fullpage)
 
 /*!
     Destroys the web view.
-*/
+ */
 QWebViewItem::~QWebViewItem()
 {
     if (d->page && d->page->parent() == this)
@@ -134,7 +135,7 @@ QWebViewItem::~QWebViewItem()
     Returns a pointer to the underlying web page.
 
     \sa setPage()
-*/
+ */
 QWebPage *QWebViewItem::page() const
 {
     if (!d->page) {
@@ -152,7 +153,7 @@ QWebPage *QWebViewItem::page() const
     view, it will be deleted.
 
     \sa page()
-*/
+ */
 void QWebViewItem::setPage(QWebPage *page)
 {
     if (d->page == page)
@@ -167,41 +168,41 @@ void QWebViewItem::setPage(QWebPage *page)
     d->page = page;
     if (d->page) {
         QWebFrame *mainFrame = d->page->mainFrame();
-        mainFrame->setScrollBarPolicy(Qt::Vertical,Qt::ScrollBarAlwaysOff);
-        mainFrame->setScrollBarPolicy(Qt::Horizontal,Qt::ScrollBarAlwaysOff);
-        connect(mainFrame, SIGNAL(titleChanged(const QString&)),
-                this, SIGNAL(titleChanged(const QString&)));
+        mainFrame->setScrollBarPolicy(Qt::Vertical, Qt::ScrollBarAlwaysOff);
+        mainFrame->setScrollBarPolicy(Qt::Horizontal, Qt::ScrollBarAlwaysOff);
+        connect(mainFrame, SIGNAL(titleChanged(const QString &)),
+         this, SIGNAL(titleChanged(const QString &)));
         connect(mainFrame, SIGNAL(iconChanged()),
-                this, SIGNAL(iconChanged()));
+         this, SIGNAL(iconChanged()));
         connect(mainFrame, SIGNAL(urlChanged(const QUrl &)),
-                this, SIGNAL(urlChanged(const QUrl &)));
+         this, SIGNAL(urlChanged(const QUrl &)));
 
         connect(d->page, SIGNAL(loadStarted()),
-                this, SIGNAL(loadStarted()));
+         this, SIGNAL(loadStarted()));
 
         connect(d->page, SIGNAL(loadProgress(int)),
-                this, SIGNAL(loadProgress(int)));
+         this, SIGNAL(loadProgress(int)));
         connect(d->page, SIGNAL(loadFinished(bool)),
-                this, SIGNAL(loadFinished(bool)));
+         this, SIGNAL(loadFinished(bool)));
         connect(d->page, SIGNAL(statusBarMessage(const QString &)),
-                this, SIGNAL(statusBarMessage(const QString &)));
+         this, SIGNAL(statusBarMessage(const QString &)));
         connect(d->page, SIGNAL(linkClicked(const QUrl &)),
-                this, SIGNAL(linkClicked(const QUrl &)));
+         this, SIGNAL(linkClicked(const QUrl &)));
 
-        connect(d->page,SIGNAL(repaintRequested(const QRect&)),this,SLOT(repaintDirty(const QRect&)));
-        connect(d->page,SIGNAL(scrollRequested(int, int , const QRect&)),this,SLOT(scrollReqest(int, int , const QRect&)));
-        connect(this, SIGNAL(loadFinished(bool)),this,SLOT(loaded(bool)));
-        connect(this, SIGNAL(loadStarted()),this,SLOT(startTimers()));
+        connect(d->page, SIGNAL(repaintRequested(const QRect &)), this, SLOT(repaintDirty(const QRect &)));
+        connect(d->page, SIGNAL(scrollRequested(int, int, const QRect &)), this, SLOT(scrollReqest(int, int, const QRect &)));
+        connect(this, SIGNAL(loadFinished(bool)), this, SLOT(loaded(bool)));
+        connect(this, SIGNAL(loadStarted()), this, SLOT(startTimers()));
     }
 
 }
 
-void QWebViewItem::scrollReqest(int dx, int dy, const QRect& r)
+void QWebViewItem::scrollReqest(int dx, int dy, const QRect &r)
 {
     update(r);
 }
 
-void QWebViewItem::repaintDirty(const QRect& rect)
+void QWebViewItem::repaintDirty(const QRect &rect)
 {
 
     update(rect);
@@ -219,15 +220,15 @@ void QWebViewItem::load(const QUrl &url)
 void QWebViewItem::load(const QWebNetworkRequest &request)
 #else
 void QWebViewItem::load(const QNetworkRequest &request,
-                        QNetworkAccessManager::Operation operation,
-                        const QByteArray &body)
+ QNetworkAccessManager::Operation operation,
+ const QByteArray &body)
 #endif
 {
     page()->mainFrame()->load(request
 #if QT_VERSION >= 0x040800
-    , operation, body
+     , operation, body
 #endif
-                             );
+     );
 }
 
 
@@ -280,7 +281,7 @@ QUrl QWebViewItem::url() const
     \brief the icon associated with the web page currently viewed
 
     \sa iconChanged(), QWebSettings::iconForUrl()
-*///
+ */                                                                                                                                                          //
 QIcon QWebViewItem::icon() const
 {
     if (d->page)
@@ -293,7 +294,7 @@ QIcon QWebViewItem::icon() const
     \brief the text currently selected
 
     \sa findText(), selectionChanged()
-*/
+ */
 QString QWebViewItem::selectedText() const
 {
     if (d->page)
@@ -303,7 +304,7 @@ QString QWebViewItem::selectedText() const
 
 /*!
     Returns a pointer to a QAction that encapsulates the specified web action \a action.
-*/
+ */
 QAction *QWebViewItem::pageAction(QWebPage::WebAction action) const
 {
     return page()->action(action);
@@ -319,7 +320,7 @@ QAction *QWebViewItem::pageAction(QWebPage::WebAction action) const
     \snippet doc/src/snippets/code/src.3rdparty.webkit.WebKit.qt.Api.qwebview.cpp 2
 
     \sa pageAction()
-*/
+ */
 void QWebViewItem::triggerPageAction(QWebPage::WebAction action, bool checked)
 {
     page()->triggerAction(action, checked);
@@ -331,7 +332,7 @@ void QWebViewItem::triggerPageAction(QWebPage::WebAction action, bool checked)
 
     Parts of HTML documents can be editable for example through the
     \c{contenteditable} attribute on HTML elements.
-*/
+ */
 bool QWebViewItem::isModified() const
 {
     if (d->page)
@@ -340,34 +341,34 @@ bool QWebViewItem::isModified() const
 }
 
 /*
-Qt::TextInteractionFlags QWebViewItem::textInteractionFlags() const
-{
+   Qt::TextInteractionFlags QWebViewItem::textInteractionFlags() const
+   {
     // ### FIXME (add to page)
     return Qt::TextInteractionFlags();
-}
-*/
+   }
+ */
 
 /*
     \property QWebViewItem::textInteractionFlags
     \brief how the view should handle user input
 
     Specifies how the user can interact with the text on the page.
-*/
+ */
 
 /*
-void QWebViewItem::setTextInteractionFlags(Qt::TextInteractionFlags flags)
-{
+   void QWebViewItem::setTextInteractionFlags(Qt::TextInteractionFlags flags)
+   {
     Q_UNUSED(flags)
     // ### FIXME (add to page)
-}
-*/
+   }
+ */
 
 /*!
     \reimp
-*/
+ */
 QSize QWebViewItem::sizeHint() const
 {
-    return QSize(rect().width(),rect().height());
+    return QSize(rect().width(), rect().height());
 }
 
 QRectF QWebViewItem::boundingRect() const
@@ -377,9 +378,9 @@ QRectF QWebViewItem::boundingRect() const
 
 
 /*!
-  \property QWebViewItem::textSizeMultiplier
-  \brief the scaling factor for all text in the frame
-*/
+   \property QWebViewItem::textSizeMultiplier
+   \brief the scaling factor for all text in the frame
+ */
 
 void QWebViewItem::setTextSizeMultiplier(qreal factor)
 {
@@ -443,7 +444,7 @@ void QWebViewItem::forward()
     Reloads the current document.
 
     \sa stop(), pageAction(), loadStarted()
-*/
+ */
 void QWebViewItem::reload()
 {
     if (d->page)
@@ -451,7 +452,7 @@ void QWebViewItem::reload()
 }
 
 /*! \reimp
-*/
+ */
 void QWebViewItem::resizeEvent(QResizeEvent *e)
 {
     if (d->page)
@@ -459,8 +460,8 @@ void QWebViewItem::resizeEvent(QResizeEvent *e)
 }
 
 /*! \reimp
-*/
-void QWebViewItem::paint ( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget  )
+ */
+void QWebViewItem::paint ( QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget  )
 {
     if (!d->page)
         return;
@@ -479,9 +480,9 @@ void QWebViewItem::paint ( QPainter * painter, const QStyleOptionGraphicsItem * 
     painter->setRenderHint(QPainter::SmoothPixmapTransform, true);
     QWebFrame *frame = d->page->mainFrame();
     frame->render(painter, QRegion(QRect(option->exposedRect.x(),
-                    option->exposedRect.y(),
-                    option->exposedRect.width(),
-                    option->exposedRect.height())));
+             option->exposedRect.y(),
+             option->exposedRect.width(),
+             option->exposedRect.height())));
     painter->setClipRect(rect());
 }
 
@@ -490,7 +491,7 @@ void QWebViewItem::paint ( QPainter * painter, const QStyleOptionGraphicsItem * 
     a JavaScript request to open a document in a new window.
 
     \sa QWebPage::createWindow()
-*/
+ */
 QWebViewItem *QWebViewItem::createWindow(QWebPage::WebWindowType type)
 {
     Q_UNUSED(type)
@@ -498,8 +499,8 @@ QWebViewItem *QWebViewItem::createWindow(QWebPage::WebWindowType type)
 }
 
 /*! \reimp
-*/
-void QWebViewItem::mouseMoveEvent(QGraphicsSceneMouseEvent* ev)
+ */
+void QWebViewItem::mouseMoveEvent(QGraphicsSceneMouseEvent *ev)
 {
     //hack
     if (d->page) {
@@ -515,8 +516,8 @@ void QWebViewItem::mouseMoveEvent(QGraphicsSceneMouseEvent* ev)
 }
 
 /*! \reimp
-*/
-void QWebViewItem::mousePressEvent(QGraphicsSceneMouseEvent* ev)
+ */
+void QWebViewItem::mousePressEvent(QGraphicsSceneMouseEvent *ev)
 {
     if (d->page) {
         QMouseEvent fakeMouseEvent(QEvent::MouseButtonPress, ev->pos().toPoint(), ev->button(), ev->buttons(), ev->modifiers());
@@ -528,8 +529,8 @@ void QWebViewItem::mousePressEvent(QGraphicsSceneMouseEvent* ev)
 }
 
 /*! \reimp
-*/
-void QWebViewItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* ev)
+ */
+void QWebViewItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *ev)
 {
     if (d->page) {
         QMouseEvent fakeMouseEvent(QEvent::MouseButtonDblClick, ev->pos().toPoint(), ev->button(), ev->buttons(), ev->modifiers());
@@ -541,21 +542,21 @@ void QWebViewItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* ev)
 }
 
 /*! \reimp
-*/
-void QWebViewItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* ev)
+ */
+void QWebViewItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *ev)
 {
     if (d->page) {
         QMouseEvent fakeMouseEvent(QEvent::MouseButtonRelease, ev->pos().toPoint(), ev->button(), ev->buttons(), ev->modifiers());
         d->page->event(&fakeMouseEvent);
         d->page->event(ev);
         ev->accept();
-    QGraphicsRectItem::mouseReleaseEvent(ev);
+        QGraphicsRectItem::mouseReleaseEvent(ev);
     }
 }
 
 /*! \reimp
-*/
-void QWebViewItem::contextMenuEvent(QGraphicsSceneContextMenuEvent * ev)
+ */
+void QWebViewItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *ev)
 {
     if (d->page)
         d->page->event(ev);
@@ -564,8 +565,8 @@ void QWebViewItem::contextMenuEvent(QGraphicsSceneContextMenuEvent * ev)
 }
 
 /*! \reimp
-*/
-void QWebViewItem::wheelEvent(QGraphicsSceneWheelEvent * ev)
+ */
+void QWebViewItem::wheelEvent(QGraphicsSceneWheelEvent *ev)
 {
     if (d->page) {
         QWheelEvent fakeWheelEvent(ev->pos().toPoint(), ev->delta(), ev->buttons(), ev->modifiers(), ev->orientation());
@@ -575,8 +576,8 @@ void QWebViewItem::wheelEvent(QGraphicsSceneWheelEvent * ev)
 }
 
 /*! \reimp
-*/
-void QWebViewItem::keyPressEvent(QKeyEvent* ev)
+ */
+void QWebViewItem::keyPressEvent(QKeyEvent *ev)
 {
     if (d->page)
         d->page->event(ev);
@@ -585,8 +586,8 @@ void QWebViewItem::keyPressEvent(QKeyEvent* ev)
 }
 
 /*! \reimp
-*/
-void QWebViewItem::keyReleaseEvent(QKeyEvent* ev)
+ */
+void QWebViewItem::keyReleaseEvent(QKeyEvent *ev)
 {
     if (d->page)
         d->page->event(ev);
@@ -596,8 +597,8 @@ void QWebViewItem::keyReleaseEvent(QKeyEvent* ev)
 }
 
 /*! \reimp
-*/
-void QWebViewItem::focusInEvent(QFocusEvent* ev)
+ */
+void QWebViewItem::focusInEvent(QFocusEvent *ev)
 {
     if (d->page)
         d->page->event(ev);
@@ -606,8 +607,8 @@ void QWebViewItem::focusInEvent(QFocusEvent* ev)
 }
 
 /*! \reimp
-*/
-void QWebViewItem::focusOutEvent(QFocusEvent* ev)
+ */
+void QWebViewItem::focusOutEvent(QFocusEvent *ev)
 {
     QGraphicsRectItem::focusOutEvent(ev);
     if (d->page)
@@ -616,8 +617,8 @@ void QWebViewItem::focusOutEvent(QFocusEvent* ev)
 }
 
 /*! \reimp
-*/
-void QWebViewItem::dragEnterEvent(QDragEnterEvent* ev)
+ */
+void QWebViewItem::dragEnterEvent(QDragEnterEvent *ev)
 {
 #ifndef QT_NO_DRAGANDDROP
     if (d->page)
@@ -626,8 +627,8 @@ void QWebViewItem::dragEnterEvent(QDragEnterEvent* ev)
 }
 
 /*! \reimp
-*/
-void QWebViewItem::dragLeaveEvent(QDragLeaveEvent* ev)
+ */
+void QWebViewItem::dragLeaveEvent(QDragLeaveEvent *ev)
 {
 #ifndef QT_NO_DRAGANDDROP
     if (d->page)
@@ -636,8 +637,8 @@ void QWebViewItem::dragLeaveEvent(QDragLeaveEvent* ev)
 }
 
 /*! \reimp
-*/
-void QWebViewItem::dragMoveEvent(QDragMoveEvent* ev)
+ */
+void QWebViewItem::dragMoveEvent(QDragMoveEvent *ev)
 {
 #ifndef QT_NO_DRAGANDDROP
     if (d->page)
@@ -646,8 +647,8 @@ void QWebViewItem::dragMoveEvent(QDragMoveEvent* ev)
 }
 
 /*! \reimp
-*/
-void QWebViewItem::dropEvent(QDropEvent* ev)
+ */
+void QWebViewItem::dropEvent(QDropEvent *ev)
 {
 #ifndef QT_NO_DRAGANDDROP
     if (d->page)
@@ -656,7 +657,7 @@ void QWebViewItem::dropEvent(QDropEvent* ev)
 }
 
 /*! \reimp
-*/
+ */
 bool QWebViewItem::focusNextPrevChild(bool next)
 {
     if (d->page && d->page->focusNextPrevChild(next))
@@ -665,7 +666,7 @@ bool QWebViewItem::focusNextPrevChild(bool next)
 }
 
 /*!\reimp
-*/
+ */
 QVariant QWebViewItem::inputMethodQuery(Qt::InputMethodQuery property) const
 {
     if (d->page)
@@ -674,7 +675,7 @@ QVariant QWebViewItem::inputMethodQuery(Qt::InputMethodQuery property) const
 }
 
 /*!\reimp
-*/
+ */
 void QWebViewItem::inputMethodEvent(QInputMethodEvent *e)
 {
     if (d->page)
@@ -682,7 +683,7 @@ void QWebViewItem::inputMethodEvent(QInputMethodEvent *e)
 }
 
 /*!\reimp
-*/
+ */
 void QWebViewItem::changeEvent(QEvent *e)
 {
     if (d->page && e->type() == QEvent::PaletteChange) {

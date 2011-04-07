@@ -44,7 +44,7 @@
 #include <QtUiTools/QUiLoader>
 
 
-int main(int argc, char **argv)
+int main(int argc, char * *argv)
 {
     QApplication app(argc, argv);
     QString url = QString("http://www.google.com");
@@ -62,23 +62,23 @@ int main(int argc, char **argv)
     QUrl qurl(url);
     if (qurl.scheme().isEmpty())
         qurl = QUrl::fromLocalFile(QFileInfo(url).absoluteFilePath());
-        
-     QGraphicsScene * s = new  QGraphicsScene();
-     WebView  window(s); ///WebView is a GraphicsView dose not relate to QWebView
-     window.resize(800,480);
-     window.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
-     
-     QWebViewItem * item = new QWebViewItem();
-     item->setUrl(qurl);
-     s->addItem(item);
-     //item->hide();
-     item->load(qurl);
-     item->grabMouse();
-     item->grabKeyboard();
-     window.addWebPage(item);//some thing i needed for reflectiondemo 
+
+    QGraphicsScene *s = new  QGraphicsScene();
+    WebView window(s);   ///WebView is a GraphicsView dose not relate to QWebView
+    window.resize(800, 480);
+    window.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+
+    QWebViewItem *item = new QWebViewItem();
+    item->setUrl(qurl);
+    s->addItem(item);
+    //item->hide();
+    item->load(qurl);
+    item->grabMouse();
+    item->grabKeyboard();
+    window.addWebPage(item); //some thing i needed for reflectiondemo
 //     item->setPos((window.width()- item->boundingRect().width())/2, (window.height() - item->boundingRect().height())/2);
-      int x = 1 ;
-      int y = x;
+    int x = 1;
+    int y = x;
 //     item->setTransform(QTransform().translate(x, y).scale(2.0,2.0).translate(-x, -y));
     window.show();
 

@@ -29,44 +29,44 @@ namespace PlexyDesk
 {
 
 
-class googleweatherWidget:public DesktopWidget
+class googleweatherWidget : public DesktopWidget
 {
 
     Q_OBJECT
 
-        public:
-        googleweatherWidget(const QRectF &rect, QWidget *widget = 0);
-        virtual ~googleweatherWidget();
-        virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem * e, QWidget *);
-        void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
-        void setPath(QString);
-        void drawWidget();
-    public slots:        
-        void drawItems();
-        void data();
-    private:        
-        void tempInCel(QPainter *p,QString temp,int x,int y, bool c, int size);
-        QString getDay(QString);
-        void drawSet(QPainter *p);
-        void setCity_UI(QPainter *p);
-        QRectF clip;
-        QRectF view;
-        int shade;
-        int moveY;
-        QImage widgetBack;
-        QImage w_ImageDock;
-        QVariantMap weatherdata;
-        SocialQDBusPluginData *weather;
-        QStringList weatherKeys;
-        QStringList weatherValues;
-        QString prefix; 
-        int initD,DS_EXTF,initTimer;
-   // private slots:
+public:
+    googleweatherWidget(const QRectF &rect, QWidget *widget = 0);
+    virtual ~googleweatherWidget();
+    virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *e, QWidget *);
+    void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
+    void setPath(QString);
+    void drawWidget();
+public slots:
+    void drawItems();
+    void data();
+private:
+    void tempInCel(QPainter *p, QString temp, int x, int y, bool c, int size);
+    QString getDay(QString);
+    void drawSet(QPainter *p);
+    void setCity_UI(QPainter *p);
+    QRectF clip;
+    QRectF view;
+    int shade;
+    int moveY;
+    QImage widgetBack;
+    QImage w_ImageDock;
+    QVariantMap weatherdata;
+    SocialQDBusPluginData *weather;
+    QStringList weatherKeys;
+    QStringList weatherValues;
+    QString prefix;
+    int initD, DS_EXTF, initTimer;
+    // private slots:
 
-;
+    ;
 
 };
 
-} 
+}
 #endif
 

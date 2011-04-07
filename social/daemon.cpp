@@ -27,33 +27,33 @@
 
 namespace PlexyDesk
 {
-    SocialDaemon::SocialDaemon(QApplication *parent=0) : QDBusAbstractAdaptor(parent)
-    {
+SocialDaemon::SocialDaemon(QApplication *parent = 0) : QDBusAbstractAdaptor(parent)
+{
 
-        QDBusConnection::sessionBus().registerService("org.plexydesk.social");
-    }
+    QDBusConnection::sessionBus().registerService("org.plexydesk.social");
+}
 
-    SocialPlugin* SocialDaemon::getPluginInstance(const QString &pluginName)
-    {
-        QObject *pluginInstance = (PluginLoader::getInstance()->instance(pluginName));
-        SocialPlugin *socioPlugin = static_cast<SocialPlugin *>(pluginInstance);
-        return socioPlugin;
-    }
+SocialPlugin *SocialDaemon::getPluginInstance(const QString &pluginName)
+{
+    QObject *pluginInstance = (PluginLoader::getInstance()->instance(pluginName));
+    SocialPlugin *socioPlugin = static_cast<SocialPlugin *>(pluginInstance);
+    return socioPlugin;
+}
 
-    QStringList SocialDaemon::getPluginsList()
-    {
-        return PluginLoader::getInstance()->listPlugins("Social");
-    }
+QStringList SocialDaemon::getPluginsList()
+{
+    return PluginLoader::getInstance()->listPlugins("Social");
+}
 
-    QStringList SocialDaemon::supportedMethods(const QString &pluginName)
-    {
-        SocialPlugin *instance = getPluginInstance(pluginName);
-       // return instance->supportedMethods();//SocialPlugin.h must contain a method QStringList supportedMethods()
-    }
+QStringList SocialDaemon::supportedMethods(const QString &pluginName)
+{
+    SocialPlugin *instance = getPluginInstance(pluginName);
+    // return instance->supportedMethods();//SocialPlugin.h must contain a method QStringList supportedMethods()
+}
 
-    QVariantMap SocialDaemon::data(const QString &pluginName, const QString &methodName, QVariantMap args)
-    {
-        SocialPlugin *socioPlugin = getPluginInstance(pluginName);
-        //socioPlugin->data(methodName, args);//SocialPlugin.h must contain a method QVariantMap data(const QString &methodName, QVariantMap args)
-    }
-}//namespace PlexyDesk
+QVariantMap SocialDaemon::data(const QString &pluginName, const QString &methodName, QVariantMap args)
+{
+    SocialPlugin *socioPlugin = getPluginInstance(pluginName);
+    //socioPlugin->data(methodName, args);//SocialPlugin.h must contain a method QVariantMap data(const QString &methodName, QVariantMap args)
+}
+} //namespace PlexyDesk

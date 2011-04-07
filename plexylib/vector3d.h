@@ -24,56 +24,58 @@
 
 namespace PlexyDesk {
 
-class  VISIBLE_SYM Vector3D 
+class VISIBLE_SYM Vector3D
 {
-	public:
-		
-		/**
-		 * Initialize the vector class, X , Y , and Z is set to 0.0 by default
-		 */
-		Vector3D():x(0.0f),y(0.0f),z(0.0f) {}
-		/**
-		 * Create a user defined Vector
-		 * @param X X Value of the Vector 
-		 * @param Y Y Valule of the Vector
-		 * @param Z Z Value of the Vector
-		 */
-		Vector3D(float X, float Y, float Z):x(X),y(Y),z(Z) {}
+public:
 
-		Vector3D add (Vector3D) ;
+    /**
+     * Initialize the vector class, X , Y , and Z is set to 0.0 by default
+     */
+    Vector3D() : x(0.0f), y(0.0f), z(0.0f) {
+    }
+    /**
+     * Create a user defined Vector
+     * @param X X Value of the Vector
+     * @param Y Y Valule of the Vector
+     * @param Z Z Value of the Vector
+     */
+    Vector3D(float X, float Y, float Z) : x(X), y(Y), z(Z) {
+    }
 
-		Vector3D substract(Vector3D);
-	
-		double magnitude();
+    Vector3D add (Vector3D);
 
-		double dot(Vector3D);
-                Vector3D mult(float);
-	
-		Vector3D cross(Vector3D);
+    Vector3D substract(Vector3D);
 
-		Vector3D unitVector3D();
-         /**
-         * Over loads the - operator there for it lets you subsctract two vectors, as if you are working with 
-		 * any pre-defined data type such as a float, example a = b -c , where a , b , and c are vector objects.
-         * @param vector 
-          * @return 
- 		*/
-         Vector3D operator-(const Vector3D& vector) const
-         {
-           return Vector3D(x-vector.x,y-vector.y,z-vector.z);
-         }
+    double magnitude();
 
-         Vector3D operator+ (const Vector3D& vector) const {
-             return Vector3D(x+vector.x,y+vector.y,z+vector.z);
-         }
+    double dot(Vector3D);
+    Vector3D mult(float);
 
-                
-	private:
-		float x;		//x component
-		float y;		//y component
-		float z;		//z component
-	
-	};// End Class Vector3D
+    Vector3D cross(Vector3D);
+
+    Vector3D unitVector3D();
+    /**
+     * Over loads the - operator there for it lets you subsctract two vectors, as if you are working with
+     * any pre-defined data type such as a float, example a = b -c , where a , b , and c are vector objects.
+     * @param vector
+     * @return
+     */
+    Vector3D operator-(const Vector3D &vector) const
+    {
+        return Vector3D(x-vector.x, y-vector.y, z-vector.z);
+    }
+
+    Vector3D operator+ (const Vector3D &vector) const {
+        return Vector3D(x+vector.x, y+vector.y, z+vector.z);
+    }
+
+
+private:
+    float x;            //x component
+    float y;            //y component
+    float z;            //z component
+
+};    // End Class Vector3D
 
 }
 

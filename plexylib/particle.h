@@ -50,43 +50,44 @@
 
 namespace PlexyDesk {
 
-    class VISIBLE_SYM Particle {
+class VISIBLE_SYM Particle {
 
-    public:
+public:
 
-        Particle() {        // Default Constructor
-            Vector3D position;
-            Vector3D velocity;
-            mass  =1;
-        }
+    Particle() {            // Default Constructor
+        Vector3D position;
+        Vector3D velocity;
+        mass = 1;
+    }
 
-        /*
-         * Constructor which is used to create an object of mass m
-         * at the location pos in space with some velocity vel.
-         */
-        Particle(Vector3D pos, Vector3D vel,float m):position(pos),velocity(vel),mass(m) {}
+    /*
+     * Constructor which is used to create an object of mass m
+     * at the location pos in space with some velocity vel.
+     */
+    Particle(Vector3D pos, Vector3D vel, float m) : position(pos), velocity(vel), mass(m) {
+    }
 
-  /*
-   * Updates the data of the particle
-   * current time. We shall defince the
-   * function in further inherited objects
-   * cause update will be different for·
-   * different type of objects
-   */
-        virtual void updateDynamics() = 0 ;
+    /*
+     * Updates the data of the particle
+     * current time. We shall defince the
+     * function in further inherited objects
+     * cause update will be different for·
+     * different type of objects
+     */
+    virtual void updateDynamics() = 0;
 
-        void hit();
+    void hit();
 
 //        void collide(Particle); FIXME - Particle has a pure virtual method above
 
-    private:
-        Vector3D position;
-        Vector3D velocity;
-        float mass;
-        int isCaught;
-        int isSpringed;
+private:
+    Vector3D position;
+    Vector3D velocity;
+    float mass;
+    int isCaught;
+    int isSpringed;
 
-    } ; // End Class Particle
+};      // End Class Particle
 } // Namespace
 #endif
 

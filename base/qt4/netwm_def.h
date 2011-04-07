@@ -18,28 +18,28 @@
 *******************************************************************************/
 /*
 
-  Copyright (c) 2000 Troll Tech AS
-  Copyright (c) 2003 Lubos Lunak <l.lunak@kde.org>
+   Copyright (c) 2000 Troll Tech AS
+   Copyright (c) 2003 Lubos Lunak <l.lunak@kde.org>
 
-  Permission is hereby granted, free of charge, to any person obtaining a
-  copy of this software and associated documentation files (the "Software"),
-  to deal in the Software without restriction, including without limitation
-  the rights to use, copy, modify, merge, publish, distribute, sublicense,
-  and/or sell copies of the Software, and to permit persons to whom the
-  Software is furnished to do so, subject to the following conditions:
+   Permission is hereby granted, free of charge, to any person obtaining a
+   copy of this software and associated documentation files (the "Software"),
+   to deal in the Software without restriction, including without limitation
+   the rights to use, copy, modify, merge, publish, distribute, sublicense,
+   and/or sell copies of the Software, and to permit persons to whom the
+   Software is furnished to do so, subject to the following conditions:
 
-  The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
+   The above copyright notice and this permission notice shall be included in
+   all copies or substantial portions of the Software.
 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
-  THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-  DEALINGS IN THE SOFTWARE.
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+   THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+   DEALINGS IN THE SOFTWARE.
 
-*/
+ */
 
 #ifndef   __netwm_def_h
 #define   __netwm_def_h
@@ -47,56 +47,58 @@
 #include <plexy.h>
 
 /**
-  Simple point class for NET classes.
+   Simple point class for NET classes.
 
-  This class is a convenience class defining a point x, y.  The existence of
-  this class is to keep the implementation from being dependant on a
-  separate framework/library.
+   This class is a convenience class defining a point x, y.  The existence of
+   this class is to keep the implementation from being dependant on a
+   separate framework/library.
 
-  NETPoint is only used by the NET API. Usually QPoint is the
-  appropriate class for representing a point.
+   NETPoint is only used by the NET API. Usually QPoint is the
+   appropriate class for representing a point.
 
-  @author Bradley T. Hughes <bhughes@trolltech.com>
-**/
+   @author Bradley T. Hughes <bhughes@trolltech.com>
+ **/
 
 struct NETPoint {
     /**
        Constructor to initialize this point to 0,0.
-    **/
-    NETPoint() : x(0), y(0) { }
+     **/
+    NETPoint() : x(0), y(0) {
+    }
 
     /*
        Public data member.
-    **/
+     **/
     int x, ///< x coordinate.
-    y;   ///< y coordinate
+     y;  ///< y coordinate
 };
 
 
 /**
-  Simple size class for NET classes.
+   Simple size class for NET classes.
 
-  This class is a convenience class defining a size width by height.  The
-  existence of this class is to keep the implementation from being dependant
-  on a separate framework/library.
+   This class is a convenience class defining a size width by height.  The
+   existence of this class is to keep the implementation from being dependant
+   on a separate framework/library.
 
-  NETSize is only used by the NET API. Usually QSize is the
-  appropriate class for representing a size.
+   NETSize is only used by the NET API. Usually QSize is the
+   appropriate class for representing a size.
 
-  @author Bradley T. Hughes <bhughes@trolltech.com>
-**/
+   @author Bradley T. Hughes <bhughes@trolltech.com>
+ **/
 
 struct NETSize {
     /**
        Constructor to initialize this size to 0x0
-    **/
-    NETSize() : width(0), height(0) { }
+     **/
+    NETSize() : width(0), height(0) {
+    }
 
     /*
        Public data member.
-    **/
+     **/
     int width,  ///< Width.
-    height;   ///< Height.
+     height;  ///< Height.
 };
 
 /**
@@ -108,20 +110,20 @@ struct NETSize {
 
    NETRect is only used by the NET API. Usually QRect is the
    appropriate class for representing a rectangle.
-**/
+ **/
 struct NETRect {
     /**
        Position of the rectangle.
 
        @see NETPoint
-    **/
+     **/
     NETPoint pos;
 
     /**
        Size of the rectangle.
 
        @see NETSize
-    **/
+     **/
     NETSize size;
 };
 
@@ -135,26 +137,27 @@ struct NETRect {
 
    NETIcon is only used by the NET API. Usually QIcon is the
    appropriate class for representing an icon.
-**/
+ **/
 
 struct NETIcon {
     /**
        Constructor to initialize this icon to 0x0 with data=0
-    **/
-    NETIcon() : data(0) { }
+     **/
+    NETIcon() : data(0) {
+    }
 
     /**
        Size of the icon.
 
        @see NETSize
-    **/
+     **/
     NETSize size;
 
     /**
        Image data for the icon.  This is an array of 32bit packed CARDINAL ARGB
        with high byte being A, low byte being B. First two bytes are width, height.
        Data is in rows, left to right and top to bottom.
-    **/
+     **/
     unsigned char *data;
 };
 
@@ -166,34 +169,35 @@ struct NETIcon {
    bottom border values, and ranges for them.  The existence of this class is to
    keep the implementation from being dependant on a separate framework/library.
    See the _NET_WM_STRUT_PARTIAL property in the NETWM spec.
-**/
+ **/
 
 struct NETExtendedStrut {
     /**
        Constructor to initialize this struct to 0,0,0,0
-    **/
+     **/
     NETExtendedStrut() : left_width(0), left_start(0), left_end(0),
-            right_width(0), right_start(0), right_end(0), top_width(0), top_start(0), top_end(0),
-            bottom_width(0), bottom_start(0), bottom_end(0) {}
+                         right_width(0), right_start(0), right_end(0), top_width(0), top_start(0), top_end(0),
+                         bottom_width(0), bottom_start(0), bottom_end(0) {
+    }
 
     /**
        Left border of the strut, width and range.
-           **/
+     **/
     int left_width, left_start, left_end;
 
     /**
        Right border of the strut, width and range.
-    **/
+     **/
     int right_width, right_start, right_end;
 
     /**
        Top border of the strut, width and range.
-           **/
+     **/
     int top_width, top_start, top_end;
 
     /**
        Bottom border of the strut, width and range.
-           **/
+     **/
     int bottom_width, bottom_start, bottom_end;
 
 };
@@ -208,46 +212,47 @@ struct NETExtendedStrut {
    bottom border values.  The existence of this class is to keep the implementation
    from being dependant on a separate framework/library. See the _NET_WM_STRUT
    property in the NETWM spec.
-**/
+ **/
 
 struct NETStrut {
     /**
        Constructor to initialize this struct to 0,0,0,0
-    **/
-    NETStrut() : left(0), right(0), top(0), bottom(0) { }
+     **/
+    NETStrut() : left(0), right(0), top(0), bottom(0) {
+    }
 
     /**
        Left border of the strut.
-           **/
+     **/
     int left;
 
     /**
        Right border of the strut.
-    **/
+     **/
     int right;
 
     /**
        Top border of the strut.
-           **/
+     **/
     int top;
 
     /**
        Bottom border of the strut.
-           **/
+     **/
     int bottom;
 };
 
 
 /**
-  Base namespace class.
+   Base namespace class.
 
-  The NET API is an implementation of the NET Window Manager Specification.
+   The NET API is an implementation of the NET Window Manager Specification.
 
-  This class is the base class for the NETRootInfo and NETWinInfo classes, which
-  are used to retrieve and modify the properties of windows. To keep
-  the namespace relatively clean, all enums are defined here.
+   This class is the base class for the NETRootInfo and NETWinInfo classes, which
+   are used to retrieve and modify the properties of windows. To keep
+   the namespace relatively clean, all enums are defined here.
 
-  @see http://www.freedesktop.org/standards/wm-spec/
+   @see http://www.freedesktop.org/standards/wm-spec/
  **/
 
 class VISIBLE_SYM NET
@@ -261,7 +266,7 @@ public:
 
        @li WindowManager indicates that the application is a window manager
        application.
-    **/
+     **/
 
     enum Role {
         Client,
@@ -296,7 +301,7 @@ public:
 
        @li TopMenu indicates a toplevel menu (AKA macmenu). This is a KDE extension to the
        _NET_WM_WINDOW_TYPE mechanism.
-    **/
+     **/
 
     enum WindowType {
         Unknown  = -1,
@@ -317,7 +322,7 @@ public:
         Values for WindowType when they should be OR'ed together, e.g.
         for the properties argument of the NETRootInfo constructor.
         @since 3.2
-    **/
+     **/
     enum WindowTypeMask {
         NormalMask   = 1 << 0,
         DesktopMask  = 1 << 1,
@@ -379,7 +384,7 @@ public:
 
        Note that KeepAbove (StaysOnTop) and KeepBelow are meant as user preference and applications
        should avoid setting these states themselves.
-    **/
+     **/
 
     enum State {
         Modal        = 1 << 0,
@@ -415,7 +420,7 @@ public:
        @li Move (for movement only)
        @li KeyboardSize (resizing via keyboard)
        @li KeyboardMove (movement via keyboard)
-    **/
+     **/
 
     enum Direction {
         TopLeft      = 0,
@@ -429,15 +434,15 @@ public:
         Move         = 8,  // movement only
         /**
            @since 3.2
-        **/
+         **/
         KeyboardSize = 9,  // size via keyboard
         /**
            @since 3.2
-        **/
+         **/
         KeyboardMove = 10, // move via keyboard
         /**
-          @since 3.5.1
-        **/
+           @since 3.5.1
+         **/
         MoveResizeCancel = 11 // to ask the WM to stop moving a window
     };
 
@@ -453,7 +458,7 @@ public:
        @li Iconic indicates that the client window is not visible, but its icon is.
            This can be when the window is minimized or when it's on a different
            virtual desktop. See also NET::Hidden.
-    **/
+     **/
 
     // KDE4 aaarghl, this doesn't map correctly to Xlib #defines
     enum MappingState {
@@ -463,9 +468,9 @@ public:
     };
 
     /**
-      Actions that can be done with a window (_NET_WM_ALLOWED_ACTIONS).
-      @since 3.2
-    **/
+       Actions that can be done with a window (_NET_WM_ALLOWED_ACTIONS).
+       @since 3.2
+     **/
     enum Action {
         ActionMove           = 1 << 0,
         ActionResize         = 1 << 1,
@@ -524,7 +529,7 @@ public:
        @li KDESystemTrayWindows
        @li WMKDESystemTrayWinFor
        @li WMKDEFrameStrut
-    **/
+     **/
 
     enum Property {
         // root
@@ -588,7 +593,7 @@ public:
 
         @since 3.2
 
-    **/
+     **/
     enum Property2 {
         WM2UserTime            = 1 << 0,
         WM2StartupId           = 1 << 1,
@@ -618,7 +623,7 @@ public:
        @li FromApplication the request comes from a normal application
        @li FromTool the request comes from pager or similar tool
        @since 3.2
-    **/
+     **/
     // must match the values for data.l[0] field in _NET_ACTIVE_WINDOW message
     enum RequestSource {
         FromUnknown, // internal
@@ -627,16 +632,16 @@ public:
     };
 
     /**
-     Compares two X timestamps, taking into account wrapping and 64bit architectures.
-     Return value is like with strcmp(), 0 for equal, -1 for time1 < time2, 1 for time1 > time2.
-     @since 3.5.3
-    */
+       Compares two X timestamps, taking into account wrapping and 64bit architectures.
+       Return value is like with strcmp(), 0 for equal, -1 for time1 < time2, 1 for time1 > time2.
+       @since 3.5.3
+     */
     static int timestampCompare(unsigned long time1, unsigned long time2);
     /**
-     Returns a difference of two X timestamps, time2 - time1, where time2 must be later than time1,
-     as returned by timestampCompare().
-     @since 3.5.3
-    */
+       Returns a difference of two X timestamps, time2 - time1, where time2 must be later than time1,
+       as returned by timestampCompare().
+       @since 3.5.3
+     */
     static int timestampDiff(unsigned long time1_, unsigned long time2_);
 
 };

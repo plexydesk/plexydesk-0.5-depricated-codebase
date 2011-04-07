@@ -31,9 +31,10 @@ class PresenceData::PresenceDataPrivate
 {
     PresenceData *parent;
 public:
-    PresenceDataPrivate(PresenceData *p) : parent(p) {}
+    PresenceDataPrivate(PresenceData *p) : parent(p) {
+    }
 
-    Telepathy::Client::AccountManager * m_accountManager;
+    Telepathy::Client::AccountManager *m_accountManager;
 
     void createAccountDataSource(const QString &path) {
         qDebug() << "createAccountDataSource called";
@@ -70,8 +71,8 @@ public:
     }
 };
 
-PresenceData::PresenceData(QObject * parent)
-        : d(new PresenceDataPrivate(this))
+PresenceData::PresenceData(QObject *parent)
+    : d(new PresenceDataPrivate(this))
 {
     // Register custom types:
     Telepathy::registerTypes();
@@ -105,17 +106,17 @@ void PresenceData::init()
      * data engine.
      */
     d->m_accountManager =
-        new Telepathy::Client::AccountManager(QDBusConnection::sessionBus());
+     new Telepathy::Client::AccountManager(QDBusConnection::sessionBus());
 
     /*
      * connect signal from the account manager
      * to waiting when it's ready
      */
     connect(d->m_accountManager->becomeReady(),
-            SIGNAL(finished(Telepathy::Client::PendingOperation*)),
-            this,
-            SLOT(onAccountReady(Telepathy::Client::PendingOperation*))
-           );
+     SIGNAL(finished(Telepathy::Client::PendingOperation *)),
+     this,
+     SLOT(onAccountReady(Telepathy::Client::PendingOperation *))
+     );
 
     /*
      * connect signals from the account manager
@@ -127,11 +128,11 @@ void PresenceData::init()
      * processing them, we don't miss out on it.
      */
     connect(d->m_accountManager, SIGNAL(accountCreated(const QString &)),
-            this, SLOT(accountCreated(const QString &)));
+     this, SLOT(accountCreated(const QString &)));
     connect(d->m_accountManager, SIGNAL(accountValidityChanged(const QString &, bool)),
-            this, SLOT(accountValidityChanged(const QString &, bool)));
+     this, SLOT(accountValidityChanged(const QString &, bool)));
     connect(d->m_accountManager, SIGNAL(accountRemoved(const QString &)),
-            this, SLOT(accountRemoved(const QString &)));
+     this, SLOT(accountRemoved(const QString &)));
 }
 
 void PresenceData::onAccountReady(Telepathy::Client::PendingOperation *operation)
@@ -208,7 +209,7 @@ void PresenceData::accountRemoved(const QString &path)
     d->removeAccountDataSource(path);
 }
 
-void PresenceData::pushData(QVariant& v)
+void PresenceData::pushData(QVariant &v)
 {
 
 }

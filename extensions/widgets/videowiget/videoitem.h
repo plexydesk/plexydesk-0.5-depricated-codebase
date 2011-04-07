@@ -28,7 +28,7 @@
 namespace PlexyDesk
 {
 
-class VideoItem: public DesktopWidget
+class VideoItem : public DesktopWidget
 {
 
     Q_OBJECT
@@ -37,10 +37,10 @@ public:
     virtual ~VideoItem();
     void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
     void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
-    virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event);
+    virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
     QRectF boundingRect() const;
 public slots:
-    void getImage(QImage & img);
+    void getImage(QImage &img);
     void loop();
 
 private:

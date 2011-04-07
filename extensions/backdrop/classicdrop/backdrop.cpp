@@ -24,7 +24,7 @@ BgPlugin::BgPlugin(QObject *object)
     : BackdropPlugin(object)
 {
     mBackgroundPixmap =
-        QPixmap(PlexyDesk::Config::getInstance()->CurrentWallpaper);
+     QPixmap(PlexyDesk::Config::getInstance()->CurrentWallpaper);
 }
 
 BgPlugin::~BgPlugin()

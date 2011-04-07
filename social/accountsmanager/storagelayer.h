@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- *Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ **Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 #include "storagelayerinterface.h"
@@ -31,11 +31,11 @@ class SocialStorageLayer : public StorageLayerInterface
 {
     Q_OBJECT;
 public:
-    SocialStorageLayer(QObject *parent=0);
+    SocialStorageLayer(QObject *parent = 0);
     void open();
-    void close() ;
+    void close();
 
-    QStringList listAccounts() ;
+    QStringList listAccounts();
     QVariantMap readAccount(const QString &id);
     bool removeAccount(const QString &id);
     bool writeAccount(const QString &id, const QVariantMap &data);

@@ -9,8 +9,10 @@ ImageCache *ImageCache::staticObject = NULL;
 class ImageCache::Private
 {
 public:
-    Private() {}
-    ~Private() {}
+    Private() {
+    }
+    ~Private() {
+    }
     QHash<QString, QPixmap> map;
     QHash<QString, QString> fileHash;
     QSvgRenderer render;
@@ -29,7 +31,7 @@ ImageCache *ImageCache::instance() {
     return staticObject;
 }
 
-ImageCache::ImageCache():d(new Private)
+ImageCache::ImageCache() : d(new Private)
 {
     load("default");
 }
@@ -51,7 +53,7 @@ void ImageCache::load(const QString &themename)
     dir.setFilter(QDir::Files);
     QFileInfoList list = dir.entryInfoList();
 
-    for (int i=0 ; i < list.size() ; i++)
+    for (int i = 0; i < list.size(); i++)
     {
         QFileInfo file = list.at(i);
         d->map[file.completeBaseName()] = QPixmap(file.absoluteFilePath());
@@ -76,4 +78,4 @@ bool ImageCache::drawSvg(QPainter *p, QRectF rect, const QString &file)
     }
     return false;
 }
-}//namespace 
+} //namespace

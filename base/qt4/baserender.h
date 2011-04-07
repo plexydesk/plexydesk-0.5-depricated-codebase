@@ -33,29 +33,29 @@ class QString;
 
 namespace PlexyDesk
 {
-    class PLEXYDESK_EXPORT BaseRender : public QGLWidget
-    {
-        Q_OBJECT
-    public:
-        typedef QMap<QString, QPixmap *> CacheDict;
+class PLEXYDESK_EXPORT BaseRender : public QGLWidget
+{
+    Q_OBJECT
+public:
+    typedef QMap<QString, QPixmap *> CacheDict;
 
-        BaseRender(QWidget * parent = 0,
-                   const QGLWidget *shareWidget = 0,
-                   Qt::WindowFlags f = 0);
-        virtual ~BaseRender();
+    BaseRender(QWidget *parent = 0,
+         const QGLWidget *shareWidget = 0,
+         Qt::WindowFlags f = 0);
+    virtual ~BaseRender();
 
-        void resetViewport(int width, int height);
-        void resetOverlay(int width, int height);
+    void resetViewport(int width, int height);
+    void resetOverlay(int width, int height);
 
-    protected:
-        void initializeGL();
-        void resizeGL(int width, int height);
-        void paintEvent(QPaintEvent *event);
+protected:
+    void initializeGL();
+    void resizeGL(int width, int height);
+    void paintEvent(QPaintEvent *event);
 
-    private:
-       class Private;
-        Private * const d ;
-    };
+private:
+    class Private;
+    Private *const d;
+};
 
 } // namespace #ifndef
 #endif

@@ -12,7 +12,7 @@
    along with this library; see the file COPYING.LIB.  If not, write to
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
-*/
+ */
 
 #ifndef PLEXYWINDOWS_H
 #define PLEXYWINDOWS_H
@@ -27,14 +27,15 @@ extern "C" {
 #include <X11/extensions/Xdamage.h>
 }
 
-class PlexyWindows :  public PlexyDesk::DesktopWidget
+class PlexyWindows : public PlexyDesk::DesktopWidget
 {
     Q_OBJECT
 public:
     PlexyWindows(Display *d, Window w, XWindowAttributes *attr, QWidget *parent = 0, Qt::WindowFlags f = 0);
-    virtual ~PlexyWindows() {}
+    virtual ~PlexyWindows() {
+    }
 
-    virtual void paintViewSide(QPainter *painter,const QRectF &rect);
+    virtual void paintViewSide(QPainter *painter, const QRectF &rect);
     void Destroyed ();
     void Mapped (bool override_redirect);
     void Unmapped ();
@@ -42,13 +43,13 @@ public:
     void bind();
     void PropertyChanged (Atom prop, bool deleted);
     void Configured (bool isNotify,
-                     int x, int y,
-                     int width, int height,
-                     int border,
-                     PlexyWindows *aboveWin,
-                     bool override_redirect);
+     int x, int y,
+     int width, int height,
+     int border,
+     PlexyWindows *aboveWin,
+     bool override_redirect);
     void Damaged(XRectangle *rect);
-    void ClientMessaged (Atom type, int format, long *data/*[5]*/);
+    void ClientMessaged (Atom type, int format, long *data /*[5]*/);
     void Resized(int x, int y, int width, int height, int border);
     void ReleaseWindow ();
 private:

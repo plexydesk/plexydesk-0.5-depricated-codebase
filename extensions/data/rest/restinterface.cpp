@@ -21,15 +21,15 @@
 #include <desktopwidget.h>
 #include <plexyconfig.h>
 
-RestInterface::RestInterface(QObject * object)
+RestInterface::RestInterface(QObject *object)
 {
 }
 
 PlexyDesk::DataPlugin *RestInterface::instance()
 {
     /* this is the plugin we are returning since plexy core
-    or other plugins will expect this pointer
-    */
+       or other plugins will expect this pointer
+     */
     return new RestData();
 }
 

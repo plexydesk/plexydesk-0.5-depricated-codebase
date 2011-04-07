@@ -22,7 +22,7 @@
 
 namespace PlexyDesk
 {
-VideoWidget::VideoWidget(const QRectF &rect, QWidget *widget): DesktopWidget(rect, widget)
+VideoWidget::VideoWidget(const QRectF &rect, QWidget *widget) : DesktopWidget(rect, widget)
 {
     setDockImage(QPixmap(applicationDirPath() + "/share/plexy/skins/widgets/widget01/pila.png"));
     cover = QImage(200, 200, QImage::Format_ARGB32_Premultiplied);
@@ -33,22 +33,22 @@ VideoWidget::~VideoWidget()
 {
 }
 
-void VideoWidget::setFrameImage(QImage& img)
+void VideoWidget::setFrameImage(QImage &img)
 {
-    video  = img;
+    video = img;
     update();
 }
 
-void VideoWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
+void VideoWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *widget)
 {
     QRectF r = e->exposedRect;
-    p->drawImage(QRectF(20, 20, r.width() - 40, r.height() - 40) , video);
+    p->drawImage(QRectF(20, 20, r.width() - 40, r.height() - 40), video);
 }
 
-void VideoWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
+void VideoWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *widget)
 {
     QRectF r = e->exposedRect;
-    p->drawImage(QRectF(20, 20, r.width() - 40, r.height() - 40) , cover);
+    p->drawImage(QRectF(20, 20, r.width() - 40, r.height() - 40), cover);
 }
 
 QRectF VideoWidget::boundingRect() const

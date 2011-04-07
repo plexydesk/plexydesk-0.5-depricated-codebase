@@ -29,10 +29,10 @@ class VISIBLE_SYM VideoWidget : public PlexyDesk::WidgetInterface
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::WidgetInterface)
 
-public:
-    VideoWidget(QObject * object = 0);
+public :
+        VideoWidget(QObject *object = 0);
     virtual ~VideoWidget();
-    virtual QGraphicsItem * item();// {};
+    virtual QGraphicsItem *item(); // {};
 
 
 };

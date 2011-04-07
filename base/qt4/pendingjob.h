@@ -27,10 +27,10 @@ public:
 Q_SIGNALS:
     void finished();
 protected:
-    PendingJob(QObject* parent);
+    PendingJob(QObject *parent);
 private:
     class Private;
-    Private * const d;
+    Private *const d;
 };
 }
 #endif // PENDINGJOB_H

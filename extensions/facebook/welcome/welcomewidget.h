@@ -28,17 +28,17 @@
 
 class QTimer;
 
-class WelcomeWidget: public PlexyDesk::DesktopWidget
+class WelcomeWidget : public PlexyDesk::DesktopWidget
 {
     Q_OBJECT
 public:
     WelcomeWidget(const QRectF &rect, QWidget *widget = 0);
-    virtual ~WelcomeWidget(); 
+    virtual ~WelcomeWidget();
     void paintBackSide(QPainter *painter, const QRectF &rect);
     void paintViewSide(QPainter *painter, const QRectF &rect);
 
 public Q_SLOTS:
-    void data(QVariantMap&);
+    void data(QVariantMap &);
     void onDataReady();
     void fadeIn();
     void fadeOut();
@@ -46,12 +46,12 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void dataChanged();
-    void newData(QVariantMap&);
+    void newData(QVariantMap &);
 
 private:
-    QPixmap fromSvg(QRectF _rect, const QString& file);
+    QPixmap fromSvg(QRectF _rect, const QString &file);
     class Private;
-    Private * const d;
+    Private *const d;
 };
 
 #endif

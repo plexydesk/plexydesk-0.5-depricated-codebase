@@ -43,22 +43,22 @@ class PLEXYDESK_EXPORT DesktopWidget : public QObject, public QGraphicsRectItem
     Q_OBJECT
     Q_ENUMS(State)
 
-public:
-    enum State {
+public :
+        enum State {
         DOCK,
         NORMALSIDE,
         BACKSIDE
     };
 
     /** \brief Constructor
-    * \param rect Defines the bounding rectangular area of a
-    * desktop widget
-    * \param embeddedWidget an optional parameter to embed a regular
-    * QWidget.
-    *
-    * This will construct a extension with default settings with an
-    * optional QWidget embedded
-    */
+     * \param rect Defines the bounding rectangular area of a
+     * desktop widget
+     * \param embeddedWidget an optional parameter to embed a regular
+     * QWidget.
+     *
+     * This will construct a extension with default settings with an
+     * optional QWidget embedded
+     */
 
     DesktopWidget(const QRectF &rect, QWidget *embeddedWidget = 0);
     virtual ~DesktopWidget();
@@ -67,9 +67,9 @@ public:
     virtual QRectF boundingRect() const;
     void configState(State s);
     void drawBackdrop(bool);
-    virtual void paintBackSide(QPainter * painter, const QRectF& rect);
-    virtual void paintViewSide(QPainter * painter, const QRectF& rect);
-    virtual void paintDockView(QPainter * painter, const QRectF& rect);
+    virtual void paintBackSide(QPainter *painter, const QRectF &rect);
+    virtual void paintViewSide(QPainter *painter, const QRectF &rect);
+    virtual void paintDockView(QPainter *painter, const QRectF &rect);
     void setState(State s);
     State state();
     void setDockImage(QPixmap);
@@ -83,22 +83,25 @@ public Q_SLOTS:
     void spin();
 
 protected:
-    virtual void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
-    virtual void mousePressEvent(QGraphicsSceneMouseEvent * event);
-    virtual void hoverEnterEvent(QGraphicsSceneHoverEvent * event);
-    virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event);
-    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent * event);
-    virtual void paintExtFace(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0) {}
-    virtual void paintExtBackFace(QPainter * painter,
-                                  const QStyleOptionGraphicsItem * option,
-                                  QWidget * widget = 0) {}
-    virtual void paintExtDockFace(QPainter * painter,
-                                  const QStyleOptionGraphicsItem * it,
-                                  QWidget * widget = 0) {}
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
+    virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+    virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
+    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+    virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) {
+    }
+    virtual void paintExtBackFace(QPainter *painter,
+         const QStyleOptionGraphicsItem *option,
+         QWidget *widget = 0) {
+    }
+    virtual void paintExtDockFace(QPainter *painter,
+         const QStyleOptionGraphicsItem *it,
+         QWidget *widget = 0) {
+    }
 private:
-    class Private ;
-    Private * const d;
+    class Private;
+    Private *const d;
 };
-}//
+} //
 
 #endif

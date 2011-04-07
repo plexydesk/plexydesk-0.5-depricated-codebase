@@ -19,7 +19,7 @@
 #include "wallpaper.h"
 #include "wallpaperwidget.h"
 
-WallpaperChange::WallpaperChange(QObject * object)
+WallpaperChange::WallpaperChange(QObject *object)
 {
 }
 
@@ -28,7 +28,7 @@ WallpaperChange::~WallpaperChange()
 
 }
 
-QGraphicsItem * WallpaperChange::item()
+QGraphicsItem *WallpaperChange::item()
 {
     QPushButton *button = new QPushButton("Change Wallpaper", 0);
     button->move(10, 10);
@@ -37,7 +37,7 @@ QGraphicsItem * WallpaperChange::item()
     return new WallpaperWidget(QRectF(0, 0, 340, 240), button);
 }
 
-void WallpaperChange::pushData(QVariant&)
+void WallpaperChange::pushData(QVariant &)
 {
 
 }

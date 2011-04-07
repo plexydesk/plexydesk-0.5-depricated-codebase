@@ -155,7 +155,7 @@ bool QPlexyMime::getGenericMime(const QString &mimeType, QFileInfo *fileInfo)
     }
 
     QString extension(*result);
-    extension = extension.remove(0,1);
+    extension = extension.remove(0, 1);
     QString filename = QString("test") + extension;
 
     fileInfo->setFile(filename.simplified());
@@ -163,7 +163,7 @@ bool QPlexyMime::getGenericMime(const QString &mimeType, QFileInfo *fileInfo)
     return true;
 }
 
-void QPlexyMime::fromFileName(const QString& fileName)
+void QPlexyMime::fromFileName(const QString &fileName)
 {
 #ifndef QT_NO_CONCURRENT
     QtConcurrent::run(this, &QPlexyMime::internalFromFileName, fileName);
@@ -508,9 +508,9 @@ void QPlexyMime::internalAlias(const QString &mimeType)
 }
 
 /*
-// TODO: rewrite
-QString QPlexyMime::mimeType (void)
-{
+   // TODO: rewrite
+   QString QPlexyMime::mimeType (void)
+   {
     QString ext = fileInfo.suffix();
     QString tmpQuery = QString("doc($internalFile)/ns:mime-info/ns:mime-type/ns:glob[@pattern='*.%1']/../@type/string()").arg(ext);
 
@@ -520,10 +520,10 @@ QString QPlexyMime::mimeType (void)
     //result = d->evaluate();
 
     return result.simplified();
-}
+   }
 
-QString QPlexyMime::fromFile (const QString& fileName)
-{
+   QString QPlexyMime::fromFile (const QString& fileName)
+   {
         QFileInfo fileInfo(fileName);
     if (fileInfo.isDir())
         {
@@ -540,10 +540,10 @@ QString QPlexyMime::fromFile (const QString& fileName)
     file.close();
 
     return(mimeType);
-}
+   }
 
-QString QPlexyMime::fromFile (QFile *file)
-{
+   QString QPlexyMime::fromFile (QFile *file)
+   {
         return QString();
-}
-*/
+   }
+ */

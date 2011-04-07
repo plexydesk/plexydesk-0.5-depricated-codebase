@@ -23,11 +23,11 @@
 
 
 
-LPhotosInterface::LPhotosInterface(QObject * object)
+LPhotosInterface::LPhotosInterface(QObject *object)
 {
 }
 
-PlexyDesk::DataPlugin *  LPhotosInterface::instance()
+PlexyDesk::DataPlugin *LPhotosInterface::instance()
 {
     return new LPhotoData();
 }

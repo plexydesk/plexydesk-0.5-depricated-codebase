@@ -75,8 +75,12 @@ private slots:
 
 private:
     bool getGenericMime(const QString &mimeType, QFileInfo *);
-    QString getInternalQuery() { return mInternalQuery; }
-    QByteArray getInternalOutput() { return mInternalOutput; }
+    QString getInternalQuery() {
+        return mInternalQuery;
+    }
+    QByteArray getInternalOutput() {
+        return mInternalOutput;
+    }
     QString evaluate(const QString &);
     QStringList evaluateToList(const QString &);
 

@@ -28,35 +28,37 @@ namespace PlexyDesk
 class HttpJobHandler::HttpJobHandlerPrivate
 {
 public:
-    HttpJobHandlerPrivate() {};
+    HttpJobHandlerPrivate() {
+    };
     QNetworkAccessManager *manager;
     QByteArray data;
-    ~HttpJobHandlerPrivate() {};
+    ~HttpJobHandlerPrivate() {
+    };
 };
 
-HttpJobHandler::HttpJobHandler(QObject * parent) : PendingJob(parent), d(new HttpJobHandlerPrivate)
+HttpJobHandler::HttpJobHandler(QObject *parent) : PendingJob(parent), d(new HttpJobHandlerPrivate)
 {
     qDebug() << "HttpJobHandler::HttpJobHandler()";
     d->manager = new QNetworkAccessManager(this);
     qDebug() << "I'm in httpjobhandler constructor";
     //connect the finished signal coming from QNetworkAccessManager with onFinish.
-    connect(d->manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onFinish(QNetworkReply*)));
+    connect(d->manager, SIGNAL(finished(QNetworkReply *)), this, SLOT(onFinish(QNetworkReply *)));
 }
 
 void HttpJobHandler::getFile(const QUrl &url)
 {
     qDebug() << "HttpJobHandler::getFile()";
     if (isValidUrl(url)) {
-        QNetworkReply* reply = d->manager->get(QNetworkRequest(url));
+        QNetworkReply *reply = d->manager->get(QNetworkRequest(url));
         m_holder.append(reply);
     }
 }
 
-void HttpJobHandler::postFile(const QUrl &url, const QByteArray  &data)
+void HttpJobHandler::postFile(const QUrl &url, const QByteArray &data)
 {
     qDebug() << "HttpJobHandler::postFile()";
     if (isValidUrl(url)) {
-        QNetworkReply* reply = d->manager->post(QNetworkRequest(url), data);
+        QNetworkReply *reply = d->manager->post(QNetworkRequest(url), data);
         m_holder.append(reply);
     }
 }
@@ -83,7 +85,7 @@ bool HttpJobHandler::isValidUrl(const QUrl &url)
     return true;
 }
 
-void HttpJobHandler::onFinish(QNetworkReply* reply)
+void HttpJobHandler::onFinish(QNetworkReply *reply)
 {
     qDebug() << "HttpJobHandler::onFinish()";
     QVariant statusCodeV = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);

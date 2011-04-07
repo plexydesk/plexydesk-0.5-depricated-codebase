@@ -9,7 +9,7 @@
 
 namespace PlexyDesk
 {
-class SocioTwitterwidget: public DesktopWidget
+class SocioTwitterwidget : public DesktopWidget
 
 {
     Q_OBJECT

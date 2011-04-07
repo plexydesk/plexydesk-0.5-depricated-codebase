@@ -24,11 +24,11 @@
 #include <QtGui>
 
 
-VideoInterface::VideoInterface(QObject * object)
+VideoInterface::VideoInterface(QObject *object)
 {
 }
 
-PlexyDesk::BasePlugin* VideoInterface::instance()
+PlexyDesk::BasePlugin *VideoInterface::instance()
 {
     return new VideoPlugin();
 }

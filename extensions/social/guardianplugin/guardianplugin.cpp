@@ -45,23 +45,23 @@ Q_DECLARE_METATYPE(NewsData);
 
 QDBusArgument &operator<<(QDBusArgument &argument, const NewsData &news)
 {
-        argument.beginStructure();
-        argument << news.contentID << news.headLine << news.trailText<< news.body<<news.webUrl<<news.docType<<news.imageUrl;
-        argument.endStructure();
-        return argument;
+    argument.beginStructure();
+    argument << news.contentID << news.headLine << news.trailText<< news.body<<news.webUrl<<news.docType<<news.imageUrl;
+    argument.endStructure();
+    return argument;
 }
 const QDBusArgument &operator>>(const QDBusArgument &argument, NewsData &news)
 {
-        argument.beginStructure();
-        argument >> news.contentID >> news.headLine >> news.trailText >> news.body >> news.webUrl >> news.docType >> news.imageUrl;
-        argument.endStructure();
-        return argument;
+    argument.beginStructure();
+    argument >> news.contentID >> news.headLine >> news.trailText >> news.body >> news.webUrl >> news.docType >> news.imageUrl;
+    argument.endStructure();
+    return argument;
 }
 
-GuardianPlugin::GuardianPlugin(QObject * parent) : SocialPlugin(parent)
+GuardianPlugin::GuardianPlugin(QObject *parent) : SocialPlugin(parent)
 {
     job = new HttpJobHandler(this);
-    connect(job,SIGNAL(finished()),this,SLOT(listen()));
+    connect(job, SIGNAL(finished()), this, SLOT(listen()));
     qDBusRegisterMetaType<NewsData>();
     QDir cacheDir;
     if (!QDir(cachePath).exists())
@@ -86,12 +86,12 @@ QVariantMap GuardianPlugin::getnews(QVariantMap args)
 {
     QVariant date = args["needDay"];
     QVariant cont = args["searchCategory"];
-    QString needDay,content;
+    QString needDay, content;
     if (date.canConvert<QString>())
-         needDay= date.value<QString>();
+        needDay = date.value<QString>();
     if (cont.canConvert<QString>())
         content = cont.value<QString>();
-    content = content.replace(" ","+",Qt::CaseSensitive);
+    content = content.replace(" ", "+", Qt::CaseSensitive);
     QUrl NEWS_URL;
     qDebug()<<content;
     if (content == "default")
@@ -125,7 +125,7 @@ QVariantMap GuardianPlugin::getnews(QVariantMap args)
     QXmlQuery query;
     query.setFocus(&buffer);
 
-    QStringList contentID,headLine,body, trailText,web_url,doc_type,image_Url;
+    QStringList contentID, headLine, body, trailText, web_url, doc_type, image_Url;
 
     query.setQuery("for $x in /search/results/content return string($x/@id)");
     query.evaluateTo(&contentID);
@@ -151,7 +151,7 @@ QVariantMap GuardianPlugin::getnews(QVariantMap args)
 
     guardianXml.clear();
     QVariantMap result;
-    for(int i=0; i<headLine.length(); i++){
+    for(int i = 0; i<headLine.length(); i++) {
 
         NewsData nws;
         nws.contentID = contentID.at(i);
@@ -183,7 +183,7 @@ QString GuardianPlugin::getNewsPicture(const QString &url)
     QUrl tempUrl(url);
     guardianXml.clear();
     getXml(tempUrl);
-    while(guardianXml.size() == 0){
+    while(guardianXml.size() == 0) {
         QTest::qWait(1000);
     }
     QImage img;
@@ -197,14 +197,14 @@ QString GuardianPlugin::getNewsPicture(const QString &url)
 }
 QString GuardianPlugin::checkPictureAvailability(const QString &url)
 {
-     QByteArray byteArrayFile;
-     byteArrayFile.append(url);
-     QString fileNameString = byteArrayFile.toBase64() + ".png";
-     QDir cacheDir(this->cachePath);
-     if(cacheDir.exists(fileNameString))
-         return (this->cachePath + fileNameString);
-     else
-         return "File Not Found";
+    QByteArray byteArrayFile;
+    byteArrayFile.append(url);
+    QString fileNameString = byteArrayFile.toBase64() + ".png";
+    QDir cacheDir(this->cachePath);
+    if(cacheDir.exists(fileNameString))
+        return (this->cachePath + fileNameString);
+    else
+        return "File Not Found";
 }
 QVariantMap GuardianPlugin::data(const QString &methodName, QVariantMap args)
 {

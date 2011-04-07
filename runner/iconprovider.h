@@ -15,10 +15,10 @@ class VISIBLE_SYM IconProvider : public QObject
     Q_OBJECT
 public:
     IconProvider();
-    IconJobPtr requestIcon(const QString& name, const QString&);
+    IconJobPtr requestIcon(const QString &name, const QString &);
 private:
     class Private;
-    Private * const d;
+    Private *const d;
 };
 
 typedef QSharedPointer<IconProvider> IconProviderPtr;

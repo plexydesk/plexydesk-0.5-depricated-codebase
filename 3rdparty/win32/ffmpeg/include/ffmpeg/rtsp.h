@@ -73,10 +73,10 @@ typedef struct RTSPActionServerSetup {
     char transport_option[512];
 } RTSPActionServerSetup;
 
-typedef int FFRTSPCallback(enum RTSPCallbackAction action,
-                           const char *session_id,
-                           char *buf, int buf_size,
-                           void *arg);
+typedef int FFRTSPCallback (enum RTSPCallbackAction action,
+ const char *session_id,
+ char *buf, int buf_size,
+ void *arg);
 
 int rtsp_init(void);
 void rtsp_parse_line(RTSPHeader *reply, const char *buf);

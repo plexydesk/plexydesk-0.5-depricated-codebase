@@ -26,26 +26,28 @@
 class RestData::Private
 {
 public:
-    Private() {}
-    ~Private() {}
-    QNetworkAccessManager * manager;
+    Private() {
+    }
+    ~Private() {
+    }
+    QNetworkAccessManager *manager;
     QString user;
     QString pass;
     QVariantMap data;
 };
 
-RestData::RestData(QObject * object): d(new Private)
+RestData::RestData(QObject *object) : d(new Private)
 {
     d->manager = new QNetworkAccessManager(this);
-    connect(d->manager, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(replyFinished(QNetworkReply*)));
+    connect(d->manager, SIGNAL(finished(QNetworkReply *)),
+     this, SLOT(replyFinished(QNetworkReply *)));
     connect(d->manager, SIGNAL(authenticationRequired(QNetworkReply *, QAuthenticator *)), this,
-            SLOT(handleAuth(QNetworkReply *, QAuthenticator *)));
+     SLOT(handleAuth(QNetworkReply *, QAuthenticator *)));
 }
 
-void  RestData::init()
+void RestData::init()
 {
-    qDebug() << Q_FUNC_INFO ;
+    qDebug() << Q_FUNC_INFO;
 }
 
 RestData::~RestData()
@@ -53,7 +55,7 @@ RestData::~RestData()
     delete d;
 }
 
-void RestData::pushData(QVariant& arg)
+void RestData::pushData(QVariant &arg)
 {
     qDebug() << Q_FUNC_INFO << arg;
     QVariantMap param = arg.toMap();
@@ -74,7 +76,7 @@ void RestData::pushData(QVariant& arg)
     // handle errors
 }
 
-void RestData::replyFinished(QNetworkReply* reply)
+void RestData::replyFinished(QNetworkReply *reply)
 {
     QVariantMap response;
     response["data"] = QVariant(reply->readAll());
@@ -82,7 +84,7 @@ void RestData::replyFinished(QNetworkReply* reply)
     Q_EMIT dataReady();
 }
 
-void RestData::handleAuth(QNetworkReply * r, QAuthenticator * auth)
+void RestData::handleAuth(QNetworkReply *r, QAuthenticator *auth)
 {
     qDebug() << Q_FUNC_INFO << d->user << ":" << d->pass;
     auth->setUser(d->user);

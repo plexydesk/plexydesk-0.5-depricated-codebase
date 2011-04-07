@@ -34,9 +34,9 @@ class QDateTime;
 class QtNPStreamPrivate;
 
 struct NPP_t;
-typedef NPP_t* NPP;
+typedef NPP_t *NPP;
 
-class QtNPBindable 
+class QtNPBindable
 {
     friend class QtNPStream;
 public:
@@ -46,9 +46,9 @@ public:
         ReasonError = 2,
         ReasonUnknown = -1
     };
-    enum DisplayMode 
-    { 
-        Embedded = 1, 
+    enum DisplayMode
+    {
+        Embedded = 1,
         Fullpage = 2
     };
 
@@ -76,7 +76,7 @@ protected:
     virtual ~QtNPBindable();
 
 private:
-    QtNPInstance* pi;
+    QtNPInstance *pi;
 };
 
 class QtNPFactory {
@@ -85,7 +85,7 @@ public:
     virtual ~QtNPFactory();
 
     virtual QStringList mimeTypes() const = 0;
-    virtual QObject* createObject(const QString &type) = 0;
+    virtual QObject *createObject(const QString &type) = 0;
 
     virtual QString pluginName() const = 0;
     virtual QString pluginDescription() const = 0;
@@ -97,7 +97,8 @@ template<class T>
 class QtNPClass : public QtNPFactory
 {
 public:
-    QtNPClass() {}
+    QtNPClass() {
+    }
 
     QObject *createObject(const QString &key)
     {
@@ -122,28 +123,32 @@ public:
         return mimeTypes;
     }
 
-    QString pluginName() const { return QString(); }
-    QString pluginDescription() const { return QString(); }
+    QString pluginName() const {
+        return QString();
+    }
+    QString pluginDescription() const {
+        return QString();
+    }
 };
 
 #define QTNPFACTORY_BEGIN(Name, Description) \
-class QtNPClassList : public QtNPFactory \
-{ \
-    QHash<QString, QtNPFactory*> factories; \
-    QString m_name, m_description; \
-public: \
-    QtNPClassList() \
-    : m_name(Name), m_description(Description) \
+    class QtNPClassList : public QtNPFactory \
     { \
-        QtNPFactory *factory = 0; \
-        QStringList keys; \
-        QStringList::Iterator it; \
+        QHash<QString, QtNPFactory *> factories; \
+        QString m_name, m_description; \
+public: \
+        QtNPClassList() \
+            : m_name(Name), m_description(Description) \
+        { \
+            QtNPFactory *factory = 0; \
+            QStringList keys; \
+            QStringList::Iterator it; \
 
 #define QTNPCLASS(Class) \
-        factory = new QtNPClass<Class>; \
-        keys = factory->mimeTypes(); \
-        for (it = keys.begin(); it != keys.end(); ++it) \
-            factories.insert(*it, factory); \
+    factory = new QtNPClass<Class>; \
+    keys = factory->mimeTypes(); \
+    for (it = keys.begin(); it != keys.end(); ++it) \
+        factories.insert(*it, factory); \
 
 #define QTNPFACTORY_END() \
     } \
@@ -155,10 +160,10 @@ public: \
     QStringList mimeTypes() const { return factories.keys(); } \
     QString pluginName() const { return m_name; } \
     QString pluginDescription() const { return m_description; } \
-}; \
-QtNPFactory *qtns_instantiate() { return new QtNPClassList; } \
+    }; \
+    QtNPFactory *qtns_instantiate() { return new QtNPClassList; } \
 
 #define QTNPFACTORY_EXPORT(Class) \
-QtNPFactory *qtns_instantiate() { return new Class; }
+    QtNPFactory *qtns_instantiate() { return new Class; }
 
 #endif  // QTNETSCAPE_H

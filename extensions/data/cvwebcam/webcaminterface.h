@@ -32,12 +32,13 @@ class WebCamInterface : public PlexyDesk::DataInterface
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
-public:
-    WebCamInterface(QObject * object = 0);
-    virtual ~WebCamInterface() {}
+public :
+        WebCamInterface(QObject *object = 0);
+    virtual ~WebCamInterface() {
+    }
 
     /* this will return a valid data plugin pointer*/
-    PlexyDesk::DataPlugin * instance();
+    PlexyDesk::DataPlugin *instance();
 
 };
 

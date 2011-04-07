@@ -27,14 +27,14 @@
 
 namespace PlexyDesk
 {
-class ClockWidget: public DesktopWidget
+class ClockWidget : public DesktopWidget
 {
     Q_OBJECT
 
 public:
     ClockWidget(const QRectF &rect, QWidget *widget = 0);
     virtual ~ClockWidget();
-    virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem * e, QWidget *);
+    virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *e, QWidget *);
     void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
     void paintExtBackFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
     void setPath(QString);
@@ -43,13 +43,13 @@ public slots:
     void drawSeconds();
 
 private:
-    QTimer  * sec_timer;
-    QTimer  * mins_timer;
-    QTimer  * hours_timer;
+    QTimer *sec_timer;
+    QTimer *mins_timer;
+    QTimer *hours_timer;
 
-    QPixmap  _secs_hand;
-    QPixmap  _mins_hand;
-    QPixmap  _hour_hand;
+    QPixmap _secs_hand;
+    QPixmap _mins_hand;
+    QPixmap _hour_hand;
 
     QStringList _hour_path;
     QStringList _mins_path;

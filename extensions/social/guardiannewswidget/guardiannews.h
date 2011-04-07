@@ -27,25 +27,25 @@ class GuardianNews;
 namespace PlexyDesk
 {
 
-    class GuardianNewsWidget: public DesktopWidget
-    {
-        Q_OBJECT
-    public:
-        GuardianNewsWidget(const QRectF &rect, QWidget *embeddedWidget = 0);
-        virtual ~GuardianNewsWidget();
-        void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
-        void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
-        void paintExtBackFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
-        QRectF boundingRect() const;
-        void setCoverPic(QImage sociotwitter);
+class GuardianNewsWidget : public DesktopWidget
+{
+    Q_OBJECT
+public:
+    GuardianNewsWidget(const QRectF &rect, QWidget *embeddedWidget = 0);
+    virtual ~GuardianNewsWidget();
+    void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
+    void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
+    void paintExtBackFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
+    QRectF boundingRect() const;
+    void setCoverPic(QImage sociotwitter);
 
-    signals:
-        void swtch();
+signals:
+    void swtch();
 
-    private:
-        QImage cover;
-        bool INITIALIZED,HIDE;
-    };
+private:
+    QImage cover;
+    bool INITIALIZED, HIDE;
+};
 
 
 } // namespace PlexyDesk

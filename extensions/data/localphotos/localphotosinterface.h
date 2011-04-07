@@ -32,10 +32,11 @@ class VISIBLE_SYM LPhotosInterface : public PlexyDesk::DataInterface
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
-public:
-    LPhotosInterface(QObject * object = 0);
-    virtual ~LPhotosInterface() {}
-    PlexyDesk::DataPlugin * instance();
+public :
+        LPhotosInterface(QObject *object = 0);
+    virtual ~LPhotosInterface() {
+    }
+    PlexyDesk::DataPlugin *instance();
 
 };
 

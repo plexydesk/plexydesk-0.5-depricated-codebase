@@ -18,12 +18,12 @@ public:
     static ImageCache *instance();
     void clear();
     bool drawSvg(QPainter *painter,
-            QRectF rect, const QString &str);
+         QRectF rect, const QString &str);
 
 private:
-    ImageCache() ;
+    ImageCache();
     class Private;
-    Private * const d ;
+    Private *const d;
     static ImageCache *staticObject;
 };
 }

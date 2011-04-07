@@ -23,7 +23,7 @@
  *
  * Authored By Siraj Razick <siraj@kde.org>
  *
- * Copyright (C) 2006 PlexyDeskTeam 
+ * Copyright (C) 2006 PlexyDeskTeam
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -42,7 +42,7 @@
  */
 
 /* visibility options
- * note only support GCC 4.x and not Windows 
+ * note only support GCC 4.x and not Windows
  * */
 
 #ifndef __PLEXY_EXPORTS
@@ -57,19 +57,19 @@
 
 #ifdef __GNUC__
 #define PACK __attribute__((__packed__))
-#endif 
+#endif
 
 #define __SYSTEM_HAVE_GCC_VISIBILITY
 
 #if defined(_WIN32) && !defined(__GNUC__)
 #define VISIBLE_SYM __declspec(dllexport)
-#else 
+#else
 #ifdef __SYSTEM_HAVE_GCC_VISIBILITY
 #define HIDDEN_SYM __attribute__ ((visibility("hidden")))
 #define VISIBLE_SYM __attribute__ ((visibility("default")))
 #define PLEXYDESK_EXPORT __attribute__ ((visibility("default")))
 #endif
-#endif 
+#endif
 
 //TODO
 //add dllexport for windows
@@ -80,14 +80,14 @@
  * source distrubution.
  * */
 
-#define PLUGIN_EXPORT(name,sym)\
-    extern "C" { void *setup_##name(){return new sym;}}
+#define PLUGIN_EXPORT(name, sym) \
+    extern "C" { void *setup_ ## name(){return new sym; }}
 
-#define  Q_UINT32 unsigned int 
+#define  Q_UINT32 unsigned int
 
 #ifdef Q_WS_WIN
 static QString windowsPath = QCoreApplication::applicationDirPath() + QStringLatin1("/..");
-#define PLEXPREFIX =  windowsPath
+#define PLEXPREFIX = windowsPath
 #endif
 
 namespace Plexy

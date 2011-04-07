@@ -29,16 +29,16 @@ class VISIBLE_SYM IRCData : public PlexyDesk::DataPlugin
     Q_OBJECT
 
 public:
-    IRCData(QObject * object = 0);
+    IRCData(QObject *object = 0);
     virtual ~IRCData();
     void init();
 public slots:
     /* ID tells you the Qhttp id which youare pocessing
-    */
-    void pushData(QVariant&);
+     */
+    void pushData(QVariant &);
     void loadCallback(int ID, bool status);
 signals:
-    void data(QVariant&);
+    void data(QVariant &);
 };
 
 

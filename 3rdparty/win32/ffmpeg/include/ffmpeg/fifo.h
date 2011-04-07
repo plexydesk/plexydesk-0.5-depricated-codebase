@@ -68,7 +68,7 @@ int av_fifo_read(AVFifoBuffer *f, uint8_t *buf, int buf_size);
  * @param *func generic read function
  * @param *dest data destination
  */
-int av_fifo_generic_read(AVFifoBuffer *f, int buf_size, void (*func)(void*, void*, int), void* dest);
+int av_fifo_generic_read(AVFifoBuffer *f, int buf_size, void (*func)(void *, void *, int), void *dest);
 
 /**
  * Writes data into an AVFifoBuffer.

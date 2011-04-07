@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- *Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ **Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 #include "account.h"
@@ -31,11 +31,11 @@ namespace PlexyDesk
 {
 
 SocialAccount::SocialAccount(const QString &accountId, QDBusConnection *dbusConnection, QObject *parent) : QObject(parent),
-        m_adapter(new SocialAccountAdaptor(this)),
-        m_id(accountId),
-        m_dbusConnection(dbusConnection)
+                                                                                                           m_adapter(new SocialAccountAdaptor(this)),
+                                                                                                           m_id(accountId),
+                                                                                                           m_dbusConnection(dbusConnection)
 {
-    connect(this, SIGNAL(AccountPropertyChanged(const QString&)), this, SLOT(onAccountPropertyChanged(const QString&)));
+    connect(this, SIGNAL(AccountPropertyChanged(const QString &)), this, SLOT(onAccountPropertyChanged(const QString &)));
     QTimer::singleShot(0, this, SLOT(loadAccountData()));
 }
 
@@ -113,15 +113,15 @@ void SocialAccount::loadAccountData()
     }
 
     /* Load property: parameters
-    if(accountData.contains("PARAMETERS"))
-    {
+       if(accountData.contains("PARAMETERS"))
+       {
         m_parameters = accountData.value("PARAMETERS").toMap();
-    }
-    else
-    {
+       }
+       else
+       {
         qDebug() << "Account::loadAccountData(): Account does not contain parameters. Making it invalid.";
         m_valid = false;
-    }*///TODO: implement parameter handling
+       }*/                                                                                                                                                                                                                                                                                                         //TODO: implement parameter handling
 
     // Load property: display name
     // FIXME: Is an account required to have a display name?
@@ -169,14 +169,14 @@ void SocialAccount::loadAccountData()
 QVariantMap SocialAccount::getAccount(const QString &accountHandle)
 {
     //TODO: implement parameter support
-    StorageLayerInterface *storageLayer = (qobject_cast<SocialAccountsManager*> (parent()))->storageLayer();
+    StorageLayerInterface *storageLayer = (qobject_cast<SocialAccountsManager *> (parent()))->storageLayer();
     return storageLayer->readAccount(accountHandle);
 }
 
 void SocialAccount::removeAccount()
 {
     //TODO: remove from storage layer
-    StorageLayerInterface *storageLayer = (qobject_cast<SocialAccountsManager*> (parent()))->storageLayer();
+    StorageLayerInterface *storageLayer = (qobject_cast<SocialAccountsManager *> (parent()))->storageLayer();
     if (storageLayer->removeAccount(m_id))
         emit Removed();
 }
@@ -215,7 +215,7 @@ QVariantMap SocialAccount::getParameters()
 
 void SocialAccount::onAccountPropertyChanged(const QString &property)
 {
-    StorageLayerInterface *storageLayer = (qobject_cast<SocialAccountsManager*> (parent()))->storageLayer();
+    StorageLayerInterface *storageLayer = (qobject_cast<SocialAccountsManager *> (parent()))->storageLayer();
     qDebug() << "SocialAccount::onAccountPropertyChanged():update status" << storageLayer->updateAccount(m_id, property, this->property(property.toAscii()));
 }
 

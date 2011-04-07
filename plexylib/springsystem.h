@@ -24,30 +24,30 @@
 "
 namespace PlexyDesk
 {
-    class VISIBLE_SYM SpringSystem
-    {
-        private:
-            /*
-             * it would be a data structure,
-             * which we haven't yet implemeted
-             * first, have to make an algorithm
-             * on how to create a network as
-             * described in the doc, then will
-             * add the DS and the constructor
-             */
+class VISIBLE_SYM SpringSystem
+{
+private:
+    /*
+     * it would be a data structure,
+     * which we haven't yet implemeted
+     * first, have to make an algorithm
+     * on how to create a network as
+     * described in the doc, then will
+     * add the DS and the constructor
+     */
 
-            float k;
+    float k;
 
-            particle caught;
+    particle caught;
 
-        public:
+public:
 
-            void dragSystem();
+    void dragSystem();
 
-            void dragCaught();
+    void dragCaught();
 
 
-    };
+};
 } // namespace plexy
 
 #endif

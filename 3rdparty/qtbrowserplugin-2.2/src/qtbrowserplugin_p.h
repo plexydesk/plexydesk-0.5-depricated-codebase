@@ -46,7 +46,7 @@ struct QtNPInstance
     Display *display;
 #endif
 #ifdef Q_WS_MAC
-    typedef NPPort* Widget;
+    typedef NPPort *Widget;
     QWidget *rootWidget;
 #endif
 
@@ -56,11 +56,11 @@ struct QtNPInstance
     QString mimetype;
     QByteArray htmlID;
     union {
-        QObject* object;
-        QWidget* widget;
+        QObject *object;
+        QWidget *widget;
     } qt;
     QtNPStream *pendingStream;
-    QtNPBindable* bindable;
+    QtNPBindable *bindable;
     QObject *filter;
 
     QMap<QByteArray, QVariant> parameters;
@@ -68,12 +68,12 @@ struct QtNPInstance
     qint32 notificationSeqNum;
     QMutex seqNumMutex;
     qint32 getNotificationSeqNum()
-        {
-            QMutexLocker locker(&seqNumMutex);
+    {
+        QMutexLocker locker(&seqNumMutex);
 
-            if (++notificationSeqNum < 0)
-                notificationSeqNum = 1;
-            return notificationSeqNum;
-        }
+        if (++notificationSeqNum < 0)
+            notificationSeqNum = 1;
+        return notificationSeqNum;
+    }
 
 };

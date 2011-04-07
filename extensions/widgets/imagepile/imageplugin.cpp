@@ -23,7 +23,7 @@
 
 #include <QLineEdit>
 
-ImagePlugin::ImagePlugin(QObject * object)
+ImagePlugin::ImagePlugin(QObject *object)
 {
     base = new QWidget();
 
@@ -38,9 +38,9 @@ ImagePlugin::ImagePlugin(QObject * object)
     search->move(0, 170);
     search->resize(300, 30);
     search->show();
-    connect(search , SIGNAL(returnPressed()) , this , SLOT(searchImage()));
+    connect(search, SIGNAL(returnPressed()), this, SLOT(searchImage()));
 
-    widget =  new PlexyDesk::ImagePileWidget(QRectF(0, 0, 340, 240), base);
+    widget = new PlexyDesk::ImagePileWidget(QRectF(0, 0, 340, 240), base);
 
     base->move(20, 20);
 }
@@ -70,13 +70,13 @@ void ImagePlugin::onDataReady()
     widget->setCoverPic(wall);
 }
 
-QGraphicsItem * ImagePlugin::item()
+QGraphicsItem *ImagePlugin::item()
 {
     //flickrEngine = loadData("flickerengine");
 
-    PlexyDesk::PluginLoader * loader = new PlexyDesk::PluginLoader();
+    PlexyDesk::PluginLoader *loader = new PlexyDesk::PluginLoader();
     loader->scanDisk();
-    flickrEngine  = qobject_cast<PlexyDesk::DataPlugin*>(loader->instance("flickerengine"));
+    flickrEngine = qobject_cast<PlexyDesk::DataPlugin *>(loader->instance("flickerengine"));
     delete loader;
     if (flickrEngine) {
         connect(flickrEngine, SIGNAL(dataReady()), this, SLOT(onDataReady()));
@@ -86,6 +86,6 @@ QGraphicsItem * ImagePlugin::item()
         qDebug() << "DataSource Was Null" << "ImagePlugin::ImagePlugin(QObject * object)" << endl;;
     }
 
-    PictureFlow * flow = new PictureFlow(0);
-    return widget;//new PlexyDesk::ImagePluginWidget(QRectF(0, 0, 400, 200), flow);
+    PictureFlow *flow = new PictureFlow(0);
+    return widget; //new PlexyDesk::ImagePluginWidget(QRectF(0, 0, 400, 200), flow);
 }

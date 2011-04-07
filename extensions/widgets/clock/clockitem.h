@@ -25,7 +25,7 @@
 namespace PlexyDesk
 {
 
-class ClockItem: public DesktopWidget
+class ClockItem : public DesktopWidget
 {
     Q_OBJECT
 public:

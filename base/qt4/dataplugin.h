@@ -9,9 +9,9 @@
 #include <QVariantMap>
 
 /*!
-\class PlexyDesk::DataPlugin
+   \class PlexyDesk::DataPlugin
 
-\brief Class which abstracts a data source
+   \brief Class which abstracts a data source
 
     \section a PlexyDesk Data Plugin
       PlexyDesk data plugins are meant to abstract data source, such as data comming from
@@ -52,12 +52,14 @@ namespace PlexyDesk
 class PLEXYDESK_EXPORT DataPlugin : public BasePlugin
 {
     Q_OBJECT
-public :
-    DataPlugin(QObject  * object = 0) {}
-    virtual ~DataPlugin() {}
+public:
+    DataPlugin(QObject *object = 0) {
+    }
+    virtual ~DataPlugin() {
+    }
     virtual QVariantMap readAll() = 0;
 public slots:
-    virtual void pushData(QVariant&) = 0;
+    virtual void pushData(QVariant &) = 0;
 signals:
     void dataReady();
 };

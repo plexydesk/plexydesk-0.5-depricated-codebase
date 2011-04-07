@@ -34,7 +34,7 @@ namespace PlexyDesk
 {
 
 ClockWidget::ClockWidget(const QRectF &rect, QWidget *widget)
-        : DesktopWidget(rect, widget)
+    : DesktopWidget(rect, widget)
 {
     shade = 0;
 
@@ -44,7 +44,7 @@ ClockWidget::ClockWidget(const QRectF &rect, QWidget *widget)
 
 void ClockWidget::setPath(QString str)
 {
-    prefix  = str + "/";
+    prefix = str + "/";
 
 }
 
@@ -78,8 +78,8 @@ void ClockWidget::drawClockWidget()
     QPainter p;
 
     lens =
-        QImage(QSize(face.width() - offset, face.height() - offset),
-               QImage::Format_ARGB32_Premultiplied);
+         QImage(QSize(face.width() - offset, face.height() - offset),
+         QImage::Format_ARGB32_Premultiplied);
 
     lens.fill(0);
 
@@ -107,13 +107,13 @@ void ClockWidget::drawSeconds()
     time = QTime::currentTime();
     _secs = 6.0 * time.second();
     _mins = 6.0 * time.minute();
-    _hour =  30.0 * time.hour();
+    _hour = 30.0 * time.hour();
     update();
 }
 
-void ClockWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget *)
+void ClockWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *)
 {
-    QRectF r  = e->exposedRect;
+    QRectF r = e->exposedRect;
     p->setCompositionMode(QPainter::CompositionMode_Source);
     p->fillRect(rect(), Qt::transparent);
     p->drawImage(QRect(0, 0, _clock_bg.width(), _clock_bg.height()), _clock_bg);
@@ -135,9 +135,9 @@ void ClockWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e ,
     p->translate(_clock_bg.width() / 2, _clock_bg.height() / 2);
     p->rotate(_hour);
     p->drawPixmap(QRect
-                  (-(ceil(double(_hour_hand.width()) / 2)),
-                   -(_hour_hand.height() - 32), _hour_hand.width(),
-                   _hour_hand.height()), _hour_hand);
+             (-(ceil(double(_hour_hand.width()) / 2)),
+             -(_hour_hand.height() - 32), _hour_hand.width(),
+             _hour_hand.height()), _hour_hand);
     p->restore();
 
     /* Draw Mins */
@@ -146,9 +146,9 @@ void ClockWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e ,
     p->translate(_clock_bg.width() / 2, _clock_bg.height() / 2);
     p->rotate(_mins);
     p->drawPixmap(QRect
-                  (-(ceil(double(_mins_hand.width()) / 2)),
-                   -(_mins_hand.height() - 16), _mins_hand.width(),
-                   _mins_hand.height()), _mins_hand);
+             (-(ceil(double(_mins_hand.width()) / 2)),
+             -(_mins_hand.height() - 16), _mins_hand.width(),
+             _mins_hand.height()), _mins_hand);
     p->restore();
 
     /*Draw Secs*/
@@ -157,51 +157,51 @@ void ClockWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e ,
     p->translate(_clock_bg.width() / 2, _clock_bg.width() / 2);
     p->rotate(_secs);
     p->drawPixmap(QRect
-                  (-(ceil(double(_secs_hand.width()) / 2)),
-                   -(_secs_hand.height() - 32), _secs_hand.width(),
-                   _secs_hand.height()), _secs_hand);
+             (-(ceil(double(_secs_hand.width()) / 2)),
+             -(_secs_hand.height() - 32), _secs_hand.width(),
+             _secs_hand.height()), _secs_hand);
     p->restore();
 
     p->save();
 
     p->translate(_clock_bg.width() / 2, _clock_bg.width() / 2);
     p->drawPixmap(QRect
-                  (-(thedot.width() / 2), -(thedot.height() / 2),
-                   thedot.width(), thedot.height()), QPixmap(thedot));
+             (-(thedot.width() / 2), -(thedot.height() / 2),
+             thedot.width(), thedot.height()), QPixmap(thedot));
     p->restore();
 
     p->drawPixmap(QRect(29, 29, gloss.width(), gloss.height()),
-                  QPixmap().fromImage(gloss));
+         QPixmap().fromImage(gloss));
     p->drawPixmap(QRect(28, 28, lens.width(), lens.height()),
-                  QPixmap().fromImage(lens));
+         QPixmap().fromImage(lens));
 
     p->drawPixmap(QRect
-                  ((_clock_bg.width() / 4) * 3, _clock_bg.height() / 2,
-                   date.width(), date.height()), date);
+             ((_clock_bg.width() / 4) * 3, _clock_bg.height() / 2,
+             date.width(), date.height()), date);
 }
 
-void ClockWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem *e , QWidget *)
+void ClockWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *)
 {
     p->setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing | QPainter::HighQualityAntialiasing);
 
     p->setPen(QColor(255, 255, 255));
     p->setFont(QFont("Bitstream Charter", 15));
-    p->drawText(QRect(8, 5, 64, 64), Qt::AlignCenter , "Clock") ;
+    p->drawText(QRect(8, 5, 64, 64), Qt::AlignCenter, "Clock");
 }
 
-void ClockWidget::paintExtBackFace(QPainter *p, const QStyleOptionGraphicsItem *e , QWidget *)
+void ClockWidget::paintExtBackFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *)
 {
     p->setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing | QPainter::HighQualityAntialiasing);
 
     p->setPen(QColor(255, 255, 255));
     p->setFont(QFont("Bitstream Charter", 15));
     p->drawText(QRect(20, 25, 160, 160), Qt::AlignTop,
-            QDateTime::currentDateTime().toString(QLatin1String("MMMM dd yyyy")));
+         QDateTime::currentDateTime().toString(QLatin1String("MMMM dd yyyy")));
 
     p->setPen(QColor(255, 203, 255));
     p->setFont(QFont("Bitstream Charter", 20));
-    p->drawText(QRect(20, 80, 160, 160), Qt::AlignCenter ,
-            QString("%1").arg(QDateTime::currentDateTime().toString(QLatin1String("h:m:s"))));
+    p->drawText(QRect(20, 80, 160, 160), Qt::AlignCenter,
+         QString("%1").arg(QDateTime::currentDateTime().toString(QLatin1String("h:m:s"))));
 }
 
 } // namespace PlexyDesk

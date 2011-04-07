@@ -10,7 +10,7 @@ class SocialAccountAdaptor : public QDBusAbstractAdaptor
     Q_CLASSINFO("D-Bus Interface", "local.socioplexy.account");
 
 public:
-    SocialAccountAdaptor(QObject *parent=0);
+    SocialAccountAdaptor(QObject *parent = 0);
 
 public slots:
     //public get methods
@@ -28,4 +28,4 @@ public slots:
     void setParameters(const QVariantMap &set, const QStringList &unSet);
     void removeAccount();
 };
-}//end of namespace PlexyDesk
+} //end of namespace PlexyDesk

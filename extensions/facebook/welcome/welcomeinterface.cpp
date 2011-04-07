@@ -22,14 +22,14 @@
 #include  <QtGui>
 
 
-WelcomeInterface::WelcomeInterface(QObject * object)
+WelcomeInterface::WelcomeInterface(QObject *object)
 {
 }
 
-PlexyDesk::BasePlugin  * WelcomeInterface::instance()
+PlexyDesk::BasePlugin *WelcomeInterface::instance()
 {
 // return new Clock(this);
-    return  new Welcome(this);
+    return new Welcome(this);
 }
 
 Q_EXPORT_PLUGIN2(WelcomeInterface, WelcomeInterface)

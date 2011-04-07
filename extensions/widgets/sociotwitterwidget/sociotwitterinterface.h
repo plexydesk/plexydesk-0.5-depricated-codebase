@@ -13,9 +13,9 @@ class VISIBLE_SYM SocioTwitterInterface : public PlexyDesk::AbstractPluginInterf
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
-public:
-    SocioTwitterInterface(QObject * object = 0);
-    PlexyDesk::BasePlugin * instance() ;
+public :
+        SocioTwitterInterface(QObject *object = 0);
+    PlexyDesk::BasePlugin *instance();
 };
 
 #endif

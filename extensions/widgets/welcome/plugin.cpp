@@ -23,9 +23,9 @@
 #include <QtGui>
 
 
-Welcome::Welcome(QObject * object)
+Welcome::Welcome(QObject *object)
 {
-    frm = new Frame(QRect(0, 0, 140 * 4 , 128*3));
+    frm = new Frame(QRect(0, 0, 140 * 4, 128*3));
     icon1 = new WellcomeItem(QRect(0, 0, 128, 256), frm);
     icon1->setName("");
     icon1->setIcon(QPixmap(applicationDirPath() + "/share/plexy/skins/default/welcome/kfm_home.png"));
@@ -49,9 +49,9 @@ Welcome::~Welcome()
 
 }
 
-QGraphicsItem * Welcome::item()
+QGraphicsItem *Welcome::item()
 {
-    return  frm;
+    return frm;
 }
 
 #include "plugin.moc"

@@ -11,25 +11,25 @@
 
 namespace PlexyDesk
 {
-    class PLEXYDESK_EXPORT BasePlugin : public QObject
+class PLEXYDESK_EXPORT BasePlugin : public QObject
+{
+    Q_OBJECT
+
+public:
+    BasePlugin(QObject *parent = 0) : QObject(parent)
     {
-        Q_OBJECT
+    }
 
-    public:
-        BasePlugin(QObject *parent = 0): QObject(parent)
-        {
-        }
+    QString applicationDirPath() const
+    {
+        return QString(PLEXPREFIX);
+    }
 
-        QString applicationDirPath() const
-        {
-            return QString(PLEXPREFIX);
-        }
+    QHash<QString, QString> metaData() const
+    {
 
-        QHash<QString, QString> metaData() const
-        {
-
-        }
-    };
+    }
+};
 } // namespace PlexyDesk
 
 #endif

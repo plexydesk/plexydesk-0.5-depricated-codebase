@@ -28,10 +28,11 @@ class GuardianInterface
 {
 
 public:
-    virtual ~GuardianInterface() {}
-    virtual QVariantMap getnews(QVariantMap args)=0;
-    virtual QVariantMap data(const QString &methodName, QVariantMap args)=0;
-    virtual QStringList supportedMethods()=0;
+    virtual ~GuardianInterface() {
+    }
+    virtual QVariantMap getnews(QVariantMap args) = 0;
+    virtual QVariantMap data(const QString &methodName, QVariantMap args) = 0;
+    virtual QStringList supportedMethods() = 0;
 
 };
 

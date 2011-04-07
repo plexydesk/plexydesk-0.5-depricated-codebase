@@ -35,14 +35,14 @@ public:
     void init();
 
 public slots:
-    void pushData(QVariant&);
+    void pushData(QVariant &);
     void grab(QImage &);
 
 signals:
-    void data(QVariant&);
+    void data(QVariant &);
 
 private:
-    PlexyDesk::VPlayer * vplayer;
+    PlexyDesk::VPlayer *vplayer;
 };
 
 

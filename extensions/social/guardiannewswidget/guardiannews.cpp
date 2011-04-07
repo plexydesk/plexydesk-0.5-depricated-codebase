@@ -25,42 +25,42 @@
 
 namespace PlexyDesk
 {
-    GuardianNewsWidget::GuardianNewsWidget(const QRectF &rect, QWidget *widget ):DesktopWidget(rect,widget)
-    {
-        setDockImage(QPixmap(applicationDirPath() + "/share/plexy/skins/default/guardiannews/icon.png"));
-        INITIALIZED = true;
-    }
-    
-    GuardianNewsWidget::~GuardianNewsWidget()
-    {
-    }
+GuardianNewsWidget::GuardianNewsWidget(const QRectF &rect, QWidget *widget ) : DesktopWidget(rect, widget)
+{
+    setDockImage(QPixmap(applicationDirPath() + "/share/plexy/skins/default/guardiannews/icon.png"));
+    INITIALIZED = true;
+}
 
-    
-    void GuardianNewsWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
-    {
-    }
+GuardianNewsWidget::~GuardianNewsWidget()
+{
+}
 
-    void GuardianNewsWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
-    {
-        QRectF r = e->exposedRect;
-        p->drawImage(QRectF(20,20,r.width()-40,r.height()-40) , cover);
 
-    }
-    void GuardianNewsWidget::paintExtBackFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
-    {
-    }
+void GuardianNewsWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *widget)
+{
+}
 
-    QRectF GuardianNewsWidget::boundingRect() const
-    {
-        return rect();
-    }
+void GuardianNewsWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *widget)
+{
+    QRectF r = e->exposedRect;
+    p->drawImage(QRectF(20, 20, r.width()-40, r.height()-40), cover);
+
+}
+void GuardianNewsWidget::paintExtBackFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *widget)
+{
+}
+
+QRectF GuardianNewsWidget::boundingRect() const
+{
+    return rect();
+}
 
 ///@
-    void GuardianNewsWidget::setCoverPic(QImage sociotwitter)
-    {
-        cover = sociotwitter;
-    }
-    //QObject * widgetInstance = PluginLoader::getInstance()->instance("guardiannews");
-    //office = static_cast<GuardianNews *>(widgetInstance);
-   
+void GuardianNewsWidget::setCoverPic(QImage sociotwitter)
+{
+    cover = sociotwitter;
+}
+//QObject * widgetInstance = PluginLoader::getInstance()->instance("guardiannews");
+//office = static_cast<GuardianNews *>(widgetInstance);
+
 } // namespace PlexyDesk

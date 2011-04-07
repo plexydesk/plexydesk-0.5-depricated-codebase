@@ -36,10 +36,10 @@ class YouTubeDataInterface : public PlexyDesk::DataInterface
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
-public:
-    YouTubeDataInterface(QObject *parent = 0);
+public :
+        YouTubeDataInterface(QObject *parent = 0);
     ~YouTubeDataInterface();
-    PlexyDesk::DataPlugin * instance();
+    PlexyDesk::DataPlugin *instance();
 private:
 };
 

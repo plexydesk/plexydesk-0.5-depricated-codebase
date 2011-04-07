@@ -54,14 +54,14 @@ public:
     {
         // make sure we're not registered with Qt before create
         WindowRef window = HIViewGetWindow(root);
-        QWidget *oldwindow=0;
+        QWidget *oldwindow = 0;
         OSErr err;
         err = GetWindowProperty(window,
-                                kWidgetCreatorQt,
-                                kWidgetPropertyQWidget,
-                                sizeof(oldwindow),
-                                0,
-                                &oldwindow);
+         kWidgetCreatorQt,
+         kWidgetPropertyQWidget,
+         sizeof(oldwindow),
+         0,
+         &oldwindow);
         if (err == noErr)
             RemoveWindowProperty(window, kWidgetCreatorQt, kWidgetPropertyQWidget);
 
@@ -69,22 +69,23 @@ public:
 
         // re-register the root window with Qt
         err = SetWindowProperty(window,
-                                kWidgetCreatorQt,
-                                kWidgetPropertyQWidget,
-                                sizeof(oldwindow),
-                                &oldwindow);
+         kWidgetCreatorQt,
+         kWidgetPropertyQWidget,
+         sizeof(oldwindow),
+         &oldwindow);
         if (err != noErr) {
             qWarning("Error, couldn't register Window with Qt: (%s:%d:%d)", __FILE__, __LINE__, err);
         }
 
         QPalette pal = palette();
-        pal.setColor(QPalette::Window,Qt::transparent);
+        pal.setColor(QPalette::Window, Qt::transparent);
         setPalette(pal);
 
         setAttribute(Qt::WA_WState_Polished);
     }
 
-    ~QMacBrowserRoot() { }
+    ~QMacBrowserRoot() {
+    }
 };
 #include "qtbrowserplugin_mac.moc"
 
@@ -96,13 +97,13 @@ struct key_sym
 };
 
 static key_sym modifier_syms[] = {
-{ shiftKey, Qt::ShiftModifier, "Qt::ShiftModifier" },
-{ controlKey, Qt::MetaModifier, "Qt::MetaModifier" },
-{ rightControlKey, Qt::MetaModifier, "Qt::MetaModifier" },
-{ optionKey, Qt::AltModifier, "Qt::AltModifier" },
-{ rightOptionKey, Qt::AltModifier, "Qt::AltModifier" },
-{ cmdKey, Qt::ControlModifier, "Qt::ControlModifier" },
-{   0, 0, NULL }
+    { shiftKey, Qt::ShiftModifier, "Qt::ShiftModifier" },
+    { controlKey, Qt::MetaModifier, "Qt::MetaModifier" },
+    { rightControlKey, Qt::MetaModifier, "Qt::MetaModifier" },
+    { optionKey, Qt::AltModifier, "Qt::AltModifier" },
+    { rightOptionKey, Qt::AltModifier, "Qt::AltModifier" },
+    { cmdKey, Qt::ControlModifier, "Qt::ControlModifier" },
+    {   0, 0, NULL }
 };
 static Qt::KeyboardModifiers get_modifiers(int key)
 {
@@ -116,21 +117,21 @@ static Qt::KeyboardModifiers get_modifiers(int key)
 }
 
 static key_sym key_syms[] = {
-{ kHomeCharCode, Qt::Key_Home, "Qt::Home" },
-{ kEnterCharCode, Qt::Key_Enter, "Qt::Key_Enter" },
-{ kEndCharCode, Qt::Key_End, "Qt::Key_End" },
-{ kBackspaceCharCode, Qt::Key_Backspace, "Qt::Backspace" },
-{ kTabCharCode, Qt::Key_Tab, "Qt::Tab" },
-{ kPageUpCharCode, Qt::Key_PageUp, "Qt::PageUp" },
-{ kPageDownCharCode, Qt::Key_PageDown, "Qt::PageDown" },
-{ kReturnCharCode, Qt::Key_Return, "Qt::Key_Return" },
+    { kHomeCharCode, Qt::Key_Home, "Qt::Home" },
+    { kEnterCharCode, Qt::Key_Enter, "Qt::Key_Enter" },
+    { kEndCharCode, Qt::Key_End, "Qt::Key_End" },
+    { kBackspaceCharCode, Qt::Key_Backspace, "Qt::Backspace" },
+    { kTabCharCode, Qt::Key_Tab, "Qt::Tab" },
+    { kPageUpCharCode, Qt::Key_PageUp, "Qt::PageUp" },
+    { kPageDownCharCode, Qt::Key_PageDown, "Qt::PageDown" },
+    { kReturnCharCode, Qt::Key_Return, "Qt::Key_Return" },
 //function keys?
-{ kEscapeCharCode, Qt::Key_Escape, "Qt::Key_Escape" },
-{ kLeftArrowCharCode, Qt::Key_Left, "Qt::Key_Left" },
-{ kRightArrowCharCode, Qt::Key_Right, "Qt::Key_Right" },
-{ kUpArrowCharCode, Qt::Key_Up, "Qt::Key_Up" },
-{ kDownArrowCharCode, Qt::Key_Down, "Qt::Key_Down" },
-{ kDeleteCharCode, Qt::Key_Delete, "Qt::Key_Delete" }
+    { kEscapeCharCode, Qt::Key_Escape, "Qt::Key_Escape" },
+    { kLeftArrowCharCode, Qt::Key_Left, "Qt::Key_Left" },
+    { kRightArrowCharCode, Qt::Key_Right, "Qt::Key_Right" },
+    { kUpArrowCharCode, Qt::Key_Up, "Qt::Key_Up" },
+    { kDownArrowCharCode, Qt::Key_Down, "Qt::Key_Down" },
+    { kDeleteCharCode, Qt::Key_Delete, "Qt::Key_Delete" }
 };
 static int get_key(int key)
 {
@@ -148,20 +149,20 @@ struct qt_last_mouse_down_struct {
 } qt_last_mouse_down = { 0, 0, 0 };
 
 //nasty, copied code -
-static void qt_dispatchEnterLeave(QWidget* enter, QWidget* leave) {
+static void qt_dispatchEnterLeave(QWidget *enter, QWidget *leave) {
 #if 0
     if(leave) {
         QEvent e(QEvent::Leave);
-        QApplication::sendEvent(leave, & e);
+        QApplication::sendEvent(leave, &e);
     }
     if(enter) {
         QEvent e(QEvent::Enter);
-        QApplication::sendEvent(enter, & e);
+        QApplication::sendEvent(enter, &e);
     }
     return;
 #endif
 
-    QWidget* w ;
+    QWidget *w;
     if(!enter && !leave)
         return;
     QWidgetList leaveList;
@@ -189,8 +190,8 @@ static void qt_dispatchEnterLeave(QWidget* enter, QWidget* leave) {
         w = leave;
         while(!w->isWindow() && (w = w->parentWidget()))
             leaveDepth++;
-        QWidget* wenter = enter;
-        QWidget* wleave = leave;
+        QWidget *wenter = enter;
+        QWidget *wleave = leave;
         while(enterDepth > leaveDepth) {
             wenter = wenter->parentWidget();
             enterDepth--;
@@ -224,7 +225,7 @@ static void qt_dispatchEnterLeave(QWidget* enter, QWidget* leave) {
         if(w->testAttribute(Qt::WA_Hover)) {
             Q_ASSERT(instance());
             QHoverEvent he(QEvent::HoverLeave, QPoint(-1, -1),
-                           w->mapFromGlobal(QApplicationPrivate::instance()->hoverGlobalPos));
+             w->mapFromGlobal(QApplicationPrivate::instance()->hoverGlobalPos));
             QApplication::sendEvent(w, &he);
         }
 #endif
@@ -254,7 +255,7 @@ extern "C" bool qtns_event(QtNPInstance *This, NPEvent *event)
         }
 
         //watch for mouse moves
-       Point currentPosition;
+        Point currentPosition;
         GetMouse(&currentPosition);
         LocalToGlobal(&currentPosition);
         if(currentPosition.h != lastPosition.h || currentPosition.v != lastPosition.v) {
@@ -275,12 +276,12 @@ extern "C" bool qtns_event(QtNPInstance *This, NPEvent *event)
                 QPoint p(currentPosition.h, currentPosition.v);
                 QPoint plocal(widget->mapFromGlobal(p));
                 QMouseEvent qme(QEvent::MouseMove, plocal, p, Button() ? Qt::LeftButton : Qt::NoButton,
-                                0, get_modifiers(GetCurrentKeyModifiers()));
+                 0, get_modifiers(GetCurrentKeyModifiers()));
                 QApplication::sendEvent(widget, &qme);
             }
         }
         return true;
-    } else if(QWidget *widget = qobject_cast<QWidget*>(This->qt.object)) {
+    } else if(QWidget *widget = qobject_cast<QWidget *>(This->qt.object)) {
         if(event->what == updateEvt) {
             widget->repaint();
             return true;
@@ -299,10 +300,10 @@ extern "C" bool qtns_event(QtNPInstance *This, NPEvent *event)
                     return 1;
 #endif
 
-                int mychar=get_key(event->message & charCodeMask);
+                int mychar = get_key(event->message & charCodeMask);
                 QEvent::Type etype = event->what == keyUp ? QEvent::KeyRelease : QEvent::KeyPress;
                 QKeyEvent ke(etype, mychar, get_modifiers(event->modifiers), QString(QChar(mychar)));
-                QApplication::sendEvent(widget,&ke);
+                QApplication::sendEvent(widget, &ke);
                 return true;
             }
         } else if(event->what == mouseDown  || event->what == mouseUp) {
@@ -316,10 +317,10 @@ extern "C" bool qtns_event(QtNPInstance *This, NPEvent *event)
                 //check if this is the second click, there must be a way to make the
                 //mac do this for us, FIXME!!
                 if(qt_last_mouse_down.when &&
-                   (event->when - qt_last_mouse_down.when <= (uint)QApplication::doubleClickInterval())) {
+                     (event->when - qt_last_mouse_down.when <= (uint) QApplication::doubleClickInterval())) {
                     int x = event->where.h, y = event->where.v;
                     if(x >= (qt_last_mouse_down.x-2) && x <= (qt_last_mouse_down.x+4) &&
-                       y >= (qt_last_mouse_down.y-2) && y <= (qt_last_mouse_down.y+4)) {
+                     y >= (qt_last_mouse_down.y-2) && y <= (qt_last_mouse_down.y+4)) {
                         etype = QEvent::MouseButtonDblClick;
                         qt_last_mouse_down.when = 0;
                     }
@@ -342,7 +343,7 @@ extern "C" bool qtns_event(QtNPInstance *This, NPEvent *event)
             QWidget *popupwidget = NULL;
             if(QApplication::activePopupWidget()) {
                 if(wp) {
-                    QWidget *clt=QWidget::find((WId)wp);
+                    QWidget *clt = QWidget::find((WId)wp);
                     if(clt && clt->windowType() == Qt::Popup)
                         popupwidget = clt;
                 }
@@ -378,7 +379,7 @@ extern "C" bool qtns_event(QtNPInstance *This, NPEvent *event)
                         return 1;
 #endif
                     if(event->what == mouseDown) {
-                        QWidget* w = widget;
+                        QWidget *w = widget;
                         while(w->focusProxy())
                             w = w->focusProxy();
                         if(w->focusPolicy() & Qt::ClickFocus)
@@ -386,7 +387,7 @@ extern "C" bool qtns_event(QtNPInstance *This, NPEvent *event)
                         if(QWidget *tlw = widget->topLevelWidget()) {
                             tlw->raise();
                             if(tlw->isTopLevel() && tlw->windowType() != Qt::Popup &&
-                               (tlw->isModal() || tlw->windowType() != Qt::Dialog))
+                                 (tlw->isModal() || tlw->windowType() != Qt::Dialog))
                                 QApplication::setActiveWindow(tlw);
                         }
                     }
@@ -408,7 +409,7 @@ extern "C" bool qtns_event(QtNPInstance *This, NPEvent *event)
 #ifdef QTBROWSER_USE_CFM
 static bool qtbrowser_use_cfm = false;
 static UInt32 gGlueTemplate[6] = { 0x3D800000, 0x618C0000, 0x800C0000,
-                            0x804C0004, 0x7C0903A6, 0x4E800420  };
+                                   0x804C0004, 0x7C0903A6, 0x4E800420  };
 struct TVector_rec
 {
     ProcPtr fProcPtr;
@@ -419,12 +420,12 @@ void *CFMFunctionPointerForMachOFunctionPointer(void *inMachProcPtr)
 {
     if(!qtbrowser_use_cfm)
         return inMachProcPtr;
-     TVector_rec *vTVector = (TVector_rec*)malloc(sizeof(TVector_rec));
-     if(MemError() == noErr && vTVector != 0) {
-         vTVector->fProcPtr = (ProcPtr)inMachProcPtr;
-         vTVector->fTOC = 0;  // ignored
-     }
-     return((void *)vTVector);
+    TVector_rec *vTVector = (TVector_rec *)malloc(sizeof(TVector_rec));
+    if(MemError() == noErr && vTVector != 0) {
+        vTVector->fProcPtr = (ProcPtr)inMachProcPtr;
+        vTVector->fTOC = 0;   // ignored
+    }
+    return((void *)vTVector);
 }
 
 void DisposeCFMFunctionPointer(void *inCfmProcPtr)
@@ -435,11 +436,11 @@ void DisposeCFMFunctionPointer(void *inCfmProcPtr)
         free(inCfmProcPtr);
 }
 
-void* MachOFunctionPointerForCFMFunctionPointer(void* inCfmProcPtr)
+void *MachOFunctionPointerForCFMFunctionPointer(void *inCfmProcPtr)
 {
     if(!qtbrowser_use_cfm)
         return inCfmProcPtr;
-    UInt32 *vMachProcPtr = (UInt32*)NewPtr(sizeof(gGlueTemplate));
+    UInt32 *vMachProcPtr = (UInt32 *)NewPtr(sizeof(gGlueTemplate));
     vMachProcPtr[0] = gGlueTemplate[0] | ((UInt32)inCfmProcPtr >> 16);
     vMachProcPtr[1] = gGlueTemplate[1] | ((UInt32)inCfmProcPtr & 0xFFFF);
     vMachProcPtr[2] = gGlueTemplate[2];
@@ -457,9 +458,9 @@ extern "C" void qtns_initialize(QtNPInstance *)
     qt_mac_set_native_menubar(false);
     if(!qApp) {
         ownsqapp = true;
-        static int argc=0;
-        static char **argv={ 0 };
-        (void)new QApplication(argc, argv);
+        static int argc = 0;
+        static char * *argv = { 0 };
+         (void)new QApplication(argc, argv);
     }
 }
 
@@ -481,12 +482,12 @@ extern "C" void qtns_shutdown()
 
 extern "C" void qtns_embed(QtNPInstance *This)
 {
-    Q_ASSERT(qobject_cast<QWidget*>(This->qt.object));
+    Q_ASSERT(qobject_cast<QWidget *>(This->qt.object));
 
     WindowPtr windowptr = GetWindowFromPort((CGrafPtr)This->window->port);
     HIViewRef root = 0;
     OSErr err;
-    err = GetRootControl(windowptr,&root);
+    err = GetRootControl(windowptr, &root);
     if(!root)
         root = HIViewGetRoot(windowptr);
     if(!root) {
@@ -499,7 +500,7 @@ extern "C" void qtns_embed(QtNPInstance *This)
 
 extern "C" void qtns_setGeometry(QtNPInstance *This, const QRect &rect, const QRect &clipRect)
 {
-    Q_ASSERT(qobject_cast<QWidget*>(This->qt.object));
+    Q_ASSERT(qobject_cast<QWidget *>(This->qt.object));
 
     WindowPtr windowptr = GetWindowFromPort((CGrafPtr)This->window->port);
     Rect content_r;
@@ -510,9 +511,9 @@ extern "C" void qtns_setGeometry(QtNPInstance *This, const QRect &rect, const QR
     QRect geom(rect.translated(content_r.left-structure_r.left, content_r.top-structure_r.top));
     if(rect != clipRect) {
         QRegion clipRegion(QRect(clipRect.x()-geom.x(), clipRect.y()-geom.y(), clipRect.width(), clipRect.height())
-                           .translated(content_r.left-structure_r.left, content_r.top-structure_r.top));
+             .translated(content_r.left-structure_r.left, content_r.top-structure_r.top));
         if(clipRegion.isEmpty())
-            clipRegion = QRegion(-1, -1, 1, 1); //eww ### FIXME
+            clipRegion = QRegion(-1, -1, 1, 1);  //eww ### FIXME
         This->qt.widget->setMask(clipRegion);
     } else {
         This->qt.widget->clearMask();
@@ -533,11 +534,11 @@ extern "C" int main(NPNetscapeFuncs *npn_funcs, NPPluginFuncs *np_funcs, NPP_Shu
     qtbrowser_use_cfm = true; //quite the heuristic..
 
     NPError ret;
-    extern NPError NP_Initialize(NPNetscapeFuncs*);
-    if((ret=NP_Initialize(npn_funcs)) != NPERR_NO_ERROR)
+    extern NPError NP_Initialize(NPNetscapeFuncs *);
+    if((ret = NP_Initialize(npn_funcs)) != NPERR_NO_ERROR)
         return ret;
-    extern NPError NP_GetEntryPoints(NPPluginFuncs*);
-    if((ret=NP_GetEntryPoints(np_funcs)) != NPERR_NO_ERROR)
+    extern NPError NP_GetEntryPoints(NPPluginFuncs *);
+    if((ret = NP_GetEntryPoints(np_funcs)) != NPERR_NO_ERROR)
         return ret;
     *shutdown = (NPP_ShutdownUPP)MAKE_FUNCTION_POINTER(NPP_MacShutdown);
     return NPERR_NO_ERROR;

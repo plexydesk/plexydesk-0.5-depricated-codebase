@@ -18,11 +18,11 @@
 
     Sam Lantinga
     slouken@libsdl.org
-*/
+ */
 
 /* This file reverses the effects of begin_code.h and should be included
    after you finish any function and structure declarations in your headers
-*/
+ */
 
 #undef _begin_code_h
 

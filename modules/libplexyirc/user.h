@@ -3,12 +3,12 @@
 
 class User
 {
-    public:
+public:
     QString nick;
     QString user;
     QString host;
 
-    User(QString nick,QString user, QString host) {
+    User(QString nick, QString user, QString host) {
         this->nick = nick;
         this->user = user;
         this->host = host;

@@ -28,7 +28,7 @@
 
 namespace PlexyDesk
 {
-class VideoWidget: public DesktopWidget
+class VideoWidget : public DesktopWidget
 {
     Q_OBJECT
 public:
@@ -36,7 +36,7 @@ public:
     virtual ~VideoWidget();
     void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
     void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
-    void setFrameImage(QImage& img);
+    void setFrameImage(QImage &img);
     QRectF boundingRect() const;
     void setCoverPic(QImage img);
 

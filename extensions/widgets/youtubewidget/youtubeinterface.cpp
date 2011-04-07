@@ -4,11 +4,11 @@
 
 #include <QtPlugin>
 
-YouTubeInterface::YouTubeInterface(QObject * object)
+YouTubeInterface::YouTubeInterface(QObject *object)
 {
 }
 
-PlexyDesk::BasePlugin * YouTubeInterface::instance()
+PlexyDesk::BasePlugin *YouTubeInterface::instance()
 {
     return new YouTube(this);
 }

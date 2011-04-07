@@ -9,13 +9,13 @@
 #include <QVariantMap>
 class SocialQDBusPluginData
 {
-public :
-        SocialQDBusPluginData();
-        virtual ~SocialQDBusPluginData();
-        QVariantMap getData(QString pluginName,QString pluginMethod,QVariantMap args);
-        bool getAuthentication(QString uName, QString pWord);
+public:
+    SocialQDBusPluginData();
+    virtual ~SocialQDBusPluginData();
+    QVariantMap getData(QString pluginName, QString pluginMethod, QVariantMap args);
+    bool getAuthentication(QString uName, QString pWord);
 
 };
 
-#endif	
+#endif
 

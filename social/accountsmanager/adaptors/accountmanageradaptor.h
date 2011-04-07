@@ -11,10 +11,10 @@ class SocialAccountsManagerAdaptor : public QDBusAbstractAdaptor
     Q_CLASSINFO("D-Bus Interface", "local.socioplexy.manageAcounts");
 
 public:
-    SocialAccountsManagerAdaptor(QObject *parent=0);
+    SocialAccountsManagerAdaptor(QObject *parent = 0);
 public slots:
     QDBusObjectPath createAccount(const QString &socialServiceName, const QString &displayName,
-                                  const QString &userName, QVariantMap properties);
+         const QString &userName, QVariantMap properties);
 
     QString testSlot();
 };

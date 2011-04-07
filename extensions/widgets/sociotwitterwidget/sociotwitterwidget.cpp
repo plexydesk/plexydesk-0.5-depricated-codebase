@@ -1,16 +1,16 @@
 /*#include "sociotwitterwidget.h"
-#include ""
+   #include ""
 
-SocioTwitter::SocioTwitter(QWidget *parent)
+   SocioTwitter::SocioTwitter(QWidget *parent)
     : QWidget(parent), ui(new Ui::SocioTwitterClass)
-{
+   {
     ui->setupUi(this);
-}
+   }
 
-SocioTwitter::~SocioTwitter()
-{
+   SocioTwitter::~SocioTwitter()
+   {
     delete ui;
-}*/
+   }*/
 
 #include <plexy.h>
 #include "sociotwitterwidget.h"
@@ -40,8 +40,8 @@ SocioTwitter::~SocioTwitter()
 namespace PlexyDesk
 {
 
-SocioTwitterwidget::SocioTwitterwidget(const QRectF &rect, QWidget *widget):
-        DesktopWidget(rect, widget)
+SocioTwitterwidget::SocioTwitterwidget(const QRectF &rect, QWidget *widget) :
+    DesktopWidget(rect, widget)
 {
 
 
@@ -58,12 +58,12 @@ SocioTwitterwidget::SocioTwitterwidget(const QRectF &rect, QWidget *widget):
     SocioTwitterwidget->setWindowTitle(QString::fromUtf8("SocioTwitter"));
     SocioTwitterwidget->setAutoFillBackground(false);
     SocioTwitterwidget->setStyleSheet(QString::fromUtf8("QWidget{   \n"
-                                      "background:transparent;\n"
-                                      "transparent-color:black;\n"
-                                      "background-color:qlineargradient(spread:pad, x1:0.604, y1:0.409, x2:0.193, y2:0.938, stop:0.233503 rgba(1, 0, 		0,255))\n"
-                                      "\n"
-                                      "\n"
-                                      "  }"));
+             "background:transparent;\n"
+             "transparent-color:black;\n"
+             "background-color:qlineargradient(spread:pad, x1:0.604, y1:0.409, x2:0.193, y2:0.938, stop:0.233503 rgba(1, 0,         0,255))\n"
+             "\n"
+             "\n"
+             "  }"));
 
     lineEdit = new QLineEdit(SocioTwitterwidget);
     lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
@@ -76,12 +76,12 @@ SocioTwitterwidget::SocioTwitterwidget(const QRectF &rect, QWidget *widget):
     lineEdit->setSizePolicy(sizePolicy1);
     lineEdit->setFocusPolicy(Qt::StrongFocus);
     lineEdit->setStyleSheet(QString::fromUtf8("QLineEdit {     \n"
-                            " border: 1px solid gray;     \n"
-                            " border-radius: 5px;     \n"
-                            " padding: 0 8px;     \n"
-                            " background: beige;     \n"
-                            " selection-background-color: darkgray;\n"
-                            "  }"));
+             " border: 1px solid gray;     \n"
+             " border-radius: 5px;     \n"
+             " padding: 0 8px;     \n"
+             " background: beige;     \n"
+             " selection-background-color: darkgray;\n"
+             "  }"));
 
     scrollArea = new QScrollArea(SocioTwitterwidget);
     scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
@@ -232,83 +232,83 @@ SocioTwitterwidget::SocioTwitterwidget(const QRectF &rect, QWidget *widget):
     void retranslateUi(QWidget *SocioTwitterClass)
     {
         scrollArea->setStyleSheet(QApplication::translate("SocioTwitterClass", "QScrollArea {\n"
-" border: 2px solid #8f8f91;     \n"
-" border-radius: 6px;      \n"
-" min-width: 25px; }", 0, QApplication::UnicodeUTF8));
+   " border: 2px solid #8f8f91;     \n"
+   " border-radius: 6px;      \n"
+   " min-width: 25px; }", 0, QApplication::UnicodeUTF8));
         graphicsView->setStyleSheet(QApplication::translate("SocioTwitterClass", "QGraphicsView{\n"
-" border: 0.5px solid #8f8f91; \n"
-"border-color: #006699;    \n"
-" border-radius: 5px;       \n"
-" min-width: 25px; }", 0, QApplication::UnicodeUTF8));
+   " border: 0.5px solid #8f8f91; \n"
+   "border-color: #006699;    \n"
+   " border-radius: 5px;       \n"
+   " min-width: 25px; }", 0, QApplication::UnicodeUTF8));
         graphicsView_2->setStyleSheet(QApplication::translate("SocioTwitterClass", "QGraphicsView{\n"
-" border: 0.5px solid #8f8f91; \n"
-"border-color: #006699;    \n"
-" border-radius: 5px;       \n"
-" min-width: 25px; }\n"
-"", 0, QApplication::UnicodeUTF8));
+   " border: 0.5px solid #8f8f91; \n"
+   "border-color: #006699;    \n"
+   " border-radius: 5px;       \n"
+   " min-width: 25px; }\n"
+   "", 0, QApplication::UnicodeUTF8));
         graphicsView_3->setStyleSheet(QApplication::translate("SocioTwitterClass", "QGraphicsView{\n"
-" border: 0.5px solid #8f8f91; \n"
-"border-color: #006699;    \n"
-" border-radius: 5px;       \n"
-" min-width: 25px; }", 0, QApplication::UnicodeUTF8));
+   " border: 0.5px solid #8f8f91; \n"
+   "border-color: #006699;    \n"
+   " border-radius: 5px;       \n"
+   " min-width: 25px; }", 0, QApplication::UnicodeUTF8));
         graphicsView_4->setStyleSheet(QApplication::translate("SocioTwitterClass", "QGraphicsView{\n"
-" border: 0.5px solid #8f8f91; \n"
-"border-color: #006699;    \n"
-" border-radius: 5px;       \n"
-" min-width: 25px; }", 0, QApplication::UnicodeUTF8));
+   " border: 0.5px solid #8f8f91; \n"
+   "border-color: #006699;    \n"
+   " border-radius: 5px;       \n"
+   " min-width: 25px; }", 0, QApplication::UnicodeUTF8));
         graphicsView_5->setStyleSheet(QApplication::translate("SocioTwitterClass", "QGraphicsView{\n"
-" border: 0.5px solid #8f8f91; \n"
-"border-color: #006699;    \n"
-" border-radius: 5px;       \n"
-" min-width: 25px; }", 0, QApplication::UnicodeUTF8));
+   " border: 0.5px solid #8f8f91; \n"
+   "border-color: #006699;    \n"
+   " border-radius: 5px;       \n"
+   " min-width: 25px; }", 0, QApplication::UnicodeUTF8));
         textBrowser->setStyleSheet(QApplication::translate("SocioTwitterClass", "QTextBrowser{\n"
-" border: 0.5px solid #8f8f91; \n"
-"border-color: #006699;    \n"
-" border-radius: 5px;       \n"
-" min-width: 25px; }", 0, QApplication::UnicodeUTF8));
+   " border: 0.5px solid #8f8f91; \n"
+   "border-color: #006699;    \n"
+   " border-radius: 5px;       \n"
+   " min-width: 25px; }", 0, QApplication::UnicodeUTF8));
         textBrowser_2->setStyleSheet(QApplication::translate("SocioTwitterClass", "QTextBrowser{\n"
-" border: 0.5px solid #8f8f91; \n"
-"border-color: #006699;    \n"
-" border-radius: 5px;       \n"
-" min-width: 25px; }", 0, QApplication::UnicodeUTF8));
+   " border: 0.5px solid #8f8f91; \n"
+   "border-color: #006699;    \n"
+   " border-radius: 5px;       \n"
+   " min-width: 25px; }", 0, QApplication::UnicodeUTF8));
         textBrowser_3->setStyleSheet(QApplication::translate("SocioTwitterClass", "QTextBrowser{\n"
-" border: 0.5px solid #8f8f91; \n"
-"border-color: #006699;    \n"
-" border-radius: 5px;       \n"
-" min-width: 25px; }", 0, QApplication::UnicodeUTF8));
+   " border: 0.5px solid #8f8f91; \n"
+   "border-color: #006699;    \n"
+   " border-radius: 5px;       \n"
+   " min-width: 25px; }", 0, QApplication::UnicodeUTF8));
         textBrowser_4->setStyleSheet(QApplication::translate("SocioTwitterClass", "QTextBrowser{\n"
-" border: 0.5px solid #8f8f91; \n"
-"border-color: #006699;    \n"
-" border-radius: 5px;       \n"
-" min-width: 25px; }", 0, QApplication::UnicodeUTF8));
+   " border: 0.5px solid #8f8f91; \n"
+   "border-color: #006699;    \n"
+   " border-radius: 5px;       \n"
+   " min-width: 25px; }", 0, QApplication::UnicodeUTF8));
         textBrowser_5->setStyleSheet(QApplication::translate("SocioTwitterClass", "QTextBrowser{\n"
-" border: 0.5px solid #8f8f91; \n"
-"border-color: #006699;    \n"
-" border-radius: 5px;       \n"
-" min-width: 25px; }", 0, QApplication::UnicodeUTF8));
+   " border: 0.5px solid #8f8f91; \n"
+   "border-color: #006699;    \n"
+   " border-radius: 5px;       \n"
+   " min-width: 25px; }", 0, QApplication::UnicodeUTF8));
         pushButton->setStyleSheet(QApplication::translate("SocioTwitterClass", "QPushButton {\n"
-" border: 1px solid #8f8f91;     \n"
-" border-radius: 6px;     \n"
-" background-image:url(blue.png);\n"
-" min-width: 25px; }", 0, QApplication::UnicodeUTF8));
+   " border: 1px solid #8f8f91;     \n"
+   " border-radius: 6px;     \n"
+   " background-image:url(blue.png);\n"
+   " min-width: 25px; }", 0, QApplication::UnicodeUTF8));
         pushButton->setText(QApplication::translate("SocioTwitterClass", "Home", 0, QApplication::UnicodeUTF8));
         OPtions->setStyleSheet(QApplication::translate("SocioTwitterClass", "QPushButton {\n"
-" border: 1px solid #8f8f91;     \n"
-" border-radius: 3px;     \n"
-" background-image:url(blue.png);  \n"
-" min-width: 25px; }", 0, QApplication::UnicodeUTF8));
+   " border: 1px solid #8f8f91;     \n"
+   " border-radius: 3px;     \n"
+   " background-image:url(blue.png);  \n"
+   " min-width: 25px; }", 0, QApplication::UnicodeUTF8));
         OPtions->setText(QApplication::translate("SocioTwitterClass", "Options", 0, QApplication::UnicodeUTF8));
         Q_UNUSED(SocioTwitterClass);
     } // retranslateUi
 
-};*/
+   };*/
 
 
 
 
 void SocioTwitterwidget::setPath(QString str)
 {
-    prefix  = str + "/";
+    prefix = str + "/";
 }
 
 void

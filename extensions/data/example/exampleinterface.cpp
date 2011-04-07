@@ -21,15 +21,15 @@
 #include <desktopwidget.h>
 #include <plexyconfig.h>
 
-ExampleInterface::ExampleInterface(QObject * object)
+ExampleInterface::ExampleInterface(QObject *object)
 {
 }
 
 PlexyDesk::DataPlugin *ExampleInterface::instance()
 {
     /* this is the plugin we are returning since plexy core
-    or other plugins will expect this pointer
-    */
+       or other plugins will expect this pointer
+     */
     return new ExampleData();
 }
 

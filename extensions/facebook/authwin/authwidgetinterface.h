@@ -12,8 +12,8 @@ class PLEXYDESK_EXPORT AuthInterface : public PlexyDesk::AbstractPluginInterface
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
-public:
-    AuthInterface(QObject *object = 0);
+public :
+        AuthInterface(QObject *object = 0);
     PlexyDesk::BasePlugin *instance();
 };
 

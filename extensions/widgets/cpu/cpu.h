@@ -29,9 +29,9 @@ class VISIBLE_SYM Cpu : public PlexyDesk::WidgetPlugin
     Q_OBJECT
 
 public:
-    Cpu(QObject * object = 0);
+    Cpu(QObject *object = 0);
     virtual ~Cpu();
-    virtual QGraphicsItem * item();// {};
+    virtual QGraphicsItem *item(); // {};
 };
 
 

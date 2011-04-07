@@ -32,12 +32,13 @@ class RestInterface : public PlexyDesk::DataInterface
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
-public:
-    RestInterface(QObject * object = 0);
-    virtual ~RestInterface() {}
+public :
+        RestInterface(QObject *object = 0);
+    virtual ~RestInterface() {
+    }
 
     /* this will return a valid data plugin pointer*/
-    PlexyDesk::DataPlugin * instance();
+    PlexyDesk::DataPlugin *instance();
 
 };
 

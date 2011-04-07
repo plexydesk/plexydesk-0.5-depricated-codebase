@@ -1,4 +1,4 @@
-/* 
+/*
  *  This file is part of Quartica.
  *
  *  Copyright (c) 2008 Matteo Bertozzi <theo.bertozzi@gmail.com>
@@ -25,39 +25,39 @@
 
 #include "freedesktopmime.h"
 
-int main (int argc, char **argv) {
-	QCoreApplication app(argc, argv);
+int main (int argc, char * *argv) {
+    QCoreApplication app(argc, argv);
 
-	QFreeDesktopMime mime;
-	qDebug() << mime.genericIconName("application/pkcs7-mime");
-	qDebug() << mime.description("application/epub+zip");
-	qDebug() << mime.expandedAcronym("text/x-xslfo");
-	qDebug() << mime.description("text/x-xslfo");
-	qDebug() << mime.acronym("text/x-xslfo");
-	qDebug() << mime.alias("text/x-xslfo");
+    QFreeDesktopMime mime;
+    qDebug() << mime.genericIconName("application/pkcs7-mime");
+    qDebug() << mime.description("application/epub+zip");
+    qDebug() << mime.expandedAcronym("text/x-xslfo");
+    qDebug() << mime.description("text/x-xslfo");
+    qDebug() << mime.acronym("text/x-xslfo");
+    qDebug() << mime.alias("text/x-xslfo");
 
-	qDebug() << mime.fromFileName("test.jpg");
-	qDebug() << mime.description();
-	qDebug() << mime.fromFileName("test.png");
-	qDebug() << mime.description();
-	qDebug() << mime.fromFileName("test.txt");
-	qDebug() << mime.description();
-	qDebug() << mime.fromFileName("test.cpp");
-	qDebug() << mime.description();
-	qDebug() << mime.fromFileName("test.h");
-	qDebug() << mime.description();
+    qDebug() << mime.fromFileName("test.jpg");
+    qDebug() << mime.description();
+    qDebug() << mime.fromFileName("test.png");
+    qDebug() << mime.description();
+    qDebug() << mime.fromFileName("test.txt");
+    qDebug() << mime.description();
+    qDebug() << mime.fromFileName("test.cpp");
+    qDebug() << mime.description();
+    qDebug() << mime.fromFileName("test.h");
+    qDebug() << mime.description();
 
-	if (argc > 1) {
-		if (QFileInfo(argv[1]).isDir()) {
-			QDir dir(argv[1]);
-			//dir.setFilter(QDir::Files);
-			foreach (QFileInfo fileInfo, dir.entryInfoList())
-				qDebug() << "-" << mime.fromFile(fileInfo.absoluteFilePath()) << fileInfo.fileName();
-		} else {
-			qDebug() << "-" << mime.fromFile(argv[1]) << argv[1];
-		}
-	}
+    if (argc > 1) {
+        if (QFileInfo(argv[1]).isDir()) {
+            QDir dir(argv[1]);
+            //dir.setFilter(QDir::Files);
+            foreach (QFileInfo fileInfo, dir.entryInfoList())
+            qDebug() << "-" << mime.fromFile(fileInfo.absoluteFilePath()) << fileInfo.fileName();
+        } else {
+            qDebug() << "-" << mime.fromFile(argv[1]) << argv[1];
+        }
+    }
 
-	return(0);
+    return(0);
 }
 

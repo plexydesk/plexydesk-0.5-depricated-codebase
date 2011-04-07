@@ -23,7 +23,7 @@
 
 #include <QtPlugin>
 
-FlickerInterface::FlickerInterface(QObject * object)
+FlickerInterface::FlickerInterface(QObject *object)
 {
 }
 

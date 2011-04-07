@@ -29,5 +29,6 @@ VideoEntity::VideoEntity()
     thumb = "";
 }
 
-VideoEntity::~VideoEntity() {}
+VideoEntity::~VideoEntity() {
+}
 }

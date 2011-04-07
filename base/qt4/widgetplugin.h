@@ -12,9 +12,10 @@ namespace PlexyDesk
 class VISIBLE_SYM WidgetPlugin : public BasePlugin
 {
     Q_OBJECT
-public :
-    virtual ~WidgetPlugin() {}
-    virtual QGraphicsItem * item() = 0;
+public:
+    virtual ~WidgetPlugin() {
+    }
+    virtual QGraphicsItem *item() = 0;
 };
 }
 #endif

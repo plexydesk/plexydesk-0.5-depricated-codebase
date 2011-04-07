@@ -22,7 +22,7 @@
 
 #include <QtPlugin>
 
-ClassicBackdrop::ClassicBackdrop(QObject * object)
+ClassicBackdrop::ClassicBackdrop(QObject *object)
 {
 }
 
@@ -31,7 +31,7 @@ ClassicBackdrop::~ClassicBackdrop()
 
 }
 
-PlexyDesk::BasePlugin * ClassicBackdrop::instance()
+PlexyDesk::BasePlugin *ClassicBackdrop::instance()
 {
     return new BgPlugin(this);
 }

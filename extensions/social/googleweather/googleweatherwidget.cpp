@@ -33,28 +33,29 @@
 #include <QTimer>
 namespace PlexyDesk
 {
-googleweatherWidget::googleweatherWidget (const QRectF &rect, QWidget *widget):
-DesktopWidget(rect,widget)
+googleweatherWidget::googleweatherWidget (const QRectF &rect, QWidget *widget) :
+    DesktopWidget(rect, widget)
 {
-  shade = 0;
-  moveY = 0;
-  setPath(applicationDirPath() +"/theme/skins/default/widget/default/googleweather/");
-  setDockImage(QPixmap(prefix + "icon.png"));
-  drawWidget();
+    shade = 0;
+    moveY = 0;
+    setPath(applicationDirPath() +"/theme/skins/default/widget/default/googleweather/");
+    setDockImage(QPixmap(prefix + "icon.png"));
+    drawWidget();
 
-  clip = QRectF(10, 10, rect.width()-40, rect.height()-20);
-  view = QRectF(0, 0, rect.width()-80, 0);
-  initD = 0;
-  DS_EXTF = 0;
-  initTimer = 1;
-  weather = new SocialQDBusPluginData();
+    clip = QRectF(10, 10, rect.width()-40, rect.height()-20);
+    view = QRectF(0, 0, rect.width()-80, 0);
+    initD = 0;
+    DS_EXTF = 0;
+    initTimer = 1;
+    weather = new SocialQDBusPluginData();
 
 }
 googleweatherWidget::~googleweatherWidget ()
-{}
+{
+}
 void googleweatherWidget::setPath(QString str)
 {
-  prefix  = str+"/";
+    prefix = str+"/";
 }
 //----------------------------------------
 void googleweatherWidget::data()
@@ -69,12 +70,12 @@ void googleweatherWidget::data()
         weatherValues.clear();
         //TODO : adding capability to change the station
         //args["station"] = QVariant("colombo");
-        weatherdata = weather->getData("weatherplugin","getweather",args);
+        weatherdata = weather->getData("weatherplugin", "getweather", args);
         //unwrapping the QVariantMap
         weatherKeys = weatherdata.keys();
         if (weatherKeys[0] != "Network Error")
         {
-            for (int i=0;i<weatherKeys.length();i++)
+            for (int i = 0; i<weatherKeys.length(); i++)
             {
                 dataPkg<<weatherdata[weatherKeys.at(i)];
                 if (dataPkg[i].canConvert<QStringList>())
@@ -84,7 +85,7 @@ void googleweatherWidget::data()
             dataPkg<<weatherdata[weatherKeys.at(0)];
             if (dataPkg[0].canConvert<QString>())
             {
-                for (int i = 0;i<26;i++)
+                for (int i = 0; i<26; i++)
                 {
                     weatherValues<<dataPkg[0].value<QStringList>();
                 }
@@ -93,21 +94,21 @@ void googleweatherWidget::data()
         //unwrapping completed..
     }
 }
-void googleweatherWidget::tempInCel(QPainter *p,QString temp ,int x,int y, bool c, int size)
+void googleweatherWidget::tempInCel(QPainter *p, QString temp, int x, int y, bool c, int size)
 {
     bool valid;
-    int t = temp.toInt(&valid,10);
+    int t = temp.toInt(&valid, 10);
 
     int ts;
     if (!c)
     {
         t = (t-32)/1.8;
     }
-    temp=QString::number(t);
+    temp = QString::number(t);
     if (valid)
-        p->setPen(QColor(175+t*2,120-t*3,120-t*3));
+        p->setPen(QColor(175+t*2, 120-t*3, 120-t*3));
     else
-        p->setPen(QColor(255,0,0));
+        p->setPen(QColor(255, 0, 0));
     if (size < 21 && size > 9)
         ts = size - 5;
     else if (size < 9)
@@ -115,9 +116,9 @@ void googleweatherWidget::tempInCel(QPainter *p,QString temp ,int x,int y, bool 
     else
         ts = size -15;
     p->setFont(QFont("SansSerif", size, QFont::Bold));
-    p->drawText(clip.x()+x, view.y()+y,temp+" C");
+    p->drawText(clip.x()+x, view.y()+y, temp+" C");
     p->setFont(QFont("SansSerif", ts, QFont::Bold));
-    if (valid && size > 20){
+    if (valid && size > 20) {
         if (t > 9)
             p->drawText(clip.x()+x+65, view.y()+y-25, "o");
         else if (t > -1)
@@ -138,7 +139,7 @@ void googleweatherWidget::tempInCel(QPainter *p,QString temp ,int x,int y, bool 
             else if (t > -10)
                 p->drawText(clip.x()+x+18, view.y()+y-8, "o");
             else
-                p->drawText(clip.x()+x+28,view.y()+y-8,"o");
+                p->drawText(clip.x()+x+28, view.y()+y-8, "o");
         }
         else
         {
@@ -149,7 +150,7 @@ void googleweatherWidget::tempInCel(QPainter *p,QString temp ,int x,int y, bool 
             else if (t > -10)
                 p->drawText(clip.x()+x+20, view.y()+y-8, "o");
             else
-                p->drawText(clip.x()+x+32,view.y()+y-8,"o");
+                p->drawText(clip.x()+x+32, view.y()+y-8, "o");
         }
     }
     p->setFont(QFont("SansSerif", 10, QFont::Normal));
@@ -157,13 +158,13 @@ void googleweatherWidget::tempInCel(QPainter *p,QString temp ,int x,int y, bool 
 }
 void googleweatherWidget::drawSet(QPainter *p)
 {
-    QString current,humidity,temp,wind,image,curr_date;
+    QString current, humidity, temp, wind, image, curr_date;
     current = weatherValues.at(0);
     humidity = weatherValues.at(1);
     temp = weatherValues.at(2);
     wind = weatherValues.at(3);
     curr_date = weatherValues.at(25);
-    QStringList f_day,f_condition,f_lTemp,f_hTemp,f_image;
+    QStringList f_day, f_condition, f_lTemp, f_hTemp, f_image;
 
     f_day<<weatherValues.at(4)<<weatherValues.at(5)<<weatherValues.at(6)<<weatherValues.at(7);
     f_condition<<weatherValues.at(8)<<weatherValues.at(9)<<weatherValues.at(10)<<weatherValues.at(11);
@@ -173,67 +174,67 @@ void googleweatherWidget::drawSet(QPainter *p)
     image = weatherValues.at(20);
 
 
-    p->setPen(QColor(255,255,255,255));
+    p->setPen(QColor(255, 255, 255, 255));
     p->setFont(QFont("SansSerif", 15, QFont::Bold));
-    p->drawLine(clip.x()+w_ImageDock.width()+57,view.y()+45,clip.x()+w_ImageDock.width()+251,view.y()+45);
+    p->drawLine(clip.x()+w_ImageDock.width()+57, view.y()+45, clip.x()+w_ImageDock.width()+251, view.y()+45);
     p->drawText(clip.x()+w_ImageDock.width()+60, view.y()+40, "Google Weather");
-    p->setPen(QColor(0,255,255,127));
+    p->setPen(QColor(0, 255, 255, 127));
     p->setFont(QFont("SansSerif", 10, QFont::Normal));
     if (current != "Data not recieved")
     {
         p->drawText(clip.x()+10, view.y()+65, "City: Colombo");
-        p->setPen(QColor(200,255,100,127));
+        p->setPen(QColor(200, 255, 100, 127));
 
         //------------current conditions --------------
         QFont tempFont = QFont("OldEnglish", 14, QFont::DemiBold);
         tempFont.setStyleStrategy(QFont::OpenGLCompatible);
         p->setFont(tempFont);
-        p->drawText(clip.x()+20, view.y()+155,current);
+        p->drawText(clip.x()+20, view.y()+155, current);
         p->setFont(QFont("SansSerif", 10, QFont::Normal));
-        p->setPen(QColor(58,136,253));
-        p->drawText(clip.x()+250, view.y()+90,"Today : " + curr_date);
+        p->setPen(QColor(58, 136, 253));
+        p->drawText(clip.x()+250, view.y()+90, "Today : " + curr_date);
         p->drawText(clip.x()+250, view.y()+130, humidity);
-        p->drawText(clip.x()+250, view.y()+145,wind);
-        tempInCel(p,temp,10,120,true,35);
-        p->drawImage(QRect(clip.x()+140,view.y()+55,100,100),QImage(prefix+image+".png"));
+        p->drawText(clip.x()+250, view.y()+145, wind);
+        tempInCel(p, temp, 10, 120, true, 35);
+        p->drawImage(QRect(clip.x()+140, view.y()+55, 100, 100), QImage(prefix+image+".png"));
         //-----------end of current conditions-----------
 
         //////////////// forecst information //////////////////////
 
         p->setFont(QFont("SansSerif", 10, QFont::Normal));
-        p->setPen(QColor(50,50,50));
-        p->drawLine(clip.x()+5,view.y()+175,clip.x()+402,view.y()+175);
-        p->drawLine(clip.x()+140,view.y()+175,clip.x()+140,view.y()+270);
-        p->drawLine(clip.x()+270,view.y()+175,clip.x()+270,view.y()+270);
-        for (int i=1;i<4;i++)
+        p->setPen(QColor(50, 50, 50));
+        p->drawLine(clip.x()+5, view.y()+175, clip.x()+402, view.y()+175);
+        p->drawLine(clip.x()+140, view.y()+175, clip.x()+140, view.y()+270);
+        p->drawLine(clip.x()+270, view.y()+175, clip.x()+270, view.y()+270);
+        for (int i = 1; i<4; i++)
         {
-            p->setPen(QColor(0,234,255));
+            p->setPen(QColor(0, 234, 255));
             p->drawText(clip.x()+15+(i-1)*130, view.y()+190, getDay(f_day.at(i)));
-            p->setPen(QColor(56,193,124));
-            p->drawText(clip.x()+15+(i-1)*130, view.y()+267,f_condition.at(i));
+            p->setPen(QColor(56, 193, 124));
+            p->drawText(clip.x()+15+(i-1)*130, view.y()+267, f_condition.at(i));
             p->setFont(QFont("SansSerif", 6, QFont::Normal));
-            p->drawText(clip.x()+15+(i-1)*130,view.y()+280,"Lowest");            
-            tempInCel(p,f_lTemp.at(i),15+(i-1)*130,300,false,12);
+            p->drawText(clip.x()+15+(i-1)*130, view.y()+280, "Lowest");
+            tempInCel(p, f_lTemp.at(i), 15+(i-1)*130, 300, false, 12);
             p->setFont(QFont("SansSerif", 6, QFont::Normal));
-            p->setPen(QColor(56,193,124));
-            p->drawText(clip.x()+70+(i-1)*130,view.y()+280,"Highest");            
-            tempInCel(p,f_hTemp.at(i),70+(i-1)*130,300,false,10);
-            p->drawImage(QRect(clip.x()+20+(i-1)*130,view.y()+200,50,50),QImage(prefix+f_image.at(i)+".png"));
+            p->setPen(QColor(56, 193, 124));
+            p->drawText(clip.x()+70+(i-1)*130, view.y()+280, "Highest");
+            tempInCel(p, f_hTemp.at(i), 70+(i-1)*130, 300, false, 10);
+            p->drawImage(QRect(clip.x()+20+(i-1)*130, view.y()+200, 50, 50), QImage(prefix+f_image.at(i)+".png"));
         }
 
         ///////////////// forecast information ///////////////////////
     }
     else
     {
-        p->setPen(QColor(255,18,18,127));
-        p->drawText(clip.x()+40,view.y()+85, "--Error----");
-        p->setPen(QColor(24,200,198,127));
-        p->drawText(clip.x()+40,view.y()+100, "Check network connection.");
-        p->drawText(clip.x()+40,view.y()+115, "could not establish connection with google.");
-        p->drawText(clip.x()+40,view.y()+130, "If problem persist, contact plexydesk dev team.");
-        p->drawText(clip.x()+40,view.y()+145, "Online help available in IRC channel #plexydesk .");
-        p->setPen(QColor(255,18,18,127));
-        p->drawText(clip.x()+40,view.y()+160, "----------");
+        p->setPen(QColor(255, 18, 18, 127));
+        p->drawText(clip.x()+40, view.y()+85, "--Error----");
+        p->setPen(QColor(24, 200, 198, 127));
+        p->drawText(clip.x()+40, view.y()+100, "Check network connection.");
+        p->drawText(clip.x()+40, view.y()+115, "could not establish connection with google.");
+        p->drawText(clip.x()+40, view.y()+130, "If problem persist, contact plexydesk dev team.");
+        p->drawText(clip.x()+40, view.y()+145, "Online help available in IRC channel #plexydesk .");
+        p->setPen(QColor(255, 18, 18, 127));
+        p->drawText(clip.x()+40, view.y()+160, "----------");
 
     }
 
@@ -260,8 +261,8 @@ QString googleweatherWidget::getDay(QString day)
 }
 void googleweatherWidget::drawWidget()
 {
-   widgetBack = QImage (prefix + "background.png");
-   w_ImageDock = QImage (prefix + "weatherDock.png");
+    widgetBack = QImage (prefix + "background.png");
+    w_ImageDock = QImage (prefix + "weatherDock.png");
 }
 //---------------------------------------------------------------------
 void googleweatherWidget::drawItems()
@@ -269,14 +270,14 @@ void googleweatherWidget::drawItems()
     update ();
 }
 void googleweatherWidget::setCity_UI(QPainter *p)
-{    
-}
-void googleweatherWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget *widget)
 {
-    QRectF r  = e->exposedRect;    
+}
+void googleweatherWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *widget)
+{
+    QRectF r = e->exposedRect;
     p->setCompositionMode(QPainter::CompositionMode_Source);
     p->fillRect(rect(), Qt::transparent);
-    p->drawImage (QRect(r.x(),r.y(),widgetBack.width(),widgetBack.height()),widgetBack);
+    p->drawImage (QRect(r.x(), r.y(), widgetBack.width(), widgetBack.height()), widgetBack);
     p->setCompositionMode(QPainter::CompositionMode_SourceOver);
     p->setBackgroundMode(Qt::TransparentMode);
     p->save ();
@@ -287,15 +288,15 @@ void googleweatherWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsIt
     drawSet(p);
     initTimer = 1;
 }
-void googleweatherWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem * e, QWidget *)
-{    
+void googleweatherWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *)
+{
     p->setRenderHints(QPainter::SmoothPixmapTransform |QPainter::Antialiasing |QPainter::HighQualityAntialiasing);
-    p->setPen(QColor(15,10,220));
-    p->setFont(QFont("Bitstream Charter",12));
+    p->setPen(QColor(15, 10, 220));
+    p->setFont(QFont("Bitstream Charter", 12));
     initD = 0;
     if (DS_EXTF == 0 && initTimer == 1)
     {
-        QTimer::singleShot(200,this,SLOT(data()));
+        QTimer::singleShot(200, this, SLOT(data()));
         //data();
     }
     else

@@ -18,7 +18,7 @@
 
     Sam Lantinga
     slouken@libsdl.org
-*/
+ */
 
 #ifndef _SDL_config_win32_h
 #define _SDL_config_win32_h
@@ -28,25 +28,25 @@
 /* This is a set of defines to configure the SDL features */
 
 #ifdef __GNUC__
-#define HAVE_STDINT_H	1
+#define HAVE_STDINT_H   1
 #elif defined(_MSC_VER)
-typedef signed __int8		int8_t;
-typedef unsigned __int8		uint8_t;
-typedef signed __int16		int16_t;
-typedef unsigned __int16	uint16_t;
-typedef signed __int32		int32_t;
-typedef unsigned __int32	uint32_t;
-typedef signed __int64		int64_t;
-typedef unsigned __int64	uint64_t;
+typedef signed __int8 int8_t;
+typedef unsigned __int8 uint8_t;
+typedef signed __int16 int16_t;
+typedef unsigned __int16 uint16_t;
+typedef signed __int32 int32_t;
+typedef unsigned __int32 uint32_t;
+typedef signed __int64 int64_t;
+typedef unsigned __int64 uint64_t;
 #ifndef _UINTPTR_T_DEFINED
 #ifdef  _WIN64
-typedef unsigned __int64    uintptr_t;
+typedef unsigned __int64 uintptr_t;
 #else
-typedef unsigned int   uintptr_t;
+typedef unsigned int uintptr_t;
 #endif
 #define _UINTPTR_T_DEFINED
 #endif
-#else	/* !__GNUC__ && !_MSC_VER */
+#else   /* !__GNUC__ && !_MSC_VER */
 typedef signed char int8_t;
 typedef unsigned char uint8_t;
 typedef signed short int16_t;
@@ -61,10 +61,10 @@ typedef unsigned int size_t;
 #endif
 typedef unsigned int uintptr_t;
 #endif /* __GNUC__ || _MSC_VER */
-#define SDL_HAS_64BIT_TYPE	1
+#define SDL_HAS_64BIT_TYPE  1
 
 /* Enabled for SDL 1.2 (binary compatibility) */
-#define HAVE_LIBC	1
+#define HAVE_LIBC   1
 #ifdef HAVE_LIBC
 /* Useful headers */
 #define HAVE_STDIO_H 1
@@ -110,64 +110,64 @@ typedef unsigned int uintptr_t;
 #define HAVE__STRNICMP 1
 #define HAVE_SSCANF 1
 #else
-#define HAVE_STDARG_H	1
-#define HAVE_STDDEF_H	1
+#define HAVE_STDARG_H   1
+#define HAVE_STDDEF_H   1
 #endif
 
 /* Enable various audio drivers */
 #ifndef _WIN32_WCE
-#define SDL_AUDIO_DRIVER_DSOUND	1
+#define SDL_AUDIO_DRIVER_DSOUND 1
 #endif
-#define SDL_AUDIO_DRIVER_WAVEOUT	1
-#define SDL_AUDIO_DRIVER_DISK	1
-#define SDL_AUDIO_DRIVER_DUMMY	1
+#define SDL_AUDIO_DRIVER_WAVEOUT    1
+#define SDL_AUDIO_DRIVER_DISK   1
+#define SDL_AUDIO_DRIVER_DUMMY  1
 
 /* Enable various cdrom drivers */
 #ifdef _WIN32_WCE
 #define SDL_CDROM_DISABLED      1
 #else
-#define SDL_CDROM_WIN32		1
+#define SDL_CDROM_WIN32     1
 #endif
 
 /* Enable various input drivers */
 #ifdef _WIN32_WCE
 #define SDL_JOYSTICK_DISABLED   1
 #else
-#define SDL_JOYSTICK_WINMM	1
+#define SDL_JOYSTICK_WINMM  1
 #endif
 
 /* Enable various shared object loading systems */
-#define SDL_LOADSO_WIN32	1
+#define SDL_LOADSO_WIN32    1
 
 /* Enable various threading systems */
-#define SDL_THREAD_WIN32	1
+#define SDL_THREAD_WIN32    1
 
 /* Enable various timer systems */
 #ifdef _WIN32_WCE
-#define SDL_TIMER_WINCE	1
+#define SDL_TIMER_WINCE 1
 #else
-#define SDL_TIMER_WIN32	1
+#define SDL_TIMER_WIN32 1
 #endif
 
 /* Enable various video drivers */
 #ifdef _WIN32_WCE
-#define SDL_VIDEO_DRIVER_GAPI	1
+#define SDL_VIDEO_DRIVER_GAPI   1
 #endif
 #ifndef _WIN32_WCE
-#define SDL_VIDEO_DRIVER_DDRAW	1
+#define SDL_VIDEO_DRIVER_DDRAW  1
 #endif
-#define SDL_VIDEO_DRIVER_DUMMY	1
-#define SDL_VIDEO_DRIVER_WINDIB	1
+#define SDL_VIDEO_DRIVER_DUMMY  1
+#define SDL_VIDEO_DRIVER_WINDIB 1
 
 /* Enable OpenGL support */
 #ifndef _WIN32_WCE
-#define SDL_VIDEO_OPENGL	1
-#define SDL_VIDEO_OPENGL_WGL	1
+#define SDL_VIDEO_OPENGL    1
+#define SDL_VIDEO_OPENGL_WGL    1
 #endif
 
 /* Enable assembly routines (Win64 doesn't have inline asm) */
 #ifndef _WIN64
-#define SDL_ASSEMBLY_ROUTINES	1
+#define SDL_ASSEMBLY_ROUTINES   1
 #endif
 
 #endif /* _SDL_config_win32_h */

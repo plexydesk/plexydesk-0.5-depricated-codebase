@@ -37,7 +37,8 @@ public:
 
 public Q_SLOTS:
     void data(QVariant &);
-    void pushData(QVariant &) {}
+    void pushData(QVariant &) {
+    }
 
 Q_SIGNALS:
     void dataChange();

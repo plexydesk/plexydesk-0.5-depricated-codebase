@@ -31,10 +31,10 @@ class VISIBLE_SYM ClassicBackdrop : public PlexyDesk::AbstractPluginInterface
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
-public:
-    ClassicBackdrop(QObject * object = 0);
+public :
+        ClassicBackdrop(QObject *object = 0);
     virtual ~ClassicBackdrop();
-    virtual  PlexyDesk::BasePlugin * instance();
+    virtual PlexyDesk::BasePlugin *instance();
 };
 
 

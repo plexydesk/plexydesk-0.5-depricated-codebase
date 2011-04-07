@@ -5,14 +5,14 @@
 #include <widgetinterface.h>
 #include <widgetplugin.h>
 
-class AuthPlugin: public PlexyDesk::WidgetPlugin
+class AuthPlugin : public PlexyDesk::WidgetPlugin
 {
     Q_OBJECT
 
 public:
-    AuthPlugin(QObject * object = 0);
+    AuthPlugin(QObject *object = 0);
     virtual ~AuthPlugin();
-    QGraphicsItem * item();
+    QGraphicsItem *item();
 };
 
 #endif

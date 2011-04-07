@@ -18,12 +18,12 @@
 
     Sam Lantinga
     slouken@libsdl.org
-*/
+ */
 
 /* This file sets things up for C dynamic library function definitions,
    static inlined functions, and structures aligned at 4-byte alignment.
    If you don't like ugly C preprocessor code, don't look at this file. :)
-*/
+ */
 
 /* This shouldn't be nested -- included it around code only. */
 #ifdef _begin_code_h
@@ -35,24 +35,24 @@
 #ifndef DECLSPEC
 # if defined(__BEOS__)
 #  if defined(__GNUC__)
-#   define DECLSPEC	__declspec(dllexport)
+#   define DECLSPEC __declspec(dllexport)
 #  else
-#   define DECLSPEC	__declspec(export)
+#   define DECLSPEC __declspec(export)
 #  endif
 # elif defined(__WIN32__)
 #  ifdef __BORLANDC__
 #   ifdef BUILD_SDL
-#    define DECLSPEC 
+#    define DECLSPEC
 #   else
-#    define DECLSPEC	__declspec(dllimport)
+#    define DECLSPEC    __declspec(dllimport)
 #   endif
 #  else
-#   define DECLSPEC	__declspec(dllexport)
+#   define DECLSPEC __declspec(dllexport)
 #  endif
 # elif defined(__OS2__)
 #  ifdef __WATCOMC__
 #   ifdef BUILD_SDL
-#    define DECLSPEC	__declspec(dllexport)
+#    define DECLSPEC    __declspec(dllexport)
 #   else
 #    define DECLSPEC
 #   endif
@@ -61,7 +61,7 @@
 #  endif
 # else
 #  if defined(__GNUC__) && __GNUC__ >= 4
-#   define DECLSPEC	__attribute__ ((visibility("default")))
+#   define DECLSPEC __attribute__ ((visibility("default")))
 #  else
 #   define DECLSPEC
 #  endif
@@ -84,7 +84,7 @@
 #endif /* SDLCALL */
 
 /* Removed DECLSPEC on Symbian OS because SDL cannot be a DLL in EPOC */
-#ifdef __SYMBIAN32__ 
+#ifdef __SYMBIAN32__
 #undef DECLSPEC
 #define DECLSPEC
 #endif /* __SYMBIAN32__ */
@@ -118,7 +118,7 @@
     defined(__WATCOMC__) || defined(__LCC__) || \
     defined(__DECC)
 #ifndef __inline__
-#define __inline__	__inline
+#define __inline__ __inline
 #endif
 #define SDL_INLINE_OKAY
 #else
@@ -133,7 +133,7 @@
 /* If inlining isn't supported, remove "__inline__", turning static
    inlined functions into static functions (resulting in code bloat
    in all files which include the offending header files)
-*/
+ */
 #ifndef SDL_INLINE_OKAY
 #define __inline__
 #endif

@@ -23,7 +23,7 @@
 
 #include <QtPlugin>
 
-YouTubeDataInterface::YouTubeDataInterface(QObject * object)
+YouTubeDataInterface::YouTubeDataInterface(QObject *object)
 {
 }
 

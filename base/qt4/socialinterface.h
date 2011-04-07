@@ -29,9 +29,11 @@ class VISIBLE_SYM SocialInterface : public AbstractPluginInterface
 {
     Q_OBJECT
 public:
-    void init() {}
-    virtual ~SocialInterface() {}
-    virtual SocialPlugin * instance() = 0;
+    void init() {
+    }
+    virtual ~SocialInterface() {
+    }
+    virtual SocialPlugin *instance() = 0;
 };
 } // namespace PlexyDesk
 

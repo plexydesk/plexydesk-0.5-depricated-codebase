@@ -32,23 +32,23 @@ class VISIBLE_SYM WebCamData : public PlexyDesk::DataPlugin
     Q_OBJECT
 
 public:
-    WebCamData(QObject * object = 0);
+    WebCamData(QObject *object = 0);
     virtual ~WebCamData();
     void init();
     QVariantMap readAll();
 
 public Q_SLOTS:
-    void pushData(QVariant& data);
+    void pushData(QVariant &data);
 
 private Q_SLOTS:
     void grab();
 private:
-    QRect detectFace(const char* faceData);
+    QRect detectFace(const char *faceData);
     void trackFace();
-    void updateHugeImage(const IplImage*);
+    void updateHugeImage(const IplImage *);
 
     class Private;
-    Private * const d;
+    Private *const d;
 };
 
 

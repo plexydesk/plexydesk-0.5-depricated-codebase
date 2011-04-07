@@ -8,14 +8,14 @@
 #include <widgetinterface.h>
 
 
-class VISIBLE_SYM googleweatherInterface :public PlexyDesk::AbstractPluginInterface
+class VISIBLE_SYM googleweatherInterface : public PlexyDesk::AbstractPluginInterface
 {
-	Q_OBJECT
+    Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
-    public:
-    	googleweatherInterface(QObject * object = 0);
-    	PlexyDesk::BasePlugin * instance () ;
+public :
+        googleweatherInterface(QObject *object = 0);
+    PlexyDesk::BasePlugin *instance ();
 };
 
 #endif

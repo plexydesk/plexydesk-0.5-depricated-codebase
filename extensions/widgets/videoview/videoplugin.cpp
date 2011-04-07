@@ -23,7 +23,7 @@
 #include <pluginloader.h>
 #include <QtGui>
 
-VideoPlugin::VideoPlugin(QObject * object)
+VideoPlugin::VideoPlugin(QObject *object)
 {
     base = new QWidget();
 
@@ -37,8 +37,8 @@ VideoPlugin::VideoPlugin(QObject * object)
     search->move(0, 170);
     search->resize(300, 30);
     search->show();
-    connect(search , SIGNAL(returnPressed()) , this , SLOT(searchImage()));
-    widget =  new PlexyDesk::VideoWidget(QRectF(0, 0, 340, 240), base);
+    connect(search, SIGNAL(returnPressed()), this, SLOT(searchImage()));
+    widget = new PlexyDesk::VideoWidget(QRectF(0, 0, 340, 240), base);
 
     base->move(20, 20);
 }
@@ -58,18 +58,18 @@ void VideoPlugin::searchImage()
 }
 
 
-void VideoPlugin::data(QVariant& data)
+void VideoPlugin::data(QVariant &data)
 {
     QImage wall = data.value<QImage>();
     search->setEnabled(true);
     flow->setPixmap(QPixmap::fromImage(wall));
 }
 
-QGraphicsItem * VideoPlugin::item()
+QGraphicsItem *VideoPlugin::item()
 {
-    PlexyDesk::PluginLoader * loader = new PlexyDesk::PluginLoader();
+    PlexyDesk::PluginLoader *loader = new PlexyDesk::PluginLoader();
     loader->scanDisk();
-    videoEngine  = (PlexyDesk::DataInterface*) loader->instance("videoengine");
+    videoEngine = (PlexyDesk::DataInterface *) loader->instance("videoengine");
 
     if (videoEngine) {
         connect(videoEngine, SIGNAL(data(QVariant&)), this, SLOT(data(QVariant&)));

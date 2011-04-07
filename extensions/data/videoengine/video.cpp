@@ -21,17 +21,17 @@
 #include <plexyconfig.h>
 
 
-VideoData::VideoData(QObject * object)
+VideoData::VideoData(QObject *object)
 {
 }
 
-void VideoData::pushData(QVariant& data)
+void VideoData::pushData(QVariant &data)
 {
     init();
     vplayer->setFileName(data.toString());
 }
 
-void  VideoData::init()
+void VideoData::init()
 {
     vplayer = new PlexyDesk::VPlayer();
     connect(vplayer, SIGNAL(frameReady(QImage&)), this, SLOT(grab(QImage&)));
@@ -41,9 +41,9 @@ VideoData::~VideoData()
 {
 }
 
-void VideoData::grab(QImage & img)
+void VideoData::grab(QImage &img)
 {
-    if (! img.isNull()) {
+    if (!img.isNull()) {
         QVariant frame = img;
         emit data(frame);
     }

@@ -35,12 +35,12 @@ Q_GUI_EXPORT int qt_translateKeyCode(int);
 LRESULT CALLBACK FilterProc( int nCode, WPARAM wParam, LPARAM lParam )
 {
     if (qApp)
-	qApp->sendPostedEvents(0, -1);
+        qApp->sendPostedEvents(0, -1);
 
     if (nCode < 0 || !(wParam & PM_REMOVE))
         return CallNextHookEx(hhook, nCode, wParam, lParam);
 
-    MSG *msg = (MSG*)lParam;
+    MSG *msg = (MSG *)lParam;
     bool processed = false;
 
     // (some) support for key-sequences via QAction and QShortcut
@@ -72,7 +72,7 @@ LRESULT CALLBACK FilterProc( int nCode, WPARAM wParam, LPARAM lParam )
 
             QKeySequence shortcutKey(modifierKey + key);
             if (!processed) {
-                QList<QAction*> actions = qFindChildren<QAction*>(focusWidget->window());
+                QList<QAction *> actions = qFindChildren<QAction *>(focusWidget->window());
                 for (int i = 0; i < actions.count() && !processed; ++i) {
                     QAction *action = actions.at(i);
                     if (!action->isEnabled() || action->shortcut() != shortcutKey)
@@ -82,7 +82,7 @@ LRESULT CALLBACK FilterProc( int nCode, WPARAM wParam, LPARAM lParam )
                 }
             }
             if (!processed) {
-                QList<QShortcut*> shortcuts = qFindChildren<QShortcut*>(focusWidget->window());
+                QList<QShortcut *> shortcuts = qFindChildren<QShortcut *>(focusWidget->window());
                 for (int i = 0; i < shortcuts.count() && !processed; ++i) {
                     QShortcut *shortcut = shortcuts.at(i);
                     if (!shortcut->isEnabled() || shortcut->key() != shortcutKey)
@@ -102,22 +102,22 @@ extern "C" bool qtns_event(QtNPInstance *, NPEvent *)
     return false;
 }
 
-extern Q_CORE_EXPORT void qWinMsgHandler(QtMsgType t, const char* str);
+extern Q_CORE_EXPORT void qWinMsgHandler(QtMsgType t, const char *str);
 
-extern "C" void qtns_initialize(QtNPInstance*)
+extern "C" void qtns_initialize(QtNPInstance *)
 {
     if (!qApp) {
         qInstallMsgHandler(qWinMsgHandler);
         ownsqapp = true;
-	static int argc=0;
-	static char **argv={ 0 };
-	(void)new QApplication(argc, argv);
+        static int argc = 0;
+        static char * *argv = { 0 };
+         (void)new QApplication(argc, argv);
 
         QT_WA({
-	    hhook = SetWindowsHookExW( WH_GETMESSAGE, FilterProc, 0, GetCurrentThreadId() );
-        }, {
-	    hhook = SetWindowsHookExA( WH_GETMESSAGE, FilterProc, 0, GetCurrentThreadId() );
-        });
+             hhook = SetWindowsHookExW( WH_GETMESSAGE, FilterProc, 0, GetCurrentThreadId() );
+         }, {
+             hhook = SetWindowsHookExA( WH_GETMESSAGE, FilterProc, 0, GetCurrentThreadId() );
+         });
     }
 }
 
@@ -151,7 +151,7 @@ extern "C" void qtns_shutdown()
 
 extern "C" void qtns_embed(QtNPInstance *This)
 {
-    Q_ASSERT(qobject_cast<QWidget*>(This->qt.object));
+    Q_ASSERT(qobject_cast<QWidget *>(This->qt.object));
 
     LONG oldLong = GetWindowLong(This->window, GWL_STYLE);
     ::SetWindowLong(This->window, GWL_STYLE, oldLong | WS_CLIPCHILDREN | WS_CLIPSIBLINGS);
@@ -161,16 +161,16 @@ extern "C" void qtns_embed(QtNPInstance *This)
 
 extern "C" void qtns_setGeometry(QtNPInstance *This, const QRect &rect, const QRect &)
 {
-    Q_ASSERT(qobject_cast<QWidget*>(This->qt.object));
+    Q_ASSERT(qobject_cast<QWidget *>(This->qt.object));
 
     This->qt.widget->setGeometry(QRect(0, 0, rect.width(), rect.height()));
 }
 
 /*
-extern "C" void qtns_print(QtNPInstance * This, NPPrint *printInfo)
-{
+   extern "C" void qtns_print(QtNPInstance * This, NPPrint *printInfo)
+   {
     NPWindow* printWindow = &(printInfo->print.embedPrint.window);
     void* platformPrint = printInfo->print.embedPrint.platformPrint;
     // #### Nothing yet.
-}
-*/
+   }
+ */

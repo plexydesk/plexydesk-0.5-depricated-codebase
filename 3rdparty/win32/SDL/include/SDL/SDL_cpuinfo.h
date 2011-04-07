@@ -18,7 +18,7 @@
 
     Sam Lantinga
     slouken@libsdl.org
-*/
+ */
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /* CPU feature detection for SDL                                       */

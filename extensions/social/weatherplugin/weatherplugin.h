@@ -48,7 +48,7 @@ private:
     QUrl WEATHER_FROM_CITYCODE_URL;
 
 public:
-    WeatherPlugin(QObject *parent=0);
+    WeatherPlugin(QObject *parent = 0);
     QUrl WEATHER_FROM_GIVEN_STATION_URL;
 public slots:
     QVariantMap getweather();

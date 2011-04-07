@@ -18,7 +18,7 @@
 *******************************************************************************/
 
 /*special credit goes to Pyrodesk project, the logic of plexydeskwm is based on
-  pyrodesk's compzilla windows manager */
+   pyrodesk's compzilla windows manager */
 
 #include "windowmanager.h"
 #include "XAtoms.h"
@@ -54,23 +54,25 @@ extern "C" {
 class WindowManager::Private
 {
 public:
-    Private() {}
-    ~Private() {}
-    Display* mDisplay;
-    Window  mRootWindow;
+    Private() {
+    }
+    ~Private() {
+    }
+    Display *mDisplay;
+    Window mRootWindow;
 
     Window mMainWin;
     Window mMainwinParent;
     Window mOverlay;
     Window mManagerWindow;
 
-    QGraphicsView* canvasview;
-    PlexyDesk::Canvas * scene;
+    QGraphicsView *canvasview;
+    PlexyDesk::Canvas *scene;
 
     bool mCompositing;
     bool mManging;
     XAtoms atoms;
-    QMap<Window, PlexyWindows*> windowMap;
+    QMap<Window, PlexyWindows *> windowMap;
     //variables required for even mapping.. etc
     int opcode;
     int composite_event, composite_error, xfixes_event, xfixes_error;
@@ -80,15 +82,15 @@ public:
     //variables
 };
 
-WindowManager::WindowManager(int & argc, char ** argv):QApplication(argc, argv), d(new Private)
+WindowManager::WindowManager(int &argc, char * *argv) : QApplication(argc, argv), d(new Private)
 {
-    d->mDisplay =  QX11Info::display();
+    d->mDisplay = QX11Info::display();
     d->mRootWindow = QApplication::desktop()->winId();
-    
+
     d->scene = new PlexyDesk::Canvas();
     d->scene->setBackgroundBrush(Qt::NoBrush);
     d->scene->setItemIndexMethod(QGraphicsScene::NoIndex);
-    d->scene->setSceneRect(QDesktopWidget().geometry());//TODO Resolution changes ?
+    d->scene->setSceneRect(QDesktopWidget().geometry()); //TODO Resolution changes ?
     init();
 }
 
@@ -114,7 +116,7 @@ void WindowManager::addWindow(Window window)
     qDebug() << Q_FUNC_INFO << info.name()  << " :  " << info.iconName();
 
 
-    PlexyWindows *  _window  = new PlexyWindows(d->mDisplay, window, &attrs);
+    PlexyWindows *_window = new PlexyWindows(d->mDisplay, window, &attrs);
     d->windowMap[window] = _window;
     d->canvasview->scene()->addItem(_window);
     _window->show();
@@ -127,15 +129,15 @@ void WindowManager::addWindow(Window window)
 bool WindowManager::isWmRunning()
 {
     Atom wmAtom;
-    wmAtom  = XInternAtom(d->mDisplay, "WM_S0",false);
-    bool hasWm =  XGetSelectionOwner(d->mDisplay, wmAtom) != None;
-    return  hasWm;
+    wmAtom = XInternAtom(d->mDisplay, "WM_S0", false);
+    bool hasWm = XGetSelectionOwner(d->mDisplay, wmAtom) != None;
+    return hasWm;
 }
 
 void WindowManager::init()
 {
     qDebug()<<Q_FUNC_INFO<<endl;
- 
+
     // register compositor
 
     if (not checkExtensions()) {
@@ -145,9 +147,9 @@ void WindowManager::init()
     Atom atom;
 
     window = XCreateSimpleWindow(d->mDisplay,
-            RootWindow(d->mDisplay, 0), 0, 0, 1, 1, 0,
-            None,
-            None);
+     RootWindow(d->mDisplay, 0), 0, 0, 1, 1, 0,
+     None,
+     None);
     atom = XInternAtom (d->mDisplay, "_NET_WM_CM_S0", False);
     XSetSelectionOwner (d->mDisplay, atom, window, 0);
 
@@ -194,22 +196,22 @@ void WindowManager::init()
         qDebug()<<"Another Window manager already running.. "<<endl;
         qApp->quit();
     }
-*/
+ */
 }
 
 void WindowManager::registerAtoms()
 {
     bool result = XInternAtoms (d->mDisplay,
-                                atom_names, sizeof (atom_names) / sizeof (atom_names[0]),
-                                false,
-                                d->atoms.a);
+     atom_names, sizeof (atom_names) / sizeof (atom_names[0]),
+     false,
+     d->atoms.a);
     if (!result)
         qDebug()<<"Registration of atoms:" <<atom_names<<"Failed"<<endl;
 }
 bool WindowManager::registerWindowManager(Window getOwner, Atom wmAtom)
 {
 
-    Window  owner = XGetSelectionOwner(d->mDisplay, wmAtom);
+    Window owner = XGetSelectionOwner(d->mDisplay, wmAtom);
 
     if (owner != None)
         XSelectInput (d->mDisplay, owner, StructureNotifyMask);
@@ -224,12 +226,12 @@ bool WindowManager::registerWindowManager(Window getOwner, Atom wmAtom)
     XClientMessageEvent cm;
     cm.window = d->mRootWindow;
     cm.message_type = XInternAtom(d->mDisplay, "MANAGER", false);
-    cm.type =  ClientMessage;
+    cm.type = ClientMessage;
     cm.format = 32;
     cm.data.l[0] = CurrentTime;
     cm.data.l[1] = wmAtom;
 
-    XSendEvent(d->mDisplay, d->mRootWindow, false, StructureNotifyMask, (XEvent*)&cm);
+    XSendEvent(d->mDisplay, d->mRootWindow, false, StructureNotifyMask, (XEvent *)&cm);
     if (owner != None) {
         XEvent event;
         do {
@@ -249,9 +251,9 @@ bool WindowManager::registerCompositeManager()
     attrs.event_mask = PropertyChangeMask;
 
     wmAtom = XInternAtom(d->mDisplay, "WM_S0", false);
-    Window  owner = XGetSelectionOwner(d->mDisplay, wmAtom);
-    Window  getOwner  = XCreateWindow(d->mDisplay, d->mRootWindow, -100, -100, 1, 1, 0, CopyFromParent,
-                                      CopyFromParent, (Visual*) CopyFromParent, CWOverrideRedirect | CWEventMask, & attrs);
+    Window owner = XGetSelectionOwner(d->mDisplay, wmAtom);
+    Window getOwner = XCreateWindow(d->mDisplay, d->mRootWindow, -100, -100, 1, 1, 0, CopyFromParent,
+     CopyFromParent, (Visual *) CopyFromParent, CWOverrideRedirect | CWEventMask, &attrs);
 
     if (owner != None)
         XSelectInput (d->mDisplay, owner, StructureNotifyMask);
@@ -266,12 +268,12 @@ bool WindowManager::registerCompositeManager()
     XClientMessageEvent cm;
     cm.window = d->mRootWindow;
     cm.message_type = XInternAtom(d->mDisplay, "MANAGER", false);
-    cm.type =  ClientMessage;
+    cm.type = ClientMessage;
     cm.format = 32;
     cm.data.l[0] = CurrentTime;
     cm.data.l[1] = wmAtom;
 
-    XSendEvent(d->mDisplay, d->mRootWindow, false, StructureNotifyMask, (XEvent*)&cm);
+    XSendEvent(d->mDisplay, d->mRootWindow, false, StructureNotifyMask, (XEvent *)&cm);
     if (owner != None) {
         XEvent event;
         do {
@@ -291,7 +293,7 @@ bool WindowManager::checkExtensions()
     int composite_major, composite_minor;
 
     if (!XQueryExtension (d->mDisplay, COMPOSITE_NAME, &opcode,
-                          &composite_event, &composite_error)) {
+         &composite_event, &composite_error)) {
         qDebug()<<"missing composite extension\n";
         return false;
     }
@@ -337,14 +339,14 @@ bool WindowManager::startOverlay()
 
     qDebug() << Q_FUNC_INFO << "width:" << rootWidth << " height:" << rootHeight;
     rootPicture = XRenderCreatePicture(d->mDisplay,
-            d->mRootWindow,
-            XRenderFindVisualFormat(d->mDisplay, DefaultVisual(d->mDisplay, scr)),
-            CPSubwindowMode,
-            &pa);
+     d->mRootWindow,
+     XRenderFindVisualFormat(d->mDisplay, DefaultVisual(d->mDisplay, scr)),
+     CPSubwindowMode,
+     &pa);
 
-    //bg 
+    //bg
     setupWindows();
-   
+
 /*
     d->mOverlay = XCompositeGetOverlayWindow (d->mDisplay, d->mRootWindow);
     if (!d->mOverlay) {
@@ -353,8 +355,8 @@ bool WindowManager::startOverlay()
     d->canvasview = new QGraphicsView(d->scene);
 
     d->canvasview->setWindowFlags(Qt::X11BypassWindowManagerHint);
-  //  d->canvasview->setAttribute(Qt::WA_NoSystemBackground);
-  //  d->canvasview->setUpdatesEnabled(false);
+   //  d->canvasview->setAttribute(Qt::WA_NoSystemBackground);
+   //  d->canvasview->setUpdatesEnabled(false);
    // d->canvasview->setAutoFillBackground(false);
    // d->canvasview->setForegroundBrush(Qt::NoBrush);
 
@@ -368,7 +370,7 @@ bool WindowManager::startOverlay()
     XReparentWindow (d->mDisplay, d->canvasview->winId(), d->mOverlay, 0, 0);
     input(d->mOverlay);
     input(d->canvasview->winId());
-*/
+ */
 }
 
 void WindowManager::input(Window w)
@@ -386,11 +388,11 @@ void WindowManager::setupWindows()
     XGrabServer (d->mDisplay);
 
     XCompositeRedirectSubwindows (d->mDisplay, d->mRootWindow, CompositeRedirectManual);
-    
+
     long ev_mask = (SubstructureNotifyMask |
-                    StructureNotifyMask |
-                    ExposureMask |
-                    PropertyChangeMask);
+     StructureNotifyMask |
+     ExposureMask |
+     PropertyChangeMask);
     XSelectInput (d->mDisplay, d->mRootWindow, ev_mask);
 
     Window root_notused, parent_notused;
@@ -399,21 +401,21 @@ void WindowManager::setupWindows()
     XWindowAttributes attr;
 
     XQueryTree (d->mDisplay,
-                d->mRootWindow,
-                &root_notused,
-                &parent_notused,
-                &children,
-                &nchildren);
+     d->mRootWindow,
+     &root_notused,
+     &parent_notused,
+     &children,
+     &nchildren);
 
     for (int i = 0; i < nchildren; i++) {
         qDebug() << Q_FUNC_INFO << i;
-    XWindowAttributes attrib;
-    if (not XGetWindowAttributes(QX11Info::display(), children[i], &attr)) {
-        qDebug() << Q_FUNC_INFO << "Failed to get window attribute";
-    }
+        XWindowAttributes attrib;
+        if (not XGetWindowAttributes(QX11Info::display(), children[i], &attr)) {
+            qDebug() << Q_FUNC_INFO << "Failed to get window attribute";
+        }
         //if (attr.map_state == IsViewable && children[i] != d->canvasview->winId() && attr.width > 1 &&
-         //attr.height > 1) {
-            //addWindow(children[i]);
+        //attr.height > 1) {
+        //addWindow(children[i]);
         //}
 
     }
@@ -466,20 +468,20 @@ Window WindowManager::GetEventXWindow (XEvent *xev)
     return None;
 }
 
-bool WindowManager::x11EventFilter( XEvent* event)
+bool WindowManager::x11EventFilter( XEvent *event)
 {
-    XEvent * xev = (XEvent*) event;
-    Window  xwin = GetEventXWindow(xev);
-    PlexyWindows * win  = d->windowMap[xwin];
+    XEvent *xev = (XEvent *) event;
+    Window xwin = GetEventXWindow(xev);
+    PlexyWindows *win = d->windowMap[xwin];
 
 
-         XVisibilityEvent desk_notify;
-        desk_notify.type       = VisibilityNotify;
-        desk_notify.send_event = True;
-        desk_notify.window     = xwin;
-        desk_notify.state      = VisibilityUnobscured;
-        XSendEvent( QX11Info::display(), xwin, true, VisibilityChangeMask, (XEvent*)&desk_notify);
-   if (xev->type == Expose || xev->type == VisibilityNotify) {
+    XVisibilityEvent desk_notify;
+    desk_notify.type = VisibilityNotify;
+    desk_notify.send_event = True;
+    desk_notify.window = xwin;
+    desk_notify.state = VisibilityUnobscured;
+    XSendEvent( QX11Info::display(), xwin, true, VisibilityChangeMask, (XEvent *)&desk_notify);
+    if (xev->type == Expose || xev->type == VisibilityNotify) {
         return false;
     }
 
@@ -492,7 +494,7 @@ bool WindowManager::x11EventFilter( XEvent* event)
         } while (XCheckTypedEvent (d->mDisplay, d->damage_event + XDamageNotify, xev));
 
         return true;
-    }//done
+    } //done
     switch (event->type) {
     case ClientMessage:
         clientMsgNotify(event);
@@ -532,11 +534,11 @@ bool WindowManager::x11EventFilter( XEvent* event)
     return false;
 }
 
-void WindowManager::destroyNotify(XEvent* e)
+void WindowManager::destroyNotify(XEvent *e)
 {
-    XEvent * xev = (XEvent*) e;
-    Window  xwin = GetEventXWindow(xev);
-    PlexyWindows * win  = d->windowMap[xwin];
+    XEvent *xev = (XEvent *) e;
+    Window xwin = GetEventXWindow(xev);
+    PlexyWindows *win = d->windowMap[xwin];
     d->windowMap.remove(xwin);
     if (win)
         delete win;
@@ -544,11 +546,11 @@ void WindowManager::destroyNotify(XEvent* e)
     qDebug() << Q_FUNC_INFO << endl;
 }
 
-void WindowManager::configureRequest(XEvent* e)
+void WindowManager::configureRequest(XEvent *e)
 {
-    XEvent * xev = (XEvent*) e;
-    Window  xwin = GetEventXWindow(xev);
-    PlexyWindows * win  = d->windowMap[xwin];
+    XEvent *xev = (XEvent *) e;
+    Window xwin = GetEventXWindow(xev);
+    PlexyWindows *win = d->windowMap[xwin];
     if (xev->xconfigurerequest.parent == d->mRootWindow) {
         qDebug() << Q_FUNC_INFO << "Has Parent";
         while (XCheckTypedWindowEvent (d->mDisplay, xwin, ConfigureRequest, xev)) {
@@ -560,11 +562,11 @@ void WindowManager::configureRequest(XEvent* e)
     qDebug() << Q_FUNC_INFO <<endl;
 }
 
-void WindowManager::configureNotify(XEvent* e)
+void WindowManager::configureNotify(XEvent *e)
 {
-    XEvent * xev = (XEvent*) e;
-    Window  xwin = GetEventXWindow(xev);
-    PlexyWindows * win  = d->windowMap[xwin];
+    XEvent *xev = (XEvent *) e;
+    Window xwin = GetEventXWindow(xev);
+    PlexyWindows *win = d->windowMap[xwin];
     if (xwin == d->mOverlay) {
         return;
     }
@@ -574,22 +576,22 @@ void WindowManager::configureNotify(XEvent* e)
     }
 
     win->Configured(true,
-                    xev->xconfigure.x,
-                    xev->xconfigure.y,
-                    xev->xconfigure.width,
-                    xev->xconfigure.height,
-                    xev->xconfigure.border_width,
-                    0,
-                    xev->xconfigure.override_redirect);
+     xev->xconfigure.x,
+     xev->xconfigure.y,
+     xev->xconfigure.width,
+     xev->xconfigure.height,
+     xev->xconfigure.border_width,
+     0,
+     xev->xconfigure.override_redirect);
 
     qDebug() << Q_FUNC_INFO <<endl;
 }
 
-void WindowManager::mapRequest(XEvent* e)
+void WindowManager::mapRequest(XEvent *e)
 {
-    XEvent * xev = (XEvent*) e;
-    Window  xwin = GetEventXWindow(xev);
-    PlexyWindows * win  = d->windowMap[xwin];
+    XEvent *xev = (XEvent *) e;
+    Window xwin = GetEventXWindow(xev);
+    PlexyWindows *win = d->windowMap[xwin];
 
     if (xwin == d->mOverlay) {
         return;
@@ -613,20 +615,20 @@ void WindowManager::getWindowType(Window w)
     unsigned char *data;
 
 //XGetWindowProperty(QX11Info::display(), w, XAtoms["_NET_WM_WINDOW_TYPE"], 0L, 1L, False, XA_ATOM, &actual,
-  //          &format,&n, &left, &data);
+//          &format,&n, &left, &data);
 
 }
-void WindowManager::createNotify(XEvent* e)
+void WindowManager::createNotify(XEvent *e)
 {
-    XEvent * xev = (XEvent*) e;
-    Window  xwin = GetEventXWindow(xev);
-    PlexyWindows * win  = d->windowMap[xwin];
+    XEvent *xev = (XEvent *) e;
+    Window xwin = GetEventXWindow(xev);
+    PlexyWindows *win = d->windowMap[xwin];
 
     /*
-    if (d->mMainWin == xwin) {
+       if (d->mMainWin == xwin) {
         return;
-    }
-*/
+       }
+     */
     if (xwin == d->mOverlay) {
         return;
     }
@@ -645,7 +647,7 @@ void WindowManager::createNotify(XEvent* e)
 
 
             if (!XCheckTypedWindowEvent (d->mDisplay, xwin, DestroyNotify, xev) &&
-                    !XCheckTypedWindowEvent (d->mDisplay, xwin, ReparentNotify, xev)) {
+             !XCheckTypedWindowEvent (d->mDisplay, xwin, ReparentNotify, xev)) {
                 addWindow (xwin);
             }
         }
@@ -653,25 +655,25 @@ void WindowManager::createNotify(XEvent* e)
     qDebug() << Q_FUNC_INFO <<endl;
 }
 
-void WindowManager::clientMsgNotify(XEvent* e)
+void WindowManager::clientMsgNotify(XEvent *e)
 {
-    XEvent * xev = (XEvent*) e;
-    Window  xwin = GetEventXWindow(xev);
-    PlexyWindows * win  = d->windowMap[xwin];
+    XEvent *xev = (XEvent *) e;
+    Window xwin = GetEventXWindow(xev);
+    PlexyWindows *win = d->windowMap[xwin];
 
     qDebug() << Q_FUNC_INFO <<endl;
 }
 
-void WindowManager::reparentNotify(XEvent* e)
+void WindowManager::reparentNotify(XEvent *e)
 {
     qDebug() << Q_FUNC_INFO <<endl;
 }
 
-void WindowManager::mapNotify(XEvent* e)
+void WindowManager::mapNotify(XEvent *e)
 {
-    XEvent * xev = (XEvent*) e;
-    Window  xwin = GetEventXWindow(xev);
-    PlexyWindows * win  = d->windowMap[xwin];
+    XEvent *xev = (XEvent *) e;
+    Window xwin = GetEventXWindow(xev);
+    PlexyWindows *win = d->windowMap[xwin];
 
     if (win) {
         if (!XCheckTypedWindowEvent (d->mDisplay, xwin, UnmapNotify, xev)) {
@@ -681,12 +683,12 @@ void WindowManager::mapNotify(XEvent* e)
     qDebug() << Q_FUNC_INFO <<endl;
 }
 
-void WindowManager::unmapNotify(XEvent* e)
+void WindowManager::unmapNotify(XEvent *e)
 {
     qDebug() << Q_FUNC_INFO <<endl;
-    XEvent * xev = (XEvent*) e;
-    Window  xwin = GetEventXWindow(xev);
-    PlexyWindows * win  = d->windowMap[xwin];
+    XEvent *xev = (XEvent *) e;
+    Window xwin = GetEventXWindow(xev);
+    PlexyWindows *win = d->windowMap[xwin];
 
     if (xwin == d->mOverlay) {
         return;
@@ -694,7 +696,7 @@ void WindowManager::unmapNotify(XEvent* e)
 }
 
 
-void WindowManager::propertyNotify(XEvent* e)
+void WindowManager::propertyNotify(XEvent *e)
 {
     qDebug() << Q_FUNC_INFO <<endl;
 }

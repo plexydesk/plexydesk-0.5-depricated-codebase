@@ -36,25 +36,25 @@ class QNetworkAccessManager;
 namespace PlexyDesk
 {
 
-class VISIBLE_SYM HttpJobHandler: public PendingJob
+class VISIBLE_SYM HttpJobHandler : public PendingJob
 {
     Q_OBJECT
 public:
-    HttpJobHandler(QObject * parent);
+    HttpJobHandler(QObject *parent);
     void getFile(const QUrl &url);
     void postFile(const QUrl &url, const QByteArray &data);
     QByteArray readData() const;
     ~HttpJobHandler();
 
 private:
-    QList<QNetworkReply*> m_holder;
+    QList<QNetworkReply *> m_holder;
     QString m_msg, m_error;
     bool isValidUrl(const QUrl &url);
     class HttpJobHandlerPrivate;
-    HttpJobHandlerPrivate * const d;
+    HttpJobHandlerPrivate *const d;
 
 private slots:
-    void onFinish(QNetworkReply* buffer);
+    void onFinish(QNetworkReply *buffer);
 };
 } //namespace PlexyDesk
 #endif // HTTPJOBHANDLER_H

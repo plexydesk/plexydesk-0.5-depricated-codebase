@@ -35,14 +35,14 @@ class VISIBLE_SYM FlickerData : public PlexyDesk::DataPlugin
     Q_OBJECT
 
 public:
-    FlickerData(QObject * object = 0);
+    FlickerData(QObject *object = 0);
     virtual ~FlickerData();
     void init();
     QVariantMap readAll();
 public slots:
     void loadImages(int, bool);
     void nextImage();
-    void pushData(QVariant&);
+    void pushData(QVariant &);
 
 private:
     QPixmap bg;
@@ -56,7 +56,7 @@ private:
     int dataID;
     int slideCount;
     int currentSlide;
-    QTimer * imageTimer;
+    QTimer *imageTimer;
     QVariant dataItem;
 };
 

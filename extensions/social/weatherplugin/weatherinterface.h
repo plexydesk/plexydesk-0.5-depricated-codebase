@@ -28,10 +28,11 @@ class WeatherInterface
 {
 
 public:
-    virtual ~WeatherInterface() {}
-    virtual QVariantMap getweather()=0;
-    virtual QVariantMap data(const QString &methodName, QVariantMap args)=0;
-    virtual QStringList supportedMethods()=0;
+    virtual ~WeatherInterface() {
+    }
+    virtual QVariantMap getweather() = 0;
+    virtual QVariantMap data(const QString &methodName, QVariantMap args) = 0;
+    virtual QStringList supportedMethods() = 0;
 
 };
 

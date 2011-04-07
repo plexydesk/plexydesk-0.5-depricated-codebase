@@ -32,15 +32,15 @@ class VISIBLE_SYM PluginLoader : public QObject
     Q_OBJECT
 
 public:
-    typedef QHash <QString, AbstractPluginInterface*> Interface;
+    typedef QHash <QString, AbstractPluginInterface *> Interface;
 
     PluginLoader();
     virtual ~PluginLoader();
 
-    static PluginLoader * getInstance();
+    static PluginLoader *getInstance();
 
-    QStringList listPlugins(const QString& types);
-    BasePlugin * instance(const QString& name);
+    QStringList listPlugins(const QString &types);
+    BasePlugin *instance(const QString &name);
     void scanDisk();
 
     QString applicationDirPath() {
@@ -52,16 +52,16 @@ public:
     }
 
 protected:
-    void loadDesktop(const QString& path);
-    void load(const QString& _interface, const QString& plugin);
+    void loadDesktop(const QString &path);
+    void load(const QString &_interface, const QString &plugin);
 
 private:
     class Private;
-    Private * const d ;
+    Private *const d;
 #ifdef Q_WS_WIN
     static PluginLoader *mInstance;
 #else
-    static VISIBLE_SYM PluginLoader * mInstance;
+    static VISIBLE_SYM PluginLoader *mInstance;
 #endif
 };
 

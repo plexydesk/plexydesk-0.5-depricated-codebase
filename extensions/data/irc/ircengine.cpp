@@ -21,11 +21,11 @@
 #include <plexyconfig.h>
 
 
-IRCData::IRCData(QObject * object)
+IRCData::IRCData(QObject *object)
 {
 }
 
-void  IRCData::init()
+void IRCData::init()
 {
 }
 
@@ -33,7 +33,7 @@ IRCData::~IRCData()
 {
 }
 
-void IRCData::pushData(QVariant& str)
+void IRCData::pushData(QVariant &str)
 {
 }
 

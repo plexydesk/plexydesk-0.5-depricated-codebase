@@ -46,17 +46,17 @@ void TestMime::startTest()
     connect(mMime, SIGNAL(aliasMime(const MimePairType)), this, SLOT(aliasMime(const MimePairType)));
 
     // set dir iterator
-    dirIterator = new QDirIterator("/var", QStringList("*.*"), QDir::AllDirs|QDir::Files|QDir::NoSymLinks,QDirIterator::Subdirectories);
+    dirIterator = new QDirIterator("/var", QStringList("*.*"), QDir::AllDirs|QDir::Files|QDir::NoSymLinks, QDirIterator::Subdirectories);
     while(dirIterator->hasNext())
     {
-            // make sure to call next, failing todo so will result in infinite loop
-            dirIterator->next();
+        // make sure to call next, failing todo so will result in infinite loop
+        dirIterator->next();
 
-            // found required file
-            if(!dirIterator->fileInfo().suffix().isEmpty())
-            {
-                mMime->fromFileName(dirIterator->fileInfo().fileName());
-            }
+        // found required file
+        if(!dirIterator->fileInfo().suffix().isEmpty())
+        {
+            mMime->fromFileName(dirIterator->fileInfo().fileName());
+        }
     }
 /*
     for(int i=0; i<100; i++) {
@@ -76,8 +76,8 @@ void TestMime::startTest()
     mMime->fromFileName("test.png");
     mMime->fromFileName("test.bmp");
     mMime->fromFileName("test.pdf");
-}
-*/
+   }
+ */
 
 }
 
@@ -88,7 +88,7 @@ void TestMime::cannotFound(const QString error, const QString str)
 
 void TestMime::fromFileNameMime(const MimePairType mimeType, const QObject *obj)
 {
-    if(this != qobject_cast<const TestMime*>(obj))
+    if(this != qobject_cast<const TestMime *>(obj))
         return;
 
     if(mimeType.second.isEmpty())

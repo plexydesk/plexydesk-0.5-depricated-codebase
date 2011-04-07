@@ -1,7 +1,7 @@
 #include <QApplication>
 #include "test.h"
 
-void Tester::connectHandler(ConnectResponseType response,QString error)
+void Tester::connectHandler(ConnectResponseType response, QString error)
 {
     if(response == ConnectOK)
         qDebug() << error;
@@ -11,7 +11,7 @@ void Tester::connectHandler(ConnectResponseType response,QString error)
     }
 }
 
-void Tester::userHandler(UserResponseType response,QString error)
+void Tester::userHandler(UserResponseType response, QString error)
 {
     if(response == UserOK)
         qDebug() << error;
@@ -21,18 +21,18 @@ void Tester::userHandler(UserResponseType response,QString error)
     }
 }
 
-void Tester::nickHandler(NickResponseType response,QString error)
+void Tester::nickHandler(NickResponseType response, QString error)
 {
-    switch(response){
-        case NickOK: qDebug() << error;
-                break;
-        case NickInUse: qDebug() << error;
-                break;
-        default: break;
+    switch(response) {
+    case NickOK: qDebug() << error;
+        break;
+    case NickInUse: qDebug() << error;
+        break;
+    default: break;
     }
 }
 
-void Tester::channelHandler(ChannelResponseType response,QString error,QStringList userList)
+void Tester::channelHandler(ChannelResponseType response, QString error, QStringList userList)
 {
     if(response == UserList)
         qDebug() << userList;
@@ -42,68 +42,68 @@ void Tester::channelHandler(ChannelResponseType response,QString error,QStringLi
     }
 }
 
-void Tester::messageHandler(MessageResponseType response,QString error)
+void Tester::messageHandler(MessageResponseType response, QString error)
 {
     if(response == AwayMessage)
         qDebug() << error;
     else
     {
-        qDebug() << error ;
+        qDebug() << error;
     }
 }
 
-void Tester::partHandler(PartResponseType response,QString error)
+void Tester::partHandler(PartResponseType response, QString error)
 {
-    qDebug() << error ;
+    qDebug() << error;
 }
 
-void Tester::inviteHandler(InviteResponseType response,QString error)
+void Tester::inviteHandler(InviteResponseType response, QString error)
 {
-    qDebug() << error ;
+    qDebug() << error;
 }
 
-void Tester::kickHandler(KickResponseType response,QString error)
+void Tester::kickHandler(KickResponseType response, QString error)
 {
-    qDebug() << error ;
+    qDebug() << error;
 }
 
-void Tester::whoisHandler(WhoisResponseType response,QString error,User who)
+void Tester::whoisHandler(WhoisResponseType response, QString error, User who)
 {
-    qDebug() << error ;
-    qDebug() << who.nick << " " << who.user << " " << who.host << " " << who.realName << " " << who.server << " " << who.serverInfo << " " << who.awayMessage << " " << who.channels ;
+    qDebug() << error;
+    qDebug() << who.nick << " " << who.user << " " << who.host << " " << who.realName << " " << who.server << " " << who.serverInfo << " " << who.awayMessage << " " << who.channels;
 }
 
-void Tester::awayHandler(AwayResponseType response,QString error)
+void Tester::awayHandler(AwayResponseType response, QString error)
 {
-    qDebug() << error ;
+    qDebug() << error;
 }
 
-void Tester::operHandler(OperResponseType response,QString error)
+void Tester::operHandler(OperResponseType response, QString error)
 {
-    qDebug() << error ;
+    qDebug() << error;
 }
 
-void Tester::namesHandler(NamesResponseType response,QString error ,QStringList list)
+void Tester::namesHandler(NamesResponseType response, QString error, QStringList list)
 {
     qDebug() << list;
 }
 
-void Tester::listHandler(ListResponseType response,QString error,QStringList list)
+void Tester::listHandler(ListResponseType response, QString error, QStringList list)
 {
-    qDebug() << error ;
+    qDebug() << error;
 }
 
-void Tester::topicHandler(TopicResponseType response,QString error)
+void Tester::topicHandler(TopicResponseType response, QString error)
 {
-    qDebug() << error ;
+    qDebug() << error;
 }
 
-void Tester::noticeHandler(NoticeResponseType response,QString error)
+void Tester::noticeHandler(NoticeResponseType response, QString error)
 {
-    qDebug() << error ;
+    qDebug() << error;
 }
 
-void Tester::genericHandler(ResponseType response,QString arg1,QString arg2,QString arg3,QString arg4)
+void Tester::genericHandler(ResponseType response, QString arg1, QString arg2, QString arg3, QString arg4)
 {
     qDebug() << arg1 << " " << arg2 << " " << arg3 << " " << arg4;
 }
@@ -111,20 +111,20 @@ void Tester::genericHandler(ResponseType response,QString arg1,QString arg2,QStr
 Tester::Tester(QObject *p) : QObject(p)
 {
     Test = 0;
-    IrcData *irc = new IrcData("64.161.254.20",6667);
+    IrcData *irc = new IrcData("64.161.254.20", 6667);
     irc->connectToServer();
-    connect(irc,SIGNAL(connectResponse(ConnectResponseType,QString)),
-            SLOT(connectHandler(ConnectResponseType,QString)));
+    connect(irc, SIGNAL(connectResponse(ConnectResponseType, QString)),
+     SLOT(connectHandler(ConnectResponseType, QString)));
     irc->setNick("sharpBot");
-    connect(irc,SIGNAL(nickResponse(NickResponseType,QString)),SLOT(nickHandler(NickResponseType,QString)));
+    connect(irc, SIGNAL(nickResponse(NickResponseType, QString)), SLOT(nickHandler(NickResponseType, QString)));
 
     irc->setUser("sharpBot", 7, "*", "Mani Shankar's BOT");
-    connect(irc,SIGNAL(userResponse(UserResponseType,QString)),SLOT(userHandler(UserResponseType,QString)));
+    connect(irc, SIGNAL(userResponse(UserResponseType, QString)), SLOT(userHandler(UserResponseType, QString)));
 
     irc->joinChannel("#plexydesk");
     irc->joinChannel("#fosskriti");
-    connect(irc,SIGNAL(channelResponse(ChannelResponseType,QString,QStringList)),
-            SLOT(channelHandler(ChannelResponseType,QString,QStringList)));
+    connect(irc, SIGNAL(channelResponse(ChannelResponseType, QString, QStringList)),
+     SLOT(channelHandler(ChannelResponseType, QString, QStringList)));
 
 //     irc->oper("sharpBot","jajdasdas");
 //     connect(irc,SIGNAL(operResponse(OperResponseType,QString)),SLOT(operHandler(OperResponseType,QString)));
@@ -140,7 +140,7 @@ Tester::Tester(QObject *p) : QObject(p)
 //     irc->writeMessage("zakirs", "Hi Folks, Our IRC engine works!");
 //     irc->writeMessage("sira", "Hi Folks, Our IRC engine works!");
 //     irc->writeMessage("sadasdasd", "Hi Folks, Our IRC engine works!");
-    connect(irc,SIGNAL(messageResponse(MessageResponseType,QString)),SLOT(messageHandler(MessageResponseType,QString)));
+    connect(irc, SIGNAL(messageResponse(MessageResponseType, QString)), SLOT(messageHandler(MessageResponseType, QString)));
 
 //     irc->invite("dA_ShArP","#plexydesk");
 //     connect(irc,SIGNAL(inviteResponse(InviteResponseType,QString)),SLOT(inviteHandler(InviteResponseType,QString)));
@@ -156,12 +156,12 @@ Tester::Tester(QObject *p) : QObject(p)
 
 //     irc->quit("Even BOTs can give Quit messages!");
 
-    connect(irc,SIGNAL(genericResponse(ResponseType,QString,QString,QString,QString)),SLOT(genericHandler(ResponseType,QString,QString,QString,QString)));
+    connect(irc, SIGNAL(genericResponse(ResponseType, QString, QString, QString, QString)), SLOT(genericHandler(ResponseType, QString, QString, QString, QString)));
 }
 
-int main(int argc, char** argv)
+int main(int argc, char * *argv)
 {
-    QApplication app(argc,argv);
+    QApplication app(argc, argv);
     Tester *test = new Tester();
     app.exec();
 }

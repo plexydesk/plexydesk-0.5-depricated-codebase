@@ -58,9 +58,9 @@ typedef struct URLPollEntry {
 #define URL_WRONLY 1
 #define URL_RDWR   2
 
-typedef int URLInterruptCB(void);
+typedef int URLInterruptCB (void);
 
-int url_open(URLContext **h, const char *filename, int flags);
+int url_open(URLContext * *h, const char *filename, int flags);
 int url_read(URLContext *h, unsigned char *buf, int size);
 int url_write(URLContext *h, unsigned char *buf, int size);
 offset_t url_seek(URLContext *h, offset_t pos, int whence);
@@ -114,7 +114,7 @@ int av_url_read_pause(URLContext *h);
  * @see AVInputFormat::read_seek
  */
 int av_url_read_seek(URLContext *h,
-                     int stream_index, int64_t timestamp, int flags);
+ int stream_index, int64_t timestamp, int flags);
 
 /**
  * Passing this as the "whence" parameter to a seek function causes it to
@@ -134,7 +134,7 @@ typedef struct URLProtocol {
     int (*url_read_play)(URLContext *h);
     int (*url_read_pause)(URLContext *h);
     int (*url_read_seek)(URLContext *h,
-                         int stream_index, int64_t timestamp, int flags);
+     int stream_index, int64_t timestamp, int flags);
 } URLProtocol;
 
 extern URLProtocol *first_protocol;
@@ -165,17 +165,17 @@ typedef struct {
     int (*read_play)(void *opaque);
     int (*read_pause)(void *opaque);
     int (*read_seek)(void *opaque,
-                     int stream_index, int64_t timestamp, int flags);
+     int stream_index, int64_t timestamp, int flags);
 } ByteIOContext;
 
 int init_put_byte(ByteIOContext *s,
-                  unsigned char *buffer,
-                  int buffer_size,
-                  int write_flag,
-                  void *opaque,
-                  int (*read_packet)(void *opaque, uint8_t *buf, int buf_size),
-                  int (*write_packet)(void *opaque, uint8_t *buf, int buf_size),
-                  offset_t (*seek)(void *opaque, offset_t offset, int whence));
+ unsigned char *buffer,
+ int buffer_size,
+ int write_flag,
+ void *opaque,
+ int (*read_packet)(void *opaque, uint8_t *buf, int buf_size),
+ int (*write_packet)(void *opaque, uint8_t *buf, int buf_size),
+ offset_t (*seek)(void *opaque, offset_t offset, int whence));
 
 void put_byte(ByteIOContext *s, int b);
 void put_buffer(ByteIOContext *s, const unsigned char *buf, int size);
@@ -201,7 +201,7 @@ int url_ferror(ByteIOContext *s);
 int av_url_read_fplay(ByteIOContext *h);
 int av_url_read_fpause(ByteIOContext *h);
 int av_url_read_fseek(ByteIOContext *h,
-                      int stream_index, int64_t timestamp, int flags);
+ int stream_index, int64_t timestamp, int flags);
 
 #define URL_EOF (-1)
 /** @note return URL_EOF (-1) if EOF */
@@ -246,7 +246,7 @@ static inline int url_is_streamed(ByteIOContext *s)
 
 /** @note when opened as read/write, the buffers are only used for
    writing */
-int url_fdopen(ByteIOContext **s, URLContext *h);
+int url_fdopen(ByteIOContext * *s, URLContext *h);
 
 /** @warning must be called before any I/O */
 int url_setbufsize(ByteIOContext *s, int buf_size);
@@ -258,7 +258,7 @@ int url_resetbuf(ByteIOContext *s, int flags);
 
 /** @note when opened as read/write, the buffers are only used for
    writing */
-int url_fopen(ByteIOContext **s, const char *filename, int flags);
+int url_fopen(ByteIOContext * *s, const char *filename, int flags);
 int url_fclose(ByteIOContext *s);
 URLContext *url_fileno(ByteIOContext *s);
 
@@ -272,7 +272,7 @@ URLContext *url_fileno(ByteIOContext *s);
  */
 int url_fget_max_packet_size(ByteIOContext *s);
 
-int url_open_buf(ByteIOContext **s, uint8_t *buf, int buf_size, int flags);
+int url_open_buf(ByteIOContext * *s, uint8_t *buf, int buf_size, int flags);
 
 /** return the written or read size */
 int url_close_buf(ByteIOContext *s);
@@ -283,7 +283,7 @@ int url_close_buf(ByteIOContext *s);
  * @param s new IO context
  * @return zero if no error.
  */
-int url_open_dyn_buf(ByteIOContext **s);
+int url_open_dyn_buf(ByteIOContext * *s);
 
 /**
  * Open a write only packetized memory stream with a maximum packet
@@ -294,7 +294,7 @@ int url_open_dyn_buf(ByteIOContext **s);
  * @param max_packet_size maximum packet size (must be > 0)
  * @return zero if no error.
  */
-int url_open_dyn_packet_buf(ByteIOContext **s, int max_packet_size);
+int url_open_dyn_packet_buf(ByteIOContext * *s, int max_packet_size);
 
 /**
  * Return the written size and a pointer to the buffer. The buffer
@@ -303,7 +303,7 @@ int url_open_dyn_packet_buf(ByteIOContext **s, int max_packet_size);
  * @param pbuffer pointer to a byte buffer
  * @return the length of the byte buffer
  */
-int url_close_dyn_buf(ByteIOContext *s, uint8_t **pbuffer);
+int url_close_dyn_buf(ByteIOContext *s, uint8_t * *pbuffer);
 
 unsigned long ff_crc04C11DB7_update(unsigned long checksum, const uint8_t *buf, unsigned int len);
 unsigned long get_checksum(ByteIOContext *s);

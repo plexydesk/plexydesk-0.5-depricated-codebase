@@ -23,11 +23,11 @@
 
 #include <QtPlugin>
 
-IVideoInterface::IVideoInterface(QObject * object)
+IVideoInterface::IVideoInterface(QObject *object)
 {
 }
 
-PlexyDesk::DataPlugin *  IVideoInterface::instance()
+PlexyDesk::DataPlugin *IVideoInterface::instance()
 {
     return new VideoData();
 }

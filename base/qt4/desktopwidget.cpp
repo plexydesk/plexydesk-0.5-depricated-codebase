@@ -32,18 +32,20 @@ namespace PlexyDesk
 class DesktopWidget::Private
 {
 public:
-    Private() {}
-    ~ Private() {}
+    Private() {
+    }
+    ~Private() {
+    }
     QTimeLine *zoomin;
     QTimeLine *zoomout;
-    QTimer * spintimer;
+    QTimer *spintimer;
     State s;
     QPixmap panel;
     QPixmap back;
     QPixmap dock;
     int angle;
     int angleHide;
-    QGraphicsProxyWidget * proxyWidget;
+    QGraphicsProxyWidget *proxyWidget;
     double opacity;
     QRectF saveRect;
     int scale;
@@ -51,8 +53,8 @@ public:
     bool backdrop;
 };
 
-DesktopWidget::DesktopWidget(const QRectF &rect , QWidget *widget):
-        QGraphicsRectItem(rect), d(new Private)
+DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget) :
+    QGraphicsRectItem(rect), d(new Private)
 {
     d->proxyWidget = 0;
     if (widget) {
@@ -64,39 +66,39 @@ DesktopWidget::DesktopWidget(const QRectF &rect , QWidget *widget):
     d->backdrop = true;
     d->opacity = 1.0;
     d->panel = QPixmap(applicationDirPath() +
-                       "/share/plexy/skins/widgets/widget01/Panel.png");
+         "/share/plexy/skins/widgets/widget01/Panel.png");
     d->back = QPixmap(applicationDirPath() +
-                      "/share/plexy/skins/widgets/widget01/reverse.png");
+         "/share/plexy/skins/widgets/widget01/reverse.png");
     d->dock = QPixmap(applicationDirPath() +
-                      "/share/plexy/skins/widgets/widget01/Icon.png");
+         "/share/plexy/skins/widgets/widget01/Icon.png");
     d->scale = 1;
     setCacheMode(QGraphicsItem::ItemCoordinateCache, d->panel.size());
     setCacheMode(DeviceCoordinateCache);
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
-    setFlag(QGraphicsItem::ItemIsMovable , true);
+    setFlag(QGraphicsItem::ItemIsMovable, true);
     setAcceptsHoverEvents(true);
     d->saveRect = rect;
     d->s = NORMALSIDE;
     d->angle = 0;
     d->angleHide = 0;
     ///zoom in settings
-    d->zoomin = new QTimeLine(150 , this);
-    d->zoomin->setFrameRange(120 , 150);
-    connect(d->zoomin , SIGNAL(frameChanged(int)) ,
-            this , SLOT(zoomIn(int)));
-    connect(d->zoomin , SIGNAL(finished()) ,
-            this , SLOT(zoomDone()));
+    d->zoomin = new QTimeLine(150, this);
+    d->zoomin->setFrameRange(120, 150);
+    connect(d->zoomin, SIGNAL(frameChanged(int)),
+         this, SLOT(zoomIn(int)));
+    connect(d->zoomin, SIGNAL(finished()),
+         this, SLOT(zoomDone()));
     //zoom out
-    d->zoomout = new QTimeLine(150 , this);
+    d->zoomout = new QTimeLine(150, this);
     d->zoomout->setFrameRange(0, 150);
-    connect(d->zoomout , SIGNAL(frameChanged(int)) ,
-            this , SLOT(zoomOut(int)));
-    connect(d->zoomout , SIGNAL(finished()) ,
-            this , SLOT(zoomDone()));
+    connect(d->zoomout, SIGNAL(frameChanged(int)),
+         this, SLOT(zoomOut(int)));
+    connect(d->zoomout, SIGNAL(finished()),
+         this, SLOT(zoomDone()));
     d->zoomin->start();
     //spin
     d->spintimer = new QTimer(this);
-    connect(d->spintimer , SIGNAL(timeout()) , this, SLOT(spin()));
+    connect(d->spintimer, SIGNAL(timeout()), this, SLOT(spin()));
 }
 
 DesktopWidget::~DesktopWidget()
@@ -106,7 +108,7 @@ DesktopWidget::~DesktopWidget()
 
 void DesktopWidget::zoomDone()
 {
-    prepareGeometryChange() ;
+    prepareGeometryChange();
     resetMatrix();
     d->opacity = 1.0;
 }
@@ -115,9 +117,9 @@ void DesktopWidget::zoomIn(int frame)
 {
     QPointF center = boundingRect().center();
     QTransform mat = QTransform();
-    mat.translate(center.x() ,  center.y());
-    mat.scale(frame / 150.0 ,  frame / 150.0);
-    mat.translate(- center.x() ,  - center.y());
+    mat.translate(center.x(), center.y());
+    mat.scale(frame / 150.0, frame / 150.0);
+    mat.translate(-center.x(), -center.y());
     setTransform(mat);
     if (d->opacity >= 0.0) {
         //d->opacity -= 0.3;
@@ -127,9 +129,9 @@ void DesktopWidget::zoomOut(int frame)
 {
     QPointF center = boundingRect().center();
     QTransform mat = QTransform();
-    mat.translate(center.x() ,  center.y());
-    mat.scale(1 - frame / 450.0 , 1 - frame / 450.0);
-    mat.translate(- center.x() ,  - center.y());
+    mat.translate(center.x(), center.y());
+    mat.scale(1 - frame / 450.0, 1 - frame / 450.0);
+    mat.translate(-center.x(), -center.y());
     setTransform(mat);
     if (d->opacity >= 0.0) {
         //d->opacity -= 0.2;
@@ -143,7 +145,7 @@ QRectF DesktopWidget::boundingRect() const
 
 void DesktopWidget::setDockImage(QPixmap img)
 {
-    d->dock  = img;
+    d->dock = img;
 }
 
 void DesktopWidget::setFaceImage(QPixmap img)
@@ -161,12 +163,12 @@ void DesktopWidget::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
     QGraphicsRectItem::hoverEnterEvent(event);
 }
 
-void  DesktopWidget::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
+void DesktopWidget::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsItem::mouseMoveEvent(event);
 }
 
-void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event)
+void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
     qDebug() << "Double Click" << endl;
     if (d->s == DOCK) {
@@ -180,7 +182,7 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event)
     } else {
         setState(DOCK);
         prepareGeometryChange();
-        this->setRect(0 , 0 , d->dock.width(), d->dock.height());
+        this->setRect(0, 0, d->dock.width(), d->dock.height());
         if (d->proxyWidget) {
             d->proxyWidget->hide();
         }
@@ -189,7 +191,7 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event)
     QGraphicsItem::mouseDoubleClickEvent(event);
 }
 
-void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent * event)
+void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->buttons() == Qt::RightButton && (state() == NORMALSIDE || state() == BACKSIDE)) {
         d->spintimer->start(10);
@@ -202,9 +204,9 @@ void DesktopWidget::spin()
     setCacheMode(ItemCoordinateCache);
     QPointF center = boundingRect().center();
     QTransform mat = QTransform();
-    mat.translate(center.x() ,  center.y());
+    mat.translate(center.x(), center.y());
     mat.rotate(d->angle, Qt::YAxis);
-    mat.translate(- center.x() ,  - center.y());
+    mat.translate(-center.x(), -center.y());
     setTransform(mat);
     if (d->angle >= 180) {
         if (state() == BACKSIDE) {
@@ -226,7 +228,7 @@ void DesktopWidget::drawBackdrop(bool b)
 
 DesktopWidget::State DesktopWidget::state()
 {
-    return d->s ;
+    return d->s;
 }
 
 
@@ -250,7 +252,7 @@ void DesktopWidget::configState(DesktopWidget::State s)
     }
 }
 
-void DesktopWidget::paintBackSide(QPainter * p, const QRectF& rect)
+void DesktopWidget::paintBackSide(QPainter *p, const QRectF &rect)
 {
     p->save();
     p->setOpacity(0.8);
@@ -259,7 +261,7 @@ void DesktopWidget::paintBackSide(QPainter * p, const QRectF& rect)
     p->restore();
 }
 
-void DesktopWidget::paintViewSide(QPainter * p, const QRectF& rect)
+void DesktopWidget::paintViewSide(QPainter *p, const QRectF &rect)
 {
     if (!d->backdrop)
         return;
@@ -270,7 +272,7 @@ void DesktopWidget::paintViewSide(QPainter * p, const QRectF& rect)
     p->restore();
 }
 
-void DesktopWidget::paintDockView(QPainter * p, const QRectF& rect)
+void DesktopWidget::paintDockView(QPainter *p, const QRectF &rect)
 {
     p->save();
     p->setRenderHints(QPainter::SmoothPixmapTransform);
@@ -278,7 +280,7 @@ void DesktopWidget::paintDockView(QPainter * p, const QRectF& rect)
     p->restore();
 }
 
-void DesktopWidget::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
+void DesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     if (isObscured())
         return;

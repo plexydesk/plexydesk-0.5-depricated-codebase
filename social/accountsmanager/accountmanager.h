@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- *Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ **Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 #include <QApplication>
@@ -38,9 +38,9 @@ class SocialAccountsManager : public QObject, protected QDBusContext
     Q_OBJECT;
 
 public:
-    SocialAccountsManager(QApplication *parent=0);
+    SocialAccountsManager(QApplication *parent = 0);
     QDBusObjectPath getAccount(const QString &protocol, const QString &userName);
-    StorageLayerInterface* storageLayer() const;
+    StorageLayerInterface *storageLayer() const;
     void loadAccounts();
 
 signals:
@@ -53,9 +53,9 @@ private:
     QStringList m_interfaces;
     QStringList m_supportedAccountProperties;
     QDBusConnection *m_dbusConnection;
-    QMap<QString, SocialAccount*> m_pendingAccounts;
-    QMap<QString, SocialAccount*> m_readyAccounts;
-    QMap<QString, CreateAccountRequestData*> m_pendingAccountsRequestData;
+    QMap<QString, SocialAccount *> m_pendingAccounts;
+    QMap<QString, SocialAccount *> m_readyAccounts;
+    QMap<QString, CreateAccountRequestData *> m_pendingAccountsRequestData;
     bool m_dbusObjectsRegistered;
     bool m_storageLayerOpened;
     SocialAccountsManagerAdaptor *m_adaptor;
@@ -68,7 +68,7 @@ private:
     //public slots
 public slots:
     QDBusObjectPath createAccount(const QString &socialServiceName, const QString &displayName,
-                                  const QString &userName, QVariantMap &properties);
+         const QString &userName, QVariantMap &properties);
 
 private slots:
     void onAccountReady(bool success);
@@ -79,4 +79,4 @@ private slots:
     void onStorageLayerOpened(bool success);
 
 };
-}//end of namespace PlexyDesk
+} //end of namespace PlexyDesk

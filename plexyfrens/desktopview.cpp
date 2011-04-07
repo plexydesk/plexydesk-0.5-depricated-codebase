@@ -40,32 +40,34 @@
 
 namespace PlexyDesk
 {
-class  DesktopView::Private
+class DesktopView::Private
 {
 public:
-    Private() {}
-    ~Private() {}
-    AbstractPluginInterface * bIface ;
-    BackdropPlugin * bgPlugin;
-    WidgetPlugin * widgets;
-    QGraphicsGridLayout * gridLayout;
-    ViewLayer *  layer;
+    Private() {
+    }
+    ~Private() {
+    }
+    AbstractPluginInterface *bIface;
+    BackdropPlugin *bgPlugin;
+    WidgetPlugin *widgets;
+    QGraphicsGridLayout *gridLayout;
+    ViewLayer *layer;
     float row;
     float column;
     float margin;
     bool openglOn;
-    QList<Icon*> icons;
+    QList<Icon *> icons;
     IconProviderPtr iconprovider;
-    QFutureWatcher<Icon*> *iconWatcher;
+    QFutureWatcher<Icon *> *iconWatcher;
     QPlexyMime *mime;
 };
 
-bool getLessThanWidget(const QGraphicsItem* it1, const QGraphicsItem* it2)
+bool getLessThanWidget(const QGraphicsItem *it1, const QGraphicsItem *it2)
 {
     return it1->zValue() < it2->zValue();
 }
 
-DesktopView::DesktopView(QGraphicsScene * scene, QWidget * parent):QGraphicsView(scene,parent),d(new Private)
+DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView(scene, parent), d(new Private)
 {
     /* setup */
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -79,14 +81,14 @@ DesktopView::DesktopView(QGraphicsScene * scene, QWidget * parent):QGraphicsView
 
     /* init */
     d->mime = new QPlexyMime(this);
-    d->bgPlugin  = static_cast<BackdropPlugin*>(PluginLoader::getInstance()->instance("classicbackdrop"));
+    d->bgPlugin = static_cast<BackdropPlugin *>(PluginLoader::getInstance()->instance("classicbackdrop"));
     d->widgets = 0;
     d->gridLayout = new QGraphicsGridLayout();
-    d->row=d->column = 0.0;
+    d->row = d->column = 0.0;
     d->margin = 10.0;
     d->layer = new ViewLayer();
     d->iconprovider = IconProviderPtr(new IconProvider, &QObject::deleteLater);
-    d->iconWatcher = new QFutureWatcher<Icon*>(this);
+    d->iconWatcher = new QFutureWatcher<Icon *>(this);
 
     connect(Config::getInstance(), SIGNAL(configChanged()), this, SLOT(backgroundChanged()));
     connect(Config::getInstance(), SIGNAL(widgetAdded()), this, SLOT(onNewWidget()));
@@ -121,8 +123,8 @@ void DesktopView::backgroundChanged()
     if (d->bgPlugin) {
         delete d->bgPlugin;
     }
-    d->bgPlugin  =
-        static_cast<BackdropPlugin*>(PluginLoader::getInstance()->instance("classicbackdrop"));
+    d->bgPlugin =
+         static_cast<BackdropPlugin *>(PluginLoader::getInstance()->instance("classicbackdrop"));
     if (!d->openglOn) {
         setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     }
@@ -139,67 +141,67 @@ void DesktopView::backgroundChanged()
 }
 
 /*
-Adds an Widget Extension to Plexy Desktop, give the widget
-name in string i.e "clock" or "radio", the internals will
-take care of the loading the widget plugin name is correct
-*/
+   Adds an Widget Extension to Plexy Desktop, give the widget
+   name in string i.e "clock" or "radio", the internals will
+   take care of the loading the widget plugin name is correct
+ */
 
-void DesktopView::addExtension(const QString& name)
+void DesktopView::addExtension(const QString &name)
 {
-    d->widgets = static_cast<WidgetPlugin*>(PluginLoader::getInstance()->instance(name));
+    d->widgets = static_cast<WidgetPlugin *>(PluginLoader::getInstance()->instance(name));
     if (d->widgets) {
-        DesktopWidget * widget = (DesktopWidget*) d->widgets->item();
+        DesktopWidget *widget = (DesktopWidget *) d->widgets->item();
         if (widget) {
             widget->configState(DesktopWidget::DOCK);
             scene()->addItem(widget);
-            widget->setPos(d->row,d->column);
+            widget->setPos(d->row, d->column);
             d->row += widget->boundingRect().width()+d->margin;
-            d->layer->addItem("Widgets",widget);
+            d->layer->addItem("Widgets", widget);
         }
     }
 }
 
-void DesktopView::addCoreExtension(const QString& name)
+void DesktopView::addCoreExtension(const QString &name)
 {
 
-    d->widgets = static_cast<WidgetPlugin*>(PluginLoader::getInstance()->instance(name));
+    d->widgets = static_cast<WidgetPlugin *>(PluginLoader::getInstance()->instance(name));
     if (d->widgets) {
-        QGraphicsRectItem  * widget = (QGraphicsRectItem*) d->widgets->item();
+        QGraphicsRectItem *widget = (QGraphicsRectItem *) d->widgets->item();
         if (widget) {
             scene()->addItem(widget);
-            widget->setPos(d->row,d->column);
+            widget->setPos(d->row, d->column);
             d->row += widget->boundingRect().width();
         }
     }
 }
 
-void DesktopView::addAuthExtension(const QString& name)
+void DesktopView::addAuthExtension(const QString &name)
 {
-    d->widgets = static_cast<WidgetPlugin*>(PluginLoader::getInstance()->instance(name));
+    d->widgets = static_cast<WidgetPlugin *>(PluginLoader::getInstance()->instance(name));
     if (d->widgets) {
-        DesktopWidget * widget = (DesktopWidget*) d->widgets->item();
+        DesktopWidget *widget = (DesktopWidget *) d->widgets->item();
         if (widget) {
             widget->configState(DesktopWidget::NORMALSIDE);
             scene()->addItem(widget);
             int width = (size().width()/2) - (widget->boundingRect().width()/2);
             widget->setPos(QPointF(width, 0));
             d->row += widget->boundingRect().width()+d->margin;
-            d->layer->addItem("Widgets",widget);
+            d->layer->addItem("Widgets", widget);
         }
     }
 
 }
 /*
-//small speed up , try if the speed is too low
-void DesktopView::paintEvent(QPaintEvent * event)
-{
-QPaintEvent *newEvent=new QPaintEvent(event->region().boundingRect());
-QGraphicsView::paintEvent(newEvent);
-delete newEvent;
-}
-*/
+   //small speed up , try if the speed is too low
+   void DesktopView::paintEvent(QPaintEvent * event)
+   {
+   QPaintEvent *newEvent=new QPaintEvent(event->region().boundingRect());
+   QGraphicsView::paintEvent(newEvent);
+   delete newEvent;
+   }
+ */
 
-void DesktopView::drawBackground(QPainter * painter, const QRectF & rect)
+void DesktopView::drawBackground(QPainter *painter, const QRectF &rect)
 {
 
     painter->setCompositionMode(QPainter::CompositionMode_Source);
@@ -208,7 +210,7 @@ void DesktopView::drawBackground(QPainter * painter, const QRectF & rect)
     painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
     painter->setClipRect(rect);
     if (d->bgPlugin) {
-        d->bgPlugin->render(painter,QRectF(rect.x(),sceneRect().y(),rect.width(),rect.height()));
+        d->bgPlugin->render(painter, QRectF(rect.x(), sceneRect().y(), rect.width(), rect.height()));
     }
     painter->restore();
 }
@@ -255,11 +257,11 @@ void DesktopView::loadIcons()
     for (int i = 0; i < list.size(); i++) {
         QFileInfo fileInfo = list.at(i);
         QPixmap iconpixmap (DesktopWidget::applicationDirPath() +
-                            "/share/plexy/skins/widgets/widget01/Icon.png");
+             "/share/plexy/skins/widgets/widget01/Icon.png");
         //TODO
         //Shared pointer please
 
-        Icon * icon = new Icon(d->iconprovider, d->mime, QRect(0,0,iconpixmap.width(),iconpixmap.height()));
+        Icon *icon = new Icon(d->iconprovider, d->mime, QRect(0, 0, iconpixmap.width(), iconpixmap.height()));
         connect(icon, SIGNAL(iconLoaded()), this, SLOT(iconLoaded()));
         icon->setContent(fileInfo.absoluteFilePath());
         d->icons.append(icon);
@@ -276,11 +278,11 @@ void DesktopView::loadIcons()
 
 void DesktopView::iconLoaded()
 {
-    Icon *icon = qobject_cast<Icon*>(sender());
+    Icon *icon = qobject_cast<Icon *>(sender());
 
     if (icon->isValid()) {
         scene()->addItem(icon);
-        icon->setPos(d->row,d->column);
+        icon->setPos(d->row, d->column);
         icon->show();
     } else {
         int index = d->icons.indexOf(icon);

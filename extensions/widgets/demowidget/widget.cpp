@@ -21,7 +21,7 @@
 //#include <QtWebKit>
 
 
-WidgetDemo::WidgetDemo(QObject * object)
+WidgetDemo::WidgetDemo(QObject *object)
 {
 
 }
@@ -31,7 +31,7 @@ WidgetDemo::~WidgetDemo()
 
 }
 
-QGraphicsItem * WidgetDemo::item()
+QGraphicsItem *WidgetDemo::item()
 {
     QCalendarWidget *date = new QCalendarWidget(0);
     date->setWindowOpacity(0.2);

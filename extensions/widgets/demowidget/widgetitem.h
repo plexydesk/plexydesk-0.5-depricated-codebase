@@ -27,7 +27,7 @@
 namespace PlexyDesk
 {
 
-class WidgetItem: public DesktopWidget
+class WidgetItem : public DesktopWidget
 {
 
     Q_OBJECT

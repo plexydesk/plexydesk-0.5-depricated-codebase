@@ -5,14 +5,14 @@
 #include <widgetinterface.h>
 #include <widgetplugin.h>
 
-class VISIBLE_SYM YouTube: public PlexyDesk::WidgetPlugin
+class VISIBLE_SYM YouTube : public PlexyDesk::WidgetPlugin
 {
     Q_OBJECT
 
 public:
-    YouTube(QObject * object = 0);
+    YouTube(QObject *object = 0);
     virtual ~YouTube();
-    QGraphicsItem * item();
+    QGraphicsItem *item();
 };
 
 #endif

@@ -13,9 +13,9 @@ class VISIBLE_SYM TwitInterface : public PlexyDesk::AbstractPluginInterface
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
-public:
-    TwitInterface(QObject * object = 0);
-    PlexyDesk::BasePlugin * instance() ;
+public :
+        TwitInterface(QObject *object = 0);
+    PlexyDesk::BasePlugin *instance();
 };
 
 #endif

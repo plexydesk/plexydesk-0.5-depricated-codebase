@@ -25,23 +25,23 @@
 
 namespace PlexyDesk
 {
-    class PLEXYDESK_EXPORT BackdropInterface : public AbstractPluginInterface
+class PLEXYDESK_EXPORT BackdropInterface : public AbstractPluginInterface
+{
+public:
+    void init()
     {
-    public:
-        void init()
-        {
-        }
+    }
 
-        BackdropInterface()
-        {
-        }
+    BackdropInterface()
+    {
+    }
 
-        virtual ~BackdropInterface()
-        {
-        }
+    virtual ~BackdropInterface()
+    {
+    }
 
-        virtual BasePlugin *instance() = 0;
-    };
+    virtual BasePlugin *instance() = 0;
+};
 } // namespace PlexyDesk
 
 Q_DECLARE_INTERFACE(PlexyDesk::BackdropInterface, "org.plexydesk.BackdropInterface")

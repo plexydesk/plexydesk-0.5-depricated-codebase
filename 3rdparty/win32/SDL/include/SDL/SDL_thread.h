@@ -18,15 +18,15 @@
 
     Sam Lantinga
     slouken@libsdl.org
-*/
+ */
 
 #ifndef _SDL_thread_h
 #define _SDL_thread_h
 
-/* Header for the SDL thread management routines 
+/* Header for the SDL thread management routines
 
-	These are independent of the other SDL routines.
-*/
+    These are independent of the other SDL routines.
+ */
 
 #include "SDL_stdinc.h"
 #include "SDL_error.h"
@@ -58,28 +58,28 @@ typedef struct SDL_Thread SDL_Thread;
    the application, then the RTL of the application will be used.
    So, in short:
    Always use the _beginthread() and _endthread() of the calling runtime library!
-*/
+ */
 #define SDL_PASSED_BEGINTHREAD_ENDTHREAD
 #ifndef _WIN32_WCE
 #include <process.h> /* This has _beginthread() and _endthread() defined! */
 #endif
 
 #ifdef __OS2__
-typedef int (*pfnSDL_CurrentBeginThread)(void (*func)(void *), void *, unsigned, void *arg); 
+typedef int (*pfnSDL_CurrentBeginThread)(void (*func)(void *), void *, unsigned, void *arg);
 typedef void (*pfnSDL_CurrentEndThread)(void);
 #elif __GNUC__
-typedef unsigned long (__cdecl *pfnSDL_CurrentBeginThread) (void *, unsigned,
-        unsigned (__stdcall *func)(void *), void *arg, 
-        unsigned, unsigned *threadID);
+typedef unsigned long (__cdecl *pfnSDL_CurrentBeginThread)(void *, unsigned,
+ unsigned (__stdcall *func)(void *), void *arg,
+ unsigned, unsigned *threadID);
 typedef void (__cdecl *pfnSDL_CurrentEndThread)(unsigned code);
 #else
-typedef uintptr_t (__cdecl *pfnSDL_CurrentBeginThread) (void *, unsigned,
-        unsigned (__stdcall *func)(void *), void *arg, 
-        unsigned, unsigned *threadID);
+typedef uintptr_t (__cdecl *pfnSDL_CurrentBeginThread)(void *, unsigned,
+ unsigned (__stdcall *func)(void *), void *arg,
+ unsigned, unsigned *threadID);
 typedef void (__cdecl *pfnSDL_CurrentEndThread)(unsigned code);
 #endif
 
-extern DECLSPEC SDL_Thread * SDLCALL SDL_CreateThread(int (SDLCALL *fn)(void *), void *data, pfnSDL_CurrentBeginThread pfnBeginThread, pfnSDL_CurrentEndThread pfnEndThread);
+extern DECLSPEC SDL_Thread *SDLCALL SDL_CreateThread(int (SDLCALL *fn)(void *), void *data, pfnSDL_CurrentBeginThread pfnBeginThread, pfnSDL_CurrentEndThread pfnEndThread);
 
 #ifdef __OS2__
 #define SDL_CreateThread(fn, data) SDL_CreateThread(fn, data, _beginthread, _endthread)
@@ -89,7 +89,7 @@ extern DECLSPEC SDL_Thread * SDLCALL SDL_CreateThread(int (SDLCALL *fn)(void *),
 #define SDL_CreateThread(fn, data) SDL_CreateThread(fn, data, _beginthreadex, _endthreadex)
 #endif
 #else
-extern DECLSPEC SDL_Thread * SDLCALL SDL_CreateThread(int (SDLCALL *fn)(void *), void *data);
+extern DECLSPEC SDL_Thread *SDLCALL SDL_CreateThread(int (SDLCALL *fn)(void *), void *data);
 #endif
 
 /* Get the 32-bit thread identifier for the current thread */

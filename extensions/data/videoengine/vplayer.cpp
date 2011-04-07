@@ -44,22 +44,22 @@ public:
     }
     ~Private() {
     }
-    AVFormatContext * pFormatCtx;
+    AVFormatContext *pFormatCtx;
     int videoStream;
-    AVCodecContext * pCodecCtx;
-    AVCodec * pCodec;
-    AVFrame * pFrame;
-    AVFrame * pFrameRGB;
+    AVCodecContext *pCodecCtx;
+    AVCodec *pCodec;
+    AVFrame *pFrame;
+    AVFrame *pFrameRGB;
     AVPacket packet;
     int frameFinished;
     int numBytes;
-    uint8_t * buffer;
-    QLabel * video;
-    QTimer * vidtimer;
-    QImage * currentFrame;
+    uint8_t *buffer;
+    QLabel *video;
+    QTimer *vidtimer;
+    QImage *currentFrame;
 };
 
-VPlayer::VPlayer(QObject * parent): QObject(parent), d(new Private)
+VPlayer::VPlayer(QObject *parent) : QObject(parent), d(new Private)
 {
     init();
     d->vidtimer = new QTimer(this);
@@ -78,7 +78,7 @@ void VPlayer::decode()
             avcodec_decode_video(d->pCodecCtx, d->pFrame, &d->frameFinished, d->packet.data, d->packet.size);
 
             if (d->frameFinished) {
-                img_convert((AVPicture *)d->pFrameRGB, PIX_FMT_RGBA32, (AVPicture*)d->pFrame, PIX_FMT_YUV420P, d->pCodecCtx->width, d->pCodecCtx->height);
+                img_convert((AVPicture *)d->pFrameRGB, PIX_FMT_RGBA32, (AVPicture *)d->pFrame, PIX_FMT_YUV420P, d->pCodecCtx->width, d->pCodecCtx->height);
                 d->currentFrame = new QImage(d->pFrameRGB->data[0], d->pCodecCtx->width, d->pCodecCtx->height, QImage::Format_ARGB32);
                 //d->video->setPixmap(QPixmap::fromImage(*d->currentFrame));
                 emit frameReady(*d->currentFrame);
@@ -101,7 +101,7 @@ void VPlayer::init()
     // d->vidtimer->start(500);
 }
 
-void VPlayer::setFileName(const QString & name)
+void VPlayer::setFileName(const QString &name)
 {
     QFile *file = new QFile(name);
     // init();
@@ -110,7 +110,7 @@ void VPlayer::setFileName(const QString & name)
         qDebug() << "Loading Media from " << name << endl;
 
         if (av_open_input_file(&d->pFormatCtx, name.toLatin1(), NULL, 0, NULL)
-                != 0) {
+             != 0) {
             qDebug() << "av_open_input_file" << "Failed" << endl;
         }
 
@@ -131,7 +131,7 @@ void VPlayer::setFileName(const QString & name)
 
         if (d->videoStream  == -1) {
             qDebug() << "Null Video" << endl;
-            return ;
+            return;
         }
 
         d->pCodecCtx = d->pFormatCtx->streams[d->videoStream]->codec;
@@ -141,7 +141,7 @@ void VPlayer::setFileName(const QString & name)
         }
 
         if (avcodec_open(d->pCodecCtx, d->pCodec) < 0) {
-            qDebug("Can't open Codec") ; // Could not open codec
+            qDebug("Can't open Codec");  // Could not open codec
         }
 
         d->pFrame = avcodec_alloc_frame();

@@ -27,7 +27,7 @@ class GuardianPluginInterface : public PlexyDesk::AbstractPluginInterface
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface);
 
-public :
-    GuardianPluginInterface(QObject *parent=0);
-    PlexyDesk::BasePlugin* instance();
+public:
+    GuardianPluginInterface(QObject *parent = 0);
+    PlexyDesk::BasePlugin *instance();
 };

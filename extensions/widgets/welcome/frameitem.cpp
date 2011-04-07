@@ -1,6 +1,6 @@
 #include "frameitem.h"
 
-void Frame::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
+void Frame::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 
     render.render(painter, rect());
@@ -10,7 +10,7 @@ void Frame::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, Q
         QRectF r = boundingRect();
         painter->save();
         painter->translate (0.5,0.5);
-      //  painter->fillRect( QRectF(6,6,r.width()-14,r.height()-14)  ,QColor(0,0,0));
+       //  painter->fillRect( QRectF(6,6,r.width()-14,r.height()-14)  ,QColor(0,0,0));
         painter->restore ();
         //painter->translate(0.5,0.5);
         QPixmap top ( QSize(render.boundsOnElement("g3329").width(), render.boundsOnElement("g3329").height()  ));
@@ -85,7 +85,7 @@ void Frame::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, Q
         p.end();
         painter->drawTiledPixmap(QRectF(6,rect().height()-33,rect().width()-12,7),tileBot);
         painter->restore();
-    */
+     */
 
 }
 

@@ -29,9 +29,9 @@ class Clock : public PlexyDesk::WidgetPlugin
     Q_OBJECT
 
 public:
-    Clock(QObject * object = 0);
+    Clock(QObject *object = 0);
     virtual ~Clock();
-    QGraphicsItem* item();
+    QGraphicsItem *item();
 };
 
 

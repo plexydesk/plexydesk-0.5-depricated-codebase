@@ -23,14 +23,14 @@
 #include <pluginloader.h>
 #include "weatherplugin.h"
 
-WeatherPluginInterface::WeatherPluginInterface(QObject * parent)
+WeatherPluginInterface::WeatherPluginInterface(QObject *parent)
 {
 
 }
 
-PlexyDesk::BasePlugin* WeatherPluginInterface::instance()
+PlexyDesk::BasePlugin *WeatherPluginInterface::instance()
 {
     return new WeatherPlugin(this);
 }
 
-Q_EXPORT_PLUGIN2(weatherplugininterface,WeatherPluginInterface);
+Q_EXPORT_PLUGIN2(weatherplugininterface, WeatherPluginInterface);

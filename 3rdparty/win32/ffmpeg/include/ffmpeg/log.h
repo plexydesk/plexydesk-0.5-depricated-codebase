@@ -28,11 +28,11 @@
  */
 typedef struct AVCLASS AVClass;
 struct AVCLASS {
-    const char* class_name;
-    const char* (*item_name)(void*); /* actually passing a pointer to an AVCodecContext
-                                        or AVFormatContext, which begin with an AVClass.
-                                        Needed because av_log is in libavcodec and has no visibility
-                                        of AVIn/OutputFormat */
+    const char *class_name;
+    const char * (*item_name)(void *); /* actually passing a pointer to an AVCodecContext
+                                          or AVFormatContext, which begin with an AVClass.
+                                          Needed because av_log is in libavcodec and has no visibility
+                                          of AVIn/OutputFormat */
     const struct AVOption *option;
 };
 
@@ -101,15 +101,15 @@ extern int av_log_level;
  * @see av_vlog
  */
 #ifdef __GNUC__
-extern void av_log(void*, int level, const char *fmt, ...) __attribute__ ((__format__ (__printf__, 3, 4)));
+extern void av_log(void *, int level, const char *fmt, ...) __attribute__ ((__format__ (__printf__, 3, 4)));
 #else
-extern void av_log(void*, int level, const char *fmt, ...);
+extern void av_log(void *, int level, const char *fmt, ...);
 #endif
 
-extern void av_vlog(void*, int level, const char *fmt, va_list);
+extern void av_vlog(void *, int level, const char *fmt, va_list);
 extern int av_log_get_level(void);
 extern void av_log_set_level(int);
-extern void av_log_set_callback(void (*)(void*, int, const char*, va_list));
-extern void av_log_default_callback(void* ptr, int level, const char* fmt, va_list vl);
+extern void av_log_set_callback(void (*)(void *, int, const char *, va_list));
+extern void av_log_default_callback(void *ptr, int level, const char *fmt, va_list vl);
 
 #endif /* FFMPEG_LOG_H */

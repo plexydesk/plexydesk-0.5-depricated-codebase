@@ -11,16 +11,22 @@ class JSONSHARED_EXPORT JsonData
 {
 public:
     typedef enum { Error = 1 << 0,
-        Object = 1 << 1
-    } Type;
-    JsonData(){}
-    void setType(Type type) { mType = type;}
-    Type type() const{ return mType;}
+                   Object = 1 << 1} Type;
+    JsonData(){
+    }
+    void setType(Type type) {
+        mType = type;
+    }
+    Type type() const {
+        return mType;
+    }
     void addData(const QString &key, const QVariant &value)
     {
         mData[key] = value;
     }
-    QHash<QString, QVariant> data() { return mData;}
+    QHash<QString, QVariant> data() {
+        return mData;
+    }
 private:
     Type mType;
     QHash<QString, QVariant> mData;
@@ -29,7 +35,7 @@ private:
 class JSONSHARED_EXPORT JsonHandler {
 public:
     JsonHandler();
-    JsonData parse(const QString& data);
+    JsonData parse(const QString &data);
     void extractValue(QScriptValueIterator &value);
 };
 

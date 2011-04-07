@@ -27,7 +27,7 @@ class WeatherPluginInterface : public PlexyDesk::AbstractPluginInterface
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface);
 
-public :
-    WeatherPluginInterface(QObject *parent=0);
-    PlexyDesk::BasePlugin* instance();
+public:
+    WeatherPluginInterface(QObject *parent = 0);
+    PlexyDesk::BasePlugin *instance();
 };

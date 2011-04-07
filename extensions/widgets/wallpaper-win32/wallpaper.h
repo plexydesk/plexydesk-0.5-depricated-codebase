@@ -28,16 +28,17 @@ class VISIBLE_SYM WallpaperChange : public PlexyDesk::DataPlugin
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
-public:
-    void init() {}
-    WallpaperChange(QObject * object = 0);
+public :
+        void init() {
+    }
+    WallpaperChange(QObject *object = 0);
     virtual ~WallpaperChange();
-    virtual QGraphicsItem * item();// {};
+    virtual QGraphicsItem *item(); // {};
 public slots:
-    void pushData(QVariant&);
+    void pushData(QVariant &);
     void changeWallpaper(bool);
 signals:
-    void data(QVariant&);
+    void data(QVariant &);
 };
 
 #endif // PLEXY_WALLPAPER_CHANGE_H

@@ -5,16 +5,16 @@
 #include <widgetinterface.h>
 #include <widgetplugin.h>
 
-class VISIBLE_SYM googleweather:public PlexyDesk::WidgetPlugin
+class VISIBLE_SYM googleweather : public PlexyDesk::WidgetPlugin
 {
     Q_OBJECT
 
-    public:
-        googleweather(QObject * object = 0);
-        virtual ~googleweather();
-        QGraphicsItem * item();
-    private :
-         QWidget *base;
+public:
+    googleweather(QObject *object = 0);
+    virtual ~googleweather();
+    QGraphicsItem *item();
+private:
+    QWidget *base;
 };
 
 #endif

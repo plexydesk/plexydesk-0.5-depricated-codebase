@@ -27,15 +27,17 @@ namespace PlexyDesk
 class VISIBLE_SYM FakeMime
 {
 public:
-    static FakeMime*  getInstance();
+    static FakeMime *getInstance();
     ///these will be pure virtual on the real plexy desk
-    QString getType(const QString& path);
+    QString getType(const QString &path);
 
 private:
-    static FakeMime * config;
-    FakeMime() {};
-    FakeMime(FakeMime &) {}
-    FakeMime& operator=(const FakeMime&);
+    static FakeMime *config;
+    FakeMime() {
+    };
+    FakeMime(FakeMime &) {
+    }
+    FakeMime &operator=(const FakeMime &);
 };
 } // namespace PlexyDesk
 #endif

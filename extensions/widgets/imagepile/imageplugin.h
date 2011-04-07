@@ -36,22 +36,22 @@ class VISIBLE_SYM ImagePlugin : public PlexyDesk::WidgetPlugin
     Q_OBJECT
 
 public:
-    ImagePlugin(QObject * object = 0);
+    ImagePlugin(QObject *object = 0);
     virtual ~ImagePlugin();
-    virtual QGraphicsItem * item();// {};
+    virtual QGraphicsItem *item(); // {};
 public slots:
     void onDataReady();
 
     void searchImage();
 signals:
     void change();
-    void sendData(QVariant&);
+    void sendData(QVariant &);
 private:
-    PictureFlow * flow ;
-    QWidget * base;
-    QLineEdit * search;
-    PlexyDesk::DataPlugin * flickrEngine;
-    PlexyDesk::ImagePileWidget * widget;
+    PictureFlow *flow;
+    QWidget *base;
+    QLineEdit *search;
+    PlexyDesk::DataPlugin *flickrEngine;
+    PlexyDesk::ImagePileWidget *widget;
 };
 
 #endif

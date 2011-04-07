@@ -31,13 +31,13 @@ class RestData : public PlexyDesk::DataPlugin
     Q_OBJECT
 
 public:
-    RestData(QObject * object = 0);
+    RestData(QObject *object = 0);
     virtual ~RestData();
     void init();
     QVariantMap readAll();
 
 public Q_SLOTS:
-    void pushData(QVariant& data);
+    void pushData(QVariant &data);
     void replyFinished(QNetworkReply *reply);
     void handleAuth(QNetworkReply *, QAuthenticator *);
 

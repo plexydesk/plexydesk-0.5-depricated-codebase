@@ -65,7 +65,7 @@
 #if defined(__GNUC__) && (__GNUC__ > 3 || __GNUC__ == 3 && __GNUC_MINOR__ > 0)
 #    define attribute_deprecated __attribute__((deprecated))
 #else
-#    define attribute_deprecated 
+#    define attribute_deprecated
 #endif
 #endif
 
@@ -80,16 +80,16 @@
 #include "mem.h"
 
 //rounded divison & shift
-#define RSHIFT(a,b) ((a) > 0 ? ((a) + ((1<<(b))>>1))>>(b) : ((a) + ((1<<(b))>>1)-1)>>(b))
+#define RSHIFT(a, b) ((a) > 0 ? ((a) + ((1<<(b))>>1))>>(b) : ((a) + ((1<<(b))>>1)-1)>>(b))
 /* assume b>0 */
-#define ROUNDED_DIV(a,b) (((a)>0 ? (a) + ((b)>>1) : (a) - ((b)>>1))/(b))
+#define ROUNDED_DIV(a, b) (((a)>0 ? (a) + ((b)>>1) : (a) - ((b)>>1))/(b))
 #define FFABS(a) ((a) >= 0 ? (a) : (-(a)))
 #define FFSIGN(a) ((a) > 0 ? 1 : -1)
 
-#define FFMAX(a,b) ((a) > (b) ? (a) : (b))
-#define FFMIN(a,b) ((a) > (b) ? (b) : (a))
+#define FFMAX(a, b) ((a) > (b) ? (a) : (b))
+#define FFMIN(a, b) ((a) > (b) ? (b) : (a))
 
-#define FFSWAP(type,a,b) do{type SWAP_tmp= b; b= a; a= SWAP_tmp;}while(0)
+#define FFSWAP(type, a, b) do {type SWAP_tmp = b; b = a; a = SWAP_tmp; } while(0)
 
 /* misc math functions */
 extern const uint8_t ff_log2_tab[256];
@@ -130,37 +130,37 @@ static inline int av_log2_16bit(unsigned int v)
 static inline int mid_pred(int a, int b, int c)
 {
 #ifdef HAVE_CMOV
-    int i=b;
-    asm volatile(
-        "cmp    %2, %1 \n\t"
-        "cmovg  %1, %0 \n\t"
-        "cmovg  %2, %1 \n\t"
-        "cmp    %3, %1 \n\t"
-        "cmovl  %3, %1 \n\t"
-        "cmp    %1, %0 \n\t"
-        "cmovg  %1, %0 \n\t"
-        :"+&r"(i), "+&r"(a)
-        :"r"(b), "r"(c)
-    );
+    int i = b;
+    asm volatile (
+     "cmp    %2, %1 \n\t"
+     "cmovg  %1, %0 \n\t"
+     "cmovg  %2, %1 \n\t"
+     "cmp    %3, %1 \n\t"
+     "cmovl  %3, %1 \n\t"
+     "cmp    %1, %0 \n\t"
+     "cmovg  %1, %0 \n\t"
+     : "+&r" (i), "+&r" (a)
+     : "r" (b), "r" (c)
+     );
     return i;
 #elif 0
-    int t= (a-b)&((a-b)>>31);
-    a-=t;
-    b+=t;
-    b-= (b-c)&((b-c)>>31);
-    b+= (a-b)&((a-b)>>31);
+    int t = (a-b)&((a-b)>>31);
+    a -= t;
+    b += t;
+    b -= (b-c)&((b-c)>>31);
+    b += (a-b)&((a-b)>>31);
 
     return b;
 #else
-    if(a>b){
-        if(c>b){
-            if(c>a) b=a;
-            else    b=c;
+    if(a>b) {
+        if(c>b) {
+            if(c>a) b = a;
+            else b = c;
         }
     }else{
-        if(b>c){
-            if(c>a) b=c;
-            else    b=a;
+        if(b>c) {
+            if(c>a) b = c;
+            else b = a;
         }
     }
     return b;
@@ -176,9 +176,9 @@ static inline int mid_pred(int a, int b, int c)
  */
 static inline int av_clip(int a, int amin, int amax)
 {
-    if (a < amin)      return amin;
+    if (a < amin) return amin;
     else if (a > amax) return amax;
-    else               return a;
+    else return a;
 }
 
 /**
@@ -189,7 +189,7 @@ static inline int av_clip(int a, int amin, int amax)
 static inline uint8_t av_clip_uint8(int a)
 {
     if (a&(~255)) return (-a)>>31;
-    else          return a;
+    else return a;
 }
 
 /**
@@ -200,7 +200,7 @@ static inline uint8_t av_clip_uint8(int a)
 static inline int16_t av_clip_int16(int a)
 {
     if ((a+32768) & ~65535) return (a>>31) ^ 32767;
-    else                    return a;
+    else return a;
 }
 
 /* math */
@@ -217,8 +217,8 @@ static inline int ff_get_fourcc(const char *s){
     return (s[0]) + (s[1]<<8) + (s[2]<<16) + (s[3]<<24);
 }
 
-#define MKTAG(a,b,c,d) (a | (b << 8) | (c << 16) | (d << 24))
-#define MKBETAG(a,b,c,d) (d | (c << 8) | (b << 16) | (a << 24))
+#define MKTAG(a, b, c, d) (a | (b << 8) | (c << 16) | (d << 24))
+#define MKBETAG(a, b, c, d) (d | (c << 8) | (b << 16) | (a << 24))
 
 /*!
  * \def GET_UTF8(val, GET_BYTE, ERROR)
@@ -233,19 +233,19 @@ static inline int ff_get_fourcc(const char *s){
  * from GET_BYTE. It should be a statement that jumps out of the macro,
  * like exit(), goto, return, break, or continue.
  */
-#define GET_UTF8(val, GET_BYTE, ERROR)\
-    val= GET_BYTE;\
-    {\
-        int ones= 7 - av_log2(val ^ 255);\
-        if(ones==1)\
-            ERROR\
-        val&= 127>>ones;\
-        while(--ones > 0){\
-            int tmp= GET_BYTE - 128;\
-            if(tmp>>6)\
-                ERROR\
-            val= (val<<6) + tmp;\
-        }\
+#define GET_UTF8(val, GET_BYTE, ERROR) \
+    val = GET_BYTE; \
+    { \
+        int ones = 7 - av_log2(val ^ 255); \
+        if(ones==1) \
+            ERROR \
+             val &= 127>>ones; \
+        while(--ones > 0) { \
+            int tmp = GET_BYTE - 128; \
+            if(tmp>>6) \
+                ERROR \
+                 val = (val<<6) + tmp; \
+        } \
     }
 
 /*!
@@ -264,24 +264,24 @@ static inline int ff_get_fourcc(const char *s){
  * 7 times in the general case, depending on the length of the converted
  * unicode character.
  */
-#define PUT_UTF8(val, tmp, PUT_BYTE)\
-    {\
-        int bytes, shift;\
-        uint32_t in = val;\
-        if (in < 0x80) {\
-            tmp = in;\
-            PUT_BYTE\
-        } else {\
-            bytes = (av_log2(in) + 4) / 5;\
-            shift = (bytes - 1) * 6;\
-            tmp = (256 - (256 >> bytes)) | (in >> shift);\
-            PUT_BYTE\
-            while (shift >= 6) {\
-                shift -= 6;\
-                tmp = 0x80 | ((in >> shift) & 0x3f);\
-                PUT_BYTE\
-            }\
-        }\
+#define PUT_UTF8(val, tmp, PUT_BYTE) \
+    { \
+        int bytes, shift; \
+        uint32_t in = val; \
+        if (in < 0x80) { \
+            tmp = in; \
+            PUT_BYTE \
+        } else { \
+            bytes = (av_log2(in) + 4) / 5; \
+            shift = (bytes - 1) * 6; \
+            tmp = (256 - (256 >> bytes)) | (in >> shift); \
+            PUT_BYTE \
+            while (shift >= 6) { \
+                shift -= 6; \
+                tmp = 0x80 | ((in >> shift) & 0x3f); \
+                PUT_BYTE \
+            } \
+        } \
     }
 
 #if defined(ARCH_X86) || defined(ARCH_POWERPC) || defined(ARCH_BFIN)
@@ -289,20 +289,20 @@ static inline int ff_get_fourcc(const char *s){
 #if defined(ARCH_X86_64)
 static inline uint64_t read_time(void)
 {
-        uint64_t a, d;
-        asm volatile(   "rdtsc\n\t"
-                : "=a" (a), "=d" (d)
-        );
-        return (d << 32) | (a & 0xffffffff);
+    uint64_t a, d;
+    asm volatile (   "rdtsc\n\t"
+     : "=a" (a), "=d" (d)
+     );
+    return (d << 32) | (a & 0xffffffff);
 }
 #elif defined(ARCH_X86_32)
 static inline long long read_time(void)
 {
-        long long l;
-        asm volatile(   "rdtsc\n\t"
-                : "=A" (l)
-        );
-        return l;
+    long long l;
+    asm volatile (   "rdtsc\n\t"
+     : "=A" (l)
+     );
+    return l;
 }
 #elif ARCH_BFIN
 static inline uint64_t read_time(void)
@@ -322,19 +322,19 @@ static inline uint64_t read_time(void)
 {
     uint32_t tbu, tbl, temp;
 
-     /* from section 2.2.1 of the 32-bit PowerPC PEM */
-     __asm__ __volatile__(
-         "1:\n"
-         "mftbu  %2\n"
-         "mftb   %0\n"
-         "mftbu  %1\n"
-         "cmpw   %2,%1\n"
-         "bne    1b\n"
-     : "=r"(tbl), "=r"(tbu), "=r"(temp)
+    /* from section 2.2.1 of the 32-bit PowerPC PEM */
+    __asm__ __volatile__ (
+     "1:\n"
+     "mftbu  %2\n"
+     "mftb   %0\n"
+     "mftbu  %1\n"
+     "cmpw   %2,%1\n"
+     "bne    1b\n"
+     : "=r" (tbl), "=r" (tbu), "=r" (temp)
      :
      : "cc");
 
-     return (((uint64_t)tbu)<<32) | (uint64_t)tbl;
+    return (((uint64_t)tbu)<<32) | (uint64_t)tbl;
 }
 #endif
 #elif defined(HAVE_GETHRTIME)
@@ -343,24 +343,24 @@ static inline uint64_t read_time(void)
 
 #ifdef AV_READ_TIME
 #define START_TIMER \
-uint64_t tend;\
-uint64_t tstart= AV_READ_TIME();\
+    uint64_t tend; \
+    uint64_t tstart = AV_READ_TIME(); \
 
 #define STOP_TIMER(id) \
-tend= AV_READ_TIME();\
-{\
-  static uint64_t tsum=0;\
-  static int tcount=0;\
-  static int tskip_count=0;\
-  if(tcount<2 || tend - tstart < FFMAX(8*tsum/tcount, 2000)){\
-      tsum+= tend - tstart;\
-      tcount++;\
-  }else\
-      tskip_count++;\
-  if(((tcount+tskip_count)&(tcount+tskip_count-1))==0){\
-      av_log(NULL, AV_LOG_DEBUG, "%"PRIu64" dezicycles in %s, %d runs, %d skips\n", tsum*10/tcount, id, tcount, tskip_count);\
-  }\
-}
+    tend = AV_READ_TIME(); \
+    { \
+        static uint64_t tsum = 0; \
+        static int tcount = 0; \
+        static int tskip_count = 0; \
+        if(tcount<2 || tend - tstart < FFMAX(8*tsum/tcount, 2000)) { \
+            tsum += tend - tstart; \
+            tcount++; \
+        }else \
+            tskip_count++; \
+        if(((tcount+tskip_count)&(tcount+tskip_count-1))==0) { \
+            av_log(NULL, AV_LOG_DEBUG, "%"PRIu 64 " dezicycles in %s, %d runs, %d skips\n", tsum*10/tcount, id, tcount, tskip_count); \
+        } \
+    }
 #else
 #define START_TIMER
 #define STOP_TIMER(id) {}

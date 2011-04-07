@@ -27,9 +27,9 @@
 #define FFMPEG_MEM_H
 
 #ifdef __GNUC__
-  #define DECLARE_ALIGNED(n,t,v)       t v __attribute__ ((aligned (n)))
+  #define DECLARE_ALIGNED(n, t, v)       t v __attribute__ ((aligned (n)))
 #else
-  #define DECLARE_ALIGNED(n,t,v)      __declspec(align(n)) t v
+  #define DECLARE_ALIGNED(n, t, v)      __declspec(align(n)) t v
 #endif
 
 /**

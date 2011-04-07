@@ -30,15 +30,15 @@ class VISIBLE_SYM LPhotoData : public PlexyDesk::DataPlugin
     Q_OBJECT
 
 public:
-    LPhotoData(QObject * object = 0);
+    LPhotoData(QObject *object = 0);
     virtual ~LPhotoData();
     void init();
 public slots:
     void loadImages();
     void nextImage();
-    void pushData(QVariant&);
+    void pushData(QVariant &);
 signals:
-    void data(QVariant&);
+    void data(QVariant &);
 
 private:
     QBrush paint;
@@ -46,7 +46,7 @@ private:
     QStringList images;
     int slideCount;
     int currentSlide;
-    QTimer * imageTimer;
+    QTimer *imageTimer;
 };
 
 

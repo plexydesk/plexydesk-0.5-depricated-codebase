@@ -3,7 +3,7 @@
 
 class User
 {
-    public:
+public:
     QString nick;
     QString user;
     QString host;
@@ -17,8 +17,8 @@ class User
     bool isIdle;
     bool isOP;
 
-    User(QString nick,QString user, QString host,QString realName,QString server,QString serverInfo,
-         QString awayMessage,QStringList channels,QString idleTime,bool isAway,bool isIdle,bool isOP) {
+    User(QString nick, QString user, QString host, QString realName, QString server, QString serverInfo,
+     QString awayMessage, QStringList channels, QString idleTime, bool isAway, bool isIdle, bool isOP) {
         this->nick = nick;
         this->user = user;
         this->host = host;

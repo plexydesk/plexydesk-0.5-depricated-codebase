@@ -22,7 +22,7 @@
 
 namespace PlexyDesk
 {
-VideoItem::VideoItem(const QRectF &rect, QWidget *widget): DesktopWidget(rect, widget)
+VideoItem::VideoItem(const QRectF &rect, QWidget *widget) : DesktopWidget(rect, widget)
 {
     vid = new VPlayer();
     vid->setFileName("/home/siraj/dwhelper/Java_Everywhere.flv");
@@ -49,7 +49,7 @@ VideoItem::~VideoItem()
         delete vidsurf;
     }
 }
-void VideoItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event)
+void VideoItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
     if (vidsurf) {
         snap = QPixmap().fromImage(*vidsurf);;
@@ -69,7 +69,7 @@ void VideoItem::loop()
     vid->setFileName("/home/siraj/dwhelper/Java_Everywhere.flv");
 }
 
-void VideoItem::getImage(QImage & img)
+void VideoItem::getImage(QImage &img)
 {
     if (vidsurf) {
         delete vidsurf;
@@ -82,7 +82,7 @@ void VideoItem::getImage(QImage & img)
 
 }
 
-void VideoItem::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
+void VideoItem::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *widget)
 {
 
     //p->setRenderHints(QPainter::SmoothPixmapTransform);
@@ -90,8 +90,8 @@ void VideoItem::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , Q
     p->setClipRect(e->exposedRect);
     //p->setOpacity(0.5);
     p->setRenderHint(QPainter::SmoothPixmapTransform, false);
-    p->setRenderHint(QPainter::Antialiasing , false);
-    p->setRenderHint(QPainter::HighQualityAntialiasing , false);
+    p->setRenderHint(QPainter::Antialiasing, false);
+    p->setRenderHint(QPainter::HighQualityAntialiasing, false);
     if (vidsurf)
         p->drawImage(QRect(23, 47, 347, 200), *vidsurf);
     // p->fillRect(QRect(30,30,320,240), brush);
@@ -99,7 +99,7 @@ void VideoItem::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , Q
 
 }
 
-void VideoItem::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
+void VideoItem::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *widget)
 {
 
     p->setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing | QPainter::HighQualityAntialiasing);

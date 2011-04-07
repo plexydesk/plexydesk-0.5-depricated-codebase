@@ -11,20 +11,22 @@ namespace PlexyDesk
 class IconProvider::Private
 {
 public:
-    Private() {}
-    ~Private() {}
+    Private() {
+    }
+    ~Private() {
+    }
     QStringList iconpaths;
 
 };
 
-IconProvider::IconProvider(): d(new Private)
+IconProvider::IconProvider() : d(new Private)
 {
 }
 
-IconJobPtr IconProvider::requestIcon(const QString& name, const QString& size)
+IconJobPtr IconProvider::requestIcon(const QString &name, const QString &size)
 {
     QSharedPointer<IconJob> obj =
-        QSharedPointer<IconJob>(new IconJob(this), &QObject::deleteLater);
+         QSharedPointer<IconJob>(new IconJob(this), &QObject::deleteLater);
     obj->requestIcon(name, size);
     return obj;
 }

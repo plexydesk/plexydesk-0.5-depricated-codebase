@@ -13,10 +13,10 @@ public:
     explicit SocialAccessManager(QObject *parent = 0);
 
 Q_SIGNALS:
-     void finished(SocialAccessManager *manager);
+    void finished(SocialAccessManager *manager);
 
 public Q_SLOTS:
-   //todo
+    //todo
 };
-}//PlexyDesk
+} //PlexyDesk
 #endif // SOCIALACCESSMANAGER_H

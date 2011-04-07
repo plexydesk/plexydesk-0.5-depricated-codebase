@@ -23,7 +23,7 @@
 #include <QHttp>
 #include <QTimer>
 
-FlickerData::FlickerData(QObject * object)
+FlickerData::FlickerData(QObject *object)
 {
     slideCount = 0;
     currentSlide = 0;
@@ -34,23 +34,23 @@ FlickerData::FlickerData(QObject * object)
     connect(imageTimer, SIGNAL(timeout()), this, SLOT(nextImage()));
 }
 
-void  FlickerData::init()
+void FlickerData::init()
 {
 
     if (PlexyDesk::Config::getInstance()->m_proxyOn) {
         QNetworkProxy NtProxy(PlexyDesk::Config::getInstance()->proxyType,
-                              PlexyDesk::Config::getInstance()->proxyURL,
-                              PlexyDesk::Config::getInstance()->m_proxyPort,
-                              PlexyDesk::Config::getInstance()->proxyUser,
-                              PlexyDesk::Config::getInstance()->proxyPasswd
-                             );
+         PlexyDesk::Config::getInstance()->proxyURL,
+         PlexyDesk::Config::getInstance()->m_proxyPort,
+         PlexyDesk::Config::getInstance()->proxyUser,
+         PlexyDesk::Config::getInstance()->proxyPasswd
+         );
 
         http->setProxy(NtProxy);
         QNetworkProxy::setApplicationProxy(NtProxy);
     }
 
     connect(http, SIGNAL(requestFinished(int, bool)),
-            SLOT(loadImages(int, bool)));
+     SLOT(loadImages(int, bool)));
 
     http->setHost("www.flickr.com");
     requestID = http->get(QString("/search/?w=all&q=%1&m=text").arg(searchkey));
@@ -77,7 +77,7 @@ void FlickerData::nextImage()
     }
 }
 
-void FlickerData::pushData(QVariant& str)
+void FlickerData::pushData(QVariant &str)
 {
     http->abort();
     searchkey = str.toString();
@@ -96,7 +96,7 @@ void FlickerData::loadImages(int id, bool stat)
             while (i < ba.size() - 5) {
                 if (data[i] == '.') {
                     if (data[i+1] == 'j' && data[i+2] == 'p'
-                            && data[i+3] == 'g' && data[i+4] == '\"') {
+                     && data[i+3] == 'g' && data[i+4] == '\"') {
                         int j = i;
                         while (j > 0 && data[j] != '\"') --j;
                         QByteArray addr(ba.mid(j + 1, i - j + 3));

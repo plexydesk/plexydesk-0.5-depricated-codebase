@@ -13,9 +13,9 @@ class VISIBLE_SYM YouTubeInterface : public PlexyDesk::AbstractPluginInterface
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
-public:
-    YouTubeInterface(QObject * object = 0);
-    PlexyDesk::BasePlugin * instance() ;
+public :
+        YouTubeInterface(QObject *object = 0);
+    PlexyDesk::BasePlugin *instance();
 };
 
 #endif

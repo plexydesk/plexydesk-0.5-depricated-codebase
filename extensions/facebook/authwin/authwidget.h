@@ -29,21 +29,21 @@
 #include <QNetworkReply>
 
 class QTimer;
-namespace PlexyDesk{
+namespace PlexyDesk {
 
-class AuthWidget: public PlexyDesk::DesktopWidget
+class AuthWidget : public PlexyDesk::DesktopWidget
 {
     Q_OBJECT
 public:
     AuthWidget(const QRectF &rect, QWidget *widget = 0);
     virtual ~AuthWidget();
     void readConfig(QString &user, QString &pass);
-    void paintExtFace(QPainter *painter, 
-            const QStyleOptionGraphicsItem *item, QWidget *widget);
+    void paintExtFace(QPainter *painter,
+         const QStyleOptionGraphicsItem *item, QWidget *widget);
     void paintExtDockFace(QPainter *painter,
-            const QStyleOptionGraphicsItem *item, QWidget *widget);
+         const QStyleOptionGraphicsItem *item, QWidget *widget);
 public Q_SLOTS:
-    void data(QVariantMap&);
+    void data(QVariantMap &);
     void onDataReady();
     void onLoadeFinished(bool ok);
     void onLoadProgress(int progress);
@@ -51,14 +51,14 @@ public Q_SLOTS:
     void onUrlChanged(const QUrl &url);
     void onReadyRead();
 private:
-      QString tokenFromConfig() const;
-      QWebViewItem *mView;
-      int mProgressValue;
-      QNetworkAccessManager *mNtManager;
-      QNetworkCookieJar *mCookie;
-      bool mLoggedIn;
-      JsonHandler *mJsonHandle;
-      QNetworkReply *mReply;
+    QString tokenFromConfig() const;
+    QWebViewItem *mView;
+    int mProgressValue;
+    QNetworkAccessManager *mNtManager;
+    QNetworkCookieJar *mCookie;
+    bool mLoggedIn;
+    JsonHandler *mJsonHandle;
+    QNetworkReply *mReply;
 };
 #endif
 }

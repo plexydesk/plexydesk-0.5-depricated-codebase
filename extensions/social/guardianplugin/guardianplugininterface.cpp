@@ -23,14 +23,14 @@
 #include <pluginloader.h>
 #include "guardianplugin.h"
 
-GuardianPluginInterface::GuardianPluginInterface(QObject * parent)
+GuardianPluginInterface::GuardianPluginInterface(QObject *parent)
 {
 
 }
 
-PlexyDesk::BasePlugin* GuardianPluginInterface::instance()
+PlexyDesk::BasePlugin *GuardianPluginInterface::instance()
 {
     return new GuardianPlugin(this);
 }
 
-Q_EXPORT_PLUGIN2(guardianplugininterface,GuardianPluginInterface);
+Q_EXPORT_PLUGIN2(guardianplugininterface, GuardianPluginInterface);

@@ -31,15 +31,15 @@ class VISIBLE_SYM ExampleData : public PlexyDesk::DataPlugin
     Q_OBJECT
 
 public:
-    ExampleData(QObject * object = 0);
+    ExampleData(QObject *object = 0);
     virtual ~ExampleData();
     void init();
 public slots:
     /* ID tells you the Qhttp id which youare pocessing
-    */
+     */
     void loadCallback(int ID, bool status);
 signals:
-    void data(QVariant&);
+    void data(QVariant &);
 
 private:
     QPixmap bg;
@@ -53,7 +53,7 @@ private:
     int dataID;
     int slideCount;
     int currentSlide;
-    QTimer * imageTimer;
+    QTimer *imageTimer;
 };
 
 

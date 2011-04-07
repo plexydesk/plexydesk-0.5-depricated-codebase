@@ -26,12 +26,12 @@
 using namespace PlexyDesk;
 
 
-WeatherPlugin::WeatherPlugin(QObject * parent) : SocialPlugin(parent)
+WeatherPlugin::WeatherPlugin(QObject *parent) : SocialPlugin(parent)
 {
     WEATHER_FROM_CITYCODE_URL = QUrl("http://www.google.com/ig/api?weather=colombo");
 
     job = new HttpJobHandler(this);
-    connect(job,SIGNAL(finished()),this,SLOT(listen()));
+    connect(job, SIGNAL(finished()), this, SLOT(listen()));
 }
 
 
@@ -74,7 +74,7 @@ QVariantMap WeatherPlugin::getweather()
     QXmlQuery query;
     query.setFocus(&buffer);
 
-    QStringList temp,humidity,windspeed,current,forecastDate,forecastDay,forecastLowTemp,forecastHighTemp,forecastCondition,image,f_image,c_date;
+    QStringList temp, humidity, windspeed, current, forecastDate, forecastDay, forecastLowTemp, forecastHighTemp, forecastCondition, image, f_image, c_date;
 
     query.setQuery("for $x in //xml_api_reply/weather/current_conditions  return string($x /temp_c/@data)");
     query.evaluateTo(&temp);
@@ -117,14 +117,14 @@ QVariantMap WeatherPlugin::getweather()
 
     QString imgName = image.at(0);
     image.clear();
-    imgName = imgName.remove(0,imgName.lastIndexOf("/")+1);
+    imgName = imgName.remove(0, imgName.lastIndexOf("/")+1);
     imgName.truncate(imgName.lastIndexOf("."));
     image<<imgName;
     QStringList tmp;
-    for (int i=0;i<f_image.length();i++)
+    for (int i = 0; i<f_image.length(); i++)
     {
         imgName = f_image.at(i);
-        imgName = imgName.remove(0,imgName.lastIndexOf("/")+1);
+        imgName = imgName.remove(0, imgName.lastIndexOf("/")+1);
         imgName.truncate(imgName.lastIndexOf("."));
         tmp<<imgName;
     }
@@ -164,14 +164,14 @@ QVariantMap WeatherPlugin::data(const QString &methodName, QVariantMap args)
         WEATHER_FROM_GIVEN_STATION_URL = "http://www.google.com/ig/api?weather="+station.value<QString>();
         FLAG = 1;
     }else*/
-        FLAG = 0;
+    FLAG = 0;
 
     return this->getweather();
 }
 
 QStringList WeatherPlugin::supportedMethods()
 {
-   // qDebug()<<"WeatherPlugin::supportedMethods() called";
+    // qDebug()<<"WeatherPlugin::supportedMethods() called";
     QStringList list;
     list <<"getweather";
     return list;

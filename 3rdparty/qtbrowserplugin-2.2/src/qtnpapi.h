@@ -38,30 +38,30 @@ typedef int int32;
 typedef unsigned char NPBool;
 typedef int16 NPError;
 typedef int16 NPReason;
-typedef char* NPMIMEType;
+typedef char *NPMIMEType;
 
 typedef void *NPRegion;
 typedef void *NPIdentifier;
 
 // Java stuff
-typedef void* jref;
-typedef void* JRIGlobalRef;
-typedef void* JRIEnv; // ### not quite correct, but we don't use it anyway
+typedef void *jref;
+typedef void *JRIGlobalRef;
+typedef void *JRIEnv; // ### not quite correct, but we don't use it anyway
 
 // NP-types
 struct NPP_t
 {
-    void* pdata; // plug-in private data
-    void* ndata; // browser private data
+    void *pdata; // plug-in private data
+    void *ndata; // browser private data
 };
-typedef NPP_t* NPP;
+typedef NPP_t *NPP;
 
 struct NPRect
 {
-    uint16	top;
-    uint16	left;
-    uint16	bottom;
-    uint16	right;
+    uint16 top;
+    uint16 left;
+    uint16 bottom;
+    uint16 right;
 };
 
 #ifdef Q_WS_WIN
@@ -101,7 +101,7 @@ enum NPPVariable {
     // Introduced in Firefox 1.0
     NPPVpluginScriptableNPObject  = 15,
     NPPVformValue = 16
-} ;
+};
 
 // Variable names for NPN_GetValue
 enum NPNVariable {
@@ -135,7 +135,7 @@ struct NPWindow
     // Platform-specific handle to a native window element in the browser's window hierarchy
     // XEmbed: "In the NPP_SetWindow call, the window parameter will be the XID of the hosting
     // XEmbed window. As an implementation note, this is really the XID of a GtkSocket window."
-    void* window;
+    void *window;
     // The x and y coordinates for the top left corner of the plug-in relative to the page
     // (and thus relative to the origin of the drawable)
     uint32 x, y;
@@ -146,7 +146,7 @@ struct NPWindow
 #ifdef Q_WS_X11
     // Contains information about the plug-in's Unix window environment
     // points to an NPSetWindowCallbackStruct
-    void* ws_info; // probably obsolete with XEmbed
+    void *ws_info; // probably obsolete with XEmbed
 #endif
     // The type field indicates the NPWindow type of the target area
     NPWindowType type;
@@ -161,15 +161,15 @@ struct NPPort
 
 struct NPFullPrint
 {
-    NPBool pluginPrinted;	// true if plugin handled fullscreen printing
+    NPBool pluginPrinted;   // true if plugin handled fullscreen printing
     NPBool printOne;            // true if plugin should print one copy to default printer
-    void* platformPrint;	// Platform-specific printing info
+    void *platformPrint;    // Platform-specific printing info
 };
 
 struct NPEmbedPrint
 {
     NPWindow window;
-    void* platformPrint;	// Platform-specific printing info
+    void *platformPrint;    // Platform-specific printing info
 };
 
 struct NPPrint
@@ -184,24 +184,24 @@ struct NPPrint
 struct NPSavedData
 {
     int32 len;
-    void* buf;
+    void *buf;
 };
 
 struct NPStream
 {
-    void* pdata;
-    void* ndata;
-    const char* url;
+    void *pdata;
+    void *ndata;
+    const char *url;
     uint32 end;
     uint32 lastmodified;
-    void* notifyData;
+    void *notifyData;
 };
 
 struct NPByteRange
 {
     int32 offset; // negative offset means from the end
     uint32 length;
-    NPByteRange* next;
+    NPByteRange *next;
 };
 
 // Values for mode passed to NPP_New:
@@ -238,7 +238,7 @@ struct NPByteRange
 #define NPRES_USER_BREAK                    2
 
 // Version feature information
-#define NPVERS_HAS_STREAMOUTPUT	            8
+#define NPVERS_HAS_STREAMOUTPUT             8
 #define NPVERS_HAS_NOTIFICATION             9
 #define NPVERS_HAS_LIVECONNECT              9
 #define NPVERS_WIN16_HAS_LIVECONNECT        10
@@ -252,11 +252,11 @@ struct NPByteRange
 #endif
 
 #ifdef QTBROWSER_USE_CFM
- extern void *CFMFunctionPointerForMachOFunctionPointer(void*);
- extern void DisposeCFMFunctionPointer(void *);
- extern void* MachOFunctionPointerForCFMFunctionPointer(void*);
-# define FUNCTION_POINTER(t) void*
-# define MAKE_FUNCTION_POINTER(f) CFMFunctionPointerForMachOFunctionPointer((void*)f)
+extern void *CFMFunctionPointerForMachOFunctionPointer(void *);
+extern void DisposeCFMFunctionPointer(void *);
+extern void *MachOFunctionPointerForCFMFunctionPointer(void *);
+# define FUNCTION_POINTER(t) void *
+# define MAKE_FUNCTION_POINTER(f) CFMFunctionPointerForMachOFunctionPointer((void *)f)
 # define DESTROY_FUNCTION_POINTER(n) DisposeCFMFunctionPointer(n)
 # define FIND_FUNCTION_POINTER(t, n) (*(t)MachOFunctionPointerForCFMFunctionPointer(n))
 #else
@@ -267,17 +267,17 @@ struct NPByteRange
 #endif
 
 // Plugin function prototypes
-typedef NPError	(*NPP_NewFP)(NPMIMEType pluginType, NPP instance, uint16 mode, int16 argc, char* argn[], char* argv[], NPSavedData* saved);
-typedef NPError	(*NPP_DestroyFP)(NPP instance, NPSavedData** save);
-typedef NPError	(*NPP_SetWindowFP)(NPP instance, NPWindow* window);
-typedef NPError	(*NPP_NewStreamFP)(NPP instance, NPMIMEType type, NPStream* stream, NPBool seekable, uint16* stype);
-typedef NPError	(*NPP_DestroyStreamFP)(NPP instance, NPStream* stream, NPReason reason);
-typedef void (*NPP_StreamAsFileFP)(NPP instance, NPStream* stream, const char* fname);
-typedef int32 (*NPP_WriteReadyFP)(NPP instance, NPStream* stream);
-typedef int32 (*NPP_WriteFP)(NPP instance, NPStream* stream, int32 offset, int32 len, void* buffer);
-typedef void (*NPP_PrintFP)(NPP instance, NPPrint* platformPrint);
-typedef int16 (*NPP_HandleEventFP)(NPP instance, NPEvent* event);
-typedef void (*NPP_URLNotifyFP)(NPP instance, const char* url, NPReason reason, void* notifyData);
+typedef NPError (*NPP_NewFP)(NPMIMEType pluginType, NPP instance, uint16 mode, int16 argc, char *argn[], char *argv[], NPSavedData *saved);
+typedef NPError (*NPP_DestroyFP)(NPP instance, NPSavedData * *save);
+typedef NPError (*NPP_SetWindowFP)(NPP instance, NPWindow *window);
+typedef NPError (*NPP_NewStreamFP)(NPP instance, NPMIMEType type, NPStream *stream, NPBool seekable, uint16 *stype);
+typedef NPError (*NPP_DestroyStreamFP)(NPP instance, NPStream *stream, NPReason reason);
+typedef void (*NPP_StreamAsFileFP)(NPP instance, NPStream *stream, const char *fname);
+typedef int32 (*NPP_WriteReadyFP)(NPP instance, NPStream *stream);
+typedef int32 (*NPP_WriteFP)(NPP instance, NPStream *stream, int32 offset, int32 len, void *buffer);
+typedef void (*NPP_PrintFP)(NPP instance, NPPrint *platformPrint);
+typedef int16 (*NPP_HandleEventFP)(NPP instance, NPEvent *event);
+typedef void (*NPP_URLNotifyFP)(NPP instance, const char *url, NPReason reason, void *notifyData);
 typedef NPError (*NPP_GetValueFP)(NPP instance, NPPVariable variable, void *value);
 typedef NPError (*NPP_SetValueFP)(NPP instance, NPPVariable variable, void *value);
 
@@ -299,7 +299,7 @@ struct NPPluginFuncs {
     JRIGlobalRef javaClass;
     FUNCTION_POINTER(NPP_GetValueFP) getvalue;
     FUNCTION_POINTER(NPP_SetValueFP) setvalue;
-} ;
+};
 
 
 // forward declarations
@@ -325,8 +325,8 @@ typedef NPObject *(*NPAllocateFP)(NPP npp, NPClass *aClass);
 typedef void (*NPDeallocateFP)(NPObject *npobj);
 typedef void (*NPInvalidateFP)(NPObject *npobj);
 typedef bool (*NPHasMethodFP)(NPObject *npobj, NPIdentifier name);
-typedef bool (*NPInvokeFP)(NPObject *npobj, NPIdentifier name,const NPVariant *args, uint32 argCount,NPVariant *result);
-typedef bool (*NPInvokeDefaultFP)(NPObject *npobj,const NPVariant *args,uint32 argCount,NPVariant *result);
+typedef bool (*NPInvokeFP)(NPObject *npobj, NPIdentifier name, const NPVariant *args, uint32 argCount, NPVariant *result);
+typedef bool (*NPInvokeDefaultFP)(NPObject *npobj, const NPVariant *args, uint32 argCount, NPVariant *result);
 typedef bool (*NPHasPropertyFP)(NPObject *npobj, NPIdentifier name);
 typedef bool (*NPGetPropertyFP)(NPObject *npobj, NPIdentifier name, NPVariant *result);
 typedef bool (*NPSetPropertyFP)(NPObject *npobj, NPIdentifier name, const NPVariant *value);
@@ -388,7 +388,8 @@ struct NPVariant {
 
     NPVariant()
         : type(Null)
-    {}
+    {
+    }
 
     // Qt specific conversion routines
     // (no c'tor as the NPP instance is required)
@@ -403,38 +404,38 @@ extern "C" {
 #endif
 
 // Browser function prototypes
-typedef NPError	(*NPN_GetURLFP)(NPP instance, const char* url, const char* window);
-typedef NPError (*NPN_PostURLFP)(NPP instance, const char* url, const char* window, uint32 len, const char* buf, NPBool file);
-typedef NPError	(*NPN_RequestReadFP)(NPStream* stream, NPByteRange* rangeList);
-typedef NPError	(*NPN_NewStreamFP)(NPP instance, NPMIMEType type, const char* window, NPStream** stream);
-typedef int32 (*NPN_WriteFP)(NPP instance, NPStream* stream, int32 len, void* buffer);
-typedef NPError (*NPN_DestroyStreamFP)(NPP instance, NPStream* stream, NPReason reason);
-typedef void (*NPN_StatusFP)(NPP instance, const char* message);
-typedef const char* (*NPN_UserAgentFP)(NPP instance);
-typedef void* (*NPN_MemAllocFP)(uint32 size);
-typedef void (*NPN_MemFreeFP)(void* ptr);
+typedef NPError (*NPN_GetURLFP)(NPP instance, const char *url, const char *window);
+typedef NPError (*NPN_PostURLFP)(NPP instance, const char *url, const char *window, uint32 len, const char *buf, NPBool file);
+typedef NPError (*NPN_RequestReadFP)(NPStream *stream, NPByteRange *rangeList);
+typedef NPError (*NPN_NewStreamFP)(NPP instance, NPMIMEType type, const char *window, NPStream * *stream);
+typedef int32 (*NPN_WriteFP)(NPP instance, NPStream *stream, int32 len, void *buffer);
+typedef NPError (*NPN_DestroyStreamFP)(NPP instance, NPStream *stream, NPReason reason);
+typedef void (*NPN_StatusFP)(NPP instance, const char *message);
+typedef const char * (*NPN_UserAgentFP)(NPP instance);
+typedef void * (*NPN_MemAllocFP)(uint32 size);
+typedef void (*NPN_MemFreeFP)(void *ptr);
 typedef uint32 (*NPN_MemFlushFP)(uint32 size);
 typedef void (*NPN_ReloadPluginsFP)(NPBool reloadPages);
-typedef JRIEnv* (*NPN_GetJavaEnvFP)(void);
+typedef JRIEnv * (*NPN_GetJavaEnvFP)(void);
 typedef jref (*NPN_GetJavaPeerFP)(NPP instance);
-typedef NPError	(*NPN_GetURLNotifyFP)(NPP instance, const char* url, const char* window, void* notifyData);
-typedef NPError (*NPN_PostURLNotifyFP)(NPP instance, const char* url, const char* window, uint32 len, const char* buf, NPBool file, void* notifyData);
-typedef NPError	(*NPN_GetValueFP)(NPP instance, NPNVariable variable, void *ret_value);
+typedef NPError (*NPN_GetURLNotifyFP)(NPP instance, const char *url, const char *window, void *notifyData);
+typedef NPError (*NPN_PostURLNotifyFP)(NPP instance, const char *url, const char *window, uint32 len, const char *buf, NPBool file, void *notifyData);
+typedef NPError (*NPN_GetValueFP)(NPP instance, NPNVariable variable, void *ret_value);
 typedef NPError (*NPN_SetValueFP)(NPP instance, NPPVariable variable, void *ret_value);
 typedef void (*NPN_InvalidateRectFP)(NPP instance, NPRect *rect);
 typedef void (*NPN_InvalidateRegionFP)(NPP instance, NPRegion *region);
 typedef void (*NPN_ForceRedrawFP)(NPP instance);
-typedef NPIdentifier (*NPN_GetStringIdentifierFP)(const char* name);
-typedef void (*NPN_GetStringIdentifiersFP)(const char** names, int32 nameCount, NPIdentifier* identifiers);
+typedef NPIdentifier (*NPN_GetStringIdentifierFP)(const char *name);
+typedef void (*NPN_GetStringIdentifiersFP)(const char * *names, int32 nameCount, NPIdentifier *identifiers);
 typedef NPIdentifier (*NPN_GetIntIdentifierFP)(int32 intid);
 typedef bool (*NPN_IdentifierIsStringFP)(NPIdentifier identifier);
-typedef char* (*NPN_UTF8FromIdentifierFP)(NPIdentifier identifier);
+typedef char * (*NPN_UTF8FromIdentifierFP)(NPIdentifier identifier);
 typedef int32 (*NPN_IntFromIdentifierFP)(NPIdentifier identifier);
-typedef NPObject* (*NPN_CreateObjectFP)(NPP npp, NPClass *aClass);
-typedef NPObject* (*NPN_RetainObjectFP)(NPObject *obj);
+typedef NPObject * (*NPN_CreateObjectFP)(NPP npp, NPClass *aClass);
+typedef NPObject * (*NPN_RetainObjectFP)(NPObject *obj);
 typedef void (*NPN_ReleaseObjectFP)(NPObject *obj);
-typedef bool (*NPN_InvokeFP)(NPP npp, NPObject* obj, NPIdentifier methodName, const NPVariant *args, int32 argCount, NPVariant *result);
-typedef bool (*NPN_InvokeDefaultFP)(NPP npp, NPObject* obj, const NPVariant *args, int32 argCount, NPVariant *result);
+typedef bool (*NPN_InvokeFP)(NPP npp, NPObject *obj, NPIdentifier methodName, const NPVariant *args, int32 argCount, NPVariant *result);
+typedef bool (*NPN_InvokeDefaultFP)(NPP npp, NPObject *obj, const NPVariant *args, int32 argCount, NPVariant *result);
 typedef bool (*NPN_EvaluateFP)(NPP npp, NPObject *obj, NPString *script, NPVariant *result);
 typedef bool (*NPN_GetPropertyFP)(NPP npp, NPObject *obj, NPIdentifier propertyName, NPVariant *result);
 typedef bool (*NPN_SetPropertyFP)(NPP npp, NPObject *obj, NPIdentifier propertyName, const NPVariant *value);
@@ -445,38 +446,38 @@ typedef void (*NPN_ReleaseVariantValueFP)(NPVariant *variant);
 typedef void (*NPN_SetExceptionFP)(NPObject *obj, const char *message);
 
 // function declarations
-NPError	NPN_GetURL(NPP instance, const char* url, const char* window);
-NPError NPN_PostURL(NPP instance, const char* url, const char* window, uint32 len, const char* buf, NPBool file);
-NPError	NPN_RequestRead(NPStream* stream, NPByteRange* rangeList);
-NPError	NPN_NewStream(NPP instance, NPMIMEType type, const char* window, NPStream** stream);
-int32 NPN_Write(NPP instance, NPStream* stream, int32 len, void* buffer);
-NPError NPN_DestroyStream(NPP instance, NPStream* stream, NPReason reason);
-void NPN_Status(NPP instance, const char* message);
-const char* NPN_UserAgent(NPP instance);
-void* NPN_MemAlloc(uint32 size);
-void NPN_MemFree(void* ptr);
+NPError NPN_GetURL(NPP instance, const char *url, const char *window);
+NPError NPN_PostURL(NPP instance, const char *url, const char *window, uint32 len, const char *buf, NPBool file);
+NPError NPN_RequestRead(NPStream *stream, NPByteRange *rangeList);
+NPError NPN_NewStream(NPP instance, NPMIMEType type, const char *window, NPStream * *stream);
+int32 NPN_Write(NPP instance, NPStream *stream, int32 len, void *buffer);
+NPError NPN_DestroyStream(NPP instance, NPStream *stream, NPReason reason);
+void NPN_Status(NPP instance, const char *message);
+const char *NPN_UserAgent(NPP instance);
+void *NPN_MemAlloc(uint32 size);
+void NPN_MemFree(void *ptr);
 uint32 NPN_MemFlush(uint32 size);
 void NPN_ReloadPlugins(NPBool reloadPages);
-JRIEnv* NPN_GetJavaEnv(void);
+JRIEnv *NPN_GetJavaEnv(void);
 jref NPN_GetJavaPeer(NPP instance);
-NPError	NPN_GetURLNotify(NPP instance, const char* url, const char* window, void* notifyData);
-NPError NPN_PostURLNotify(NPP instance, const char* url, const char* window, uint32 len, const char* buf, NPBool file, void* notifyData);
-NPError	NPN_GetValue(NPP instance, NPNVariable variable, void *ret_value);
+NPError NPN_GetURLNotify(NPP instance, const char *url, const char *window, void *notifyData);
+NPError NPN_PostURLNotify(NPP instance, const char *url, const char *window, uint32 len, const char *buf, NPBool file, void *notifyData);
+NPError NPN_GetValue(NPP instance, NPNVariable variable, void *ret_value);
 NPError NPN_SetValue(NPP instance, NPPVariable variable, void *ret_value);
 void NPN_InvalidateRect(NPP instance, NPRect *rect);
 void NPN_InvalidateRegion(NPP instance, NPRegion *region);
 void NPN_ForceRedraw(NPP instance);
-NPIdentifier NPN_GetStringIdentifier(const char* name);
-void NPN_GetStringIdentifiers(const char** names, int32 nameCount, NPIdentifier* identifiers);
+NPIdentifier NPN_GetStringIdentifier(const char *name);
+void NPN_GetStringIdentifiers(const char * *names, int32 nameCount, NPIdentifier *identifiers);
 NPIdentifier NPN_GetIntIdentifier(int32 intid);
 bool NPN_IdentifierIsString(NPIdentifier identifier);
-char* NPN_UTF8FromIdentifier(NPIdentifier identifier);
+char *NPN_UTF8FromIdentifier(NPIdentifier identifier);
 int32 NPN_IntFromIdentifier(NPIdentifier identifier);
-NPObject* NPN_CreateObject(NPP npp, NPClass *aClass);
-NPObject* NPN_RetainObject(NPObject *obj);
+NPObject *NPN_CreateObject(NPP npp, NPClass *aClass);
+NPObject *NPN_RetainObject(NPObject *obj);
 void NPN_ReleaseObject(NPObject *obj);
-bool NPN_Invoke(NPP npp, NPObject* obj, NPIdentifier methodName, const NPVariant *args, int32 argCount, NPVariant *result);
-bool NPN_InvokeDefault(NPP npp, NPObject* obj, const NPVariant *args, int32 argCount, NPVariant *result);
+bool NPN_Invoke(NPP npp, NPObject *obj, NPIdentifier methodName, const NPVariant *args, int32 argCount, NPVariant *result);
+bool NPN_InvokeDefault(NPP npp, NPObject *obj, const NPVariant *args, int32 argCount, NPVariant *result);
 bool NPN_Evaluate(NPP npp, NPObject *obj, NPString *script, NPVariant *result);
 bool NPN_GetProperty(NPP npp, NPObject *obj, NPIdentifier propertyName, NPVariant *result);
 bool NPN_SetProperty(NPP npp, NPObject *obj, NPIdentifier propertyName, const NPVariant *value);

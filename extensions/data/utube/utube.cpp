@@ -21,7 +21,7 @@
 
 #include <QTimer>
 
-UtubeData::UtubeData(QObject * object)
+UtubeData::UtubeData(QObject *object)
 {
     init();
     mRssTimer = new QTimer(this);
@@ -29,27 +29,27 @@ UtubeData::UtubeData(QObject * object)
     //mRssTimer->start( 1000*60*60 );
 }
 
-void  UtubeData::init()
+void UtubeData::init()
 {
     mHttp = new QHttp(this);
     connect(mHttp, SIGNAL(readyRead(const QHttpResponseHeader &)),
-            this, SLOT(readData(const QHttpResponseHeader &)));
+     this, SLOT(readData(const QHttpResponseHeader &)));
 
     connect(mHttp, SIGNAL(requestFinished(int, bool)),
-            this, SLOT(finished(int, bool)));
+     this, SLOT(finished(int, bool)));
 
     if (PlexyDesk::Config::getInstance()->m_proxyOn) {
         QNetworkProxy NtProxy(PlexyDesk::Config::getInstance()->proxyType,
-                              PlexyDesk::Config::getInstance()->proxyURL,
-                              PlexyDesk::Config::getInstance()->m_proxyPort,
-                              PlexyDesk::Config::getInstance()->proxyUser,
-                              PlexyDesk::Config::getInstance()->proxyPasswd
-                             );
+         PlexyDesk::Config::getInstance()->proxyURL,
+         PlexyDesk::Config::getInstance()->m_proxyPort,
+         PlexyDesk::Config::getInstance()->proxyUser,
+         PlexyDesk::Config::getInstance()->proxyPasswd
+         );
 
         mHttp->setProxy(NtProxy);
         QNetworkProxy::setApplicationProxy(NtProxy);
         qDebug() << "UtubeData::init()" << "Proxy state"
-        << PlexyDesk::Config::getInstance()->m_proxyOn << endl;
+                 << PlexyDesk::Config::getInstance()->m_proxyOn << endl;
     }
 
     fetch();
@@ -71,8 +71,8 @@ void UtubeData::fetch()
 
     mHttp->setHost("gdata.youtube.com");
     mConnectionId = mHttp->get(
-                        QString("/feeds/api/videos?vq=%1&max-results=20&orderby=viewCount&alt=rss").
-                        arg("kbfx"));
+     QString("/feeds/api/videos?vq=%1&max-results=20&orderby=viewCount&alt=rss").
+         arg("kbfx"));
 
 }
 
@@ -133,7 +133,7 @@ void UtubeData::parseXml()
                 QVariant rssitem(mEntry);
 
                 //mRssEntries.append(rssitem);
-                dataItem  = rssitem;
+                dataItem = rssitem;
                 emit dataReady();
 
                 //mTitleString.clear();
@@ -154,7 +154,7 @@ void UtubeData::parseXml()
     }
 
     if (mXml.error() && mXml.error() !=
-            QXmlStreamReader::PrematureEndOfDocumentError) {
+     QXmlStreamReader::PrematureEndOfDocumentError) {
         qDebug() << "UTUBE: XML ERROR:" << mXml.lineNumber() << ": " <<
         mXml.errorString();
         mHttp->abort();

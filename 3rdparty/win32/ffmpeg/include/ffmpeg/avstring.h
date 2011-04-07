@@ -32,7 +32,7 @@
  * @param ptr updated after the prefix in str in there is a match
  * @return non-zero if the prefix matches, zero otherwise
  */
-int av_strstart(const char *str, const char *pfx, const char **ptr);
+int av_strstart(const char *str, const char *pfx, const char * *ptr);
 
 /**
  * Return non-zero if pfx is a prefix of str independent of case. If
@@ -44,7 +44,7 @@ int av_strstart(const char *str, const char *pfx, const char **ptr);
  * @param ptr updated after the prefix in str in there is a match
  * @return non-zero if the prefix matches, zero otherwise
  */
-int av_stristart(const char *str, const char *pfx, const char **ptr);
+int av_stristart(const char *str, const char *pfx, const char * *ptr);
 
 /**
  * Copy the string src to dst, but no more than size - 1 bytes, and

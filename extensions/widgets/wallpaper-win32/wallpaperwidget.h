@@ -25,15 +25,15 @@
 #include <desktopwidget.h>
 #include <datainterface.h>
 
-class VISIBLE_SYM WallpaperWidget: public PlexyDesk::DesktopWidget
+class VISIBLE_SYM WallpaperWidget : public PlexyDesk::DesktopWidget
 {
     Q_OBJECT
 public:
     WallpaperWidget(const QRectF &rect, QWidget *embeddedWidget = 0);
     virtual ~WallpaperWidget();
-    void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem * e, QWidget *);
+    void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *e, QWidget *);
     void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
-    void paintExtBackFace(QPainter *p, const QStyleOptionGraphicsItem * e, QWidget *);
+    void paintExtBackFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *);
     QRectF boundingRect() const;
 };
 

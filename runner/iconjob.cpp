@@ -7,20 +7,22 @@ namespace PlexyDesk
 class IconJob::Private
 {
 public:
-    Private() {}
-    ~Private() {}
+    Private() {
+    }
+    ~Private() {
+    }
     QStringList iconpaths;
     QString name;
     QString size;
     QPixmap pixmap;
 };
 
-IconJob::IconJob(QObject * parent) : PendingJob(parent), d(new Private)
+IconJob::IconJob(QObject *parent) : PendingJob(parent), d(new Private)
 {
     /*Order is according to the freedesktop icon theme sepc ,
             if adding more paths append to the end. do not alter
                  this layout.
-    */
+     */
     d->iconpaths << QDir::homePath() + "/.icons/" + Config::getInstance()->iconTheme + "/"
     ;
     QStringList xdg = QString(qgetenv("XDG_DATA_DIRS")).split(':');
@@ -28,8 +30,8 @@ IconJob::IconJob(QObject * parent) : PendingJob(parent), d(new Private)
         d->iconpaths << path + "/icons/" + Config::getInstance()->iconTheme + "/";
     }
     d->iconpaths << "/usr/share/pixmaps/"
-    << "/usr/share/app-install/icons/";
-    connect(this, SIGNAL(newJob()), this , SLOT(handleJob()), Qt::DirectConnection);
+                 << "/usr/share/app-install/icons/";
+    connect(this, SIGNAL(newJob()), this, SLOT(handleJob()), Qt::DirectConnection);
 }
 
 IconJob::~IconJob()
@@ -42,7 +44,7 @@ QPixmap IconJob::Icon() const
     return d->pixmap;
 }
 
-void IconJob::requestIcon(const QString& name, const QString& size)
+void IconJob::requestIcon(const QString &name, const QString &size)
 {
     d->size = size;
     d->name = name;
@@ -73,7 +75,7 @@ void IconJob::handleJob()
 }
 
 
-QStringList IconJob::getSubDir(const QString& path)
+QStringList IconJob::getSubDir(const QString &path)
 {
     QStringList rpaths;
     QStringList paths;
@@ -82,7 +84,7 @@ QStringList IconJob::getSubDir(const QString& path)
         QSettings indexfile(path + "/" + "index.theme", QSettings::IniFormat);
         indexfile.beginGroup("Icon Theme");
         rpaths =
-            indexfile.value("Directories", "").toStringList();
+             indexfile.value("Directories", "").toStringList();
         indexfile.endGroup();
     }
     foreach(QString _rpath, rpaths) {

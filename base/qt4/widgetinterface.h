@@ -28,9 +28,12 @@ class VISIBLE_SYM WidgetInterface : public AbstractPluginInterface
 {
     Q_OBJECT
 public:
-    void init() {}
-    WidgetInterface() {}
-    ~WidgetInterface() {}
+    void init() {
+    }
+    WidgetInterface() {
+    }
+    ~WidgetInterface() {
+    }
 };
 } // namespace PlexyDesk
 

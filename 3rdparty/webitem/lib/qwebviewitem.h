@@ -46,7 +46,7 @@ class QWebPage;
 class QWebViewItemPrivate;
 class QWebNetworkRequest;
 
-class QWEBKIT_EXPORT QWebViewItem : public QObject,  public QGraphicsRectItem
+class QWEBKIT_EXPORT QWebViewItem : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
     Q_PROPERTY(QString title READ title)
@@ -55,8 +55,8 @@ class QWEBKIT_EXPORT QWebViewItem : public QObject,  public QGraphicsRectItem
     Q_PROPERTY(QString selectedText READ selectedText)
     Q_PROPERTY(bool modified READ isModified)
     Q_PROPERTY(qreal textSizeMultiplier READ textSizeMultiplier WRITE setTextSizeMultiplier)
-public:
-    explicit QWebViewItem(const QRectF &rect, QGraphicsItem * parent = 0);
+public :
+        explicit QWebViewItem(const QRectF &rect, QGraphicsItem *parent = 0);
     virtual ~QWebViewItem();
 
     QWebPage *page() const;
@@ -65,8 +65,8 @@ public:
     void load(const QUrl &url);
 
     void load(const QNetworkRequest &request,
-              QNetworkAccessManager::Operation operation = QNetworkAccessManager::GetOperation,
-              const QByteArray &body = QByteArray());
+     QNetworkAccessManager::Operation operation = QNetworkAccessManager::GetOperation,
+     const QByteArray &body = QByteArray());
     void setHtml(const QString &html, const QUrl &baseUrl = QUrl());
     void setContent(const QByteArray &data, const QString &mimeType = QString(), const QUrl &baseUrl = QUrl());
 
@@ -82,14 +82,14 @@ public:
 
     QAction *pageAction(QWebPage::WebAction action) const;
     void triggerPageAction(QWebPage::WebAction action, bool checked = false);
-    virtual QRectF boundingRect() const ;
+    virtual QRectF boundingRect() const;
     bool isModified() const;
     QVariant inputMethodQuery(Qt::InputMethodQuery property) const;
     QSize sizeHint() const;
     void setTextSizeMultiplier(qreal factor);
     qreal textSizeMultiplier() const;
     bool findText(const QString &subString, QWebPage::FindFlags options = 0);
-    QPixmap getPreview(bool fullpage=false);
+    QPixmap getPreview(bool fullpage = false);
 
 public Q_SLOTS:
     void stop();
@@ -97,19 +97,19 @@ public Q_SLOTS:
     void forward();
     void reload();
     void loaded(bool);
-    void repaintDirty(const QRect&);
-    void scrollReqest(int, int, const QRect&);
+    void repaintDirty(const QRect &);
+    void scrollReqest(int, int, const QRect &);
     void print(QPrinter *printer) const;
     void changeOpacity(int);
-    void startTimers(); 
+    void startTimers();
     void fade();
 
 Q_SIGNALS:
     void loadStarted();
     void loadProgress(int progress);
     void loadFinished(bool);
-    void titleChanged(const QString& title);
-    void statusBarMessage(const QString& text);
+    void titleChanged(const QString &title);
+    void statusBarMessage(const QString &text);
     void linkClicked(const QUrl &url);
     void selectionChanged();
     void iconChanged();
@@ -118,25 +118,25 @@ Q_SIGNALS:
 
 protected:
     void resizeEvent(QResizeEvent *e);
-    void paint ( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 ); 
-    
+    void paint ( QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0 );
+
     virtual QWebViewItem *createWindow(QWebPage::WebWindowType type);
-    virtual void changeEvent(QEvent*);
-    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent*);
-    virtual void mousePressEvent(QGraphicsSceneMouseEvent*);
-    virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent*);
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent*);
-    virtual void contextMenuEvent(QGraphicsSceneContextMenuEvent*);
-    virtual void wheelEvent(QGraphicsSceneWheelEvent*);
-    virtual void keyPressEvent(QKeyEvent*);
-    virtual void keyReleaseEvent(QKeyEvent*);
+    virtual void changeEvent(QEvent *);
+    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *);
+    virtual void mousePressEvent(QGraphicsSceneMouseEvent *);
+    virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *);
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *);
+    virtual void contextMenuEvent(QGraphicsSceneContextMenuEvent *);
+    virtual void wheelEvent(QGraphicsSceneWheelEvent *);
+    virtual void keyPressEvent(QKeyEvent *);
+    virtual void keyReleaseEvent(QKeyEvent *);
     virtual void dragEnterEvent(QDragEnterEvent *);
     virtual void dragLeaveEvent(QDragLeaveEvent *);
     virtual void dragMoveEvent(QDragMoveEvent *);
     virtual void dropEvent(QDropEvent *);
-    virtual void focusInEvent(QFocusEvent*);
-    virtual void focusOutEvent(QFocusEvent*);
-    virtual void inputMethodEvent(QInputMethodEvent*);
+    virtual void focusInEvent(QFocusEvent *);
+    virtual void focusOutEvent(QFocusEvent *);
+    virtual void inputMethodEvent(QInputMethodEvent *);
     virtual bool focusNextPrevChild(bool next);
 private:
     friend class QWebPage;

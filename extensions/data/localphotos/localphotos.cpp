@@ -21,7 +21,7 @@
 #include <plexyconfig.h>
 
 
-LPhotoData::LPhotoData(QObject * object)
+LPhotoData::LPhotoData(QObject *object)
 {
     m_dirpath = QDir::homePath();
     slideCount = 0;
@@ -31,7 +31,7 @@ LPhotoData::LPhotoData(QObject * object)
     init();
 }
 
-void  LPhotoData::init()
+void LPhotoData::init()
 {
     if (imageTimer->isActive())
         imageTimer->stop();
@@ -73,7 +73,7 @@ void LPhotoData::nextImage()
     }
 }
 
-void LPhotoData::pushData(QVariant& str)
+void LPhotoData::pushData(QVariant &str)
 {
     qDebug() << "pushData: " << str.toString() << endl;
     m_dirpath = str.toString();

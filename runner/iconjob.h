@@ -11,10 +11,10 @@ class VISIBLE_SYM IconJob : public PendingJob
 {
     Q_OBJECT
 public:
-    IconJob(QObject * parent);
+    IconJob(QObject *parent);
     virtual ~IconJob();
-    void requestIcon(const QString& name, const QString& size);
-    QStringList getSubDir(const QString& path);
+    void requestIcon(const QString &name, const QString &size);
+    QStringList getSubDir(const QString &path);
     QPixmap Icon() const;
 Q_SIGNALS:
     void newJob();
@@ -22,7 +22,7 @@ public Q_SLOTS:
     void handleJob();
 private:
     class Private;
-    Private * const d;
+    Private *const d;
     friend class IconProvider;
 };
 

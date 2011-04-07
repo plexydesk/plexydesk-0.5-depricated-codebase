@@ -21,7 +21,7 @@
 #include <QtGui>
 
 WallpaperWidget::WallpaperWidget(const QRectF &rect, QWidget *widget)
-        : PlexyDesk::DesktopWidget(rect, widget)
+    : PlexyDesk::DesktopWidget(rect, widget)
 {
 }
 
@@ -30,11 +30,11 @@ WallpaperWidget::~WallpaperWidget()
 
 }
 
-void WallpaperWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
+void WallpaperWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *widget)
 {
 }
 
-void WallpaperWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget * widget)
+void WallpaperWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *widget)
 {
     p->setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing | QPainter::HighQualityAntialiasing);
 
@@ -43,7 +43,7 @@ void WallpaperWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsIt
     p->drawText(QRect(8, 5, 64, 64), Qt::AlignCenter, "Wallpaper");
 }
 
-void WallpaperWidget::paintExtBackFace(QPainter *p, const QStyleOptionGraphicsItem * e, QWidget *widget)
+void WallpaperWidget::paintExtBackFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *widget)
 {
 
 }

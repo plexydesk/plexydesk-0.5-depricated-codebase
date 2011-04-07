@@ -23,15 +23,15 @@
 
 #include <QtPlugin>
 
-IRCInterface::IRCInterface(QObject * object)
+IRCInterface::IRCInterface(QObject *object)
 {
 }
 
 PlexyDesk::DataPlugin *IRCInterface::instance()
 {
     /* this is the plugin we are returning since plexy core
-    or other plugins will expect this pointer
-    */
+       or other plugins will expect this pointer
+     */
     return new IRCData();
 }
 

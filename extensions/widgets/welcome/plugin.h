@@ -32,14 +32,14 @@ class VISIBLE_SYM Welcome : public PlexyDesk::WidgetPlugin
     Q_OBJECT
 
 public:
-    Welcome(QObject * object = 0);
+    Welcome(QObject *object = 0);
     virtual ~Welcome();
-    virtual QGraphicsItem * item();
+    virtual QGraphicsItem *item();
 private:
-    WellcomeItem * icon1;
-    WellcomeItem * icon2;
-    WellcomeItem * icon3;
-    Frame * frm;
+    WellcomeItem *icon1;
+    WellcomeItem *icon2;
+    WellcomeItem *icon3;
+    Frame *frm;
 };
 
 

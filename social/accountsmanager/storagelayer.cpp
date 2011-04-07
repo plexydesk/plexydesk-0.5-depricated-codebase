@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- *Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ **Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 #include "storagelayer.h"
@@ -32,7 +32,7 @@ SocialStorageLayer::SocialStorageLayer(QObject *parent) : StorageLayerInterface(
 
 }
 
-bool  SocialStorageLayer::writeAccount(const QString& id, const QVariantMap& data)
+bool SocialStorageLayer::writeAccount(const QString &id, const QVariantMap &data)
 {
     //extract properties
     QString serviceName, userName, displayName, password;
@@ -68,7 +68,7 @@ bool  SocialStorageLayer::writeAccount(const QString& id, const QVariantMap& dat
 
     QSqlQuery query(QSqlDatabase::database());
     return query.exec("INSERT INTO Accounts VALUES('" + id + "', '" + serviceName + "', '" +userName + "', '"
-                      + displayName + "', " + QString(valid?"1":"0") + ", " + QString(enabled?"1":"0") + ", '" + password + "')");
+         + displayName + "', " + QString(valid ? "1" : "0") + ", " + QString(enabled ? "1" : "0") + ", '" + password + "')");
 }
 
 void SocialStorageLayer::setDatabasePath(const QString &path)
@@ -84,9 +84,9 @@ void SocialStorageLayer::createTables()
 {
     QSqlQuery query(QSqlDatabase::database());
     qDebug() << "statuse of create tables:" << query.exec("CREATE TABLE Accounts(id varchar(100) PRIMARY KEY, "
-            "socialservice varchar(50), username varchar(30), "
-            "displayname varchar(50), "
-            "valid boolean, enabled boolean, password varchar(50))");
+         "socialservice varchar(50), username varchar(30), "
+         "displayname varchar(50), "
+         "valid boolean, enabled boolean, password varchar(50))");
     //TODO: extend to accommodate parameter values
 }
 
@@ -100,7 +100,7 @@ void SocialStorageLayer::open()
     if (!databaseConnection.open()) {
         qDebug() << "Unable to establish db connection";
         emit opened(false);
-        return ;
+        return;
     }
 
     createTables(); //Create the master table
@@ -127,7 +127,7 @@ QStringList SocialStorageLayer::listAccounts()
     return listOfAccounts;
 }
 
-QVariantMap SocialStorageLayer::readAccount(const QString& id)
+QVariantMap SocialStorageLayer::readAccount(const QString &id)
 {
     QVariantMap accountData;
     QSqlQuery query(QSqlDatabase::database());
@@ -162,9 +162,9 @@ bool SocialStorageLayer::updateAccount(const QString &id, const QString &propert
     else if (propertyName == "DISPLAY_NAME")
         queryStr = "UPDATE Accounts SET displayname='" + value.toString() + "' WHERE id='" + id + "'";
     else if (propertyName == "VALID")
-        queryStr = "UPDATE Accounts SET valid='" + QString(value.toBool()?"1":"0") + "' WHERE id='" + id + "'";
+        queryStr = "UPDATE Accounts SET valid='" + QString(value.toBool() ? "1" : "0") + "' WHERE id='" + id + "'";
     else if (propertyName == "ENABLED")
-        queryStr = "UPDATE Accounts SET enabled='" + QString(value.toBool()?"1":"0") + "' WHERE id='" + id + "'";
+        queryStr = "UPDATE Accounts SET enabled='" + QString(value.toBool() ? "1" : "0") + "' WHERE id='" + id + "'";
     else
         return false;
 

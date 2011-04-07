@@ -31,19 +31,19 @@
 #include <QXmlQuery>
 #include <QXmlSerializer>
 
-namespace PlexyDesk{
+namespace PlexyDesk {
 
-TwitWidget::TwitWidget(const QRectF &rect, QWidget *widget):
-        PlexyDesk::ListView(rect, widget)
+TwitWidget::TwitWidget(const QRectF &rect, QWidget *widget) :
+    PlexyDesk::ListView(rect, widget)
 {
-    utubeEngine = (PlexyDesk::DataPlugin*)
-                  PlexyDesk::PluginLoader::getInstance()->instance("restengine");
+    utubeEngine = (PlexyDesk::DataPlugin *)
+         PlexyDesk::PluginLoader::getInstance()->instance("restengine");
 
     QString account;
     QString pass;
     readConfig(account, pass);
     mMap.insert("url", QUrl("http://identi.ca/api/statuses/user_timeline.xml"));
-    mMap.insert("type", 1);//post
+    mMap.insert("type", 1); //post
     mMap.insert("user", account);
     mMap.insert("pass", pass);
     QVariant arg = QVariant(mMap);
@@ -57,7 +57,8 @@ TwitWidget::TwitWidget(const QRectF &rect, QWidget *widget):
 }
 
 TwitWidget::~TwitWidget()
-{}
+{
+}
 
 void TwitWidget::onDataReady()
 {
@@ -88,15 +89,15 @@ void TwitWidget::onDataReady()
         if (title.isEmpty()) {
             continue;
         }
-        ListItem * item = new ListItem();
+        ListItem *item = new ListItem();
         item->desc = title;
         insert(item);
         Q_EMIT dataChanged();
     }
 }
 
-void TwitWidget::readConfig(QString& user,
-        QString& pass)
+void TwitWidget::readConfig(QString &user,
+     QString &pass)
 {
     Config::getInstance()->beginGroup("twitter");
     user = Config::getInstance()->value("account").toString();
@@ -104,7 +105,7 @@ void TwitWidget::readConfig(QString& user,
     Config::getInstance()->endGroup();
 }
 
-void TwitWidget::data(QVariantMap& data)
+void TwitWidget::data(QVariantMap &data)
 {
     qDebug() << Q_FUNC_INFO << data["data"];
 
@@ -129,6 +130,6 @@ void TwitWidget::data(QVariantMap& data)
         insert(item);
 
         emit dataChanged();
-        */
+     */
 }
 }

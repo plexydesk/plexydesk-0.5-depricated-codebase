@@ -30,14 +30,14 @@ class VISIBLE_SYM PresenceData : public PlexyDesk::DataPlugin
     Q_OBJECT
 
 public:
-    PresenceData(QObject * object = 0);
+    PresenceData(QObject *object = 0);
     virtual ~PresenceData();
 
     void init();
-    void pushData(QVariant&);
+    void pushData(QVariant &);
 
 signals:
-    void data(QVariant&);
+    void data(QVariant &);
 
 private slots:
     void onAccountReady(Telepathy::Client::PendingOperation *operation);
@@ -47,7 +47,7 @@ private slots:
 
 private:
     class PresenceDataPrivate;
-    PresenceDataPrivate * const d;
+    PresenceDataPrivate *const d;
 };
 
 #endif //PRESENCE_H_

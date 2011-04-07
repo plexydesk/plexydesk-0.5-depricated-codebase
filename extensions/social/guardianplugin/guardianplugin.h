@@ -47,7 +47,7 @@ private:
     QString checkPictureAvailability(const QString &url);
     static const QString cachePath;
 public:
-    GuardianPlugin(QObject *parent=0);
+    GuardianPlugin(QObject *parent = 0);
 
 public slots:
     QVariantMap getnews(QVariantMap args);

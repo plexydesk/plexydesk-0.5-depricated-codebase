@@ -26,8 +26,8 @@
 namespace PlexyDesk
 {
 
-CpuWidget::CpuWidget(const QRectF &rect, QWidget *widget):
-        DesktopWidget(rect, widget)
+CpuWidget::CpuWidget(const QRectF &rect, QWidget *widget) :
+    DesktopWidget(rect, widget)
 {
     shade == 0;
     getBaseData();
@@ -39,7 +39,7 @@ CpuWidget::CpuWidget(const QRectF &rect, QWidget *widget):
 
 void CpuWidget::setPath(QString str)
 {
-    prefix  = str + "/";
+    prefix = str + "/";
 }
 
 void
@@ -74,10 +74,10 @@ CpuWidget::drawMeter()
 
 
 void
-CpuWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget *)
+CpuWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *)
 {
 
-    QRectF r  = e->exposedRect;
+    QRectF r = e->exposedRect;
     p->setOpacity(0.8);
     p->setCompositionMode(QPainter::CompositionMode_Source);
     p->fillRect(rect(), Qt::transparent);
@@ -98,23 +98,23 @@ CpuWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidge
     p->save();
     p->setRenderHint(QPainter::SmoothPixmapTransform);
     p->translate(_cpu_bg.width() / 2, _cpu_bg.width() / 2);
-    p->rotate(230 + (2.6*percen));//130 230
+    p->rotate(230 + (2.6*percen)); //130 230
     p->drawPixmap(QRect
-                  (-(ceil(_meter_hand.width() / 2)),
-                   -(_meter_hand.height() - 15), _meter_hand.width(),
-                   _meter_hand.height()), _meter_hand);
+             (-(ceil(_meter_hand.width() / 2)),
+             -(_meter_hand.height() - 15), _meter_hand.width(),
+             _meter_hand.height()), _meter_hand);
     p->restore();
 
     p->save();
 
     p->translate(_cpu_bg.width() / 2, _cpu_bg.width() / 2);
     p->drawPixmap(QRect
-                  (-(thedot.width() / 2), -(thedot.height() / 2),
-                   thedot.width(), thedot.height()), QPixmap(thedot));
+             (-(thedot.width() / 2), -(thedot.height() / 2),
+             thedot.width(), thedot.height()), QPixmap(thedot));
     p->restore();
 
     p->drawPixmap(QRect(10, 10, gloss.width(), gloss.height()),
-                  QPixmap().fromImage(gloss));
+         QPixmap().fromImage(gloss));
 
     p->save();
 
@@ -124,22 +124,22 @@ CpuWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidge
 
     p->setPen(QColor(16, 90, 147));
     p->setFont(QFont("Bitstream Charter", 12, QFont::Bold));
-    p->drawText(QRect(70, 108, 64, 64), Qt::AlignCenter , QString("%1").arg(percen) + "%");
+    p->drawText(QRect(70, 108, 64, 64), Qt::AlignCenter, QString("%1").arg(percen) + "%");
 
     p->setPen(QColor(255, 255, 255));
     p->setFont(QFont("Bitstream Charter", 10, QFont::Bold));
-    p->drawText(QRect(70, 130, 64, 64), Qt::AlignCenter , "CPU");
+    p->drawText(QRect(70, 130, 64, 64), Qt::AlignCenter, "CPU");
 }
 
 
 void
-CpuWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem * e , QWidget *)
+CpuWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *)
 {
     /*p->setRenderHints(QPainter::SmoothPixmapTransform |QPainter::Antialiasing |QPainter::HighQualityAntialiasing);
 
-    p->setPen(QColor(255,255,255));
-    p->setFont(QFont("Bitstream Charter",15));
-    p->drawText(QRect(8,5,64,64), Qt::AlignCenter ,"Cpu\n"+QString("%1").arg(percen)+"%" );*/
+       p->setPen(QColor(255,255,255));
+       p->setFont(QFont("Bitstream Charter",15));
+       p->drawText(QRect(8,5,64,64), Qt::AlignCenter ,"Cpu\n"+QString("%1").arg(percen)+"%" );*/
 }
 
 void

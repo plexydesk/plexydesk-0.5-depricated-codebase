@@ -12,7 +12,7 @@
    along with this library; see the file COPYING.LIB.  If not, write to
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
-*/
+ */
 
 #include "plexywindow.h"
 #include <QApplication>
@@ -33,12 +33,14 @@ extern "C" {
 class PlexyWindows::Private
 {
 public:
-    Private() {}
-    ~Private() {}
+    Private() {
+    }
+    ~Private() {
+    }
     Damage damage;
     Window window;
     XWindowAttributes attrib;
-    Display * display;
+    Display *display;
     Pixmap pixmap;
     bool isRedirected;
     QPixmap plexypixmap;
@@ -46,8 +48,8 @@ public:
 
 };
 
-PlexyWindows::PlexyWindows(Display* dsp, Window win, XWindowAttributes* attr, QWidget *parent, Qt::WindowFlags f  )
-        :PlexyDesk::DesktopWidget(QRect(0,0,attr->width+40,attr->height+40)), d(new Private)
+PlexyWindows::PlexyWindows(Display *dsp, Window win, XWindowAttributes *attr, QWidget *parent, Qt::WindowFlags f  )
+    : PlexyDesk::DesktopWidget(QRect(0, 0, attr->width+40, attr->height+40)), d(new Private)
 {
     XSelectInput (dsp, win, (PropertyChangeMask | EnterWindowMask | FocusChangeMask));
     XShapeSelectInput (dsp, win, ShapeNotifyMask);
@@ -73,13 +75,13 @@ void PlexyWindows::Mapped (bool override_redirect)
 {
 
 
-        if (d->attrib.map_state == IsViewable || d->attrib.c_class == InputOnly)
+    if (d->attrib.map_state == IsViewable || d->attrib.c_class == InputOnly)
         return;
 
-            d->attrib.map_state = IsViewable;
-            d->attrib.override_redirect = override_redirect;
+    d->attrib.map_state = IsViewable;
+    d->attrib.override_redirect = override_redirect;
 
-            qDebug()<< Q_FUNC_INFO <<endl;
+    qDebug()<< Q_FUNC_INFO <<endl;
 
     bind();
 }
@@ -88,13 +90,13 @@ void PlexyWindows::bind()
 {
     qDebug() <<  Q_FUNC_INFO<<endl;
     RedirectWindow();
-   qDebug() <<  Q_FUNC_INFO<< " Try grabbing pixmap " << d->window << endl;
+    qDebug() <<  Q_FUNC_INFO<< " Try grabbing pixmap " << d->window << endl;
     if (!d->pixmap) {
         XGrabServer(d->display);
-            qDebug() <<  Q_FUNC_INFO<< "Grabbing Xserver " << endl;
+        qDebug() <<  Q_FUNC_INFO<< "Grabbing Xserver " << endl;
         XWindowAttributes attr;
         XGetWindowAttributes(d->display, d->window, &d->attrib);
-        setRect(d->attrib.x,d->attrib.y, d->attrib.width, d->attrib.height);
+        setRect(d->attrib.x, d->attrib.y, d->attrib.width, d->attrib.height);
         if (d->attrib.map_state == IsViewable) {
             d->pixmap = XCompositeNameWindowPixmap (d->display, d->window);
             if (d->pixmap == None) {
@@ -111,8 +113,8 @@ void PlexyWindows::bind()
 void PlexyWindows::RedirectWindow ()
 {
     qDebug() <<  Q_FUNC_INFO<<endl;
-   // if (d->isRedirected) {
-     //   return;
+    // if (d->isRedirected) {
+    //   return;
     //}
 
     XCompositeRedirectWindow (d->display, d->window, CompositeRedirectAutomatic);
@@ -121,7 +123,7 @@ void PlexyWindows::RedirectWindow ()
 
 void PlexyWindows::Unmapped ()
 {
-      if (d->attrib.map_state != IsViewable)
+    if (d->attrib.map_state != IsViewable)
         return;
 
     d->attrib.map_state = IsUnmapped;
@@ -132,15 +134,15 @@ void PlexyWindows::PropertyChanged (Atom prop, bool deleted)
 {
 }
 
-void PlexyWindows::Configured (bool isNotify,int x, int y,int width, int height,int border, PlexyWindows *aboveWin, bool override_redirect)
+void PlexyWindows::Configured (bool isNotify, int x, int y, int width, int height, int border, PlexyWindows *aboveWin, bool override_redirect)
 {
     d->attrib.override_redirect = override_redirect;
     if (isNotify) {
         Resized (x, y, width, height, border);
-        unsigned changeMask =  CWX | CWY | CWWidth| CWHeight;
+        unsigned changeMask = CWX | CWY | CWWidth| CWHeight;
         XConfigureWindow (d->display, d->window, changeMask, &d->changeSet);
         if (d->attrib.border_width != 0)
-        qDebug()<<Q_FUNC_INFO<<"Resize"<<endl;
+            qDebug()<<Q_FUNC_INFO<<"Resize"<<endl;
     }
 
 }
@@ -163,14 +165,14 @@ void PlexyWindows::Damaged(XRectangle *rect)
 
 }
 
-void PlexyWindows::paintViewSide(QPainter * painter,const QRectF& rect)
+void PlexyWindows::paintViewSide(QPainter *painter, const QRectF &rect)
 {
     PlexyDesk::DesktopWidget::paintViewSide(painter, rect);
-    painter->drawPixmap(rect.x()+20, rect.y()+20,d->plexypixmap.width(),d->plexypixmap.height(), d->plexypixmap);
+    painter->drawPixmap(rect.x()+20, rect.y()+20, d->plexypixmap.width(), d->plexypixmap.height(), d->plexypixmap);
 }
 
 
-void PlexyWindows::ClientMessaged (Atom type, int format, long *data/*[5]*/)
+void PlexyWindows::ClientMessaged (Atom type, int format, long *data /*[5]*/)
 {
     qDebug()<<Q_FUNC_INFO<<endl;
 }
@@ -195,13 +197,13 @@ void PlexyWindows::Resized(int x, int y, int width, int height, int border)
         }
     }
     d->attrib.height = height;
-    d->attrib.width  = width;
+    d->attrib.width = width;
     d->attrib.border_width = border;
     d->attrib.x = x;
     d->attrib.y = y;
 
     d->changeSet.height = height;
-    d->changeSet.width  = width;
+    d->changeSet.width = width;
     d->changeSet.border_width = border;
     d->changeSet.x = x;
     d->changeSet.y = y;

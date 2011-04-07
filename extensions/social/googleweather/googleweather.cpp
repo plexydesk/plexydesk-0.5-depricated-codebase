@@ -1,7 +1,7 @@
 /*******************************************************************************
 * This file is part of PlexyDesk.
 *  Maintained by : Siraj Razick <siraj@kde.org>
-*  Authored By  : SLIIT 
+*  Authored By  : SLIIT
 *
 *  PlexyDesk is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU Lesser General Public License as published by
@@ -19,7 +19,7 @@
 #include "googleweather.h"
 #include "googleweatherwidget.h"
 
-googleweather::googleweather(QObject * object)
+googleweather::googleweather(QObject *object)
 {
 }
 
@@ -28,7 +28,7 @@ googleweather::~googleweather()
 
 }
 
-QGraphicsItem * googleweather::item()
+QGraphicsItem *googleweather::item()
 {
-    return new PlexyDesk::googleweatherWidget(QRectF(0,0,480,320),0);
+    return new PlexyDesk::googleweatherWidget(QRectF(0, 0, 480, 320), 0);
 }

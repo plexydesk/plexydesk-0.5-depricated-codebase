@@ -29,11 +29,13 @@ namespace PlexyDesk
 class Canvas::Private
 {
 public:
-    Private() {}
-    ~Private() {}
+    Private() {
+    }
+    ~Private() {
+    }
 };
 
-Canvas::Canvas(QObject * parent): QGraphicsScene(parent), d(new Private)
+Canvas::Canvas(QObject *parent) : QGraphicsScene(parent), d(new Private)
 {
 }
 
@@ -42,7 +44,7 @@ Canvas::~Canvas()
     delete d;
 }
 
-void Canvas::dropEvent(QGraphicsSceneDragDropEvent * event)
+void Canvas::dropEvent(QGraphicsSceneDragDropEvent *event)
 {
     if (event)
         event->accept();

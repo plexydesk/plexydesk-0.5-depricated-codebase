@@ -5,17 +5,19 @@ namespace PlexyDesk
 class ViewLayer::Private
 {
 public:
-    Private() {}
-    ~Private() {}
+    Private() {
+    }
+    ~Private() {
+    }
 
-    typedef QList <DesktopWidget*> List;
-    typedef QHash <QString, List*> Layer;
+    typedef QList <DesktopWidget *> List;
+    typedef QHash <QString, List *> Layer;
 
     Layer layer;
-    List * currentList;
+    List *currentList;
 };
 
-ViewLayer::ViewLayer(QObject * obj) : QObject(obj),  d(new Private)
+ViewLayer::ViewLayer(QObject *obj) : QObject(obj), d(new Private)
 {
     d->currentList = new Private::List;
 }
@@ -25,18 +27,18 @@ ViewLayer::~ViewLayer()
     delete d;
 }
 
-void ViewLayer::addItem(const QString& layerName, DesktopWidget * item)
+void ViewLayer::addItem(const QString &layerName, DesktopWidget *item)
 {
     if (d->layer.contains(layerName)) {
         d->layer[layerName]->append(item);
     } else {
-        Private::List* itemlayer   = new Private::List;
+        Private::List *itemlayer = new Private::List;
         itemlayer->append(item);
         d->layer[layerName] = itemlayer;
     }
 }
 
-void ViewLayer::showLayer(const QString& layername)
+void ViewLayer::showLayer(const QString &layername)
 {
     if (!d->layer.contains(layername)) {
         qDebug("Invalid Layer:  ViewLayer::showLayer()");
@@ -46,7 +48,7 @@ void ViewLayer::showLayer(const QString& layername)
                 d->currentList->at(i)->hide();
             }
         }
-        d->currentList  = d->layer[layername];
+        d->currentList = d->layer[layername];
         for (int i = 0; i < d->currentList->size(); i++) {
             if (d->currentList->at(i)) {
                 d->currentList->at(i)->show();

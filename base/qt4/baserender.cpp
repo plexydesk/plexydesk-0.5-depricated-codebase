@@ -32,11 +32,13 @@ namespace PlexyDesk
 class BaseRender::Private
 {
 public:
-    Private() {}
-    ~Private() {}
+    Private() {
+    }
+    ~Private() {
+    }
 
     CacheDict dict;
-    void drawPattern(QPainter * p, const QRect & r) {
+    void drawPattern(QPainter *p, const QRect &r) {
         p->fillRect(r, QColor(255, 255, 255));
     }
 
@@ -45,12 +47,12 @@ public:
     int height;
 };
 
-BaseRender::BaseRender(QWidget * parent, const QGLWidget * shareWidget,
-                       Qt::WindowFlags flag): QGLWidget(QGLFormat(QGL::
-                                                                SampleBuffers),
-                                                                parent,
-                                                                shareWidget, flag),
-        d(new Private)
+BaseRender::BaseRender(QWidget *parent, const QGLWidget *shareWidget,
+     Qt::WindowFlags flag) : QGLWidget(QGLFormat(QGL::
+             SampleBuffers),
+     parent,
+     shareWidget, flag),
+                             d(new Private)
 {
     setMouseTracking(true);
     //TODO
@@ -78,19 +80,19 @@ void BaseRender::resetOverlay(int width, int height)
     QFontMetrics metrics = QFontMetrics(font());
     int border = qMax(4, metrics.leading());
     QRect rect =
-        metrics.boundingRect(0, 0, width - 2 * border, int (height * 0.125),
-                             Qt::AlignCenter | Qt::TextWordWrap, text);
+         metrics.boundingRect(0, 0, width - 2 * border, int (height * 0.125),
+         Qt::AlignCenter | Qt::TextWordWrap, text);
     d->image =
-        QImage(width, rect.height() + 2 * border,
-               QImage::Format_ARGB32_Premultiplied);
+         QImage(width, rect.height() + 2 * border,
+         QImage::Format_ARGB32_Premultiplied);
     d->image.fill(qRgba(0, 0, 0, 127));
     QPainter painter;
     painter.begin(&d->image);
     painter.setRenderHint(QPainter::TextAntialiasing);
     painter.setPen(Qt::white);
     painter.drawText((width - rect.width()) / 2, border,
-                     rect.width(), rect.height(),
-                     Qt::AlignCenter | Qt::TextWordWrap, text);
+         rect.width(), rect.height(),
+         Qt::AlignCenter | Qt::TextWordWrap, text);
     painter.end();
 }
 
@@ -108,7 +110,7 @@ void BaseRender::resizeGL(int w, int h)
 }
 
 
-void BaseRender::paintEvent(QPaintEvent * event)
+void BaseRender::paintEvent(QPaintEvent *event)
 {
     QPainter p;
     p.begin(this);

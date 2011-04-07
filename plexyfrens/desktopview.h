@@ -28,37 +28,37 @@
 
 namespace PlexyDesk
 {
-    class VISIBLE_SYM DesktopView : public QGraphicsView
-    {
-        Q_OBJECT
-    public:
-        DesktopView(QGraphicsScene * scene = new QGraphicsScene(), QWidget * parent = 0);
-        virtual ~DesktopView();
+class VISIBLE_SYM DesktopView : public QGraphicsView
+{
+    Q_OBJECT
+public:
+    DesktopView(QGraphicsScene *scene = new QGraphicsScene(), QWidget *parent = 0);
+    virtual ~DesktopView();
 
-        void addWallpaper(const QString& path);
-        void addRender(QGraphicsScene * scene);
-        void addExtension(const QString& name);
-        void addCoreExtension(const QString& name);
-        void addAuthExtension(const QString& name);
-        void addDesktopItem(QGraphicsItem * item);
-        void enableOpenGL(bool);
+    void addWallpaper(const QString &path);
+    void addRender(QGraphicsScene *scene);
+    void addExtension(const QString &name);
+    void addCoreExtension(const QString &name);
+    void addAuthExtension(const QString &name);
+    void addDesktopItem(QGraphicsItem *item);
+    void enableOpenGL(bool);
 
-    public slots:
-        void backgroundChanged();
-        void onNewWidget();
-        void showIcon(int);
-        void loadIcons();
-        void iconLoaded();
+public slots:
+    void backgroundChanged();
+    void onNewWidget();
+    void showIcon(int);
+    void loadIcons();
+    void iconLoaded();
 
-    protected:
-        void drawBackground(QPainter * painter, const QRectF& rect);
-        void mousePressEvent(QMouseEvent *event);
+protected:
+    void drawBackground(QPainter *painter, const QRectF &rect);
+    void mousePressEvent(QMouseEvent *event);
 
-    private:
-        class Private;
-        Private * const d;
-        void setTopMostWidget(const QPoint &pt);
-    };
+private:
+    class Private;
+    Private *const d;
+    void setTopMostWidget(const QPoint &pt);
+};
 } // namespace #ifndef
 
 #endif

@@ -19,10 +19,10 @@
 #include "cpu.h"
 #include "cpuwidget.h"
 #include <QtCore>
-#include<QtGui>
+#include <QtGui>
 
 
-Cpu::Cpu(QObject * object)
+Cpu::Cpu(QObject *object)
 {
 
 }
@@ -32,7 +32,7 @@ Cpu::~Cpu()
 
 }
 
-QGraphicsItem * Cpu::item()
+QGraphicsItem *Cpu::item()
 {
     return new  PlexyDesk::CpuWidget(QRectF(0, 0, 210, 210), 0);
 }

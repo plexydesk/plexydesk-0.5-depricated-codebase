@@ -32,8 +32,8 @@ template <class T>
 class PLEXYDESK_EXPORT ExtensionProducer
 {
 public:
-    T * instance(const QString& name, QObject *obj) {
-        return  qobject_cast<T*> (obj);
+    T *instance(const QString &name, QObject *obj) {
+        return qobject_cast<T *> (obj);
     }
 };
 

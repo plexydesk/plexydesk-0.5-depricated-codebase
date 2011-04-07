@@ -18,7 +18,7 @@
 
     Sam Lantinga
     slouken@libsdl.org
-*/
+ */
 
 #ifndef _SDL_main_h
 #define _SDL_main_h
@@ -28,26 +28,26 @@
 /* Redefine main() on Win32 and MacOS so that it is called by winmain.c */
 
 #if defined(__WIN32__) || \
-    (defined(__MWERKS__) && !defined(__BEOS__)) || \
+ (defined(__MWERKS__) && !defined(__BEOS__)) || \
     defined(__MACOS__) || defined(__MACOSX__) || \
     defined(__SYMBIAN32__) || defined(QWS)
 
 #ifdef __cplusplus
-#define C_LINKAGE	"C"
+#define C_LINKAGE   "C"
 #else
 #define C_LINKAGE
 #endif /* __cplusplus */
 
 /* The application's main() function must be called with C linkage,
    and should be declared like this:
-#ifdef __cplusplus
-extern "C"
-#endif
-	int main(int argc, char *argv[])
-	{
-	}
+   #ifdef __cplusplus
+   extern "C"
+   #endif
+    int main(int argc, char *argv[])
+    {
+    }
  */
-#define main	SDL_main
+#define main    SDL_main
 
 /* The prototype for the application's main() function */
 extern C_LINKAGE int SDL_main(int argc, char *argv[]);

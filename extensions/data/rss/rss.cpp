@@ -19,7 +19,7 @@
 #include "rss.h"
 #include <desktopwidget.h>
 
-RssData::RssData(QObject * object)
+RssData::RssData(QObject *object)
 {
     init();
     mRssTimer = new QTimer(this);
@@ -27,14 +27,14 @@ RssData::RssData(QObject * object)
     mRssTimer->start(1000*60*60);
 }
 
-void  RssData::init()
+void RssData::init()
 {
     mHttp = new QHttp(this);
     connect(mHttp, SIGNAL(readyRead(const QHttpResponseHeader &)),
-            this, SLOT(readData(const QHttpResponseHeader &)));
+     this, SLOT(readData(const QHttpResponseHeader &)));
 
     connect(mHttp, SIGNAL(requestFinished(int, bool)),
-            this, SLOT(finished(int, bool)));
+     this, SLOT(finished(int, bool)));
     fetch();
 }
 
@@ -119,7 +119,7 @@ void RssData::parseXml()
     }
 
     if (mXml.error() && mXml.error() !=
-            QXmlStreamReader::PrematureEndOfDocumentError) {
+     QXmlStreamReader::PrematureEndOfDocumentError) {
         qDebug() << "XML ERROR:" << mXml.lineNumber() << ": " <<
         mXml.errorString();
         mHttp->abort();
@@ -130,13 +130,13 @@ void RssData::parseXml()
     //emit data(rss);
 }
 
-void RssData::pushData(QVariant& var)
+void RssData::pushData(QVariant &var)
 {
     mHttp->abort();
     init();
 }
 
-QGraphicsItem * RssData::item()
+QGraphicsItem *RssData::item()
 {
     /// \todo: null for success compilation only
     return NULL;

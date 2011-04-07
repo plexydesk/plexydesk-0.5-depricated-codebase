@@ -17,29 +17,29 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 /*
-  PictureFlow - animated image show widget
-  http://pictureflow.googlecode.com
+   PictureFlow - animated image show widget
+   http://pictureflow.googlecode.com
 
-  Copyright (C) 2007 Ariya Hidayat (ariya@kde.org)
+   Copyright (C) 2007 Ariya Hidayat (ariya@kde.org)
 
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to deal
-  in the Software without restriction, including without limitation the rights
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-  copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
+   Permission is hereby granted, free of charge, to any person obtaining a copy
+   of this software and associated documentation files (the "Software"), to deal
+   in the Software without restriction, including without limitation the rights
+   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+   copies of the Software, and to permit persons to whom the Software is
+   furnished to do so, subject to the following conditions:
 
-  The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
+   The above copyright notice and this permission notice shall be included in
+   all copies or substantial portions of the Software.
 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-  THE SOFTWARE.
-*/
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+   THE SOFTWARE.
+ */
 
 #include "pictureflow.h"
 
@@ -70,8 +70,8 @@
 #include <qvaluevector.h>
 #include <qwidget.h>
 
-#define qMax(x,y) ((x) > (y)) ? (x) : (y)
-#define qMin(x,y) ((x) < (y)) ? (x) : (y)
+#define qMax(x, y) ((x) > (y)) ? (x) : (y)
+#define qMin(x, y) ((x) < (y)) ? (x) : (y)
 
 #define QVector QValueVector
 #define QHash QMap
@@ -110,14 +110,14 @@ inline PFreal fsin(int iangle)
 {
     // warning: regenerate the table if IANGLE_MAX and PFREAL_SHIFT are changed!
     static const PFreal tab[] = {
-        3,    103,    202,    300,    394,    485,    571,    652,
-        726,    793,    853,    904,    947,    980,   1004,   1019,
-        1023,   1018,   1003,    978,    944,    901,    849,    789,
-        721,    647,    566,    479,    388,    294,    196,     97,
-        -4,   -104,   -203,   -301,   -395,   -486,   -572,   -653,
-        -727,   -794,   -854,   -905,   -948,   -981,  -1005,  -1020,
-        -1024,  -1019,  -1004,   -979,   -945,   -902,   -850,   -790,
-        -722,   -648,   -567,   -480,   -389,   -295,   -197,    -98,
+        3, 103, 202, 300, 394, 485, 571, 652,
+        726, 793, 853, 904, 947, 980, 1004, 1019,
+        1023, 1018, 1003, 978, 944, 901, 849, 789,
+        721, 647, 566, 479, 388, 294, 196, 97,
+        -4, -104, -203, -301, -395, -486, -572, -653,
+        -727, -794, -854, -905, -948, -981, -1005, -1020,
+        -1024, -1019, -1004, -979, -945, -902, -850, -790,
+        -722, -648, -567, -480, -389, -295, -197, -98,
         3
     };
 
@@ -139,21 +139,21 @@ inline PFreal fcos(int iangle)
 
 /* ----------------------------------------------------------
 
-PictureFlowState stores the state of all slides, i.e. all the necessary
-information to be able to render them.
+   PictureFlowState stores the state of all slides, i.e. all the necessary
+   information to be able to render them.
 
-PictureFlowAnimator is responsible to move the slides during the
-transition between slides, to achieve the effect similar to Cover Flow,
-by changing the state.
+   PictureFlowAnimator is responsible to move the slides during the
+   transition between slides, to achieve the effect similar to Cover Flow,
+   by changing the state.
 
-PictureFlowSoftwareRenderer (or PictureFlowOpenGLRenderer) is
-the actual 3-d renderer. It should render all slides given the state
-(an instance of PictureFlowState).
+   PictureFlowSoftwareRenderer (or PictureFlowOpenGLRenderer) is
+   the actual 3-d renderer. It should render all slides given the state
+   (an instance of PictureFlowState).
 
-Instances of all the above three classes are stored in
-PictureFlowPrivate.
+   Instances of all the above three classes are stored in
+   PictureFlowPrivate.
 
-------------------------------------------------------- */
+   ------------------------------------------------------- */
 
 struct SlideInfo {
     int slideIndex;
@@ -174,7 +174,7 @@ public:
     QRgb backgroundColor;
     int slideWidth;
     int slideHeight;
-    QVector<QImage*> slideImages;
+    QVector<QImage *> slideImages;
 
     int angle;
     int spacing;
@@ -191,7 +191,7 @@ class PictureFlowAnimator
 {
 public:
     PictureFlowAnimator();
-    PictureFlowState* state;
+    PictureFlowState *state;
 
     void start(int slide);
     void stop(int slide);
@@ -206,18 +206,20 @@ public:
 class PictureFlowAbstractRenderer
 {
 public:
-    PictureFlowAbstractRenderer(): state(0), dirty(false), widget(0) {}
-    virtual ~PictureFlowAbstractRenderer() {}
+    PictureFlowAbstractRenderer() : state(0), dirty(false), widget(0) {
+    }
+    virtual ~PictureFlowAbstractRenderer() {
+    }
 
-    PictureFlowState* state;
+    PictureFlowState *state;
     bool dirty;
-    QWidget* widget;
+    QWidget *widget;
 
     virtual void init() = 0;
     virtual void paint() = 0;
 };
 
-class PictureFlowSoftwareRenderer: public PictureFlowAbstractRenderer
+class PictureFlowSoftwareRenderer : public PictureFlowAbstractRenderer
 {
 public:
     PictureFlowSoftwareRenderer();
@@ -230,24 +232,24 @@ private:
     QSize size;
     QImage buffer;
     QVector<PFreal> rays;
-    QImage* blankSurface;
+    QImage *blankSurface;
 #ifdef PICTUREFLOW_QT4
     QCache<int, QImage> surfaceCache;
 #endif
 #ifdef PICTUREFLOW_QT3
     QCache<QImage> surfaceCache;
 #endif
-    QHash<int, QImage*> imageHash;
+    QHash<int, QImage *> imageHash;
 
     void render();
     QRect renderSlide(const SlideInfo &slide, int col1 = -1, int col2 = -1);
-    QImage* surface(int slideIndex);
+    QImage *surface(int slideIndex);
 };
 
 // ------------- PictureFlowState ---------------------------------------
 
-PictureFlowState::PictureFlowState():
-        backgroundColor(0), slideWidth(150), slideHeight(200), centerIndex(0)
+PictureFlowState::PictureFlowState() :
+    backgroundColor(0), slideWidth(150), slideHeight(200), centerIndex(0)
 {
 }
 
@@ -275,7 +277,7 @@ void PictureFlowState::reset()
     leftSlides.clear();
     leftSlides.resize(6);
     for (int i = 0; i < (int)leftSlides.count(); i++) {
-        SlideInfo& si = leftSlides[i];
+        SlideInfo &si = leftSlides[i];
         si.angle = angle;
         si.cx = -(offsetX + spacing * i * PFREAL_ONE);
         si.cy = offsetY;
@@ -290,7 +292,7 @@ void PictureFlowState::reset()
     rightSlides.clear();
     rightSlides.resize(6);
     for (int i = 0; i < (int)rightSlides.count(); i++) {
-        SlideInfo& si = rightSlides[i];
+        SlideInfo &si = rightSlides[i];
         si.angle = -angle;
         si.cx = offsetX + spacing * i * PFREAL_ONE;
         si.cy = offsetY;
@@ -305,8 +307,8 @@ void PictureFlowState::reset()
 
 // ------------- PictureFlowAnimator  ---------------------------------------
 
-PictureFlowAnimator::PictureFlowAnimator():
-        state(0), target(0), step(0), frame(0)
+PictureFlowAnimator::PictureFlowAnimator() :
+    state(0), target(0), step(0), frame(0)
 {
 }
 
@@ -374,7 +376,7 @@ void PictureFlowAnimator::update()
     }
 
     state->centerSlide.angle = (step * tick * state->angle) >> 16;
-    state->centerSlide.cx = -step * fmul(state->offsetX, ftick);
+    state->centerSlide.cx = -step *fmul(state->offsetX, ftick);
     state->centerSlide.cy = fmul(state->offsetY, ftick);
 
     if (state->centerIndex == target) {
@@ -384,14 +386,14 @@ void PictureFlowAnimator::update()
     }
 
     for (int i = 0; i < (int)state->leftSlides.count(); i++) {
-        SlideInfo& si = state->leftSlides[i];
+        SlideInfo &si = state->leftSlides[i];
         si.angle = state->angle;
         si.cx = -(state->offsetX + state->spacing * i * PFREAL_ONE + step * state->spacing * ftick);
         si.cy = state->offsetY;
     }
 
     for (int i = 0; i < (int)state->rightSlides.count(); i++) {
-        SlideInfo& si = state->rightSlides[i];
+        SlideInfo &si = state->rightSlides[i];
         si.angle = -state->angle;
         si.cx = state->offsetX + state->spacing * i * PFREAL_ONE - step * state->spacing * ftick;
         si.cy = state->offsetY;
@@ -445,8 +447,8 @@ void PictureFlowAnimator::update()
 
 // ------------- PictureFlowSoftwareRenderer ---------------------------------------
 
-PictureFlowSoftwareRenderer::PictureFlowSoftwareRenderer():
-        PictureFlowAbstractRenderer(), size(0, 0), blankSurface(0)
+PictureFlowSoftwareRenderer::PictureFlowSoftwareRenderer() :
+    PictureFlowAbstractRenderer(), size(0, 0), blankSurface(0)
 {
 #ifdef PICTUREFLOW_QT3
     surfaceCache.setAutoDelete(true);
@@ -515,7 +517,7 @@ static QRgb blendColor(QRgb c1, QRgb c2, int blend)
     return qRgb(r, g, b);
 }
 
-static QImage* prepareSurface(const QImage& slideImage, int w, int h, QRgb bg)
+static QImage *prepareSurface(const QImage &slideImage, int w, int h, QRgb bg)
 {
 #ifdef PICTUREFLOW_QT4
     Qt::TransformationMode mode = Qt::SmoothTransformation;
@@ -531,10 +533,10 @@ static QImage* prepareSurface(const QImage& slideImage, int w, int h, QRgb bg)
 
     // offscreen buffer: black is sweet
 #ifdef PICTUREFLOW_QT4
-    QImage* result = new QImage(hs, w, QImage::Format_RGB32);
+    QImage *result = new QImage(hs, w, QImage::Format_RGB32);
 #endif
 #ifdef PICTUREFLOW_QT3
-    QImage* result = new QImage;
+    QImage *result = new QImage;
     result->create(hs, w, 32);
 #endif
     result->fill(bg);
@@ -558,7 +560,7 @@ static QImage* prepareSurface(const QImage& slideImage, int w, int h, QRgb bg)
     return result;
 }
 
-QImage* PictureFlowSoftwareRenderer::surface(int slideIndex)
+QImage *PictureFlowSoftwareRenderer::surface(int slideIndex)
 {
     if (!state)
         return 0;
@@ -574,9 +576,9 @@ QImage* PictureFlowSoftwareRenderer::surface(int slideIndex)
     QString key = QString::number(slideIndex);
 #endif
 
-    QRgb bg = Qt::transparent;//state->backgroundColor;
+    QRgb bg = Qt::transparent; //state->backgroundColor;
 
-    QImage* img = state->slideImages[slideIndex];
+    QImage *img = state->slideImages[slideIndex];
     bool empty = (!img) ? true : img->isNull();
     if (empty) {
         surfaceCache.remove(key);
@@ -632,7 +634,7 @@ QImage* PictureFlowSoftwareRenderer::surface(int slideIndex)
 // col1 and col2 limit the column for rendering.
 QRect PictureFlowSoftwareRenderer::renderSlide(const SlideInfo &slide, int col1, int col2)
 {
-    QImage* src = surface(slide.slideIndex);
+    QImage *src = surface(slide.slideIndex);
     if (!src)
         return QRect();
 
@@ -640,7 +642,7 @@ QRect PictureFlowSoftwareRenderer::renderSlide(const SlideInfo &slide, int col1,
     if (!blend)
         return QRect();
 
-    QRgb bg = Qt::transparent;//state->backgroundColor;
+    QRgb bg = Qt::transparent; //state->backgroundColor;
 
     QRect rect(0, 0, 0, 0);
 
@@ -702,8 +704,8 @@ QRect PictureFlowSoftwareRenderer::renderSlide(const SlideInfo &slide, int col1,
 
         int y1 = h / 2;
         int y2 = y1 + 1;
-        QRgb* pixel1 = (QRgb*)(buffer.scanLine(y1)) + x;
-        QRgb* pixel2 = (QRgb*)(buffer.scanLine(y2)) + x;
+        QRgb *pixel1 = (QRgb *)(buffer.scanLine(y1)) + x;
+        QRgb *pixel2 = (QRgb *)(buffer.scanLine(y2)) + x;
         QRgb pixelstep = pixel2 - pixel1;
 
         int center = (sh / 2);
@@ -711,7 +713,7 @@ QRect PictureFlowSoftwareRenderer::renderSlide(const SlideInfo &slide, int col1,
         int p1 = center * PFREAL_ONE - dy / 2;
         int p2 = center * PFREAL_ONE + dy / 2;
 
-        const QRgb *ptr = (const QRgb*)(src->scanLine(column));
+        const QRgb *ptr = (const QRgb *)(src->scanLine(column));
         if (blend == 256)
             while ((y1 >= 0) && (y2 < h) && (p1 >= 0)) {
                 *pixel1 = ptr[p1 >> PFREAL_SHIFT];
@@ -775,14 +777,14 @@ void PictureFlowSoftwareRenderer::render()
 class PictureFlowPrivate
 {
 public:
-    PictureFlowState* state;
-    PictureFlowAnimator* animator;
-    PictureFlowAbstractRenderer* renderer;
+    PictureFlowState *state;
+    PictureFlowAnimator *animator;
+    PictureFlowAbstractRenderer *renderer;
     QTimer triggerTimer;
 };
 
 
-PictureFlow::PictureFlow(QWidget* parent): QWidget(parent)
+PictureFlow::PictureFlow(QWidget *parent) : QWidget(parent)
 {
     d = new PictureFlowPrivate;
 
@@ -832,7 +834,7 @@ QColor PictureFlow::backgroundColor() const
     return QColor(d->state->backgroundColor);
 }
 
-void PictureFlow::setBackgroundColor(const QColor& c)
+void PictureFlow::setBackgroundColor(const QColor &c)
 {
     d->state->backgroundColor = c.rgb();
     triggerRender();
@@ -853,34 +855,34 @@ void PictureFlow::setSlideSize(QSize size)
 
 QImage PictureFlow::slide(int index) const
 {
-    QImage* i = 0;
+    QImage *i = 0;
     if ((index >= 0) && (index < slideCount()))
         i = d->state->slideImages[index];
     return i ? QImage(*i) : QImage();
 }
 
-void PictureFlow::addSlide(const QImage& image)
+void PictureFlow::addSlide(const QImage &image)
 {
     d->state->slideImages.append(new QImage(image));
     triggerRender();
 }
 
-void PictureFlow::addSlide(const QPixmap& pixmap)
+void PictureFlow::addSlide(const QPixmap &pixmap)
 {
     addSlide(pixmap.toImage());
 }
 
-void PictureFlow::setSlide(int index, const QImage& image)
+void PictureFlow::setSlide(int index, const QImage &image)
 {
     if ((index >= 0) && (index < slideCount())) {
-        QImage* i = image.isNull() ? 0 : new QImage(image);
+        QImage *i = image.isNull() ? 0 : new QImage(image);
         delete d->state->slideImages[index];
         d->state->slideImages[index] = i;
         triggerRender();
     }
 }
 
-void PictureFlow::setSlide(int index, const QPixmap& pixmap)
+void PictureFlow::setSlide(int index, const QPixmap &pixmap)
 {
     setSlide(index, pixmap.toImage());
 }
@@ -968,7 +970,7 @@ void PictureFlow::showSlide(int index)
     d->animator->start(index);
 }
 
-void PictureFlow::keyPressEvent(QKeyEvent* event)
+void PictureFlow::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Left) {
         if (event->modifiers() == Qt::ControlModifier)
@@ -991,13 +993,13 @@ void PictureFlow::keyPressEvent(QKeyEvent* event)
     event->ignore();
 }
 
-void PictureFlow::paintEvent(QPaintEvent* event)
+void PictureFlow::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
     d->renderer->paint();
 }
 
-void PictureFlow::resizeEvent(QResizeEvent* event)
+void PictureFlow::resizeEvent(QResizeEvent *event)
 {
     triggerRender();
     QWidget::resizeEvent(event);

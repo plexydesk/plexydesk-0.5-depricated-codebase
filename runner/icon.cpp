@@ -12,7 +12,7 @@
    along with this library; see the file COPYING.LIB.  If not, write to
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
-*/
+ */
 
 #include "icon.h"
 #include <iconprovider.h>
@@ -26,8 +26,10 @@ namespace PlexyDesk
 class Icon::Private
 {
 public:
-    Private() {}
-    ~Private() {}
+    Private() {
+    }
+    ~Private() {
+    }
     QPixmap icon;
     QPlexyMime *mime;
     QString text;
@@ -39,7 +41,7 @@ public:
     QString path;
 };
 
-Icon::Icon(IconProviderPtr icon, QPlexyMime* mime, const QRectF &rect, QWidget *embeddedWidget) : DesktopWidget(rect), d(new Private)
+Icon::Icon(IconProviderPtr icon, QPlexyMime *mime, const QRectF &rect, QWidget *embeddedWidget) : DesktopWidget(rect), d(new Private)
 {
     d->valid = false;
     d->iconprovider = icon;
@@ -62,7 +64,7 @@ void Icon::fromFileNameMime(const MimePairType mimePair)
 {
     QString iconname;
     if (mimePair.second == "application/x-desktop") {
-        QSettings setting(d->path,  QSettings::IniFormat);
+        QSettings setting(d->path, QSettings::IniFormat);
         setting.beginGroup("Desktop Entry");
         iconname = setting.value("Icon", "").toString();
         d->text = setting.value("Name", "").toString();
@@ -90,7 +92,7 @@ void Icon::loadIcon()
     update();
 }
 
-void Icon::setContent(const QString& path)
+void Icon::setContent(const QString &path)
 {
     d->path = path;
     //QMetaObject::invokeMethod(this, "pathSet", Qt::DirectConnection);
@@ -101,46 +103,46 @@ bool Icon::isValid()
     return d->valid;
 }
 
-void Icon::paintBackSide(QPainter * painter, const QRectF& rect)
+void Icon::paintBackSide(QPainter *painter, const QRectF &rect)
 {
     if (!d->icon.isNull()) {
         int x = (this->boundingRect().width() - d->icon.width()) / 2;
-        painter->drawPixmap(QRect(x, x , d->icon.width(), d->icon.height()) , d->icon);
+        painter->drawPixmap(QRect(x, x, d->icon.width(), d->icon.height()), d->icon);
     }
     drawText(painter, rect);
     // DesktopWidget::paintDockView(painter, rect);
 }
-void Icon::paintViewSide(QPainter * painter, const QRectF& rect)
+void Icon::paintViewSide(QPainter *painter, const QRectF &rect)
 {
     if (!d->icon.isNull()) {
         int x = (this->boundingRect().width() - d->icon.width()) / 2;
-        painter->drawPixmap(QRect(x, x , d->icon.width(), d->icon.height()) , d->icon);
+        painter->drawPixmap(QRect(x, x, d->icon.width(), d->icon.height()), d->icon);
     }
     drawText(painter, rect);
 }
-void Icon::paintDockView(QPainter * painter, const QRectF& rect)
+void Icon::paintDockView(QPainter *painter, const QRectF &rect)
 {
     if (!d->icon.isNull()) {
         int x = (this->boundingRect().width() - d->icon.width()) / 2;
-        painter->drawPixmap(QRect(x, x , d->icon.width(), d->icon.height()) , d->icon);
+        painter->drawPixmap(QRect(x, x, d->icon.width(), d->icon.height()), d->icon);
     }
     drawText(painter, rect);
 }
 
-void Icon::drawText(QPainter *painter, const QRectF& rect)
+void Icon::drawText(QPainter *painter, const QRectF &rect)
 {
     float x = (this->boundingRect().width() - d->icon.width()) / 2;
-    float y = boundingRect().height() - x;// - (d->icon.height() +x );
+    float y = boundingRect().height() - x; // - (d->icon.height() +x );
     QTextOption opt;
     opt.setAlignment(Qt::AlignHCenter);
     QFontMetrics fm(painter->font());
     QString label = fm.elidedText(d->text, Qt::ElideRight, boundingRect().width());
     QRectF tr = QRectF(0.0, y, boundingRect().width(), boundingRect().height() -
-                       (d->icon.height()));
+             (d->icon.height()));
     painter->drawText(tr, label, opt);
 }
 
-void Icon::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event)
+void Icon::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
     qDebug() << "Running" << d->exe << endl;
     QProcess::startDetached(d->exe);

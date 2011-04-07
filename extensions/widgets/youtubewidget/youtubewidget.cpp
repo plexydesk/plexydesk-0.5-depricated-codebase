@@ -32,11 +32,11 @@
 namespace PlexyDesk
 {
 
-YouTubeWidget::YouTubeWidget(const QRectF &rect, QWidget *widget):
-        ListView(rect, widget)
+YouTubeWidget::YouTubeWidget(const QRectF &rect, QWidget *widget) :
+    ListView(rect, widget)
 {
-    utubeEngine = qobject_cast<PlexyDesk::DataPlugin*>(
-                      PlexyDesk::PluginLoader::getInstance()->instance("utubeengine"));
+    utubeEngine = qobject_cast<PlexyDesk::DataPlugin *>(
+         PlexyDesk::PluginLoader::getInstance()->instance("utubeengine"));
 
     if (utubeEngine) {
         connect(utubeEngine, SIGNAL(dataReady()), this, SLOT(onDataReady()));
@@ -46,7 +46,8 @@ YouTubeWidget::YouTubeWidget(const QRectF &rect, QWidget *widget):
 }
 
 YouTubeWidget::~YouTubeWidget()
-{}
+{
+}
 
 void YouTubeWidget::onDataReady()
 {
@@ -62,7 +63,7 @@ void YouTubeWidget::onDataReady()
     mVideos.append(videoentity);
     view.setHeight(mVideos.size()*mItem_bg.height());
 
-    ListItem * item = new ListItem();
+    ListItem *item = new ListItem();
     item->title = videoentity.title;
     item->link = videoentity.link;
     item->desc = videoentity.desc;

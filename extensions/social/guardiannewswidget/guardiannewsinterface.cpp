@@ -23,13 +23,13 @@
 
 #include <QtPlugin>
 
-Interface::Interface(QObject * object)
+Interface::Interface(QObject *object)
 {
 }
 
-PlexyDesk::BasePlugin* Interface::instance()
+PlexyDesk::BasePlugin *Interface::instance()
 {
     return new GuardianNews();
 }
 
-Q_EXPORT_PLUGIN2(Interface,Interface)
+Q_EXPORT_PLUGIN2(Interface, Interface)

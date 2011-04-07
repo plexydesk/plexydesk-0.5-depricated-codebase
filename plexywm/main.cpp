@@ -46,9 +46,9 @@
 #include "windowmanager.h"
 using namespace PlexyDesk;
 
-int main( int argc, char ** argv )
+int main( int argc, char * *argv )
 {
-    WindowManager app(argc,argv);
+    WindowManager app(argc, argv);
 
     if (app.isWmRunning())
     {

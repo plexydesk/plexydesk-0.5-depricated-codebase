@@ -40,27 +40,29 @@
 
 namespace PlexyDesk
 {
-class  DesktopView::Private
+class DesktopView::Private
 {
 public:
-    Private() {}
-    ~Private() {}
-    AbstractPluginInterface *bIface ;
+    Private() {
+    }
+    ~Private() {
+    }
+    AbstractPluginInterface *bIface;
     BackdropPlugin *bgPlugin;
-    QGraphicsGridLayout * gridLayout;
-    ViewLayer *  layer;
+    QGraphicsGridLayout *gridLayout;
+    ViewLayer *layer;
     float row;
     float column;
     float margin;
     bool openglOn;
 };
 
-bool getLessThanWidget(const QGraphicsItem* it1, const QGraphicsItem* it2)
+bool getLessThanWidget(const QGraphicsItem *it1, const QGraphicsItem *it2)
 {
     return it1->zValue() < it2->zValue();
 }
 
-DesktopView::DesktopView(QGraphicsScene * scene, QWidget * parent):QGraphicsView(scene,parent),d(new Private)
+DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView(scene, parent), d(new Private)
 {
     /* setup */
     setWindowFlags(Qt::FramelessWindowHint);
@@ -74,9 +76,9 @@ DesktopView::DesktopView(QGraphicsScene * scene, QWidget * parent):QGraphicsView
     d->openglOn = false;
 
     /* init */
-    d->bgPlugin  = static_cast<BackdropPlugin*>(PluginLoader::getInstance()->instance("classicbackdrop"));
+    d->bgPlugin = static_cast<BackdropPlugin *>(PluginLoader::getInstance()->instance("classicbackdrop"));
     d->gridLayout = new QGraphicsGridLayout();
-    d->row=d->column = 0.0;
+    d->row = d->column = 0.0;
     d->margin = 10.0;
     d->layer = new ViewLayer();
 
@@ -111,8 +113,8 @@ void DesktopView::backgroundChanged()
     if (d->bgPlugin) {
         delete d->bgPlugin;
     }
-    d->bgPlugin  =
-        static_cast<BackdropPlugin*>(PluginLoader::getInstance()->instance("classicbackdrop"));
+    d->bgPlugin =
+         static_cast<BackdropPlugin *>(PluginLoader::getInstance()->instance("classicbackdrop"));
     if (!d->openglOn) {
         setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     }
@@ -129,51 +131,51 @@ void DesktopView::backgroundChanged()
 }
 
 /*
-Adds an Widget Extension to Plexy Desktop, give the widget
-name in string i.e "clock" or "radio", the internals will
-take care of the loading the widget plugin name is correct
-*/
+   Adds an Widget Extension to Plexy Desktop, give the widget
+   name in string i.e "clock" or "radio", the internals will
+   take care of the loading the widget plugin name is correct
+ */
 
-void DesktopView::addExtension(const QString& name)
+void DesktopView::addExtension(const QString &name)
 {
-    WidgetPlugin *provider = static_cast<WidgetPlugin*>(PluginLoader::getInstance()->instance(name));
+    WidgetPlugin *provider = static_cast<WidgetPlugin *>(PluginLoader::getInstance()->instance(name));
     if (provider) {
-        DesktopWidget * widget = (DesktopWidget*) provider->item();
+        DesktopWidget *widget = (DesktopWidget *) provider->item();
         if (widget) {
             widget->configState(DesktopWidget::DOCK);
             scene()->addItem(widget);
-            widget->setPos(d->row,d->column);
+            widget->setPos(d->row, d->column);
             d->row += widget->boundingRect().width()+d->margin;
-            d->layer->addItem("Widgets",widget);
+            d->layer->addItem("Widgets", widget);
         }
     }
     delete provider;
 }
 
-void DesktopView::addCoreExtension(const QString& name)
+void DesktopView::addCoreExtension(const QString &name)
 {
-   WidgetPlugin *provider = static_cast<WidgetPlugin*>(PluginLoader::getInstance()->instance(name));
+    WidgetPlugin *provider = static_cast<WidgetPlugin *>(PluginLoader::getInstance()->instance(name));
     if (provider) {
-        QGraphicsRectItem  *widget = (QGraphicsRectItem*) provider->item();
+        QGraphicsRectItem *widget = (QGraphicsRectItem *) provider->item();
         if (widget) {
             scene()->addItem(widget);
-            widget->setPos(d->row,d->column);
+            widget->setPos(d->row, d->column);
             d->row += widget->boundingRect().width();
         }
     }
     delete provider;
 }
 /*
-//small speed up , try if the speed is too low
-void DesktopView::paintEvent(QPaintEvent * event)
-{
-QPaintEvent *newEvent=new QPaintEvent(event->region().boundingRect());
-QGraphicsView::paintEvent(newEvent);
-delete newEvent;
-}
-*/
+   //small speed up , try if the speed is too low
+   void DesktopView::paintEvent(QPaintEvent * event)
+   {
+   QPaintEvent *newEvent=new QPaintEvent(event->region().boundingRect());
+   QGraphicsView::paintEvent(newEvent);
+   delete newEvent;
+   }
+ */
 
-void DesktopView::drawBackground(QPainter * painter, const QRectF & rect)
+void DesktopView::drawBackground(QPainter *painter, const QRectF &rect)
 {
 
     painter->setCompositionMode(QPainter::CompositionMode_Source);
@@ -182,7 +184,7 @@ void DesktopView::drawBackground(QPainter * painter, const QRectF & rect)
     painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
     painter->setClipRect(rect);
     if (d->bgPlugin) {
-        d->bgPlugin->render(painter,QRectF(rect.x(),sceneRect().y(),rect.width(),rect.height()));
+        d->bgPlugin->render(painter, QRectF(rect.x(), sceneRect().y(), rect.width(), rect.height()));
     }
     painter->restore();
 }

@@ -23,21 +23,21 @@
 
 namespace PlexyDesk
 {
-FakeMime * FakeMime::config = 0;
+FakeMime *FakeMime::config = 0;
 
-FakeMime * FakeMime::getInstance()
+FakeMime *FakeMime::getInstance()
 {
     if (config == 0) {
-        return  new FakeMime();
+        return new FakeMime();
     } else {
         return config;
     }
 }
 
-QString FakeMime::getType(const QString& file)
+QString FakeMime::getType(const QString &file)
 {
     QStringList splits = file.split(".");
-    QString ext =  splits.at(1);
+    QString ext = splits.at(1);
     return ext;
 }
 }

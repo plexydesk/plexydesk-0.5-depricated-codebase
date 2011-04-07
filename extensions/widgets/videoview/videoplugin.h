@@ -31,20 +31,20 @@ class VISIBLE_SYM VideoPlugin : public PlexyDesk::WidgetPlugin
     Q_OBJECT
 
 public:
-    VideoPlugin(QObject * object = 0);
+    VideoPlugin(QObject *object = 0);
     virtual ~VideoPlugin();
-    virtual QGraphicsItem * item();
+    virtual QGraphicsItem *item();
 
 public slots:
-    void data(QVariant&);
+    void data(QVariant &);
     void searchImage();
 
 signals:
     void change();
-    void sendData(QVariant&);
+    void sendData(QVariant &);
 
 private:
-    QLabel *flow ;
+    QLabel *flow;
     QWidget *base;
     QLineEdit *search;
     PlexyDesk::DataInterface *videoEngine;

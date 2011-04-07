@@ -18,7 +18,7 @@
 
     Sam Lantinga
     slouken@libsdl.org
-*/
+ */
 
 /* Include file for SDL joystick event handling */
 
@@ -37,7 +37,7 @@ extern "C" {
 /* In order to use these functions, SDL_Init() must have been called
    with the SDL_INIT_JOYSTICK flag.  This causes SDL to scan the system
    for joysticks, and load appropriate drivers.
-*/
+ */
 
 /* The joystick structure used to identify an SDL joystick */
 struct _SDL_Joystick;
@@ -55,7 +55,7 @@ extern DECLSPEC int SDLCALL SDL_NumJoysticks(void);
  * This can be called before any joysticks are opened.
  * If no name can be found, this function returns NULL.
  */
-extern DECLSPEC const char * SDLCALL SDL_JoystickName(int device_index);
+extern DECLSPEC const char *SDLCALL SDL_JoystickName(int device_index);
 
 /*
  * Open a joystick for use - the index passed as an argument refers to
@@ -64,7 +64,7 @@ extern DECLSPEC const char * SDLCALL SDL_JoystickName(int device_index);
  *
  * This function returns a joystick identifier, or NULL if an error occurred.
  */
-extern DECLSPEC SDL_Joystick * SDLCALL SDL_JoystickOpen(int device_index);
+extern DECLSPEC SDL_Joystick *SDLCALL SDL_JoystickOpen(int device_index);
 
 /*
  * Returns 1 if the joystick has been opened, or 0 if it has not.
@@ -125,15 +125,15 @@ extern DECLSPEC Sint16 SDLCALL SDL_JoystickGetAxis(SDL_Joystick *joystick, int a
  * Get the current state of a POV hat on a joystick
  * The return value is one of the following positions:
  */
-#define SDL_HAT_CENTERED	0x00
-#define SDL_HAT_UP		0x01
-#define SDL_HAT_RIGHT		0x02
-#define SDL_HAT_DOWN		0x04
-#define SDL_HAT_LEFT		0x08
-#define SDL_HAT_RIGHTUP		(SDL_HAT_RIGHT|SDL_HAT_UP)
-#define SDL_HAT_RIGHTDOWN	(SDL_HAT_RIGHT|SDL_HAT_DOWN)
-#define SDL_HAT_LEFTUP		(SDL_HAT_LEFT|SDL_HAT_UP)
-#define SDL_HAT_LEFTDOWN	(SDL_HAT_LEFT|SDL_HAT_DOWN)
+#define SDL_HAT_CENTERED    0x00
+#define SDL_HAT_UP      0x01
+#define SDL_HAT_RIGHT       0x02
+#define SDL_HAT_DOWN        0x04
+#define SDL_HAT_LEFT        0x08
+#define SDL_HAT_RIGHTUP     (SDL_HAT_RIGHT|SDL_HAT_UP)
+#define SDL_HAT_RIGHTDOWN   (SDL_HAT_RIGHT|SDL_HAT_DOWN)
+#define SDL_HAT_LEFTUP      (SDL_HAT_LEFT|SDL_HAT_UP)
+#define SDL_HAT_LEFTDOWN    (SDL_HAT_LEFT|SDL_HAT_DOWN)
 /*
  * The hat indices start at index 0.
  */

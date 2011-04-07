@@ -30,27 +30,27 @@ class QRectF;
 
 namespace PlexyDesk
 {
-    class PLEXYDESK_EXPORT BackdropPlugin : public BasePlugin
+class PLEXYDESK_EXPORT BackdropPlugin : public BasePlugin
+{
+    Q_OBJECT
+
+public:
+    BackdropPlugin(QObject *object = 0) : BasePlugin(object)
     {
-        Q_OBJECT
+    }
 
-    public :
-        BackdropPlugin(QObject  *object = 0) : BasePlugin(object)
-        {
-        }
+    virtual ~BackdropPlugin()
+    {
+    }
 
-        virtual ~BackdropPlugin()
-        {
-        }
+    virtual void render(QPainter *painter, QRectF rect) = 0;
 
-        virtual void render(QPainter *painter, QRectF rect) = 0;
+public Q_SLOTS:
+    virtual void pushData(QVariant &value) = 0;
 
-    public Q_SLOTS:
-        virtual void pushData(QVariant &value) = 0;
-
-    Q_SIGNALS:
-        void data(QVariant &value);
-    };
+Q_SIGNALS:
+    void data(QVariant &value);
+};
 }
 
 #endif

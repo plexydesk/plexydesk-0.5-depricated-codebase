@@ -20,7 +20,7 @@
 #include "authplugin.h"
 #include <qwebviewitem.h>
 
-AuthPlugin::AuthPlugin(QObject * object)
+AuthPlugin::AuthPlugin(QObject *object)
 {
 
 }
@@ -30,7 +30,7 @@ AuthPlugin::~AuthPlugin()
 
 }
 
-QGraphicsItem * AuthPlugin::item()
+QGraphicsItem *AuthPlugin::item()
 {
     return new PlexyDesk::AuthWidget(QRectF(0, 0, 480, 320), 0);
 }

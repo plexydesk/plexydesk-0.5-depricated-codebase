@@ -27,30 +27,30 @@
 
 class WebView : public QGraphicsView
 {
-        Q_OBJECT
+    Q_OBJECT
 public:
-        WebView(QGraphicsScene * scene = new QGraphicsScene(), QWidget * parent = 0);
-        virtual ~WebView();
+    WebView(QGraphicsScene *scene = new QGraphicsScene(), QWidget *parent = 0);
+    virtual ~WebView();
 
-        void addWallpaper(const QString& path);
-        void addRender(QGraphicsScene * scene);
-        void addExtension(const QString& name);
-        void addCoreExtension(const QString& name);
-        void addDesktopItem(QGraphicsItem * item);
-        void addWebPage(QGraphicsItem * item);
+    void addWallpaper(const QString &path);
+    void addRender(QGraphicsScene *scene);
+    void addExtension(const QString &name);
+    void addCoreExtension(const QString &name);
+    void addDesktopItem(QGraphicsItem *item);
+    void addWebPage(QGraphicsItem *item);
 public slots:
-        void backgroundChanged();
-        void zoomView(int);
-        void updateReflect();
+    void backgroundChanged();
+    void zoomView(int);
+    void updateReflect();
 
 protected:
-        void drawBackground(QPainter * painter, const QRectF& rect);
-        void mousePressEvent(QMouseEvent *event);
+    void drawBackground(QPainter *painter, const QRectF &rect);
+    void mousePressEvent(QMouseEvent *event);
 
 private:
-        class Private;
-        Private * const d;
-        void setTopMostWidget(const QPoint &pt);
+    class Private;
+    Private *const d;
+    void setTopMostWidget(const QPoint &pt);
 };
 
 #endif

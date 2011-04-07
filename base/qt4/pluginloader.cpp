@@ -33,14 +33,16 @@ PluginLoader *PluginLoader::mInstance = 0;
 class PluginLoader::Private
 {
 public:
-    Private() {}
-    ~Private() {}
+    Private() {
+    }
+    ~Private() {
+    }
     Interface groups;
     QString prefix;
     QHash<QString, QStringList> mDict;
 };
 
-PluginLoader::PluginLoader(): d(new Private)
+PluginLoader::PluginLoader() : d(new Private)
 {
     d->prefix = applicationDirPath() + "/ext/groups/";
 }
@@ -50,7 +52,7 @@ PluginLoader::~PluginLoader()
     delete d;
 }
 
-PluginLoader* PluginLoader::getInstance()
+PluginLoader *PluginLoader::getInstance()
 {
     if (!mInstance) {
         mInstance = new PluginLoader();
@@ -59,12 +61,12 @@ PluginLoader* PluginLoader::getInstance()
     return mInstance;
 }
 
-QStringList PluginLoader::listPlugins(const QString& types)
+QStringList PluginLoader::listPlugins(const QString &types)
 {
     return d->mDict[types];
 }
 
-BasePlugin *PluginLoader::instance(const QString& name)
+BasePlugin *PluginLoader::instance(const QString &name)
 {
     if (d->groups.contains(name)) {
         return d->groups[name]->instance();
@@ -73,7 +75,7 @@ BasePlugin *PluginLoader::instance(const QString& name)
     }
 }
 
-void PluginLoader::load(const QString & interface, const QString & pluginName)
+void PluginLoader::load(const QString &interface, const QString &pluginName)
 {
 #ifdef Q_WS_MAC
     QPluginLoader loader(applicationDirPath() + "/lib/plexyext/lib" + pluginName + ".dylib");
@@ -87,7 +89,7 @@ void PluginLoader::load(const QString & interface, const QString & pluginName)
     QObject *plugin = loader.instance();
     if (plugin) {
         AbstractPluginInterface *Iface = 0;
-        Iface = qobject_cast<AbstractPluginInterface*> (plugin);
+        Iface = qobject_cast<AbstractPluginInterface *> (plugin);
         d->groups[pluginName] = Iface;
         qDebug() << "PluginLoader::load" << "Loading.." << Iface << pluginName << endl;
 
@@ -120,7 +122,7 @@ void PluginLoader::scanDisk()
     }
 }
 
-void PluginLoader::loadDesktop(const QString & path)
+void PluginLoader::loadDesktop(const QString &path)
 {
     QSettings desktopFile(path, QSettings::IniFormat, this);
     desktopFile.beginGroup("Desktop Entry");

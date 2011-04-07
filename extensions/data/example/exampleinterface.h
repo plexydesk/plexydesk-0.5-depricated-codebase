@@ -33,12 +33,13 @@ class ExampleInterface : public PlexyDesk::DataInterface
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
-public:
-    ExampleInterface(QObject * object = 0);
-    virtual ~ExampleInterface() {}
+public :
+        ExampleInterface(QObject *object = 0);
+    virtual ~ExampleInterface() {
+    }
 
     /* this will return a valid data plugin pointer*/
-    PlexyDesk::DataPlugin * instance();
+    PlexyDesk::DataPlugin *instance();
 
 };
 

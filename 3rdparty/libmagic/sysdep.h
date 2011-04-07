@@ -17,10 +17,10 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 /*
- *  libmagic - system dependent things 
+ *  libmagic - system dependent things
  *  $Id: sysdep.h,v 1.5 2000/05/26 07:34:55 fyre Exp $
  *
- *  Copyright (c) 2000 Tim Robbins 		<tim_r@hotmail.com>
+ *  Copyright (c) 2000 Tim Robbins      <tim_r@hotmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
  *
  */
- 
+
 #ifndef INCLUDED_SYSDEP_H
 #define INCLUDED_SYSDEP_H
 
@@ -53,16 +53,16 @@
 #else
 /* define them ourselves */
 /* CHANGEME */
-typedef signed char    		int8_t;
-typedef short int     		int16_t;
-typedef int           		int32_t;
-typedef unsigned char           uint8_t;
-typedef unsigned short int     uint16_t;
-typedef unsigned int           uint32_t;
+typedef signed char int8_t;
+typedef short int int16_t;
+typedef int int32_t;
+typedef unsigned char uint8_t;
+typedef unsigned short int uint16_t;
+typedef unsigned int uint32_t;
 #endif
 
 #if !defined(BYTE_ORDER) || !defined(LITTLE_ENDIAN) || !defined(BIG_ENDIAN)
-# if (__GLIBC__ >= 2) 
+# if (__GLIBC__ >= 2)
 #  include <endian.h>
 # else
 #  if (BSD >= 199103) || defined(__FreeBSD__) || defined(__OpenBSD__)
@@ -72,14 +72,14 @@ typedef unsigned int           uint32_t;
 #     define LITTLE_ENDIAN  1234
 #     define BYTE_ORDER LITTLE_ENDIAN
 #   else
-#     define BIG_ENDIAN		4321
-#     define LITTLE_ENDIAN	1234
+#     define BIG_ENDIAN     4321
+#     define LITTLE_ENDIAN  1234
 #     error Define your byte order in sysdep.h
 #   endif
 /*
-#   define BYTE_ORDER	LITTLE_ENDIAN
-#   define BYTE_ORDER	BIG_ENDIAN
-*/
+ #   define BYTE_ORDER	LITTLE_ENDIAN
+ #   define BYTE_ORDER	BIG_ENDIAN
+ */
 #  endif
 # endif
 #endif

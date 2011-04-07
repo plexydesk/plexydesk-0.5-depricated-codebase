@@ -18,7 +18,7 @@
 
     Sam Lantinga
     slouken@libsdl.org
-*/
+ */
 
 #ifndef _SDL_config_h
 #define _SDL_config_h

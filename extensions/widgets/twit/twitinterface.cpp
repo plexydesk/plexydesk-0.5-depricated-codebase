@@ -4,11 +4,11 @@
 
 #include <QtPlugin>
 
-TwitInterface::TwitInterface(QObject * object)
+TwitInterface::TwitInterface(QObject *object)
 {
 }
 
-PlexyDesk::BasePlugin * TwitInterface::instance()
+PlexyDesk::BasePlugin *TwitInterface::instance()
 {
     return new Twit(this);
 }

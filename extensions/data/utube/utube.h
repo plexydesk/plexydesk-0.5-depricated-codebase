@@ -35,7 +35,7 @@ class UtubeData : public PlexyDesk::DataPlugin
     Q_OBJECT
 
 public:
-    UtubeData(QObject * object = 0);
+    UtubeData(QObject *object = 0);
     virtual ~UtubeData();
     void init();
     QVariantMap readAll();
@@ -44,7 +44,8 @@ public slots:
     void fetch();
     void finished(int id, bool error);
     void readData(const QHttpResponseHeader &);
-    void pushData(QVariant&) {}
+    void pushData(QVariant &) {
+    }
 signals:
     void success();
 

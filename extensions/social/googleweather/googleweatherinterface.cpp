@@ -4,13 +4,13 @@
 
 #include <QtPlugin>
 
-googleweatherInterface::googleweatherInterface(QObject * object)
+googleweatherInterface::googleweatherInterface(QObject *object)
 {
 }
 
-PlexyDesk::BasePlugin * googleweatherInterface::instance()
+PlexyDesk::BasePlugin *googleweatherInterface::instance()
 {
-	return new googleweather(this);
+    return new googleweather(this);
 }
 
-Q_EXPORT_PLUGIN2(googleweatherInterface,googleweatherInterface)
+Q_EXPORT_PLUGIN2(googleweatherInterface, googleweatherInterface)

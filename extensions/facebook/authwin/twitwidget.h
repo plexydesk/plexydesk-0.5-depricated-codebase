@@ -29,9 +29,9 @@
 #include <listview.h>
 
 class QTimer;
-namespace PlexyDesk{
+namespace PlexyDesk {
 
-class TwitWidget: public PlexyDesk::ListView
+class TwitWidget : public PlexyDesk::ListView
 {
     Q_OBJECT
 public:
@@ -40,11 +40,11 @@ public:
     void readConfig(QString &user, QString &pass);
 
 public Q_SLOTS:
-    void data(QVariantMap&);
+    void data(QVariantMap &);
     void onDataReady();
 Q_SIGNALS:
     void dataChanged();
-    void newData(QVariantMap&);
+    void newData(QVariantMap &);
 
 private:
     QRectF clip;
@@ -55,11 +55,11 @@ private:
     QImage mItem_bg;
     QString prefix;
     QPoint clickPos;
-    PlexyDesk::DataPlugin * utubeEngine;
+    PlexyDesk::DataPlugin *utubeEngine;
     QList<VideoEntity> mVideos;
     QMap<QString, QVariant> mVariantMap;
     QVariantMap mMap;
-    PlexyDesk::DataPlugin * plugin;
+    PlexyDesk::DataPlugin *plugin;
 };
 #endif
 }

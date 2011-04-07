@@ -3,11 +3,11 @@
 #include <pluginloader.h>
 #include <QtPlugin>
 
-AuthInterface::AuthInterface(QObject * object)
+AuthInterface::AuthInterface(QObject *object)
 {
 }
 
-PlexyDesk::BasePlugin * AuthInterface::instance()
+PlexyDesk::BasePlugin *AuthInterface::instance()
 {
     return new AuthPlugin(this);
 }

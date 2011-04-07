@@ -21,7 +21,7 @@
 #include "clockwidget.h"
 
 
-Clock::Clock(QObject * object)
+Clock::Clock(QObject *object)
 {
 
 }
@@ -31,7 +31,7 @@ Clock::~Clock()
 
 }
 
-QGraphicsItem * Clock::item()
+QGraphicsItem *Clock::item()
 {
     return new  PlexyDesk::ClockWidget(QRectF(0, 0, 210, 210), 0);
 }

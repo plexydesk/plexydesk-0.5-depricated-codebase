@@ -18,11 +18,11 @@ function fix
   nfixedo=0
   case $(echo ${fname#*.}) in
     h) debug "[fix header] $fname"
-       astyle $fname > /dev/null
+    uncrustify  -c ~/plex.cfg  -f $fname  -o $fname > /dev/null
        nfixedo=`expr $nfixedo + 1`
        ;;
     cpp) debug "[fix source] $fname"
-         astyle $fname > /dev/null
+         uncrustify  -c ~/plex.cfg  -f $fname  -o $fname > /dev/null
          nfixedo=`expr $nfixedo + 1`
          ;;
     *) debug "omiting $fname"

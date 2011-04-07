@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- *Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ **Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 #include "account.h"
@@ -50,9 +50,9 @@ namespace PlexyDesk
 
 
 SocialAccountsManager::SocialAccountsManager(QApplication *parent) : QObject(parent),
-        m_adaptor(new SocialAccountsManagerAdaptor(this)),
-        m_storageLayer(new SocialStorageLayer(this)),
-        m_storageLayerOpened(false)
+                                                                     m_adaptor(new SocialAccountsManagerAdaptor(this)),
+                                                                     m_storageLayer(new SocialStorageLayer(this)),
+                                                                     m_storageLayerOpened(false)
 {
     qRegisterMetaType<CreateAccountRequestData>();
     m_dbusConnection = new QDBusConnection(QDBusConnection::sessionBus());
@@ -62,7 +62,7 @@ SocialAccountsManager::SocialAccountsManager(QApplication *parent) : QObject(par
     loadAccounts();
 }
 
-StorageLayerInterface* SocialAccountsManager::storageLayer() const
+StorageLayerInterface *SocialAccountsManager::storageLayer() const
 {
     if (m_storageLayerOpened)
         return m_storageLayer;
@@ -105,13 +105,13 @@ void SocialAccountsManager::doLoadAccounts()
 
         m_pendingAccounts.insert(accountHandle, new SocialAccount(accountHandle, m_dbusConnection, this));
         connect(m_pendingAccounts.value(accountHandle), SIGNAL(ready(bool)),
-                this, SLOT(onAccountReady(bool)));
+             this, SLOT(onAccountReady(bool)));
 
     }
 }
 
 QDBusObjectPath SocialAccountsManager::createAccount(const QString &socialServiceName, const QString &displayName,
-        const QString &userName, QVariantMap &properties)
+     const QString &userName, QVariantMap &properties)
 {
     qDebug() <<" SocialAccountsManager::createAccount() called";
     //create the structure storing the account requested data
@@ -130,7 +130,7 @@ QDBusObjectPath SocialAccountsManager::createAccount(const QString &socialServic
     if (requestData->socialService.isEmpty())
     {
         QDBusMessage errorReply = requestData->message.createErrorReply(
-                                      "org.plexydesk.SocialAccountsManager.Error.NotImplemented", "Empty social service parameter passed.");
+             "org.plexydesk.SocialAccountsManager.Error.NotImplemented", "Empty social service parameter passed.");
         m_dbusConnection->send(errorReply);
         delete requestData;
         return QDBusObjectPath("/dummy/object/path/to/suppress/qdbus/warning");
@@ -158,8 +158,8 @@ void SocialAccountsManager::doCreateAccount()
     }
     /*--------------check whether the social service requested is supported by social daemon-----------*/
 
-    QDBusMessage busMsg = QDBusMessage::createMethodCall("org.plexydesk.social", "/services","local.socioplexy.Configuration","getPluginsList");
-    QDBusPendingReply<QStringList> msgRep = m_dbusConnection->asyncCall(busMsg,1000);
+    QDBusMessage busMsg = QDBusMessage::createMethodCall("org.plexydesk.social", "/services", "local.socioplexy.Configuration", "getPluginsList");
+    QDBusPendingReply<QStringList> msgRep = m_dbusConnection->asyncCall(busMsg, 1000);
     msgRep.waitForFinished();
     //if reply is valid only proceed the QDBus connection method calling
     if (msgRep.isValid())
@@ -169,8 +169,8 @@ void SocialAccountsManager::doCreateAccount()
         {
             // SocialDaemon doesn't support the social service specified. dbus error.
             QDBusMessage errorReply = m_requestData->message.createErrorReply(
-                                          "org.plexydesk.SocialAccountsManager.Error.NotImplemented",
-                                          "SocialDaemon does not support the specified service.");
+                 "org.plexydesk.SocialAccountsManager.Error.NotImplemented",
+                 "SocialDaemon does not support the specified service.");
             m_dbusConnection->send(errorReply);
             delete m_requestData;
             return;
@@ -216,7 +216,7 @@ void SocialAccountsManager::doCreateAccount()
     //create the ACTUAL account object
     m_pendingAccounts.insert(accountHandle, new SocialAccount(accountHandle, m_dbusConnection, this));
     connect(m_pendingAccounts.value(accountHandle), SIGNAL(ready(bool)),
-            this, SLOT(onAccountReady(bool)));
+         this, SLOT(onAccountReady(bool)));
     Q_ASSERT(!m_pendingAccountsRequestData.contains(accountHandle));
     m_pendingAccountsRequestData.insert(accountHandle, m_requestData);
 }
@@ -224,7 +224,7 @@ void SocialAccountsManager::doCreateAccount()
 void SocialAccountsManager::onAccountReady(bool success)
 {
     qDebug()<< "SocialAccountsManager::onAccountReady(): An account is ready!..";
-    SocialAccount *account = qobject_cast<SocialAccount*>(sender());
+    SocialAccount *account = qobject_cast<SocialAccount *>(sender());
 
     Q_ASSERT(0 != account);
     Q_ASSERT(m_pendingAccounts.contains(account->id()));
@@ -247,9 +247,9 @@ void SocialAccountsManager::onAccountReady(bool success)
         }
 
         connect(account, SIGNAL(validityChanged(bool)),
-                this, SLOT(onAccountValidityChanged()));
+             this, SLOT(onAccountValidityChanged()));
         connect(account, SIGNAL(Removed()),
-                this, SLOT(onAccountRemoved()));
+             this, SLOT(onAccountRemoved()));
     }
     else
     {
@@ -273,7 +273,7 @@ void SocialAccountsManager::onAccountReady(bool success)
         else
         {
             QDBusMessage errorReply = requestData->message.createErrorReply(
-                                          "org.plexydesk.SocialAccountsManager.Error.NotImplemented", "Unknown error occured trying to create the account.");
+                 "org.plexydesk.SocialAccountsManager.Error.NotImplemented", "Unknown error occured trying to create the account.");
             m_dbusConnection->send(errorReply);
         }
 
@@ -286,20 +286,20 @@ void SocialAccountsManager::onAccountReady(bool success)
         // If we have already registered on dbus, we should emit a signal saying
         // that this account has been created.
         /* if(m_dbusObjectsRegistered)
-         {
+           {
              Q_EMIT AccountValidityChanged(QDBusObjectPath(account->id()), account->isValid());
-         }*/
+           }*/
     }
 
     /*  if((m_dbusObjectsRegistered == false) && (m_pendingAccounts.size() == 0))
-      {
+       {
           Q_EMIT callDoRegisterDBusObjects();
-      }*/ //CHECK: this is done @ constructor
+       }*/                                                                                                                                        //CHECK: this is done @ constructor
 }
 
 void SocialAccountsManager::onAccountValidityChanged()
 {
-    SocialAccount *account = qobject_cast<SocialAccount*>(sender());
+    SocialAccount *account = qobject_cast<SocialAccount *>(sender());
     Q_ASSERT(0 != account);
     Q_ASSERT(m_readyAccounts.contains(account->id()));
 
@@ -341,7 +341,7 @@ void SocialAccountsManager::onAccountValidityChanged()
 
 void SocialAccountsManager::onAccountRemoved()
 {
-    SocialAccount *account = qobject_cast<SocialAccount*>(sender());
+    SocialAccount *account = qobject_cast<SocialAccount *>(sender());
     Q_ASSERT(0 != account);
 
     Q_ASSERT(m_readyAccounts.contains(account->id()));

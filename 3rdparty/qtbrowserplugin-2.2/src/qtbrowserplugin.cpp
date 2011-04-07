@@ -41,8 +41,8 @@
 #  endif
 
 /*
-static void debuginfo(const QString &str)
-{
+   static void debuginfo(const QString &str)
+   {
     QFile file("/tmp/qnsdebug.txt");
     if (file.open(QFile::WriteOnly | QFile::Append)) {
         file.write(str.toLatin1());
@@ -67,11 +67,11 @@ QtNPFactory *qtNPFactory()
 }
 
 // NPN functions, forwarding to function pointers provided by browser
-void NPN_Version(int* plugin_major, int* plugin_minor, int* netscape_major, int* netscape_minor)
+void NPN_Version(int *plugin_major, int *plugin_minor, int *netscape_major, int *netscape_minor)
 {
     Q_ASSERT(qNetscapeFuncs);
-    *plugin_major   = NP_VERSION_MAJOR;
-    *plugin_minor   = NP_VERSION_MINOR;
+    *plugin_major = NP_VERSION_MAJOR;
+    *plugin_minor = NP_VERSION_MINOR;
     *netscape_major = qNetscapeFuncs->version  >> 8;  // Major version is in high byte
     *netscape_minor = qNetscapeFuncs->version & 0xFF; // Minor version is in low byte
 }
@@ -84,183 +84,183 @@ void NPN_Version(int* plugin_major, int* plugin_minor, int* netscape_major, int*
 const char *NPN_UserAgent(NPP instance)
 {
     NPN_Prolog(uagent);
-    return FIND_FUNCTION_POINTER(NPN_UserAgentFP, qNetscapeFuncs->uagent)(instance);
+    return FIND_FUNCTION_POINTER(NPN_UserAgentFP, qNetscapeFuncs->uagent) (instance);
 }
 
-void NPN_Status(NPP instance, const char* message)
+void NPN_Status(NPP instance, const char *message)
 {
     NPN_Prolog(status);
-    FIND_FUNCTION_POINTER(NPN_StatusFP, qNetscapeFuncs->status)(instance, message);
+    FIND_FUNCTION_POINTER(NPN_StatusFP, qNetscapeFuncs->status) (instance, message);
 }
 
-NPError NPN_GetURL(NPP instance, const char* url, const char* window)
+NPError NPN_GetURL(NPP instance, const char *url, const char *window)
 {
     NPN_Prolog(geturl);
-    return FIND_FUNCTION_POINTER(NPN_GetURLFP, qNetscapeFuncs->geturl)(instance, url, window);
+    return FIND_FUNCTION_POINTER(NPN_GetURLFP, qNetscapeFuncs->geturl) (instance, url, window);
 }
 
-NPError NPN_GetURLNotify(NPP instance, const char* url, const char* window, void* notifyData)
+NPError NPN_GetURLNotify(NPP instance, const char *url, const char *window, void *notifyData)
 {
     if ((qNetscapeFuncs->version & 0xFF) < NPVERS_HAS_NOTIFICATION)
         return NPERR_INCOMPATIBLE_VERSION_ERROR;
 
     NPN_Prolog(geturlnotify);
-    return FIND_FUNCTION_POINTER(NPN_GetURLNotifyFP, qNetscapeFuncs->geturlnotify)(instance, url, window, notifyData);
+    return FIND_FUNCTION_POINTER(NPN_GetURLNotifyFP, qNetscapeFuncs->geturlnotify) (instance, url, window, notifyData);
 }
 
-NPError NPN_PostURLNotify(NPP instance, const char* url, const char* window, uint32 len, const char* buf, NPBool file, void* notifyData)
+NPError NPN_PostURLNotify(NPP instance, const char *url, const char *window, uint32 len, const char *buf, NPBool file, void *notifyData)
 {
     if ((qNetscapeFuncs->version & 0xFF) < NPVERS_HAS_NOTIFICATION)
         return NPERR_INCOMPATIBLE_VERSION_ERROR;
 
     NPN_Prolog(posturlnotify);
-    return FIND_FUNCTION_POINTER(NPN_PostURLNotifyFP, qNetscapeFuncs->posturlnotify)(instance, url, window, len, buf, file, notifyData);
+    return FIND_FUNCTION_POINTER(NPN_PostURLNotifyFP, qNetscapeFuncs->posturlnotify) (instance, url, window, len, buf, file, notifyData);
 }
 
-void* NPN_MemAlloc(uint32 size)
+void *NPN_MemAlloc(uint32 size)
 {
     NPN_Prolog(memalloc);
-    return FIND_FUNCTION_POINTER(NPN_MemAllocFP, qNetscapeFuncs->memalloc)(size);
+    return FIND_FUNCTION_POINTER(NPN_MemAllocFP, qNetscapeFuncs->memalloc) (size);
 }
 
-void NPN_MemFree(void* ptr)
+void NPN_MemFree(void *ptr)
 {
     NPN_Prolog(memfree);
-    FIND_FUNCTION_POINTER(NPN_MemFreeFP, qNetscapeFuncs->memfree)(ptr);
+    FIND_FUNCTION_POINTER(NPN_MemFreeFP, qNetscapeFuncs->memfree) (ptr);
 }
 
 uint32 NPN_MemFlush(uint32 size)
 {
     NPN_Prolog(memflush);
-    return FIND_FUNCTION_POINTER(NPN_MemFlushFP, qNetscapeFuncs->memflush)(size);
+    return FIND_FUNCTION_POINTER(NPN_MemFlushFP, qNetscapeFuncs->memflush) (size);
 }
 
-NPError	NPN_GetValue(NPP instance, NPNVariable variable, void *ret_value)
+NPError NPN_GetValue(NPP instance, NPNVariable variable, void *ret_value)
 {
     NPN_Prolog(getvalue);
-    return FIND_FUNCTION_POINTER(NPN_GetValueFP, qNetscapeFuncs->getvalue)(instance, variable, ret_value);
+    return FIND_FUNCTION_POINTER(NPN_GetValueFP, qNetscapeFuncs->getvalue) (instance, variable, ret_value);
 }
 
 NPError NPN_SetValue(NPP instance, NPPVariable variable, void *ret_value)
 {
     NPN_Prolog(setvalue);
-    return FIND_FUNCTION_POINTER(NPN_SetValueFP, qNetscapeFuncs->setvalue)(instance, variable, ret_value);
+    return FIND_FUNCTION_POINTER(NPN_SetValueFP, qNetscapeFuncs->setvalue) (instance, variable, ret_value);
 }
 
-NPIdentifier NPN_GetStringIdentifier(const char* name)
+NPIdentifier NPN_GetStringIdentifier(const char *name)
 {
     NPN_Prolog(getstringidentifier);
-    return FIND_FUNCTION_POINTER(NPN_GetStringIdentifierFP, qNetscapeFuncs->getstringidentifier)(name);
+    return FIND_FUNCTION_POINTER(NPN_GetStringIdentifierFP, qNetscapeFuncs->getstringidentifier) (name);
 }
 
-void NPN_GetStringIdentifiers(const char** names, int32 nameCount, NPIdentifier* identifiers)
+void NPN_GetStringIdentifiers(const char * *names, int32 nameCount, NPIdentifier *identifiers)
 {
     NPN_Prolog(getstringidentifiers);
-    FIND_FUNCTION_POINTER(NPN_GetStringIdentifiersFP, qNetscapeFuncs->getstringidentifiers)(names, nameCount, identifiers);
+    FIND_FUNCTION_POINTER(NPN_GetStringIdentifiersFP, qNetscapeFuncs->getstringidentifiers) (names, nameCount, identifiers);
 }
 
 NPIdentifier NPN_GetIntIdentifier(int32 intid)
 {
     NPN_Prolog(getintidentifier);
-    return FIND_FUNCTION_POINTER(NPN_GetIntIdentifierFP, qNetscapeFuncs->getintidentifier)(intid);
+    return FIND_FUNCTION_POINTER(NPN_GetIntIdentifierFP, qNetscapeFuncs->getintidentifier) (intid);
 }
 
 bool NPN_IdentifierIsString(NPIdentifier identifier)
 {
     NPN_Prolog(identifierisstring);
-    return FIND_FUNCTION_POINTER(NPN_IdentifierIsStringFP, qNetscapeFuncs->identifierisstring)(identifier);
+    return FIND_FUNCTION_POINTER(NPN_IdentifierIsStringFP, qNetscapeFuncs->identifierisstring) (identifier);
 }
 
-char* NPN_UTF8FromIdentifier(NPIdentifier identifier)
+char *NPN_UTF8FromIdentifier(NPIdentifier identifier)
 {
     NPN_Prolog(utf8fromidentifier);
-    return FIND_FUNCTION_POINTER(NPN_UTF8FromIdentifierFP, qNetscapeFuncs->utf8fromidentifier)(identifier);
+    return FIND_FUNCTION_POINTER(NPN_UTF8FromIdentifierFP, qNetscapeFuncs->utf8fromidentifier) (identifier);
 }
 
 int32 NPN_IntFromIdentifier(NPIdentifier identifier)
 {
     NPN_Prolog(intfromidentifier);
-    return FIND_FUNCTION_POINTER(NPN_IntFromIdentifierFP, qNetscapeFuncs->intfromidentifier)(identifier);
+    return FIND_FUNCTION_POINTER(NPN_IntFromIdentifierFP, qNetscapeFuncs->intfromidentifier) (identifier);
 }
 
-NPObject* NPN_CreateObject(NPP npp, NPClass *aClass)
+NPObject *NPN_CreateObject(NPP npp, NPClass *aClass)
 {
     NPN_Prolog(createobject);
-    return FIND_FUNCTION_POINTER(NPN_CreateObjectFP, qNetscapeFuncs->createobject)(npp, aClass);
+    return FIND_FUNCTION_POINTER(NPN_CreateObjectFP, qNetscapeFuncs->createobject) (npp, aClass);
 }
 
-NPObject* NPN_RetainObject(NPObject *obj)
+NPObject *NPN_RetainObject(NPObject *obj)
 {
     NPN_Prolog(retainobject);
-    return FIND_FUNCTION_POINTER(NPN_RetainObjectFP, qNetscapeFuncs->retainobject)(obj);
+    return FIND_FUNCTION_POINTER(NPN_RetainObjectFP, qNetscapeFuncs->retainobject) (obj);
 }
 
 void NPN_ReleaseObject(NPObject *obj)
 {
     NPN_Prolog(releaseobject);
-    FIND_FUNCTION_POINTER(NPN_ReleaseObjectFP, qNetscapeFuncs->releaseobject)(obj);
+    FIND_FUNCTION_POINTER(NPN_ReleaseObjectFP, qNetscapeFuncs->releaseobject) (obj);
 }
 
 // Scripting implementation (QObject calling JavaScript in browser) - we don't use those
-bool NPN_Invoke(NPP npp, NPObject* obj, NPIdentifier methodName, const NPVariant *args, int32 argCount, NPVariant *result)
+bool NPN_Invoke(NPP npp, NPObject *obj, NPIdentifier methodName, const NPVariant *args, int32 argCount, NPVariant *result)
 {
     NPN_Prolog(invoke);
-    return FIND_FUNCTION_POINTER(NPN_InvokeFP, qNetscapeFuncs->invoke)(npp, obj, methodName, args, argCount, result);
+    return FIND_FUNCTION_POINTER(NPN_InvokeFP, qNetscapeFuncs->invoke) (npp, obj, methodName, args, argCount, result);
 }
 
-bool NPN_InvokeDefault(NPP npp, NPObject* obj, const NPVariant *args, int32 argCount, NPVariant *result)
+bool NPN_InvokeDefault(NPP npp, NPObject *obj, const NPVariant *args, int32 argCount, NPVariant *result)
 {
     NPN_Prolog(invokedefault);
-    return FIND_FUNCTION_POINTER(NPN_InvokeDefaultFP, qNetscapeFuncs->invokedefault)(npp, obj, args, argCount, result);
+    return FIND_FUNCTION_POINTER(NPN_InvokeDefaultFP, qNetscapeFuncs->invokedefault) (npp, obj, args, argCount, result);
 }
 
 bool NPN_Evaluate(NPP npp, NPObject *obj, NPString *script, NPVariant *result)
 {
     NPN_Prolog(evaluate);
-    return FIND_FUNCTION_POINTER(NPN_EvaluateFP, qNetscapeFuncs->evaluate)(npp, obj, script, result);
+    return FIND_FUNCTION_POINTER(NPN_EvaluateFP, qNetscapeFuncs->evaluate) (npp, obj, script, result);
 }
 
 bool NPN_GetProperty(NPP npp, NPObject *obj, NPIdentifier propertyName, NPVariant *result)
 {
     NPN_Prolog(getproperty);
-    return FIND_FUNCTION_POINTER(NPN_GetPropertyFP, qNetscapeFuncs->getproperty)(npp, obj, propertyName, result);
+    return FIND_FUNCTION_POINTER(NPN_GetPropertyFP, qNetscapeFuncs->getproperty) (npp, obj, propertyName, result);
 }
 
 bool NPN_SetProperty(NPP npp, NPObject *obj, NPIdentifier propertyName, const NPVariant *value)
 {
     NPN_Prolog(setproperty);
-    return FIND_FUNCTION_POINTER(NPN_SetPropertyFP, qNetscapeFuncs->setproperty)(npp, obj, propertyName, value);
+    return FIND_FUNCTION_POINTER(NPN_SetPropertyFP, qNetscapeFuncs->setproperty) (npp, obj, propertyName, value);
 }
 
 bool NPN_RemoveProperty(NPP npp, NPObject *obj, NPIdentifier propertyName)
 {
     NPN_Prolog(removeproperty);
-    return FIND_FUNCTION_POINTER(NPN_RemovePropertyFP, qNetscapeFuncs->removeproperty)(npp, obj, propertyName);
+    return FIND_FUNCTION_POINTER(NPN_RemovePropertyFP, qNetscapeFuncs->removeproperty) (npp, obj, propertyName);
 }
 
 bool NPN_HasProperty(NPP npp, NPObject *obj, NPIdentifier propertyName)
 {
     NPN_Prolog(hasproperty);
-    return FIND_FUNCTION_POINTER(NPN_HasPropertyFP, qNetscapeFuncs->hasproperty)(npp, obj, propertyName);
+    return FIND_FUNCTION_POINTER(NPN_HasPropertyFP, qNetscapeFuncs->hasproperty) (npp, obj, propertyName);
 }
 
 bool NPN_HasMethod(NPP npp, NPObject *obj, NPIdentifier methodName)
 {
     NPN_Prolog(hasmethod);
-    return FIND_FUNCTION_POINTER(NPN_HasMethodFP, qNetscapeFuncs->hasmethod)(npp, obj, methodName);
+    return FIND_FUNCTION_POINTER(NPN_HasMethodFP, qNetscapeFuncs->hasmethod) (npp, obj, methodName);
 }
 
 void NPN_ReleaseVariantValue(NPVariant *variant)
 {
     NPN_Prolog(releasevariantvalue);
-    FIND_FUNCTION_POINTER(NPN_ReleaseVariantValueFP, qNetscapeFuncs->releasevariantvalue)(variant);
+    FIND_FUNCTION_POINTER(NPN_ReleaseVariantValueFP, qNetscapeFuncs->releasevariantvalue) (variant);
 }
 
 void NPN_SetException(NPObject *obj, const char *message)
 {
     qDebug("NPN_SetException: %s", message);
     NPN_Prolog(setexception);
-    FIND_FUNCTION_POINTER(NPN_SetExceptionFP, qNetscapeFuncs->setexception)(obj, message);
+    FIND_FUNCTION_POINTER(NPN_SetExceptionFP, qNetscapeFuncs->setexception) (obj, message);
 }
 
 // Scripting implementation (JavaScript calling QObject)
@@ -305,14 +305,14 @@ static int metaOffset(const QMetaObject *metaObject, MetaOffset offsetType)
         return 0;
     QByteArray ToSuperClass = metaObject->classInfo(classInfoIndex).value();
     int offset = offsetType == MetaProperty ? metaObject->propertyOffset()
-        : metaObject->methodOffset();
+     : metaObject->methodOffset();
 
     while (ToSuperClass != metaObject->className()) {
         metaObject = metaObject->superClass();
         if (!metaObject)
             break;
         offset -= offsetType == MetaProperty ? metaObject->propertyCount()
-                    : metaObject->methodCount();
+         : metaObject->methodCount();
     }
     return offset;
 }
@@ -358,9 +358,9 @@ static bool NPClass_Invoke(NPObject *npobj, NPIdentifier name, const NPVariant *
         return false;
     }
 
-    QVariant returnVariant(QVariant::nameToType(slot.typeName()), (void*)0);
+    QVariant returnVariant(QVariant::nameToType(slot.typeName()), (void *)0);
     QVector<QVariant> variants(parameterTypes.count()); // keep data alive
-    QVector<const void*> metacallArgs(parameterTypes.count() + 1); // arguments for qt_metacall
+    QVector<const void *> metacallArgs(parameterTypes.count() + 1); // arguments for qt_metacall
     metacallArgs[0] = returnVariant.data(); // args[0] == return value
 
     for (int p = 0; p < parameterTypes.count(); ++p) {
@@ -381,7 +381,7 @@ static bool NPClass_Invoke(NPObject *npobj, NPIdentifier name, const NPVariant *
         metacallArgs[p + 1] = variants.at(p).constData(); // must not detach!
     }
 
-    qobject->qt_metacall(QMetaObject::InvokeMetaMethod, slotIndex, const_cast<void**>(metacallArgs.data()));
+    qobject->qt_metacall(QMetaObject::InvokeMetaMethod, slotIndex, const_cast<void * *>(metacallArgs.data()));
     if (returnVariant.isValid() && result)
         *result = NPVariant::fromQVariant(This, returnVariant);
 
@@ -464,8 +464,8 @@ NPString NPString::fromQString(const QString &qstr)
     const QByteArray qutf8 = qstr.toUtf8();
 
     npstring.utf8length = qutf8.length();
-    npstring.utf8characters = (char*)NPN_MemAlloc(npstring.utf8length);
-    memcpy((char*)npstring.utf8characters, qutf8.constData(), npstring.utf8length);
+    npstring.utf8characters = (char *)NPN_MemAlloc(npstring.utf8length);
+    memcpy((char *)npstring.utf8characters, qutf8.constData(), npstring.utf8length);
 
     return npstring;
 }
@@ -496,19 +496,19 @@ NPVariant NPVariant::fromQVariant(QtNPInstance *This, const QVariant &qvariant)
         npvar.type = Double;
         break;
     case QVariant::UserType:
-        {
-            QByteArray userType = qvariant.typeName();
-            if (userType.endsWith('*')) {
-                QtNPInstance *that = new QtNPInstance;
-                that->npp = This->npp;
-                that->qt.object = *(QObject**)qvariant.constData();
-                NPClass *npclass = new NPClass(that);
-                npclass->delete_qtnp = true;
-                npvar.value.objectValue = NPN_CreateObject(This->npp, new NPClass(This));
-                npvar.type = Object;
-            }
+    {
+        QByteArray userType = qvariant.typeName();
+        if (userType.endsWith('*')) {
+            QtNPInstance *that = new QtNPInstance;
+            that->npp = This->npp;
+            that->qt.object = *(QObject * *)qvariant.constData();
+            NPClass *npclass = new NPClass(that);
+            npclass->delete_qtnp = true;
+            npvar.value.objectValue = NPN_CreateObject(This->npp, new NPClass(This));
+            npvar.type = Object;
         }
-        break;
+    }
+    break;
     default: // including QVariant::String
         if (!qvar.convert(QVariant::String))
             break;
@@ -527,26 +527,26 @@ NPVariant::operator QVariant() const
     case Null:
         return QVariant();
     case Object:
-        {
-            if (!value.objectValue || !value.objectValue->_class)
-                break;
-            NPClass *aClass = value.objectValue->_class;
-            // not one of ours?
-            if (aClass->invoke != NPClass_Invoke)
-                break;
-            // or just empty for some reason
-            QObject *qobject = aClass->qtnp->qt.object;
-            if (!qobject)
-                break;
-            QByteArray typeName = qobject->metaObject()->className();
-            int userType = QMetaType::type(typeName + "*");
-            if (userType == QVariant::Invalid)
-                break;
-            QVariant result(userType, &aClass->qtnp->qt.object);
-            // sanity check
-            Q_ASSERT(*(QObject**)result.constData() == aClass->qtnp->qt.object);
-            return result;
-        }
+    {
+        if (!value.objectValue || !value.objectValue->_class)
+            break;
+        NPClass *aClass = value.objectValue->_class;
+        // not one of ours?
+        if (aClass->invoke != NPClass_Invoke)
+            break;
+        // or just empty for some reason
+        QObject *qobject = aClass->qtnp->qt.object;
+        if (!qobject)
+            break;
+        QByteArray typeName = qobject->metaObject()->className();
+        int userType = QMetaType::type(typeName + "*");
+        if (userType == QVariant::Invalid)
+            break;
+        QVariant result(userType, &aClass->qtnp->qt.object);
+        // sanity check
+        Q_ASSERT(*(QObject * *)result.constData() == aClass->qtnp->qt.object);
+        return result;
+    }
     case Boolean:
         return value.boolValue;
     case Int32:
@@ -580,7 +580,7 @@ public:
     NPError reason;
 
     NPP npp;
-    NPStream* stream;
+    NPStream *stream;
 
 protected:
     qint64 readData(char *, qint64);
@@ -595,7 +595,7 @@ QtNPStream::QtNPStream(NPP instance, NPStream *st)
 /*!
     Returns the URL from which the stream was created, or the empty string
     for write-only streams.
-*/
+ */
 QString QtNPStream::url() const
 {
     if (!stream)
@@ -636,21 +636,21 @@ bool QtNPStream::finish(QtNPBindable *bindable)
             }
             break;
         case NPRES_USER_BREAK:
-            {
-                ErrorBuffer empty;
-                empty.setObjectName(url());
-                empty.setErrorString("User cancelled operation."),
-                res = bindable->readData(&empty, mime);
-            }
-            break;
+        {
+            ErrorBuffer empty;
+            empty.setObjectName(url());
+            empty.setErrorString("User cancelled operation."),
+            res = bindable->readData(&empty, mime);
+        }
+        break;
         case NPRES_NETWORK_ERR:
-            {
-                ErrorBuffer empty;
-                empty.setObjectName(url());
-                empty.setErrorString("Network error during download."),
-                res = bindable->readData(&empty, mime);
-            }
-            break;
+        {
+            ErrorBuffer empty;
+            empty.setObjectName(url());
+            empty.setErrorString("Network error during download."),
+            res = bindable->readData(&empty, mime);
+        }
+        break;
         default:
             break;
         }
@@ -675,77 +675,77 @@ public:
             NPN_ReleaseObject(domNode);
     }
 
-    int qt_metacall(QMetaObject::Call call, int index, void **args);
+    int qt_metacall(QMetaObject::Call call, int index, void * *args);
 
 private:
     QtNPInstance *This;
     NPObject *domNode;
 };
 
-int QtSignalForwarder::qt_metacall(QMetaObject::Call call, int index, void **args)
+int QtSignalForwarder::qt_metacall(QMetaObject::Call call, int index, void * *args)
 {
     // no support for QObject method/properties etc!
     if (!This || !This->npp || call != QMetaObject::InvokeMetaMethod
-        || !This->qt.object)
+     || !This->qt.object)
         return index;
 
     switch (index) {
     case -1:
-        {
-            QString msg = *(QString*)args[1];
-            NPN_Status(This->npp, msg.toLocal8Bit().constData());
-        }
-        break;
+    {
+        QString msg = *(QString *)args[1];
+        NPN_Status(This->npp, msg.toLocal8Bit().constData());
+    }
+    break;
     default:
-        {
-            QObject *qobject = This->qt.object;
-            if (!domNode)
-                NPN_GetValue(This->npp, NPNVPluginElementNPObject, &domNode);
-            if (!domNode)
-                break;
-            const QMetaObject *metaObject = qobject->metaObject();
-            if (index < metaOffset(metaObject, MetaMethod))
-                break;
+    {
+        QObject *qobject = This->qt.object;
+        if (!domNode)
+            NPN_GetValue(This->npp, NPNVPluginElementNPObject, &domNode);
+        if (!domNode)
+            break;
+        const QMetaObject *metaObject = qobject->metaObject();
+        if (index < metaOffset(metaObject, MetaMethod))
+            break;
 
-            const QMetaMethod method = metaObject->method(index);
-            Q_ASSERT(method.methodType() == QMetaMethod::Signal);
+        const QMetaMethod method = metaObject->method(index);
+        Q_ASSERT(method.methodType() == QMetaMethod::Signal);
 
-            QByteArray signalSignature = method.signature();
-            QByteArray scriptFunction = signalSignature.left(signalSignature.indexOf('('));
-            NPIdentifier id = NPN_GetStringIdentifier(scriptFunction.constData());
-            if (NPN_HasMethod(This->npp, domNode, id)) {
-                QList<QByteArray> parameterTypes = method.parameterTypes();
-                QVector<NPVariant> parameters;
-                NPVariant result;
-                bool error = false;
-                for (int p = 0; p < parameterTypes.count(); ++p) {
-                    QVariant::Type type = QVariant::nameToType(parameterTypes.at(p));
-                    if (type == QVariant::Invalid) {
-                        NPN_SetException(domNode, QByteArray("Unsupported parameter type in ") + scriptFunction);
-                        error = true;
-                        break;
-                    }
-                    QVariant qvar(type, args[p + 1]);
-                    NPVariant npvar = NPVariant::fromQVariant(This, qvar);
-                    if (npvar.type == NPVariant::Null || npvar.type == NPVariant::Void) {
-                        NPN_SetException(domNode, QByteArray("Unsupported parameter value in ") + scriptFunction);
-                        error =true;
-                        break;
-                    }
-                    parameters += npvar;
-                }
-                if (error)
+        QByteArray signalSignature = method.signature();
+        QByteArray scriptFunction = signalSignature.left(signalSignature.indexOf('('));
+        NPIdentifier id = NPN_GetStringIdentifier(scriptFunction.constData());
+        if (NPN_HasMethod(This->npp, domNode, id)) {
+            QList<QByteArray> parameterTypes = method.parameterTypes();
+            QVector<NPVariant> parameters;
+            NPVariant result;
+            bool error = false;
+            for (int p = 0; p < parameterTypes.count(); ++p) {
+                QVariant::Type type = QVariant::nameToType(parameterTypes.at(p));
+                if (type == QVariant::Invalid) {
+                    NPN_SetException(domNode, QByteArray("Unsupported parameter type in ") + scriptFunction);
+                    error = true;
                     break;
-
-                NPError nperror = NPN_Invoke(This->npp, domNode, id, parameters.constData(), parameters.count(), &result);
-                if (nperror != NPERR_NO_ERROR && false) { // disabled, as NPN_Invoke seems to always return GENERICERROR
-                    NPN_SetException(domNode, QByteArray("Error invoking event handler ") + scriptFunction);
                 }
-                // ### TODO: update return value (args[0]) (out-parameters not supported anyway)
-                NPN_ReleaseVariantValue(&result);
+                QVariant qvar(type, args[p + 1]);
+                NPVariant npvar = NPVariant::fromQVariant(This, qvar);
+                if (npvar.type == NPVariant::Null || npvar.type == NPVariant::Void) {
+                    NPN_SetException(domNode, QByteArray("Unsupported parameter value in ") + scriptFunction);
+                    error = true;
+                    break;
+                }
+                parameters += npvar;
             }
+            if (error)
+                break;
+
+            NPError nperror = NPN_Invoke(This->npp, domNode, id, parameters.constData(), parameters.count(), &result);
+            if (nperror != NPERR_NO_ERROR && false) {     // disabled, as NPN_Invoke seems to always return GENERICERROR
+                NPN_SetException(domNode, QByteArray("Error invoking event handler ") + scriptFunction);
+            }
+            // ### TODO: update return value (args[0]) (out-parameters not supported anyway)
+            NPN_ReleaseVariantValue(&result);
         }
-        break;
+    }
+    break;
     }
 
     return index;
@@ -757,57 +757,57 @@ extern "C" NPError
 NPP_GetValue(NPP instance, NPPVariable variable, void *value)
 {
     if (!instance || !instance->pdata)
-	return NPERR_INVALID_INSTANCE_ERROR;
+        return NPERR_INVALID_INSTANCE_ERROR;
 
-    QtNPInstance* This = (QtNPInstance*) instance->pdata;
+    QtNPInstance *This = (QtNPInstance *) instance->pdata;
 
     switch (variable) {
     case NPPVpluginNameString:
-        {
-            static QByteArray name = qtNPFactory()->pluginName().toLocal8Bit();
-            *(const char**)value = name.constData();
-        }
-        break;
+    {
+        static QByteArray name = qtNPFactory()->pluginName().toLocal8Bit();
+        *(const char * *)value = name.constData();
+    }
+    break;
     case NPPVpluginDescriptionString:
-        {
-            static QByteArray description = qtNPFactory()->pluginDescription().toLocal8Bit();
-            *(const char**)value = description.constData();
-        }
-        break;
+    {
+        static QByteArray description = qtNPFactory()->pluginDescription().toLocal8Bit();
+        *(const char * *)value = description.constData();
+    }
+    break;
 
 #ifdef Q_WS_X11
     case NPPVpluginNeedsXEmbed:
-        *(int*)value = true; // PRBool = int
+        *(int *)value = true; // PRBool = int
         break;
 #endif
 
     case NPPVpluginScriptableNPObject:
-        {
-            NPObject *object = NPN_CreateObject(instance, new NPClass(This));
-            *(NPObject**)value = object;
-        }
-        break;
+    {
+        NPObject *object = NPN_CreateObject(instance, new NPClass(This));
+        *(NPObject * *)value = object;
+    }
+    break;
     case NPPVformValue:
-        {
-            QObject *object = This->qt.object;
-            const QMetaObject *metaObject = object->metaObject();
-            int defaultIndex = metaObject->indexOfClassInfo("DefaultProperty");
-            if (defaultIndex == -1)
-                return NPERR_GENERIC_ERROR;
-            QByteArray defaultProperty = metaObject->classInfo(defaultIndex).value();
-            if (defaultProperty.isEmpty())
-                return NPERR_GENERIC_ERROR;
-            QVariant defaultValue = object->property(defaultProperty);
-            if (!defaultValue.isValid())
-                return NPERR_GENERIC_ERROR;
-            defaultProperty = defaultValue.toString().toUtf8();
-            int size = defaultProperty.size();
-            char *utf8 = (char*)NPN_MemAlloc(size + 1);
-            memcpy(utf8, defaultProperty.constData(), size);
-            utf8[size] = 0; // null-terminator
-            *(void**)value = utf8;
-        }
-        break;
+    {
+        QObject *object = This->qt.object;
+        const QMetaObject *metaObject = object->metaObject();
+        int defaultIndex = metaObject->indexOfClassInfo("DefaultProperty");
+        if (defaultIndex == -1)
+            return NPERR_GENERIC_ERROR;
+        QByteArray defaultProperty = metaObject->classInfo(defaultIndex).value();
+        if (defaultProperty.isEmpty())
+            return NPERR_GENERIC_ERROR;
+        QVariant defaultValue = object->property(defaultProperty);
+        if (!defaultValue.isValid())
+            return NPERR_GENERIC_ERROR;
+        defaultProperty = defaultValue.toString().toUtf8();
+        int size = defaultProperty.size();
+        char *utf8 = (char *)NPN_MemAlloc(size + 1);
+        memcpy(utf8, defaultProperty.constData(), size);
+        utf8[size] = 0;     // null-terminator
+        *(void * *)value = utf8;
+    }
+    break;
     default:
         return NPERR_GENERIC_ERROR;
     }
@@ -822,39 +822,39 @@ NPP_SetValue(NPP instance, NPPVariable variable, void *value)
     Q_UNUSED(value);
 
     if (!instance || !instance->pdata)
-	return NPERR_INVALID_INSTANCE_ERROR;
+        return NPERR_INVALID_INSTANCE_ERROR;
 
     /*
-    switch(variable) {
-    default:
+       switch(variable) {
+       default:
         return NPERR_GENERIC_ERROR;
-    }
-    */
+       }
+     */
     return NPERR_NO_ERROR;
 }
 
-extern "C" int16 NPP_Event(NPP instance, NPEvent* event)
+extern "C" int16 NPP_Event(NPP instance, NPEvent *event)
 {
     if (!instance || !instance->pdata)
-	return NPERR_INVALID_INSTANCE_ERROR;
+        return NPERR_INVALID_INSTANCE_ERROR;
 
-    QtNPInstance* This = (QtNPInstance*) instance->pdata;
+    QtNPInstance *This = (QtNPInstance *) instance->pdata;
     extern bool qtns_event(QtNPInstance *, NPEvent *);
     return qtns_event(This, event) ? 1 : 0;
 }
 
 #ifdef Q_WS_X11
 // Instance state information about the plugin.
-extern "C" char*
+extern "C" char *
 NP_GetMIMEDescription(void)
 {
     static QByteArray mime = qtNPFactory()->mimeTypes().join(";").toLocal8Bit() + "::" +
-                             qtNPFactory()->pluginName().toLocal8Bit();
-    return (char*)mime.constData();
+     qtNPFactory()->pluginName().toLocal8Bit();
+    return (char *)mime.constData();
 }
 
 extern "C" NPError
-NP_GetValue(void*, NPPVariable aVariable, void *aValue)
+NP_GetValue(void *, NPPVariable aVariable, void *aValue)
 {
     NPError err = NPERR_NO_ERROR;
 
@@ -863,13 +863,13 @@ NP_GetValue(void*, NPPVariable aVariable, void *aValue)
 
     switch (aVariable) {
     case NPPVpluginNameString:
-        *static_cast<char **> (aValue) = name.data();
+        *static_cast<char * *> (aValue) = name.data();
         break;
     case NPPVpluginDescriptionString:
-        *static_cast<char **>(aValue) = descr.data();
+        *static_cast<char * *>(aValue) = descr.data();
         break;
     case NPPVpluginNeedsXEmbed:
-        *static_cast<int*>(aValue) = true;
+        *static_cast<int *>(aValue) = true;
         break;
     case NPPVpluginTimerInterval:
     case NPPVpluginKeepLibraryInMemory:
@@ -887,19 +887,19 @@ NP_GetValue(void*, NPPVariable aVariable, void *aValue)
 */
 extern "C" NPError
 NPP_New(NPMIMEType pluginType,
-    NPP instance,
-    uint16 mode,
-    int16 argc,
-    char* argn[],
-    char* argv[],
-    NPSavedData* /*saved*/)
+ NPP instance,
+ uint16 mode,
+ int16 argc,
+ char *argn[],
+ char *argv[],
+ NPSavedData * /*saved*/)
 {
     if (!instance)
-	return NPERR_INVALID_INSTANCE_ERROR;
+        return NPERR_INVALID_INSTANCE_ERROR;
 
-    QtNPInstance* This = new QtNPInstance;
+    QtNPInstance *This = new QtNPInstance;
     if (!This)
-	return NPERR_OUT_OF_MEMORY_ERROR;
+        return NPERR_OUT_OF_MEMORY_ERROR;
 
     instance->pdata = This;
     This->filter = 0;
@@ -926,12 +926,12 @@ NPP_New(NPMIMEType pluginType,
 }
 
 extern "C" NPError
-NPP_Destroy(NPP instance, NPSavedData** /*save*/)
+NPP_Destroy(NPP instance, NPSavedData * * /*save*/)
 {
     if (!instance || !instance->pdata)
-	return NPERR_INVALID_INSTANCE_ERROR;
+        return NPERR_INVALID_INSTANCE_ERROR;
 
-    QtNPInstance* This = (QtNPInstance*) instance->pdata;
+    QtNPInstance *This = (QtNPInstance *) instance->pdata;
 
 #ifdef Q_WS_X11
     //This->widget->destroy(false, false); // X has destroyed all windows
@@ -951,34 +951,34 @@ NPP_Destroy(NPP instance, NPSavedData** /*save*/)
 static QtNPInstance *next_pi = 0; // helper to connect to QtNPBindable
 
 extern "C" NPError
-NPP_SetWindow(NPP instance, NPWindow* window)
+NPP_SetWindow(NPP instance, NPWindow *window)
 {
     if (!instance)
-	return NPERR_INVALID_INSTANCE_ERROR;
+        return NPERR_INVALID_INSTANCE_ERROR;
 
-    QtNPInstance* This = (QtNPInstance*) instance->pdata;
+    QtNPInstance *This = (QtNPInstance *) instance->pdata;
     extern void qtns_setGeometry(QtNPInstance*, const QRect &, const QRect &);
 
     const QRect clipRect(window->clipRect.left, window->clipRect.top,
-                         window->clipRect.right - window->clipRect.left,
-                         window->clipRect.bottom - window->clipRect.top);
+     window->clipRect.right - window->clipRect.left,
+     window->clipRect.bottom - window->clipRect.top);
     if (window)
         This->geometry = QRect(window->x, window->y, window->width, window->height);
 
     // take a shortcut if all that was changed is the geometry
-    if (qobject_cast<QWidget*>(This->qt.object) && window && This->window == (QtNPInstance::Widget)window->window) {
+    if (qobject_cast<QWidget *>(This->qt.object) && window && This->window == (QtNPInstance::Widget)window->window) {
         qtns_setGeometry(This, This->geometry, clipRect);
-	return NPERR_NO_ERROR;
+        return NPERR_NO_ERROR;
     }
 
-	delete This->qt.object;
-	This->qt.object = 0;
-	extern void qtns_destroy(QtNPInstance *This);
-	qtns_destroy(This);
+    delete This->qt.object;
+    This->qt.object = 0;
+    extern void qtns_destroy(QtNPInstance *This);
+    qtns_destroy(This);
 
     if (!window) {
         This->window = 0;
-	return NPERR_NO_ERROR;
+        return NPERR_NO_ERROR;
     }
 
     This->window = (QtNPInstance::Widget)window->window;
@@ -986,7 +986,7 @@ NPP_SetWindow(NPP instance, NPWindow* window)
     //This->display = ((NPSetWindowCallbackStruct *)window->ws_info)->display;
 #endif
 
-    extern void qtns_initialize(QtNPInstance*);
+    extern void qtns_initialize(QtNPInstance *);
     qtns_initialize(This);
 
     next_pi = This;
@@ -1000,7 +1000,7 @@ NPP_SetWindow(NPP instance, NPWindow* window)
         This->qt.object->setObjectName(QLatin1String(This->htmlID));
 
     This->filter = new QtSignalForwarder(This);
-    QStatusBar *statusbar = qFindChild<QStatusBar*>(This->qt.object);
+    QStatusBar *statusbar = qFindChild<QStatusBar *>(This->qt.object);
     if (statusbar) {
         int statusSignal = statusbar->metaObject()->indexOfSignal("messageChanged(QString)");
         if (statusSignal != -1) {
@@ -1028,10 +1028,10 @@ NPP_SetWindow(NPP instance, NPWindow* window)
         This->pendingStream = 0;
     }
 
-    if (!qobject_cast<QWidget*>(This->qt.object))
-	return NPERR_NO_ERROR;
+    if (!qobject_cast<QWidget *>(This->qt.object))
+        return NPERR_NO_ERROR;
 
-    extern void qtns_embed(QtNPInstance*);
+    extern void qtns_embed(QtNPInstance *);
     qtns_embed(This);
 
     QEvent e(QEvent::EmbeddingControl);
@@ -1047,15 +1047,15 @@ NPP_SetWindow(NPP instance, NPWindow* window)
 
 extern "C" NPError
 NPP_NewStream(NPP instance,
-	  NPMIMEType type,
-	  NPStream *stream,
-	  NPBool /*seekable*/,
-	  uint16 *stype)
+ NPMIMEType type,
+ NPStream *stream,
+ NPBool /*seekable*/,
+ uint16 *stype)
 {
     if (!instance)
-	return NPERR_INVALID_INSTANCE_ERROR;
+        return NPERR_INVALID_INSTANCE_ERROR;
 
-    QtNPInstance* This = (QtNPInstance*) instance->pdata;
+    QtNPInstance *This = (QtNPInstance *) instance->pdata;
     if (!This)
         return NPERR_NO_ERROR;
 
@@ -1084,8 +1084,8 @@ NPP_Write(NPP instance, NPStream *stream, int32 /*offset*/, int32 len, void *buf
         return NPERR_INVALID_INSTANCE_ERROR;
 
     // this should not be called, as we always demand a download
-    QtNPStream *qstream = (QtNPStream*)stream->pdata;
-    QByteArray data((const char*)buffer, len); // make deep copy
+    QtNPStream *qstream = (QtNPStream *)stream->pdata;
+    QByteArray data((const char *)buffer, len); // make deep copy
     qstream->buffer += data;
 
     return len;
@@ -1096,10 +1096,10 @@ extern "C" NPError
 NPP_DestroyStream(NPP instance, NPStream *stream, NPError reason)
 {
     if (!instance || !instance->pdata || !stream || !stream->pdata)
-	return NPERR_INVALID_INSTANCE_ERROR;
+        return NPERR_INVALID_INSTANCE_ERROR;
 
-    QtNPInstance *This = (QtNPInstance*)instance->pdata;
-    QtNPStream *qstream = (QtNPStream*)stream->pdata;
+    QtNPInstance *This = (QtNPInstance *)instance->pdata;
+    QtNPStream *qstream = (QtNPStream *)stream->pdata;
     qstream->reason = reason;
 
     if (!This->qt.object) { // not yet initialized
@@ -1114,7 +1114,7 @@ NPP_DestroyStream(NPP instance, NPStream *stream, NPError reason)
 }
 
 extern "C" void
-NPP_StreamAsFile(NPP instance, NPStream *stream, const char* fname)
+NPP_StreamAsFile(NPP instance, NPStream *stream, const char *fname)
 {
     if (!instance || !stream || !stream->pdata)
         return;
@@ -1124,36 +1124,36 @@ NPP_StreamAsFile(NPP instance, NPStream *stream, const char* fname)
     path = "/" + path.section(':', 1).replace(':', '/');
 #endif
 
-    QtNPStream *qstream = (QtNPStream*)stream->pdata;
+    QtNPStream *qstream = (QtNPStream *)stream->pdata;
     qstream->file.setFileName(path);
 }
 
 extern "C" void
 NPP_URLNotify(NPP instance,
-	      const char* url,
-	      NPReason reason,
-	      void* notifyData)
+ const char *url,
+ NPReason reason,
+ void *notifyData)
 {
     if (!instance)
         return;
-    QtNPInstance* This = (QtNPInstance*) instance->pdata;
+    QtNPInstance *This = (QtNPInstance *) instance->pdata;
     if (!This->bindable)
         return;
 
     QtNPBindable::Reason r;
     switch (reason) {
     case NPRES_DONE:
-	r = QtNPBindable::ReasonDone;
-	break;
+        r = QtNPBindable::ReasonDone;
+        break;
     case NPRES_USER_BREAK:
-	r = QtNPBindable::ReasonBreak;
-	break;
+        r = QtNPBindable::ReasonBreak;
+        break;
     case NPRES_NETWORK_ERR:
-	r = QtNPBindable::ReasonError;
-	break;
+        r = QtNPBindable::ReasonError;
+        break;
     default:
-	r = QtNPBindable::ReasonUnknown;
-	break;
+        r = QtNPBindable::ReasonUnknown;
+        break;
     }
 
     qint32 id = static_cast<qint32>(reinterpret_cast<size_t>(notifyData));
@@ -1164,29 +1164,29 @@ NPP_URLNotify(NPP instance,
 }
 
 extern "C" void
-NPP_Print(NPP instance, NPPrint* printInfo)
+NPP_Print(NPP instance, NPPrint *printInfo)
 {
     if(!printInfo || !instance)
-	return;
+        return;
 
-    QtNPInstance* This = (QtNPInstance*) instance->pdata;
+    QtNPInstance *This = (QtNPInstance *) instance->pdata;
     if (!This->bindable)
         return;
 
 /*
     if (printInfo->mode == NP_FULL) {
-	printInfo->print.fullPrint.pluginPrinted = This->bindable->printFullPage();
+    printInfo->print.fullPrint.pluginPrinted = This->bindable->printFullPage();
     } else if (printInfo->mode == NP_EMBED) {
         extern void qtns_print(QtNPInstance*, NPPrint*);
         qtns_print(This, printInfo);
     }
-*/
+ */
 }
 
 // Plug-in entrypoints - these are called by the browser
 
 // Fills in functiontable used by browser to call entry points in plugin.
-extern "C" NPError WINAPI NP_GetEntryPoints(NPPluginFuncs* pFuncs)
+extern "C" NPError WINAPI NP_GetEntryPoints(NPPluginFuncs *pFuncs)
 {
     if(!pFuncs)
         return NPERR_INVALID_FUNCTABLE_ERROR;
@@ -1195,21 +1195,21 @@ extern "C" NPError WINAPI NP_GetEntryPoints(NPPluginFuncs* pFuncs)
     else if (pFuncs->size < sizeof(NPPluginFuncs))
         return NPERR_INVALID_FUNCTABLE_ERROR;
 
-    pFuncs->version       = (NP_VERSION_MAJOR << 8) | NP_VERSION_MINOR;
-    pFuncs->newp          = MAKE_FUNCTION_POINTER(NPP_New);
-    pFuncs->destroy       = MAKE_FUNCTION_POINTER(NPP_Destroy);
-    pFuncs->setwindow     = MAKE_FUNCTION_POINTER(NPP_SetWindow);
-    pFuncs->newstream     = MAKE_FUNCTION_POINTER(NPP_NewStream);
+    pFuncs->version = (NP_VERSION_MAJOR << 8) | NP_VERSION_MINOR;
+    pFuncs->newp = MAKE_FUNCTION_POINTER(NPP_New);
+    pFuncs->destroy = MAKE_FUNCTION_POINTER(NPP_Destroy);
+    pFuncs->setwindow = MAKE_FUNCTION_POINTER(NPP_SetWindow);
+    pFuncs->newstream = MAKE_FUNCTION_POINTER(NPP_NewStream);
     pFuncs->destroystream = MAKE_FUNCTION_POINTER(NPP_DestroyStream);
-    pFuncs->asfile        = MAKE_FUNCTION_POINTER(NPP_StreamAsFile);
-    pFuncs->writeready    = MAKE_FUNCTION_POINTER(NPP_WriteReady);
-    pFuncs->write         = MAKE_FUNCTION_POINTER(NPP_Write);
-    pFuncs->print         = MAKE_FUNCTION_POINTER(NPP_Print);
-    pFuncs->event         = MAKE_FUNCTION_POINTER(NPP_Event);
-    pFuncs->urlnotify     = MAKE_FUNCTION_POINTER(NPP_URLNotify);
-    pFuncs->javaClass     = 0;
-    pFuncs->getvalue      = MAKE_FUNCTION_POINTER(NPP_GetValue);
-    pFuncs->setvalue      = MAKE_FUNCTION_POINTER(NPP_SetValue);
+    pFuncs->asfile = MAKE_FUNCTION_POINTER(NPP_StreamAsFile);
+    pFuncs->writeready = MAKE_FUNCTION_POINTER(NPP_WriteReady);
+    pFuncs->write = MAKE_FUNCTION_POINTER(NPP_Write);
+    pFuncs->print = MAKE_FUNCTION_POINTER(NPP_Print);
+    pFuncs->event = MAKE_FUNCTION_POINTER(NPP_Event);
+    pFuncs->urlnotify = MAKE_FUNCTION_POINTER(NPP_URLNotify);
+    pFuncs->javaClass = 0;
+    pFuncs->getvalue = MAKE_FUNCTION_POINTER(NPP_GetValue);
+    pFuncs->setvalue = MAKE_FUNCTION_POINTER(NPP_SetValue);
     return NPERR_NO_ERROR;
 }
 
@@ -1220,7 +1220,7 @@ enum NPNToolkitType
 };
 
 #ifndef Q_WS_X11
-extern "C" NPError WINAPI NP_Initialize(NPNetscapeFuncs* pFuncs)
+extern "C" NPError WINAPI NP_Initialize(NPNetscapeFuncs *pFuncs)
 {
     if(!pFuncs)
         return NPERR_INVALID_FUNCTABLE_ERROR;
@@ -1236,7 +1236,7 @@ extern "C" NPError WINAPI NP_Initialize(NPNetscapeFuncs* pFuncs)
     return NPERR_NO_ERROR;
 }
 #else
-extern "C" NPError WINAPI NP_Initialize(NPNetscapeFuncs* nFuncs, NPPluginFuncs* pFuncs)
+extern "C" NPError WINAPI NP_Initialize(NPNetscapeFuncs *nFuncs, NPPluginFuncs *pFuncs)
 {
     if(!nFuncs)
         return NPERR_INVALID_FUNCTABLE_ERROR;
@@ -1293,7 +1293,7 @@ extern "C" NPError WINAPI NP_Shutdown()
         //...
     };
     \endcode
-*/
+ */
 
 /*!
     \enum QtNPBindable::DisplayMode
@@ -1304,7 +1304,7 @@ extern "C" NPError WINAPI NP_Shutdown()
     with the <EMBED> or the <OBJECT> tag.
     \value Fullpage The plugin widget is the primary content of the web browser, which
     is usually the case when the web browser displays a file the plugin supports.
-*/
+ */
 
 /*!
     \enum QtNPBindable::Reason
@@ -1315,15 +1315,15 @@ extern "C" NPError WINAPI NP_Shutdown()
     \value ReasonBreak
     \value ReasonError
     \value ReasonUnknown
-*/
+ */
 
 /*!
     Constructs a QtNPBindable object.
 
     This can only happen when the plugin object is created.
-*/
+ */
 QtNPBindable::QtNPBindable()
-: pi(next_pi)
+    : pi(next_pi)
 {
     if (pi)
         pi->bindable = this;
@@ -1334,7 +1334,7 @@ QtNPBindable::QtNPBindable()
     Destroys the object.
 
     This can only happen when the plugin object is destroyed.
-*/
+ */
 QtNPBindable::~QtNPBindable()
 {
 }
@@ -1348,7 +1348,7 @@ QtNPBindable::~QtNPBindable()
 
     Note that the SGML specification does not permit multiple
     arguments with the same name.
-*/
+ */
 QMap<QByteArray, QVariant> QtNPBindable::parameters() const
 {
     if (!pi)
@@ -1362,7 +1362,7 @@ QMap<QByteArray, QVariant> QtNPBindable::parameters() const
     This is a wrapper around NPN_UserAgent.
 
     \sa getBrowserVersion()
-*/
+ */
 QString QtNPBindable::userAgent() const
 {
     if (!pi)
@@ -1378,7 +1378,7 @@ QString QtNPBindable::userAgent() const
     for an explanation of those values.
 
     \sa getBrowserVersion() userAgent()
-*/
+ */
 void QtNPBindable::getNppVersion(int *major, int *minor) const
 {
     int dummy = 0;
@@ -1393,7 +1393,7 @@ void QtNPBindable::getNppVersion(int *major, int *minor) const
     for an explanation of those values.
 
     \sa getNppVersion() userAgent()
-*/
+ */
 void QtNPBindable::getBrowserVersion(int *major, int *minor) const
 {
     int dummy = 0;
@@ -1403,7 +1403,7 @@ void QtNPBindable::getBrowserVersion(int *major, int *minor) const
 
 /*!
     Returns the display mode of the plugin.
-*/
+ */
 QtNPBindable::DisplayMode QtNPBindable::displayMode() const
 {
     if (!pi)
@@ -1413,7 +1413,7 @@ QtNPBindable::DisplayMode QtNPBindable::displayMode() const
 
 /*!
     Returns the mime type this plugin has been instantiated for.
-*/
+ */
 QString QtNPBindable::mimeType() const
 {
     if (!pi)
@@ -1430,7 +1430,7 @@ QString QtNPBindable::mimeType() const
 
     See http://devedge-temp.mozilla.org/library/manuals/2002/plugin/1.0/
     for documentation of the \c NPP type.
-*/
+ */
 NPP QtNPBindable::instance() const
 {
     if (!pi)
@@ -1447,7 +1447,7 @@ NPP QtNPBindable::instance() const
 
     Return true to indicate successfull processing of the data, otherwise
     return false. The default implementation does nothing and returns false.
-*/
+ */
 
 bool QtNPBindable::readData(QIODevice *source, const QString &format)
 {
@@ -1472,7 +1472,7 @@ bool QtNPBindable::readData(QIODevice *source, const QString &format)
     See Netscape's JavaScript documentation for an explanation of window names.
 
     \sa transferComplete() uploadData() uploadFile()
-*/
+ */
 int QtNPBindable::openUrl(const QString &url, const QString &window)
 {
     if (!pi)
@@ -1482,7 +1482,7 @@ int QtNPBindable::openUrl(const QString &url, const QString &window)
         wnd = "_blank";
 
     qint32 id = pi->getNotificationSeqNum();
-    NPError err = NPN_GetURLNotify(pi->npp, url.toLocal8Bit().constData(), wnd.toLocal8Bit().constData(), reinterpret_cast<void*>(id));
+    NPError err = NPN_GetURLNotify(pi->npp, url.toLocal8Bit().constData(), wnd.toLocal8Bit().constData(), reinterpret_cast<void *>(id));
     if (err != NPERR_NO_ERROR)
         id = -1;
 
@@ -1511,14 +1511,14 @@ int QtNPBindable::openUrl(const QString &url, const QString &window)
     See Netscape's JavaScript documentation for an explanation of window names.
 
     \sa transferComplete() openUrl() uploadFile()
-*/
+ */
 int QtNPBindable::uploadData(const QString &url, const QString &window, const QByteArray &data)
 {
     if (!pi)
         return -1;
 
     int id = pi->getNotificationSeqNum();
-    if (NPERR_NO_ERROR != NPN_PostURLNotify(pi->npp, url.toLocal8Bit().constData(), window.isEmpty() ? 0 : window.toLocal8Bit().constData(), data.size(), data.constData(), false, reinterpret_cast<void*>(id)))
+    if (NPERR_NO_ERROR != NPN_PostURLNotify(pi->npp, url.toLocal8Bit().constData(), window.isEmpty() ? 0 : window.toLocal8Bit().constData(), data.size(), data.constData(), false, reinterpret_cast<void *>(id)))
         id = -1;
 
     return id;
@@ -1540,7 +1540,7 @@ int QtNPBindable::uploadData(const QString &url, const QString &window, const QB
     See Netscape's JavaScript documentation for an explanation of window names.
 
     \sa transferComplete() uploadData() openUrl()
-*/
+ */
 
 int QtNPBindable::uploadFile(const QString &url, const QString &window, const QString &filename)
 {
@@ -1549,7 +1549,7 @@ int QtNPBindable::uploadFile(const QString &url, const QString &window, const QS
 
     QByteArray data = filename.toLocal8Bit();
     int id = pi->getNotificationSeqNum();
-    if (NPERR_NO_ERROR != NPN_PostURLNotify(pi->npp, url.toLocal8Bit().constData(), window.isEmpty() ? 0 : window.toLocal8Bit().constData(), data.size(), data.constData(), true, reinterpret_cast<void*>(id)))
+    if (NPERR_NO_ERROR != NPN_PostURLNotify(pi->npp, url.toLocal8Bit().constData(), window.isEmpty() ? 0 : window.toLocal8Bit().constData(), data.size(), data.constData(), true, reinterpret_cast<void *>(id)))
         id = -1;
 
     return id;
@@ -1559,7 +1559,7 @@ int QtNPBindable::uploadFile(const QString &url, const QString &window, const QS
     Called as a result of a call to openUrl, uploadData or uploadFile.
     \a url corresponds to the respective parameter, and \a id to value returned
     by the call. \a reason indicates how the transfer was completed.
-*/
+ */
 void QtNPBindable::transferComplete(const QString &url, int id, Reason reason)
 {
     Q_UNUSED(url)
@@ -1607,11 +1607,11 @@ void QtNPBindable::transferComplete(const QString &url, int id, Reason reason)
     So, your plugin should tread lightly on global settings. Do not, for example,
     use QApplication::setFont() - that will change the font in every widget of
     every Qt-based plugin currently loaded!
-*/
+ */
 
 /*!
     Creates a QtNPFactory.
-*/
+ */
 QtNPFactory::QtNPFactory()
 {
 }
@@ -1623,7 +1623,7 @@ QtNPFactory::QtNPFactory()
     about to be unloaded from memory. If createObject() has been called,
     a QApplication will still exist at this time, but will be deleted
     shortly after, just before the plugin is deleted.
-*/
+ */
 QtNPFactory::~QtNPFactory()
 {
 }
@@ -1642,10 +1642,10 @@ QtNPFactory::~QtNPFactory()
         QStringList list;
         list << "image/x-png:png:PNG Image"
              << "image/png:png:PNG Image";
-	return list;
+    return list;
     }
     \endcode
-*/
+ */
 
 /*!
     \fn QObject *QtNPFactory::createObject(const QString &type)
@@ -1653,16 +1653,16 @@ QtNPFactory::~QtNPFactory()
     Reimplement this function to return the QObject or QWidget subclass
     supporting the mime type \a type, or 0 if the factory doesn't support
     the type requested.
-*/
+ */
 
 /*!
     \fn QString QtNPFactory::pluginName() const
 
     Reimplement this function to return the name of the plugin.
-*/
+ */
 
 /*!
     \fn QString QtNPFactory::pluginDescription() const
 
     Reimplement this function to return the description of the plugin.
-*/
+ */
