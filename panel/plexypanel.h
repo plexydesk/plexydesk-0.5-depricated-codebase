@@ -11,11 +11,10 @@ public:
     virtual ~PlexyPanel();
 
 private slots:
-    void slt();
+    void switchLayer();
 
 private:
     void setup();
-    void test();
 };
 
 #endif // PLEXYPANEL_H
