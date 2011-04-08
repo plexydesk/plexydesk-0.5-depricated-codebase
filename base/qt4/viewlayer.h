@@ -24,18 +24,24 @@ public:
      **/
     void addItem(const QString &layerName, DesktopWidget *item);
 
+   /**
+    * Display the requested layer
+    * @param layer name of layer to be displayed
+    **/
     void showLayer(const QString &layer);
-    void hideLayer(const QString &layer);
-    //void switchLayer(int switchTo = 1);
-
     QStringList layerIndex() const;
+
 public slots:
     void switchLayer();
 
 private:
     class Private;
     Private *const d;
-    Private *const p;
+    
+   /**
+    * Hides the current layer
+    **/	
+    void hideLayer();
 };
 } // namespace PlexyDesk
 

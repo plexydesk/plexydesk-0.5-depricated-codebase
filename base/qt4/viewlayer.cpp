@@ -17,7 +17,7 @@ public:
     List *currentList;
 };
 
-ViewLayer::ViewLayer(QObject *obj) : QObject(obj), d(new Private), p(new Private)
+ViewLayer::ViewLayer(QObject *obj) : QObject(obj), d(new Private)
 {
     d->currentList = new Private::List;
 }
@@ -25,7 +25,6 @@ ViewLayer::ViewLayer(QObject *obj) : QObject(obj), d(new Private), p(new Private
 ViewLayer::~ViewLayer()
 {
     delete d;
-    delete p;
 }
 
 void ViewLayer::addItem(const QString &layerName, DesktopWidget *item)
@@ -45,12 +44,8 @@ void ViewLayer::showLayer(const QString &layername)
         qDebug("Invalid Layer:  ViewLayer::showLayer()");
     } else {
         qDebug()<<Q_FUNC_INFO <<layername;
-        for (int i = 0; i < d->currentList->size(); i++) {
-            if (d->currentList->at(i)) {
-                d->currentList->at(i)->hide();
-            }
-        }
-        d->currentList = d->layer[layername];
+        hideLayer();
+	d->currentList = d->layer[layername];
         for (int i = 0; i < d->currentList->size(); i++) {
             if (d->currentList->at(i)) {
                 d->currentList->at(i)->show();
@@ -58,23 +53,13 @@ void ViewLayer::showLayer(const QString &layername)
         }
     }
 }
-void ViewLayer::hideLayer(const QString &layerName)
+void ViewLayer::hideLayer()
 {
-    if (!d->layer.contains(layerName)) {
-        qDebug("Invalid Layer:  ViewLayer::hideLayer()");
-    } else {
-        qDebug()<<Q_FUNC_INFO <<layerName;
-        p->currentList = d->currentList;
-        d->currentList = d->layer[layerName];
-        p->currentList = d->currentList;
-        d->currentList = d->layer[layerName];
-        for (int i = 0; i < d->currentList->size(); i++) {
-            if (d->currentList->at(i)) {
-                d->currentList->at(i)->hide();
-            }
+     for (int i = 0; i < d->currentList->size(); i++) {
+        if (d->currentList->at(i)) {
+            d->currentList->at(i)->hide();
         }
-        d->currentList = p->currentList;
-    }
+     }
 }
 
 void ViewLayer::switchLayer()
@@ -97,7 +82,6 @@ void ViewLayer::switchLayer()
     {
         newLayer = keysList.at(0);
     }
-    hideLayer(currentLayer);
     showLayer(newLayer);
 
     qDebug()<<"CurrentLayer::"<<currentLayer;

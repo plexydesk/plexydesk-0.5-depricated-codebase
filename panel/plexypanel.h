@@ -10,9 +10,6 @@ public:
     PlexyPanel(QWidget *parent = 0, Qt::WindowFlags f = 0);
     virtual ~PlexyPanel();
 
-private slots:
-    void switchLayer();
-
 private:
     void setup();
 };

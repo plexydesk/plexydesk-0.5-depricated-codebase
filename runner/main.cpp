@@ -41,8 +41,6 @@
 #include <canvas.h>
 #include <plexyconfig.h>
 
-#include "plexypanel.h"
-
 using namespace PlexyDesk;
 
 int main( int argc, char * *argv )
@@ -82,10 +80,6 @@ int main( int argc, char * *argv )
     foreach (QString str, list) {
         view->addExtension(str);
     }
-
-    /* load the panel : do it as a new process later */
-    PlexyPanel *panel = new PlexyPanel();
-    panel->show();
 
     return app.exec();
 }

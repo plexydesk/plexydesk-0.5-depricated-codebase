@@ -84,6 +84,7 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
 
     connect(Config::getInstance(), SIGNAL(configChanged()), this, SLOT(backgroundChanged()));
     connect(Config::getInstance(), SIGNAL(widgetAdded()), this, SLOT(onNewWidget()));
+    connect(Config::getInstance(), SIGNAL(layerChange()), d->layer, SLOT(switchLayer()));
 }
 
 void DesktopView::onNewWidget()
@@ -146,7 +147,13 @@ void DesktopView::addExtension(const QString &name)
             scene()->addItem(widget);
             widget->setPos(d->row, d->column);
             d->row += widget->boundingRect().width()+d->margin;
-            d->layer->addItem("Widgets", widget);
+	    if (name == "plexytwit"){
+	       d->layer->addItem("Social",widget);
+	       d->layer->showLayer("Social");
+	    }else{
+               d->layer->addItem("Widgets", widget);
+	       d->layer->showLayer("Widgets");
+	    }
         }
     }
     delete provider;
