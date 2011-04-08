@@ -2,6 +2,12 @@
 #include <QDesktopWidget>
 #include <QDebug>
 
+//includes needed for testing
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QDBusConnection>
+#include <QDBusMessage>
+
 #include <X11/Xlib.h>
 #include <QX11Info>
 #include <netwm.h>
@@ -25,4 +31,18 @@ void PlexyPanel::setup()
     info.setState(winId(), NET::Sticky | NET::StaysOnTop | NET::KeepAbove);
     info.setDesktop(NETWinInfo::OnAllDesktops);
     setWindowOpacity(0.5);
+
+    /*setup test button Only for testing.. :)*/
+    QPushButton *but = new QPushButton("ChangeLayer");
+    connect(but, SIGNAL(clicked()), this, SLOT(switchLayer()));
+    QVBoxLayout *layout = new QVBoxLayout();
+    layout->addWidget(but);
+    this->setLayout(layout);
+}
+
+void PlexyPanel::switchLayer()
+{
+    QDBusMessage busMsg = QDBusMessage::createMethodCall("org.PlexyDesk.Config","/Configuration","local.PlexyDesk.Config","changeLayer");
+    QDBusConnection bus = QDBusConnection::connectToBus(QDBusConnection::SessionBus,"PlexyDesk");
+    bus.call(busMsg);
 }
