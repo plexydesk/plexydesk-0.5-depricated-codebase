@@ -26,7 +26,7 @@
 #include <abstractplugininterface.h>
 
 
-class VISIBLE_SYM ClassicBackdrop : public PlexyDesk::AbstractPluginInterface
+class ClassicBackdrop : public PlexyDesk::AbstractPluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)

@@ -54,27 +54,10 @@ CONFIGURE_FILE(org.plexydesk.daemon.service.in ${CMAKE_CURRENT_BINARY_DIR}/org.p
 
 INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}
-    ${CMAKE_BINARY_DIR}/extensions/widgets/clock
     ${CMAKE_BINARY_DIR}/plexylib
     ${CMAKE_BINARY_DIR}/base/qt4
     ${CMAKE_BINARY_DIR}/runner/
     ${CMAKE_BINARY_DIR}/base/gtk
-    ${QIMAGE_BLITZ_INCLUDE_DIR}
-    ${CMAKE_BINARY_DIR}/extensions/backdrop/classicdrop
-    ${CMAKE_BINARY_DIR}/extensions/widgets/demowidget
-    ${CMAKE_BINARY_DIR}/extensions/widgets/welcome
-    ${CMAKE_BINARY_DIR}/extensions/widgets/cpu
-    ${CMAKE_BINARY_DIR}/extensions/widgets/friendswidget
-    ${CMAKE_BINARY_DIR}/extensions/widgets/imagepile
-    ${CMAKE_BINARY_DIR}/extensions/widgets/youtubewidget
-    ${CMAKE_BINARY_DIR}/extensions/widgets/videoview
-    ${CMAKE_BINARY_DIR}/extensions/widgets/wallpaper-win32
-    ${CMAKE_BINARY_DIR}/extensions/data/presence
-    ${CMAKE_BINARY_DIR}/extensions/data/flicker
-    ${CMAKE_BINARY_DIR}/extensions/data/rss
-    ${CMAKE_BINARY_DIR}/extensions/data/irc
-    ${CMAKE_BINARY_DIR}/extensions/data/utube
-    ${CMAKE_BINARY_DIR}/extensions/data/videoengine 
     ${CMAKE_BINARY_DIR}/modules/libplexyirc/ 
     ${CMAKE_BINARY_DIR}/modules/QtWin/ 
     ${CMAKE_BINARY_DIR}/plexylib/fbjson/
@@ -106,7 +89,6 @@ INCLUDE_DIRECTORIES(
 
 ADD_SUBDIRECTORY(base/qt4/)
 ADD_SUBDIRECTORY(extensions/backdrop/classicdrop)
-ADD_SUBDIRECTORY(extensions/widgets/imagepile)
 
 ADD_SUBDIRECTORY(data)
 IF (NOT APPLE)
@@ -137,38 +119,3 @@ ENDIF(FFMPEG_FOUND)
 #ADD_SUBDIRECTORY(extensions/widgets/cpu) // TODO : port this
 ENDIF(NOT APPLE)
 
-ADD_SUBDIRECTORY(extensions/widgets/clock)
-ADD_SUBDIRECTORY(extensions/widgets/videoview)
-ADD_SUBDIRECTORY(extensions/widgets/youtubewidget)
-ADD_SUBDIRECTORY(extensions/data/flicker)
-ADD_SUBDIRECTORY(extensions/data/utube)
-ADD_SUBDIRECTORY(modules/libplexyirc)
-ADD_SUBDIRECTORY(extensions/data/rest/)
-ADD_SUBDIRECTORY(extensions/widgets/twit/)
-
-#facebook
-ADD_SUBDIRECTORY(social/libs/service)
-ADD_SUBDIRECTORY(extensions/facebook/authwin)
-IF(QIMAGE_BLITZ_FOUND)
-ADD_SUBDIRECTORY(extensions/facebook/welcome)
-ENDIF(QIMAGE_BLITZ_FOUND)
-#unported
-#ADD_SUBDIRECTORY(extensions/widgets/friendswidget) // TODO : port this
-#ADD_SUBDIRECTORY(extensions/data/presence) // TODO : port this
-#ADD_SUBDIRECTORY(extensions/data/rss) // TODO : port this and clean ups
-#ADD_SUBDIRECTORY(extensions/data/irc) // TODO : port this move it out of main
-#ADD_SUBDIRECTORY(extensions/widgets/sociotwitterwidget) // TODO : port this
-
-#windows
-IF(FULL_DESKTOP)
-ADD_SUBDIRECTORY(modules/QtWin)
-ENDIF(FULL_DESKTOP)
-#IF(WIN32)
-#ADD_SUBDIRECTORY(extensions/widgets/wallpaper-win32) // TODO : port this
-#ENDIF(WIN32)
-IF(OpenCV_FOUND)
- 
-ADD_SUBDIRECTORY(extensions/data/cvwebcam/)
-#ADD_SUBDIRECTORY(headtrack) // TODO : remove
-ENDIF(OpenCV_FOUND)
-#social // TODO : review o.o

@@ -28,7 +28,6 @@ ClassicBackdrop::ClassicBackdrop(QObject *object)
 
 ClassicBackdrop::~ClassicBackdrop()
 {
-
 }
 
 PlexyDesk::BasePlugin *ClassicBackdrop::instance()
