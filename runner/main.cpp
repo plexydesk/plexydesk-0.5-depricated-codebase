@@ -72,7 +72,7 @@ int main( int argc, char * *argv )
     info.setWindowType(NET::Desktop);
 #endif
 
-    PlexyDesk::PluginLoader *loader = new PlexyDesk::PluginLoader();
+    PlexyDesk::PluginLoader *loader = PlexyDesk::PluginLoader::getInstance();
     loader->scanDisk();
     view->show();
     QStringList list = PlexyDesk::Config::getInstance()->widgetList;

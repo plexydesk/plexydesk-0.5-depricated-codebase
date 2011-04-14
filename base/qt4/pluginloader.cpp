@@ -77,6 +77,10 @@ BasePlugin *PluginLoader::instance(const QString &name)
 
 void PluginLoader::load(const QString &interface, const QString &pluginName)
 {
+    // plugin already loaded
+    if(d->groups.find(pluginName) != d->groups.end())
+        return;
+
 #ifdef Q_WS_MAC
     QPluginLoader loader(applicationDirPath() + "/lib/plexyext/lib" + pluginName + ".dylib");
 #endif
