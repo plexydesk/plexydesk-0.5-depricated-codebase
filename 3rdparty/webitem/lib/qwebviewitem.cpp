@@ -690,5 +690,3 @@ void QWebViewItem::changeEvent(QEvent *e)
         //d->page->setPalette(palette());
     }
 }
-
-#include "qwebviewitem.moc"

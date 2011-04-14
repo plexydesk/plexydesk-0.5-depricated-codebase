@@ -38,7 +38,7 @@
 #include <QtCore/qurl.h>
 #include <QtNetwork/qnetworkaccessmanager.h>
 
-
+#include "config.h"
 
 class QNetworkRequest;
 class QPrinter;
@@ -46,7 +46,7 @@ class QWebPage;
 class QWebViewItemPrivate;
 class QWebNetworkRequest;
 
-class QWEBKIT_EXPORT QWebViewItem : public QObject, public QGraphicsRectItem
+class WEBQGV_EXPORT QWebViewItem : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
     Q_PROPERTY(QString title READ title)
@@ -56,7 +56,7 @@ class QWEBKIT_EXPORT QWebViewItem : public QObject, public QGraphicsRectItem
     Q_PROPERTY(bool modified READ isModified)
     Q_PROPERTY(qreal textSizeMultiplier READ textSizeMultiplier WRITE setTextSizeMultiplier)
 public :
-        explicit QWebViewItem(const QRectF &rect, QGraphicsItem *parent = 0);
+    explicit QWebViewItem(const QRectF &rect, QGraphicsItem *parent = 0);
     virtual ~QWebViewItem();
 
     QWebPage *page() const;
@@ -65,8 +65,8 @@ public :
     void load(const QUrl &url);
 
     void load(const QNetworkRequest &request,
-     QNetworkAccessManager::Operation operation = QNetworkAccessManager::GetOperation,
-     const QByteArray &body = QByteArray());
+    QNetworkAccessManager::Operation operation = QNetworkAccessManager::GetOperation,
+    const QByteArray &body = QByteArray());
     void setHtml(const QString &html, const QUrl &baseUrl = QUrl());
     void setContent(const QByteArray &data, const QString &mimeType = QString(), const QUrl &baseUrl = QUrl());
 
