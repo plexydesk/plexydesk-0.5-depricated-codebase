@@ -27,6 +27,7 @@ namespace PlexyDesk
 {
 class PLEXYDESK_EXPORT BackdropInterface : public AbstractPluginInterface
 {
+    Q_OBJECT
 public:
     void init()
     {

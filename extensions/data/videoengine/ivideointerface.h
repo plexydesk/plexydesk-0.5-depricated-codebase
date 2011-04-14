@@ -27,7 +27,9 @@
 
 #include <QObject>
 
-class VISIBLE_SYM IVideoInterface : public PlexyDesk::DataInterface
+#include "config.h"
+
+class VIDEOENGINE_EXPORT IVideoInterface : public PlexyDesk::DataInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)

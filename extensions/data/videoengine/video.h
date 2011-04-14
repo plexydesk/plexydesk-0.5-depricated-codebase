@@ -23,9 +23,11 @@
 #include <backdropinterface.h>
 #include <abstractplugininterface.h>
 #include <datainterface.h>
-#include "vplayer.h"
 
-class VISIBLE_SYM VideoData : public PlexyDesk::DataPlugin
+#include "vplayer.h"
+#include "config.h"
+
+class VIDEOENGINE_EXPORT VideoData : public PlexyDesk::DataPlugin
 {
     Q_OBJECT
 
@@ -33,6 +35,7 @@ public:
     VideoData(QObject *parent = 0);
     virtual ~VideoData();
     void init();
+    QVariantMap readAll() { return QVariantMap(); }
 
 public slots:
     void pushData(QVariant &);

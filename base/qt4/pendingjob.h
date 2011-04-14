@@ -7,7 +7,7 @@
 
 namespace PlexyDesk
 {
-class PendingJob : public QObject
+class PLEXYDESK_EXPORT PendingJob : public QObject
 {
     Q_OBJECT
 public:

@@ -23,7 +23,9 @@
 #include <QDomElement>
 #include <QFile>
 
-class QFreeDesktopMime : public QObject {
+#include "config.h"
+
+class MIME_EXPORT QFreeDesktopMime : public QObject {
     Q_OBJECT
 
 public:

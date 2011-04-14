@@ -497,5 +497,3 @@ bool QFreeDesktopMime::checkMagicString (const QString offset, const QByteArray 
 
     return(false);
 }
-
-#include "freedesktopmime.moc"

@@ -7,7 +7,7 @@ class IconProvider;
 
 namespace PlexyDesk
 {
-class VISIBLE_SYM IconJob : public PendingJob
+class IconJob : public PendingJob
 {
     Q_OBJECT
 public:

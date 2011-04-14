@@ -1,7 +1,3 @@
-SET (mimetypesrc 	freedesktopmime.cpp)
-QT4_AUTOMOC(${mimetypesrc})
-add_library (mimetype SHARED ${mimetypesrc})
-
 INCLUDE_DIRECTORIES(
     ${QT_INCLUDES}
     ${QT_QTNETWORK_INCLUDE_DIR}
@@ -9,12 +5,38 @@ INCLUDE_DIRECTORIES(
     ${QT_QTTEST_INCLUDE_DIR}
 )
 
-TARGET_LINK_LIBRARIES(
-    mimetype
+SET (sourceFiles
+    freedesktopmime.cpp
+)
+
+SET(headerFiles
+    freedesktopmime.h
+    config.h
+)
+
+SET(MOC_SRCS
+    freedesktopmime.h
+)
+
+qt4_wrap_cpp(QT_MOC_SRCS ${MOC_SRCS})
+
+SET(sourceFiles
+   ${sourceFiles}
+   ${headerFiles}
+)
+
+SET(libs
     ${QT_QTGUI_LIBRARY}
     ${QT_QTXML_LIBRARY}
     ${QT_QTCORE_LIBRARY}
     ${QT_QTSVG_LIBRARY}
+)
+
+add_library (mimetype SHARED ${sourceFiles} ${QT_MOC_SRCS})
+
+TARGET_LINK_LIBRARIES(
+    mimetype
+    ${libs}
 )
 
 if(NOT WIN32)

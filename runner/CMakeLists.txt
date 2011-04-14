@@ -1,23 +1,53 @@
-include(${QT_USE_FILE})
-INCLUDE_DIRECTORIES(
-   ${QT_INCLUDES}
-   ${QT_QTOPENGL_INCLUDE_DIR}
-   ${QT_QTNETWORK_INCLUDE_DIR}
-   ${QT_QTTEST_INCLUDE_DIR}
-   ${X11_INCLUDE_DIR}
- )
+project(plexydesk_runner)
 
-include_directories(${CMAKE_SOURCE_DIR}/lib/)
-########### source files ###############
-SET(sourceFiles
-   desktopview.cpp
-   plexywindow.cpp
-   main.cpp
+include(${QT_USE_FILE})
+
+INCLUDE_DIRECTORIES(
+    ${QT_INCLUDES}
+    ${QT_QTOPENGL_INCLUDE_DIR}
+    ${QT_QTNETWORK_INCLUDE_DIR}
+    ${QT_QTTEST_INCLUDE_DIR}
+    ${CMAKE_SOURCE_DIR}/lib/
 )
 
-set(QTMOC_SRCS plexywindow.h desktopview.h)
+IF(UNIX)
+INCLUDE_DIRECTORIES(
+    ${X11_INCLUDE_DIR}
+)
+ENDIF(UNIX)
+
+########### source files ###############
+SET(sourceFiles
+    desktopview.cpp
+    icon.cpp
+    iconjob.cpp
+    iconprovider.cpp
+    plexypanel.cpp
+    main.cpp
+)
+
+set(headerFiles
+    desktopview.h
+    icon.h
+    iconjob.h
+    iconprovider.h
+    plexypanel.h
+)
+
+set(QTMOC_SRCS
+    desktopview.h
+    icon.h
+    iconjob.h
+    iconprovider.h
+    plexypanel.h
+)
 
 qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
+
+set(sourceFiles
+    ${sourceFiles}
+    ${headerFiles}
+)
 
 IF(WIN32)
 SET(GUI_TYPE WIN32)
@@ -25,27 +55,33 @@ ADD_DEFINITIONS(-DNODEFAULTLIB:library)
 SET (${QT_LIBRARIES} qtmain ${QT_LIBRARIES})
 ENDIF(WIN32)
 
+IF(UNIX)
 set(libs
-   ${QT_QTGUI_LIBRARY}
-   ${QT_QTCORE_LIBRARY}
-   ${QT_QTOPENGL_LIBRARY}
-   Xcomposite
-   Xdamage
+    ${QT_QTGUI_LIBRARY}
+    ${QT_QTCORE_LIBRARY}
+    ${QT_QTOPENGL_LIBRARY}
+    Xcomposite
+    Xdamage
 )
+ELSE(UNIX)
+set(libs
+    ${QT_QTGUI_LIBRARY}
+    ${QT_QTCORE_LIBRARY}
+    ${QT_QTOPENGL_LIBRARY}
+)
+ENDIF(UNIX)
 
 ########### prepare files ###############
 ADD_EXECUTABLE(plexydesk ${sourceFiles} ${QT_MOC_SRCS})
-#KDE4_ADD_PLUGIN(plexydesk ${raptor_plasmoid_PART_SRCS})
 
 TARGET_LINK_LIBRARIES(
 	plexydesk 
 	plexydeskcore
+        plexymime
 	${libs}
 )
 
-
 ########### install files ###############
 INSTALL(TARGETS plexydesk DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/)
-#INSTALL( FILES raptor.desktop  DESTINATION  ${DATA_INSTALL_DIR}/kicker/applets )
 
 add_subdirectory(test)

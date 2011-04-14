@@ -357,10 +357,6 @@ void DesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
 QString DesktopWidget::applicationDirPath()
 {
-#ifdef Q_WS_WIN
-    return QCoreApplication::applicationDirPath() + "/..";
-#else
     return QString(PLEXPREFIX);
-#endif
 }
 } //namespace PlexyDesk

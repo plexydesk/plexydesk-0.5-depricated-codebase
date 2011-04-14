@@ -62,9 +62,7 @@
 
 #define __SYSTEM_HAVE_GCC_VISIBILITY
 
-//#if defined(_WIN32) && !defined(__GNUC__)
-
-#if defined(_WIN32)// && defined(BUILD_SHARED_LIBS)
+#if defined(_WIN32)
   #if defined(plexydeskcore_EXPORTS)
     #define  PLEXYDESK_EXPORT __declspec(dllexport)
   #else
@@ -95,9 +93,9 @@
 #ifdef Q_WS_WIN
 #include <QCoreApplication>
 
+static QString windowsPath = QString("%1%2").arg(PLEXPREFIX).arg(QString("/.."));
 #undef PLEXPREFIX
 
-static QString windowsPath = QString("%1%2").arg(QCoreApplication::applicationDirPath()).arg(QString("/.."));
 #define PLEXPREFIX windowsPath
 
 #endif

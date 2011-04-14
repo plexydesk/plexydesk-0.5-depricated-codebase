@@ -25,9 +25,11 @@
 #include <QObject>
 #include <QImage>
 
+#include "config.h"
+
 namespace PlexyDesk
 {
-class VISIBLE_SYM VPlayer : public QObject
+class VIDEOENGINE_EXPORT VPlayer : public QObject
 {
     Q_OBJECT
 

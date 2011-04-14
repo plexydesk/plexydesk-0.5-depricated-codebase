@@ -11,8 +11,6 @@ INCLUDE_DIRECTORIES(
 	${QT_QTTEST_INCLUDE_DIR}
  )
 
-SET(MAKE_DLL)
-
 set(sourceFiles
 	backdrop.cpp
 	classicinterface.cpp

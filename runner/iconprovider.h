@@ -10,7 +10,7 @@
 namespace PlexyDesk
 {
 
-class PLEXYDESK_EXPORT IconProvider : public QObject
+class IconProvider : public QObject
 {
     Q_OBJECT
 public:

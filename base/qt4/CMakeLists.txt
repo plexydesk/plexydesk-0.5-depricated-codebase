@@ -1,6 +1,4 @@
-PROJECT(plexydeskcore)
 SET(QT_USE_OPENGL TRUE)
-SET(BUILD_SHARED_LIBS TRUE)
 
 INCLUDE(${QT_USE_FILE})
 
@@ -12,21 +10,22 @@ INCLUDE_DIRECTORIES(
 )
 
 SET(sourceFiles
-   abstractplugininterface.cpp
-   backdropinterface.cpp
-   canvas.cpp
-   baserender.cpp
-   desktopwidget.cpp
-   extensionfactory.cpp
-   fakemime.cpp
-   netwm.cpp
-   plexyconfig.cpp
-   pluginloader.cpp
-   viewlayer.cpp
-   pendingjob.cpp
-   listview.cpp
-   imagecache.cpp
-   httpjobhandler.cpp
+    abstractplugininterface.cpp
+    backdropinterface.cpp
+    backdropplugin.cpp
+    baserender.cpp
+    canvas.cpp
+    desktopwidget.cpp
+    extensionfactory.cpp
+    fakemime.cpp
+    httpjobhandler.cpp
+    imagecache.cpp
+    listview.cpp
+    netwm.cpp
+    pendingjob.cpp
+    plexyconfig.cpp
+    pluginloader.cpp
+    viewlayer.cpp
 )
 
 SET(headerFiles
@@ -41,22 +40,25 @@ SET(headerFiles
    desktopwidget.h
    extensionfactory.h
    fakemime.h
+   httpjobhandler.h
+   imagecache.h
+   listview.h
    netwm.h
    netwm_def.h
    netwm_p.h
+   pendingjob.h
    plexyconfig.h
    pluginloader.h
+   socialinterface.h
+   socialplugin.h
    viewlayer.h
    widgetinterface.h
    widgetplugin.h
-   pendingjob.h
-   listview.h
-   imagecache.h
-   httpjobhandler.h
 )
 
-SET(QTMOC_SRCS
+SET(MOC_SRCS
    abstractplugininterface.h
+   backdropinterface.h
    backdropplugin.h
    baseplugin.h
    baserender.h
@@ -64,15 +66,17 @@ SET(QTMOC_SRCS
    datainterface.h
    dataplugin.h
    desktopwidget.h
+   httpjobhandler.h
+   imagecache.h
+   listview.h
+   pendingjob.h
    plexyconfig.h
    pluginloader.h
+   socialinterface.h
+   socialplugin.h
    viewlayer.h
-   widgetplugin.h
    widgetinterface.h
-   pendingjob.h
-   listview.h
-   imagecache.h
-   httpjobhandler.h
+   widgetplugin.h
 )
 
 #for now only dbus works only under linux
@@ -86,7 +90,7 @@ ENDIF(UNIX)
 
 ENDIF (NOT APPLE)
 
-qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
+qt4_wrap_cpp(QT_MOC_SRCS ${MOC_SRCS})
 
 SET(sourceFiles
    ${sourceFiles}
@@ -111,6 +115,7 @@ TARGET_LINK_LIBRARIES(
     plexydeskcore
     ${libs}
 )
+
 IF (NOT WIN32)
     INSTALL(TARGETS plexydeskcore DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/)
 ELSEIF(WIN32)

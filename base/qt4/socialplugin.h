@@ -7,7 +7,7 @@
 
 namespace PlexyDesk
 {
-class VISIBLE_SYM SocialPlugin : public BasePlugin
+class PLEXYDESK_EXPORT SocialPlugin : public BasePlugin
 {
     Q_OBJECT
 public:
@@ -18,7 +18,7 @@ public:
 public slots:
     virtual void pushSocial(QVariant &) = 0;
 signals:
-    virtual void data(QVariant &) = 0;
+    void data(QVariant &);
 };
 }
 #endif

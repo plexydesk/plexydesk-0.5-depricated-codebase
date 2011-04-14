@@ -47,7 +47,7 @@ int main( int argc, char * *argv )
 {
     QApplication app(argc, argv);
 #ifdef Q_WS_WIN
-    QString pluginPath = app.applicationDirPath() + "/plugins/imageformats";
+    QString pluginPath = QString(PLEXPREFIX) + "/plugins/imageformats";
     app.addLibraryPath(pluginPath);
 #endif
     Canvas scene;

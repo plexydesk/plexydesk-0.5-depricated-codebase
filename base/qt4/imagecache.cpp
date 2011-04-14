@@ -43,12 +43,8 @@ ImageCache::~ImageCache()
 
 void ImageCache::load(const QString &themename)
 {
-    QString prefix("");
-#ifdef Q_WS_WIN
-    prefix = QString(QCoreApplication::applicationDirPath() + "/theme/"+themename+"/");
-#else
-    prefix = QString(PLEXPREFIX)+ "/theme/"+ themename +"/";
-#endif
+    QString prefix = QString(PLEXPREFIX) + "/theme/"+ themename +"/";
+
     QDir dir(prefix);
     dir.setFilter(QDir::Files);
     QFileInfoList list = dir.entryInfoList();

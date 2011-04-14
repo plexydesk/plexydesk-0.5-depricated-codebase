@@ -29,7 +29,7 @@
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT Icon : public DesktopWidget
+class Icon : public DesktopWidget
 {
     Q_OBJECT
 public:
