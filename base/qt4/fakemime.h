@@ -24,7 +24,7 @@
 
 namespace PlexyDesk
 {
-class VISIBLE_SYM FakeMime
+class PLEXYDESK_EXPORT FakeMime
 {
 public:
     static FakeMime *getInstance();

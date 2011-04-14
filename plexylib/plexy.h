@@ -22,6 +22,7 @@
  * Sci-Fi Desktop for the Hurd
  *
  * Authored By Siraj Razick <siraj@kde.org>
+ *      Dariusz Mikulski <dariusz.mikulski@gmail.com>
  *
  * Copyright (C) 2006 PlexyDeskTeam
  *
@@ -61,14 +62,20 @@
 
 #define __SYSTEM_HAVE_GCC_VISIBILITY
 
-#if defined(_WIN32) && !defined(__GNUC__)
-#define VISIBLE_SYM __declspec(dllexport)
+//#if defined(_WIN32) && !defined(__GNUC__)
+
+#if defined(_WIN32)// && defined(BUILD_SHARED_LIBS)
+  #if defined(plexydeskcore_EXPORTS)
+    #define  PLEXYDESK_EXPORT __declspec(dllexport)
+  #else
+    #define  PLEXYDESK_EXPORT __declspec(dllimport)
+  #endif
 #else
-#ifdef __SYSTEM_HAVE_GCC_VISIBILITY
-#define HIDDEN_SYM __attribute__ ((visibility("hidden")))
-#define VISIBLE_SYM __attribute__ ((visibility("default")))
-#define PLEXYDESK_EXPORT __attribute__ ((visibility("default")))
-#endif
+    #ifdef __SYSTEM_HAVE_GCC_VISIBILITY
+        #define HIDDEN_SYM __attribute__ ((visibility("hidden")))
+        #define VISIBLE_SYM __attribute__ ((visibility("default")))
+        #define PLEXYDESK_EXPORT __attribute__ ((visibility("default")))
+    #endif
 #endif
 
 //TODO
@@ -86,8 +93,13 @@
 #define  Q_UINT32 unsigned int
 
 #ifdef Q_WS_WIN
-static QString windowsPath = QCoreApplication::applicationDirPath() + QStringLatin1("/..");
-#define PLEXPREFIX = windowsPath
+#include <QCoreApplication>
+
+#undef PLEXPREFIX
+
+static QString windowsPath = QString("%1%2").arg(QCoreApplication::applicationDirPath()).arg(QString("/.."));
+#define PLEXPREFIX windowsPath
+
 #endif
 
 namespace Plexy

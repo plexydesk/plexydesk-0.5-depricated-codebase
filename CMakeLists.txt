@@ -26,10 +26,10 @@ INCLUDE_DIRECTORIES (
         ${CMAKE_BINARY_DIR}
         )
 
-IF(MSVC80)
+IF(MSVC80 OR MSVC90 OR MSVC10)
   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
   SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MP")
-ENDIF(MSVC80)
+ENDIF(MSVC80 OR MSVC90 OR MSVC10)
 
 IF(WIN32)
   SET(FFMPEG_INCLUDE_DIR ${CMAKE_BINARY_DIR}/win32/ffmpeg/include)
@@ -90,38 +90,44 @@ INCLUDE_DIRECTORIES(
 
 ADD_SUBDIRECTORY(base/qt4/)
 ADD_SUBDIRECTORY(extensions/backdrop/classicdrop)
+ADD_SUBDIRECTORY(data)
+ADD_SUBDIRECTORY(runner)
 
+IF (NOT APPLE)
+IF (UNIX)
+ADD_SUBDIRECTORY(panel)
+ADD_SUBDIRECTORY(social)
+ADD_SUBDIRECTORY(social/accountsmanager/)
 #UI widgets
 ADD_SUBDIRECTORY(extensions/widgets/clock)
 ADD_SUBDIRECTORY(extensions/widgets/cpu)
 
 #data plugins
 ADD_SUBDIRECTORY(extensions/data/rest)
-
-ADD_SUBDIRECTORY(data)
-IF (NOT APPLE)
-IF (UNIX)
-ADD_SUBDIRECTORY(plexywm)
-ADD_SUBDIRECTORY(panel)
-ADD_SUBDIRECTORY(social)
-ADD_SUBDIRECTORY(social/accountsmanager/)
-ADD_SUBDIRECTORY(runner)
 ENDIF (UNIX)
+
+IF(NOT WIN32)
+IF(FFMPEG_FOUND)
+ADD_SUBDIRECTORY(extensions/data/videoengine/)
+ENDIF(FFMPEG_FOUND)
+ENDIF(NOT WIN32)
+
+ADD_SUBDIRECTORY(plexywm)
+
 ENDIF (NOT APPLE)
 
-#add_subdirectory(extensions/widgets/demowidget)
 ADD_SUBDIRECTORY(plexylib/fbjson)
-ADD_SUBDIRECTORY(artwork)
-ADD_SUBDIRECTORY(artwork/plexyfren_theme/default/)
 ADD_SUBDIRECTORY(3rdparty/libmagic)
 ADD_SUBDIRECTORY(3rdparty/mime)
 ADD_SUBDIRECTORY(3rdparty/qplexymime)
 ADD_SUBDIRECTORY(3rdparty/webitem)
-#ADD_SUBDIRECTORY(3rdparty/cair)
-IF(NOT APPLE) 
-IF(FFMPEG_FOUND)
-ADD_SUBDIRECTORY(extensions/data/videoengine/)
-ENDIF(FFMPEG_FOUND)
-#ADD_SUBDIRECTORY(extensions/widgets/cpu) // TODO : port this
-ENDIF(NOT APPLE)
+IF(WIN32)
+ADD_SUBDIRECTORY(extensions/widgets/wallpaper-win32)
+ENDIF(WIN32)
 
+ADD_SUBDIRECTORY(artwork)
+ADD_SUBDIRECTORY(artwork/plexyfren_theme/default/)
+
+# Removed from building
+#ADD_SUBDIRECTORY(3rdparty/cair)
+#ADD_SUBDIRECTORY(extensions/widgets/demowidget)

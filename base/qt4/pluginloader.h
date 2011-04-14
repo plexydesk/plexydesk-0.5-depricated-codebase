@@ -27,7 +27,7 @@
 
 namespace PlexyDesk
 {
-class VISIBLE_SYM PluginLoader : public QObject
+class PLEXYDESK_EXPORT PluginLoader : public QObject
 {
     Q_OBJECT
 
@@ -44,11 +44,7 @@ public:
     void scanDisk();
 
     QString applicationDirPath() {
-#ifdef Q_WS_WIN
-        return QString(QCoreApplication::applicationDirPath() + "/..");
-#else
         return QString(PLEXPREFIX);
-#endif
     }
 
 protected:
@@ -61,7 +57,7 @@ private:
 #ifdef Q_WS_WIN
     static PluginLoader *mInstance;
 #else
-    static VISIBLE_SYM PluginLoader *mInstance;
+    static PLEXYDESKCORE_EXPORT PluginLoader *mInstance;
 #endif
 };
 

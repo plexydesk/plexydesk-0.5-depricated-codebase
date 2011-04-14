@@ -36,7 +36,7 @@ class QNetworkAccessManager;
 namespace PlexyDesk
 {
 
-class VISIBLE_SYM HttpJobHandler : public PendingJob
+class PLEXYDESK_EXPORT HttpJobHandler : public PendingJob
 {
     Q_OBJECT
 public:

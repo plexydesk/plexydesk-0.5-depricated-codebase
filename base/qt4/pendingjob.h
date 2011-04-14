@@ -11,7 +11,6 @@ class PendingJob : public QObject
 {
     Q_OBJECT
 public:
-    Q_DISABLE_COPY(PendingJob)
     /**
     **/
     bool isError();
@@ -29,6 +28,7 @@ Q_SIGNALS:
 protected:
     PendingJob(QObject *parent);
 private:
+    Q_DISABLE_COPY(PendingJob)
     class Private;
     Private *const d;
 };

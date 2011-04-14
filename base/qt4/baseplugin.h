@@ -27,7 +27,7 @@ public:
 
     QHash<QString, QString> metaData() const
     {
-
+        return QHash<QString, QString>();
     }
 };
 } // namespace PlexyDesk

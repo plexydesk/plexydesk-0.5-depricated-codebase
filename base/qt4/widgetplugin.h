@@ -9,7 +9,7 @@ class QGraphicsItem;
 
 namespace PlexyDesk
 {
-class VISIBLE_SYM WidgetPlugin : public BasePlugin
+class PLEXYDESK_EXPORT WidgetPlugin : public BasePlugin
 {
     Q_OBJECT
 public:

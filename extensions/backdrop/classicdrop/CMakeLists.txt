@@ -1,3 +1,4 @@
+PROJECT(classicbackdrop)
 
 set(QT_USE_OPENGL TRUE)
 # -> this will cause cmake to include and link against the OpenGL module
@@ -10,6 +11,7 @@ INCLUDE_DIRECTORIES(
 	${QT_QTTEST_INCLUDE_DIR}
  )
 
+SET(MAKE_DLL)
 
 set(sourceFiles
 	backdrop.cpp
@@ -20,7 +22,7 @@ set(headerFiles
 	backdrop.h
 	classicinterface.h
 )
-#XXX: Do we reall need this ??
+
 set(QTMOC_SRCS
 	backdrop.h
 	classicinterface.h

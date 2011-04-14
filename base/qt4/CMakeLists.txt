@@ -1,4 +1,7 @@
+PROJECT(plexydeskcore)
 SET(QT_USE_OPENGL TRUE)
+SET(BUILD_SHARED_LIBS TRUE)
+
 INCLUDE(${QT_USE_FILE})
 
 INCLUDE_DIRECTORIES(
@@ -7,7 +10,6 @@ INCLUDE_DIRECTORIES(
     ${QT_QTNETWORK_INCLUDE_DIR}
     ${QT_QTTEST_INCLUDE_DIR}
 )
-
 
 SET(sourceFiles
    abstractplugininterface.cpp
@@ -107,7 +109,6 @@ ADD_LIBRARY(plexydeskcore SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
     plexydeskcore
-    plexymime
     ${libs}
 )
 IF (NOT WIN32)
