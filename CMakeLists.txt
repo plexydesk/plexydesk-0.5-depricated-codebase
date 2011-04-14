@@ -128,6 +128,9 @@ ENDIF(WIN32)
 ADD_SUBDIRECTORY(artwork)
 ADD_SUBDIRECTORY(artwork/plexyfren_theme/default/)
 
+ADD_SUBDIRECTORY(artwork)
+ADD_SUBDIRECTORY(artwork/plexyfren_theme/default/)
+
 # Removed from building
 #ADD_SUBDIRECTORY(3rdparty/cair)
 #ADD_SUBDIRECTORY(extensions/widgets/demowidget)
