@@ -1,18 +1,22 @@
 INCLUDE_DIRECTORIES(
-		   ${QT_INCLUDES}
-		 )
+    ${QT_INCLUDES}
+)
 
+SET(sourceFiles
+    jsonhandler.cpp
+)
 
-SET (plexyjson_src
-	jsonhandler.cpp
-    )
+SET(headerFiles
+    json_global.h
+    jsonhandler.cpp
+)
 
+SET(sourceFiles
+    ${sourceFiles}
+    ${headerFiles}
+)
 
-#QT4_AUTOMOC(MOCSRC ${plexyjson_src})
-qt4_automoc(qwebviewitem.cpp)
-#qt4_wrap_cpp(QT_MOC_SRCS  qwebviewitem.h)
-
-ADD_LIBRARY (plexyjson SHARED  ${plexyjson_src})
+ADD_LIBRARY (plexyjson SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
         plexyjson
