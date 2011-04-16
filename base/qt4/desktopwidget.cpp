@@ -170,6 +170,14 @@ void DesktopWidget::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
+    if (event->buttons() != Qt::LeftButton) {
+        /* We will let the widgets decide what to do with 
+           left clicks
+           */
+        QGraphicsItem::mouseDoubleClickEvent(event);
+        return;
+    }
+
     qDebug() << "Double Click" << endl;
     if (d->s == DOCK) {
         setState(NORMALSIDE);
