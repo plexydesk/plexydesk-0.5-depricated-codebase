@@ -92,6 +92,7 @@ ADD_SUBDIRECTORY(extensions/backdrop/classicdrop)
 
 #UI widgets
 ADD_SUBDIRECTORY(extensions/widgets/clock)
+ADD_SUBDIRECTORY(extensions/widgets/cpu)
 
 ADD_SUBDIRECTORY(data)
 IF (NOT APPLE)

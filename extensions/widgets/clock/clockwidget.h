@@ -25,9 +25,7 @@
 
 #include <QTime>
 
-namespace PlexyDesk
-{
-class ClockWidget : public DesktopWidget
+class ClockWidget : public PlexyDesk::DesktopWidget
 {
     Q_OBJECT
 
@@ -76,7 +74,5 @@ private:
     QPixmap date;
 
 };
-
-} // namespace PlexyDesk
 #endif
 

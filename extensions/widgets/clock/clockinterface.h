@@ -22,7 +22,6 @@
 #include <QtCore>
 #include <plexy.h>
 #include <widgetinterface.h>
-#include "clockinterface.h"
 #include "clock.h"
 #include "clockwidget.h"
 

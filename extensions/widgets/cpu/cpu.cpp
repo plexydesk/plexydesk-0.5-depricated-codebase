@@ -34,8 +34,5 @@ Cpu::~Cpu()
 
 QGraphicsItem *Cpu::item()
 {
-    return new  PlexyDesk::CpuWidget(QRectF(0, 0, 210, 210), 0);
+    return new CpuWidget(QRectF(0, 0, 200, 200), 0);
 }
-
-Q_EXPORT_PLUGIN2(Cpu, Cpu)
-#include "cpu.moc"

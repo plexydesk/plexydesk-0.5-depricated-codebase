@@ -16,61 +16,27 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-
-#ifndef CPU_WIDGET_H
-#define CPU_WIDGET_H
+#ifndef PLEXY_CPU_I
+#define PLEXY_CPU_I
 
 #include <QtCore>
-#include <QtGui>
-#include <desktopwidget.h>
+#include <plexy.h>
+#include <widgetinterface.h>
+#include "cpu.h"
+#include "cpuwidget.h"
 
-class QTimer;
-
-class CpuWidget : public PlexyDesk::DesktopWidget
+class CpuInterface : public PlexyDesk::WidgetInterface
 {
-
     Q_OBJECT
+    Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
-public:
-
-    CpuWidget(const QRectF &rect, QWidget *widget = 0);
-    virtual ~CpuWidget();
-    virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *e, QWidget *);
-    void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
-    void setPath(QString);
-    void drawCpuWidget();
-    void getBaseData();
-    void getNxtData();
-
-public Q_SLOTS:
-    void drawMeter();
-
-private:
-    QTimer *meter_timer;
-    long user_a;
-    long nice_a;
-    long sys_a;
-    long idle_a;
-
-    long user_b;
-    long nice_b;
-    long sys_b;
-    long idle_b;
-
-    long usage;
-    long total;
-
-    double percen;
-
-    int shade;
-
-    QPixmap _meter_hand;
-    QPixmap thedot;
-    QImage _cpu_bg;
-    QImage gloss;
-
-    QString prefix;
-    QPoint clickPos;
+public :
+        CpuInterface(QObject *object = 0) {
+    }
+    PlexyDesk::BasePlugin *instance() {
+        return new Cpu(this);
+    }
 };
-#endif
 
+Q_EXPORT_PLUGIN2(CpuInterface, CpuInterface)
+#endif

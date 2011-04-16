@@ -30,11 +30,8 @@
 #include <QStyleOptionGraphicsItem>
 #include <QDateTime>
 
-namespace PlexyDesk
-{
-
 ClockWidget::ClockWidget(const QRectF &rect, QWidget *widget)
-    : DesktopWidget(rect, widget)
+    : PlexyDesk::DesktopWidget(rect, widget)
 {
     shade = 0;
 
@@ -203,5 +200,3 @@ void ClockWidget::paintExtBackFace(QPainter *p, const QStyleOptionGraphicsItem *
     p->drawText(QRect(20, 80, 160, 160), Qt::AlignCenter,
          QString("%1").arg(QDateTime::currentDateTime().toString(QLatin1String("h:m:s"))));
 }
-
-} // namespace PlexyDesk

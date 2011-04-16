@@ -19,19 +19,18 @@
 #ifndef PLEXY_WIDGET_CPU_H
 #define PLEXY_WIDGET_CPU_H
 
-#include <QtCore>
 #include <plexy.h>
 #include <widgetinterface.h>
 #include <widgetplugin.h>
 
-class VISIBLE_SYM Cpu : public PlexyDesk::WidgetPlugin
+class Cpu : public PlexyDesk::WidgetPlugin
 {
     Q_OBJECT
 
 public:
     Cpu(QObject *object = 0);
     virtual ~Cpu();
-    virtual QGraphicsItem *item(); // {};
+    virtual QGraphicsItem *item();
 };
 
 

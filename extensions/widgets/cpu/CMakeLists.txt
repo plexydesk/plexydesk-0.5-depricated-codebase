@@ -1,40 +1,44 @@
-
-set(QT_USE_OPENGL TRUE)
-# -> this will cause cmake to include and link against the OpenGL module
-include(${QT_USE_FILE})
-
 INCLUDE_DIRECTORIES(
-	   ${QT_INCLUDES}
-	   ${QT_QTOPENGL_INCLUDE_DIR}
-	   ${QT_QTNETWORK_INCLUDE_DIR}
-	   ${QT_QTTEST_INCLUDE_DIR}
-		 )
-
+      ${QT_INCLUDES}
+      ${QT_QTOPENGL_INCLUDE_DIR}
+)
 
 SET (plexycpusrc
 	cpu.cpp
 	cpuwidget.cpp
-		)
+)
 
-add_library (plexycpu SHARED ${plexycpusrc})
-QT4_AUTOMOC( ${plexycpusrc}) 
+SET (headerFiles
+   cpu.h
+   cpuwidget.h
+   cpuinterface.h
+)
 
-#SET_TARGET_PROPERTIES(plexy
-#
-#	·       ·       PROPERTIES
-	#	#	·       ·       COMPILE_FLAGS ${CMAKE_SHARED_LIBRARY_CXX_FLAGS})
-#
+SET(QTMOC_SRCS
+   cpu.h
+   cpuwidget.h
+   cpuinterface.h
+)
 
-TARGET_LINK_LIBRARIES(
-	       plexycpu
-			qtviz
-		   ${QT_QTGUI_LIBRARY}
-	       ${OPENGL_LIBRARIES}
-	       ${QT_QTCORE_LIBRARY}
-	       ${QT_QTOPENGL_LIBRARY}
-       )
+qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
+
+SET (sourceFiles
+   ${plexycpusrc}
+   ${QT_MOC_SRCS}
+)
+
+SET (libs
+   plexydeskcore
+   ${QT_QTGUI_LIBRARY}
+   ${OPENGL_LIBRARIES}
+   ${QT_QTCORE_LIBRARY}
+   ${QT_QTOPENGL_LIBRARY}
+)
+
+ADD_LIBRARY (plexycpu SHARED ${sourceFiles})
+TARGET_LINK_LIBRARIES(plexycpu ${libs})
 
 INSTALL(TARGETS plexycpu DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext/)
-install(FILES cpu.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups/)
+INSTALL(FILES cpu.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups/)
 
-add_subdirectory(cpu)
+ADD_SUBDIRECTORY(cpu)

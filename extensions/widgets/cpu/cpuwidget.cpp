@@ -23,11 +23,8 @@
 #include <QtCore>
 #include <QtGui>
 
-namespace PlexyDesk
-{
-
 CpuWidget::CpuWidget(const QRectF &rect, QWidget *widget) :
-    DesktopWidget(rect, widget)
+    PlexyDesk::DesktopWidget(rect, widget)
 {
     shade == 0;
     getBaseData();
@@ -78,9 +75,8 @@ CpuWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget 
 {
 
     QRectF r = e->exposedRect;
-    p->setOpacity(0.8);
     p->setCompositionMode(QPainter::CompositionMode_Source);
-    p->fillRect(rect(), Qt::transparent);
+    p->fillRect(r, Qt::transparent);
 
     p->drawImage(QRect(0, 0, _cpu_bg.width(), _cpu_bg.height()), _cpu_bg);
     p->setCompositionMode(QPainter::CompositionMode_SourceOver);
@@ -188,6 +184,3 @@ CpuWidget::getNxtData()
 
     getBaseData();
 }
-
-} // namespace PlexyDesk
-#include "cpuwidget.moc"
