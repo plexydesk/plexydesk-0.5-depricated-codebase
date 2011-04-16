@@ -17,7 +17,6 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 #include "clock.h"
-#include "clockitem.h"
 #include "clockwidget.h"
 
 

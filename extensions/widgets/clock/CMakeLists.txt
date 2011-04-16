@@ -1,8 +1,3 @@
-
-set(QT_USE_OPENGL TRUE)
-# -> this will cause cmake to include and link against the OpenGL module
-include(${QT_USE_FILE})
-
 INCLUDE_DIRECTORIES(
 	${QT_INCLUDES}
 	${QT_QTOPENGL_INCLUDE_DIR}
@@ -12,20 +7,17 @@ INCLUDE_DIRECTORIES(
 
 SET(sourceFiles
 	clock.cpp
-	clockitem.cpp
 	clockwidget.cpp
 )
 
 set(headerFiles
 	clock.h
-	clockitem.h
 	clockwidget.h
 	clockinterface.h
 )
 
 set(QTMOC_SRCS
 	clock.h
-	clockitem.h
 	clockwidget.h
 	clockinterface.h
 )

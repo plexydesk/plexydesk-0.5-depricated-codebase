@@ -24,7 +24,6 @@
 #include <widgetinterface.h>
 #include "clockinterface.h"
 #include "clock.h"
-#include "clockitem.h"
 #include "clockwidget.h"
 
 class ClockInterface : public PlexyDesk::WidgetInterface

@@ -90,6 +90,9 @@ INCLUDE_DIRECTORIES(
 ADD_SUBDIRECTORY(base/qt4/)
 ADD_SUBDIRECTORY(extensions/backdrop/classicdrop)
 
+#UI widgets
+ADD_SUBDIRECTORY(extensions/widgets/clock)
+
 ADD_SUBDIRECTORY(data)
 IF (NOT APPLE)
 IF (UNIX)

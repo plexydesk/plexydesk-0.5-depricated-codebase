@@ -16,8 +16,8 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#ifndef PLEXY_WIDGET_DEMO_H
-#define PLEXY_WIDGET_DEMO_H
+#ifndef PLEXY_WIDGET_CLOCK_H
+#define PLEXY_WIDGET_CLOCK_H
 
 #include <plexy.h>
 #include <widgetinterface.h>
