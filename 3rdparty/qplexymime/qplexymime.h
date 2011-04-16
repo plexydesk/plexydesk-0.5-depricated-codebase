@@ -37,18 +37,13 @@ typedef QPair<QString, QString> MimePairType;
 typedef QPair<MimePairType, QString> MimeWithLangType;
 typedef QPair<QString, QStringList> MimeWithListType;
 
-#if defined(_WIN32)
-  #if defined(plexymime_EXPORTS)
-    #define  QPLEXYMIME_EXPORT __declspec(dllexport)
-  #else
-    #define  QPLEXYMIME_EXPORT __declspec(dllimport)
-  #endif
+
+#include <QtCore/qglobal.h>
+
+#if defined(plexymime_EXPORTS)
+#  define QPLEXYMIME_EXPORT Q_DECL_EXPORT
 #else
-    #ifdef __SYSTEM_HAVE_GCC_VISIBILITY
-        #define HIDDEN_SYM __attribute__ ((visibility("hidden")))
-        #define VISIBLE_SYM __attribute__ ((visibility("default")))
-        #define QPLEXYMIME_EXPORT __attribute__ ((visibility("default")))
-    #endif
+#  define QPLEXYMIME_EXPORT Q_DECL_IMPORT
 #endif
 
 class QPLEXYMIME_EXPORT QPlexyMime : public QObject
