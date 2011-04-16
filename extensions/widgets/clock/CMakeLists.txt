@@ -10,25 +10,25 @@ SET(clocksourceFiles
    clockwidget.cpp
 )
 
-set(headerFiles
+SET(headerFiles
    clock.h
    clockwidget.h
    clockinterface.h
 )
 
-set(QTMOC_SRCS
+SET(QTMOC_SRCS
    clock.h
    clockwidget.h
    clockinterface.h
 )
 qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
 
-set(sourceFiles
+SET(sourceFiles
    ${clocksourceFiles}
    ${QT_MOC_SRCS}
 )
 
-set(libs
+SET(libs
    ${PLEXY_CORE_LIBRARY}
    ${QT_QTGUI_LIBRARY}
    ${OPENGL_LIBRARIES}
@@ -36,7 +36,7 @@ set(libs
    ${QT_QTOPENGL_LIBRARY}
 )
 
-add_library (plexyclock SHARED ${sourceFiles} ${QT_MOC_SRCS})
+ADD_LIBRARY (plexyclock SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
    plexyclock
@@ -44,6 +44,6 @@ TARGET_LINK_LIBRARIES(
 )
 
 INSTALL(TARGETS plexyclock DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext/)
-install(FILES clock.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups/)
+INSTALL(FILES clock.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups/)
 
-add_subdirectory(clock)
+ADD_SUBDIRECTORY(clock)
