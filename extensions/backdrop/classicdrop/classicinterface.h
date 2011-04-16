@@ -31,11 +31,10 @@ class ClassicBackdrop : public PlexyDesk::AbstractPluginInterface
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
-public :
-        ClassicBackdrop(QObject *object = 0);
+public:
+    ClassicBackdrop(QObject *object = 0);
     virtual ~ClassicBackdrop();
     virtual PlexyDesk::BasePlugin *instance();
 };
-
 
 #endif

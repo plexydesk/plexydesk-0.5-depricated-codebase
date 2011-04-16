@@ -1,61 +1,70 @@
 
-set(QT_USE_OPENGL TRUE)
+SET(QT_USE_OPENGL TRUE)
 # -> this will cause cmake to include and link against the OpenGL module
-include(${QT_USE_FILE})
+INCLUDE(${QT_USE_FILE})
 
 INCLUDE_DIRECTORIES(
-	   ${QT_INCLUDES}
-	   ${QT_QTOPENGL_INCLUDE_DIR}
-	   ${QT_QTNETWORK_INCLUDE_DIR}
-		 )
+    ${QT_INCLUDES}
+    ${QT_QTOPENGL_INCLUDE_DIR}
+    ${QT_QTNETWORK_INCLUDE_DIR}
+)
 
-
-SET (wallpaper_CPP
+SET(sourceFiles
     wallpaper.cpp
     wallpaperwidget.cpp
     wallpaperinterface.cpp
-    )
+)
     
-SET (wallpaper_H
+SET(headerFiles
     wallpaper.h
     wallpaperwidget.h
     wallpaperinterface.h
-    )
+    config.h
+)
     
 SOURCE_GROUP(source
     FILES
-    ${wallpaper_CPP}
-    )
+    ${sourceFile}
+)
     
 SOURCE_GROUP(headers
     FILES
-    ${wallpaper_H}
-    )
-    
-SET (wallpaper_SRCS
-    ${wallpaper_CPP}
-    ${wallpaper_H}
-    )
+    ${headerFiles}
+)
 
-SET (plexicore_MOC
-    ${CMAKE_SOURCE_DIR}/plexycore/qt4/abstractplugininterface.cpp
-    ${CMAKE_SOURCE_DIR}/plexycore/qt4/pluginloader.cpp
-    ${CMAKE_SOURCE_DIR}/plexycore/qt4/desktopwidget.cpp
-    )
-    
-QT4_AUTOMOC( ${plexicore_MOC})
+SET (sourceFiles
+    ${sourceFiles}
+    ${headerFiles}
+)
 
-add_library (wallpaperchange-win32 SHARED ${wallpaper_SRCS} ${plexicore_MOC})
-QT4_AUTOMOC( ${wallpaper_SRCS}) 
+SET(QTMOC_SRCS
+    wallpaper.h
+    wallpaperwidget.h
+    wallpaperinterface.h
+)
+
+QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})
+
+SET(sourceFiles
+    ${sourceFiles}
+    ${headerFiles}
+)
+
+ADD_LIBRARY(wallpaperchange SHARED ${sourceFiles} ${QT_MOC_SRCS})
+
+SET(libs
+    ${QT_QTGUI_LIBRARY}
+    ${OPENGL_LIBRARIES}
+    ${QT_QTCORE_LIBRARY}
+    ${QT_QTOPENGL_LIBRARY}
+)
 
 TARGET_LINK_LIBRARIES(
-	       wallpaperchange-win32
-     		qtviz
-	       ${QT_QTGUI_LIBRARY}
-	       ${OPENGL_LIBRARIES}
-	       ${QT_QTCORE_LIBRARY}
-	       ${QT_QTOPENGL_LIBRARY}
-       )
+    wallpaperchange
+    plexydeskcore
+#    qtviz
+    ${libs}
+)
 
-INSTALL(TARGETS wallpaperchange-win32 DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext)
-INSTALL(FILES wallpaper-win32.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups/)
+INSTALL(TARGETS wallpaperchange DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext)
+INSTALL(FILES wallpaperchange.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups/)

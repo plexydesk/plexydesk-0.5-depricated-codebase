@@ -17,8 +17,9 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 #include "WallpaperWidget.h"
-#include <QtCore>
-#include <QtGui>
+#include <QWidget>
+#include <QStyleOptionGraphicsItem>
+#include <QPainter>
 
 WallpaperWidget::WallpaperWidget(const QRectF &rect, QWidget *widget)
     : PlexyDesk::DesktopWidget(rect, widget)
@@ -53,4 +54,3 @@ QRectF WallpaperWidget::boundingRect() const
     return rect();
 }
 
-#include "wallpaperwidget.moc"

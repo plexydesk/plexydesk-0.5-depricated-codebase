@@ -33,11 +33,6 @@
 #include <QStringList>
 #include <plexyconfig.h>
 
-typedef QPair<QString, QString> MimePairType;
-typedef QPair<MimePairType, QString> MimeWithLangType;
-typedef QPair<QString, QStringList> MimeWithListType;
-
-
 #include <QtCore/qglobal.h>
 
 #if defined(plexymime_EXPORTS)
@@ -45,6 +40,10 @@ typedef QPair<QString, QStringList> MimeWithListType;
 #else
 #  define QPLEXYMIME_EXPORT Q_DECL_IMPORT
 #endif
+
+typedef QPair<QString, QString> MimePairType;
+typedef QPair<MimePairType, QString> MimeWithLangType;
+typedef QPair<QString, QStringList> MimeWithListType;
 
 class QPLEXYMIME_EXPORT QPlexyMime : public QObject
 {

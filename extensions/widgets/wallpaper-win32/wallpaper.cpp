@@ -19,6 +19,10 @@
 #include "wallpaper.h"
 #include "wallpaperwidget.h"
 
+#include <QPushButton>
+#include <QSettings>
+#include <QVariantMap>
+
 WallpaperChange::WallpaperChange(QObject *object)
 {
 }
@@ -52,4 +56,7 @@ void WallpaperChange::changeWallpaper(bool)
     emit data(image);
 }
 
-#include "wallpaper.moc"
+QVariantMap WallpaperChange::readAll()
+{
+    return QVariantMap();
+}

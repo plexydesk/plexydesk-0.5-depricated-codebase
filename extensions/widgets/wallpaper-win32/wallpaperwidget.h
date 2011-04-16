@@ -19,18 +19,25 @@
 #ifndef PLEXY_WALLPAPER_WIDGET_H
 #define PLEXY_WALLPAPER_WIDGET_H
 
-#include <QtCore>
-#include <QtGui>
-#include <plexy.h>
+#include <QObject>
+#include <QRectF>
+
 #include <desktopwidget.h>
 #include <datainterface.h>
 
-class VISIBLE_SYM WallpaperWidget : public PlexyDesk::DesktopWidget
+#include "config.h"
+
+class QWidget;
+class QStyleOptionGraphicsItem;
+class QPainter;
+
+class WALLPAPERCHANGE_EXPORT WallpaperWidget : public PlexyDesk::DesktopWidget
 {
     Q_OBJECT
 public:
     WallpaperWidget(const QRectF &rect, QWidget *embeddedWidget = 0);
     virtual ~WallpaperWidget();
+
     void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *e, QWidget *);
     void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
     void paintExtBackFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *);

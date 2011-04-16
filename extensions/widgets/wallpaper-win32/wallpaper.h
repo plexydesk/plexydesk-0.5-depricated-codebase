@@ -19,24 +19,30 @@
 #ifndef PLEXY_WALLPAPER_CHANGE_H
 #define PLEXY_WALLPAPER_CHANGE_H
 
-#include <QtCore>
-#include <plexy.h>
-#include <datainterface.h>
+#include <QObject>
+#include <QVariant>
 
-class VISIBLE_SYM WallpaperChange : public PlexyDesk::DataPlugin
+#include <dataplugin.h>
+
+#include "config.h"
+
+class QGraphicsItem;
+
+class WALLPAPERCHANGE_EXPORT WallpaperChange : public PlexyDesk::DataPlugin
 {
     Q_OBJECT
-    Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
-public :
-        void init() {
-    }
+public:
     WallpaperChange(QObject *object = 0);
+    void init() {}
     virtual ~WallpaperChange();
     virtual QGraphicsItem *item(); // {};
+    QVariantMap readAll();
+
 public slots:
     void pushData(QVariant &);
     void changeWallpaper(bool);
+
 signals:
     void data(QVariant &);
 };
