@@ -28,7 +28,7 @@ SET (sourceFiles
 )
 
 SET (libs
-   plexydeskcore
+   ${PLEXY_CORE_LIBRARY}
    ${QT_QTGUI_LIBRARY}
    ${OPENGL_LIBRARIES}
    ${QT_QTCORE_LIBRARY}
