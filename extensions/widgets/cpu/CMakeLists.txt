@@ -4,8 +4,8 @@ INCLUDE_DIRECTORIES(
 )
 
 SET (plexycpusrc
-	cpu.cpp
-	cpuwidget.cpp
+   cpu.cpp
+   cpuwidget.cpp
 )
 
 SET (headerFiles
