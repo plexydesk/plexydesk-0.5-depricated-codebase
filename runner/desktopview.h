@@ -22,9 +22,6 @@
 #include <QGraphicsView>
 #include <plexy.h>
 
-
-namespace PlexyDesk
-{
 class DesktopView : public QGraphicsView
 {
     Q_OBJECT
@@ -52,6 +49,5 @@ private:
     Private *const d;
     void setTopMostWidget(const QPoint &pt);
 };
-}
 
 #endif

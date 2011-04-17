@@ -38,8 +38,8 @@
 #include <QPropertyAnimation>
 #endif
 
-namespace PlexyDesk
-{
+using namespace PlexyDesk;
+
 class DesktopView::Private
 {
 public:
@@ -219,7 +219,3 @@ void DesktopView::setTopMostWidget(const QPoint &pt)
 
     clickedItem->update();
 }
-}
-
-
-
