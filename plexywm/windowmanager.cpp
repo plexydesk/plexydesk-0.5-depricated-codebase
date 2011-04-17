@@ -112,6 +112,14 @@ void WindowManager::addWindow(Window window)
         return;
     }
 
+    if (window == d->mRootWindow ||
+            window == d->mMainWin ||
+            window == d->mMainwinParent ||
+            window == d->mOverlay ||
+            window == d->mManagerWindow) {
+        return;
+    }
+
     NETWinInfo info(QX11Info::display(), window, QX11Info::appRootWindow(), 0);
     qDebug() << Q_FUNC_INFO << info.name()  << " :  " << info.iconName();
 
@@ -345,9 +353,7 @@ bool WindowManager::startOverlay()
      &pa);
 
     //bg
-    setupWindows();
 
-/*
     d->mOverlay = XCompositeGetOverlayWindow (d->mDisplay, d->mRootWindow);
     if (!d->mOverlay) {
         qDebug()<<"Overly window can not start"<<endl;
@@ -370,7 +376,8 @@ bool WindowManager::startOverlay()
     XReparentWindow (d->mDisplay, d->canvasview->winId(), d->mOverlay, 0, 0);
     input(d->mOverlay);
     input(d->canvasview->winId());
- */
+
+    setupWindows();
 }
 
 void WindowManager::input(Window w)
@@ -387,7 +394,7 @@ void WindowManager::setupWindows()
 {
     XGrabServer (d->mDisplay);
 
-    XCompositeRedirectSubwindows (d->mDisplay, d->mRootWindow, CompositeRedirectManual);
+    XCompositeRedirectSubwindows (d->mDisplay, d->mRootWindow, CompositeRedirectAutomatic);
 
     long ev_mask = (SubstructureNotifyMask |
      StructureNotifyMask |
@@ -408,17 +415,19 @@ void WindowManager::setupWindows()
      &nchildren);
 
     for (int i = 0; i < nchildren; i++) {
-        qDebug() << Q_FUNC_INFO << i;
+        qDebug() << Q_FUNC_INFO << "Childnum:" << i;
         XWindowAttributes attrib;
         if (not XGetWindowAttributes(QX11Info::display(), children[i], &attr)) {
             qDebug() << Q_FUNC_INFO << "Failed to get window attribute";
         }
-        //if (attr.map_state == IsViewable && children[i] != d->canvasview->winId() && attr.width > 1 &&
-        //attr.height > 1) {
-        //addWindow(children[i]);
-        //}
+        if (attr.map_state == IsViewable && children[i] != d->canvasview->winId() && attr.width > 1 &&
+           attr.height > 1) {
+           addWindow(children[i]);
+        }
 
     }
+    qDebug() << Q_FUNC_INFO << "Done Adding children";
+
     XFree (children);
     XUngrabServer (d->mDisplay);
 }
