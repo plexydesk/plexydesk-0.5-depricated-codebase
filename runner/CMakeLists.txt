@@ -13,10 +13,11 @@ include_directories(${CMAKE_SOURCE_DIR}/lib/)
 ########### source files ###############
 SET(sourceFiles
    desktopview.cpp
+   plexywindow.cpp
    main.cpp
 )
 
-set(QTMOC_SRCS desktopview.h)
+set(QTMOC_SRCS plexywindow.h desktopview.h)
 
 qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
 
@@ -27,10 +28,12 @@ SET (${QT_LIBRARIES} qtmain ${QT_LIBRARIES})
 ENDIF(WIN32)
 
 set(libs
-	${QT_QTGUI_LIBRARY}
-	${QT_QTCORE_LIBRARY}
+   ${QT_QTGUI_LIBRARY}
+   ${QT_QTCORE_LIBRARY}
    ${QT_QTOPENGL_LIBRARY}
-	${QT_AND_KDECORE_LIBS}
+   ${QT_AND_KDECORE_LIBS}
+   Xcomposite
+   Xdamage
 )
 
 ########### prepare files ###############

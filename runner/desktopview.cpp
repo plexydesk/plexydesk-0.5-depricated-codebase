@@ -27,12 +27,28 @@
 #include "icon.h"
 #include "iconprovider.h"
 #include <qplexymime.h>
+#include <plexywindow.h>
 
 #include <QGLWidget>
 #include <QGraphicsGridLayout>
 #include <QDir>
 #include <QFutureWatcher>
 #include <QtDebug>
+
+#ifdef Q_WS_X11
+extern "C" {
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <X11/Xatom.h>
+#include <X11/extensions/shape.h>
+#include <X11/cursorfont.h>
+#include <X11/extensions/Xcomposite.h>
+#include <X11/extensions/Xdamage.h>
+#include <X11/extensions/Xrender.h>
+}
+
+#include <QX11Info>
+#endif
 
 #if QT_VERSION < 0x04600
 #include <QPropertyAnimation>
@@ -85,6 +101,16 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
     connect(Config::getInstance(), SIGNAL(configChanged()), this, SLOT(backgroundChanged()));
     connect(Config::getInstance(), SIGNAL(widgetAdded()), this, SLOT(onNewWidget()));
     connect(Config::getInstance(), SIGNAL(layerChange()), d->layer, SLOT(switchLayer()));
+
+#ifdef Q_WS_X11
+    if (checkXCompositeExt()) {
+        qDebug() << Q_FUNC_INFO << "Supports Composite Ext: Yes";
+        redirectWindows();
+        loadWindows();
+    } else {
+        qDebug() << Q_FUNC_INFO << "Supports Composite Ext: No";
+    }
+#endif
 }
 
 void DesktopView::onNewWidget()
@@ -104,6 +130,78 @@ void DesktopView::enableOpenGL(bool state)
         d->openglOn = false;
     }
 }
+
+#ifdef Q_WS_X11
+bool DesktopView::checkXCompositeExt()
+{
+    /* We don't support this feature in Windows and MacosX */
+
+    int event_base, error_base;
+    if (XCompositeQueryExtension(QX11Info::display(), &event_base, &error_base)) {
+        int major = 0, minor = 2;
+        XCompositeQueryVersion(QX11Info::display(), &major, &minor );
+        if ( major > 0 || minor >= 2 ) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void DesktopView::redirectWindows()
+{
+    qDebug() << Q_FUNC_INFO;
+
+    Display *dpy = QX11Info::display();
+
+    for (int i = 0; i < ScreenCount(dpy); i++) {
+        XCompositeRedirectSubwindows(dpy, RootWindow(dpy, i),
+                                CompositeRedirectAutomatic);
+    }
+}
+
+void DesktopView::loadWindows()
+{
+
+    Display *dpy = QX11Info::display();
+    XGrabServer (dpy);
+    Window root_notused, parent_notused;
+    Window *children;
+    unsigned int nchildren;
+    XWindowAttributes attr;
+
+    XQueryTree (dpy,
+     RootWindow(dpy, QX11Info::appScreen()),
+     &root_notused,
+     &parent_notused,
+     &children,
+     &nchildren);
+
+    for (int i = 0; i < nchildren; i++) {
+        if (not XGetWindowAttributes(QX11Info::display(), children[i], &attr)) {
+            qDebug() << Q_FUNC_INFO << "Failed to get window attribute";
+            continue;
+        }
+
+        if (children[i] == this->winId()) {
+            continue;
+        }
+        if (attr.map_state == IsViewable) {
+           qDebug() << Q_FUNC_INFO << "Windows found";
+           //XRenderPictFormat *format = XRenderFindVisualFormat(dpy, attr.visual);
+           //XRenderPictureAttributes pa;
+           //pa.subwindow_mode = IncludeInferiors; // Don't clip child widgets
+           //Picture picture = XRenderCreatePicture( dpy, children[i], format, CPSubwindowMode, &pa );
+           PlexyWindows *_window = new PlexyWindows(dpy, children[i], &attr);
+           _window->configState(DesktopWidget::NORMALSIDE);
+           scene()->addItem(_window);
+           _window->setRect(0,0, 200, 200);
+           _window->show();
+        }
+    }
+    XUngrabServer (dpy);
+}
+#endif
+
 DesktopView::~DesktopView()
 {
     delete d;

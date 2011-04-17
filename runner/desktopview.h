@@ -35,6 +35,11 @@ public:
     void addCoreExtension(const QString &name);
     void addDesktopItem(QGraphicsItem *item);
     void enableOpenGL(bool);
+#ifdef Q_WS_X11
+    bool checkXCompositeExt();
+    void redirectWindows();
+    void loadWindows();
+#endif
 
 public slots:
     void backgroundChanged();
