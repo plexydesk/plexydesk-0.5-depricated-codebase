@@ -147,16 +147,10 @@ void DesktopView::addExtension(const QString &name)
             scene()->addItem(widget);
             widget->setPos(d->row, d->column);
             d->row += widget->boundingRect().width()+d->margin;
-	    if (name == "plexytwit"){
-	       d->layer->addItem("Social",widget);
-	       d->layer->showLayer("Social");
-	    }else{
-               d->layer->addItem("Widgets", widget);
-	       d->layer->showLayer("Widgets");
-	    }
+            d->layer->addItem("Widgets", widget);
         }
     }
-    delete provider;
+   delete provider;
 }
 
 void DesktopView::addCoreExtension(const QString &name)
