@@ -105,8 +105,8 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
 #ifdef Q_WS_X11
     if (checkXCompositeExt()) {
         qDebug() << Q_FUNC_INFO << "Supports Composite Ext: Yes";
-        redirectWindows();
-        loadWindows();
+        // TODO:
+        // load composite layer 
     } else {
         qDebug() << Q_FUNC_INFO << "Supports Composite Ext: No";
     }
