@@ -19,10 +19,15 @@
 
 #include <canvas.h>
 #include <plexyconfig.h>
+#include <desktopwidget.h>
 
 #include <QGraphicsSceneDragDropEvent>
 #include <QMimeData>
 #include <QUrl>
+#include <QDeclarativeEngine>
+#include <QGraphicsObject>
+#include <QDeclarativeComponent>
+
 
 namespace PlexyDesk
 {
@@ -32,7 +37,9 @@ public:
     Private() {
     }
     ~Private() {
+        mQMLWidgets.clear();
     }
+    QList<DesktopWidget *> mQMLWidgets;
 };
 
 Canvas::Canvas(QObject *parent) : QGraphicsScene(parent), d(new Private)
@@ -55,6 +62,17 @@ void Canvas::dragEnterEvent(QGraphicsSceneDragDropEvent *event)
     if (!event)
         return;
     event->acceptProposedAction();
+    const QUrl droppedFile = event->mimeData()->urls().at(0).toString(QUrl::StripTrailingSlash |
+            QUrl::RemoveScheme);
+    if (droppedFile.toString().contains(".qml")) {
+
+        qDebug() << Q_FUNC_INFO << droppedFile;
+        DesktopWidget *parent = new DesktopWidget(QRectF(0,0,0,0));
+        parent->loadQML(droppedFile);
+        addItem(parent);
+        d->mQMLWidgets.append(parent);
+        return;
+    }
     if (event->mimeData()->hasUrls()) {
         Config::getInstance()->setWallpaper(event->mimeData()->urls().at(0).toString(QUrl::StripTrailingSlash | QUrl::RemoveScheme));
     }

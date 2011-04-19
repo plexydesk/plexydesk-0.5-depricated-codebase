@@ -27,6 +27,10 @@
 #include <QTimeLine>
 #include <QTimer>
 
+#include <QDeclarativeEngine>
+#include <QGraphicsObject>
+#include <QDeclarativeComponent>
+
 namespace PlexyDesk
 {
 class DesktopWidget::Private
@@ -51,12 +55,14 @@ public:
     int scale;
     QPointF clickPos;
     bool backdrop;
+    QGraphicsObject *qmlChild;
 };
 
 DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget) :
     QGraphicsRectItem(rect), d(new Private)
 {
     d->proxyWidget = 0;
+    d->qmlChild = 0;
     if (widget) {
         d->proxyWidget = new QGraphicsProxyWidget(this);
         d->proxyWidget->setFocusPolicy(Qt::StrongFocus);
@@ -158,6 +164,30 @@ void DesktopWidget::setBackFaceImage(QPixmap img)
     d->back = img;
 }
 
+void DesktopWidget::loadQML(const QUrl &url)
+{
+    QDeclarativeEngine *engine = new QDeclarativeEngine;
+    QDeclarativeComponent component(engine, url.toLocalFile());
+    if (not component.isReady()) {
+        return;
+    }
+    d->qmlChild =
+        qobject_cast<QGraphicsObject *>(component.create());
+    d->saveRect = d->qmlChild->boundingRect();
+    setRect(d->qmlChild->boundingRect());
+    update();
+    d->qmlChild->setParentItem(this);
+}
+
+bool DesktopWidget::isQml() const
+{
+    if (d->qmlChild) {
+        return true;
+    }
+
+    return false;
+}
+
 void DesktopWidget::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
     QGraphicsRectItem::hoverEnterEvent(event);
@@ -180,6 +210,9 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 
     qDebug() << "Double Click" << endl;
     if (d->s == DOCK) {
+        if (d->qmlChild) {
+            d->qmlChild->show();
+        }
         setState(NORMALSIDE);
         prepareGeometryChange();
         this->setRect(d->saveRect);
@@ -188,6 +221,9 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
         }
         d->zoomin->start();
     } else {
+        if (d->qmlChild) {
+            d->qmlChild->hide();
+        }
         setState(DOCK);
         prepareGeometryChange();
         this->setRect(0, 0, d->dock.width(), d->dock.height());
@@ -294,6 +330,7 @@ void DesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
         return;
     if (!painter->isActive())
         return;
+
     painter->setOpacity(d->opacity);
     painter->setClipRect(option->exposedRect);
     if (d->s == NORMALSIDE) {

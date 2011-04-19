@@ -100,6 +100,7 @@ SET(libs
     ${QT_QTSVG_LIBRARY}
     ${DBUS_LIB}
     ${QT_QTNETWORK_LIBRARY}
+    ${QT_QTDECLARATIVE_LIBRARY}
 )
 
 ADD_LIBRARY(plexydeskcore SHARED ${sourceFiles} ${QT_MOC_SRCS})

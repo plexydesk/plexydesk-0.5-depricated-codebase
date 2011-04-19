@@ -75,7 +75,8 @@ public :
     void setDockImage(QPixmap);
     void setFaceImage(QPixmap);
     void setBackFaceImage(QPixmap);
-
+    void loadQML(const QUrl &url);
+    bool isQml() const;
 public Q_SLOTS:
     void zoomIn(int);
     void zoomOut(int);
