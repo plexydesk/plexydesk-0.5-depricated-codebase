@@ -189,14 +189,29 @@ void ClockWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem *
 void ClockWidget::paintExtBackFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *)
 {
     p->setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing | QPainter::HighQualityAntialiasing);
+    QRectF r = e->exposedRect;
+    p->setCompositionMode(QPainter::CompositionMode_Source);
+    p->fillRect(r, Qt::transparent);
+    p->setCompositionMode(QPainter::CompositionMode_SourceOver);
+    p->setBackgroundMode(Qt::TransparentMode);
+    p->save();
 
-    p->setPen(QColor(255, 255, 255));
+    p->setPen(QColor(0, 0, 0));
     p->setFont(QFont("Bitstream Charter", 15));
-    p->drawText(QRect(20, 25, 160, 160), Qt::AlignTop,
-         QDateTime::currentDateTime().toString(QLatin1String("MMMM dd yyyy")));
+    p->drawText(QRect(0, 0, 200, 140), Qt::AlignLeft | Qt::AlignBottom,
+         QDateTime::currentDateTime().toString(QLatin1String("dddd. MMMM. dd")));
 
-    p->setPen(QColor(255, 203, 255));
+    /*Draw Time*/
+    p->setPen(QColor(0, 0, 0));
+    p->setFont(QFont("Bitstream Charter", 40));
+    p->drawText(QRect(0, 0, 160, 160), Qt::AlignCenter,
+         QString("%1").arg(QDateTime::currentDateTime().toString(QLatin1String("hh:mm"))));
+    p->setFont(QFont("Bitstream Charter", 15));
+    p->drawText(QRect(0, 0, 190, 180), Qt::AlignCenter | Qt::AlignRight,
+         QString("%1").arg(QDateTime::currentDateTime().toString(QLatin1String(":ss"))));
+    /* AM/PM */
     p->setFont(QFont("Bitstream Charter", 20));
-    p->drawText(QRect(20, 80, 160, 160), Qt::AlignCenter,
-         QString("%1").arg(QDateTime::currentDateTime().toString(QLatin1String("h:m:s"))));
+    p->drawText(QRect(0, 0, 190, 140), Qt::AlignCenter | Qt::AlignRight,
+         QString("%1").arg(QDateTime::currentDateTime().toString(QLatin1String("AP"))));
+    p->restore();
 }

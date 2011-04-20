@@ -173,8 +173,13 @@ void DesktopWidget::loadQML(const QUrl &url)
     }
     d->qmlChild =
         qobject_cast<QGraphicsObject *>(component.create());
-    d->saveRect = d->qmlChild->boundingRect();
-    setRect(d->qmlChild->boundingRect());
+    QRectF objectRect = d->qmlChild->boundingRect();
+    QRectF borderRect(objectRect.x(),
+            objectRect.y(),
+            objectRect.width() + 10,
+            objectRect.height() + 10);
+    d->saveRect = borderRect;
+    setRect(borderRect);
     update();
     d->qmlChild->setParentItem(this);
 }
@@ -237,6 +242,11 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 
 void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    if (d->qmlChild) {
+        QGraphicsItem::mousePressEvent(event);
+        return;
+    }
+
     if (event->buttons() == Qt::RightButton && (state() == NORMALSIDE || state() == BACKSIDE)) {
         d->spintimer->start(18);
     }
