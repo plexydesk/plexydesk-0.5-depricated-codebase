@@ -23,14 +23,18 @@ IconJob::IconJob(QObject *parent) : PendingJob(parent), d(new Private)
             if adding more paths append to the end. do not alter
                  this layout.
      */
-    d->iconpaths << QDir::homePath() + "/.icons/" + Config::getInstance()->iconTheme + "/"
-    ;
+    const QLatin1String slash("/");
+    d->iconpaths << QDir::homePath() + QLatin1String("/.icons/") + Config::getInstance()->iconTheme
+        + slash;
+
     QStringList xdg = QString(qgetenv("XDG_DATA_DIRS")).split(':');
     foreach(QString path, xdg) {
-        d->iconpaths << path + "/icons/" + Config::getInstance()->iconTheme + "/";
+        d->iconpaths << path + QLatin1String("/icons/") + Config::getInstance()->iconTheme + slash;
     }
-    d->iconpaths << "/usr/share/pixmaps/"
-                 << "/usr/share/app-install/icons/";
+    d->iconpaths << QLatin1String("/usr/share/pixmaps/")
+                 << QLatin1String("/usr/share/icons/")
+                 << QLatin1String("/usr/share/icons/") + Config::getInstance()->iconTheme + slash
+                 << QLatin1String("/usr/share/app-install/icons/");
     connect(this, SIGNAL(newJob()), this, SLOT(handleJob()), Qt::DirectConnection);
 }
 
@@ -39,7 +43,7 @@ IconJob::~IconJob()
     delete d;
 }
 
-QPixmap IconJob::Icon() const
+QPixmap IconJob::iconPixmap() const
 {
     return d->pixmap;
 }
@@ -53,17 +57,17 @@ void IconJob::requestIcon(const QString &name, const QString &size)
 
 void IconJob::handleJob()
 {
+    QString error, message;
     foreach(QString path, d->iconpaths) {
         QDir dir(path);
         if (dir.exists()) {
-            QString subpath = d->size + "/" + d->name + ".png";
+            QString subpath = d->size + QLatin1String("/") + d->name + QLatin1String(".png");
             QStringList iconlist = getSubDir(path);
             foreach(QString icon, iconlist) {
-                QFile iconfile(icon + "/" + d->name + ".png");
+                QFile iconfile(icon + "/" + d->name + QLatin1String(".png"));
                 if (iconfile.exists()) {
-                    d->pixmap = QPixmap(icon + "/" + d->name + ".png");
+                    d->pixmap = QPixmap(icon + "/" + d->name + QLatin1String(".png"));
                     if (!d->pixmap.isNull()) {
-                        QString error, message;
                         setFinished(true, error, message);
                         QMetaObject::invokeMethod(this, "finished", Qt::QueuedConnection);
                         return;
@@ -72,6 +76,9 @@ void IconJob::handleJob()
             }
         }
     }
+
+   setFinished(false, error, message);
+   QMetaObject::invokeMethod(this, "finished", Qt::QueuedConnection);
 }
 
 

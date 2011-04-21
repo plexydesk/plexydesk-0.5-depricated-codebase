@@ -15,7 +15,7 @@ public:
     virtual ~IconJob();
     void requestIcon(const QString &name, const QString &size);
     QStringList getSubDir(const QString &path);
-    QPixmap Icon() const;
+    QPixmap iconPixmap() const;
 Q_SIGNALS:
     void newJob();
 public Q_SLOTS:

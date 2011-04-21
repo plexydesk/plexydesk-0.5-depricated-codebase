@@ -23,7 +23,7 @@ PendingJob::PendingJob(QObject *parent) : QObject(parent), d(new Private)
 
 bool PendingJob::isError()
 {
-    return d->iserror;
+    return !d->iserror;
 }
 
 QString PendingJob::errorName() const
@@ -39,6 +39,7 @@ QString PendingJob::errorMessage() const
 void PendingJob::setFinished(bool status, QString &error, const QString &message)
 {
     d->done = status;
+    d->iserror = status;
     d->error = error;
     d->message = message;
     emit finished();

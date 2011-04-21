@@ -46,6 +46,7 @@ void TestMime::startTest()
     connect(mMime, SIGNAL(aliasMime(const MimePairType)), this, SLOT(aliasMime(const MimePairType)));
 
     // set dir iterator
+    /*
     dirIterator = new QDirIterator("/var", QStringList("*.*"), QDir::AllDirs|QDir::Files|QDir::NoSymLinks, QDirIterator::Subdirectories);
     while(dirIterator->hasNext())
     {
@@ -58,9 +59,12 @@ void TestMime::startTest()
             mMime->fromFileName(dirIterator->fileInfo().fileName());
         }
     }
-/*
-    for(int i=0; i<100; i++) {
-    mMime->fromFileName("test.ez");
+    */
+
+///    for(int i=0; i<100; i++) {
+    mMime->fromFileName("test.pdf");
+    mMime->fromFileName("test.desktop");
+    /*
     mMime->fromFileName("test.exe");
     mMime->fromFileName("test.xml");
     mMime->fromFileName("test.cpp");
@@ -76,8 +80,9 @@ void TestMime::startTest()
     mMime->fromFileName("test.png");
     mMime->fromFileName("test.bmp");
     mMime->fromFileName("test.pdf");
-   }
- */
+    */
+ //  }
+
 
 }
 
@@ -86,11 +91,8 @@ void TestMime::cannotFound(const QString error, const QString str)
     qDebug() << error << str;
 }
 
-void TestMime::fromFileNameMime(const MimePairType mimeType, const QObject *obj)
+void TestMime::fromFileNameMime(const MimePairType mimeType)
 {
-    if(this != qobject_cast<const TestMime *>(obj))
-        return;
-
     if(mimeType.second.isEmpty())
         return;
 

@@ -31,7 +31,6 @@ set(libs
    ${QT_QTGUI_LIBRARY}
    ${QT_QTCORE_LIBRARY}
    ${QT_QTOPENGL_LIBRARY}
-   ${QT_AND_KDECORE_LIBS}
    Xcomposite
    Xdamage
 )
@@ -50,3 +49,5 @@ TARGET_LINK_LIBRARIES(
 ########### install files ###############
 INSTALL(TARGETS plexydesk DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/)
 #INSTALL( FILES raptor.desktop  DESTINATION  ${DATA_INSTALL_DIR}/kicker/applets )
+
+add_subdirectory(test)
