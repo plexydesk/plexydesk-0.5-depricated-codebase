@@ -1,5 +1,3 @@
-project(plexydesk)
-
 include(${QT_USE_FILE})
 INCLUDE_DIRECTORIES(
    ${QT_INCLUDES}
