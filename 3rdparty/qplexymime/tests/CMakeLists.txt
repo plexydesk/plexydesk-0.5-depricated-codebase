@@ -34,6 +34,7 @@ ADD_EXECUTABLE(plexymimetest ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
 	plexymimetest
+    plexymime
 	${libs}
 )
 
