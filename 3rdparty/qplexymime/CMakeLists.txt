@@ -1,3 +1,4 @@
+add_subdirectory(tests)
 
 include(${QT_USE_FILE})
 
@@ -49,5 +50,3 @@ INSTALL(TARGETS plexymime DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
 FILE(GLOB XML_FILES *.xml)
 
 INSTALL(FILES ${XML_FILES}  DESTINATION ${CMAKE_INSTALL_PREFIX}/mime/)
-
-add_subdirectory(tests)

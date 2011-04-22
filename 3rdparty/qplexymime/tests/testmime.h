@@ -25,7 +25,7 @@
 #include <QObject>
 #include <QDirIterator>
 
-#include "qplexymime.h"
+#include <qplexymime.h>
 
 class TestMime : public QObject
 {
