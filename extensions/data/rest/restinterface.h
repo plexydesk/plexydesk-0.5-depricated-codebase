@@ -16,8 +16,8 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#ifndef FLICKER_DATA_I
-#define FLICKER_DATA_I
+#ifndef REST_DATA_I
+#define REST_DATA_I
 
 #include <QtCore>
 #include <plexy.h>
@@ -33,7 +33,7 @@ class RestInterface : public PlexyDesk::DataInterface
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
 public :
-        RestInterface(QObject *object = 0);
+    RestInterface(QObject *object = 0);
     virtual ~RestInterface() {
     }
 
@@ -41,6 +41,5 @@ public :
     PlexyDesk::DataPlugin *instance();
 
 };
-
 
 #endif

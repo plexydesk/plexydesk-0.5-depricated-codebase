@@ -95,6 +95,9 @@ ADD_SUBDIRECTORY(extensions/backdrop/classicdrop)
 ADD_SUBDIRECTORY(extensions/widgets/clock)
 ADD_SUBDIRECTORY(extensions/widgets/cpu)
 
+#data plugins
+ADD_SUBDIRECTORY(extensions/data/rest)
+
 ADD_SUBDIRECTORY(data)
 IF (NOT APPLE)
 IF (UNIX)

@@ -16,8 +16,8 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#ifndef Rest_DATA_H
-#define Rest_DATA_H
+#ifndef REST_DATA_H
+#define REST_DATA_H
 
 #include <QtCore>
 #include <plexy.h>

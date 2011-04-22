@@ -1,21 +1,16 @@
-
-set(QT_USE_OPENGL TRUE)
-# -> this will cause cmake to include and link against the OpenGL module
-include(${QT_USE_FILE})
-
 INCLUDE_DIRECTORIES(
-	   ${QT_INCLUDES}
-	   ${QT_QTOPENGL_INCLUDE_DIR}
-	   ${QT_QTNETWORK_INCLUDE_DIR}
-	   ${QT_QTTEST_INCLUDE_DIR}
+       ${QT_INCLUDES}
+       ${QT_QTOPENGL_INCLUDE_DIR}
+       ${QT_QTNETWORK_INCLUDE_DIR}
+       ${QT_QTTEST_INCLUDE_DIR}
 )
 
-SET (sourceFiles 	
+SET (sourceFiles
     rest.cpp
     restinterface.cpp
 )
 
-set(headerFiles
+SET(headerFiles
     rest.h
     restinterface.h
 )
@@ -23,30 +18,27 @@ set(headerFiles
 SET (QTMOC_SRCS
     rest.h
     restinterface.h
-)    
-
-qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
-
-set(sourceFiles
-	${sourceFiles}
-	${headerFiles}
 )
 
-set(libs
-	${QT_QTGUI_LIBRARY}
-	${OPENGL_LIBRARIES}
-	${QT_QTCORE_LIBRARY}
-	${QT_QTNETWORK_LIBRARY}
-	${QT_QTOPENGL_LIBRARY}
+QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})
+
+SET(sourceFiles
+    ${sourceFiles}
+    ${headerFiles}
 )
 
-add_library (restengine SHARED ${sourceFiles} ${QT_MOC_SRCS})
+SET(libs
+    ${QT_QTCORE_LIBRARY}
+    ${QT_QTNETWORK_LIBRARY}
+)
+
+ADD_LIBRARY (restengine SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
-	restengine
-	plexydeskcore
-	${libs}
+    restengine
+    ${PLEXY_CORE_LIBRARY}
+    ${libs}
 )
 
 INSTALL(TARGETS restengine DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext/)
-install(FILES rest.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups/)
+INSTALL(FILES rest.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups/)
