@@ -26,7 +26,7 @@
 CpuWidget::CpuWidget(const QRectF &rect, QWidget *widget) :
     PlexyDesk::DesktopWidget(rect, widget)
 {
-    shade == 0;
+    shade = false;
     getBaseData();
 
     setPath("/usr/share/plexy/skins/default/cpu/");
