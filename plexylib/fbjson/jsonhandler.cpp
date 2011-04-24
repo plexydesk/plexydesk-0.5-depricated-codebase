@@ -5,12 +5,15 @@ JsonHandler::JsonHandler()
 {
 }
 
-JsonData JsonHandler::parse(const QString &data)
+JsonData JsonHandler::property(const QString &data, const QString &prop)
 {
-    qDebug() << Q_FUNC_INFO <<  data;
     QScriptValue sc;
     QScriptEngine engine;
+    JsonData errorData;
+    JsonData propData;;
+
     sc = engine.evaluate("(" + QString(data) + ")");
+
     if (sc.property("error").isObject()) {
         JsonData result;
         result.setType(JsonData::Error);
@@ -19,50 +22,39 @@ JsonData JsonHandler::parse(const QString &data)
         "Error in Result" <<
         errorObj.property("type").toString() <<
         errorObj.property("message").toString();
-        return result;
+        errorData = result;
     }
 
-    if (sc.isObject()) {
-        QScriptValueIterator it(sc);
-        JsonData result;
-        result.setType(JsonData::Object);
-        QScriptValue obj = sc;
-
-        QVariantMap map = qscriptvalue_cast<QVariantMap>(sc);
-
-        qDebug() << Q_FUNC_INFO << map;
-        Q_FOREACH(QString var, map.keys()) {
-            QScriptValue value = sc.property(var);
-            QVariantMap innerdata = qscriptvalue_cast<QVariantMap>(value);
-            qDebug() << var << value.isArray() << value.isObject();
-            if (value.isArray()) {
-                QScriptValueIterator iter(value);
-                while (iter.hasNext()) {
-                    iter.next();
-                    if (iter.value().isObject()) {
-                        QVariantMap list = qscriptvalue_cast<QVariantMap>(iter.value());
-                        qDebug() << list;
-                    }
-                }
-            }
-            if (value.isObject()) {
-                QVariantMap list = qscriptvalue_cast<QVariantMap>(value);
-                qDebug() << list;
-            }
+    QScriptValue propValue = sc.property(prop);
+    if (!propValue.isValid() || propValue.isUndefined()) {
+        return errorData;
+    }else {
+        qDebug() << Q_FUNC_INFO << "Start parsing property :" << propValue.isObject();
+        if (propValue.isObject()) {
+            QVariantMap list = qscriptvalue_cast<QVariantMap>(propValue);
+            propData.setType(JsonData::Object);
+            propData.addData(prop, QVariant(list));
+            return propData;
+        } else if (propValue.isString()) {
+            propData.setType(JsonData::String);
+            propData.addData(prop, QVariant(propValue.toString()));
+            return propData;
+        } else if (propValue.isArray()) {
+            propData.setType(JsonData::Array);
+            propData.addData(prop, QVariant(arrayToMap(propValue)));
+            return propData;
         }
-        return result;
     }
 }
 
-void JsonHandler::extractValue(QScriptValueIterator &it)
+QHash<QString, QVariant> JsonHandler::arrayToMap(const QScriptValue &value)
 {
-    if (it.hasNext()) {
-        it.next();
-        qDebug() << Q_FUNC_INFO << it.name();
-        QScriptValueIterator rt(it.value());
-        extractValue(rt);
-    }
-
-
-    return;
+  QScriptValueIterator iter(value);
+  while (iter.hasNext()) {
+        iter.next();
+        if (iter.value().isObject()) {
+            QVariantMap list = qscriptvalue_cast<QVariantMap>(iter.value());
+            qDebug() << list;
+        }
+  }
 }
