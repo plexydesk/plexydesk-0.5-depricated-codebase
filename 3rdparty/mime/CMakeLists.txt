@@ -34,6 +34,14 @@ SET(libs
 
 add_library (mimetype SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
+IF(MINGW)
+    SET_TARGET_PROPERTIES(mimetype PROPERTIES
+        IMPORT_SUFFIX ".lib"
+        IMPORT_PREFIX ""
+        PREFIX ""
+    )
+ENDIF(MINGW)
+
 TARGET_LINK_LIBRARIES(
     mimetype
     ${libs}

@@ -52,6 +52,14 @@ SET(sourceFiles
 
 ADD_LIBRARY(wallpaperchange SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
+IF(MINGW)
+    SET_TARGET_PROPERTIES(wallpaperchange PROPERTIES
+        IMPORT_SUFFIX ".lib"
+        IMPORT_PREFIX ""
+        PREFIX ""
+    )
+ENDIF(MINGW)
+
 SET(libs
     ${QT_QTGUI_LIBRARY}
     ${OPENGL_LIBRARIES}

@@ -111,6 +111,14 @@ SET(libs
 
 ADD_LIBRARY(plexydeskcore SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
+IF(MINGW)
+    SET_TARGET_PROPERTIES(plexydeskcore PROPERTIES
+        IMPORT_SUFFIX ".lib"
+        IMPORT_PREFIX ""
+        PREFIX ""
+    )
+ENDIF(MINGW)
+
 TARGET_LINK_LIBRARIES(
     plexydeskcore
     ${libs}

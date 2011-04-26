@@ -24,6 +24,14 @@ set(sourceFiles
 
 ADD_LIBRARY (webqgv SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
+IF(MINGW)
+    SET_TARGET_PROPERTIES(webqgv PROPERTIES
+        IMPORT_SUFFIX ".lib"
+        IMPORT_PREFIX ""
+        PREFIX ""
+    )
+ENDIF(MINGW)
+
 SET(libs
     ${QT_QTWEBKIT_LIBRARY}
     ${QT_QTGUI_LIBRARY}

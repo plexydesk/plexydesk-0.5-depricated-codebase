@@ -40,6 +40,14 @@ set(libs
 
 add_library (plexymime SHARED ${sourceFiles} ${QT_MOC_SRCS} ${QT_RCC_SRCS})
 
+IF(MINGW)
+    SET_TARGET_PROPERTIES(plexymime PROPERTIES
+        IMPORT_SUFFIX ".lib"
+        IMPORT_PREFIX ""
+        PREFIX ""
+    )
+ENDIF(MINGW)
+
 TARGET_LINK_LIBRARIES(
 	plexymime
 	${libs}

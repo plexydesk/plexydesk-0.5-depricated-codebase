@@ -18,6 +18,14 @@ SET(sourceFiles
 
 add_library (plexymagic SHARED ${sourceFiles})
 
+IF(MINGW)
+    SET_TARGET_PROPERTIES(plexymagic PROPERTIES
+        IMPORT_SUFFIX ".lib"
+        IMPORT_PREFIX ""
+        PREFIX ""
+    )
+ENDIF(MINGW)
+
 if(NOT WIN32)
 INSTALL(TARGETS plexymagic DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/)
 elseif(WIN32)
