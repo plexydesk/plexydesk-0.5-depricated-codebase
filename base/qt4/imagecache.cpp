@@ -1,5 +1,6 @@
 #include <imagecache.h>
 #include <QSvgRenderer>
+#include <QtDebug>
 
 namespace PlexyDesk
 {
