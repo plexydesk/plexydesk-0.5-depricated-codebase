@@ -90,16 +90,6 @@
 
 #define  Q_UINT32 unsigned int
 
-#ifdef Q_WS_WIN
-#include <QCoreApplication>
-
-static QString windowsPath = QString("%1%2").arg(PLEXPREFIX).arg(QString("/.."));
-#undef PLEXPREFIX
-
-#define PLEXPREFIX windowsPath
-
-#endif
-
 namespace Plexy
 {
 
