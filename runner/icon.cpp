@@ -88,7 +88,7 @@ void Icon::genericIconNameMime(const MimePairType mimePair)
 
 void Icon::loadIcon()
 {
-    d->icon = d->iconjob->Icon();
+    d->icon = d->iconjob->iconPixmap();
     update();
 }
 

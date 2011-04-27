@@ -14,6 +14,12 @@ IF(UNIX)
 INCLUDE_DIRECTORIES(
     ${X11_INCLUDE_DIR}
 )
+SET (extra_headers
+   plexywindow.h)
+
+SET (extra_source 
+   plexywindow.cpp)
+
 ENDIF(UNIX)
 
 ########### source files ###############
@@ -23,6 +29,7 @@ SET(sourceFiles
     iconjob.cpp
     iconprovider.cpp
     plexypanel.cpp
+    ${extra_source}
     main.cpp
 )
 
@@ -32,6 +39,7 @@ set(headerFiles
     iconjob.h
     iconprovider.h
     plexypanel.h
+    ${extra_headers}
 )
 
 set(QTMOC_SRCS
@@ -40,6 +48,7 @@ set(QTMOC_SRCS
     iconjob.h
     iconprovider.h
     plexypanel.h
+    ${extra_headers}
 )
 
 qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
