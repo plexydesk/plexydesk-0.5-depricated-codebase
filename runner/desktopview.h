@@ -31,8 +31,9 @@ public:
 
     void addWallpaper(const QString &path);
     void addRender(QGraphicsScene *scene);
-    void addExtension(const QString &name);
     void addCoreExtension(const QString &name);
+    void addExtension(const QString &name,
+            const QString &layer = QLatin1String("widgets"));
     void addDesktopItem(QGraphicsItem *item);
     void enableOpenGL(bool);
 #ifdef Q_WS_X11

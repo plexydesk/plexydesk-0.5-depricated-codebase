@@ -230,12 +230,16 @@ void DesktopView::backgroundChanged()
 }
 
 /*
-   Adds an Widget Extension to Plexy Desktop, give the widget
+   \brief Adds an Widget Extension to Plexy Desktop, give the widget
    name in string i.e "clock" or "radio", the internals will
    take care of the loading the widget plugin name is correct
+
+   \param name String name of the widget as specified by the desktop file
+
+   \param layerName Name of the layer you want add the widget to 
  */
 
-void DesktopView::addExtension(const QString &name)
+void DesktopView::addExtension(const QString &name, const QString &layerName)
 {
     WidgetPlugin *provider = static_cast<WidgetPlugin *>(PluginLoader::getInstance()->instance(name));
     if (provider) {
@@ -245,7 +249,7 @@ void DesktopView::addExtension(const QString &name)
             scene()->addItem(widget);
             widget->setPos(d->row, d->column);
             d->row += widget->boundingRect().width()+d->margin;
-            d->layer->addItem("Widgets", widget);
+            d->layer->addItem(layerName, widget);
         }
     }
    delete provider;
