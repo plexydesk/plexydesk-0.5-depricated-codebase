@@ -88,6 +88,7 @@ int main( int argc, char * *argv )
         view->addExtension(pluginName, QLatin1String("Browser"));
     }
 
+    view->showLayer(QLatin1String("Widgets"));
 
     return app.exec();
 }

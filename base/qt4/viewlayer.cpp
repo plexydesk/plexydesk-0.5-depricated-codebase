@@ -15,6 +15,7 @@ public:
 
     Layer layer;
     List *currentList;
+    QString currentLayerName;
 };
 
 ViewLayer::ViewLayer(QObject *obj) : QObject(obj), d(new Private)
@@ -29,6 +30,10 @@ ViewLayer::~ViewLayer()
 
 void ViewLayer::addItem(const QString &layerName, DesktopWidget *item)
 {
+    if (d->currentLayerName != layerName) {
+        item->hide();
+    }
+
     if (d->layer.contains(layerName)) {
         d->layer[layerName]->append(item);
     } else {
@@ -40,10 +45,14 @@ void ViewLayer::addItem(const QString &layerName, DesktopWidget *item)
 
 void ViewLayer::showLayer(const QString &layername)
 {
+    /* Hide all the stuff in the current layer
+       then show the requested layer
+     */
+
     if (!d->layer.contains(layername)) {
-        qDebug("Invalid Layer:  ViewLayer::showLayer()");
+        qDebug() << Q_FUNC_INFO << "Invalid Layer";
     } else {
-        qDebug()<<Q_FUNC_INFO <<layername;
+        qDebug() << Q_FUNC_INFO << layername;
         hideLayer();
 	d->currentList = d->layer[layername];
         for (int i = 0; i < d->currentList->size(); i++) {
@@ -51,6 +60,8 @@ void ViewLayer::showLayer(const QString &layername)
                 d->currentList->at(i)->show();
             }
         }
+
+        d->currentLayerName = layername;
     }
 }
 void ViewLayer::hideLayer()
@@ -84,8 +95,8 @@ void ViewLayer::switchLayer()
     }
     showLayer(newLayer);
 
-    qDebug()<<"CurrentLayer::"<<currentLayer;
-    qDebug()<<"NewLayer::"<<newLayer;
+    qDebug()<< "CurrentLayer::" <<currentLayer;
+    qDebug()<< "NewLayer::" <<newLayer;
 }
 QStringList ViewLayer::layerIndex() const
 {

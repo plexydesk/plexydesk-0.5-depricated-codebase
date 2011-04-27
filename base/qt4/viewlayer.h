@@ -31,7 +31,7 @@ public:
     void showLayer(const QString &layer);
     QStringList layerIndex() const;
 
-public slots:
+public Q_SLOTS:
     void switchLayer();
 
 private:

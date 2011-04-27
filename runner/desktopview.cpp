@@ -94,9 +94,10 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
     /* init */
     d->bgPlugin = static_cast<BackdropPlugin *>(PluginLoader::getInstance()->instance("classicbackdrop"));
     d->gridLayout = new QGraphicsGridLayout();
-    d->row = d->column = 0.0;
+    d->row = d->column = 48.0;
     d->margin = 10.0;
     d->layer = new ViewLayer();
+    d->layer->showLayer(QLatin1String("Widgets"));
 
     connect(Config::getInstance(), SIGNAL(configChanged()), this, SLOT(backgroundChanged()));
     connect(Config::getInstance(), SIGNAL(widgetAdded()), this, SLOT(onNewWidget()));
@@ -129,6 +130,11 @@ void DesktopView::enableOpenGL(bool state)
         setViewport(new QWidget);
         d->openglOn = false;
     }
+}
+
+void DesktopView::showLayer(const QString &layer)
+{
+    d->layer->showLayer(layer);
 }
 
 #ifdef Q_WS_X11

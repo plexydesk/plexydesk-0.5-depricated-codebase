@@ -33,9 +33,10 @@ public:
     void addRender(QGraphicsScene *scene);
     void addCoreExtension(const QString &name);
     void addExtension(const QString &name,
-            const QString &layer = QLatin1String("widgets"));
+            const QString &layer = QLatin1String("Widgets"));
     void addDesktopItem(QGraphicsItem *item);
     void enableOpenGL(bool);
+    void showLayer(const QString &name);
 #ifdef Q_WS_X11
     bool checkXCompositeExt();
     void redirectWindows();
