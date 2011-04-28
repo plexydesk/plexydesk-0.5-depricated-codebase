@@ -1,8 +1,8 @@
 INCLUDE_DIRECTORIES(
-       ${QT_INCLUDES}
-       ${QT_QTOPENGL_INCLUDE_DIR}
-       ${QT_QTNETWORK_INCLUDE_DIR}
-       ${QT_QTTEST_INCLUDE_DIR}
+    ${QT_INCLUDES}
+    ${QT_QTOPENGL_INCLUDE_DIR}
+    ${QT_QTNETWORK_INCLUDE_DIR}
+    ${QT_QTTEST_INCLUDE_DIR}
 )
 
 SET (sourceFiles
@@ -33,6 +33,14 @@ SET(libs
 )
 
 ADD_LIBRARY (restengine SHARED ${sourceFiles} ${QT_MOC_SRCS})
+
+IF(MINGW)
+    SET_TARGET_PROPERTIES(restengine PROPERTIES
+        IMPORT_SUFFIX ".lib"
+        IMPORT_PREFIX ""
+        PREFIX ""
+    )
+ENDIF(MINGW)
 
 TARGET_LINK_LIBRARIES(
     restengine

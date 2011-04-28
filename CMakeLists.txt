@@ -106,7 +106,6 @@ ADD_SUBDIRECTORY(social/accountsmanager/)
 ADD_SUBDIRECTORY(extensions/widgets/cpu)
 
 #data plugins
-ADD_SUBDIRECTORY(extensions/data/rest)
 #////////////////////////////
 ENDIF (UNIX)
 
@@ -133,6 +132,9 @@ ADD_SUBDIRECTORY(3rdparty/webitem)
 
 #UI widgets for all platforms
 ADD_SUBDIRECTORY(extensions/widgets/clock)
+
+#data plugins for all platforms
+ADD_SUBDIRECTORY(extensions/data/rest)
 
 ADD_SUBDIRECTORY(artwork)
 ADD_SUBDIRECTORY(artwork/plexyfren_theme/default/)
