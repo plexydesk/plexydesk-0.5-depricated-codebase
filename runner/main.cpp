@@ -46,16 +46,19 @@ using namespace PlexyDesk;
 int main( int argc, char * *argv )
 {
     QApplication app(argc, argv);
+
 #ifdef Q_WS_WIN
     QString pluginPath = QString(PLEXPREFIX) + "/plugins/imageformats";
     app.addLibraryPath(pluginPath);
 #endif
+
     Canvas scene;
     scene.setBackgroundBrush(Qt::NoBrush);
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
     scene.setSceneRect(QDesktopWidget().availableGeometry()); //TODO Resolution changes ?
 
-    DesktopView *view = new DesktopView(&scene);
+    QSharedPointer<DesktopView> view = QSharedPointer<DesktopView>(new DesktopView(&scene));
+    QObject::connect(view.data(), SIGNAL(closeApplication()), &app, SLOT(quit()));
     view->enableOpenGL(false);
     QRect r = QDesktopWidget().geometry();
     view->move(r.x(), r.y());

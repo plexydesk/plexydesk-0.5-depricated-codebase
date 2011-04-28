@@ -5,9 +5,10 @@ namespace PlexyDesk
 class ViewLayer::Private
 {
 public:
-    Private() {
-    }
-    ~Private() {
+    Private() {}
+    ~Private()
+    {
+        clean();
     }
 
     typedef QList <DesktopWidget *> List;
@@ -16,7 +17,26 @@ public:
     Layer layer;
     List *currentList;
     QString currentLayerName;
+
+private:
+    void clean();
 };
+
+void ViewLayer::Private::clean()
+{
+    qDebug() << "Cleaning layers";
+
+    QStringList keysList = layer.keys();
+    foreach(QString key, keysList)
+    {
+        List *widgetList = layer.value(key);
+        widgetList->clear();
+        delete widgetList;
+        layer.remove(key);
+    }
+
+    layer.clear();
+}
 
 ViewLayer::ViewLayer(QObject *obj) : QObject(obj), d(new Private)
 {

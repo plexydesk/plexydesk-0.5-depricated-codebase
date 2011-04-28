@@ -33,6 +33,7 @@
 #include <QDir>
 #include <QFutureWatcher>
 #include <QtDebug>
+#include <QSharedPointer>
 
 #ifdef Q_WS_X11
 #include <plexywindow.h>
@@ -62,12 +63,13 @@ class DesktopView::Private
 public:
     Private() {
     }
-    ~Private() {
+    ~Private()
+    {
     }
     AbstractPluginInterface *bIface;
     BackdropPlugin *bgPlugin;
     QGraphicsGridLayout *gridLayout;
-    ViewLayer *layer;
+    QSharedPointer<ViewLayer> layer;
     float row;
     float column;
     float margin;
@@ -83,6 +85,7 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
 {
     /* setup */
     setWindowFlags(Qt::FramelessWindowHint);
+    setAttribute(Qt::WA_QuitOnClose, true);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setOptimizationFlag(QGraphicsView::DontClipPainter);
@@ -97,12 +100,12 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
     d->gridLayout = new QGraphicsGridLayout();
     d->row = d->column = 48.0;
     d->margin = 10.0;
-    d->layer = new ViewLayer();
+    d->layer = QSharedPointer<ViewLayer>(new ViewLayer);
     d->layer->showLayer(QLatin1String("Widgets"));
 
     connect(Config::getInstance(), SIGNAL(configChanged()), this, SLOT(backgroundChanged()));
     connect(Config::getInstance(), SIGNAL(widgetAdded()), this, SLOT(onNewWidget()));
-    connect(Config::getInstance(), SIGNAL(layerChange()), d->layer, SLOT(switchLayer()));
+    connect(Config::getInstance(), SIGNAL(layerChange()), d->layer.data(), SLOT(switchLayer()));
 
 #ifdef Q_WS_X11
     if (checkXCompositeExt()) {
@@ -327,4 +330,12 @@ void DesktopView::setTopMostWidget(const QPoint &pt)
     }
 
     clickedItem->update();
+}
+
+void DesktopView::keyReleaseEvent(QKeyEvent *event)
+{
+    if((event->key() == Qt::Key_Backspace) && event->modifiers() == (Qt::ShiftModifier | Qt::ControlModifier))
+        emit closeApplication();
+
+    QGraphicsView::keyReleaseEvent(event);
 }
