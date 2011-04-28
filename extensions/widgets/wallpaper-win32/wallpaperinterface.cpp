@@ -13,7 +13,7 @@ WallpaperInterface::~WallpaperInterface()
 
 }
 
-PlexyDesk::DataPlugin *WallpaperInterface::instance()
+PlexyDesk::WidgetPlugin *WallpaperInterface::instance()
 {
     return new WallpaperChange(this);
 }

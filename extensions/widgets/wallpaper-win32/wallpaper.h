@@ -22,25 +22,22 @@
 #include <QObject>
 #include <QVariant>
 
-#include <dataplugin.h>
+#include <widgetplugin.h>
 
 #include "config.h"
 
 class QGraphicsItem;
 
-class WALLPAPERCHANGE_EXPORT WallpaperChange : public PlexyDesk::DataPlugin
+class WALLPAPERCHANGE_EXPORT WallpaperChange : public PlexyDesk::WidgetPlugin
 {
     Q_OBJECT
 
 public:
     WallpaperChange(QObject *object = 0);
-    void init() {}
-    virtual ~WallpaperChange();
-    virtual QGraphicsItem *item(); // {};
-    QVariantMap readAll();
+    ~WallpaperChange();
+    QGraphicsItem *item();
 
 public slots:
-    void pushData(QVariant &);
     void changeWallpaper(bool);
 
 signals:
