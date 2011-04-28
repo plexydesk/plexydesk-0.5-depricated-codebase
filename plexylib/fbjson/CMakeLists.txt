@@ -16,7 +16,7 @@ SET(sourceFiles
     ${headerFiles}
 )
 
-ADD_LIBRARY (plexyjson SHARED ${sourceFiles} ${QT_MOC_SRCS})
+ADD_LIBRARY (plexyjson SHARED ${sourceFiles})
 
 IF(MINGW)
     SET_TARGET_PROPERTIES(plexyjson PROPERTIES

@@ -27,7 +27,6 @@
 #include "icon.h"
 #include "iconprovider.h"
 #include <qplexymime.h>
-#include <plexywindow.h>
 
 #include <QGLWidget>
 #include <QGraphicsGridLayout>
@@ -36,6 +35,8 @@
 #include <QtDebug>
 
 #ifdef Q_WS_X11
+#include <plexywindow.h>
+
 extern "C" {
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
