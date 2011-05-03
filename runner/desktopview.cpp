@@ -47,6 +47,8 @@ extern "C" {
 #include <X11/extensions/Xcomposite.h>
 #include <X11/extensions/Xdamage.h>
 #include <X11/extensions/Xrender.h>
+#include <GL/gl.h>  // Header File For The OpenGL32 Library
+#include <GL/glu.h> // Header File For The GLu32 Library
 }
 
 #include <QX11Info>
@@ -126,8 +128,8 @@ void DesktopView::onNewWidget()
 void DesktopView::enableOpenGL(bool state)
 {
     if (state) {
+        setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers)));
         setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-        setViewport(new QGLWidget(new QGLContext(QGL::StencilBuffer | QGL::AlphaChannel)));
         d->openglOn = true;
     } else {
         setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
@@ -278,26 +280,25 @@ void DesktopView::addCoreExtension(const QString &name)
     }
     delete provider;
 }
-/*
    //small speed up , try if the speed is too low
-   void DesktopView::paintEvent(QPaintEvent * event)
-   {
+void DesktopView::paintEvent(QPaintEvent * event)
+{
    QPaintEvent *newEvent=new QPaintEvent(event->region().boundingRect());
    QGraphicsView::paintEvent(newEvent);
    delete newEvent;
-   }
- */
+}
 
 void DesktopView::drawBackground(QPainter *painter, const QRectF &rect)
 {
-
     painter->setCompositionMode(QPainter::CompositionMode_Source);
     painter->fillRect(rect, Qt::transparent);
     painter->save();
     painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
     painter->setClipRect(rect);
     if (d->bgPlugin) {
-        d->bgPlugin->render(painter, QRectF(rect.x(), sceneRect().y(), rect.width(), rect.height()));
+       d->bgPlugin->render(painter, 
+                    QRectF(rect.x(), sceneRect().y(), 
+                        rect.width(), rect.height()));
     }
     painter->restore();
 }

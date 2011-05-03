@@ -57,11 +57,12 @@ int main( int argc, char * *argv )
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
     scene.setSceneRect(QDesktopWidget().availableGeometry()); //TODO Resolution changes ?
 
-    QSharedPointer<DesktopView> view = QSharedPointer<DesktopView>(new DesktopView(&scene));
-    QObject::connect(view.data(), SIGNAL(closeApplication()), &app, SLOT(quit()));
+    QSharedPointer<DesktopView> view = QSharedPointer<DesktopView>(new DesktopView(0));
     view->enableOpenGL(
             PlexyDesk::Config::getInstance()->openGL);
-    QRect r = QDesktopWidget().geometry();
+    view->setScene(&scene);
+    QObject::connect(view.data(), SIGNAL(closeApplication()), &app, SLOT(quit()));
+       QRect r = QDesktopWidget().geometry();
     view->move(r.x(), r.y());
     view->resize(QDesktopWidget().geometry().size());
 #ifdef Q_WS_WIN

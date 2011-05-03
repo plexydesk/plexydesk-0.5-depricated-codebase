@@ -27,6 +27,8 @@
 #include <QDeclarativeEngine>
 #include <QGraphicsObject>
 #include <QDeclarativeComponent>
+#include <QPainter>
+#include <QPaintEngine>
 
 
 namespace PlexyDesk
