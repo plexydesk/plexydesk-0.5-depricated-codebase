@@ -46,6 +46,7 @@ Config::Config(const QString &organization,
     proxyUser = "";
     proxyPasswd = "";
     m_proxyPort = 3128;
+    openGL = false;
     read();
 
     if (value("CurrentWallpaper").toString().isNull()) {
@@ -80,6 +81,8 @@ void Config::read()
     CurrentWallpaper = value("CurrentWallpaper").toString();
     widgetList = value("widgetList").toStringList();
     iconTheme = value("iconTheme").toString();
+    openGL = value("openGL").toBool();
+
     m_collisionOn = false;
 }
 
@@ -94,6 +97,7 @@ void Config::writeToFile()
     setValue("collisionOn", m_collisionOn);
     setValue("widgetList", widgetList);
     setValue("iconTheme", iconTheme);
+    setValue("openGL", openGL);
     sync();
 }
 

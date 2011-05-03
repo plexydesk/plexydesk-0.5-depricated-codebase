@@ -59,7 +59,8 @@ int main( int argc, char * *argv )
 
     QSharedPointer<DesktopView> view = QSharedPointer<DesktopView>(new DesktopView(&scene));
     QObject::connect(view.data(), SIGNAL(closeApplication()), &app, SLOT(quit()));
-    view->enableOpenGL(true);
+    view->enableOpenGL(
+            PlexyDesk::Config::getInstance()->openGL);
     QRect r = QDesktopWidget().geometry();
     view->move(r.x(), r.y());
     view->resize(QDesktopWidget().geometry().size());

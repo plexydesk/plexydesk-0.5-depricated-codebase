@@ -48,6 +48,7 @@ public:
     QStringList widgetList;
     bool m_collisionOn;
     QString iconTheme;
+    bool openGL;
 
 public Q_SLOTS:
     void setWallpaper(const QString &str);
