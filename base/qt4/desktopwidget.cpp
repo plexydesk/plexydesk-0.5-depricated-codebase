@@ -169,6 +169,11 @@ void DesktopWidget::loadQML(const QUrl &url)
     QDeclarativeEngine *engine = new QDeclarativeEngine;
     QDeclarativeComponent component(engine, url.toLocalFile());
     if (not component.isReady()) {
+        if (component.isError()) {
+            Q_FOREACH(QDeclarativeError error, component.errors()) {
+                qDebug() << Q_FUNC_INFO << error.toString();
+            }
+        }
         return;
     }
     d->qmlChild =
