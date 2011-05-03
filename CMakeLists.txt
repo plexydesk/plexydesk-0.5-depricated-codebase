@@ -95,15 +95,18 @@ ADD_SUBDIRECTORY(runner)
 
 IF (NOT APPLE)
 IF (UNIX)
+# /// Only Linux platform ///
+ADD_SUBDIRECTORY(plexywm)
+
 ADD_SUBDIRECTORY(panel)
 ADD_SUBDIRECTORY(social)
 ADD_SUBDIRECTORY(social/accountsmanager/)
+
 #UI widgets
-ADD_SUBDIRECTORY(extensions/widgets/clock)
 ADD_SUBDIRECTORY(extensions/widgets/cpu)
 
 #data plugins
-ADD_SUBDIRECTORY(extensions/data/rest)
+#////////////////////////////
 ENDIF (UNIX)
 
 IF(NOT WIN32)
@@ -112,18 +115,26 @@ ADD_SUBDIRECTORY(extensions/data/videoengine/)
 ENDIF(FFMPEG_FOUND)
 ENDIF(NOT WIN32)
 
-ADD_SUBDIRECTORY(plexywm)
-
 ENDIF (NOT APPLE)
 
+IF(WIN32)
+# /// Only Winows platform ///
+ADD_SUBDIRECTORY(extensions/widgets/wallpaper-win32)
+# ///////////////////////////
+ENDIF(WIN32)
+
+# /// All platforms ///
 ADD_SUBDIRECTORY(plexylib/fbjson)
 ADD_SUBDIRECTORY(3rdparty/libmagic)
 ADD_SUBDIRECTORY(3rdparty/mime)
 ADD_SUBDIRECTORY(3rdparty/qplexymime)
 ADD_SUBDIRECTORY(3rdparty/webitem)
-IF(WIN32)
-ADD_SUBDIRECTORY(extensions/widgets/wallpaper-win32)
-ENDIF(WIN32)
+
+#UI widgets for all platforms
+ADD_SUBDIRECTORY(extensions/widgets/clock)
+
+#data plugins for all platforms
+ADD_SUBDIRECTORY(extensions/data/rest)
 
 ADD_SUBDIRECTORY(artwork)
 ADD_SUBDIRECTORY(artwork/plexyfren_theme/default/)

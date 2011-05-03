@@ -41,11 +41,6 @@ QGraphicsItem *WallpaperChange::item()
     return new WallpaperWidget(QRectF(0, 0, 340, 240), button);
 }
 
-void WallpaperChange::pushData(QVariant &)
-{
-
-}
-
 void WallpaperChange::changeWallpaper(bool)
 {
     QString wallpaperRegPath("HKEY_CURRENT_USER\\Control Panel\\Desktop");
@@ -54,9 +49,4 @@ void WallpaperChange::changeWallpaper(bool)
     QImage img(imagePath);
     QVariant image(img);
     emit data(image);
-}
-
-QVariantMap WallpaperChange::readAll()
-{
-    return QVariantMap();
 }

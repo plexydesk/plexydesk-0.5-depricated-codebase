@@ -43,6 +43,9 @@ public:
     void loadWindows();
 #endif
 
+signals:
+    void closeApplication();
+
 public slots:
     void backgroundChanged();
     void onNewWidget();
@@ -50,6 +53,7 @@ public slots:
 protected:
     void drawBackground(QPainter *painter, const QRectF &rect);
     void mousePressEvent(QMouseEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
 
 private:
     class Private;
