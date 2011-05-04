@@ -105,21 +105,21 @@ void Config::setWallpaper(const QString &str)
 {
     CurrentWallpaper = str;
     setValue("CurrentWallpaper", CurrentWallpaper);
-    emit configChanged();
+    Q_EMIT configChanged();
 }
 
 void Config::addWidget(const QString &widget)
 {
     //TODO: Check if this is a valid widgetname
     widgetList.append(widget);
-    emit configChanged();
-    emit widgetAdded();
+    Q_EMIT configChanged();
+    Q_EMIT widgetAdded();
     writeToFile();
 }
 
 void Config::changeLayer()
 {
-    qDebug()<<Q_FUNC_INFO;
-    emit layerChange();
+    qDebug() << Q_FUNC_INFO;
+    Q_EMIT layerChange();
 }
 }

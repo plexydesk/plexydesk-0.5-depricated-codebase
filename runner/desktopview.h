@@ -46,7 +46,7 @@ public:
 signals:
     void closeApplication();
 
-public slots:
+public Q_SLOTS:
     void backgroundChanged();
     void onNewWidget();
 
