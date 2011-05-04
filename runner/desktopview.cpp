@@ -91,7 +91,6 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setOptimizationFlag(QGraphicsView::DontClipPainter);
-    setCacheMode(QGraphicsView::CacheBackground);
     setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     setFrameStyle(QFrame::NoFrame);
     setAlignment(Qt::AlignLeft | Qt::AlignTop);
@@ -134,6 +133,7 @@ void DesktopView::enableOpenGL(bool state)
     } else {
         setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
         setViewport(new QWidget);
+        setCacheMode(QGraphicsView::CacheBackground);
         d->openglOn = false;
     }
 }
