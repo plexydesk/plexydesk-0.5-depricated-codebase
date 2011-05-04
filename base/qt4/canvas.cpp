@@ -63,6 +63,7 @@ void Canvas::dragEnterEvent(QGraphicsSceneDragDropEvent *event)
 {
     if (event) {
         event->accept();
+        event->setDropAction(Qt::MoveAction);
     }
     dragLeaveEvent(event);
 }
@@ -72,11 +73,10 @@ void Canvas::dragLeaveEvent(QGraphicsSceneDragDropEvent *event)
         return;
     } else {
         event->accept();
+        event->setDropAction(Qt::MoveAction);
     }
 
-    event->acceptProposedAction();
-    if ((event->mimeData()->urls().count() <= 0 ) ||
-            !event->mimeData()->hasUrls()) {
+    if ( event->mimeData()->urls().count() <= 0 ) {
         return;
     }
 
