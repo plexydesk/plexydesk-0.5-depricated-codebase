@@ -26,6 +26,7 @@
 #include <viewlayer.h>
 #include "icon.h"
 #include "iconprovider.h"
+#include "glwidget.h"
 #include <qplexymime.h>
 
 #include <QGLWidget>
@@ -91,7 +92,6 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setOptimizationFlag(QGraphicsView::DontClipPainter);
-    setCacheMode(QGraphicsView::CacheBackground);
     setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     setFrameStyle(QFrame::NoFrame);
     setAlignment(Qt::AlignLeft | Qt::AlignTop);
@@ -133,6 +133,7 @@ void DesktopView::enableOpenGL(bool state)
         d->openglOn = true;
     } else {
         setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
+        setCacheMode(QGraphicsView::CacheBackground);
         setViewport(new QWidget);
         d->openglOn = false;
     }
@@ -280,6 +281,7 @@ void DesktopView::addCoreExtension(const QString &name)
     }
     delete provider;
 }
+/*
    //small speed up , try if the speed is too low
 void DesktopView::paintEvent(QPaintEvent * event)
 {
@@ -287,7 +289,8 @@ void DesktopView::paintEvent(QPaintEvent * event)
    QGraphicsView::paintEvent(newEvent);
    delete newEvent;
 }
-
+*/
+/*
 void DesktopView::drawBackground(QPainter *painter, const QRectF &rect)
 {
     painter->setCompositionMode(QPainter::CompositionMode_Source);
@@ -295,14 +298,29 @@ void DesktopView::drawBackground(QPainter *painter, const QRectF &rect)
     painter->save();
     painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
     painter->setClipRect(rect);
-    if (d->bgPlugin) {
+    if (d->bgPlugin && not d->openglOn) {
        d->bgPlugin->render(painter, 
                     QRectF(rect.x(), sceneRect().y(), 
                         rect.width(), rect.height()));
     }
+    if (d->openglOn) {
+        painter->beginNativePainting();
+        glClearColor(0.0, 1.0, 0.0, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glColor3f(1.0, 1.0, 1.0);
+        glVertex3f(0.25, 0.25, 0.0);
+        glVertex3f(0.75, 0.25, 0.0);
+        glVertex3f(0.75, 0.75, 0.0);
+        glVertex3f(0.25, 0.75, 0.0);
+        glEnd();
+        painter->endNativePainting();
+        painter->save();
+        QGraphicsView::drawBackground(painter, rect);
+        painter->restore();
+    }
     painter->restore();
 }
-
+*/
 void DesktopView::mousePressEvent(QMouseEvent *event)
 {
     setTopMostWidget(event->pos());

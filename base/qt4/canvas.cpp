@@ -29,6 +29,10 @@
 #include <QDeclarativeComponent>
 #include <QPainter>
 #include <QPaintEngine>
+#include <GL/gl.h>  // Header File For The OpenGL32 Library
+#include <GL/glu.h> // Header File For The GLu32 Library
+#include <QTimer>
+
 
 
 namespace PlexyDesk
@@ -51,6 +55,37 @@ Canvas::Canvas(QObject *parent) : QGraphicsScene(parent), d(new Private)
 Canvas::~Canvas()
 {
     delete d;
+}
+
+void Canvas::drawBackground(QPainter *painter, const QRectF &rect)
+{
+    qDebug() << Q_FUNC_INFO << rect;
+    //painter->fillRect(rect, QColor(0.0, 255, 0.0));
+
+    painter->beginNativePainting();
+
+    glMatrixMode(GL_PROJECTION);
+    glClearColor(0.0, 0.0, 0.0, 1.0f);
+    //glPushMatrix();
+    glLoadIdentity();
+   // gluPerspective(70, width() / height(), 0.01, 1000);
+    glOrtho(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
+
+    glEnable(GL_MULTISAMPLE);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glColor3f(1.0, 1.0, 1.0);
+        glVertex3f(0.25, 0.25, 0.0);
+        glVertex3f(0.75, 0.25, 0.0);
+        glVertex3f(0.75, 0.75, 0.0);
+        glVertex3f(0.25, 0.75, 0.0);
+        glDisable(GL_MULTISAMPLE);
+        glEnd();
+
+        glFlush();
+
+
+        painter->endNativePainting();
+    QTimer::singleShot(20, this, SLOT(update()));
 }
 
 void Canvas::dropEvent(QGraphicsSceneDragDropEvent *event)

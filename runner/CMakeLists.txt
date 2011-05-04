@@ -31,6 +31,10 @@ SET(sourceFiles
     plexypanel.cpp
     ${extra_source}
     main.cpp
+    glwidget.cpp
+    qtlogo.cpp
+    openglscene.cpp
+    model.cpp
 )
 
 set(headerFiles
@@ -39,6 +43,10 @@ set(headerFiles
     iconjob.h
     iconprovider.h
     plexypanel.h
+    glwidget.h
+    qtlogo.h
+    openglscene.h
+    model.h
     ${extra_headers}
 )
 
@@ -48,6 +56,10 @@ set(QTMOC_SRCS
     iconjob.h
     iconprovider.h
     plexypanel.h
+    glwidget.h
+    qtlogo.h
+    openglscene.h
+    model.h
     ${extra_headers}
 )
 

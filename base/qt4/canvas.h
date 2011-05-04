@@ -23,12 +23,12 @@ public:
 protected:
     virtual void dropEvent(QGraphicsSceneDragDropEvent *event);
     virtual void dragEnterEvent(QGraphicsSceneDragDropEvent *event);
+    virtual void drawBackground(QPainter *painter, const QRectF &rect);
 
 private:
     class Private;
     Private *const d;
 };
 } /* PlexyDesk */
-
 
 #endif /* _CANVAS_H_ */
