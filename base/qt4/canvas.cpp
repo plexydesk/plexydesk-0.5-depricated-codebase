@@ -61,9 +61,25 @@ void Canvas::dropEvent(QGraphicsSceneDragDropEvent *event)
 
 void Canvas::dragEnterEvent(QGraphicsSceneDragDropEvent *event)
 {
-    if (!event)
+    if (event) {
+        event->accept();
+    }
+    dragLeaveEvent(event);
+}
+void Canvas::dragLeaveEvent(QGraphicsSceneDragDropEvent *event)
+{
+    if (!event) {
         return;
+    } else {
+        event->accept();
+    }
+
     event->acceptProposedAction();
+    if ((event->mimeData()->urls().count() <= 0 ) ||
+            !event->mimeData()->hasUrls()) {
+        return;
+    }
+
     const QUrl droppedFile = event->mimeData()->urls().at(0).toString(QUrl::StripTrailingSlash |
             QUrl::RemoveScheme);
     if (droppedFile.toString().contains(".qml")) {

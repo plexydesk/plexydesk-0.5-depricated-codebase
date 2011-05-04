@@ -22,6 +22,7 @@ public:
 
 protected:
     virtual void dropEvent(QGraphicsSceneDragDropEvent *event);
+    virtual void dragLeaveEvent(QGraphicsSceneDragDropEvent *event);
     virtual void dragEnterEvent(QGraphicsSceneDragDropEvent *event);
 
 private:
