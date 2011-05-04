@@ -29,7 +29,6 @@
 #include <X11/Xlib.h>
 #include <QX11Info>
 #include <netwm.h>
-#include <openglscene.h>
 #endif
 
 //plexy
@@ -53,7 +52,7 @@ int main( int argc, char * *argv )
     app.addLibraryPath(pluginPath);
 #endif
 
-    OpenGLScene scene;
+    Canvas scene;
     scene.setBackgroundBrush(Qt::NoBrush);
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
     scene.setSceneRect(QDesktopWidget().availableGeometry()); //TODO Resolution changes ?

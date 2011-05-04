@@ -51,10 +51,10 @@ public slots:
     void onNewWidget();
 
 protected:
-    //void drawBackground(QPainter *painter, const QRectF &rect);
+    void drawBackground(QPainter *painter, const QRectF &rect);
     void mousePressEvent(QMouseEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
-    //void paintEvent(QPaintEvent *event);
+    void paintEvent(QPaintEvent *event);
 
 private:
     class Private;
