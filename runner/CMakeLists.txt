@@ -9,7 +9,7 @@ INCLUDE_DIRECTORIES(
     ${QT_QTTEST_INCLUDE_DIR}
     ${CMAKE_SOURCE_DIR}/lib/
 )
-
+IF (NOT APPLE)
 IF(UNIX)
 INCLUDE_DIRECTORIES(
     ${X11_INCLUDE_DIR}
@@ -17,10 +17,15 @@ INCLUDE_DIRECTORIES(
 SET (extra_headers
    plexywindow.h)
 
-SET (extra_source 
+SET (extra_source
    plexywindow.cpp)
 
+SET (extra_libs
+   Xcomposite
+   Xdamage)
+
 ENDIF(UNIX)
+ENDIF(NOT APPLE)
 
 ########### source files ###############
 SET(sourceFiles
@@ -69,14 +74,13 @@ set(libs
     ${QT_QTGUI_LIBRARY}
     ${QT_QTCORE_LIBRARY}
     ${QT_QTOPENGL_LIBRARY}
-    Xcomposite
-    Xdamage
-)
+   )
 ELSE(UNIX)
 set(libs
     ${QT_QTGUI_LIBRARY}
     ${QT_QTCORE_LIBRARY}
     ${QT_QTOPENGL_LIBRARY}
+    ${extra_libs}
 )
 ENDIF(UNIX)
 
@@ -84,9 +88,9 @@ ENDIF(UNIX)
 ADD_EXECUTABLE(plexydesk ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
-	plexydesk 
+	plexydesk
 	plexydeskcore
-        plexymime
+   plexymime
 	${libs}
 )
 
