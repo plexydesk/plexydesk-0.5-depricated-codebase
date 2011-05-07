@@ -226,7 +226,6 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
         return;
     }
 
-    qDebug() << "Double Click" << endl;
     if (d->s == DOCK) {
         if (d->qmlChild) {
             d->qmlChild->show();
@@ -354,6 +353,7 @@ void DesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     if (!painter->isActive())
         return;
 
+    painter->setRenderHint(QPainter::HighQualityAntialiasing, true);
     painter->setOpacity(d->opacity);
     painter->setClipRect(option->exposedRect);
     if (d->s == NORMALSIDE) {
