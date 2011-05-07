@@ -21,6 +21,7 @@
 
 #include <QCoreApplication>
 #include <QGraphicsProxyWidget>
+#include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
@@ -169,9 +170,9 @@ void DesktopWidget::setBackFaceImage(QPixmap img)
     d->back = img;
 }
 
-void DesktopWidget::loadQML(const QUrl &url)
+void DesktopWidget::qmlFromUrl(const QUrl &url)
 {
-    QDeclarativeEngine *engine = new QDeclarativeEngine;
+    QDeclarativeEngine *engine = QmlEngine();
     QDeclarativeComponent component(engine, url.toLocalFile());
     if (not component.isReady()) {
         if (component.isError()) {
@@ -195,9 +196,21 @@ void DesktopWidget::loadQML(const QUrl &url)
     d->qmlChild->setFlag(QGraphicsItem::ItemIsSelectable, true);
     d->qmlChild->setCacheMode(QGraphicsItem::DeviceCoordinateCache);
     update();
+
+    // forward signals
+    connect(engine, SIGNAL(quit()), this, SLOT(onQmlQuit()));
 }
 
-bool DesktopWidget::isQml() const
+void DesktopWidget::onQmlQuit()
+{
+    qDebug() << Q_FUNC_INFO ;
+    d->qmlChild->hide();
+    scene()->removeItem(d->qmlChild);
+    d->qmlChild->setParentItem(0);
+    Q_EMIT close();
+}
+
+bool DesktopWidget::isQMLWidget() const
 {
     if (d->qmlChild) {
         return true;

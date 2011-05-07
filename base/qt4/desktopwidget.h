@@ -65,23 +65,30 @@ public :
 
     static QString applicationDirPath();
     virtual QRectF boundingRect() const;
+    void drawBackdrop(bool draw);
+
     void configState(State s);
-    void drawBackdrop(bool);
-    virtual void paintBackSide(QPainter *painter, const QRectF &rect);
-    virtual void paintViewSide(QPainter *painter, const QRectF &rect);
-    virtual void paintDockView(QPainter *painter, const QRectF &rect);
     void setState(State s);
     State state();
+
     void setDockImage(QPixmap);
     void setFaceImage(QPixmap);
     void setBackFaceImage(QPixmap);
-    void loadQML(const QUrl &url);
-    bool isQml() const;
+
+    void qmlFromUrl(const QUrl &url);
+    bool isQMLWidget() const;
+
 public Q_SLOTS:
     void zoomIn(int);
     void zoomOut(int);
     void zoomDone();
     void spin();
+
+Q_SIGNALS:
+    void close();
+
+private Q_SLOTS:
+    void onQmlQuit();
 
 protected:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
@@ -89,16 +96,18 @@ protected:
     virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-    virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) {
-    }
+    virtual void paintExtFace(QPainter *painter,
+            const QStyleOptionGraphicsItem *option, QWidget *widget = 0) {};
     virtual void paintExtBackFace(QPainter *painter,
-         const QStyleOptionGraphicsItem *option,
-         QWidget *widget = 0) {
-    }
+         const QStyleOptionGraphicsItem *option, QWidget *widget = 0) {};
     virtual void paintExtDockFace(QPainter *painter,
-         const QStyleOptionGraphicsItem *it,
-         QWidget *widget = 0) {
-    }
+         const QStyleOptionGraphicsItem *it, QWidget *widget = 0) {};
+
+    virtual void paintBackSide(QPainter *painter, const QRectF &rect);
+    virtual void paintViewSide(QPainter *painter, const QRectF &rect);
+    virtual void paintDockView(QPainter *painter, const QRectF &rect);
+
+
 private:
     class Private;
     Private *const d;

@@ -18,6 +18,7 @@
 *******************************************************************************/
 #include "plexyconfig.h"
 #include <desktopwidget.h>
+#include <QDeclarativeEngine>
 
 #ifdef Q_WS_X11
 #include <configadaptor.h>
@@ -27,6 +28,8 @@ namespace PlexyDesk
 {
 Config *Config::config = 0;
 
+QDeclarativeEngine *Config::engine = 0;
+
 Config *Config::getInstance()
 {
     if (config == 0) {
@@ -34,6 +37,16 @@ Config *Config::getInstance()
         return config;
     } else {
         return config;
+    }
+}
+
+QDeclarativeEngine *Config::qmlEngine()
+{
+    if (engine == 0) {
+        engine = new QDeclarativeEngine;
+        return engine;
+    } else {
+        return engine;
     }
 }
 

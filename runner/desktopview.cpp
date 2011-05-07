@@ -124,6 +124,15 @@ void DesktopView::onNewWidget()
     addExtension(Config::getInstance()->widgetList.last());
 }
 
+void DesktopView::closeDesktopWidget()
+{
+    qDebug() << Q_FUNC_INFO;
+    DesktopWidget *widget = qobject_cast<DesktopWidget *> (sender());
+    if (widget) {
+        scene()->removeItem(widget);
+        delete widget;
+    }
+}
 void DesktopView::enableOpenGL(bool state)
 {
     if (state) {
@@ -269,6 +278,8 @@ void DesktopView::addExtension(const QString &name, const QString &layerName)
             widget->setPos(d->row, d->column);
             d->row += widget->boundingRect().width()+d->margin;
             d->layer->addItem(layerName, widget);
+
+            connect(widget, SIGNAL(close()), this, SLOT(closeDesktopWidget()));
         }
     }
    delete provider;
@@ -293,6 +304,44 @@ void DesktopView::paintEvent(QPaintEvent * event)
    QPaintEvent *newEvent=new QPaintEvent(event->region().boundingRect());
    QGraphicsView::paintEvent(newEvent);
    delete newEvent;
+}
+
+void DesktopView::dropEvent(QDropEvent * event)
+{
+    qDebug() << Q_FUNC_INFO;
+    event->accept();
+}
+
+void DesktopView::dragEnterEvent (QDragEnterEvent * event)
+{
+    qDebug() << Q_FUNC_INFO;
+
+    if (!event) {
+        return;
+    } else {
+        event->accept();
+        event->setDropAction(Qt::MoveAction);
+    }
+
+    if ( event->mimeData()->urls().count() <= 0 ) {
+        return;
+    }
+
+    const QUrl droppedFile = event->mimeData()->urls().at(0).toString(QUrl::StripTrailingSlash |
+            QUrl::RemoveScheme);
+    if (droppedFile.toString().contains(".qml")) {
+
+        qDebug() << Q_FUNC_INFO << droppedFile;
+        DesktopWidget *parent = new DesktopWidget(QRectF(0,0,0,0));
+        parent->qmlFromUrl(droppedFile);
+        scene()->addItem(parent);
+        connect(parent, SIGNAL(close()), this, SLOT(closeDesktopWidget()));
+        return;
+    }
+    if (event->mimeData()->hasUrls()) {
+        Config::getInstance()->setWallpaper(event->mimeData()->urls().at(0).toString(QUrl::StripTrailingSlash | QUrl::RemoveScheme));
+    }
+
 }
 
 void DesktopView::drawBackground(QPainter *painter, const QRectF &rect)
