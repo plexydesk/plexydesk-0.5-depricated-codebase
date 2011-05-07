@@ -82,6 +82,7 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget) :
     setCacheMode(DeviceCoordinateCache);
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
     setFlag(QGraphicsItem::ItemIsMovable, true);
+    setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
     setAcceptsHoverEvents(true);
     d->saveRect = rect;
     d->s = NORMALSIDE;
@@ -181,8 +182,8 @@ void DesktopWidget::loadQML(const QUrl &url)
     QRectF objectRect = d->qmlChild->boundingRect();
     QRectF borderRect(objectRect.x(),
             objectRect.y(),
-            objectRect.width() + 10,
-            objectRect.height() + 10);
+            objectRect.width(),
+            objectRect.height());
     d->saveRect = borderRect;
     setRect(borderRect);
     update();
