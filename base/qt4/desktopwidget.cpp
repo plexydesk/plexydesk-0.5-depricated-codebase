@@ -366,7 +366,6 @@ void DesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     if (!painter->isActive())
         return;
 
-    painter->setRenderHint(QPainter::HighQualityAntialiasing, true);
     painter->setOpacity(d->opacity);
     painter->setClipRect(option->exposedRect);
     if (d->s == NORMALSIDE) {
