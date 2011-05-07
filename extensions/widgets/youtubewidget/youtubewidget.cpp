@@ -32,8 +32,8 @@
 namespace PlexyDesk
 {
 
-YouTubeWidget::YouTubeWidget(const QRectF &rect, QWidget *widget) :
-    ListView(rect, widget)
+YouTubeWidget::YouTubeWidget(const QRectF &rect) :
+    ListView(rect)
 {
     utubeEngine = qobject_cast<PlexyDesk::DataPlugin *>(
          PlexyDesk::PluginLoader::getInstance()->instance("utubeengine"));

@@ -40,17 +40,12 @@ class YouTubeWidget : public ListView
     Q_OBJECT
 
 public:
-    YouTubeWidget(const QRectF &rect, QWidget *widget = 0);
+    YouTubeWidget(const QRectF &rect);
     virtual ~YouTubeWidget();
-    /*
-       virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem * e, QWidget *);
-       virtual void wheelEvent(QGraphicsSceneWheelEvent * event);
-       void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
-       void setPath(QString);
-       void drawWidget();;
-     */
+
 public Q_SLOTS:
     void onDataReady();
+
 Q_SIGNALS:
     void dataChanged();
 

@@ -130,9 +130,11 @@ ADD_SUBDIRECTORY(3rdparty/webitem)
 
 #UI widgets for all platforms
 ADD_SUBDIRECTORY(extensions/widgets/clock)
+ADD_SUBDIRECTORY(extensions/widgets/youtubewidget/)
 
 #data plugins for all platforms
 ADD_SUBDIRECTORY(extensions/data/rest)
+ADD_SUBDIRECTORY(extensions/data/utube)
 
 ADD_SUBDIRECTORY(artwork)
 ADD_SUBDIRECTORY(artwork/plexyfren_theme/default/)
