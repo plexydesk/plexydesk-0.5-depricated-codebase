@@ -14,7 +14,6 @@ SET(sourceFiles
     backdropinterface.cpp
     backdropplugin.cpp
     baserender.cpp
-    canvas.cpp
     desktopwidget.cpp
     extensionfactory.cpp
     fakemime.cpp
@@ -34,7 +33,6 @@ SET(headerFiles
    backdropplugin.h
    baseplugin.h
    baserender.h
-   canvas.h
    datainterface.h
    dataplugin.h
    desktopwidget.h
@@ -62,7 +60,6 @@ SET(MOC_SRCS
    backdropplugin.h
    baseplugin.h
    baserender.h
-   canvas.h
    datainterface.h
    dataplugin.h
    desktopwidget.h

@@ -22,7 +22,8 @@ SET (extra_source
 
 SET (extra_libs
    Xcomposite
-   Xdamage)
+   Xdamage
+   )
 
 ENDIF(UNIX)
 ENDIF(NOT APPLE)
@@ -34,6 +35,7 @@ SET(sourceFiles
     iconjob.cpp
     iconprovider.cpp
     plexypanel.cpp
+    canvas.cpp
     ${extra_source}
     main.cpp
 )
@@ -43,6 +45,7 @@ set(headerFiles
     icon.h
     iconjob.h
     iconprovider.h
+    canvas.h
     plexypanel.h
     ${extra_headers}
 )
@@ -53,6 +56,7 @@ set(QTMOC_SRCS
     iconjob.h
     iconprovider.h
     plexypanel.h
+    canvas.h
     ${extra_headers}
 )
 
@@ -74,13 +78,13 @@ set(libs
     ${QT_QTGUI_LIBRARY}
     ${QT_QTCORE_LIBRARY}
     ${QT_QTOPENGL_LIBRARY}
+    ${extra_libs}
    )
 ELSE(UNIX)
 set(libs
     ${QT_QTGUI_LIBRARY}
     ${QT_QTCORE_LIBRARY}
     ${QT_QTOPENGL_LIBRARY}
-    ${extra_libs}
 )
 ENDIF(UNIX)
 
@@ -88,10 +92,10 @@ ENDIF(UNIX)
 ADD_EXECUTABLE(plexydesk ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
-	plexydesk
-	plexydeskcore
-   plexymime
-	${libs}
+    plexydesk
+    plexydeskcore
+    plexymime
+    ${libs}
 )
 
 ########### install files ###############

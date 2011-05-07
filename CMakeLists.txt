@@ -94,7 +94,7 @@ ADD_SUBDIRECTORY(runner)
 IF (NOT APPLE)
 IF (UNIX)
 # /// Only Linux platform ///
-ADD_SUBDIRECTORY(plexywm)
+#ADD_SUBDIRECTORY(plexywm)
 
 ADD_SUBDIRECTORY(panel)
 ADD_SUBDIRECTORY(social)
