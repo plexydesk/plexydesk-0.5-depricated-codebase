@@ -69,33 +69,37 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget) :
         d->proxyWidget->setWidget(widget);
         d->proxyWidget->show();
     }
+
     d->backdrop = true;
     d->opacity = 1.0;
+    d->saveRect = rect;
+    d->s = NORMALSIDE;
+    d->angle = 0;
+    d->angleHide = 0;
+    d->scale = 1;
+
     d->panel = QPixmap(applicationDirPath() +
          "/share/plexy/skins/widgets/widget01/Panel.png");
     d->back = QPixmap(applicationDirPath() +
          "/share/plexy/skins/widgets/widget01/reverse.png");
     d->dock = QPixmap(applicationDirPath() +
          "/share/plexy/skins/widgets/widget01/Icon.png");
-    d->scale = 1;
+
     setCacheMode(QGraphicsItem::ItemCoordinateCache, d->panel.size());
     setCacheMode(DeviceCoordinateCache);
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
     setAcceptsHoverEvents(true);
-    d->saveRect = rect;
-    d->s = NORMALSIDE;
-    d->angle = 0;
-    d->angleHide = 0;
-    ///zoom in settings
+
+    // zoom in settings
     d->zoomin = new QTimeLine(150, this);
     d->zoomin->setFrameRange(120, 150);
     connect(d->zoomin, SIGNAL(frameChanged(int)),
          this, SLOT(zoomIn(int)));
     connect(d->zoomin, SIGNAL(finished()),
          this, SLOT(zoomDone()));
-    //zoom out
+    // zoom out
     d->zoomout = new QTimeLine(150, this);
     d->zoomout->setFrameRange(0, 150);
     connect(d->zoomout, SIGNAL(frameChanged(int)),
@@ -103,7 +107,7 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget) :
     connect(d->zoomout, SIGNAL(finished()),
          this, SLOT(zoomDone()));
     d->zoomin->start();
-    //spin
+    // spin
     d->spintimer = new QTimer(this);
     connect(d->spintimer, SIGNAL(timeout()), this, SLOT(spin()));
 }
@@ -186,8 +190,11 @@ void DesktopWidget::loadQML(const QUrl &url)
             objectRect.height());
     d->saveRect = borderRect;
     setRect(borderRect);
-    update();
     d->qmlChild->setParentItem(this);
+    d->qmlChild->setFlag(QGraphicsItem::ItemIsFocusable, true);
+    d->qmlChild->setFlag(QGraphicsItem::ItemIsSelectable, true);
+    d->qmlChild->setCacheMode(QGraphicsItem::DeviceCoordinateCache);
+    update();
 }
 
 bool DesktopWidget::isQml() const

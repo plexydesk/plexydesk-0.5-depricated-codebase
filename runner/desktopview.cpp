@@ -87,13 +87,16 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
 {
     /* setup */
     setWindowFlags(Qt::FramelessWindowHint);
+    setFrameStyle(QFrame::NoFrame);
     setAttribute(Qt::WA_QuitOnClose, true);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
     setOptimizationFlag(QGraphicsView::DontClipPainter);
     setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
-    setFrameStyle(QFrame::NoFrame);
+    setOptimizationFlags(QGraphicsView::DontSavePainterState);
     setAlignment(Qt::AlignLeft | Qt::AlignTop);
+
     d->openglOn = false;
 
     /* init */
