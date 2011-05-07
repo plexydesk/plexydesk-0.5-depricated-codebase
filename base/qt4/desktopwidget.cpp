@@ -21,6 +21,7 @@
 
 #include <QCoreApplication>
 #include <QGraphicsProxyWidget>
+#include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
@@ -69,32 +70,37 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget) :
         d->proxyWidget->setWidget(widget);
         d->proxyWidget->show();
     }
+
     d->backdrop = true;
     d->opacity = 1.0;
+    d->saveRect = rect;
+    d->s = NORMALSIDE;
+    d->angle = 0;
+    d->angleHide = 0;
+    d->scale = 1;
+
     d->panel = QPixmap(applicationDirPath() +
          "/share/plexy/skins/widgets/widget01/Panel.png");
     d->back = QPixmap(applicationDirPath() +
          "/share/plexy/skins/widgets/widget01/reverse.png");
     d->dock = QPixmap(applicationDirPath() +
          "/share/plexy/skins/widgets/widget01/Icon.png");
-    d->scale = 1;
+
     setCacheMode(QGraphicsItem::ItemCoordinateCache, d->panel.size());
     setCacheMode(DeviceCoordinateCache);
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
     setFlag(QGraphicsItem::ItemIsMovable, true);
+    setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
     setAcceptsHoverEvents(true);
-    d->saveRect = rect;
-    d->s = NORMALSIDE;
-    d->angle = 0;
-    d->angleHide = 0;
-    ///zoom in settings
+
+    // zoom in settings
     d->zoomin = new QTimeLine(150, this);
     d->zoomin->setFrameRange(120, 150);
     connect(d->zoomin, SIGNAL(frameChanged(int)),
          this, SLOT(zoomIn(int)));
     connect(d->zoomin, SIGNAL(finished()),
          this, SLOT(zoomDone()));
-    //zoom out
+    // zoom out
     d->zoomout = new QTimeLine(150, this);
     d->zoomout->setFrameRange(0, 150);
     connect(d->zoomout, SIGNAL(frameChanged(int)),
@@ -102,7 +108,7 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget) :
     connect(d->zoomout, SIGNAL(finished()),
          this, SLOT(zoomDone()));
     d->zoomin->start();
-    //spin
+    // spin
     d->spintimer = new QTimer(this);
     connect(d->spintimer, SIGNAL(timeout()), this, SLOT(spin()));
 }
@@ -164,9 +170,9 @@ void DesktopWidget::setBackFaceImage(QPixmap img)
     d->back = img;
 }
 
-void DesktopWidget::loadQML(const QUrl &url)
+void DesktopWidget::qmlFromUrl(const QUrl &url)
 {
-    QDeclarativeEngine *engine = new QDeclarativeEngine;
+    QDeclarativeEngine *engine = QmlEngine();
     QDeclarativeComponent component(engine, url.toLocalFile());
     if (not component.isReady()) {
         if (component.isError()) {
@@ -181,15 +187,30 @@ void DesktopWidget::loadQML(const QUrl &url)
     QRectF objectRect = d->qmlChild->boundingRect();
     QRectF borderRect(objectRect.x(),
             objectRect.y(),
-            objectRect.width() + 10,
-            objectRect.height() + 10);
+            objectRect.width(),
+            objectRect.height());
     d->saveRect = borderRect;
     setRect(borderRect);
-    update();
     d->qmlChild->setParentItem(this);
+    d->qmlChild->setFlag(QGraphicsItem::ItemIsFocusable, true);
+    d->qmlChild->setFlag(QGraphicsItem::ItemIsSelectable, true);
+    d->qmlChild->setCacheMode(QGraphicsItem::DeviceCoordinateCache);
+    update();
+
+    // forward signals
+    connect(engine, SIGNAL(quit()), this, SLOT(onQmlQuit()));
 }
 
-bool DesktopWidget::isQml() const
+void DesktopWidget::onQmlQuit()
+{
+    qDebug() << Q_FUNC_INFO ;
+    d->qmlChild->hide();
+    scene()->removeItem(d->qmlChild);
+    d->qmlChild->setParentItem(0);
+    Q_EMIT close();
+}
+
+bool DesktopWidget::isQMLWidget() const
 {
     if (d->qmlChild) {
         return true;
@@ -218,7 +239,6 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
         return;
     }
 
-    qDebug() << "Double Click" << endl;
     if (d->s == DOCK) {
         if (d->qmlChild) {
             d->qmlChild->show();

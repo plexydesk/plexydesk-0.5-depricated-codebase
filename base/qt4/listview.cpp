@@ -19,8 +19,8 @@ public:
     QList<ListItem *> mItemList;
 };
 
-ListView::ListView(const QRectF &rect, QWidget *win) :
-    DesktopWidget(rect, win), d(new Private)
+ListView::ListView(const QRectF &rect) :
+    DesktopWidget(rect, 0), d(new Private)
 {
     d->clip = QRectF(10, 10, rect.width() - 40, rect.height() - 20);
     d->view = QRectF(0, 0, rect.width() - 80, 0);

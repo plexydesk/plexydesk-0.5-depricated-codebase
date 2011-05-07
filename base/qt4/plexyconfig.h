@@ -25,6 +25,9 @@
 #include <QNetworkProxy>
 #include <QSettings>
 #include <QStringList>
+#include <QDeclarativeEngine>
+
+#define QmlEngine() PlexyDesk::Config::qmlEngine();
 
 namespace PlexyDesk
 {
@@ -33,6 +36,7 @@ class PLEXYDESK_EXPORT Config : public QSettings
     Q_OBJECT
 public:
     static Config *getInstance();
+    static QDeclarativeEngine *qmlEngine();
     void read();
     void writeToFile();
 
@@ -62,6 +66,7 @@ Q_SIGNALS:
 private:
     Config(const QString &organization, const QString &application = QString(), QObject *parent = 0);
     static Config *config;
+    static QDeclarativeEngine *engine;
 
     Config()
     {

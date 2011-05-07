@@ -52,7 +52,7 @@ int main( int argc, char * *argv )
     app.addLibraryPath(pluginPath);
 #endif
 
-    Canvas scene;
+    QGraphicsScene scene;
     scene.setBackgroundBrush(Qt::NoBrush);
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
     scene.setSceneRect(QDesktopWidget().availableGeometry()); //TODO Resolution changes ?

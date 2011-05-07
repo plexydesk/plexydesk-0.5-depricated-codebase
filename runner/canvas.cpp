@@ -86,7 +86,7 @@ void Canvas::dragLeaveEvent(QGraphicsSceneDragDropEvent *event)
 
         qDebug() << Q_FUNC_INFO << droppedFile;
         DesktopWidget *parent = new DesktopWidget(QRectF(0,0,0,0));
-        parent->loadQML(droppedFile);
+        parent->qmlFromUrl(droppedFile);
         addItem(parent);
         d->mQMLWidgets.append(parent);
         return;

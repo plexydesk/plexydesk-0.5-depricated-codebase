@@ -27,8 +27,9 @@ class PLEXYDESK_EXPORT ListView : public DesktopWidget
     Q_OBJECT
 
 public:
-    ListView(const QRectF &rect, QWidget *embeddedWidget = 0);
+    ListView(const QRectF &rect);
     virtual ~ListView();
+
     virtual void paintExtFace(QPainter *painter,
          const QStyleOptionGraphicsItem *e,
          QWidget *widget);

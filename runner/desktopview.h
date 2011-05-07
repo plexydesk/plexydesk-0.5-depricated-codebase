@@ -49,12 +49,16 @@ signals:
 public Q_SLOTS:
     void backgroundChanged();
     void onNewWidget();
+    void closeDesktopWidget();
 
 protected:
     void drawBackground(QPainter *painter, const QRectF &rect);
     void mousePressEvent(QMouseEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
     void paintEvent(QPaintEvent *event);
+    virtual void dropEvent(QDropEvent *event);
+    void dragEnterEvent (QDragEnterEvent * event);
+    
 
 private:
     class Private;
