@@ -11,6 +11,7 @@ public slots:
 private slots:
     void loadIcons();
     void loadInvalidIcon();
+    void loadThemePackInit();
 
 private:
     bool mFetchComplete;

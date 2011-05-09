@@ -142,6 +142,8 @@ ADD_SUBDIRECTORY(extensions/data/utube)
 ADD_SUBDIRECTORY(artwork)
 ADD_SUBDIRECTORY(artwork/plexyfren_theme/default/)
 
+#themepacks
+ADD_SUBDIRECTORY(artwork/themepacks/default)
 
 # Removed from building
 #ADD_SUBDIRECTORY(3rdparty/cair)

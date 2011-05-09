@@ -96,6 +96,7 @@ protected:
     virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+
     virtual void paintExtFace(QPainter *painter,
             const QStyleOptionGraphicsItem *option, QWidget *widget = 0) {};
     virtual void paintExtBackFace(QPainter *painter,

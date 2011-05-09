@@ -3,6 +3,8 @@
 #include <iconprovider.h>
 #include <iconjob.h>
 
+#include <themepackloader.h>
+
 
 void TestIcon::loadIcons()
 {
@@ -48,6 +50,13 @@ void TestIcon::onInvalidFinished()
   QCOMPARE(icon->isError(), true);
 
   mFetchComplete = true;
+}
+
+void TestIcon::loadThemePackInit()
+{
+    ThemepackLoader *themeLoader = new ThemepackLoader("default");
+    QCOMPARE(themeLoader->wallpaper(), QString("logoless.png"));
+    QCOMPARE(themeLoader->widgets("native").count() , 1);
 }
 
 QTEST_MAIN(TestIcon)
