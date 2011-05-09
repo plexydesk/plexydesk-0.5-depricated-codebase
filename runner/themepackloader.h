@@ -18,7 +18,7 @@ public:
 
     QString wallpaper();
     QStringList widgets(const QString &type);
-    QStringList qmlFilesFromTheme(const QString &themeName);
+    QString qmlFilesFromTheme(const QString &themeName);
 
 signals:
     void ready();
