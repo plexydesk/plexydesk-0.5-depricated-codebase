@@ -1,7 +1,0 @@
-Welcome to ABP
-You can change this text
-by simply clicking on it.
-If you want to change the name of the tabs,
-use the config-tool.
-
-btw: "Notizen" is the german word for Notes

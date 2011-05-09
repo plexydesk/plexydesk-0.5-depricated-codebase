@@ -1,4 +1,0 @@
-[Variables]
-BaseColor=20,20,20
-BarColor=50,50,50,100
-BackColor=190,191,190
