@@ -58,7 +58,9 @@ void TestIcon::loadThemePackInit()
     QCOMPARE(themeLoader->wallpaper(), QString("logoless.png"));
     QCOMPARE(themeLoader->widgets("native").count() , 1);
     QCOMPARE(themeLoader->qmlFilesFromTheme("weather") , 
-            QString("/usr/share/plexy/themepack/default/weather/weather.qml"));
+            QDir::toNativeSeparators(
+                 QString(PLEXPREFIX) +
+                 QString("/share/plexy/themepack/default/weather/weather.qml")));
 }
 
 QTEST_MAIN(TestIcon)

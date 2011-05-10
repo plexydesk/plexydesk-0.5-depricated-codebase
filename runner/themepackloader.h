@@ -4,14 +4,14 @@
 #include <QObject>
 #include <QSettings>
 
-class ThemepackLoader : public QSettings
+class ThemepackLoader : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString themeName READ QString WRITE setThemeName)
 
 public:
     explicit ThemepackLoader(const QString &themeName,
-            Format format =  QSettings::IniFormat,
+            QSettings::Format format =  QSettings::IniFormat,
             QObject *parent = 0);
 
     void setThemeName(const QString &name);

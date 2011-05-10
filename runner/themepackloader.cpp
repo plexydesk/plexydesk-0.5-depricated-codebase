@@ -2,31 +2,31 @@
 #include <config.h>
 #include <QDebug>
 #include <QStringList>
+#include <QDir>
+
+const QString themePackPath = QString("%1/%2").arg(PLEXPREFIX).arg("share/plexy/themepack");
 
 class ThemepackLoader::ThemepackLoaderPrivate
 {
-
 public:
-ThemepackLoaderPrivate() {}
-~ThemepackLoaderPrivate() {}
+    ThemepackLoaderPrivate() {}
+    ~ThemepackLoaderPrivate() {}
 
-  QString mThemeCfgFile;
-  QString mBasePath;
+    QSettings *mSettings;
+    QString mThemeCfgFile;
+    QString mBasePath;
 };
 
-ThemepackLoader::ThemepackLoader(const QString &themeName,
-        Format format,
-        QObject *parent) :
-    QSettings(QLatin1String(PLEXPREFIX) +
-            QLatin1String("/share/plexy/themepack/") + themeName +
-            QLatin1String("/main.cfg"), format, parent),
-    d (new ThemepackLoaderPrivate)
-
+ThemepackLoader::ThemepackLoader(const QString &themeName, QSettings::Format format, QObject *parent) :
+    QObject(parent), d (new ThemepackLoaderPrivate)
 {
-    d->mThemeCfgFile = fileName();
-    d->mBasePath = QLatin1String(PLEXPREFIX) +
-        QLatin1String("/share/plexy/themepack/") +
-        themeName + QLatin1String("/");
+    QDir mainConfig(QString("%1/%2/").arg(themePackPath).arg(themeName));
+    d->mSettings = new QSettings(QDir::toNativeSeparators(
+                                 mainConfig.absoluteFilePath("main.cfg")),
+                             format, parent);
+
+    d->mThemeCfgFile = QDir::toNativeSeparators(d->mSettings->fileName());
+    d->mBasePath = QDir::toNativeSeparators(mainConfig.absolutePath());
 
     qDebug() << Q_FUNC_INFO << d->mThemeCfgFile;
 }
@@ -34,27 +34,27 @@ ThemepackLoader::ThemepackLoader(const QString &themeName,
 QString ThemepackLoader::wallpaper()
 {
     QString rv;
-    beginGroup(QLatin1String("main"));
-    rv = value("wallpaper").toString();
-    endGroup();
+    d->mSettings->beginGroup(QLatin1String("main"));
+    rv = d->mSettings->value("wallpaper").toString();
+    d->mSettings->endGroup();
     return rv;
 }
 
 QStringList ThemepackLoader::widgets(const QString &expType)
 {
     QStringList rv;
-    Q_FOREACH(const QString &key, childGroups()) {
+    Q_FOREACH(const QString &key, d->mSettings->childGroups()) {
         qDebug() << Q_FUNC_INFO << key;
         if (key == QLatin1String("main")) {
             continue;
         }
-        beginGroup(key);
-        QString type = value(QLatin1String("type")).toString();
+        d->mSettings->beginGroup(key);
+        QString type = d->mSettings->value(QLatin1String("type")).toString();
         if (type != expType) {
-            endGroup();
+            d->mSettings->endGroup();
             continue;
         }
-        endGroup();
+        d->mSettings->endGroup();
         rv << key;
     }
 
@@ -63,13 +63,14 @@ QStringList ThemepackLoader::widgets(const QString &expType)
 
 QString ThemepackLoader::qmlFilesFromTheme(const QString &name)
 {
-    beginGroup(name);
-    QString fileName = value("mainfile").toString();
-    QString baseFolder = value("basefolder").toString();
+    d->mSettings->beginGroup(name);
+    QString fileName = d->mSettings->value("mainfile").toString();
+    QString baseFolder = d->mSettings->value("basefolder").toString();
     qDebug() << Q_FUNC_INFO << name << ":" << fileName;
-    endGroup();
+    d->mSettings->endGroup();
 
-    return (d->mBasePath + baseFolder + QLatin1String("/") + fileName );
+    QDir path(QString("%1/%2").arg(d->mBasePath).arg(baseFolder));
+    return (QDir::toNativeSeparators(path.absoluteFilePath(fileName)));
 }
 
 
