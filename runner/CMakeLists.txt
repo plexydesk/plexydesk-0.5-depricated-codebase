@@ -1,4 +1,4 @@
-project(plexydesk_runner)
+project(PlexyDesktop)
 
 include(${QT_USE_FILE})
 
@@ -89,6 +89,7 @@ set(libs
 ENDIF(UNIX)
 
 ########### prepare files ###############
+cmake_policy(SET CMP0003 NEW)
 ADD_EXECUTABLE(plexydesk ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
