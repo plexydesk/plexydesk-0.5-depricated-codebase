@@ -10,7 +10,7 @@ void TestIcon::loadIcons()
 {
     mFetchComplete = false;
     PlexyDesk::IconProvider *iconprovider = new PlexyDesk::IconProvider();
-    PlexyDesk::IconJobPtr job = iconprovider->requestIcon("utilities-terminal", "32"); 
+    PlexyDesk::IconJobPtr job = iconprovider->requestIcon("utilities", "32");
     connect(job.data(), SIGNAL(finished()), this, SLOT(onFinished()));
     while (!mFetchComplete) {
         qApp->processEvents();
@@ -21,7 +21,7 @@ void TestIcon::loadInvalidIcon()
 {
     mFetchComplete = false;
     PlexyDesk::IconProvider *iconprovider = new PlexyDesk::IconProvider();
-    PlexyDesk::IconJobPtr job = iconprovider->requestIcon("terminator2", "32"); 
+    PlexyDesk::IconJobPtr job = iconprovider->requestIcon("terminal2", "32");
     connect(job.data(), SIGNAL(finished()), this, SLOT(onInvalidFinished()));
     while (!mFetchComplete) {
         qApp->processEvents();
