@@ -80,15 +80,6 @@ int main( int argc, char * *argv )
     PlexyDesk::PluginLoader *loader = PlexyDesk::PluginLoader::getInstance();
     loader->scanDisk();
     view->show();
-    /* Load the widget from settings */
-    /* commenting out since we will only load widgets from theme packs */
-    /*
-    QStringList list = PlexyDesk::Config::getInstance()->widgetList;
-
-    Q_FOREACH (QString str, list) {
-        view->addExtension(str);
-    }
-    */
 
     /* load all the widgets to a Widget Browser Layer */
     Q_FOREACH(const QString &pluginName, loader->listPlugins(QLatin1String("Widget"))) {
