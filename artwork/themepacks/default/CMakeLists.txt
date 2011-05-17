@@ -1,9 +1,17 @@
 PROJECT(PlexyDesktop)
 
 FILE(GLOB PNGFILES resources/*.png )
+FILE(GLOB JPEGFILES resources/*.jpg ) 
 FILE(GLOB CFG main.cfg)
 SET(WEATHER weather/weather.qml)
+SET(PHOTO photo/photoElement.qml)
+SET(PHOTO_IMGS photo/photoElement_images/background.png)
+SET(PHOTO_IMG_1 photo/photoElement_images/pasted_layer.png)
 
 INSTALL(FILES ${PNGFILES}  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/resources/)
+INSTALL(FILES ${JPEGFILES}  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/resources/)
 INSTALL(FILES ${CFG}  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default)
 INSTALL(FILES ${WEATHER}  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/weather/)
+INSTALL(FILES ${PHOTO}  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/photo/)
+INSTALL(FILES ${PHOTO_IMGS}  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/photo/photoElement_images/)
+INSTALL(FILES ${PHOTO_IMG_1}  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/photo/photoElement_images/)
