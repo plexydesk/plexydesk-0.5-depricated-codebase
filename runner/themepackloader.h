@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QSettings>
+#include <QPoint>
+#include <desktopwidget.h>
 
 class ThemepackLoader : public QObject
 {
@@ -10,15 +12,16 @@ class ThemepackLoader : public QObject
     Q_PROPERTY(QString themeName READ QString WRITE setThemeName)
 
 public:
-    explicit ThemepackLoader(const QString &themeName,
-            QSettings::Format format =  QSettings::IniFormat,
-            QObject *parent = 0);
+    explicit ThemepackLoader(const QString &themeName, QObject *parent = 0);
 
     void setThemeName(const QString &name);
 
     QString wallpaper();
     QStringList widgets(const QString &type);
     QString qmlFilesFromTheme(const QString &themeName);
+    QPoint widgetPos(const QString &name);
+    PlexyDesk::DesktopWidget::State widgetView(const QString &name);
+
 
 signals:
     void ready();

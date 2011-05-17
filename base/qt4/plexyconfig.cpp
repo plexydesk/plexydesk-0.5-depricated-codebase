@@ -66,6 +66,7 @@ Config::Config(const QString &organization,
         CurrentWallpaper = DesktopWidget::applicationDirPath() + "/share/plexy/skins/default/default.png";
     }
 
+
     if (value("iconTheme").toString().isNull()) {
         iconTheme = "default";
     }

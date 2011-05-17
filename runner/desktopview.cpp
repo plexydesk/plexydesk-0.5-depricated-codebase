@@ -58,6 +58,8 @@ extern "C" {
 #include <QPropertyAnimation>
 #endif
 
+#include "themepackloader.h"
+
 using namespace PlexyDesk;
 
 class DesktopView::Private
@@ -72,6 +74,7 @@ public:
     BackdropPlugin *bgPlugin;
     QGraphicsGridLayout *gridLayout;
     QSharedPointer<ViewLayer> layer;
+    ThemepackLoader *mThemeLoader;
     float row;
     float column;
     float margin;
@@ -97,6 +100,11 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
     d->openglOn = false;
 
     /* init */
+    d->mThemeLoader = new ThemepackLoader(QLatin1String("default"), this);
+    if (not d->mThemeLoader->wallpaper().isEmpty()) {
+        qDebug() << Q_FUNC_INFO << d->mThemeLoader->wallpaper();
+        PlexyDesk::Config::getInstance()->setWallpaper(d->mThemeLoader->wallpaper());
+    }
     d->bgPlugin = static_cast<BackdropPlugin *>(PluginLoader::getInstance()->instance("classicbackdrop"));
     d->gridLayout = new QGraphicsGridLayout();
     d->row = d->column = 48.0;
@@ -157,6 +165,25 @@ void DesktopView::enableOpenGL(bool state)
 void DesktopView::showLayer(const QString &layer)
 {
     d->layer->showLayer(layer);
+}
+
+void DesktopView::setThemePack(const QString &name)
+{
+    if (d->mThemeLoader) {
+        delete d->mThemeLoader;
+
+        // TODO
+        // ERROR HANDLING 
+        d->mThemeLoader = new ThemepackLoader(name, this);
+        PlexyDesk::Config::getInstance()->setWallpaper(d->mThemeLoader->wallpaper());
+
+        Q_FOREACH(const QString &nativeWidget, d->mThemeLoader->widgets("native")) {
+            qDebug() << Q_FUNC_INFO << nativeWidget;
+            QPoint pos = d->mThemeLoader->widgetPos(nativeWidget);
+            addExtension(nativeWidget, QLatin1String("Widgets"), pos,
+                    d->mThemeLoader->widgetView(nativeWidget));
+        }
+    }
 }
 
 #ifdef Q_WS_X11
@@ -267,16 +294,24 @@ void DesktopView::backgroundChanged()
    \param layerName Name of the layer you want add the widget to 
  */
 
-void DesktopView::addExtension(const QString &name, const QString &layerName)
+void DesktopView::addExtension(const QString &name,
+        const QString &layerName,
+        const QPoint &pos,
+        PlexyDesk::DesktopWidget::State state)
 {
     WidgetPlugin *provider = static_cast<WidgetPlugin *>(PluginLoader::getInstance()->instance(name));
     if (provider) {
+        qDebug() << Q_FUNC_INFO << name << layerName;
         DesktopWidget *widget = (DesktopWidget *) provider->item();
         if (widget) {
-            widget->configState(DesktopWidget::DOCK);
+            widget->configState(state);
             scene()->addItem(widget);
-            widget->setPos(d->row, d->column);
-            d->row += widget->boundingRect().width()+d->margin;
+            if (pos.x() == 0 && pos.y() == 0) {
+                widget->setPos(d->row, d->column);
+                d->row += widget->boundingRect().width()+d->margin;
+            } else {
+                widget->setPos(pos);
+            }
             d->layer->addItem(layerName, widget);
 
             connect(widget, SIGNAL(close()), this, SLOT(closeDesktopWidget()));

@@ -3,6 +3,8 @@
 #include <QDebug>
 #include <QStringList>
 #include <QDir>
+#include <QDesktopWidget>
+#include <QRect>
 
 const QString themePackPath = QString("%1/%2").arg(PLEXPREFIX).arg("share/plexy/themepack");
 
@@ -15,15 +17,17 @@ public:
     QSettings *mSettings;
     QString mThemeCfgFile;
     QString mBasePath;
+    QString mThemeName;
 };
 
-ThemepackLoader::ThemepackLoader(const QString &themeName, QSettings::Format format, QObject *parent) :
+ThemepackLoader::ThemepackLoader(const QString &themeName, QObject *parent) :
     QObject(parent), d (new ThemepackLoaderPrivate)
 {
+    d->mThemeName = themeName;
     QDir mainConfig(QString("%1/%2/").arg(themePackPath).arg(themeName));
     d->mSettings = new QSettings(QDir::toNativeSeparators(
                                  mainConfig.absoluteFilePath("main.cfg")),
-                             format, parent);
+                             QSettings::IniFormat, parent);
 
     d->mThemeCfgFile = QDir::toNativeSeparators(d->mSettings->fileName());
     d->mBasePath = QDir::toNativeSeparators(mainConfig.absolutePath());
@@ -37,7 +41,11 @@ QString ThemepackLoader::wallpaper()
     d->mSettings->beginGroup(QLatin1String("main"));
     rv = d->mSettings->value("wallpaper").toString();
     d->mSettings->endGroup();
-    return rv;
+
+    QDir
+        prefix(QString("%1/%2/%3").arg(themePackPath).arg(d->mThemeName).arg(QLatin1String("resources")));
+
+    return QDir::toNativeSeparators(prefix.absoluteFilePath(rv));
 }
 
 QStringList ThemepackLoader::widgets(const QString &expType)
@@ -71,6 +79,58 @@ QString ThemepackLoader::qmlFilesFromTheme(const QString &name)
 
     QDir path(QString("%1/%2").arg(d->mBasePath).arg(baseFolder));
     return (QDir::toNativeSeparators(path.absoluteFilePath(fileName)));
+}
+
+QPoint ThemepackLoader::widgetPos(const QString &name)
+{
+    d->mSettings->beginGroup(name);
+    int x = 0;
+    int y = 0;
+    QRect screenRect = QDesktopWidget().availableGeometry();
+
+    QString x_value = d->mSettings->value("x").toString();
+    QString y_value = d->mSettings->value("y").toString();
+
+    QRegExp rx("(\\d+)");
+    rx.indexIn(x_value, 0);
+
+    qDebug() << Q_FUNC_INFO << "Parsed Value" << rx.cap(1); 
+    x = rx.cap(1).toUInt();
+    x = (screenRect.width()/100) * x;
+
+
+    rx.indexIn(y_value, 0);
+    y = rx.cap(1).toUInt();
+    y = (screenRect.height()/100) * y;
+
+    qDebug() << Q_FUNC_INFO << x << ": " << y;
+
+    d->mSettings->endGroup();
+
+    return QPoint(x, y);
+}
+
+PlexyDesk::DesktopWidget::State ThemepackLoader::widgetView(const QString &name)
+{
+    PlexyDesk::DesktopWidget::State default_state = PlexyDesk::DesktopWidget::NORMALSIDE;
+    d->mSettings->beginGroup(name);
+    QString state = d->mSettings->value("view").toString().toUpper();
+    if (!state.isEmpty() && !state.isNull()) {
+        if (state == "NORMALSIDE") {
+           d->mSettings->endGroup(); 
+           return default_state;
+        } else if (state == "BACKSIDE") {
+            d->mSettings->endGroup();
+            return PlexyDesk::DesktopWidget::BACKSIDE;
+        } else if (state == "DOCK") {
+            d->mSettings->endGroup();
+            return PlexyDesk::DesktopWidget::DOCK;
+        }
+
+    }
+
+    d->mSettings->endGroup();
+    return default_state;
 }
 
 
