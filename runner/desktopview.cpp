@@ -362,7 +362,7 @@ void DesktopView::dragEnterEvent (QDragEnterEvent * event)
         return;
     }
 
-    const QUrl droppedFile = event->mimeData()->urls().at(0).toString(QUrl::StripTrailingSlash |
+    const QUrl droppedFile = event->mimeData()->urls().value(0).toString(QUrl::StripTrailingSlash |
             QUrl::RemoveScheme);
     if (droppedFile.toString().contains(".qml")) {
 
@@ -374,7 +374,7 @@ void DesktopView::dragEnterEvent (QDragEnterEvent * event)
         return;
     }
     if (event->mimeData()->hasUrls()) {
-        Config::getInstance()->setWallpaper(event->mimeData()->urls().at(0).toString(QUrl::StripTrailingSlash | QUrl::RemoveScheme));
+        Config::getInstance()->setWallpaper(event->mimeData()->urls().value(0).toString(QUrl::StripTrailingSlash | QUrl::RemoveScheme));
     }
 
 }
