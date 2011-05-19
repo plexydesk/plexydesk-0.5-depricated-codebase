@@ -1,8 +1,11 @@
 import Qt 4.7
+
 Rectangle {
+
     width:200 * 2
     height:176 * 2
     color : "transparent"
+
     Image {
         source:"photoElement_images/background.png"
         id:background
@@ -10,6 +13,7 @@ Rectangle {
         width:200 * 2 
         height:176 * 2
     }
+
     Image {
         parent : background
         source : "http://www.wallpaperstop.com/wallpapers/baby-wallpapers/cute-baby-wallpaper-240x150-0912045.jpg"
@@ -19,19 +23,19 @@ Rectangle {
         height:75 * 2
         opacity: 0.0
         smooth : true
+
         Behavior on opacity {
-         NumberAnimation { from : 0.0 ; to: 1.0  ; duration: 1000 }
+            NumberAnimation { from : 0.0 ; to: 1.0  ; duration: 1000 }
         }
 
         onStatusChanged: if (pasted_layer.status == Image.Ready) pasted_layer.state = "loaded"
 
          states: [
-         State {
-             name: "loaded"
-             PropertyChanges { target: pasted_layer; opacity : 1.0 }
-             
-          }
+             State {
+                 name: "loaded"
+                 PropertyChanges { target: pasted_layer; opacity : 1.0 }
+              }
         ]
-       
+
     }
 }
