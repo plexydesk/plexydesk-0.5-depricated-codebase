@@ -86,6 +86,8 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/social/libs/service/
     ${CMAKE_BINARY_DIR}/panel/
     ${CMAKE_SOURCE_DIR}/panel/
+    ${CMAKE_SOURCE_DIR}/artwork/themepacks/default/folderview/resources/
+    ${CMAKE_BINARY_DIR}/artwork/themepacks/default/folderview/resources/
     ${QT_INCLUDE_DIR}
 )
 
@@ -133,17 +135,20 @@ ADD_SUBDIRECTORY(3rdparty/webitem)
 
 #UI widgets for all platforms
 ADD_SUBDIRECTORY(extensions/widgets/clock)
-ADD_SUBDIRECTORY(extensions/widgets/youtubewidget/)
+#Youtube is diabled ListView is now at extensions/widgets
+#ADD_SUBDIRECTORY(extensions/widgets/youtubewidget/)
 
 #data plugins for all platforms
 ADD_SUBDIRECTORY(extensions/data/rest)
-ADD_SUBDIRECTORY(extensions/data/utube)
+#Youtube is diabled ListView is now at extensions/widgets
+#ADD_SUBDIRECTORY(extensions/data/utube)
 
 ADD_SUBDIRECTORY(artwork)
 ADD_SUBDIRECTORY(artwork/plexyfren_theme/default/)
 
 #themepacks
 ADD_SUBDIRECTORY(artwork/themepacks/default)
+ADD_SUBDIRECTORY(artwork/themepacks/default/folderview/resources)
 
 # Removed from building
 #ADD_SUBDIRECTORY(3rdparty/cair)

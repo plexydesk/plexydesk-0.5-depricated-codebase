@@ -27,8 +27,6 @@
 #include "socialqdbusplugindata.h"
 namespace PlexyDesk
 {
-
-
 class googleweatherWidget : public DesktopWidget
 {
 
@@ -61,10 +59,6 @@ private:
     QStringList weatherValues;
     QString prefix;
     int initD, DS_EXTF, initTimer;
-    // private slots:
-
-    ;
-
 };
 
 }

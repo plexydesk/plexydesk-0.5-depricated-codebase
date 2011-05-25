@@ -19,7 +19,6 @@ SET(sourceFiles
     fakemime.cpp
     httpjobhandler.cpp
     imagecache.cpp
-    listview.cpp
     netwm.cpp
     pendingjob.cpp
     plexyconfig.cpp
@@ -40,7 +39,6 @@ SET(headerFiles
    fakemime.h
    httpjobhandler.h
    imagecache.h
-   listview.h
    netwm.h
    netwm_def.h
    netwm_p.h
@@ -65,7 +63,6 @@ SET(MOC_SRCS
    desktopwidget.h
    httpjobhandler.h
    imagecache.h
-   listview.h
    pendingjob.h
    plexyconfig.h
    pluginloader.h
