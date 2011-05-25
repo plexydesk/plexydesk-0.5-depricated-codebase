@@ -118,10 +118,11 @@ Rectangle{
 
 
     }
+    FolderView{id:folderView}
     FolderListModel
     {
         id: flm
-        folder: "/"
+        folder: folderView.home
         nameFilters: ["*"]
     }
 
