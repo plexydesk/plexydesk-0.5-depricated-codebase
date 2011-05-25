@@ -32,6 +32,7 @@ Rectangle{
     Image {
         id: background
         anchors.fill: parent
+        asynchronous : true
         source: "resources/images/background.png"
         z:-100
     }
@@ -87,6 +88,8 @@ Rectangle{
         GridView{
                 id: gridView
                 anchors.fill: parent
+                cacheBuffer : 40
+                snapMode : GridView.SnapToRow
                 Component
                 {
                         id:fileDelegate
@@ -95,7 +98,7 @@ Rectangle{
                             width: 100
                             height: 100
                             Icon{filename: fileName}
-                            opacity: 0.8
+                            opacity: 1.0
                             color: "#00000000"
                             MouseArea
                             {
@@ -123,6 +126,7 @@ Rectangle{
     {
         id: flm
         folder: folderView.home
+        sortField : FolderListModel.Type
         nameFilters: ["*"]
     }
 
@@ -133,6 +137,7 @@ Rectangle{
         y: 349
         width: 25
         height: 23
+        asynchronous : true
         anchors.verticalCenterOffset: -5
         anchors.verticalCenter: rectangle3.verticalCenter
         source: "resources/images/Back.png"
@@ -151,9 +156,10 @@ Rectangle{
         height: 0
         y:0
         visible: false
+        asynchronous : true
         anchors.horizontalCenter: rectangle1.horizontalCenter
         anchors.verticalCenter: rectangle1.verticalCenter
-        clip: false
+        clip: true
         smooth: true
         z:1
         fillMode: Image.PreserveAspectFit
@@ -192,6 +198,7 @@ Rectangle{
             width: 16
             height: 16
             source: "resources/images/CCW.png"
+            asynchronous : true
             opacity: 1
             MouseArea
             {
@@ -208,6 +215,7 @@ Rectangle{
             height: 16
             source: "resources/images/CW.png"
             opacity: 1
+            asynchronous : true
             MouseArea
             {
                 anchors.fill: parent

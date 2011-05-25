@@ -54,6 +54,7 @@ Rectangle {
         height: 80
         opacity: 1
         smooth: true
+        asynchronous : true
         fillMode: Image.PreserveAspectFit
         anchors.bottomMargin: 17
         source: Scripts.getTypeIcon(type)
