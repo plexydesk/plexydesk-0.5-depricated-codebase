@@ -19,7 +19,7 @@
 
 import Qt 4.7
 import Qt.labs.folderlistmodel 1.0
-import FolderView 1.0
+//import FolderView 1.0
 
 import "resources"
 import "resources/images" as Images
@@ -55,8 +55,9 @@ Rectangle{
         y: 347
         color: "silver"
         text: Scripts.getFolderName(flm)
-        anchors.verticalCenterOffset: -10
-        anchors.verticalCenter: rectangle3.verticalCenter
+        font.pointSize: 12
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 20
         anchors.horizontalCenterOffset: 0
         anchors.horizontalCenter: parent.horizontalCenter
         style: Text.Raised
@@ -121,11 +122,11 @@ Rectangle{
 
 
     }
-    FolderView{id:folderView}
+    //FolderView{id:folderView}
     FolderListModel
     {
         id: flm
-        folder: folderView.home
+        folder: "/home/varuna/" //folderView.home
         sortField : FolderListModel.Type
         nameFilters: ["*"]
     }
@@ -137,11 +138,11 @@ Rectangle{
         y: 349
         width: 25
         height: 23
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 16
         asynchronous : true
-        anchors.verticalCenterOffset: -5
-        anchors.verticalCenter: rectangle3.verticalCenter
         source: "resources/images/Back.png"
-        z: 400
+        z: 300
         opacity: 1
         MouseArea {
             id: mouse_area1
@@ -172,7 +173,7 @@ Rectangle{
             id: viewImageClickArea
             opacity: 0
             anchors.fill: parent
-            onClicked: Scripts.setOpacityBug(backgroundHolder,iconcontainer,rectangle1,rectangle2,currentDir,image1)
+            onClicked: Scripts.setOpacityBug(backgroundHolder,background,iconcontainer,rectangle1,currentDir,image1)
             visible: false
         }
     }
@@ -183,8 +184,8 @@ Rectangle{
         width: 34
         height: 16
         color: "#3a3a3a"
-        anchors.verticalCenterOffset: -5
-        anchors.verticalCenter: rectangle3.verticalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 18
         opacity: 1
         visible: false
         Behavior on opacity{
@@ -236,48 +237,7 @@ Rectangle{
         style: Text.Raised
         z:399
     }
-    Rectangle {
-        id: rectangle2
-        color: "#000000"
-        radius: 0
-        visible: false
-        opacity: 0.8
-        anchors.fill: parent
-        z:-1
-    }
 
-    Rectangle {
-        id: rectangle3
-        x: 0
-        y: 340
-        width: 420
-        height: 41
-        color: "#161515"
-        radius: 0
-        visible: false
-        gradient: Gradient {
-            GradientStop {
-                position: 0
-                color: "#222121"
-            }
-
-            GradientStop {
-                position: 0.28
-                color: "#141414"
-            }
-
-            GradientStop {
-                position: 1
-                color: "#000000"
-            }
-        }
-        border.width: 2
-        border.color: "#000000"
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
-        opacity: 0.9
-        z:-5
-    }
     }
     states: [
         State {
@@ -285,12 +245,8 @@ Rectangle{
 
             PropertyChanges {
                 target: imageViewer
-                x: 60
-                y: 19
                 width: 300
                 height: 300
-                anchors.verticalCenterOffset: 2
-                anchors.horizontalCenterOffset: 0
                 visible: true
                 z: 199
             }
@@ -299,6 +255,7 @@ Rectangle{
                 target: viewImageClickArea
                 focus: true
                 opacity: 1
+                z: 400
                 visible: true
             }
             PropertyChanges {
@@ -313,25 +270,14 @@ Rectangle{
                 x: 196
                 y: 1
                 text: "test"
-                anchors.horizontalCenterOffset: 0
-                anchors.topMargin: 1
-                anchors.bottomMargin: 10
             }
 
             PropertyChanges {
                 target: imageControls
-                x: 375
-                y: 333
                 opacity: 1
                 visible: true
             }
 
-            PropertyChanges {
-                target: rectangle1
-                x: 10
-                y: 9
-                anchors.horizontalCenterOffset: 0
-            }
 
         }
     ]

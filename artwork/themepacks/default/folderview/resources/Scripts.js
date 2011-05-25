@@ -29,7 +29,9 @@ function goInto(to,flm,ic,iv,imt)
     var npath = cpath + "/" + to;
     var type = getType(to);
     flm.folder = npath;
-    setImageViewer(ic,iv,imt,npath,type,to);
+    if(type === "png" || type === "PNG" || type === "jpg" || type === "jpeg" || type === "JPG" || type === "JPEG"){
+        setImageViewer(ic,iv,imt,npath,type,to);
+    }
 }
 function getIconName(flm)
 {
@@ -118,19 +120,16 @@ function getFileName(filename)
 
 function setImageViewer(ic,iv,imt,path,type,name)
 {
-    if(type === "png" || type === "PNG" || type === "jpg" || type === "jpeg" || type === "JPG" || type === "JPEG"){
         ic.state = "viewImage"
         iv.source = path;
         imt.text = name;
-    }
 }
 
-function setOpacityBug(back,ic,rec1,rec2,ct,bb)
+function setOpacityBug(backHold,back,ic,rec1,ct,bb)
 {
-    back.state = "";
+    backHold.state = "";
     ic.opacity = 1;
     rec1.opacity = 1;
-    rec2.opacity = 0.8;
     ct.opacity = 1;
     bb.opacity = 1;
     setZIndexes(back,ic,ct,bb);
@@ -138,7 +137,7 @@ function setOpacityBug(back,ic,rec1,rec2,ct,bb)
 
 function setZIndexes(back,ic,ct,bb)
 {
-    back.z = -10;
+    back.z = -100;
     ic.z = 0
     ct.z = 50
     bb.z = 50;
