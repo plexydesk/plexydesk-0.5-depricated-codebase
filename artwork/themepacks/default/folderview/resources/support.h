@@ -35,6 +35,7 @@ public:
     ~Support();
     Q_PROPERTY(QString home READ home);
     QString home();
+    Q_INVOKABLE bool openFile(QString file);
     virtual void classBegin(){}
     virtual void componentComplete(){}
 };

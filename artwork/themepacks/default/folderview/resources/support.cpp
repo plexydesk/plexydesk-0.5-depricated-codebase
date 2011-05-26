@@ -18,12 +18,18 @@
 *******************************************************************************/
 
 #include "support.h"
-#include <QDir>
+#include <QDesktopServices>
+#include <QUrl>
 
 Support::Support(QObject *parent) : QObject(parent){}
 Support::~Support(){}
 
 QString Support::home()
 {
-	return QDir::homePath();
+    return QDesktopServices::storageLocation(QDesktopServices::DesktopLocation);
+}
+
+bool Support::openFile(QString file)
+{
+    return QDesktopServices::openUrl(QUrl(file,QUrl::TolerantMode));
 }

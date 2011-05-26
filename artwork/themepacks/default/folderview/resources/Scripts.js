@@ -19,19 +19,19 @@
 
 .pragma library
 
-function goUp(flm)
+function goUp(flm,backHold,back,rec1,ct,bb)
 {
-    flm.folder = flm.parentFolder.toString()
+    flm.folder = flm.parentFolder.toString();
+    setOpacityBug(backHold,back,rec1,ct,bb);
 }
-function goInto(to,flm,ic,iv,imt)
+function goInto(to,flm,ic,flv)
 {
     var cpath = flm.folder.toString();
     var npath = cpath + "/" + to;
     var type = getType(to);
     flm.folder = npath;
-    if(type === "png" || type === "PNG" || type === "jpg" || type === "jpeg" || type === "JPG" || type === "JPEG"){
-        setImageViewer(ic,iv,imt,npath,type,to);
-    }
+    if(type !== "")
+        flv.openFile(npath);
 }
 function getIconName(flm)
 {
@@ -125,20 +125,18 @@ function setImageViewer(ic,iv,imt,path,type,name)
         imt.text = name;
 }
 
-function setOpacityBug(backHold,back,ic,rec1,ct,bb)
+function setOpacityBug(backHold,back,rec1,ct,bb)
 {
     backHold.state = "";
-    ic.opacity = 1;
     rec1.opacity = 1;
     ct.opacity = 1;
     bb.opacity = 1;
-    setZIndexes(back,ic,ct,bb);
+    setZIndexes(back,ct,bb);
 }
 
-function setZIndexes(back,ic,ct,bb)
+function setZIndexes(back,ct,bb)
 {
     back.z = -100;
-    ic.z = 0
     ct.z = 50
     bb.z = 50;
 }
