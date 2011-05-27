@@ -4,13 +4,19 @@ FILE(GLOB PNGFILES resources/*.png )
 FILE(GLOB JPEGFILES resources/*.jpg ) 
 FILE(GLOB CFG main.cfg)
 SET(WEATHER weather/weather.qml)
+
+#photo CMAKE entries
 SET(PHOTO photo/photoElement.qml)
 SET(PHOTO_IMGS photo/photoElement_images/background.png)
 SET(PHOTO_IMG_1 photo/photoElement_images/pasted_layer.png)
+#Folderview CMAKE entries
 SET(FOLDERVIEW folderview/folderview.qml)
 SET(FOLDERVIEW_RES_QML folderview/resources/Icon.qml)
 SET(FOLDERVIEW_RES_JS folderview/resources/Scripts.js)
 FILE(GLOB FOLDERVIEW_IMGS folderview/resources/images/*.png)
+#DigitalClock CMAKE entries
+SET(DIGITALCLOCK digitalclock/digitalClock.qml)
+FILE(GLOB DIGITALCLOCK_IMGS digitalclock/images/*.png)
 
 INSTALL(FILES ${PNGFILES}  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/resources/)
 INSTALL(FILES ${JPEGFILES}  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/resources/)
@@ -19,7 +25,11 @@ INSTALL(FILES ${WEATHER}  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themep
 INSTALL(FILES ${PHOTO}  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/photo/)
 INSTALL(FILES ${PHOTO_IMGS}  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/photo/photoElement_images/)
 INSTALL(FILES ${PHOTO_IMG_1}  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/photo/photoElement_images/)
+
 INSTALL(FILES ${FOLDERVIEW} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/folderview/)
 INSTALL(FILES ${FOLDERVIEW_RES_QML} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/folderview/resources)
 INSTALL(FILES ${FOLDERVIEW_RES_JS} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/folderview/resources)
 INSTALL(FILES ${FOLDERVIEW_IMGS} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/folderview/resources/images)
+
+INSTALL(FILES ${DIGITALCLOCK} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/digitalclock/)
+INSTALL(FILES ${DIGITALCLOCK_IMGS} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/digitalclock/images)
