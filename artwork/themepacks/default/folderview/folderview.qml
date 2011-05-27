@@ -23,12 +23,14 @@ import FolderView 1.0
 import "resources"
 import "resources/images" as Images
 import "resources/Scripts.js" as Scripts
+
 Rectangle{
     id:backgroundHolder
     width: 528
     height: 454
     color: "#00000000"
     focus : false
+
     Image {
         id: background
         anchors.fill: parent
@@ -103,7 +105,12 @@ Rectangle{
 
 
     }
-    FolderView{id:folderView}
+
+    FolderView 
+    {
+       id : folderView
+    }
+
     FolderListModel
     {
         id: flm
