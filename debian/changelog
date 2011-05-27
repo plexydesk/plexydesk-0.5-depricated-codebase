@@ -1,5 +1,13 @@
+plexydesk (0.5-21) unstable; urgency=low
+
+    * New QML digital clock
+    * New Icon Container
+    * Fixes : stacking order of qml items
+    * Integration with Desktop service to run apps
+    * New QML C++ extension for Loading directories
+
 plexydesk (0.5-20) unstable; urgency=low
- 
+
     * Feature #1: Review Varuna's commits
     * Feature #2: remove all plugins from compiling
     * Feature #3: review classic-background plugin
