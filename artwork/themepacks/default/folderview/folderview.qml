@@ -28,12 +28,14 @@ Rectangle{
     width: 528
     height: 454
     color: "#00000000"
+    focus : false
     Image {
         id: background
         anchors.fill: parent
+        parent : backgroundHolder
         asynchronous : true
+        focus: false
         source: "resources/images/background.png"
-        z:-100
     }
 
     Text{
@@ -48,18 +50,13 @@ Rectangle{
         anchors.horizontalCenterOffset: 0
         anchors.horizontalCenter: rectangle1.horizontalCenter
         style: Text.Raised
-        z: 400
         opacity: 1
     }
-    MouseArea
-    {
-        id:msa1
-        drag.target: backgroundHolder
-        drag.axis: Drag.XandYAxis
-    }
+   
     Rectangle
     {
         id: rectangle1
+        parent : backgroundHolder 
         width: 400
         height: 320
         clip: true
@@ -72,12 +69,12 @@ Rectangle{
         radius: 5
         anchors.horizontalCenterOffset: -9
         anchors.horizontalCenter: parent.horizontalCenter
-        z: 200
         GridView{
                 id: gridView
                 anchors.fill: parent
                 cacheBuffer : 40
                 snapMode : GridView.SnapToRow
+                parent : rectangle1
                 Component
                 {
                         id:fileDelegate
@@ -102,9 +99,6 @@ Rectangle{
                 model: flm
                 delegate: fileDelegate
                 focus: true
-                Behavior on opacity{
-                    NumberAnimation{duration: 500}
-                }
         }
 
 
@@ -128,14 +122,13 @@ Rectangle{
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 49
         asynchronous : true
+        parent : backgroundHolder
         source: "resources/images/Back.png"
-        z: 300
         opacity: 1
         MouseArea {
             id: mouse_area1
             anchors.fill: parent
             onClicked: Scripts.goUp(flm,backgroundHolder,background,rectangle1,currentDir,image1)
-
         }
     }
 }

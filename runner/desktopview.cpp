@@ -407,8 +407,8 @@ void DesktopView::drawBackground(QPainter *painter, const QRectF &rect)
 
 void DesktopView::mousePressEvent(QMouseEvent *event)
 {
-    setTopMostWidget(event->pos());
-
+    // commenting out due to qml stacking problem
+    //setTopMostWidget(event->pos());
     QGraphicsView::mousePressEvent(event);
 }
 
