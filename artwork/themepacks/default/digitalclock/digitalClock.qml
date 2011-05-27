@@ -109,7 +109,7 @@ Rectangle {
         style: Text.Normal
         font.pixelSize: 16
         Behavior on opacity {
-            NumberAnimation{duration:1000}
+            NumberAnimation{duration:800}
         }
     }
 
@@ -125,7 +125,7 @@ Rectangle {
         style: Text.Normal
         font.pixelSize: 10
         Behavior on opacity {
-            NumberAnimation{duration: 4000}
+            NumberAnimation{duration: 1000}
         }
     }
 
@@ -135,8 +135,7 @@ Rectangle {
         y: 70
         width: 15
         height: 15
-        color: "#5c5a5a"
-        radius: 4
+        color:  "#00000000"
         clip: true
         Behavior on color{
             NumberAnimation{duration:200}
@@ -154,8 +153,6 @@ Rectangle {
                 onClicked: changeConfig()
                 opacity: 1
                 hoverEnabled: true;
-                onEntered: settingsParent.color = "#ffffff"
-                onExited: settingsParent.color = "#5c5a5a"
             }
         }
     }
