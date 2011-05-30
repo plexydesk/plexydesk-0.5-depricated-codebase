@@ -19,6 +19,10 @@ SET(DIGITALCLOCK digitalclock/digitalClock.qml)
 FILE(GLOB DIGITALCLOCK_IMGS digitalclock/images/*.png)
 #tips
 SET(TIPS tips/main.qml)
+#Welcome widget CMAKE entries
+SET(WELCOMEQML welcome/welcome.qml)
+SET(WELCOMESCRIPTS welcome/scripts/Scripts.js)
+FILE(GLOB WELCOMEIMGS welcome/images/*.png)
 
 INSTALL(FILES ${PNGFILES}  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/resources/)
 INSTALL(FILES ${JPEGFILES}  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/resources/)
@@ -36,3 +40,8 @@ INSTALL(FILES ${FOLDERVIEW_IMGS} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy
 INSTALL(FILES ${DIGITALCLOCK} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/digitalclock/)
 INSTALL(FILES ${DIGITALCLOCK} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/digitalclock/)
 INSTALL(FILES ${TIPS} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/tips/)
+INSTALL(FILES ${DIGITALCLOCK_IMGS} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/digitalclock/images)
+
+INSTALL(FILES ${WELCOMEQML} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/welcome/)
+INSTALL(FILES ${WELCOMESCRIPTS} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/welcome/scripts/)
+INSTALL(FILES ${WELCOMEIMGS} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/welcome/images/)
