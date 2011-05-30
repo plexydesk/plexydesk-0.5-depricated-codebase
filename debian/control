@@ -1,7 +1,7 @@
 Source: plexydesk
 Section: x11
 Priority: extra
-Maintainer: Johnny Saenz A. <saenzac@gmail.com>
+Maintainer: Siraj Razick <sirajrazick@me.com>
 Build-Depends: cmake, cdbs, debhelper (>= 5), libqt4-dev (>= 4.4.1), ffmpeg (>= 0.cvs20070307), libavformat-dev (>= 0.cvs20070307), libavutil-dev (>= 0.cvs20070307), libavcodec-dev (>= 0.cvs20070307), libqimageblitz4 (>= 0.0.4), libqt4-opengl-dev (>= 4.4.1), libsm-dev (>= 1.1.1-1), libxext-dev (>= 1.0.4-1), libxcomposite-dev (>= 0.4.1-1), libxdamage-dev (>= 1.1.2-1), libqimageblitz-dev, libxrender-dev, libxcomposite-dev, libxdamage-dev, libqtwebkit-dev
 Standards-Version: 3.8.0
 
