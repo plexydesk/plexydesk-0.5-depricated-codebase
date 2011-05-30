@@ -17,6 +17,8 @@ FILE(GLOB FOLDERVIEW_IMGS folderview/resources/images/*.png)
 #DigitalClock CMAKE entries
 SET(DIGITALCLOCK digitalclock/digitalClock.qml)
 FILE(GLOB DIGITALCLOCK_IMGS digitalclock/images/*.png)
+#tips
+SET(TIPS tips/main.qml)
 
 INSTALL(FILES ${PNGFILES}  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/resources/)
 INSTALL(FILES ${JPEGFILES}  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/resources/)
@@ -32,4 +34,5 @@ INSTALL(FILES ${FOLDERVIEW_RES_JS} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/ple
 INSTALL(FILES ${FOLDERVIEW_IMGS} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/folderview/resources/images)
 
 INSTALL(FILES ${DIGITALCLOCK} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/digitalclock/)
-INSTALL(FILES ${DIGITALCLOCK_IMGS} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/digitalclock/images)
+INSTALL(FILES ${DIGITALCLOCK} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/digitalclock/)
+INSTALL(FILES ${TIPS} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/tips/)
