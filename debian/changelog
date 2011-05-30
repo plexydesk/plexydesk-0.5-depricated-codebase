@@ -1,3 +1,9 @@
+plexydesk (0.5.21~2) unstable; urgency=low
+
+   * Fixes : qml plugin install path on Ubuntu
+
+ -- Siraj Razick <sirajrazick@plexydesk.org>  Fri, 27 May 2011 22:07:12 +0530
+
 plexydesk (0.5.21~1) unstable; urgency=low
 
    * Build fix for Ubuntu
