@@ -14,37 +14,37 @@ function changeState(base,stt) {
 
 function showInfo(clicked,topic,content)
 {
-    if (clicked === "desktop")
+    if (clicked === "Desktop")
     {
         topic.text = "Desktop";
         content.text = infoDesktop;
         //code.text = "";
     }
-    else if (clicked === "addwidget")
+    else if (clicked === "Adding Widgets")
     {
         topic.text = "Adding Widgets";
         content.text = infoAddingWidget;
         //code.text = addWidgetCommand;
     }
-    else if (clicked === "deletewidget")
+    else if (clicked === "Removing Widgets")
     {
         topic.text = "Removing Widgets";
         content.text = infoDeleteWidget;
         //code.text ="";
     }
-    else if (clicked === "changewallpaper")
+    else if (clicked === "Changing Wallpaper")
     {
         topic.text = "Changing Wallpaper";
         content.text = infoChangeWallpaper;
         //code.text = "";
     }
-    else if (clicked === "development")
+    else if (clicked === "Development")
     {
         topic.text = "Development";
         content.text = infoDevelopment;
         //code.text = "";
     }
-    else if (clicked === "wiki")
+    else if (clicked === "Wiki")
     {
         topic.text = "Wiki";
         content.text = infoWiki;
@@ -56,6 +56,9 @@ function buttonClicked(base,toState,clickedButton,topic,content)
 {
     changeState(base,toState);
     showInfo(clickedButton,topic,content);
+    changeState(base,toState);
 }
+
+
 
 

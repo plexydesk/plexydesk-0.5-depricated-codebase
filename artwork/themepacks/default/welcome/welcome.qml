@@ -65,7 +65,7 @@ Rectangle {
             hoverEnabled: true
             onEntered: parent.color = "#b1b0b0"
             onExited: parent.color = "#7c7c7c"
-            onClicked: Scripts.buttonClicked(rectangle1,"State1","desktop",info_topic,info_desc)
+            onClicked: Scripts.buttonClicked(rectangle1,"State1","Desktop",info_topic,info_desc)
         }
         Behavior on opacity {
             NumberAnimation{duration : 100}
@@ -97,7 +97,7 @@ Rectangle {
             hoverEnabled: true
             onEntered: parent.color = "#b1b0b0"
             onExited: parent.color = "#7c7c7c"
-            onClicked: Scripts.buttonClicked(rectangle1,"State1","addwidget",info_topic,info_desc)
+            onClicked: Scripts.buttonClicked(rectangle1,"State1","Adding Widgets",info_topic,info_desc)
         }
         Behavior on opacity {
             NumberAnimation{duration : 100}
@@ -116,7 +116,7 @@ Rectangle {
         Text {
             id: entry2
             color: "#ffffff"
-            text: "Removing widgets"
+            text: "Removing Widgets"
             style: Text.Sunken
             font.pixelSize: 12
             anchors.horizontalCenter: parent.horizontalCenter
@@ -129,7 +129,7 @@ Rectangle {
             hoverEnabled: true
             onEntered: parent.color = "#b1b0b0"
             onExited: parent.color = "#7c7c7c"
-            onClicked: Scripts.buttonClicked(rectangle1,"State1","deletewidget",info_topic,info_desc)
+            onClicked: Scripts.buttonClicked(rectangle1,"State1","Removing Widgets",info_topic,info_desc)
         }
         Behavior on opacity {
             NumberAnimation{duration : 100}
@@ -148,7 +148,7 @@ Rectangle {
         Text {
             id: entry3
             color: "#ffffff"
-            text: "Changing wallpaper"
+            text: "Changing Wallpaper"
             style: Text.Sunken
             font.pixelSize: 12
             anchors.horizontalCenter: parent.horizontalCenter
@@ -161,7 +161,7 @@ Rectangle {
             hoverEnabled: true
             onEntered: parent.color = "#b1b0b0"
             onExited: parent.color = "#7c7c7c"
-            onClicked: Scripts.buttonClicked(rectangle1,"State1","changewallpaper",info_topic,info_desc)
+            onClicked: Scripts.buttonClicked(rectangle1,"State1","Changing Wallpaper",info_topic,info_desc)
         }
         Behavior on opacity {
             NumberAnimation{duration : 100}
@@ -193,7 +193,7 @@ Rectangle {
             hoverEnabled: true
             onEntered: parent.color = "#b1b0b0"
             onExited: parent.color = "#7c7c7c"
-            onClicked: Scripts.buttonClicked(rectangle1,"State1","development",info_topic,info_desc)
+            onClicked: Scripts.buttonClicked(rectangle1,"State1","Development",info_topic,info_desc)
         }
         Behavior on opacity {
             NumberAnimation{duration : 100}
@@ -225,7 +225,7 @@ Rectangle {
             hoverEnabled: true
             onEntered: parent.color = "#b1b0b0"
             onExited: parent.color = "#7c7c7c"
-            onClicked: Scripts.buttonClicked(rectangle1,"State1","wiki",info_topic,info_desc)
+            onClicked: Scripts.buttonClicked(rectangle1,"State1","Wiki",info_topic,info_desc)
         }
         Behavior on opacity {
             NumberAnimation{duration : 100}
@@ -311,7 +311,7 @@ Rectangle {
                 id: backClick
                 anchors.fill: parent
                 opacity: 0
-                onClicked: rectangle1.state = "";
+                onClicked: Scripts.buttonClicked(rectangle1,"",info_topic.text,info_topic,info_desc)
             }
         }
     }
