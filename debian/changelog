@@ -1,3 +1,9 @@
+plexydesk (0.5.21~1) unstable; urgency=low
+
+   * Build fix for Ubuntu
+
+ -- Siraj Razick <sirajrazick@plexydesk.org>  Fri, 27 May 2011 21:07:12 +0530
+
 plexydesk (0.5-21) unstable; urgency=low
 
     * New QML digital clock
