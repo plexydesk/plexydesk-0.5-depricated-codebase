@@ -16,8 +16,8 @@ SET(sourceFiles
     baserender.cpp
     desktopwidget.cpp
     extensionfactory.cpp
-    fakemime.cpp
-    httpjobhandler.cpp
+#    fakemime.cpp
+#    httpjobhandler.cpp
     imagecache.cpp
     netwm.cpp
     pendingjob.cpp
@@ -36,8 +36,8 @@ SET(headerFiles
    dataplugin.h
    desktopwidget.h
    extensionfactory.h
-   fakemime.h
-   httpjobhandler.h
+#   fakemime.h
+#   httpjobhandler.h
    imagecache.h
    netwm.h
    netwm_def.h
@@ -61,7 +61,7 @@ SET(MOC_SRCS
    datainterface.h
    dataplugin.h
    desktopwidget.h
-   httpjobhandler.h
+#   httpjobhandler.h
    imagecache.h
    pendingjob.h
    plexyconfig.h

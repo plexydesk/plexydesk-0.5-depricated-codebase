@@ -36,7 +36,6 @@
 #include <baserender.h>
 #include "desktopview.h"
 #include <pluginloader.h>
-#include <fakemime.h>
 #include <datainterface.h>
 #include <canvas.h>
 #include <plexyconfig.h>
