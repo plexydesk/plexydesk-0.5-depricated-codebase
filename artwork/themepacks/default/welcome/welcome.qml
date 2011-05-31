@@ -303,8 +303,8 @@ Rectangle {
         Text {
             id: info_desc
             x: 30
-            y: 50
-            width: 350
+            y: 65
+            width: 400
             color: "#ffffff"
             text: "info_desc"
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
