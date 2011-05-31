@@ -54,7 +54,6 @@ int main( int argc, char * *argv )
     QGraphicsScene scene;
     scene.setBackgroundBrush(Qt::NoBrush);
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
-    scene.setSceneRect(QDesktopWidget().availableGeometry()); //TODO Resolution changes ?
 
     QSharedPointer<DesktopView> view = QSharedPointer<DesktopView>(new DesktopView(0));
     view->enableOpenGL(
@@ -64,6 +63,12 @@ int main( int argc, char * *argv )
        QRect r = QDesktopWidget().geometry();
     view->move(r.x(), r.y());
     view->resize(QDesktopWidget().geometry().size());
+    scene.setSceneRect(QDesktopWidget().availableGeometry()); //TODO Resolution changes ?
+    view->setSceneRect(QDesktopWidget().availableGeometry());
+    view->ensureVisible(QDesktopWidget().availableGeometry());
+    view->setDragMode(QGraphicsView::RubberBandDrag);
+    //view->fitInView(QDesktopWidget().availableGeometry());
+    qDebug() << Q_FUNC_INFO << QDesktopWidget().availableGeometry();
 #ifdef Q_WS_WIN
     /// \brief: remove plexy from taskbar
     view->move(0, 0);
