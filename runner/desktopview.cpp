@@ -399,11 +399,14 @@ void DesktopView::dragEnterEvent (QDragEnterEvent * event)
 
 void DesktopView::drawBackground(QPainter *painter, const QRectF &rect)
 {
+    qDebug() << Q_FUNC_INFO << rect;
+    painter->setRenderHint(QPainter::TextAntialiasing, false);
+    painter->setRenderHint(QPainter::QPainter::SmoothPixmapTransform, false);
+    painter->setRenderHint(QPainter::HighQualityAntialiasing, false);
     painter->setCompositionMode(QPainter::CompositionMode_Source);
-    painter->fillRect(rect, Qt::transparent);
-    painter->save();
-    painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
     painter->setClipRect(rect);
+
+    painter->save();
     if (d->bgPlugin) {
        d->bgPlugin->render(painter, 
                     QRectF(rect.x(), sceneRect().y(), 
