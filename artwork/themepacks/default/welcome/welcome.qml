@@ -303,6 +303,7 @@ Rectangle {
         id: image1
         opacity: 1
         anchors.fill: parent
+        asynchronous : true
         z: -10
         source: "images/background.png"
     }
@@ -373,6 +374,7 @@ Rectangle {
             width: 30
             height: 25
             source: "images/back.png"
+            asynchronous : true
             opacity: 0
             Behavior on opacity {
                 NumberAnimation{duration: 200}

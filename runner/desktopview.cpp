@@ -34,6 +34,7 @@
 #include <QFutureWatcher>
 #include <QtDebug>
 #include <QSharedPointer>
+#include <QGraphicsDropShadowEffect>
 
 #ifdef Q_WS_X11
 #include <plexywindow.h>
@@ -79,6 +80,7 @@ public:
     float column;
     float margin;
     bool openglOn;
+    QGraphicsDropShadowEffect *mShadowEffect;
 };
 
 bool getLessThanWidget(const QGraphicsItem *it1, const QGraphicsItem *it2)
@@ -111,6 +113,11 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
     d->margin = 10.0;
     d->layer = QSharedPointer<ViewLayer>(new ViewLayer);
     d->layer->showLayer(QLatin1String("Widgets"));
+
+    /* Effects */
+
+    d->mShadowEffect = new QGraphicsDropShadowEffect(this);
+    d->mShadowEffect->setBlurRadius(8.0);
 
     connect(Config::getInstance(), SIGNAL(configChanged()), this, SLOT(backgroundChanged()));
     connect(Config::getInstance(), SIGNAL(widgetAdded()), this, SLOT(onNewWidget()));
