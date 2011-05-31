@@ -150,6 +150,7 @@ ADD_SUBDIRECTORY(artwork/plexyfren_theme/default/)
 ADD_SUBDIRECTORY(artwork/themepacks/default)
 ADD_SUBDIRECTORY(artwork/themepacks/default/folderview/resources)
 
+
 # Removed from building
 #ADD_SUBDIRECTORY(3rdparty/cair)
 #ADD_SUBDIRECTORY(extensions/widgets/demowidget)
