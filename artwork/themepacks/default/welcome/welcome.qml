@@ -24,21 +24,19 @@ import "images"
 Rectangle {
 
     id: rectangle1
-    width: 400
-    height: 200
+    width: 460
+    height: 225
     color: "#00000000"
 
     Text {
         id: gettingstarted
-        x: 19
-        y: 6
         color: "#ffffff"
         text: "Getting Started"
         style: Text.Raised
         anchors.left: parent.left
-        anchors.leftMargin: 19
+        anchors.leftMargin: 40
         anchors.top: parent.top
-        anchors.topMargin: 6
+        anchors.topMargin: 20
         font.family: "Bitstream Charter"
         font.pixelSize: 40
         Behavior on opacity {
@@ -52,9 +50,9 @@ Rectangle {
         text: "PlexyDesk"
         style: Text.Raised
         anchors.top: gettingstarted.bottom
-        anchors.topMargin: 10
+        anchors.topMargin: 5
         anchors.left: gettingstarted.right
-        anchors.leftMargin: -50
+        anchors.leftMargin: -20
         font.pixelSize: 30
         Behavior on opacity {
             NumberAnimation{duration : 100}
@@ -63,11 +61,11 @@ Rectangle {
 
     Rectangle {
         id: item1
-        x: 35
-        y: 109
+        x: 41
+        y: 122
         width: 160
         height: 20
-        color: "#7c7c7c"
+        color: "#00000000"
         radius: 2
         Text {
             id: entry
@@ -83,9 +81,17 @@ Rectangle {
             id: itemclick
             anchors.fill: parent
             hoverEnabled: true
-            onEntered: parent.color = "#b1b0b0"
-            onExited: parent.color = "#7c7c7c"
+            onEntered: Scripts.onEnteredDo(itemBack)
+            onExited: Scripts.onExitedDo(itemBack)
             onClicked: Scripts.buttonClicked(rectangle1,"State1","Desktop",info_topic,info_desc)
+        }
+        Rectangle {
+            id: itemBack
+            color: "#5c5c5c"
+            radius: 5
+            z: -5
+            opacity: 0.8
+            anchors.fill: parent
         }
         Behavior on opacity {
             NumberAnimation{duration : 100}
@@ -96,7 +102,7 @@ Rectangle {
         id: item2
         width: 160
         height: 20
-        color: "#7c7c7c"
+        color: "#00000000"
         radius: 2
         anchors.left: item1.left
         anchors.top: item1.bottom
@@ -115,9 +121,17 @@ Rectangle {
             id: itemclick1
             anchors.fill: parent
             hoverEnabled: true
-            onEntered: parent.color = "#b1b0b0"
-            onExited: parent.color = "#7c7c7c"
+            onEntered: Scripts.onEnteredDo(itemBack1)
+            onExited: Scripts.onExitedDo(itemBack1)
             onClicked: Scripts.buttonClicked(rectangle1,"State1","Adding Widgets",info_topic,info_desc)
+        }
+        Rectangle {
+            id: itemBack1
+            color: "#5c5c5c"
+            radius: 5
+            z: -5
+            opacity: 0.8
+            anchors.fill: parent
         }
         Behavior on opacity {
             NumberAnimation{duration : 100}
@@ -128,7 +142,7 @@ Rectangle {
         id: item3
         width: 160
         height: 20
-        color: "#7c7c7c"
+        color: "#00000000"
         radius: 2
         anchors.left: item2.left
         anchors.top: item2.bottom
@@ -147,9 +161,17 @@ Rectangle {
             id: itemclick2
             anchors.fill: parent
             hoverEnabled: true
-            onEntered: parent.color = "#b1b0b0"
-            onExited: parent.color = "#7c7c7c"
+            onEntered: Scripts.onEnteredDo(itemBack2)
+            onExited: Scripts.onExitedDo(itemBack2)
             onClicked: Scripts.buttonClicked(rectangle1,"State1","Removing Widgets",info_topic,info_desc)
+        }
+        Rectangle {
+            id: itemBack2
+            color: "#5c5c5c"
+            radius: 5
+            z: -5
+            opacity: 0.8
+            anchors.fill: parent
         }
         Behavior on opacity {
             NumberAnimation{duration : 100}
@@ -160,9 +182,9 @@ Rectangle {
         id: item4
         width: 160
         height: 20
-        color: "#7c7c7c"
+        color: "#00000000"
         radius: 2
-        anchors.leftMargin: 10
+        anchors.leftMargin: 56
         anchors.left: item1.right
         anchors.verticalCenter: item1.verticalCenter
         Text {
@@ -179,9 +201,17 @@ Rectangle {
             id: itemclick3
             anchors.fill: parent
             hoverEnabled: true
-            onEntered: parent.color = "#b1b0b0"
-            onExited: parent.color = "#7c7c7c"
+            onEntered: Scripts.onEnteredDo(itemBack3)
+            onExited: Scripts.onExitedDo(itemBack3)
             onClicked: Scripts.buttonClicked(rectangle1,"State1","Changing Wallpaper",info_topic,info_desc)
+        }
+        Rectangle {
+            id: itemBack3
+            color: "#5c5c5c"
+            radius: 5
+            z: -5
+            opacity: 0.8
+            anchors.fill: parent
         }
         Behavior on opacity {
             NumberAnimation{duration : 100}
@@ -192,7 +222,7 @@ Rectangle {
         id: item5
         width: 160
         height: 20
-        color: "#7c7c7c"
+        color: "#00000000"
         radius: 2
         anchors.left: item4.left
         anchors.top: item4.bottom
@@ -211,9 +241,18 @@ Rectangle {
             id: itemclick4
             anchors.fill: parent
             hoverEnabled: true
-            onEntered: parent.color = "#b1b0b0"
-            onExited: parent.color = "#7c7c7c"
+            onEntered: Scripts.onEnteredDo(itemBack4)
+            onExited: Scripts.onExitedDo(itemBack4)
             onClicked: Scripts.buttonClicked(rectangle1,"State1","Development",info_topic,info_desc)
+        }
+
+        Rectangle {
+            id: itemBack4
+            color: "#5c5c5c"
+            radius: 5
+            z: -5
+            opacity: 0.8
+            anchors.fill: parent
         }
         Behavior on opacity {
             NumberAnimation{duration : 100}
@@ -224,7 +263,7 @@ Rectangle {
         id: item6
         width: 160
         height: 20
-        color: "#7c7c7c"
+        color: "#00000000"
         radius: 2
         anchors.left: item5.left
         anchors.top: item5.bottom
@@ -243,9 +282,17 @@ Rectangle {
             id: itemclick5
             anchors.fill: parent
             hoverEnabled: true
-            onEntered: parent.color = "#b1b0b0"
-            onExited: parent.color = "#7c7c7c"
+            onEntered: Scripts.onEnteredDo(itemBack5)
+            onExited: Scripts.onExitedDo(itemBack5)
             onClicked: Scripts.buttonClicked(rectangle1,"State1","Wiki",info_topic,info_desc)
+        }
+        Rectangle {
+            id: itemBack5
+            color: "#5c5c5c"
+            radius: 5
+            z: -5
+            opacity: 0.8
+            anchors.fill: parent
         }
         Behavior on opacity {
             NumberAnimation{duration : 100}
@@ -254,7 +301,7 @@ Rectangle {
 
     Image {
         id: image1
-        opacity: 0.8
+        opacity: 1
         anchors.fill: parent
         z: -10
         source: "images/background.png"
@@ -277,6 +324,10 @@ Rectangle {
             height: 200
             color: "#ffffff"
             radius: 10
+            anchors.rightMargin: 25
+            anchors.leftMargin: 25
+            anchors.bottomMargin: 25
+            anchors.topMargin: 25
             opacity: 0
             anchors.fill: information
             anchors.margins: 15
@@ -288,7 +339,7 @@ Rectangle {
         Text {
             id: info_topic
             x: 31
-            y: 20
+            y: 30
             width: 94
             height: 23
             color: "#ffffff"
@@ -317,8 +368,8 @@ Rectangle {
 
         Image {
             id: backtohome
-            x: 362
-            y: 10
+            x: 404
+            y: 25
             width: 30
             height: 25
             source: "images/back.png"
@@ -390,10 +441,10 @@ Rectangle {
             PropertyChanges {
                 target: info_desc
                 x: 30
-                y: 50
-                width: 350
+                y: 65
+                width: 400
                 color: "#ffffff"
-                text: "info_desc"
+                text: "info_desc "
                 wrapMode: "WrapAtWordBoundaryOrAnywhere"
                 font.underline: false
                 style: "Normal"
@@ -403,7 +454,7 @@ Rectangle {
             PropertyChanges {
                 target: info_topic
                 x: 31
-                y: 20
+                y: 30
                 color: "#ffffff"
                 style: "Raised"
                 font.underline: false
@@ -423,8 +474,8 @@ Rectangle {
 
             PropertyChanges {
                 target: backtohome
-                x: 362
-                y: 10
+                x: 404
+                y: 25
                 width: 30
                 height: 25
                 fillMode: "PreserveAspectFit"
@@ -434,6 +485,11 @@ Rectangle {
 
             PropertyChanges {
                 target: backClick
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: image1
                 opacity: 1
             }
         }

@@ -18,13 +18,13 @@
 *******************************************************************************/
 .pragma library
 
-var infoDesktop = "PlexyDesk is a modular desktop renderer. We bring the web to desktop. Based on QGraphicsView. We aim for simply cool desktop with exapnding through operating systems";
-var infoAddingWidget = "PlexyDesk has the capability to use complete Qt/C++ widgets as well as it supports the QML applications.\nTo add a QML application just drag and drop to the desktop, we'll load the application to the desktop. Just write and see. simple and cool :D\nTo add the Qt/C++ widgets please use the QDBUS command. We are building the panels to load the widgets from UI. Please wait for our newest release.";
+var infoDesktop = "\tPlexyDesk is a modular desktop renderer. We bring the web to desktop. Based on QGraphicsView. We aim for simply cool desktop with exapnding through operating systems";
+var infoAddingWidget = "\tPlexyDesk has the capability to use complete Qt/C++ widgets as well as it supports the QML applications.\n\tTo add a QML application just drag and drop to the desktop, we'll load the application to the desktop. Just write and see. simple and cool :D\n\tTo add the Qt/C++ widgets please use the QDBUS command. We are building the panels to load the widgets from UI. Please wait for our newest release.";
 var addWidgetCommand = "qdbus org.PlexyDesk.Config /Configuration local.PlexyDesk.Config.addWidget <your_widget_name>";
-var infoDeleteWidget = "Current PlexyDesk does not support automated widget removal. You can goto the ~/.config/plexydesk/plexydeskconf.conf and remove the widget entries from the conf file. Widgets will be removed after a reload";
-var infoChangeWallpaper = "In PlexyDesk simply drag and drop your image to the desktop, we'll set the wallpaper to which you dropped. :D";
-var infoDevelopment = "Visit us at redmine.plexyplanet.org, Use our widget API to develop Qt/C++ applications, Just write any QML and drag and drop. Visit GitHub and simply fork and start development. Development is simply exciting";
-var infoWiki = "Visit our wiki page here are the links.. :D \n\n\thttp://redmine.plexyplanet.org/\n\thttp://plexyplanet.org/"
+var infoDeleteWidget = "\tCurrent PlexyDesk does not support automated widget removal. You can goto the ~/.config/plexydesk/plexydeskconf.conf and remove the widget entries from the conf file. Widgets will be removed after a reload";
+var infoChangeWallpaper = "\tIn PlexyDesk simply drag and drop your image to the desktop, we'll set the wallpaper to which you dropped. :D";
+var infoDevelopment = "\tVisit us at redmine.plexyplanet.org, Use our widget API to develop Qt/C++ applications, Just write any QML and drag and drop. Visit GitHub and simply fork and start development. Development is simply exciting";
+var infoWiki = "\tVisit our wiki page here are the links.. :D \n\n\thttp://redmine.plexyplanet.org/\n\thttp://plexyplanet.org/"
 
 function changeState(base,stt) {
     base.state = stt;
@@ -77,6 +77,16 @@ function buttonClicked(base,toState,clickedButton,topic,content)
     changeState(base,toState);
 }
 
+function onEnteredDo(back)
+{
+    back.color ="#b1b0b0";
+    back.opacity = 1;
+}
 
+function onExitedDo(back)
+{
+    back.color ="#5c5c5c";
+    back.opacity = 0.8;
+}
 
 
