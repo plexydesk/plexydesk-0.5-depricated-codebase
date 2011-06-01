@@ -45,7 +45,7 @@ Q_SIGNALS:
 
 private:
     QPixmap mBackgroundCache;
-    QPixmap mBackgroundPixmap;
+    QPixmap *mBackgroundPixmap;
 };
 
 #endif //PLEXY_CLASSIC_BACKDROP_H
