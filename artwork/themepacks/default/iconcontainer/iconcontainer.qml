@@ -6,7 +6,6 @@ import "resources/Scripts.js" as Scripts
 
 Rectangle {
     id: iconcontainer
-    //y:8
     width: 420
     height: 370
     radius: 10
@@ -14,6 +13,7 @@ Rectangle {
     border.color: "#000000"
     opacity: 1
     color: "#00000000"
+    smooth : false
     Text{
 	id: currentDir
         x: 120
@@ -90,6 +90,8 @@ Rectangle {
         y: 5
         width: 25
         height: 23
+        asynchronous : true
+        smooth : false
         source: "resources/images/Back.png"
         z: 400
         MouseArea {
@@ -113,6 +115,7 @@ Rectangle {
         z:1
         fillMode: Image.PreserveAspectFit
         source: "resources/images/qt.png"
+        asynchronous : true
 
         Behavior on opacity{
             NumberAnimation{duration: 500}
@@ -145,6 +148,7 @@ Rectangle {
             width: 16
             height: 16
             source: "resources/images/CCW.png"
+            asynchronous : true
             opacity: 1
             MouseArea
             {
@@ -161,6 +165,7 @@ Rectangle {
             height: 16
             source: "resources/images/CW.png"
             opacity: 1
+            asynchronous : true
             MouseArea
             {
                 anchors.fill: parent

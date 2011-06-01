@@ -155,11 +155,10 @@ void DesktopView::enableOpenGL(bool state)
                         QGL::StencilBuffer |
                         QGL::DoubleBuffer |
                         QGL::AlphaChannel)));
-        setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
+        setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
         setOptimizationFlag(QGraphicsView::DontAdjustForAntialiasing);
         d->openglOn = true;
     } else {
-        setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
         setViewport(new QWidget);
         setCacheMode(QGraphicsView::CacheBackground);
         setOptimizationFlags(QGraphicsView::DontSavePainterState);
@@ -288,7 +287,7 @@ void DesktopView::backgroundChanged()
     d->bgPlugin =
          static_cast<BackdropPlugin *>(PluginLoader::getInstance()->instance("classicbackdrop"));
     if (!d->openglOn) {
-        setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+        setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     }
     setCacheMode(QGraphicsView::CacheNone);
     invalidateScene();

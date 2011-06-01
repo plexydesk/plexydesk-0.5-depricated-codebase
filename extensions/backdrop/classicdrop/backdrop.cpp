@@ -43,5 +43,18 @@ void BgPlugin::data(QVariant &data)
 
 void BgPlugin::render(QPainter *p, QRectF r)
 {
-    p->drawPixmap(r.x(), r.y(), r.width(), r.height(), mBackgroundPixmap);
+    if (mBackgroundCache.isNull()) {
+        mBackgroundCache = mBackgroundPixmap.scaled(r.width(), r.height(),
+                Qt::KeepAspectRatioByExpanding,
+                Qt::SmoothTransformation);
+    }
+
+    const QSize imageSize = mBackgroundCache.size();
+
+    p->save();
+    p->setRenderHint(QPainter::SmoothPixmapTransform, false);
+    p->setRenderHint(QPainter::Antialiasing, false);
+    p->setRenderHint(QPainter::NonCosmeticDefaultPen, false);
+    p->drawPixmap(r.x(), r.y(), imageSize.width(), imageSize.height(), mBackgroundCache);
+    p->restore();
 }
