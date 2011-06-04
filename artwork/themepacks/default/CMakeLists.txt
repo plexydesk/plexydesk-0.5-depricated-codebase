@@ -21,6 +21,11 @@ FILE(GLOB DIGITALCLOCK_IMGS digitalclock/images/*.png)
 SET(WELCOMEQML welcome/welcome.qml)
 SET(WELCOMESCRIPTS welcome/scripts/Scripts.js)
 FILE(GLOB WELCOMEIMGS welcome/images/*.png)
+#PhotoViewer CMAKE entries
+SET(PHOTOVIEWER photoviewer/photoviewer.qml)
+FILE(GLOB PHOTOVIEWER_COM photoviewer/PhotoViewerCore/*.qml)
+FILE(GLOB PHOTOVIEWER_IMG photoviewer/PhotoViewerCore/images/*.png)
+SET(PHOTOVIEWER_SCR photoviewer/PhotoViewerCore/script/script.js)
 
 INSTALL(FILES ${PNGFILES}  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/resources/)
 INSTALL(FILES ${JPEGFILES}  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/resources/)
@@ -42,3 +47,8 @@ INSTALL(FILES ${DIGITALCLOCK_IMGS} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/ple
 INSTALL(FILES ${WELCOMEQML} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/welcome/)
 INSTALL(FILES ${WELCOMESCRIPTS} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/welcome/scripts/)
 INSTALL(FILES ${WELCOMEIMGS} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/welcome/images/)
+
+INSTALL(FILES ${PHOTOVIEWER} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/photoviewer/)
+INSTALL(FILES ${PHOTOVIEWER_COM} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/photoviewer/PhotoViewerCore/)
+INSTALL(FILES ${PHOTOVIEWER_IMG} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/photoviewer/PhotoViewerCore/images)
+INSTALL(FILES ${PHOTOVIEWER_SCR} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/themepack/default/photoviewer/PhotoViewerCore/script)
