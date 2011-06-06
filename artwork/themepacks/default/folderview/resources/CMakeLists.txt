@@ -1,3 +1,7 @@
+SET(QT_USE_QTDECLARATIVE ON)
+
+INCLUDE (${QT_USE_FILE})
+
 INCLUDE_DIRECTORIES(
    ${QT_INCLUDES}
 )
@@ -28,6 +32,13 @@ SET(libs
 )
 
 add_library (folderview  SHARED ${sourceFiles} ${QT_MOC_SRCS})
+
+#set_target_properties(folderview PROPERTIES DEFINE_SYMBOL Q_DECLARATIVE_EXPORT)
+
+
+
+
+
 #IF(MINGW)
 #    SET_TARGET_PROPERTIES(desktopview PROPERTIES
 #        IMPORT_SUFFIX ".lib"

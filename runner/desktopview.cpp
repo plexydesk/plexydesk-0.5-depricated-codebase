@@ -103,7 +103,7 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
 
     /* init */
     d->mThemeLoader = new ThemepackLoader(QLatin1String("default"), this);
-    if (not d->mThemeLoader->wallpaper().isEmpty()) {
+    if (!d->mThemeLoader->wallpaper().isEmpty()) {
         qDebug() << Q_FUNC_INFO << d->mThemeLoader->wallpaper();
         PlexyDesk::Config::getInstance()->setWallpaper(d->mThemeLoader->wallpaper());
     }
@@ -400,7 +400,9 @@ void DesktopView::drawBackground(QPainter *painter, const QRectF &rect)
 {
     qDebug() << Q_FUNC_INFO << rect;
     painter->setRenderHint(QPainter::TextAntialiasing, false);
+#ifdef Q_WS_X11
     painter->setRenderHint(QPainter::QPainter::SmoothPixmapTransform, false);
+#endif
     painter->setRenderHint(QPainter::HighQualityAntialiasing, false);
     painter->setCompositionMode(QPainter::CompositionMode_Source);
     painter->setClipRect(rect);

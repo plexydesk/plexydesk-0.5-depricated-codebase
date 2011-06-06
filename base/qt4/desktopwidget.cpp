@@ -174,7 +174,7 @@ void DesktopWidget::qmlFromUrl(const QUrl &url)
 {
     QDeclarativeEngine *engine = QmlEngine();
     QDeclarativeComponent component(engine, url.toLocalFile());
-    if (not component.isReady()) {
+    if (!component.isReady()) {
         if (component.isError()) {
             Q_FOREACH(QDeclarativeError error, component.errors()) {
                 qDebug() << Q_FUNC_INFO << error.toString();

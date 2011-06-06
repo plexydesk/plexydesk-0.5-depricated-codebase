@@ -19,21 +19,28 @@
 
 #ifndef FOLDERSUPPORT_H
 #define FOLDERSUPPORT_H
-#include <QtDeclarative/qdeclarative.h>
-#include <QtDeclarative/QDeclarativeParserStatus>
+#include <qdeclarative.h>
+#include <QDeclarativeParserStatus>
+
+#if defined(folderview_EXPORTS)
+#define FOLDERVIEW_EXPORT Q_DECL_EXPORT
+#else
+#define FOLDERVIEW_EXPORT Q_DECL_EXPORT
+#endif
 
 QT_MODULE(Declarative)
 
 class QDeclarativeContext;
 
-class Q_DECLARATIVE_EXPORT Support : public QObject, public QDeclarativeParserStatus
+class FOLDERVIEW_EXPORT Support : public QObject, public QDeclarativeParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
+    Q_PROPERTY(QString home READ home);
+
 public:
     Support(QObject *parent = 0);
     ~Support();
-    Q_PROPERTY(QString home READ home);
     QString home();
     Q_INVOKABLE bool openFile(QString file);
     virtual void classBegin(){}

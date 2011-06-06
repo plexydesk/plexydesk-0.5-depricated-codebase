@@ -120,12 +120,6 @@ ENDIF(NOT WIN32)
 
 ENDIF (NOT APPLE)
 
-IF(WIN32)
-# /// Only Winows platform ///
-ADD_SUBDIRECTORY(extensions/widgets/wallpaper-win32)
-# ///////////////////////////
-ENDIF(WIN32)
-
 # /// All platforms ///
 ADD_SUBDIRECTORY(plexylib/fbjson)
 ADD_SUBDIRECTORY(3rdparty/libmagic)

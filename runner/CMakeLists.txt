@@ -35,7 +35,6 @@ SET(sourceFiles
     iconjob.cpp
     iconprovider.cpp
     plexypanel.cpp
-    canvas.cpp
     themepackloader.cpp
     ${extra_source}
     main.cpp
@@ -46,7 +45,6 @@ set(headerFiles
     icon.h
     iconjob.h
     iconprovider.h
-    canvas.h
     plexypanel.h
     themepackloader.h
     ${extra_headers}
@@ -58,7 +56,6 @@ set(QTMOC_SRCS
     iconjob.h
     iconprovider.h
     plexypanel.h
-    canvas.h
     themepackloader.h
     ${extra_headers}
 )

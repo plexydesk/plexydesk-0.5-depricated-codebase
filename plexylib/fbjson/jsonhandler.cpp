@@ -45,16 +45,20 @@ JsonData JsonHandler::property(const QString &data, const QString &prop)
             return propData;
         }
     }
+    return propData;
 }
 
-QHash<QString, QVariant> JsonHandler::arrayToMap(const QScriptValue &value)
+QVariantMap JsonHandler::arrayToMap(const QScriptValue &value)
 {
   QScriptValueIterator iter(value);
+  QVariantMap rv;
   while (iter.hasNext()) {
         iter.next();
         if (iter.value().isObject()) {
             QVariantMap list = qscriptvalue_cast<QVariantMap>(iter.value());
             qDebug() << list;
+	    return list;
         }
   }
+  return rv;
 }
