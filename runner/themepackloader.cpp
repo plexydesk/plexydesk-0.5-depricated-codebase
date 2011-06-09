@@ -6,7 +6,7 @@
 #include <QDesktopWidget>
 #include <QRect>
 
-const QString themePackPath = QString("%1/%2").arg(PLEXPREFIX).arg("share/plexy/themepack");
+const QString themePackPath = QString("%1/%2").arg(PLEXPREFIX).arg("/share/plexy/themepack");
 
 class ThemepackLoader::ThemepackLoaderPrivate
 {

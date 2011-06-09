@@ -92,6 +92,7 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
 {
     /* setup */
     setWindowFlags(Qt::FramelessWindowHint);
+    setWindowFlags(Qt::Desktop);
     setFrameStyle(QFrame::NoFrame);
     setAttribute(Qt::WA_QuitOnClose, true);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
