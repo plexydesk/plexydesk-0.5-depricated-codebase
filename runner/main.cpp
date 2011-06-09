@@ -60,9 +60,9 @@ int main( int argc, char * *argv )
             PlexyDesk::Config::getInstance()->openGL);
     view->setScene(&scene);
     QObject::connect(view.data(), SIGNAL(closeApplication()), &app, SLOT(quit()));
-       QRect r = QDesktopWidget().geometry();
+    QRect r = QDesktopWidget().availableGeometry();
     view->move(r.x(), r.y());
-    view->resize(QDesktopWidget().geometry().size());
+    view->resize(QDesktopWidget().availableGeometry().size());
     scene.setSceneRect(QDesktopWidget().availableGeometry()); //TODO Resolution changes ?
     view->setSceneRect(QDesktopWidget().availableGeometry());
     view->ensureVisible(QDesktopWidget().availableGeometry());
@@ -72,7 +72,7 @@ int main( int argc, char * *argv )
 #ifdef Q_WS_WIN
     /// \brief: remove plexy from taskbar
     view->move(0, 0);
-    view->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
+    //view->setWindowFlags(Qt::FramelessWindowHint | Qt::Desktop);
 #endif
 
 #ifdef Q_WS_X11

@@ -91,10 +91,13 @@ bool getLessThanWidget(const QGraphicsItem *it1, const QGraphicsItem *it2)
 DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView(scene, parent), d(new Private)
 {
     /* setup */
-    setWindowFlags(Qt::FramelessWindowHint);
-    setWindowFlags(Qt::Desktop);
+    setWindowFlags(Qt::FramelessWindowHint |
+                   Qt::WindowStaysOnBottomHint);
+
     setFrameStyle(QFrame::NoFrame);
+
     setAttribute(Qt::WA_QuitOnClose, true);
+
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
