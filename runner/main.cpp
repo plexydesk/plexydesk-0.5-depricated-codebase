@@ -44,6 +44,7 @@ using namespace PlexyDesk;
 
 int main( int argc, char * *argv )
 {
+    QApplication::setGraphicsSystem(QLatin1String("raster"));
     QApplication app(argc, argv);
 
 #ifdef Q_WS_WIN
