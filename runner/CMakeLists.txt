@@ -80,17 +80,27 @@ set(libs
     ${QT_QTOPENGL_LIBRARY}
     ${extra_libs}
    )
-ELSE(UNIX)
+ENDIF(UNIX)
+
+IF(WIN32)
 set(libs
     ${QT_QTGUI_LIBRARY}
     ${QT_QTCORE_LIBRARY}
     ${QT_QTOPENGL_LIBRARY}
+    ${QT_QTMAIN_LIBRARY}
 )
-ENDIF(UNIX)
+ENDIF(WIN32)
 
 ########### prepare files ###############
 cmake_policy(SET CMP0003 NEW)
+
+IF(WIN32)
+   ADD_EXECUTABLE(plexydesk WIN32 ${sourceFiles} ${QT_MOC_SRCS})
+ENDIF(WIN32)
+
+IF(UNIX)
 ADD_EXECUTABLE(plexydesk ${sourceFiles} ${QT_MOC_SRCS})
+ENDIF(UNIX)
 
 TARGET_LINK_LIBRARIES(
     plexydesk
