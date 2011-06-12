@@ -55,7 +55,8 @@ void TestIcon::onInvalidFinished()
 void TestIcon::loadThemePackInit()
 {
     ThemepackLoader *themeLoader = new ThemepackLoader("default");
-    QCOMPARE(themeLoader->wallpaper(), QString("logoless.png"));
+    QCOMPARE(themeLoader->wallpaper(),
+            QString("/usr//share/plexy/themepack/default/resources/plexy_default.jpg"));
     QCOMPARE(themeLoader->widgets("native").count() , 1);
     QCOMPARE(themeLoader->qmlFilesFromTheme("weather") , 
             QDir::toNativeSeparators(
