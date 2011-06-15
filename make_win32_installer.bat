@@ -1,4 +1,4 @@
-cmake -DCMAKE_INSTALL_PREFIX:STRING="plexydesk" -G "Visual Studio 10"
+cmake -DCMAKE_INSTALL_PREFIX:STRING="c:/plexydesk" -G "Visual Studio 9 2008"
 msbuild PlexyDesktop.sln /t:Build /p:Configuration=Release /V:m
 
 mkdir plexydesk
@@ -6,7 +6,7 @@ mkdir plexydesk\bin
 mkdir plexydesk\bin\plugins
 mkdir plexydesk\bin\plugins\imageformats
 
-msbuild INSTALL.vcproj /t:Build /p:Configuration=Release
+vcbuild INSTALL.vcproj "Release|Win32"
 
 
 del /F/S/Q plexydesk\include\qimageblitz\*.*
