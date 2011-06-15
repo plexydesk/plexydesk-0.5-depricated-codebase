@@ -67,6 +67,9 @@ void TestIcon::loadThemePackInit()
             QDir::toNativeSeparators(
                  QString(PLEXPREFIX) +
                  QString("/share/plexy/themepack/default/weather/weather.qml")));
+    Q_FOREACH(const QString &qmlWidget, themeLoader->widgets("QML")) {
+       qDebug() <<  themeLoader->qmlFilesFromTheme(qmlWidget);
+    }
 }
 
 QTEST_MAIN(TestIcon)
