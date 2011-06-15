@@ -31,6 +31,7 @@
 #include <QDeclarativeEngine>
 #include <QGraphicsObject>
 #include <QDeclarativeComponent>
+#include <QDir>
 
 namespace PlexyDesk
 {
@@ -385,6 +386,6 @@ void DesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
 QString DesktopWidget::applicationDirPath()
 {
-    return QString(PLEXPREFIX);
+    return QDir::toNativeSeparators(PLEXPREFIX);
 }
 } //namespace PlexyDesk
