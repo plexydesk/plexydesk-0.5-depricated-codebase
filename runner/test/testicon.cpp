@@ -2,6 +2,7 @@
 #include <plexyconfig.h>
 #include <iconprovider.h>
 #include <iconjob.h>
+#include <desktopwidget.h>
 
 #include <themepackloader.h>
 
@@ -69,6 +70,8 @@ void TestIcon::loadThemePackInit()
                  QString("/share/plexy/themepack/default/weather/weather.qml")));
     Q_FOREACH(const QString &qmlWidget, themeLoader->widgets("QML")) {
        qDebug() <<  themeLoader->qmlFilesFromTheme(qmlWidget);
+       PlexyDesk::DesktopWidget *parent = new PlexyDesk::DesktopWidget(QRectF(0,0,0,0));
+       parent->qmlFromUrl(themeLoader->qmlFilesFromTheme(qmlWidget));
     }
 }
 
