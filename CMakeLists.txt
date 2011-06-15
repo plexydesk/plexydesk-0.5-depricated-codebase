@@ -92,6 +92,7 @@ INCLUDE_DIRECTORIES(
 )
 
 ADD_SUBDIRECTORY(base/qt4/)
+ADD_SUBDIRECTORY(extensions/widgets/clock)
 ADD_SUBDIRECTORY(extensions/backdrop/classicdrop)
 ADD_SUBDIRECTORY(data)
 ADD_SUBDIRECTORY(runner)
@@ -128,7 +129,6 @@ ADD_SUBDIRECTORY(3rdparty/qplexymime)
 ADD_SUBDIRECTORY(3rdparty/webitem)
 
 #UI widgets for all platforms
-ADD_SUBDIRECTORY(extensions/widgets/clock)
 #Youtube is diabled ListView is now at extensions/widgets
 #ADD_SUBDIRECTORY(extensions/widgets/youtubewidget/)
 

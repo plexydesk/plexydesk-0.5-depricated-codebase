@@ -25,6 +25,7 @@
 #include <QSettings>
 #include <QStringList>
 
+#include <debug.h>
 
 namespace PlexyDesk
 {
@@ -95,7 +96,7 @@ void PluginLoader::load(const QString &interface, const QString &pluginName)
         AbstractPluginInterface *Iface = 0;
         Iface = qobject_cast<AbstractPluginInterface *> (plugin);
         d->groups[pluginName] = Iface;
-        qDebug() << "PluginLoader::load" << "Loading.." << Iface << pluginName << endl;
+        winDebug() << "PluginLoader::load" << "Loading.." << Iface << pluginName << endl;
 
         const QStringList dictKeys = d->mDict.keys();
         if (!dictKeys.contains(interface)) {
@@ -110,8 +111,10 @@ void PluginLoader::load(const QString &interface, const QString &pluginName)
         }
 
     } else {
-        qDebug() << loader.errorString() << endl;;
+        winDebug() << loader.errorString() << endl;;
     }
+
+    winDebug().flush();
 }
 
 void PluginLoader::scanDisk()
