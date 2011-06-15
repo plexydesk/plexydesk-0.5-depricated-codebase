@@ -19,6 +19,7 @@
 #include "plexyconfig.h"
 #include <desktopwidget.h>
 #include <QDeclarativeEngine>
+#include <QDir>
 
 #ifdef Q_WS_X11
 #include <configadaptor.h>
