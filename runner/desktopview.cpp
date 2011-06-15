@@ -115,7 +115,7 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
     d->gridLayout = new QGraphicsGridLayout();
     d->row = d->column = 48.0;
     d->margin = 10.0;
-    d->layer = QSharedPointer<ViewLayer>(new ViewLayer);
+    d->layer = QSharedPointer<ViewLayer>(new ViewLayer(this));
     d->layer->showLayer(QLatin1String("Widgets"));
 
     /* Effects */

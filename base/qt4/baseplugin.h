@@ -7,6 +7,7 @@
 #include <QObject>
 #include <QString>
 #include <QSettings>
+#include <QDir>
 
 
 namespace PlexyDesk
@@ -22,7 +23,7 @@ public:
 
     QString applicationDirPath() const
     {
-        return QString(PLEXPREFIX);
+        return QDir::toNativeSeparators(PLEXPREFIX);
     }
 
     QHash<QString, QString> metaData() const
