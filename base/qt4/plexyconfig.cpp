@@ -44,6 +44,8 @@ QDeclarativeEngine *Config::qmlEngine()
 {
     if (engine == 0) {
         engine = new QDeclarativeEngine;
+        engine->addImportPath(DesktopWidget::applicationDirPath() +
+                QDir::toNativeSeparators("/lib/qt4/imports/"));
         return engine;
     } else {
         return engine;
