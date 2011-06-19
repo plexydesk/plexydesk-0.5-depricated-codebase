@@ -26,7 +26,11 @@ Support::~Support(){}
 
 QString Support::home()
 {
+#if defined(Q_OS_LINUX) || defined(Q_OS_MAC)
     return QDesktopServices::storageLocation(QDesktopServices::DesktopLocation);
+#elif defined(Q_OS_WIN)
+    return "/" + QDesktopServices::storageLocation(QDesktopServices::DesktopLocation).replace(QString("\\"),QString("/"));
+#endif
 }
 
 bool Support::openFile(QString file)
