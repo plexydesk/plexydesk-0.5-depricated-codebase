@@ -44,7 +44,9 @@ using namespace PlexyDesk;
 
 int main( int argc, char * *argv )
 {
+#ifndef Q_WS_MAC
     QApplication::setGraphicsSystem(QLatin1String("raster"));
+#endif
     QApplication app(argc, argv);
 
 #ifdef Q_WS_WIN
@@ -57,9 +59,20 @@ int main( int argc, char * *argv )
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 
     QSharedPointer<DesktopView> view = QSharedPointer<DesktopView>(new DesktopView(0));
-    view->enableOpenGL(
-            PlexyDesk::Config::getInstance()->openGL);
+    bool accel = false;
+    QSize desktopSize;
+#ifdef Q_WS_MAC
+    accel = true;
+    desktopSize = QDesktopWidget().screenGeometry().size();
+#else
+    accel = PlexyDesk::Config::getInstance()->openGL;
+    desktopSize = QDesktopWidget().availableGeometry().size();
+#endif
+
+    view->enableOpenGL(accel);
+
     view->setScene(&scene);
+
     QObject::connect(view.data(), SIGNAL(closeApplication()), &app, SLOT(quit()));
     QRect r = QDesktopWidget().availableGeometry();
     view->move(r.x(), r.y());
@@ -68,12 +81,10 @@ int main( int argc, char * *argv )
     view->setSceneRect(QDesktopWidget().availableGeometry());
     view->ensureVisible(QDesktopWidget().availableGeometry());
     view->setDragMode(QGraphicsView::RubberBandDrag);
-    //view->fitInView(QDesktopWidget().availableGeometry());
-    qDebug() << Q_FUNC_INFO << QDesktopWidget().availableGeometry();
+
 #ifdef Q_WS_WIN
     /// \brief: remove plexy from taskbar
     view->move(0, 0);
-    //view->setWindowFlags(Qt::FramelessWindowHint | Qt::Desktop);
 #endif
 
 #ifdef Q_WS_X11
