@@ -106,7 +106,8 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
     d->openglOn = false;
 
     /* init */
-    d->mThemeLoader = new ThemepackLoader(QLatin1String("default"), this);
+
+    d->mThemeLoader = new ThemepackLoader(PlexyDesk::Config::getInstance()->themepackName, this);
     if (!d->mThemeLoader->wallpaper().isEmpty()) {
         qDebug() << Q_FUNC_INFO << d->mThemeLoader->wallpaper();
         PlexyDesk::Config::getInstance()->setWallpaper(d->mThemeLoader->wallpaper());

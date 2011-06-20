@@ -62,7 +62,7 @@ int main( int argc, char * *argv )
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 
     QSharedPointer<DesktopView> view = QSharedPointer<DesktopView>(new DesktopView(0));
-    bool accel = false;
+    bool accel = PlexyDesk::Config::getInstance()->openGL;
     QSize desktopSize;
 #ifdef Q_WS_MAC
     accel = true;
@@ -106,7 +106,7 @@ int main( int argc, char * *argv )
         view->addExtension(pluginName, QLatin1String("Browser"));
     }
 
-    view->setThemePack("default");
+    view->setThemePack(PlexyDesk::Config::getInstance()->themepackName);
     view->showLayer(QLatin1String("Widgets"));
 
     return app.exec();
