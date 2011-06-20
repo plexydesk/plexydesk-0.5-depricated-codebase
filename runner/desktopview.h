@@ -21,6 +21,7 @@
 
 #include <QGraphicsView>
 #include <plexy.h>
+#include <desktopwidget.h>
 
 class DesktopView : public QGraphicsView
 {
@@ -33,10 +34,13 @@ public:
     void addRender(QGraphicsScene *scene);
     void addCoreExtension(const QString &name);
     void addExtension(const QString &name,
-            const QString &layer = QLatin1String("Widgets"));
+            const QString &layer = QLatin1String("Widgets"),
+            const QPoint &pos = QPoint(0, 0),
+            PlexyDesk::DesktopWidget::State state = PlexyDesk::DesktopWidget::DOCK);
     void addDesktopItem(QGraphicsItem *item);
     void enableOpenGL(bool);
     void showLayer(const QString &name);
+    void setThemePack(const QString &name);
 #ifdef Q_WS_X11
     bool checkXCompositeExt();
     void redirectWindows();

@@ -50,6 +50,7 @@ public:
     QString proxyUser;
     QString proxyPasswd;
     QStringList widgetList;
+    QString themepackName;
     bool m_collisionOn;
     QString iconTheme;
     bool openGL;

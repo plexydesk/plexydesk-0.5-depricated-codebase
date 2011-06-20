@@ -19,7 +19,6 @@ SET(headerFiles
     wallpaper.h
     wallpaperwidget.h
     wallpaperinterface.h
-    config.h
 )
     
 SOURCE_GROUP(source

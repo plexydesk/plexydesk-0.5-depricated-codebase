@@ -24,6 +24,7 @@
 #include <plexy.h>
 
 #include <QHash>
+#include <QDir>
 
 namespace PlexyDesk
 {
@@ -44,7 +45,7 @@ public:
     void scanDisk();
 
     QString applicationDirPath() {
-        return QString(PLEXPREFIX);
+        return QDir::toNativeSeparators (PLEXPREFIX);
     }
 
 protected:

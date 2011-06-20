@@ -1,12 +1,15 @@
-cmake -DCMAKE_INSTALL_PREFIX:STRING="plexydesk"
-msbuild PlexyDesktop.sln /t:Build /p:Configuration=Release
+cmake -DCMAKE_INSTALL_PREFIX:STRING="c:/plexydesk" -G "Visual Studio 9 2008"
+msbuild PlexyDesktop.sln /t:Build /p:Configuration=Release /V:m
 
 mkdir plexydesk
 mkdir plexydesk\bin
 mkdir plexydesk\bin\plugins
 mkdir plexydesk\bin\plugins\imageformats
 
-vcbuild INSTALL.vcproj "Release|Win32"
+ren vcbuild INSTALL.vcproj "Release|Win32"
+
+vcbuild /target:Release /msbuild:/p:Configuration=Release INSTALL.vcproj
+
 
 del /F/S/Q plexydesk\include\qimageblitz\*.*
 rmdir /S/Q plexydesk\include\qimageblitz
@@ -28,4 +31,4 @@ xcopy %QTDIR%\plugins\imageformats\qgif4.dll plexydesk\bin\plugins\imageformats
 
 "makensis" installer.nsi
 
-rmdir /S/Q plexydesk
+

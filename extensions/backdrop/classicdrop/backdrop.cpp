@@ -24,7 +24,7 @@ BgPlugin::BgPlugin(QObject *object)
     : BackdropPlugin(object)
 {
     mBackgroundPixmap =
-     QPixmap(PlexyDesk::Config::getInstance()->CurrentWallpaper);
+     new QPixmap(PlexyDesk::Config::getInstance()->CurrentWallpaper);
 }
 
 BgPlugin::~BgPlugin()
@@ -43,5 +43,19 @@ void BgPlugin::data(QVariant &data)
 
 void BgPlugin::render(QPainter *p, QRectF r)
 {
-    p->drawPixmap(r.x(), r.y(), r.width(), r.height(), mBackgroundPixmap);
+    if (mBackgroundCache.isNull()) {
+        mBackgroundCache = mBackgroundPixmap->scaled(r.width(), r.height(),
+                Qt::KeepAspectRatioByExpanding,
+                Qt::SmoothTransformation);
+        delete mBackgroundPixmap;
+    }
+
+    const QSize imageSize = mBackgroundCache.size();
+
+    p->save();
+    p->setRenderHint(QPainter::SmoothPixmapTransform, false);
+    p->setRenderHint(QPainter::Antialiasing, false);
+    p->setRenderHint(QPainter::NonCosmeticDefaultPen, false);
+    p->drawPixmap(r.x(), r.y(), imageSize.width(), imageSize.height(), mBackgroundCache);
+    p->restore();
 }

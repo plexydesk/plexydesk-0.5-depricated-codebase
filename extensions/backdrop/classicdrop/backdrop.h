@@ -44,11 +44,8 @@ Q_SIGNALS:
     void dataChange();
 
 private:
-    QPixmap mBackgroundPixmap;
-    QImage mBackgroundImage;
-    QBrush mBackgroundBurush;
-    int mImageWidth;
-    int mImageHeight;
+    QPixmap mBackgroundCache;
+    QPixmap *mBackgroundPixmap;
 };
 
 #endif //PLEXY_CLASSIC_BACKDROP_H

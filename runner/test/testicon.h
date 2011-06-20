@@ -9,6 +9,7 @@ public slots:
     void onInvalidFinished();
 
 private slots:
+    void loadThemePackInit();
     void loadIcons();
     void loadInvalidIcon();
 

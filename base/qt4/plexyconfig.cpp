@@ -19,6 +19,7 @@
 #include "plexyconfig.h"
 #include <desktopwidget.h>
 #include <QDeclarativeEngine>
+#include <QDir>
 
 #ifdef Q_WS_X11
 #include <configadaptor.h>
@@ -44,6 +45,8 @@ QDeclarativeEngine *Config::qmlEngine()
 {
     if (engine == 0) {
         engine = new QDeclarativeEngine;
+        engine->addImportPath(DesktopWidget::applicationDirPath() +
+                QDir::toNativeSeparators("/lib/qt4/imports/"));
         return engine;
     } else {
         return engine;
@@ -65,6 +68,7 @@ Config::Config(const QString &organization,
     if (value("CurrentWallpaper").toString().isNull()) {
         CurrentWallpaper = DesktopWidget::applicationDirPath() + "/share/plexy/skins/default/default.png";
     }
+
 
     if (value("iconTheme").toString().isNull()) {
         iconTheme = "default";

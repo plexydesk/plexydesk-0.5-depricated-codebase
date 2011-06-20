@@ -1,3 +1,51 @@
+plexydesk (0.5.21~2) unstable; urgency=low
+
+   * Fixes : qml plugin install path on Ubuntu
+
+ -- Siraj Razick <sirajrazick@plexydesk.org>  Fri, 27 May 2011 22:07:12 +0530
+
+plexydesk (0.5.21~1) unstable; urgency=low
+
+   * Build fix for Ubuntu
+
+ -- Siraj Razick <sirajrazick@plexydesk.org>  Fri, 27 May 2011 21:07:12 +0530
+
+plexydesk (0.5-21) unstable; urgency=low
+
+    * New QML digital clock
+    * New Icon Container
+    * Fixes : stacking order of qml items
+    * Integration with Desktop service to run apps
+    * New QML C++ extension for Loading directories
+
+ -- Siraj Razick <sirajrazick@plexydesk.org>  Fri, 27 May 2011 20:07:12 +0530
+
+plexydesk (0.5-20) unstable; urgency=low
+
+    * Feature #1: Review Varuna's commits
+    * Feature #2: remove all plugins from compiling
+    * Feature #3: review classic-background plugin
+    * Feature #4: Windows platform support
+    * Feature #8: support qml loading
+    * Feature #12: test cases for icon provider and qplexymime
+    * Feature #14: Merge windows branch with master
+    * Feature #19: QML secene for backdrop so we render them
+    * Feature #25: Test isssue close
+    * Feature #31: Light box for redmine
+    * Feature #46: Widget can't be closed
+    * Feature #48: theme packsupport
+    * Support #23: Upgrade our website to look cool
+    * Support #44: Directly visiting http://redmine.plexyplanet.org/login leads to a internal login error
+    * Release #26: Move canvas from base/qt4 to runner
+    * Release #27: Canvas should handle the background drawing
+    * Bug #36: Crash at wallpaper change
+    * Bug #43: plexydesk does not compile on macosx
+    * Bug #45: QML Widgets are not clicped to the parent
+    * Bug #47: memory leak in loading qml
+    * Bug #51: plexydesk crashes when dropping wallpapers
+
+ -- Siraj Razick <sirajrazick@plexydesk.org>  Fri, 20 May 2011 20:07:12 +0530
+
 plexydesk (0.2.1) unstable; urgency=low
  
   * Working Debian files

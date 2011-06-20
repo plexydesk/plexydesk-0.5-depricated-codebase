@@ -18,6 +18,7 @@
 *******************************************************************************/
 #include "desktopwidget.h"
 #include <plexy.h>
+#include <debug.h>
 
 #include <QCoreApplication>
 #include <QGraphicsProxyWidget>
@@ -31,6 +32,7 @@
 #include <QDeclarativeEngine>
 #include <QGraphicsObject>
 #include <QDeclarativeComponent>
+#include <QDir>
 
 namespace PlexyDesk
 {
@@ -172,9 +174,11 @@ void DesktopWidget::setBackFaceImage(QPixmap img)
 
 void DesktopWidget::qmlFromUrl(const QUrl &url)
 {
+    winDebug() << Q_FUNC_INFO << url.toString() << endl;
     QDeclarativeEngine *engine = QmlEngine();
-    QDeclarativeComponent component(engine, url.toLocalFile());
-    if (not component.isReady()) {
+    QDeclarativeComponent component(engine, url.toString(QUrl::StripTrailingSlash |
+                QUrl::RemoveScheme));
+    if (!component.isReady()) {
         if (component.isError()) {
             Q_FOREACH(QDeclarativeError error, component.errors()) {
                 qDebug() << Q_FUNC_INFO << error.toString();
@@ -199,6 +203,7 @@ void DesktopWidget::qmlFromUrl(const QUrl &url)
 
     // forward signals
     connect(engine, SIGNAL(quit()), this, SLOT(onQmlQuit()));
+    winDebug().flush();
 }
 
 void DesktopWidget::onQmlQuit()
@@ -344,6 +349,9 @@ void DesktopWidget::paintViewSide(QPainter *p, const QRectF &rect)
 {
     if (!d->backdrop)
         return;
+    if (d->qmlChild) {
+        return;
+    }
     p->save();
     p->setOpacity(0.8);
     p->setRenderHints(QPainter::SmoothPixmapTransform);
@@ -382,6 +390,6 @@ void DesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
 QString DesktopWidget::applicationDirPath()
 {
-    return QString(PLEXPREFIX);
+    return QDir::toNativeSeparators(PLEXPREFIX);
 }
 } //namespace PlexyDesk

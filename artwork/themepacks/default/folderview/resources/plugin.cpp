@@ -1,7 +1,7 @@
 /*******************************************************************************
 * This file is part of PlexyDesk.
 *  Maintained by : Siraj Razick <siraj@kde.org>
-*  Authored By  :
+*  Authored By  : Varuna Lekamwasam <vrlekamwasam@gmail.com>
 *
 *  PlexyDesk is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU Lesser General Public License as published by
@@ -17,27 +17,12 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
-#ifndef PLEXY_FAME_MIME_QT_H
-#define PLEXY_FAKE_MIME_QT_H
+#include "plugin.h"
 
-#include <plexy.h>
-
-namespace PlexyDesk
+void QmlSupportPlugin::registerTypes(const char *uri)
 {
-class PLEXYDESK_EXPORT FakeMime
-{
-public:
-    static FakeMime *getInstance();
-    ///these will be pure virtual on the real plexy desk
-    QString getType(const QString &path);
+    qmlRegisterType<Support>(uri,1,0,"FolderView");
+}
 
-private:
-    static FakeMime *config;
-    FakeMime() {
-    };
-    FakeMime(FakeMime &) {
-    }
-    FakeMime &operator=(const FakeMime &);
-};
-} // namespace PlexyDesk
-#endif
+Q_EXPORT_PLUGIN2(folderview, QmlSupportPlugin);
+

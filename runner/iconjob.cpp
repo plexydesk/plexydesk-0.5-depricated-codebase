@@ -34,7 +34,9 @@ IconJob::IconJob(QObject *parent) : PendingJob(parent), d(new Private)
     d->iconpaths << QLatin1String("/usr/share/pixmaps/")
                  << QLatin1String("/usr/share/icons/")
                  << QLatin1String("/usr/share/icons/") + Config::getInstance()->iconTheme + slash
-                 << QLatin1String("/usr/share/app-install/icons/");
+                 << QLatin1String("/usr/share/app-install/icons/")
+                 << QLatin1String(PLEXPREFIX) + QLatin1String("/share/plexy/skins") +
+                    slash + Config::getInstance()->iconTheme + slash + QLatin1String("icons") + slash;
     connect(this, SIGNAL(newJob()), this, SLOT(handleJob()), Qt::DirectConnection);
 }
 
@@ -58,16 +60,21 @@ void IconJob::requestIcon(const QString &name, const QString &size)
 void IconJob::handleJob()
 {
     QString error, message;
-    foreach(QString path, d->iconpaths) {
+    foreach(QString path, d->iconpaths)
+    {
         QDir dir(path);
-        if (dir.exists()) {
-            QString subpath = d->size + QLatin1String("/") + d->name + QLatin1String(".png");
+        if (dir.exists())
+        {
             QStringList iconlist = getSubDir(path);
-            foreach(QString icon, iconlist) {
-                QFile iconfile(icon + "/" + d->name + QLatin1String(".png"));
-                if (iconfile.exists()) {
-                    d->pixmap = QPixmap(icon + "/" + d->name + QLatin1String(".png"));
-                    if (!d->pixmap.isNull()) {
+            foreach(QString icon, iconlist)
+            {
+                QString iconFilePath(icon + "/" + d->name + QLatin1String(".png"));
+                QFileInfo iconfile(iconFilePath);
+                if (iconfile.exists())
+                {
+                    d->pixmap = QPixmap(iconFilePath);
+                    if (!d->pixmap.isNull())
+                    {
                         setFinished(true, error, message);
                         QMetaObject::invokeMethod(this, "finished", Qt::QueuedConnection);
                         return;
@@ -86,16 +93,18 @@ QStringList IconJob::getSubDir(const QString &path)
 {
     QStringList rpaths;
     QStringList paths;
-    QFile file(path + "/" + "index.theme");
+    QFile file(path + "index.theme");
     if (file.exists()) {
-        QSettings indexfile(path + "/" + "index.theme", QSettings::IniFormat);
+        QSettings indexfile(path + "index.theme", QSettings::IniFormat);
         indexfile.beginGroup("Icon Theme");
         rpaths =
              indexfile.value("Directories", "").toStringList();
         indexfile.endGroup();
     }
-    foreach(QString _rpath, rpaths) {
-        paths.append(path + "/" + _rpath);
+    foreach(QString _rpath, rpaths)
+    {
+        if(_rpath.contains(d->size))
+            paths.append(path + _rpath);
     }
     paths.append("/usr/share/app-install/icons/");
     paths.append(path);

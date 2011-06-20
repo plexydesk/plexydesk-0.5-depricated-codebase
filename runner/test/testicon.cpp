@@ -2,13 +2,16 @@
 #include <plexyconfig.h>
 #include <iconprovider.h>
 #include <iconjob.h>
+#include <desktopwidget.h>
+
+#include <themepackloader.h>
 
 
 void TestIcon::loadIcons()
 {
     mFetchComplete = false;
     PlexyDesk::IconProvider *iconprovider = new PlexyDesk::IconProvider();
-    PlexyDesk::IconJobPtr job = iconprovider->requestIcon("utilities-terminal", "32"); 
+    PlexyDesk::IconJobPtr job = iconprovider->requestIcon("utilities", "32");
     connect(job.data(), SIGNAL(finished()), this, SLOT(onFinished()));
     while (!mFetchComplete) {
         qApp->processEvents();
@@ -19,7 +22,7 @@ void TestIcon::loadInvalidIcon()
 {
     mFetchComplete = false;
     PlexyDesk::IconProvider *iconprovider = new PlexyDesk::IconProvider();
-    PlexyDesk::IconJobPtr job = iconprovider->requestIcon("terminator2", "32"); 
+    PlexyDesk::IconJobPtr job = iconprovider->requestIcon("terminal2", "32");
     connect(job.data(), SIGNAL(finished()), this, SLOT(onInvalidFinished()));
     while (!mFetchComplete) {
         qApp->processEvents();
@@ -48,6 +51,28 @@ void TestIcon::onInvalidFinished()
   QCOMPARE(icon->isError(), true);
 
   mFetchComplete = true;
+}
+
+void TestIcon::loadThemePackInit()
+{
+    ThemepackLoader *themeLoader = new ThemepackLoader("default");
+
+    QCOMPARE(themeLoader->wallpaper(),
+            QDir::toNativeSeparators(
+                QString(PLEXPREFIX) +
+                QString("//share/plexy/themepack/default/resources/plexy_default.jpg")));
+
+    QCOMPARE(themeLoader->widgets("native").count() , 1);
+
+    QCOMPARE(themeLoader->qmlFilesFromTheme("weather") , 
+            QDir::toNativeSeparators(
+                 QString(PLEXPREFIX) +
+                 QString("/share/plexy/themepack/default/weather/weather.qml")));
+    Q_FOREACH(const QString &qmlWidget, themeLoader->widgets("QML")) {
+       qDebug() <<  themeLoader->qmlFilesFromTheme(qmlWidget);
+       PlexyDesk::DesktopWidget *parent = new PlexyDesk::DesktopWidget(QRectF(0,0,0,0));
+       parent->qmlFromUrl(themeLoader->qmlFilesFromTheme(qmlWidget));
+    }
 }
 
 QTEST_MAIN(TestIcon)

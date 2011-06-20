@@ -1,7 +1,7 @@
 /*******************************************************************************
 * This file is part of PlexyDesk.
 *  Maintained by : Siraj Razick <siraj@kde.org>
-*  Authored By  : Sri Lanka Institute of Information Technology
+*  Authored By  : Varuna Lekamwasam <vrlekamwasam@gmail.com>
 *
 *  PlexyDesk is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU Lesser General Public License as published by
@@ -17,44 +17,19 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
-#ifndef HTTPJOBHANDLER_H
-#define HTTPJOBHANDLER_H
-
-#include "pendingjob.h"
-
-#include <QList>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include <QNetworkRequest>
-#include <QObject>
-#include <QString>
+#include "support.h"
+#include <QDesktopServices>
 #include <QUrl>
 
-class QByteArray;
-class QNetworkAccessManager;
+Support::Support(QObject *parent) : QObject(parent){}
+Support::~Support(){}
 
-namespace PlexyDesk
+QString Support::home()
 {
+    return QDesktopServices::storageLocation(QDesktopServices::DesktopLocation);
+}
 
-class PLEXYDESK_EXPORT HttpJobHandler : public PendingJob
+bool Support::openFile(QString file)
 {
-    Q_OBJECT
-public:
-    HttpJobHandler(QObject *parent);
-    void getFile(const QUrl &url);
-    void postFile(const QUrl &url, const QByteArray &data);
-    QByteArray readData() const;
-    ~HttpJobHandler();
-
-private:
-    QList<QNetworkReply *> m_holder;
-    QString m_msg, m_error;
-    bool isValidUrl(const QUrl &url);
-    class HttpJobHandlerPrivate;
-    HttpJobHandlerPrivate *const d;
-
-private slots:
-    void onFinish(QNetworkReply *buffer);
-};
-} //namespace PlexyDesk
-#endif // HTTPJOBHANDLER_H
+    return QDesktopServices::openUrl(QUrl(file,QUrl::TolerantMode));
+}

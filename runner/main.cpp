@@ -36,7 +36,6 @@
 #include <baserender.h>
 #include "desktopview.h"
 #include <pluginloader.h>
-#include <fakemime.h>
 #include <datainterface.h>
 #include <canvas.h>
 #include <plexyconfig.h>
@@ -45,6 +44,7 @@ using namespace PlexyDesk;
 
 int main( int argc, char * *argv )
 {
+    QApplication::setGraphicsSystem(QLatin1String("raster"));
     QApplication app(argc, argv);
 
 #ifdef Q_WS_WIN
@@ -55,20 +55,25 @@ int main( int argc, char * *argv )
     QGraphicsScene scene;
     scene.setBackgroundBrush(Qt::NoBrush);
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
-    scene.setSceneRect(QDesktopWidget().availableGeometry()); //TODO Resolution changes ?
 
     QSharedPointer<DesktopView> view = QSharedPointer<DesktopView>(new DesktopView(0));
     view->enableOpenGL(
             PlexyDesk::Config::getInstance()->openGL);
     view->setScene(&scene);
     QObject::connect(view.data(), SIGNAL(closeApplication()), &app, SLOT(quit()));
-       QRect r = QDesktopWidget().geometry();
+    QRect r = QDesktopWidget().availableGeometry();
     view->move(r.x(), r.y());
-    view->resize(QDesktopWidget().geometry().size());
+    view->resize(QDesktopWidget().availableGeometry().size());
+    scene.setSceneRect(QDesktopWidget().availableGeometry()); //TODO Resolution changes ?
+    view->setSceneRect(QDesktopWidget().availableGeometry());
+    view->ensureVisible(QDesktopWidget().availableGeometry());
+    view->setDragMode(QGraphicsView::RubberBandDrag);
+    //view->fitInView(QDesktopWidget().availableGeometry());
+    qDebug() << Q_FUNC_INFO << QDesktopWidget().availableGeometry();
 #ifdef Q_WS_WIN
     /// \brief: remove plexy from taskbar
     view->move(0, 0);
-    view->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
+    //view->setWindowFlags(Qt::FramelessWindowHint | Qt::Desktop);
 #endif
 
 #ifdef Q_WS_X11
@@ -80,12 +85,6 @@ int main( int argc, char * *argv )
     PlexyDesk::PluginLoader *loader = PlexyDesk::PluginLoader::getInstance();
     loader->scanDisk();
     view->show();
-    /* Load the widget from settings */
-    QStringList list = PlexyDesk::Config::getInstance()->widgetList;
-
-    Q_FOREACH (QString str, list) {
-        view->addExtension(str);
-    }
 
     /* load all the widgets to a Widget Browser Layer */
     Q_FOREACH(const QString &pluginName, loader->listPlugins(QLatin1String("Widget"))) {
@@ -93,6 +92,7 @@ int main( int argc, char * *argv )
         view->addExtension(pluginName, QLatin1String("Browser"));
     }
 
+    view->setThemePack("default");
     view->showLayer(QLatin1String("Widgets"));
 
     return app.exec();

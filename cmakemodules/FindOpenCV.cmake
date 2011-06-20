@@ -52,9 +52,6 @@ SET (OpenCV_POSSIBLE_ROOT_DIRS
   "$ENV{OpenCV_ROOT_DIR}"  
   "$ENV{OPENCV_DIR}"  # only for backward compatibility deprecated by ROOT_DIR
   "$ENV{OPENCV_HOME}" # only for backward compatibility
-   IF(WIN32)
-   "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Intel(R) Open Source Computer Vision Library_is1;Inno Setup: App Path]"
-   ENDIF(WIN32)
   "$ENV{ProgramFiles}/OpenCV"
   /usr/local
   /usr

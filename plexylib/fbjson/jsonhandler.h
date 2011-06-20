@@ -44,7 +44,7 @@ class JSONSHARED_EXPORT JsonHandler {
 public:
     JsonHandler();
     JsonData property(const QString &data, const QString &prop);
-    QHash<QString, QVariant> arrayToMap(const QScriptValue &value);
+    QVariantMap arrayToMap(const QScriptValue &value);
 };
 
 #endif // JSONHANDLER_H

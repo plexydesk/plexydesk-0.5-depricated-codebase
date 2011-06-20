@@ -34,6 +34,7 @@
 #include <QFutureWatcher>
 #include <QtDebug>
 #include <QSharedPointer>
+#include <QGraphicsDropShadowEffect>
 
 #ifdef Q_WS_X11
 #include <plexywindow.h>
@@ -58,6 +59,8 @@ extern "C" {
 #include <QPropertyAnimation>
 #endif
 
+#include "themepackloader.h"
+
 using namespace PlexyDesk;
 
 class DesktopView::Private
@@ -72,10 +75,12 @@ public:
     BackdropPlugin *bgPlugin;
     QGraphicsGridLayout *gridLayout;
     QSharedPointer<ViewLayer> layer;
+    ThemepackLoader *mThemeLoader;
     float row;
     float column;
     float margin;
     bool openglOn;
+    QGraphicsDropShadowEffect *mShadowEffect;
 };
 
 bool getLessThanWidget(const QGraphicsItem *it1, const QGraphicsItem *it2)
@@ -86,9 +91,13 @@ bool getLessThanWidget(const QGraphicsItem *it1, const QGraphicsItem *it2)
 DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView(scene, parent), d(new Private)
 {
     /* setup */
-    setWindowFlags(Qt::FramelessWindowHint);
+    setWindowFlags(Qt::FramelessWindowHint |
+                   Qt::WindowStaysOnBottomHint);
+
     setFrameStyle(QFrame::NoFrame);
+
     setAttribute(Qt::WA_QuitOnClose, true);
+
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
@@ -97,12 +106,22 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
     d->openglOn = false;
 
     /* init */
+    d->mThemeLoader = new ThemepackLoader(QLatin1String("default"), this);
+    if (!d->mThemeLoader->wallpaper().isEmpty()) {
+        qDebug() << Q_FUNC_INFO << d->mThemeLoader->wallpaper();
+        PlexyDesk::Config::getInstance()->setWallpaper(d->mThemeLoader->wallpaper());
+    }
     d->bgPlugin = static_cast<BackdropPlugin *>(PluginLoader::getInstance()->instance("classicbackdrop"));
     d->gridLayout = new QGraphicsGridLayout();
     d->row = d->column = 48.0;
     d->margin = 10.0;
-    d->layer = QSharedPointer<ViewLayer>(new ViewLayer);
+    d->layer = QSharedPointer<ViewLayer>(new ViewLayer(this));
     d->layer->showLayer(QLatin1String("Widgets"));
+
+    /* Effects */
+
+    d->mShadowEffect = new QGraphicsDropShadowEffect(this);
+    d->mShadowEffect->setBlurRadius(8.0);
 
     connect(Config::getInstance(), SIGNAL(configChanged()), this, SLOT(backgroundChanged()));
     connect(Config::getInstance(), SIGNAL(widgetAdded()), this, SLOT(onNewWidget()));
@@ -140,11 +159,10 @@ void DesktopView::enableOpenGL(bool state)
                         QGL::StencilBuffer |
                         QGL::DoubleBuffer |
                         QGL::AlphaChannel)));
-        setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
+        setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
         setOptimizationFlag(QGraphicsView::DontAdjustForAntialiasing);
         d->openglOn = true;
     } else {
-        setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
         setViewport(new QWidget);
         setCacheMode(QGraphicsView::CacheBackground);
         setOptimizationFlags(QGraphicsView::DontSavePainterState);
@@ -157,6 +175,36 @@ void DesktopView::enableOpenGL(bool state)
 void DesktopView::showLayer(const QString &layer)
 {
     d->layer->showLayer(layer);
+}
+
+void DesktopView::setThemePack(const QString &name)
+{
+    if (d->mThemeLoader) {
+        delete d->mThemeLoader;
+
+        // TODO
+        // ERROR HANDLING 
+        d->mThemeLoader = new ThemepackLoader(name, this);
+        PlexyDesk::Config::getInstance()->setWallpaper(d->mThemeLoader->wallpaper());
+
+        Q_FOREACH(const QString &nativeWidget, d->mThemeLoader->widgets("native")) {
+            qDebug() << Q_FUNC_INFO << nativeWidget;
+            QPoint pos = d->mThemeLoader->widgetPos(nativeWidget);
+            addExtension(nativeWidget, QLatin1String("Widgets"), pos,
+                    d->mThemeLoader->widgetView(nativeWidget));
+        }
+
+        Q_FOREACH(const QString &qmlWidget, d->mThemeLoader->widgets("QML")) {
+            qDebug() << Q_FUNC_INFO << "Loading qml " << qmlWidget;
+            DesktopWidget *parent = new DesktopWidget(QRectF(0,0,0,0));
+            parent->qmlFromUrl(QUrl(d->mThemeLoader->qmlFilesFromTheme(qmlWidget)));
+            scene()->addItem(parent);
+            connect(parent, SIGNAL(close()), this, SLOT(closeDesktopWidget()));
+            QPoint pos = d->mThemeLoader->widgetPos(qmlWidget);
+            parent->setPos(pos);
+        }
+
+    }
 }
 
 #ifdef Q_WS_X11
@@ -243,7 +291,7 @@ void DesktopView::backgroundChanged()
     d->bgPlugin =
          static_cast<BackdropPlugin *>(PluginLoader::getInstance()->instance("classicbackdrop"));
     if (!d->openglOn) {
-        setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+        setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     }
     setCacheMode(QGraphicsView::CacheNone);
     invalidateScene();
@@ -267,16 +315,24 @@ void DesktopView::backgroundChanged()
    \param layerName Name of the layer you want add the widget to 
  */
 
-void DesktopView::addExtension(const QString &name, const QString &layerName)
+void DesktopView::addExtension(const QString &name,
+        const QString &layerName,
+        const QPoint &pos,
+        PlexyDesk::DesktopWidget::State state)
 {
     WidgetPlugin *provider = static_cast<WidgetPlugin *>(PluginLoader::getInstance()->instance(name));
     if (provider) {
+        qDebug() << Q_FUNC_INFO << name << layerName;
         DesktopWidget *widget = (DesktopWidget *) provider->item();
         if (widget) {
-            widget->configState(DesktopWidget::DOCK);
+            widget->configState(state);
             scene()->addItem(widget);
-            widget->setPos(d->row, d->column);
-            d->row += widget->boundingRect().width()+d->margin;
+            if (pos.x() == 0 && pos.y() == 0) {
+                widget->setPos(d->row, d->column);
+                d->row += widget->boundingRect().width()+d->margin;
+            } else {
+                widget->setPos(pos);
+            }
             d->layer->addItem(layerName, widget);
 
             connect(widget, SIGNAL(close()), this, SLOT(closeDesktopWidget()));
@@ -327,7 +383,7 @@ void DesktopView::dragEnterEvent (QDragEnterEvent * event)
         return;
     }
 
-    const QUrl droppedFile = event->mimeData()->urls().at(0).toString(QUrl::StripTrailingSlash |
+    const QUrl droppedFile = event->mimeData()->urls().value(0).toString(QUrl::StripTrailingSlash |
             QUrl::RemoveScheme);
     if (droppedFile.toString().contains(".qml")) {
 
@@ -339,18 +395,23 @@ void DesktopView::dragEnterEvent (QDragEnterEvent * event)
         return;
     }
     if (event->mimeData()->hasUrls()) {
-        Config::getInstance()->setWallpaper(event->mimeData()->urls().at(0).toString(QUrl::StripTrailingSlash | QUrl::RemoveScheme));
+        Config::getInstance()->setWallpaper(event->mimeData()->urls().value(0).toString(QUrl::StripTrailingSlash | QUrl::RemoveScheme));
     }
 
 }
 
 void DesktopView::drawBackground(QPainter *painter, const QRectF &rect)
 {
+    qDebug() << Q_FUNC_INFO << rect;
+    painter->setRenderHint(QPainter::TextAntialiasing, false);
+#ifdef Q_WS_X11
+    painter->setRenderHint(QPainter::QPainter::SmoothPixmapTransform, false);
+#endif
+    painter->setRenderHint(QPainter::HighQualityAntialiasing, false);
     painter->setCompositionMode(QPainter::CompositionMode_Source);
-    painter->fillRect(rect, Qt::transparent);
-    painter->save();
-    painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
     painter->setClipRect(rect);
+
+    painter->save();
     if (d->bgPlugin) {
        d->bgPlugin->render(painter, 
                     QRectF(rect.x(), sceneRect().y(), 
@@ -361,8 +422,8 @@ void DesktopView::drawBackground(QPainter *painter, const QRectF &rect)
 
 void DesktopView::mousePressEvent(QMouseEvent *event)
 {
-    setTopMostWidget(event->pos());
-
+    // commenting out due to qml stacking problem
+    //setTopMostWidget(event->pos());
     QGraphicsView::mousePressEvent(event);
 }
 

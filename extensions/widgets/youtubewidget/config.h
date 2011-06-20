@@ -1,7 +1,7 @@
 /*******************************************************************************
 * This file is part of PlexyDesk.
 *  Maintained by : Siraj Razick <siraj@kde.org>
-*  Authored By  :
+*  Authored By  : Dariusz Mikulski <dariusz.mikulski@gmail.com>
 *
 *  PlexyDesk is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU Lesser General Public License as published by
@@ -16,30 +16,16 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#include "fakemime.h"
 
-#include <QString>
-#include <QStringList>
+#ifndef WALLPAPER_CONFIG_H_
+#define WALLPAPER_CONFIG_H_
 
-namespace PlexyDesk
-{
-FakeMime *FakeMime::config = 0;
+#include <QtCore/qglobal.h>
 
-FakeMime *FakeMime::getInstance()
-{
-    if (config == 0) {
-        return new FakeMime();
-    } else {
-        return config;
-    }
-}
+#if defined(plexyyoutube_EXPORTS)
+#  define PLEXYYOUTUBE_EXPORT Q_DECL_EXPORT
+#else
+#  define PLEXYYOUTUBE_EXPORT Q_DECL_IMPORT
+#endif
 
-QString FakeMime::getType(const QString &file)
-{
-    QStringList splits = file.split(".");
-    QString ext = splits.at(1);
-    return ext;
-}
-}
-
-
+#endif //WALLPAPER_CONFIG_H_

@@ -8,7 +8,6 @@ SET(sourceFiles
 
 SET(headerFiles
     json_global.h
-    jsonhandler.cpp
 )
 
 SET(sourceFiles
