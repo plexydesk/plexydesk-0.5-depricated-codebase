@@ -96,7 +96,7 @@ void PluginLoader::load(const QString &interface, const QString &pluginName)
         AbstractPluginInterface *Iface = 0;
         Iface = qobject_cast<AbstractPluginInterface *> (plugin);
         d->groups[pluginName] = Iface;
-        winDebug() << "PluginLoader::load" << "Loading.." << Iface << pluginName << endl;
+        qDebug() << "PluginLoader::load" << "Loading.." << Iface << pluginName << endl;
 
         const QStringList dictKeys = d->mDict.keys();
         if (!dictKeys.contains(interface)) {
@@ -111,10 +111,8 @@ void PluginLoader::load(const QString &interface, const QString &pluginName)
         }
 
     } else {
-        winDebug() << loader.errorString() << endl;;
+        qDebug() << loader.errorString() << endl;;
     }
-
-    winDebug().flush();
 }
 
 void PluginLoader::scanDisk()

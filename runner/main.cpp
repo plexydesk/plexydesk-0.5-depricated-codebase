@@ -19,6 +19,7 @@
 
 #include <QtCore>
 #include <QtGui>
+#include <debug.h>
 
 #ifdef Q_WS_X11
 #include <stdio.h>
@@ -46,6 +47,8 @@ int main( int argc, char * *argv )
 {
 #ifndef Q_WS_MAC
     QApplication::setGraphicsSystem(QLatin1String("raster"));
+#elif Q_WS_WIN
+    qInstallMsgHandler(plexyWindowsLogger);
 #endif
     QApplication app(argc, argv);
 
