@@ -66,17 +66,23 @@ Config::Config(const QString &organization,
     read();
 
     if (value("CurrentWallpaper").toString().isNull()) {
-        CurrentWallpaper = DesktopWidget::applicationDirPath() + "/share/plexy/skins/default/default.png";
+        CurrentWallpaper = QDir::toNativeSeparators(
+                DesktopWidget::applicationDirPath() + 
+                QLatin1String("/share/plexy/skins/default/default.png"));
     }
 
 
     if (value("iconTheme").toString().isNull()) {
-        iconTheme = "default";
+        iconTheme = QLatin1String("default");
+    }
+
+    if (value(QLatin1String("themepack")).toString().isEmpty()) {
+        themepackName = QLatin1String("default");
     }
 
     m_collisionOn = false;
 
-    if (widgetList.count() < 0) {
+    if (widgetList.count() <= 0) {
         writeToFile();
     }
 #ifdef Q_WS_X11
@@ -99,6 +105,7 @@ void Config::read()
     widgetList = value("widgetList").toStringList();
     iconTheme = value("iconTheme").toString();
     openGL = value("openGL").toBool();
+    themepackName = value("themepack").toString();
 
     m_collisionOn = false;
 }
@@ -115,6 +122,7 @@ void Config::writeToFile()
     setValue("widgetList", widgetList);
     setValue("iconTheme", iconTheme);
     setValue("openGL", openGL);
+    setValue("themepack", themepackName);
     sync();
 }
 

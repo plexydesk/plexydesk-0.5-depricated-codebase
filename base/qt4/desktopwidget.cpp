@@ -174,7 +174,7 @@ void DesktopWidget::setBackFaceImage(QPixmap img)
 
 void DesktopWidget::qmlFromUrl(const QUrl &url)
 {
-    winDebug() << Q_FUNC_INFO << url.toString() << endl;
+    qDebug() << Q_FUNC_INFO << url.toString() << endl;
     QDeclarativeEngine *engine = QmlEngine();
     QDeclarativeComponent component(engine, url.toString(QUrl::StripTrailingSlash |
                 QUrl::RemoveScheme));
@@ -203,7 +203,6 @@ void DesktopWidget::qmlFromUrl(const QUrl &url)
 
     // forward signals
     connect(engine, SIGNAL(quit()), this, SLOT(onQmlQuit()));
-    winDebug().flush();
 }
 
 void DesktopWidget::onQmlQuit()
