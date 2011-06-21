@@ -34,6 +34,8 @@ namespace PlexyDesk
 class PLEXYDESK_EXPORT Config : public QSettings
 {
     Q_OBJECT
+    Q_PROPERTY(QString wallpaper READ wallpaper WRITE setWallpaper NOTIFY wallpaperChanged)
+
 public:
     static Config *getInstance();
     static QDeclarativeEngine *qmlEngine();
@@ -62,6 +64,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void configChanged();
+    void wallpaperChanged();
     void widgetAdded();
     void layerChange();
 private:
