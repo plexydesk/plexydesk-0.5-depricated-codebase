@@ -146,5 +146,6 @@ void Config::changeLayer()
 {
     qDebug() << Q_FUNC_INFO;
     Q_EMIT layerChange();
+    Q_EMIT wallpaperChanged();
 }
 }
