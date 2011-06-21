@@ -79,7 +79,7 @@ int main( int argc, char * *argv )
     QObject::connect(view.data(), SIGNAL(closeApplication()), &app, SLOT(quit()));
     QRect r = QDesktopWidget().availableGeometry();
     view->move(r.x(), r.y());
-    view->resize(QDesktopWidget().availableGeometry().size());
+    view->resize(desktopSize);
     scene.setSceneRect(QDesktopWidget().availableGeometry()); //TODO Resolution changes ?
     view->setSceneRect(QDesktopWidget().availableGeometry());
     view->ensureVisible(QDesktopWidget().availableGeometry());
