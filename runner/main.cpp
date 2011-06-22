@@ -40,6 +40,7 @@
 #include <datainterface.h>
 #include <canvas.h>
 #include <plexyconfig.h>
+#include <debug.h>
 
 using namespace PlexyDesk;
 
@@ -53,8 +54,9 @@ int main( int argc, char * *argv )
     QApplication app(argc, argv);
 
 #ifdef Q_WS_WIN
-    QString pluginPath = QString(PLEXPREFIX) + "/plugins/imageformats";
-    app.addLibraryPath(pluginPath);
+    QString pluginPath = QString(PLEXPREFIX) + "/bin/plugins/imageformats/";
+	QDir pluginDir(QDir::toNativeSeparators(pluginPath));
+	app.addLibraryPath(QDir::toNativeSeparators(pluginPath));
 #endif
 
     QGraphicsScene scene;

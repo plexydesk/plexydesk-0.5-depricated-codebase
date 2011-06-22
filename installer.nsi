@@ -49,7 +49,7 @@ section
    
   SetOutPath $INSTDIR
   SetOverwrite on
-  FILE /r plexydesk\*.*
+  FILE /r c:\plexydesk\*.*
    
   # create the uninstaller
   writeUninstaller "c:\$APPBIN\uninstall.exe"
