@@ -1,3 +1,5 @@
+#ifndef PLEXY_DEBUG_H
+#define PLEXY_DEBUG_H
 
 #include <QFile>
 #include <QTextStream>
@@ -20,3 +22,5 @@ static void plexyWindowsLogger(QtMsgType type, const char *msg)
          abort();
      }
 }
+
+#endif
