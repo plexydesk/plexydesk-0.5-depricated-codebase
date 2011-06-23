@@ -192,23 +192,23 @@ Rectangle {
             hr = "0" + hr;
         if (sc < 10)
             sc = "0" + sc;
-        var amorpm = "NA";
+        var amorpm = qsTr("NA");
         if (type === "12")
         {
             if(hr > 12)
             {
                 hr = hr - 12;
-                amorpm = "PM";
+                amorpm = qsTr("PM");
                 if (hr < 10)
                     hr = "0" + hr;
             }
             else if (hr === "12")
             {
-                amorpm = "PM";
+                amorpm = qsTr("PM");
             }
             else
             {
-                amorpm = "AM";
+                amorpm = qsTr("AM");
             }
         }
         ampm.text = amorpm;
