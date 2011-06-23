@@ -197,15 +197,15 @@ void ClockWidget::paintExtBackFace(QPainter *p, const QStyleOptionGraphicsItem *
     p->save();
 
     p->setPen(QColor(0, 0, 0));
-    p->setFont(QFont("Bitstream Charter", 15));
-    p->drawText(QRect(0, 0, 200, 140), Qt::AlignLeft | Qt::AlignBottom,
-         QDateTime::currentDateTime().toString(QLatin1String("dddd. MMMM. dd")));
+    p->setFont(QFont("Bitstream Charter", 12));
+    p->drawText(QRect(10, -10, 200, 140), Qt::AlignLeft | Qt::AlignBottom,
+         QDateTime::currentDateTime().toString(QLatin1String("dddd, dd MMMM yyyy")));
 
     /*Draw Time*/
     p->setPen(QColor(0, 0, 0));
     p->setFont(QFont("Bitstream Charter", 40));
     p->drawText(QRect(0, 0, 160, 160), Qt::AlignCenter,
-         QString("%1").arg(QDateTime::currentDateTime().toString(QLatin1String("hh:mm"))));
+         QString("%1").arg(QDateTime::currentDateTime().toString(QLatin1String("h:mm"))));
     p->setFont(QFont("Bitstream Charter", 15));
     p->drawText(QRect(0, 0, 190, 180), Qt::AlignCenter | Qt::AlignRight,
          QString("%1").arg(QDateTime::currentDateTime().toString(QLatin1String(":ss"))));
