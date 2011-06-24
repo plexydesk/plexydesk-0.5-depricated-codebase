@@ -27,6 +27,17 @@
 
 namespace PlexyDesk
 {
+
+class Config::Private
+{
+public:
+    Private() {}
+    ~Private() {}
+
+    QSettings *mSettings;
+
+};
+
 Config *Config::config = 0;
 
 QDeclarativeEngine *Config::engine = 0;
@@ -55,8 +66,11 @@ QDeclarativeEngine *Config::qmlEngine()
 
 Config::Config(const QString &organization,
      const QString &application, QObject *parent) :
-    QSettings(organization, application, parent)
+    d(new Private),
+    QObject(parent)
 {
+    d->mSettings = new QSettings(organization, application, this);
+
     m_proxyOn = false;
     proxyURL = "";
     proxyUser = "";
@@ -65,18 +79,18 @@ Config::Config(const QString &organization,
     openGL = false;
     read();
 
-    if (value("CurrentWallpaper").toString().isNull()) {
+    if (d->mSettings->value("CurrentWallpaper").toString().isNull()) {
         CurrentWallpaper = QDir::toNativeSeparators(
                 DesktopWidget::applicationDirPath() + 
                 QLatin1String("/share/plexy/skins/default/default.png"));
     }
 
 
-    if (value("iconTheme").toString().isNull()) {
+    if (d->mSettings->value("iconTheme").toString().isNull()) {
         iconTheme = QLatin1String("default");
     }
 
-    if (value(QLatin1String("themepack")).toString().isEmpty()) {
+    if (d->mSettings->value(QLatin1String("themepack")).toString().isEmpty()) {
         themepackName = QLatin1String("default");
     }
 
@@ -96,40 +110,40 @@ Config::Config(const QString &organization,
 
 void Config::read()
 {
-    m_proxyOn = value("proxyOn").toInt();
-    proxyURL = value("proxyURL").toString();
-    proxyUser = value("proxyUser").toString();
-    proxyPasswd = value("proxyPasswd").toString();
-    m_proxyPort = value("proxyPort").toInt();
-    CurrentWallpaper = value("CurrentWallpaper").toString();
-    widgetList = value("widgetList").toStringList();
-    iconTheme = value("iconTheme").toString();
-    openGL = value("openGL").toBool();
-    themepackName = value("themepack").toString();
+    m_proxyOn = d->mSettings->value("proxyOn").toInt();
+    proxyURL = d->mSettings->value("proxyURL").toString();
+    proxyUser = d->mSettings->value("proxyUser").toString();
+    proxyPasswd = d->mSettings->value("proxyPasswd").toString();
+    m_proxyPort = d->mSettings->value("proxyPort").toInt();
+    CurrentWallpaper = d->mSettings->value("CurrentWallpaper").toString();
+    widgetList = d->mSettings->value("widgetList").toStringList();
+    iconTheme = d->mSettings->value("iconTheme").toString();
+    openGL = d->mSettings->value("openGL").toBool();
+    themepackName = d->mSettings->value("themepack").toString();
 
     m_collisionOn = false;
 }
 
 void Config::writeToFile()
 {
-    setValue("proxyOn", m_proxyOn);
-    setValue("proxyURL", proxyURL);
-    setValue("proxyUser", proxyUser);
-    setValue("ProxyPasswd", proxyPasswd);
-    setValue("proxyPort", m_proxyPort);
-    setValue("CurrentWallpaper", CurrentWallpaper);
-    setValue("collisionOn", m_collisionOn);
-    setValue("widgetList", widgetList);
-    setValue("iconTheme", iconTheme);
-    setValue("openGL", openGL);
-    setValue("themepack", themepackName);
+    d->mSettings->setValue("proxyOn", m_proxyOn);
+    d->mSettings->setValue("proxyURL", proxyURL);
+    d->mSettings->setValue("proxyUser", proxyUser);
+    d->mSettings->setValue("ProxyPasswd", proxyPasswd);
+    d->mSettings->setValue("proxyPort", m_proxyPort);
+    d->mSettings->setValue("CurrentWallpaper", CurrentWallpaper);
+    d->mSettings->setValue("collisionOn", m_collisionOn);
+    d->mSettings->setValue("widgetList", widgetList);
+    d->mSettings->setValue("iconTheme", iconTheme);
+    d->mSettings->setValue("openGL", openGL);
+    d->mSettings->setValue("themepack", themepackName);
     sync();
 }
 
 void Config::setWallpaper(const QString &str)
 {
     CurrentWallpaper = str;
-    setValue("CurrentWallpaper", CurrentWallpaper);
+    d->mSettings->setValue("CurrentWallpaper", CurrentWallpaper);
     Q_EMIT configChanged();
 }
 

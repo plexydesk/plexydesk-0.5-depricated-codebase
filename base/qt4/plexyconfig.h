@@ -31,7 +31,7 @@
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT Config : public QSettings
+class PLEXYDESK_EXPORT Config : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString wallpaper READ wallpaper WRITE setWallpaper NOTIFY wallpaperChanged)
@@ -41,6 +41,8 @@ public:
     static QDeclarativeEngine *qmlEngine();
     void read();
     void writeToFile();
+
+    QString wallpaper() const { return CurrentWallpaper;};
 
     QString MyPictures;
     QString MyMovies;
@@ -69,16 +71,13 @@ Q_SIGNALS:
     void layerChange();
 private:
     Config(const QString &organization, const QString &application = QString(), QObject *parent = 0);
+    Config();
+    Config(Config &config);
     static Config *config;
     static QDeclarativeEngine *engine;
 
-    Config()
-    {
-        read();
-    }
-
-    Config(Config &) {
-    }
+    class Private;
+    Private *const d;
     Config &operator=(const Config &);
 };
 } // namespace PlexyDesk
