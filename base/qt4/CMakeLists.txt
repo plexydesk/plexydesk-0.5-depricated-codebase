@@ -27,6 +27,8 @@ SET(sourceFiles
 )
 
 SET(headerFiles
+   plexy.h
+   debug.h
    abstractplugininterface.h
    backdropinterface.h
    backdropplugin.h

@@ -56,7 +56,7 @@ CONFIGURE_FILE(org.plexydesk.daemon.service.in ${CMAKE_CURRENT_BINARY_DIR}/org.p
 
 INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}
-    ${CMAKE_BINARY_DIR}/plexylib
+    #${CMAKE_BINARY_DIR}/plexylib
     ${CMAKE_BINARY_DIR}/base/qt4
     ${CMAKE_BINARY_DIR}/runner/
     ${CMAKE_BINARY_DIR}/base/gtk
@@ -64,7 +64,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/modules/QtWin/ 
     ${CMAKE_BINARY_DIR}/plexylib/fbjson/
     ${CMAKE_SOURCE_DIR}
-    ${CMAKE_SOURCE_DIR}/plexylib
+    #${CMAKE_SOURCE_DIR}/plexylib
     ${CMAKE_SOURCE_DIR}/base/qt4
     ${CMAKE_SOURCE_DIR}/runner
     ${CMAKE_SOURCE_DIR}/widgets/gtk
