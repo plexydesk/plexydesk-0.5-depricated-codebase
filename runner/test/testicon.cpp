@@ -60,7 +60,7 @@ void TestIcon::loadThemePackInit()
     QCOMPARE(themeLoader->wallpaper(),
             QDir::toNativeSeparators(
                 QString(PLEXPREFIX) +
-                QString("//share/plexy/themepack/default/resources/plexy_default.jpg")));
+                QString("//share/plexy/themepack/default/resources/default.png")));
 
     QCOMPARE(themeLoader->widgets("native").count() , 1);
 

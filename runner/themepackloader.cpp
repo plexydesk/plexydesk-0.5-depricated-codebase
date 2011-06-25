@@ -25,6 +25,7 @@ ThemepackLoader::ThemepackLoader(const QString &themeName, QObject *parent) :
 {
     d->mThemeName = themeName;
     QDir mainConfig(QString("%1/%2/").arg(themePackPath).arg(themeName));
+    qDebug() << Q_FUNC_INFO << themeName;
     d->mSettings = new QSettings(QDir::toNativeSeparators(
                                  mainConfig.absoluteFilePath("main.cfg")),
                              QSettings::IniFormat, parent);

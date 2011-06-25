@@ -24,19 +24,20 @@ IconJob::IconJob(QObject *parent) : PendingJob(parent), d(new Private)
                  this layout.
      */
     const QLatin1String slash("/");
-    d->iconpaths << QDir::homePath() + QLatin1String("/.icons/") + Config::getInstance()->iconTheme
+    d->iconpaths << QDir::homePath() + QLatin1String("/.icons/") +
+        Config::getInstance()->iconTheme()
         + slash;
 
     QStringList xdg = QString(qgetenv("XDG_DATA_DIRS")).split(':');
     foreach(QString path, xdg) {
-        d->iconpaths << path + QLatin1String("/icons/") + Config::getInstance()->iconTheme + slash;
+        d->iconpaths << path + QLatin1String("/icons/") + Config::getInstance()->iconTheme() + slash;
     }
     d->iconpaths << QLatin1String("/usr/share/pixmaps/")
                  << QLatin1String("/usr/share/icons/")
-                 << QLatin1String("/usr/share/icons/") + Config::getInstance()->iconTheme + slash
+                 << QLatin1String("/usr/share/icons/") + Config::getInstance()->iconTheme() + slash
                  << QLatin1String("/usr/share/app-install/icons/")
                  << QLatin1String(PLEXPREFIX) + QLatin1String("/share/plexy/skins") +
-                    slash + Config::getInstance()->iconTheme + slash + QLatin1String("icons") + slash;
+                    slash + Config::getInstance()->iconTheme() + slash + QLatin1String("icons") + slash;
     connect(this, SIGNAL(newJob()), this, SLOT(handleJob()), Qt::DirectConnection);
 }
 

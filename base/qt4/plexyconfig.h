@@ -35,29 +35,40 @@ class PLEXYDESK_EXPORT Config : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString wallpaper READ wallpaper WRITE setWallpaper NOTIFY wallpaperChanged)
+    Q_PROPERTY(bool proxy READ isProxyOn WRITE setProxyOn NOTIFY proxyChanged)
+    Q_PROPERTY(int port READ proxyPort WRITE setProxyPort NOTIFY proxyPortChanged)
+    Q_PROPERTY(QString proxyURL READ proxyURL WRITE setProxyURL NOTIFY proxyURLChanged)
+    Q_PROPERTY(QString proxyUser READ proxyUser WRITE setProxyUser NOTIFY proxyUserChanged)
+    Q_PROPERTY(QString proxyPasswd READ proxyPasswd WRITE setProxyPasswd NOTIFY proxyPasswdChanged)
+    Q_PROPERTY(QString themepackName READ themepackName WRITE setThemepackName NOTIFY themepackNameChanged)
+    Q_PROPERTY(QString iconTheme READ iconTheme WRITE setIconTheme NOTIFY iconThemechanged)
+    Q_PROPERTY(bool openGL READ isOpenGL WRITE setOpenGL NOTIFY openGLChanged) 
 
 public:
     static Config *getInstance();
     static QDeclarativeEngine *qmlEngine();
+
     void read();
     void writeToFile();
 
-    QString wallpaper() const { return CurrentWallpaper;};
+    QString wallpaper() const;
+    bool isProxyOn() const;
+    int proxyPort() const;
+    QString proxyURL() const;
+    QString proxyUser() const;
+    QString proxyPasswd() const;
+    QString themepackName() const;
+    QString iconTheme() const;
+    bool isOpenGL() const;
 
-    QString MyPictures;
-    QString MyMovies;
-    QString CurrentWallpaper;
-    bool m_proxyOn;
-    int m_proxyPort;
-    QNetworkProxy::ProxyType proxyType;
-    QString proxyURL;
-    QString proxyUser;
-    QString proxyPasswd;
-    QStringList widgetList;
-    QString themepackName;
-    bool m_collisionOn;
-    QString iconTheme;
-    bool openGL;
+    void setProxyOn(bool enable);
+    void setProxyPort(int port);
+    void setProxyURL(const QString &url);
+    void setProxyUser(const QString &user);
+    void setProxyPasswd(const QString &pass); 
+    void setThemepackName(const QString &name);
+    void setIconTheme(const QString &name);
+    void setOpenGL(bool enable);
 
 public Q_SLOTS:
     void setWallpaper(const QString &str);
@@ -69,6 +80,16 @@ Q_SIGNALS:
     void wallpaperChanged();
     void widgetAdded();
     void layerChange();
+    void proxyChanged();
+    void proxyPortChanged();
+    void proxyURLChanged();
+    void proxyUserChanged();
+    void proxyPasswdChanged();
+    void widgetListChanged();
+    void themepackNameChanged();
+    void iconThemechanged();
+    void openGLChanged();
+
 private:
     Config(const QString &organization, const QString &application = QString(), QObject *parent = 0);
     Config();
@@ -78,6 +99,7 @@ private:
 
     class Private;
     Private *const d;
+
     Config &operator=(const Config &);
 };
 } // namespace PlexyDesk

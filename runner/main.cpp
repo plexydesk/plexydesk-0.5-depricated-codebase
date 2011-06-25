@@ -55,8 +55,8 @@ int main( int argc, char * *argv )
 
 #ifdef Q_WS_WIN
     QString pluginPath = QString(PLEXPREFIX) + "/bin/plugins/imageformats/";
-	QDir pluginDir(QDir::toNativeSeparators(pluginPath));
-	app.addLibraryPath(QDir::toNativeSeparators(pluginPath));
+    QDir pluginDir(QDir::toNativeSeparators(pluginPath));
+    app.addLibraryPath(QDir::toNativeSeparators(pluginPath));
 #endif
 
     QGraphicsScene scene;
@@ -64,13 +64,13 @@ int main( int argc, char * *argv )
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 
     QSharedPointer<DesktopView> view = QSharedPointer<DesktopView>(new DesktopView(0));
-    bool accel = PlexyDesk::Config::getInstance()->openGL;
+    bool accel = PlexyDesk::Config::getInstance()->isOpenGL();
     QSize desktopSize;
 #ifdef Q_WS_MAC
     accel = true;
     desktopSize = QDesktopWidget().screenGeometry().size();
 #else
-    accel = PlexyDesk::Config::getInstance()->openGL;
+    accel = PlexyDesk::Config::getInstance()->isOpenGL();
     desktopSize = QDesktopWidget().availableGeometry().size();
 #endif
 
@@ -108,7 +108,7 @@ int main( int argc, char * *argv )
         view->addExtension(pluginName, QLatin1String("Browser"));
     }
 
-    view->setThemePack(PlexyDesk::Config::getInstance()->themepackName);
+    view->setThemePack(PlexyDesk::Config::getInstance()->themepackName());
     view->showLayer(QLatin1String("Widgets"));
 
     return app.exec();
