@@ -137,7 +137,7 @@ void Config::writeToFile()
     d->mSettings->setValue("iconTheme", d->mData["iconTheme"].toString());
     d->mSettings->setValue("openGL", d->mData["openGL"].toString());
     d->mSettings->setValue("themepack", d->mData["themepack"].toString());
-    sync();
+    d->mSettings->sync();
 }
 
 void Config::setWallpaper(const QString &str)
