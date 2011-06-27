@@ -19,13 +19,14 @@
 #include "backdrop.h"
 #include <desktopwidget.h>
 #include <plexyconfig.h>
+#include <QDir>
 
 BgPlugin::BgPlugin(QObject *object)
     : BackdropPlugin(object)
 {
     mBackgroundPixmap =
-     new QPixmap(PlexyDesk::Config::getInstance()->wallpaper());
-    qDebug() << Q_FUNC_INFO << PlexyDesk::Config::getInstance()->wallpaper();
+     new QPixmap(QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->wallpaper()));
+    qDebug() << Q_FUNC_INFO << QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->wallpaper());
 }
 
 BgPlugin::~BgPlugin()
@@ -37,6 +38,7 @@ void BgPlugin::data(QVariant &data)
     QImage wall = data.value<QImage>();
     if (wall.isNull()) {
         wall = QImage::fromData(data.toByteArray());
+	return;
     }
 
     emit dataChange();

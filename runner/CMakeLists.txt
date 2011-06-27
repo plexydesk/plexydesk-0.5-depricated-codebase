@@ -95,7 +95,7 @@ ENDIF(WIN32)
 cmake_policy(SET CMP0003 NEW)
 
 IF(WIN32)
-   ADD_EXECUTABLE(plexydesk WIN32 ${sourceFiles} ${QT_MOC_SRCS})
+   ADD_EXECUTABLE(plexydesk ${sourceFiles} ${QT_MOC_SRCS})
 ENDIF(WIN32)
 
 IF(UNIX)

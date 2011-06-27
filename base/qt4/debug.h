@@ -7,20 +7,23 @@
 
 static void plexyWindowsLogger(QtMsgType type, const char *msg)
 {
+     QTextStream stream(stdout);
      switch (type) {
      case QtDebugMsg:
-         fprintf(stdout, "Debug: %s\n", msg);
+	 stream << QString("Debug:%1").arg(msg);
          break;
      case QtWarningMsg:
-         fprintf(stdout, "Warning: %s\n", msg);
+	 stream << QString("Warning:%1").arg(msg);
          break;
      case QtCriticalMsg:
-         fprintf(stdout, "Critical: %s\n", msg);
+	 stream << QString("Critical:%1").arg(msg);
          break;
      case QtFatalMsg:
-         fprintf(stdout, "Fatal: %s\n", msg);
+	 stream << QString("Fatal:%1").arg(msg);
+	 stream.flush();
          abort();
      }
+     stream.flush();
 }
 
 #endif

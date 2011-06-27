@@ -396,7 +396,7 @@ void DesktopView::dragEnterEvent (QDragEnterEvent * event)
         return;
     }
     if (event->mimeData()->hasUrls()) {
-        Config::getInstance()->setWallpaper(event->mimeData()->urls().value(0).toString(QUrl::StripTrailingSlash | QUrl::RemoveScheme));
+        Config::getInstance()->setWallpaper(event->mimeData()->urls().value(0).toLocalFile());
     }
 
 }
