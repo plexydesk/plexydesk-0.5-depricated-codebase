@@ -1,22 +1,27 @@
+ 
 cmake -DCMAKE_INSTALL_PREFIX:STRING="c:/plexydesk" -G "Visual Studio 9 2008"
-msbuild PlexyDesktop.sln /t:Build /p:Configuration=Release /V:d /nologo
 
-mkdir plexydesk
-mkdir plexydesk\bin
-mkdir plexydesk\bin\plugins
-mkdir plexydesk\bin\plugins\imageformats
+msbuild PlexyDesktop.sln /t:Build /p:Configuration=Release /V:n /nologo
 
-ren vcbuild INSTALL.vcproj "Release|Win32"
-
-msbuild /target:Build /p:Configuration=Release INSTALL.vcproj /V:d /nologo
+msbuild /target:Build /p:Configuration=Release INSTALL.vcproj /V:n /nologo
 
 xcopy %QTDIR%\bin\*.dll c:\plexydesk\bin
 
 xcopy /E %QTDIR%\imports\*.*  c:\plexydesk\lib\qt4\imports\
 
+echo "Following path is not a Mistake"
 
-xcopy /E %QTDIR%\plugins\*.* c:\plexydesk\bin\
+xcopy /E %QTDIR%\plugins\*.* c:\plexydesk\bin
 
-"makensis" installer.nsi
+
+ren delete unwanted files
+
+del c:\plexydesk\bin\QtDesigner*
+del c:\plexydesk\bin\QTHelp*
+del c:\plexydesk\bin\QtCL*
+
+
+
+"makensis" make_nsis_installer.nsi
 
 
