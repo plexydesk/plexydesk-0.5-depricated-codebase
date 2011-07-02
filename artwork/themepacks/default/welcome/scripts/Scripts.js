@@ -18,13 +18,13 @@
 *******************************************************************************/
 .pragma library
 
-var infoDesktop = "\tPlexyDesk is a modular desktop renderer. We bring the web to desktop. Based on QGraphicsView. We aim for simply cool desktop with exapnding through operating systems";
-var infoAddingWidget = "\tPlexyDesk has the capability to use complete Qt/C++ widgets as well as it supports the QML applications.\n\tTo add a QML application just drag and drop to the desktop, we'll load the application to the desktop. Just write and see. simple and cool :D\n\tTo add the Qt/C++ widgets please use the QDBUS command. We are building the panels to load the widgets from UI. Please wait for our newest release.";
-var addWidgetCommand = "qdbus org.PlexyDesk.Config /Configuration local.PlexyDesk.Config.addWidget <your_widget_name>";
-var infoDeleteWidget = "\tCurrent PlexyDesk does not support automated widget removal. You can goto the ~/.config/plexydesk/plexydeskconf.conf and remove the widget entries from the conf file. Widgets will be removed after a reload";
-var infoChangeWallpaper = "\tIn PlexyDesk simply drag and drop your image to the desktop, we'll set the wallpaper to which you dropped. :D";
-var infoDevelopment = "\tVisit us at redmine.plexyplanet.org, Use our widget API to develop Qt/C++ applications, Just write any QML and drag and drop. Visit GitHub and simply fork and start development. Development is simply exciting";
-var infoWiki = "\tVisit our wiki page here are the links.. :D \n\n\thttp://redmine.plexyplanet.org/\n\thttp://plexyplanet.org/"
+var infoDesktop = "\tPlexyDesk is a extension which lets you customize your desktop workspace.With Plexydesk you can add your own graphics,QML Widgets and even write extensions to change the way your desktop works.";
+var infoAddingWidget = "\tJust \"Drag'n'Drop\" any QML Widget from your File Manager or the Web and watch the widget come alive!.";
+var addWidgetCommand = "";
+var infoDeleteWidget = "\tNot supported Currently";
+var infoChangeWallpaper = "\tWith Plexydesk just \"Drag'n'Drop\" any image to change your wallpaper ";
+var infoDevelopment = "\tIf you are good or even interested in VOIP Technologies,OpenGL,Mathematics and Physics,Have Experience with libjingle or willing to code using it,2D Graphics and Art Work,GTK and Qt 4.x,Write howtos,Report Bugs and Beta testing or Just good at gossiping? We would like to hear from you. The Plexydesk Team and the rest of the community will indeed appreciate your valuable contribution.";
+var infoWiki = "\tVisit our Wiki \n\thttp://redmine.plexyplanet.org/\n\thttp://plexyplanet.org/";
 
 function changeState(base,stt) {
     base.state = stt;
