@@ -1,3 +1,19 @@
+plexydesk (0.6.0-0) unstable; urgency=low
+
+  Feature #52: Create mac osx application bundle
+  Feature #53: Create .deb files for plexydesk
+  Feature #55: Depricate the following classes from the core library
+  Feature #58: digital clock with QML
+  Feature #66: Commits to review
+  Release #42: Icon contaner
+  Bug #61: Folder view does not monitor file system changes
+  Bug #64: FolderView Widget does not show the Desktop files
+  Bug #65: Native widgets are not loading, find out why
+  Bug #67: plexy doesn't load jpeg images on windows
+  Bug #68: dragging and dropping images does not work on windows
+
+ -- Siraj Razick <siraj@plexyplanet.org>  Sun, 03 Jul 2011 04:01:00 +0530
+
 plexydesk (0.5.26~1) unstable; urgency=low
 
    * Fixes : PPA Build Issue Fix
