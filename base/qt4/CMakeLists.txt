@@ -1,13 +1,9 @@
-SET(QT_USE_OPENGL TRUE)
-
-INCLUDE(${QT_USE_FILE})
-
 INCLUDE_DIRECTORIES(
     ${QT_INCLUDES}
     ${QT_QTOPENGL_INCLUDE_DIR}
     ${QT_QTNETWORK_INCLUDE_DIR}
     ${QT_QTTEST_INCLUDE_DIR}
-)
+    )
 
 SET(sourceFiles
     abstractplugininterface.cpp
@@ -24,7 +20,7 @@ SET(sourceFiles
     plexyconfig.cpp
     pluginloader.cpp
     viewlayer.cpp
-)
+    )
 
 SET(headerFiles
    plexy.h
@@ -52,7 +48,7 @@ SET(headerFiles
    viewlayer.h
    widgetinterface.h
    widgetplugin.h
-)
+   )
 
 SET(MOC_SRCS
    abstractplugininterface.h
@@ -73,26 +69,25 @@ SET(MOC_SRCS
    viewlayer.h
    widgetinterface.h
    widgetplugin.h
-)
+   )
 
-#for now only dbus works only under linux
+# DBUS is working only under linux for now
 IF (NOT APPLE)
-IF (UNIX)
-QT4_ADD_DBUS_ADAPTOR(dbus_SRCS org.plexydesk.Config.xml
-                        plexyconfig.h PlexyDesk::Config)
-SET (DBUS_LIB ${QT_QTDBUS_LIBRARY})
-MESSAGE(${dbus_SRCS})
-ENDIF(UNIX)
-
+    IF (UNIX)
+        QT4_ADD_DBUS_ADAPTOR(dbus_SRCS org.plexydesk.Config.xml
+                             plexyconfig.h PlexyDesk::Config)
+        SET (DBUS_LIB ${QT_QTDBUS_LIBRARY})
+        MESSAGE(${dbus_SRCS})
+    ENDIF(UNIX)
 ENDIF (NOT APPLE)
 
-qt4_wrap_cpp(QT_MOC_SRCS ${MOC_SRCS})
+QT4_WRAP_CPP(QT_MOC_SRCS ${MOC_SRCS})
 
 SET(sourceFiles
-   ${sourceFiles}
-   ${headerFiles}
-   ${dbus_SRCS}
-)
+    ${sourceFiles}
+    ${headerFiles}
+    ${dbus_SRCS}
+    )
 
 SET(libs
     ${QT_QTGUI_LIBRARY}
@@ -103,7 +98,7 @@ SET(libs
     ${DBUS_LIB}
     ${QT_QTNETWORK_LIBRARY}
     ${QT_QTDECLARATIVE_LIBRARY}
-)
+    )
 
 ADD_LIBRARY(plexydeskcore SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
@@ -112,16 +107,16 @@ IF(MINGW)
         IMPORT_SUFFIX ".lib"
         IMPORT_PREFIX ""
         PREFIX ""
-    )
+        )
 ENDIF(MINGW)
 
 TARGET_LINK_LIBRARIES(
     plexydeskcore
     ${libs}
-)
+    )
 
 IF (NOT WIN32)
-    INSTALL(TARGETS plexydeskcore DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/)
+    INSTALL(TARGETS plexydeskcore DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
 ELSEIF(WIN32)
-    INSTALL(TARGETS plexydeskcore DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/)
+    INSTALL(TARGETS plexydeskcore DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
 ENDIF(NOT WIN32)

@@ -1,0 +1,25 @@
+${APPLICATION_EXE_NAME} ICON "${APPLICATION_EXE_NAME}.ico"
+1 VERSIONINFO
+FILEVERSION     ${LIB_MAJOR},${LIB_MINOR},${LIB_RELEASE},${LIB_SUB_RELEASE}
+PRODUCTVERSION  ${LIB_MAJOR},${LIB_MINOR},${LIB_RELEASE},${LIB_SUB_RELEASE}
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "080904E4"
+    BEGIN
+      VALUE "CompanyName", "PlexyDesk Team, http://www.plexyplanet.org"
+      VALUE "FileDescription", "${APPLICATION_NAME} - the rich featured desktop"
+      VALUE "FileVersion", "${APPLICATION_MAIN_VERSION}"
+      VALUE "InternalName", "${APPLICATION_EXE_NAME}"
+      VALUE "LegalCopyright", "GNU LGPLv3 PlexyDesk Team 2011"
+      VALUE "OriginalFilename", "${APPLICATION_EXE_NAME}.exe"
+      VALUE "ProductName", "${APPLICATION_NAME}"
+      VALUE "ProductVersion", "${APPLICATION_MAIN_VERSION}"
+    END
+  END
+
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x809, 1252
+  END
+END
