@@ -1,21 +1,18 @@
-
-SET(QT_USE_OPENGL TRUE)
-# -> this will cause cmake to include and link against the OpenGL module
-INCLUDE(${QT_USE_FILE})
+ADD_SUBDIRECTORY(youtube)
 
 INCLUDE_DIRECTORIES(
     ${QT_INCLUDES}
     ${QT_QTOPENGL_INCLUDE_DIR}
     ${QT_QTNETWORK_INCLUDE_DIR}
     ${QT_QTTEST_INCLUDE_DIR}
-)
+    )
 
 SET(sourceFiles
     videoentity.cpp
     youtube.cpp
     youtubeinterface.cpp
     youtubewidget.cpp
-)
+    )
 
 SET(headerFiles
     videoentity.h
@@ -23,27 +20,27 @@ SET(headerFiles
     youtubeinterface.h
     youtubewidget.h
     config.h
-)
+    )
 
 SET(QTMOC_SRCS
     youtube.h
     youtubeinterface.h
     youtubewidget.h
-)
+    )
 
 QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})
 
 SET(sourceFiles
     ${sourceFiles}
     ${headerFiles}
-)
+    )
 
 SET(libs
     ${QT_QTGUI_LIBRARY}
     ${OPENGL_LIBRARIES}
     ${QT_QTCORE_LIBRARY}
     ${QT_QTOPENGL_LIBRARY}
-)
+    )
 
 ADD_LIBRARY(plexyyoutube SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
@@ -52,16 +49,14 @@ IF(MINGW)
         IMPORT_SUFFIX ".lib"
         IMPORT_PREFIX ""
         PREFIX ""
-    )
+        )
 ENDIF(MINGW)
 
 TARGET_LINK_LIBRARIES(
     plexyyoutube
     plexydeskcore
     ${libs}
-)
+    )
 
-INSTALL(TARGETS plexyyoutube DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext/)
-INSTALL(FILES youtube.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups/)
-
-ADD_SUBDIRECTORY(youtube)
+INSTALL(TARGETS plexyyoutube DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext)
+INSTALL(FILES youtube.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups)

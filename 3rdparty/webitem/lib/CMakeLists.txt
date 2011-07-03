@@ -1,26 +1,26 @@
 INCLUDE_DIRECTORIES(
     ${QT_INCLUDES}
-)
+    )
 
 SET(sourceFiles
     qwebviewitem.cpp
-)
+    )
 
 SET(headerFiles
     qwebviewitem.h
     config.h
-)
+    )
 
 SET(MOC_SRCS
     qwebviewitem.h
-)
+    )
 
-qt4_wrap_cpp(QT_MOC_SRCS ${MOC_SRCS})
+QT4_WRAP_CPP(QT_MOC_SRCS ${MOC_SRCS})
 
-set(sourceFiles
-        ${sourceFiles}
-        ${headerFiles}
-)
+SET(sourceFiles
+    ${sourceFiles}
+    ${headerFiles}
+    )
 
 ADD_LIBRARY (webqgv SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
@@ -29,7 +29,7 @@ IF(MINGW)
         IMPORT_SUFFIX ".lib"
         IMPORT_PREFIX ""
         PREFIX ""
-    )
+        )
 ENDIF(MINGW)
 
 SET(libs
@@ -37,11 +37,11 @@ SET(libs
     ${QT_QTGUI_LIBRARY}
     ${QT_QTCORE_LIBRARY}
     ${QT_QTSVG_LIBRARY}
-)
+    )
 
 TARGET_LINK_LIBRARIES(
     webqgv
     ${libs}
-)
+    )
 
-INSTALL(TARGETS webqgv DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/)
+INSTALL(TARGETS webqgv DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)

@@ -1,41 +1,39 @@
-include(${QT_USE_FILE})
-
 INCLUDE_DIRECTORIES(
-	${QT_INCLUDES}
-	${QT_QTXMLPATTERNS_INCLUDE_DIR}
-)
+    ${QT_INCLUDES}
+    ${QT_QTXMLPATTERNS_INCLUDE_DIR}
+    )
 
 SET(sourceFiles
-	test.cpp
-        testmime.cpp
-)
+    test.cpp
+    testmime.cpp
+    )
 
-set(headerFiles
-        testmime.h
-)
+SET(headerFiles
+    testmime.h
+    )
 
-set(QTMOC_SRCS
-        testmime.h
-)
+SET(QTMOC_SRCS
+    testmime.h
+    )
 
-qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
+QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})
 
-set(sourceFiles
-        ${sourceFiles}
-        ${headerFiles}
-)
+SET(sourceFiles
+    ${sourceFiles}
+    ${headerFiles}
+    )
 
-set(libs
-	${QT_QTCORE_LIBRARY}
-	${QT_QTXMLPATTERNS_LIBRARY}
-)
+SET(libs
+    ${QT_QTCORE_LIBRARY}
+    ${QT_QTXMLPATTERNS_LIBRARY}
+    )
 
 ADD_EXECUTABLE(plexymimetest ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
-	plexymimetest
+    plexymimetest
     plexymime
-	${libs}
-)
+    ${libs}
+    )
 
 INSTALL(TARGETS plexymimetest DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)

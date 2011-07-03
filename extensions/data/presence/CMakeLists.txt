@@ -1,55 +1,51 @@
-find_package(TelepathyQt4)
-
-set(QT_USE_OPENGL TRUE)
-# -> this will cause cmake to include and link against the OpenGL module
-include(${QT_USE_FILE})
+FIND_PACKAGE(TelepathyQt4)
 
 INCLUDE_DIRECTORIES(
-	${QT_INCLUDES}
-	${QT_QTOPENGL_INCLUDE_DIR}
-	${QT_QTNETWORK_INCLUDE_DIR}
-	${QT_QTTEST_INCLUDE_DIR}
-	${TELEPATHY_QT4_INCLUDE_DIR}
-)
+    ${QT_INCLUDES}
+    ${QT_QTOPENGL_INCLUDE_DIR}
+    ${QT_QTNETWORK_INCLUDE_DIR}
+    ${QT_QTTEST_INCLUDE_DIR}
+    ${TELEPATHY_QT4_INCLUDE_DIR}
+    )
 
 SET(sourceFiles
-	presence.cpp
-	presenceinterface.cpp
-)
+    presence.cpp
+    presenceinterface.cpp
+    )
 
-set(headerFiles
-	presence.h
-	presenceinterface.h
-)
+SET(headerFiles
+    presence.h
+    presenceinterface.h
+    )
 
-set(QTMOC_SRCS
-	presence.h
-	presenceinterface.h
-)
-qt4_wrap_cpp(QT_MOC_SRCS ${QTMOC_SRCS})
+SET(QTMOC_SRCS
+    presence.h
+    presenceinterface.h
+    )
 
-set(sourceFiles
-	${sourceFiles}
-	${headerFiles}
-)
+QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})
 
-set(libs
-	${QT_QTGUI_LIBRARY}
-	${OPENGL_LIBRARIES}
-	${QT_QTCORE_LIBRARY}
-	${QT_QTDBUS_LIBRARY}
-	${QT_QTOPENGL_LIBRARY}
-	${TELEPATHY_QT4_LIBRARIES}
-)
+SET(sourceFiles
+    ${sourceFiles}
+    ${headerFiles}
+    )
 
-add_library (presenceengine SHARED ${sourceFiles} ${QT_MOC_SRCS})
+SET(libs
+    ${QT_QTGUI_LIBRARY}
+    ${OPENGL_LIBRARIES}
+    ${QT_QTCORE_LIBRARY}
+    ${QT_QTDBUS_LIBRARY}
+    ${QT_QTOPENGL_LIBRARY}
+    ${TELEPATHY_QT4_LIBRARIES}
+    )
+
+ADD_LIBRARY(presenceengine SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
-	presenceengine
-	qtviz
-	${libs}
-)
+    presenceengine
+    qtviz
+    ${libs}
+    )
 
-INSTALL(TARGETS presenceengine DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext/)
-install(FILES presence.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups/)
-
+INSTALL(TARGETS presenceengine DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext)
+INSTALL(FILES presence.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups)
