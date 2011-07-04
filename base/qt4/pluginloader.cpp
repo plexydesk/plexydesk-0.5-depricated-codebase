@@ -45,7 +45,8 @@ public:
 
 PluginLoader::PluginLoader() : d(new Private)
 {
-    d->prefix = applicationDirPath() + "/ext/groups/";
+    d->prefix = applicationDirPath() +
+        QLatin1String("/plexydesk//ext/groups/");
 }
 
 PluginLoader::~PluginLoader()
