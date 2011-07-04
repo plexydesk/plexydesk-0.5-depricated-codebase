@@ -59,7 +59,7 @@ ADD_EXECUTABLE(socialplexyaccountman ${WIN_APPLICATION} ${sourceFiles} ${QT_MOC_
 
 IF(MSVC)
     MSVC_SET_PROPER_CONSOLE_HANDLING(socialplexyaccountman)
-ENDIF(MSVC))
+ENDIF(MSVC)
 
 TARGET_LINK_LIBRARIES(
     socialplexyaccountman

@@ -77,7 +77,6 @@ IF (NOT APPLE)
         QT4_ADD_DBUS_ADAPTOR(dbus_SRCS org.plexydesk.Config.xml
                              plexyconfig.h PlexyDesk::Config)
         SET (DBUS_LIB ${QT_QTDBUS_LIBRARY})
-        MESSAGE(${dbus_SRCS})
     ENDIF(UNIX)
 ENDIF (NOT APPLE)
 
