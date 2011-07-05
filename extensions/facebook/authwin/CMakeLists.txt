@@ -48,4 +48,4 @@ TARGET_LINK_LIBRARIES(
     )
 
 INSTALL(TARGETS plexyauth DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext)
-INSTALL(FILES authwidget.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups)
+INSTALL(FILES authwidget.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexydesk/ext/groups)
