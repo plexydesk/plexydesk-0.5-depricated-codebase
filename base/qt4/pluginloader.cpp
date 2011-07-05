@@ -45,8 +45,8 @@ public:
 
 PluginLoader::PluginLoader() : d(new Private)
 {
-    d->prefix = applicationDirPath() +
-        QLatin1String("/plexydesk//ext/groups/");
+    d->prefix = QDir::toNativeSeparators(applicationDirPath() +
+        QString(QLatin1String("/share/plexydesk//ext/groups/")));
 }
 
 PluginLoader::~PluginLoader()

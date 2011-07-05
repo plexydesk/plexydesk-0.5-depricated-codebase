@@ -45,6 +45,10 @@ public:
     void scanDisk();
 
     QString applicationDirPath() {
+        QDir binaryPath (QCoreApplication::applicationDirPath());
+        if (binaryPath.cdUp()) {
+            return QDir::toNativeSeparators(binaryPath.canonicalPath());
+        }
         return QDir::toNativeSeparators (PLEXPREFIX);
     }
 

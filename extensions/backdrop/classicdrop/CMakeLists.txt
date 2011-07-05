@@ -53,4 +53,4 @@ TARGET_LINK_LIBRARIES(
     )
 
 INSTALL(TARGETS classicbackdrop DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext)
-INSTALL(FILES classic.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/plexydesk/ext/groups)
+INSTALL(FILES classic.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexydesk/ext/groups)
