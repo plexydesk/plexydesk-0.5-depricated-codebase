@@ -70,6 +70,8 @@ public:
     void setIconTheme(const QString &name);
     void setOpenGL(bool enable);
 
+    static QString plexydeskBasePath();
+
 public Q_SLOTS:
     void setWallpaper(const QString &str);
     void addWidget(const QString &widget);

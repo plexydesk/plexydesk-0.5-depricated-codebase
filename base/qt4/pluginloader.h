@@ -44,14 +44,6 @@ public:
     BasePlugin *instance(const QString &name);
     void scanDisk();
 
-    QString applicationDirPath() {
-        QDir binaryPath (QCoreApplication::applicationDirPath());
-        if (binaryPath.cdUp()) {
-            return QDir::toNativeSeparators(binaryPath.canonicalPath());
-        }
-        return QDir::toNativeSeparators (PLEXPREFIX);
-    }
-
 protected:
     void loadDesktop(const QString &path);
     void load(const QString &_interface, const QString &plugin);

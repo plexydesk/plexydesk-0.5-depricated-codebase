@@ -18,7 +18,7 @@
 *******************************************************************************/
 #include "pluginloader.h"
 #include "extensionfactory.h"
-
+#include <plexyconfig.h>
 #include <QDebug>
 #include <QDir>
 #include <QPluginLoader>
@@ -45,7 +45,7 @@ public:
 
 PluginLoader::PluginLoader() : d(new Private)
 {
-    d->prefix = QDir::toNativeSeparators(applicationDirPath() +
+    d->prefix = QDir::toNativeSeparators(Config::plexydeskBasePath() +
         QString(QLatin1String("/share/plexydesk//ext/groups/")));
 }
 
@@ -83,15 +83,9 @@ void PluginLoader::load(const QString &interface, const QString &pluginName)
     if(d->groups.find(pluginName) != d->groups.end())
         return;
 
-#ifdef Q_WS_MAC
-    QPluginLoader loader(applicationDirPath() + "/lib/plexyext/lib" + pluginName + ".dylib");
-#endif
-#ifdef Q_WS_X11
-    QPluginLoader loader(applicationDirPath() + "/lib/plexyext/lib" + pluginName + ".so");
-#endif
-#ifdef Q_WS_WIN
-    QPluginLoader loader(applicationDirPath() + "/lib/plexyext/" + pluginName + ".dll");
-#endif
+    QPluginLoader loader(QDir::toNativeSeparators(Config::plexydeskBasePath() + 
+                "/lib/plexyext/lib" + pluginName + ".so"));
+
     QObject *plugin = loader.instance();
     if (plugin) {
         AbstractPluginInterface *Iface = 0;

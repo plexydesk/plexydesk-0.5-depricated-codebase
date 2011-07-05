@@ -252,4 +252,15 @@ void Config::setProxyURL(const QString &url)
 {
     d->mData["proxyURL"] = QVariant(url);
 }
+
+QString Config::plexydeskBasePath()
+{
+    QDir binaryPath (QCoreApplication::applicationDirPath());
+    if (binaryPath.cdUp()) {
+        return QDir::toNativeSeparators(binaryPath.canonicalPath());
+    }
+
+    return QDir::toNativeSeparators (PLEXPREFIX);
+}
+
 }
