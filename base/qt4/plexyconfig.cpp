@@ -22,6 +22,7 @@
 #include <QDir>
 #include <QHash>
 #include <config.h>
+#include <QCoreApplication>
 
 #ifdef Q_WS_X11
 #include <configadaptor.h>
