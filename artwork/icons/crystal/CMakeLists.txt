@@ -31,9 +31,9 @@ SET(ICONS
 FOREACH(X ${ICONS})
     MESSAGE("Processing Icons ................. ${X}")
     FILE(GLOB PNGFILES ${X}/*.*)
-    INSTALL(FILES ${PNGFILES} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/skins/default/icons/${X})
+    INSTALL(FILES ${PNGFILES} DESTINATION share/plexy/skins/default/icons/${X})
 ENDFOREACH(X)
 
 FILE(GLOB FILES_theme *.*)
 
-INSTALL(FILES ${FILES_theme} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/skins/default/icons)
+INSTALL(FILES ${FILES_theme} DESTINATION share/plexy/skins/default/icons)

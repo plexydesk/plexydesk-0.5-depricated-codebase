@@ -42,10 +42,10 @@ EMDIF(MSVC)
 
 TARGET_LINK_LIBRARIES(
     plexyfrens
-    plexydeskcore
+    ${PLEXY_CORE_LIBRARY}
     ${libs}
     )
 
 
 ########### Install files ###############
-INSTALL(TARGETS plexyfrens DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
+INSTALL(TARGETS plexyfrens DESTINATION bin)

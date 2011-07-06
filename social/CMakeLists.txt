@@ -39,11 +39,11 @@ ENDIF(MSVC)
 
 TARGET_LINK_LIBRARIES(
     socialplexydaemon
-    plexydeskcore
+    ${PLEXY_CORE_LIBRARY}
     ${libs}
     )
 
 DBUS_ADD_ACTIVATION_SERVICE(org.plexydesk.social.service.in)
 
 ########### Install files ###############
-INSTALL(TARGETS socialplexydaemon  DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
+INSTALL(TARGETS socialplexydaemon  DESTINATION bin)

@@ -42,9 +42,9 @@ ENDIF(MSVC)
 
 TARGET_LINK_LIBRARIES(
     plexypanel
-    plexydeskcore
+    ${PLEXY_CORE_LIBRARY}
     ${libs}
     )
 
 ########### Install files ###############
-INSTALL(TARGETS plexypanel  DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
+INSTALL(TARGETS plexypanel  DESTINATION bin)

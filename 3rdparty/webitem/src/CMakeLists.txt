@@ -30,4 +30,4 @@ TARGET_LINK_LIBRARIES(
 
 
 ########### Install files ###############
-INSTALL(TARGETS stefani DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
+INSTALL(TARGETS stefani DESTINATION bin)

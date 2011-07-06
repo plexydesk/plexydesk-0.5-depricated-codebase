@@ -25,4 +25,4 @@ TARGET_LINK_LIBRARIES(
     ${QT_QTOPENGL_LIBRARY}
     )
 
-INSTALL(TARGETS videowidget DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext/widgets)
+INSTALL(TARGETS videowidget DESTINATION lib/plexyext/widgets)

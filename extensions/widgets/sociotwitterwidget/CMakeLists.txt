@@ -47,5 +47,5 @@ TARGET_LINK_LIBRARIES(
     ${libs}
     )
 
-INSTALL(TARGETS sociotweets DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext)
-INSTALL(FILES sociotweets.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups)
+INSTALL(TARGETS sociotweets DESTINATION lib/plexyext)
+INSTALL(FILES sociotweets.desktop DESTINATION share/plexy/ext/groups)

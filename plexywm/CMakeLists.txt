@@ -53,7 +53,7 @@ ENDIF(MSVC)
 
 TARGET_LINK_LIBRARIES(
     plexydeskwm
-    plexydeskcore
+    ${PLEXY_CORE_LIBRARY}
     Xcomposite
     Xdamage
     ${libs}
@@ -61,5 +61,5 @@ TARGET_LINK_LIBRARIES(
 
 
 ########### Install files ###############
-INSTALL(TARGETS plexydeskwm DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
+INSTALL(TARGETS plexydeskwm DESTINATION bin)
 #INSTALL(FILES raptor.desktop  DESTINATION  ${DATA_INSTALL_DIR}/kicker/applets)

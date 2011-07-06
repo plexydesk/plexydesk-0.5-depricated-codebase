@@ -54,5 +54,10 @@ TARGET_LINK_LIBRARIES(
     ${libs}
     )
 
+<<<<<<< Updated upstream
 INSTALL(TARGETS plexyclock DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext)
 INSTALL(FILES clock.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexydesk/ext/groups)
+=======
+INSTALL(TARGETS plexyclock DESTINATION lib/plexyext)
+INSTALL(FILES clock.desktop DESTINATION share/plexy/ext/groups)
+>>>>>>> Stashed changes

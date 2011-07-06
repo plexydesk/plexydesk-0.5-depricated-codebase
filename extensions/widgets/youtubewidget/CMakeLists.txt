@@ -54,9 +54,9 @@ ENDIF(MINGW)
 
 TARGET_LINK_LIBRARIES(
     plexyyoutube
-    plexydeskcore
+    ${PLEXY_CORE_LIBRARY}
     ${libs}
     )
 
-INSTALL(TARGETS plexyyoutube DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext)
-INSTALL(FILES youtube.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups)
+INSTALL(TARGETS plexyyoutube DESTINATION lib/plexyext)
+INSTALL(FILES youtube.desktop DESTINATION share/plexy/ext/groups)

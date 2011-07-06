@@ -122,4 +122,4 @@ TARGET_LINK_LIBRARIES(
     )
 
 ########### Install files ###############
-INSTALL(TARGETS plexydesk DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
+INSTALL(TARGETS plexydesk DESTINATION bin)

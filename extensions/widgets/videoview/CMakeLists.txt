@@ -45,9 +45,9 @@ ADD_LIBRARY(videoview SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
     videoview
-    plexydeskcore
+    ${PLEXY_CORE_LIBRARY}
     ${libs}
     )
 
-INSTALL(TARGETS videoview DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext)
-INSTALL(FILES videoview.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups)
+INSTALL(TARGETS videoview DESTINATION lib/plexyext)
+INSTALL(FILES videoview.desktop DESTINATION share/plexy/ext/groups)

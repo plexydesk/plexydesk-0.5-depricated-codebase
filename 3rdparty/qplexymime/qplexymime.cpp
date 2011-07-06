@@ -27,7 +27,7 @@
 QPlexyMime::QPlexyMime(QObject *parent)
     : QObject(parent)
 {
-    QFile sourceDocument(QString(PLEXPREFIX) + "/mime/freedesktop.org.xml");
+    QFile sourceDocument(QString(PLEXPREFIX) + "/share/plexy/mime/freedesktop.org.xml");
     sourceDocument.open(QIODevice::ReadOnly);
 
     mInternalQuery = QString("declare namespace ns = 'http://www.freedesktop.org/standards/shared-mime-info';\ndeclare variable $internalFile external;\n");

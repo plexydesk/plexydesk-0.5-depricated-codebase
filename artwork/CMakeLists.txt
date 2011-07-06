@@ -1,6 +1,6 @@
 #FILE(GLOB PNGFILES *.png)
 
-#INSTALL(FILES ${PNGFILES} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexy/skins/default/)
+#INSTALL(FILES ${PNGFILES} DESTINATION share/plexy/skins/default/)
 
 #ADD_SUBDIRECTORY(artwork)
 #ADD_SUBDIRECTORY(buttons)

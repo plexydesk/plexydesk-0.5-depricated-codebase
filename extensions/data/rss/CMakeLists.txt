@@ -33,5 +33,5 @@ TARGET_LINK_LIBRARIES(
         ${QT_QTOPENGL_LIBRARY}
         )
 
-INSTALL(TARGETS rssengine DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext)
-INSTALL(FILES rss.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups)
+INSTALL(TARGETS rssengine DESTINATION lib/plexyext)
+INSTALL(FILES rss.desktop DESTINATION share/plexy/ext/groups)

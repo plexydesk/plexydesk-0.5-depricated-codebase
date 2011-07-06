@@ -44,4 +44,4 @@ TARGET_LINK_LIBRARIES(
     ${libs}
     )
 
-INSTALL(TARGETS plexy_icon_test DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
+INSTALL(TARGETS plexy_icon_test DESTINATION bin)

@@ -49,5 +49,5 @@ TARGET_LINK_LIBRARIES(
     ${libs}
     )
 
-INSTALL(TARGETS guardiannews DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext)
-INSTALL(FILES guardiannews.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups)
+INSTALL(TARGETS guardiannews DESTINATION lib/plexyext)
+INSTALL(FILES guardiannews.desktop DESTINATION share/plexy/ext/groups)

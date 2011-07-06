@@ -39,9 +39,9 @@ ADD_LIBRARY(utubeengine SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
     utubeengine
-    plexydeskcore
+    ${PLEXY_CORE_LIBRARY}
     ${libs}
     )
 
-INSTALL(TARGETS utubeengine DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext)
-INSTALL(FILES utube.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups)
+INSTALL(TARGETS utubeengine DESTINATION lib/plexyext)
+INSTALL(FILES utube.desktop DESTINATION share/plexy/ext/groups)

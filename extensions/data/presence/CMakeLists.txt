@@ -47,5 +47,5 @@ TARGET_LINK_LIBRARIES(
     ${libs}
     )
 
-INSTALL(TARGETS presenceengine DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext)
-INSTALL(FILES presence.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups)
+INSTALL(TARGETS presenceengine DESTINATION lib/plexyext)
+INSTALL(FILES presence.desktop DESTINATION share/plexy/ext/groups)

@@ -63,10 +63,10 @@ SET(libs
 
 TARGET_LINK_LIBRARIES(
     wallpaperchange
-    plexydeskcore
+    ${PLEXY_CORE_LIBRARY}
 #    qtviz
     ${libs}
     )
 
-INSTALL(TARGETS wallpaperchange DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext)
-INSTALL(FILES wallpaperchange.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups)
+INSTALL(TARGETS wallpaperchange DESTINATION lib/plexyext)
+INSTALL(FILES wallpaperchange.desktop DESTINATION share/plexy/ext/groups)

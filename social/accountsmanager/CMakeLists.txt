@@ -63,7 +63,7 @@ ENDIF(MSVC)
 
 TARGET_LINK_LIBRARIES(
     socialplexyaccountman
-    plexydeskcore
+    ${PLEXY_CORE_LIBRARY}
     ${libs}
     ${QT_QTSQL_LIBRARY}
     )
@@ -72,4 +72,4 @@ DBUS_ADD_ACTIVATION_SERVICE(org.plexydesk.SocialAccountsManager.service.in)
 
 
 ########### Install files ###############
-INSTALL(TARGETS socialplexyaccountman  DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/)
+INSTALL(TARGETS socialplexyaccountman  DESTINATION bin)

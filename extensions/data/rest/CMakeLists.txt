@@ -48,5 +48,5 @@ TARGET_LINK_LIBRARIES(
     ${libs}
     )
 
-INSTALL(TARGETS restengine DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext)
-INSTALL(FILES rest.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups)
+INSTALL(TARGETS restengine DESTINATION lib/plexyext)
+INSTALL(FILES rest.desktop DESTINATION share/plexy/ext/groups)

@@ -41,11 +41,16 @@ ADD_LIBRARY(plexyauth SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
     plexyauth
-    plexydeskcore
+    ${PLEXY_CORE_LIBRARY}
     plexyjson
     webqgv
     ${libs}
     )
 
+<<<<<<< Updated upstream
 INSTALL(TARGETS plexyauth DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext)
 INSTALL(FILES authwidget.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexydesk/ext/groups)
+=======
+INSTALL(TARGETS plexyauth DESTINATION lib/plexyext)
+INSTALL(FILES authwidget.desktop DESTINATION share/plexy/ext/groups)
+>>>>>>> Stashed changes

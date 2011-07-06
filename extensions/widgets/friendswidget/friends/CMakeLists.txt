@@ -1,3 +1,3 @@
 FILE(GLOB PNGFILES *.png )
 
-INSTALL(FILES ${PNGFILES}  DESTINATION ${CMAKE_INSTALL_PREFIX}/theme/skins/default/widget/friendswidget)
+INSTALL(FILES ${PNGFILES}  DESTINATION theme/skins/default/widget/friendswidget)

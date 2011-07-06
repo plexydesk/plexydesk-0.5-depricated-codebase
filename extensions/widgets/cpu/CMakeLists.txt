@@ -40,5 +40,5 @@ SET(libs
 ADD_LIBRARY(plexycpu SHARED ${sourceFiles})
 TARGET_LINK_LIBRARIES(plexycpu ${libs})
 
-INSTALL(TARGETS plexycpu DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext)
-INSTALL(FILES cpu.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups)
+INSTALL(TARGETS plexycpu DESTINATION lib/plexyext)
+INSTALL(FILES cpu.desktop DESTINATION share/plexy/ext/groups)

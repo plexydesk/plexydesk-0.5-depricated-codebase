@@ -39,9 +39,9 @@ ADD_LIBRARY(flickerengine SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
 	flickerengine
-	plexydeskcore
+	${PLEXY_CORE_LIBRARY}
 	${libs}
 )
 
-INSTALL(TARGETS flickerengine DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext)
-INSTALL(FILES flicker.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups)
+INSTALL(TARGETS flickerengine DESTINATION lib/plexyext)
+INSTALL(FILES flicker.desktop DESTINATION share/plexy/ext/groups)

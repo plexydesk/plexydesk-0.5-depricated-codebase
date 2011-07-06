@@ -43,5 +43,5 @@ TARGET_LINK_LIBRARIES(
     ${libs}
     )
 
-INSTALL(TARGETS ircengine DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext)
-INSTALL(FILES irc.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/ext/groups)
+INSTALL(TARGETS ircengine DESTINATION lib/plexyext)
+INSTALL(FILES irc.desktop DESTINATION share/plexy/ext/groups)
