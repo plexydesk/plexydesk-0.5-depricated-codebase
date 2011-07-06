@@ -52,10 +52,5 @@ TARGET_LINK_LIBRARIES(
     ${libs}
     )
 
-<<<<<<< Updated upstream
-INSTALL(TARGETS classicbackdrop DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext)
-INSTALL(FILES classic.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexydesk/ext/groups)
-=======
 INSTALL(TARGETS classicbackdrop DESTINATION lib/plexyext)
 INSTALL(FILES classic.desktop DESTINATION share/plexy/ext/groups)
->>>>>>> Stashed changes

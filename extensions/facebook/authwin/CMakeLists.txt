@@ -47,10 +47,5 @@ TARGET_LINK_LIBRARIES(
     ${libs}
     )
 
-<<<<<<< Updated upstream
-INSTALL(TARGETS plexyauth DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/plexyext)
-INSTALL(FILES authwidget.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plexydesk/ext/groups)
-=======
 INSTALL(TARGETS plexyauth DESTINATION lib/plexyext)
 INSTALL(FILES authwidget.desktop DESTINATION share/plexy/ext/groups)
->>>>>>> Stashed changes
