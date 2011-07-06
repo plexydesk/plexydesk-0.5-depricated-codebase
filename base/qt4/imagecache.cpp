@@ -44,7 +44,10 @@ ImageCache::~ImageCache()
 
 void ImageCache::load(const QString &themename)
 {
-    QString prefix = QDir::toNativeSeparators(PLEXPREFIX) + "/theme/"+ themename +"/";
+    QString prefix = QDir::toNativeSeparators(Config::plexydeskBasePath() +
+            QLatin1String("/theme/") +
+            themename
+            + QLatin1String("/"));
 
     QDir dir(prefix);
     dir.setFilter(QDir::Files);

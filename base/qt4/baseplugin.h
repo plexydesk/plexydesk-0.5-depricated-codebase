@@ -21,11 +21,6 @@ public:
     {
     }
 
-    QString applicationDirPath() const
-    {
-        return QDir::toNativeSeparators(PLEXPREFIX);
-    }
-
     QHash<QString, QString> metaData() const
     {
         return QHash<QString, QString>();

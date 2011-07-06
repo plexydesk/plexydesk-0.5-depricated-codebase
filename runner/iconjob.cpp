@@ -36,7 +36,7 @@ IconJob::IconJob(QObject *parent) : PendingJob(parent), d(new Private)
                  << QLatin1String("/usr/share/icons/")
                  << QLatin1String("/usr/share/icons/") + Config::getInstance()->iconTheme() + slash
                  << QLatin1String("/usr/share/app-install/icons/")
-                 << QLatin1String(PLEXPREFIX) + QLatin1String("/share/plexy/skins") +
+                 << Config::plexydeskBasePath() + QLatin1String("/share/plexy/skins") +
                     slash + Config::getInstance()->iconTheme() + slash + QLatin1String("icons") + slash;
     connect(this, SIGNAL(newJob()), this, SLOT(handleJob()), Qt::DirectConnection);
 }

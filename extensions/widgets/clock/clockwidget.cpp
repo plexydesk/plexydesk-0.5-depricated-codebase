@@ -29,13 +29,16 @@
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 #include <QDateTime>
+#include <QDir>
+#include <plexyconfig.h>
 
 ClockWidget::ClockWidget(const QRectF &rect, QWidget *widget)
     : PlexyDesk::DesktopWidget(rect, widget)
 {
     shade = 0;
 
-    setPath(applicationDirPath() + "/share/plexy/skins/default/clock/");
+    setPath(QDir::toNativeSeparators (
+                PlexyDesk::Config::plexydeskBasePath() + "/share/plexy/skins/default/clock/"));
     drawClockWidget();
 }
 

@@ -58,8 +58,8 @@ QDeclarativeEngine *Config::qmlEngine()
 {
     if (engine == 0) {
         engine = new QDeclarativeEngine;
-        engine->addImportPath(DesktopWidget::applicationDirPath() +
-                QDir::toNativeSeparators("/lib/qt4/imports/"));
+        engine->addImportPath(QDir::toNativeSeparators(
+                    Config::plexydeskBasePath() + QLatin1String("/lib/qt4/imports/")));
         return engine;
     } else {
         return engine;
@@ -84,7 +84,7 @@ Config::Config(const QString &organization,
 
     if (d->mSettings->value("CurrentWallpaper").toString().isNull()) {
         d->mData["CurrentWallpaper"] = QDir::toNativeSeparators(
-                QString(PLEXPREFIX)+ 
+                Config::plexydeskBasePath() + 
                 QLatin1String("/share/plexy/skins/default/default.png"));
     }
 
@@ -255,12 +255,22 @@ void Config::setProxyURL(const QString &url)
 
 QString Config::plexydeskBasePath()
 {
+#ifndef Q_WS_X11
     QDir binaryPath (QCoreApplication::applicationDirPath());
     if (binaryPath.cdUp()) {
         return QDir::toNativeSeparators(binaryPath.canonicalPath());
     }
+#endif
 
-    return QDir::toNativeSeparators (PLEXPREFIX);
+#ifdef Q_WS_X11
+    QString basePath(qgetenv("PLEXYDESK_DIR"));
+    if (basePath.isEmpty() || basePath.isNull()) {
+        return PLEXPREFIX;
+    }
+
+    return basePath;
+#endif
+
 }
 
 }

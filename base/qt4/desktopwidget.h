@@ -63,7 +63,6 @@ public :
     DesktopWidget(const QRectF &rect, QWidget *embeddedWidget = 0);
     virtual ~DesktopWidget();
 
-    static QString applicationDirPath();
     virtual QRectF boundingRect() const;
     void drawBackdrop(bool draw);
 

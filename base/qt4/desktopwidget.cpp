@@ -81,12 +81,14 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget) :
     d->angleHide = 0;
     d->scale = 1;
 
-    d->panel = QPixmap(applicationDirPath() +
-         "/share/plexy/skins/widgets/widget01/Panel.png");
-    d->back = QPixmap(applicationDirPath() +
-         "/share/plexy/skins/widgets/widget01/reverse.png");
-    d->dock = QPixmap(applicationDirPath() +
-         "/share/plexy/skins/widgets/widget01/Icon.png");
+    d->panel = QPixmap(QDir::toNativeSeparators(Config::plexydeskBasePath()  +
+         QLatin1String( "/share/plexy/skins/widgets/widget01/Panel.png")));
+
+    d->back = QPixmap(QDir::toNativeSeparators(Config::plexydeskBasePath()  +
+         QLatin1String("/share/plexy/skins/widgets/widget01/reverse.png")));
+
+    d->dock = QPixmap(QDir::toNativeSeparators(Config::plexydeskBasePath() +
+         QLatin1String("/share/plexy/skins/widgets/widget01/Icon.png")));
 
     setCacheMode(QGraphicsItem::ItemCoordinateCache, d->panel.size());
     setCacheMode(DeviceCoordinateCache);
@@ -387,8 +389,4 @@ void DesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     }
 }
 
-QString DesktopWidget::applicationDirPath()
-{
-    return QDir::toNativeSeparators(PLEXPREFIX);
-}
 } //namespace PlexyDesk
