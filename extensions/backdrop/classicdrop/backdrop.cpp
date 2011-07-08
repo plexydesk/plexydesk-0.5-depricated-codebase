@@ -58,6 +58,10 @@ void BgPlugin::changeWallpaperItem()
 
     mBackgroundPixmap = new QPixmap(PlexyDesk::Config::getInstance()->wallpaper());
 
+    if (mBackgroundPixmap->isNull()) {
+        return;
+    }
+
      //get desktop size
     QSize desktopSize;
 #ifdef Q_WS_MAC
@@ -71,8 +75,6 @@ void BgPlugin::changeWallpaperItem()
 
    mBackgroundItem->setPixmap(mBackgroundCache);
    mBlurAnimation->start();
-
-
 }
 void BgPlugin::data(QVariant &data)
 {
@@ -92,7 +94,7 @@ QGraphicsItem *BgPlugin::item()
         mBlurEffect = new QGraphicsBlurEffect();
         mBlurEffect->setBlurHints(QGraphicsBlurEffect::AnimationHint);
         mBlurAnimation = new QPropertyAnimation(mBlurEffect, "blurRadius");
-        mBlurAnimation->setDuration(500);
+        mBlurAnimation->setDuration(100);
         mBlurAnimation->setStartValue(5.0);
         mBlurAnimation->setEndValue(0.0);
 
