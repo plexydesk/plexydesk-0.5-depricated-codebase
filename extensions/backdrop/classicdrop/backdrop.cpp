@@ -90,19 +90,19 @@ QGraphicsItem *BgPlugin::item()
     if (mBackgroundItem == NULL) {
         mBackgroundItem = new QGraphicsPixmapItem(*mBackgroundPixmap);
         mBlurEffect = new QGraphicsBlurEffect();
+        mBlurEffect->setBlurHints(QGraphicsBlurEffect::AnimationHint);
         mBlurAnimation = new QPropertyAnimation(mBlurEffect, "blurRadius");
-        mBlurAnimation->setDuration(1000);
-        mBlurAnimation->setStartValue(10.0);
+        mBlurAnimation->setDuration(500);
+        mBlurAnimation->setStartValue(5.0);
         mBlurAnimation->setEndValue(0.0);
 
-
         mBackgroundItem->setGraphicsEffect(mBlurEffect);
-
         mBackgroundItem->setCacheMode(QGraphicsItem::ItemCoordinateCache);
 
         connect(PlexyDesk::Config::getInstance(),
                 SIGNAL(wallpaperChanged()), this,
                 SLOT(changeWallpaperItem()));
+
         mBlurAnimation->start();
     }
 
