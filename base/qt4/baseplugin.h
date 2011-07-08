@@ -4,6 +4,7 @@
 #include <plexy.h>
 
 #include <QCoreApplication>
+#include <QGraphicsItem>
 #include <QObject>
 #include <QString>
 #include <QSettings>
@@ -19,11 +20,6 @@ class PLEXYDESK_EXPORT BasePlugin : public QObject
 public:
     BasePlugin(QObject *parent = 0) : QObject(parent)
     {
-    }
-
-    QHash<QString, QString> metaData() const
-    {
-        return QHash<QString, QString>();
     }
 };
 } // namespace PlexyDesk

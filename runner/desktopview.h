@@ -41,6 +41,8 @@ public:
     void enableOpenGL(bool);
     void showLayer(const QString &name);
     void setThemePack(const QString &name);
+    void addWallpaperItem();
+
 #ifdef Q_WS_X11
     bool checkXCompositeExt();
     void redirectWindows();

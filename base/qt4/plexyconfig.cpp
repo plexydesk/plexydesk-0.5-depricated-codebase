@@ -143,10 +143,11 @@ void Config::writeToFile()
 
 void Config::setWallpaper(const QString &str)
 {
+    qDebug() << Q_FUNC_INFO << str;
     d->mData["CurrentWallpaper"] = QVariant(str);
     d->mSettings->setValue("CurrentWallpaper",
             d->mData["CurrentWallpaper"].toString());
-    Q_EMIT configChanged();
+    Q_EMIT wallpaperChanged();
 }
 
 void Config::addWidget(const QString &widget)

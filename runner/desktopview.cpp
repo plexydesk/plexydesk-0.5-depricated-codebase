@@ -81,6 +81,7 @@ public:
     float margin;
     bool openglOn;
     QGraphicsDropShadowEffect *mShadowEffect;
+    QGraphicsItem *backgroundWallpaperItem;
 };
 
 bool getLessThanWidget(const QGraphicsItem *it1, const QGraphicsItem *it2)
@@ -205,6 +206,17 @@ void DesktopView::setThemePack(const QString &name)
             parent->setPos(pos);
         }
 
+    }
+}
+
+void DesktopView::addWallpaperItem()
+{
+    if (d->bgPlugin) {
+        d->backgroundWallpaperItem = d->bgPlugin->item();
+        if (d->backgroundWallpaperItem) {
+            scene()->addItem(d->backgroundWallpaperItem);
+            d->backgroundWallpaperItem->show();
+        }
     }
 }
 

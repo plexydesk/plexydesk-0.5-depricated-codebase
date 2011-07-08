@@ -21,10 +21,14 @@
 
 #include <QPainter>
 #include <QDesktopWidget>
+#include <QGraphicsItem>
+#include <QGraphicsPixmapItem>
 #include <QPixmap>
 #include <plexy.h>
 #include <config.h>
 #include <backdropplugin.h>
+#include <QPropertyAnimation>
+#include <QGraphicsBlurEffect>
 
 class BgPlugin : public PlexyDesk::BackdropPlugin
 {
@@ -34,11 +38,13 @@ public:
     BgPlugin(QObject *object = 0);
     virtual ~BgPlugin();
     void render(QPainter *p, QRectF r);
+    QGraphicsItem *item();
 
 public Q_SLOTS:
     void data(QVariant &);
     void pushData(QVariant &) {
     }
+    void changeWallpaperItem();
 
 Q_SIGNALS:
     void dataChange();
@@ -46,6 +52,9 @@ Q_SIGNALS:
 private:
     QPixmap mBackgroundCache;
     QPixmap *mBackgroundPixmap;
+    QGraphicsPixmapItem *mBackgroundItem;
+    QPropertyAnimation *mBlurAnimation;
+    QGraphicsBlurEffect *mBlurEffect;
 };
 
 #endif //PLEXY_CLASSIC_BACKDROP_H

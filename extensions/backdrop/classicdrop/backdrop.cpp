@@ -26,13 +26,40 @@ BgPlugin::BgPlugin(QObject *object)
 {
     mBackgroundPixmap =
      new QPixmap(QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->wallpaper()));
-    qDebug() << Q_FUNC_INFO << QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->wallpaper());
+    mBackgroundItem = NULL;
 }
 
 BgPlugin::~BgPlugin()
 {
 }
 
+
+void BgPlugin::changeWallpaperItem()
+{
+    qDebug() << Q_FUNC_INFO << "Wallpaper Changed";
+    if (mBackgroundPixmap) {
+        delete mBackgroundPixmap;
+    }
+
+    mBackgroundPixmap = new QPixmap(PlexyDesk::Config::getInstance()->wallpaper());
+   // QPropertyAnimation *animation = new QPropertyAnimation(mBackgroundItem, QLatin1String("");
+
+     //get desktop size
+    QSize desktopSize;
+#ifdef Q_WS_MAC
+    desktopSize = QDesktopWidget().screenGeometry().size();
+#else
+    desktopSize = QDesktopWidget().availableGeometry().size();
+#endif
+    mBackgroundCache = mBackgroundPixmap->scaled(desktopSize.width(), desktopSize.height(),
+                Qt::KeepAspectRatioByExpanding,
+                Qt::SmoothTransformation);
+
+   mBackgroundItem->setPixmap(mBackgroundCache);
+   mBlurAnimation->start();
+
+
+}
 void BgPlugin::data(QVariant &data)
 {
     QImage wall = data.value<QImage>();
@@ -46,6 +73,7 @@ void BgPlugin::data(QVariant &data)
 
 void BgPlugin::render(QPainter *p, QRectF r)
 {
+    /*
     if (mBackgroundCache.isNull()) {
         mBackgroundCache = mBackgroundPixmap->scaled(r.width(), r.height(),
                 Qt::KeepAspectRatioByExpanding,
@@ -61,4 +89,29 @@ void BgPlugin::render(QPainter *p, QRectF r)
     p->setRenderHint(QPainter::NonCosmeticDefaultPen, false);
     p->drawPixmap(r.x(), r.y(), imageSize.width(), imageSize.height(), mBackgroundCache);
     p->restore();
+    */
+}
+
+QGraphicsItem *BgPlugin::item()
+{
+    if (mBackgroundItem == NULL) {
+        mBackgroundItem = new QGraphicsPixmapItem(*mBackgroundPixmap);
+        mBlurEffect = new QGraphicsBlurEffect();
+        mBlurAnimation = new QPropertyAnimation(mBlurEffect, "blurRadius");
+        mBlurAnimation->setDuration(1000);
+        mBlurAnimation->setStartValue(10.0);
+        mBlurAnimation->setEndValue(0.0);
+
+
+        mBackgroundItem->setGraphicsEffect(mBlurEffect);
+
+        mBackgroundItem->setCacheMode(QGraphicsItem::ItemCoordinateCache);
+
+        connect(PlexyDesk::Config::getInstance(),
+                SIGNAL(wallpaperChanged()), this,
+                SLOT(changeWallpaperItem()));
+        mBlurAnimation->start();
+    }
+
+    return mBackgroundItem;
 }

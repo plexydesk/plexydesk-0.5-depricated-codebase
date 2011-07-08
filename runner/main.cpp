@@ -78,6 +78,8 @@ int main( int argc, char * *argv )
 
     view->setScene(&scene);
 
+   view->addWallpaperItem();
+
     QObject::connect(view.data(), SIGNAL(closeApplication()), &app, SLOT(quit()));
     QRect r = QDesktopWidget().availableGeometry();
     view->move(r.x(), r.y());
@@ -104,6 +106,7 @@ int main( int argc, char * *argv )
 
     view->setThemePack(PlexyDesk::Config::getInstance()->themepackName());
     view->showLayer(QLatin1String("Widgets"));
+
 
     return app.exec();
 }

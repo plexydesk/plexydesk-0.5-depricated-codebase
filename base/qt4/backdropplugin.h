@@ -44,6 +44,7 @@ public:
     }
 
     virtual void render(QPainter *painter, QRectF rect) = 0;
+    virtual QGraphicsItem *item() = 0;
 
 public Q_SLOTS:
     virtual void pushData(QVariant &value) = 0;
