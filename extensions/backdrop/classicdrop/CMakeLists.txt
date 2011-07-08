@@ -53,4 +53,4 @@ TARGET_LINK_LIBRARIES(
     )
 
 INSTALL(TARGETS classicbackdrop DESTINATION lib/plexyext)
-INSTALL(FILES classic.desktop DESTINATION share/plexy/ext/groups)
+INSTALL(FILES classic.desktop DESTINATION share/plexydesk/ext/groups)

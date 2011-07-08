@@ -55,4 +55,4 @@ TARGET_LINK_LIBRARIES(
     )
 
 INSTALL(TARGETS plexyclock DESTINATION lib/plexyext)
-INSTALL(FILES clock.desktop DESTINATION share/plexy/ext/groups)
+INSTALL(FILES clock.desktop DESTINATION share/plexydesk/ext/groups)
