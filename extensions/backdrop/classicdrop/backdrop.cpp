@@ -31,6 +31,21 @@ BgPlugin::BgPlugin(QObject *object)
 
 BgPlugin::~BgPlugin()
 {
+    if (mBackgroundItem) {
+        delete mBackgroundItem;
+    }
+
+    if (mBackgroundPixmap) {
+        delete mBackgroundPixmap;
+    }
+
+    if (mBlurAnimation) {
+        delete mBlurAnimation;
+    }
+
+    if (mBlurEffect) {
+        delete mBlurEffect;
+    }
 }
 
 
@@ -42,7 +57,6 @@ void BgPlugin::changeWallpaperItem()
     }
 
     mBackgroundPixmap = new QPixmap(PlexyDesk::Config::getInstance()->wallpaper());
-   // QPropertyAnimation *animation = new QPropertyAnimation(mBackgroundItem, QLatin1String("");
 
      //get desktop size
     QSize desktopSize;
