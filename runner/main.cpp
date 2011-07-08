@@ -102,12 +102,6 @@ int main( int argc, char * *argv )
     loader->scanDisk();
     view->show();
 
-    /* load all the widgets to a Widget Browser Layer */
-    Q_FOREACH(const QString &pluginName, loader->listPlugins(QLatin1String("Widget"))) {
-        qDebug() << "Lading Plugins to Hidden Browser Layer";
-        view->addExtension(pluginName, QLatin1String("Browser"));
-    }
-
     view->setThemePack(PlexyDesk::Config::getInstance()->themepackName());
     view->showLayer(QLatin1String("Widgets"));
 
