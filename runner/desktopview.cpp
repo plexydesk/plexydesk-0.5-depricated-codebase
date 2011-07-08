@@ -383,8 +383,6 @@ void DesktopView::dropEvent(QDropEvent * event)
 
 void DesktopView::dragEnterEvent (QDragEnterEvent * event)
 {
-    qDebug() << Q_FUNC_INFO;
-
     if (!event) {
         return;
     } else {
@@ -408,7 +406,10 @@ void DesktopView::dragEnterEvent (QDragEnterEvent * event)
         return;
     }
     if (event->mimeData()->hasUrls()) {
-        Config::getInstance()->setWallpaper(event->mimeData()->urls().value(0).toLocalFile());
+        QFileInfo info(event->mimeData()->urls().value(0).toLocalFile());
+        if (!info.isDir() && !QPixmap(event->mimeData()->urls().value(0).toLocalFile()).isNull()) {
+           Config::getInstance()->setWallpaper(event->mimeData()->urls().value(0).toLocalFile());
+        }
     }
 
 }
