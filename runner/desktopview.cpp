@@ -425,11 +425,6 @@ void DesktopView::drawBackground(QPainter *painter, const QRectF &rect)
     painter->setClipRect(rect);
 
     painter->save();
-    if (d->bgPlugin) {
-       d->bgPlugin->render(painter, 
-                    QRectF(rect.x(), sceneRect().y(), 
-                        rect.width(), rect.height()));
-    }
     painter->restore();
 }
 

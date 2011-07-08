@@ -85,27 +85,6 @@ void BgPlugin::data(QVariant &data)
     emit dataChange();
 }
 
-void BgPlugin::render(QPainter *p, QRectF r)
-{
-    /*
-    if (mBackgroundCache.isNull()) {
-        mBackgroundCache = mBackgroundPixmap->scaled(r.width(), r.height(),
-                Qt::KeepAspectRatioByExpanding,
-                Qt::SmoothTransformation);
-        delete mBackgroundPixmap;
-    }
-
-    const QSize imageSize = mBackgroundCache.size();
-
-    p->save();
-    p->setRenderHint(QPainter::SmoothPixmapTransform, false);
-    p->setRenderHint(QPainter::Antialiasing, false);
-    p->setRenderHint(QPainter::NonCosmeticDefaultPen, false);
-    p->drawPixmap(r.x(), r.y(), imageSize.width(), imageSize.height(), mBackgroundCache);
-    p->restore();
-    */
-}
-
 QGraphicsItem *BgPlugin::item()
 {
     if (mBackgroundItem == NULL) {

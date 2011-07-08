@@ -37,7 +37,6 @@ class BgPlugin : public PlexyDesk::BackdropPlugin
 public:
     BgPlugin(QObject *object = 0);
     virtual ~BgPlugin();
-    void render(QPainter *p, QRectF r);
     QGraphicsItem *item();
 
 public Q_SLOTS:
