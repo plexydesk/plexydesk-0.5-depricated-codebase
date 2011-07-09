@@ -83,8 +83,20 @@ void PluginLoader::load(const QString &interface, const QString &pluginName)
     if(d->groups.find(pluginName) != d->groups.end())
         return;
 
+#ifdef Q_WS_MAC
+    QPluginLoader loader(QDir::toNativeSeparators(Config::plexydeskBasePath() + 
+                "/lib/plexyext/lib" + pluginName + ".dylib"));
+#endif
+
+#if Q_WS_X11
     QPluginLoader loader(QDir::toNativeSeparators(Config::plexydeskBasePath() + 
                 "/lib/plexyext/lib" + pluginName + ".so"));
+#endif
+
+#ifdef Q_WS_WIN
+    QPluginLoader loader(QDir::toNativeSeparators(Config::plexydeskBasePath() + 
+                "/lib/plexyext/lib" + pluginName + ".dll"));
+#endif
 
     QObject *plugin = loader.instance();
     if (plugin) {
