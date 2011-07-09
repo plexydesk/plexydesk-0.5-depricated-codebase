@@ -416,7 +416,7 @@ void DesktopView::dragEnterEvent (QDragEnterEvent * event)
 
 void DesktopView::drawBackground(QPainter *painter, const QRectF &rect)
 {
-    qDebug() << Q_FUNC_INFO << rect;
+    /*
     painter->setRenderHint(QPainter::TextAntialiasing, false);
 #ifdef Q_WS_X11
     painter->setRenderHint(QPainter::QPainter::SmoothPixmapTransform, false);
@@ -427,6 +427,7 @@ void DesktopView::drawBackground(QPainter *painter, const QRectF &rect)
 
     painter->save();
     painter->restore();
+    */
 }
 
 void DesktopView::mousePressEvent(QMouseEvent *event)

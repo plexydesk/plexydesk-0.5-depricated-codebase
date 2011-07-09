@@ -20,6 +20,7 @@
 #include <desktopwidget.h>
 #include <plexyconfig.h>
 #include <QDir>
+#include <QPixmapCache>
 
 BgPlugin::BgPlugin(QObject *object)
     : BackdropPlugin(object)
@@ -90,6 +91,10 @@ void BgPlugin::data(QVariant &data)
 QGraphicsItem *BgPlugin::item()
 {
     if (mBackgroundItem == NULL) {
+
+        QSize desktopSize = QDesktopWidget().screenGeometry().size();
+
+        QPixmapCache::setCacheLimit((desktopSize.height()* desktopSize.width() * 32)/8);
         mBackgroundItem = new QGraphicsPixmapItem(*mBackgroundPixmap);
         mBlurEffect = new QGraphicsBlurEffect();
         mBlurEffect->setBlurHints(QGraphicsBlurEffect::AnimationHint);
