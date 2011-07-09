@@ -60,7 +60,7 @@ QDeclarativeEngine *Config::qmlEngine()
     if (engine == 0) {
         engine = new QDeclarativeEngine;
         engine->addImportPath(QDir::toNativeSeparators(
-                    Config::plexydeskBasePath() + QLatin1String("/lib/qt4/imports/")));
+                    Config::getInstance()->plexydeskBasePath() + QLatin1String("/lib/qt4/imports/")));
         return engine;
     } else {
         return engine;
@@ -259,6 +259,7 @@ QString Config::plexydeskBasePath()
 {
 #ifndef Q_WS_X11
     QDir binaryPath (QCoreApplication::applicationDirPath());
+    qDebug() << Q_FUNC_INFO  << QDir::toNativeSeparators(binaryPath.canonicalPath());
     if (binaryPath.cdUp()) {
         return QDir::toNativeSeparators(binaryPath.canonicalPath());
     }

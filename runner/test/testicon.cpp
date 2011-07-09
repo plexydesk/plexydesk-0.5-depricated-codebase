@@ -59,14 +59,14 @@ void TestIcon::loadThemePackInit()
 
     QCOMPARE(themeLoader->wallpaper(),
             QDir::toNativeSeparators(
-                QString(PlexyDesk::Config::plexydeskBasePath()) +
+                QString(PlexyDesk::Config::getInstance()->plexydeskBasePath()) +
                 QString("//share/plexy/themepack/default/resources/default.png")));
 
     QCOMPARE(themeLoader->widgets("native").count() , 1);
 
     QCOMPARE(themeLoader->qmlFilesFromTheme("weather") , 
             QDir::toNativeSeparators(
-                 QString(PlexyDesk::Config::plexydeskBasePath()) +
+                 QString(PlexyDesk::Config::getInstance()->plexydeskBasePath()) +
                  QString("/share/plexy/themepack/default/weather/weather.qml")));
     Q_FOREACH(const QString &qmlWidget, themeLoader->widgets("QML")) {
        qDebug() <<  themeLoader->qmlFilesFromTheme(qmlWidget);

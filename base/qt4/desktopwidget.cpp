@@ -81,13 +81,13 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget) :
     d->angleHide = 0;
     d->scale = 1;
 
-    d->panel = QPixmap(QDir::toNativeSeparators(Config::plexydeskBasePath()  +
+    d->panel = QPixmap(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath()  +
          QLatin1String( "/share/plexy/skins/widgets/widget01/Panel.png")));
 
-    d->back = QPixmap(QDir::toNativeSeparators(Config::plexydeskBasePath()  +
+    d->back = QPixmap(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath()  +
          QLatin1String("/share/plexy/skins/widgets/widget01/reverse.png")));
 
-    d->dock = QPixmap(QDir::toNativeSeparators(Config::plexydeskBasePath() +
+    d->dock = QPixmap(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() +
          QLatin1String("/share/plexy/skins/widgets/widget01/Icon.png")));
 
     setCacheMode(QGraphicsItem::ItemCoordinateCache, d->panel.size());

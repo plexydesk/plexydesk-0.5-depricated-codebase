@@ -51,6 +51,8 @@ int main( int argc, char * *argv )
 #elif Q_WS_WIN
     qInstallMsgHandler(plexyWindowsLogger);
 #endif
+
+    qInstallMsgHandler(plexyWindowsLogger);
     QApplication app(argc, argv);
 
 #ifdef Q_WS_WIN

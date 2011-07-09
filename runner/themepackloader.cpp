@@ -6,7 +6,6 @@
 #include <QDesktopWidget>
 #include <QRect>
 
-const QString themePackPath = QString("%1/%2").arg(PlexyDesk::Config::plexydeskBasePath()).arg("/share/plexy/themepack");
 
 class ThemepackLoader::ThemepackLoaderPrivate
 {
@@ -18,13 +17,16 @@ public:
     QString mThemeCfgFile;
     QString mBasePath;
     QString mThemeName;
+    QString mThemePackPath;
 };
 
 ThemepackLoader::ThemepackLoader(const QString &themeName, QObject *parent) :
     QObject(parent), d (new ThemepackLoaderPrivate)
 {
+    d->mThemePackPath =
+        QString("%1/%2").arg(PlexyDesk::Config::getInstance()->plexydeskBasePath()).arg("/share/plexy/themepack");
     d->mThemeName = themeName;
-    QDir mainConfig(QString("%1/%2/").arg(themePackPath).arg(themeName));
+    QDir mainConfig(QString("%1/%2/").arg(d->mThemePackPath).arg(themeName));
     qDebug() << Q_FUNC_INFO << themeName;
     d->mSettings = new QSettings(QDir::toNativeSeparators(
                                  mainConfig.absoluteFilePath("main.cfg")),
@@ -44,7 +46,7 @@ QString ThemepackLoader::wallpaper()
     d->mSettings->endGroup();
 
     QDir
-        prefix(QString("%1/%2/%3").arg(themePackPath).arg(d->mThemeName).arg(QLatin1String("resources")));
+        prefix(QString("%1/%2/%3").arg(d->mThemePackPath).arg(d->mThemeName).arg(QLatin1String("resources")));
 
     return QDir::toNativeSeparators(prefix.absoluteFilePath(rv));
 }

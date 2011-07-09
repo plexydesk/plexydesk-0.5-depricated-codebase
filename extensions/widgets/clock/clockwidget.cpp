@@ -38,7 +38,7 @@ ClockWidget::ClockWidget(const QRectF &rect, QWidget *widget)
     shade = 0;
 
     setPath(QDir::toNativeSeparators (
-                PlexyDesk::Config::plexydeskBasePath() + "/share/plexy/skins/default/clock/"));
+                PlexyDesk::Config::getInstance()->plexydeskBasePath() + "/share/plexy/skins/default/clock/"));
     drawClockWidget();
 }
 

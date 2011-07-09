@@ -44,7 +44,7 @@ ImageCache::~ImageCache()
 
 void ImageCache::load(const QString &themename)
 {
-    QString prefix = QDir::toNativeSeparators(Config::plexydeskBasePath() +
+    QString prefix = QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() +
             QLatin1String("/theme/") +
             themename
             + QLatin1String("/"));

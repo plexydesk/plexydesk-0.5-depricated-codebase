@@ -7,10 +7,18 @@
 
 static void plexyWindowsLogger(QtMsgType type, const char *msg)
 {
-     QTextStream stream(stdout);
+    static QFile data("plexydesk_log.txt");
+    data.close();
+    if (!data.open(QFile::WriteOnly | QFile::Append)) {
+        return;
+    }
+ 
+    static QTextStream stream(&data);
+
      switch (type) {
      case QtDebugMsg:
-	 stream << QString("Debug:%1").arg(msg);
+	 stream << QString("Debug:%1").arg(msg) << endl;
+         stream.flush();
          break;
      case QtWarningMsg:
 	 stream << QString("Warning:%1").arg(msg);
@@ -23,7 +31,6 @@ static void plexyWindowsLogger(QtMsgType type, const char *msg)
 	 stream.flush();
          abort();
      }
-     stream.flush();
 }
 
 #endif
