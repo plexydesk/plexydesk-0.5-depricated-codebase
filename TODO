@@ -8,54 +8,61 @@
 
 * Try to write some test and see if the spring system works
 
-* Write API Doc and examples of how it can be used 
+* Write API Doc and examples of how it can be used
+
+
 
 == Social Data ==
 
 * Find ways to download social data
-* HTTP Job handler 
+
+* HTTP Job handler
+
 
 
 == OpenGL Canvas ==
 
-*  Input Proxy for widets
+* Input Proxy for widgets
 
-* Mapping Coordniates from view port to scene 
+* Mapping Coordniates from view port to scene
 
-* OpenGL Items, 
+* OpenGL Items
+
 
 
 Core
 ============
 
-* Refactor the Factory classes, 
+* Refactor the Factory classes,
 
 * Fix known issues
 
-* Make it More Desktop complient 
+* Make it more Desktop compliant
 
-* settings backends ( Kconfig / QtConfig / and GConf) 
+* Settings backends ( Kconfig / QtConfig / and GConf)
 
 * See ways to lower CPU
 
-* write Engines 
+* Write Engines
 
-* make it run on Windows
+* Make it run on Windows
+
 
 
 == Desktop View ==
 
 * Icon dock has to be done
 
-* Widget aniimations has to be improved 
+* Widget aniimations has to be improved
 
-* desktop settings
+* Desktop settings
 
-* Handle different view ports 
+* Handle different view ports
+
 
 
 == Framwork  VOIP ==
 
 * Integrate Tapioca VOIP
 
-* Write VOIP Engine for plexy desk
+* Write VOIP Engine for PlexyDesk

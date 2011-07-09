@@ -60,13 +60,23 @@ ELSE(CMAKE_BUILD_TYPE MATCHES ".*Deb.*")
 ENDIF(CMAKE_BUILD_TYPE MATCHES ".*Deb.*")
 
 
+# Check on Windows if we have used CMAKE_INSTALL_PREFIX or default it to
+# outsource special ready path
+# Set the install prefix
+IF(WIN32)
+        IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
+            SET(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/${APPLICATION_EXE_NAME}-ready-build")
+        ENDIF(NOT DEFINED CMAKE_INSTALL_PREFIX)
+        STRING(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
+ENDIF(WIN32)
+
+
 # This will cause cmake to include and link against the OpenGL module.
 # Set all flags first and then use the QT_USE_FILE to set everything.
 # Note that QT_USE_FILE also sets QT_DEFINITIONS
 SET(QT_USE_OPENGL TRUE)
 INCLUDE(${QT_USE_FILE})
 
-INCLUDE(CPack)
 INCLUDE(PkgConfigGetVar)
 
 INCLUDE_DIRECTORIES (
@@ -85,17 +95,20 @@ IF(WIN32)
     SET(FFMPEG_FOUND TRUE)
 ENDIF(WIN32)
 
-ADD_CUSTOM_TARGET(uninstall
-    "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
-
 CONFIGURE_FILE(config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h )
 CONFIGURE_FILE(plexydesk.Doxyfile.cmake ${CMAKE_CURRENT_BINARY_DIR}/plexydesk.Doxyfile )
-CONFIGURE_FILE(make_nsis_installer.cmake ${CMAKE_CURRENT_SOURCE_DIR}/make_nsis_installer.nsi )
 CONFIGURE_FILE(org.plexydesk.daemon.service.in ${CMAKE_CURRENT_BINARY_DIR}/org.plexydesk.daemon.service)
+CONFIGURE_FILE(
+    "${CMAKE_CURRENT_SOURCE_DIR}/windows/make_nsis_installer.cmake.nsi"
+    "${CMAKE_CURRENT_BINARY_DIR}/windows/make_nsis_installer.nsi"
+    @ONLY)
 CONFIGURE_FILE(
     "${CMAKE_CURRENT_SOURCE_DIR}/cmakemodules/cmake_uninstall.cmake.in"
     "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
     IMMEDIATE @ONLY)
+
+ADD_CUSTOM_TARGET(uninstall
+    "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
 
 # *** Windows Resource file handling ***
 # Put all the resource files for Windows in this section using the pattern bellow
@@ -103,16 +116,16 @@ CONFIGURE_FILE(
 # Then add the resource to the sources files as "resourceFiles" and use them
 # in the final target to be compiled (for an example see the runner/CMakeLists.txt)
 CONFIGURE_FILE(
-    "${CMAKE_CURRENT_SOURCE_DIR}/artwork/windows/${APPLICATION_EXE_NAME}_windres.rc.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/artwork/windows/${APPLICATION_EXE_NAME}_windres.rc")
+    "${CMAKE_CURRENT_SOURCE_DIR}/windows/${APPLICATION_EXE_NAME}_windres.rc.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/windows/${APPLICATION_EXE_NAME}_windres.rc")
 IF(MINGW)
     ADD_CUSTOM_COMMAND(
         OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/wally_rc.o
         COMMAND windres.exe
-                  -I ${CMAKE_CURRENT_SOURCE_DIR}/artwork/windows
-                  -o ${CMAKE_CURRENT_BINARY_DIR}/artwork/windows/${APPLICATION_EXE_NAME}_rc.o
-                  -i ${CMAKE_CURRENT_BINARY_DIR}/artwork/windows/windres.rc
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/artwork/windows
+                  -I ${CMAKE_CURRENT_SOURCE_DIR}/windows
+                  -o ${CMAKE_CURRENT_BINARY_DIR}/windows/${APPLICATION_EXE_NAME}_rc.o
+                  -i ${CMAKE_CURRENT_BINARY_DIR}/windows/windres.rc
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/windows
         COMMENT "Generating windows RC file ...")
 ENDIF(MINGW)
 
@@ -150,6 +163,8 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/panel
 #    ${CMAKE_SOURCE_DIR}/extensions/qml/folders/
 #    ${CMAKE_BINARY_DIR}/extensions/qml/folders/
+    ${CMAKE_SOURCE_DIR}/windows
+    ${CMAKE_BINARY_DIR}/windows
     ${QT_INCLUDE_DIR}
     )
 
@@ -175,6 +190,10 @@ IF (NOT APPLE)
         ENDIF(FFMPEG_FOUND)
     ENDIF(NOT WIN32)
 ENDIF (NOT APPLE)
+
+IF(WIN32)
+    ADD_SUBDIRECTORY(windows)
+ENDIF(WIN32)
 
 # *** ALL PLATFORMS ***
 ADD_SUBDIRECTORY(base/qt4)
@@ -207,14 +226,3 @@ ADD_SUBDIRECTORY(extensions/qml/folders)
 # *** Removed from building - ALL PLATFORMS ***
 #ADD_SUBDIRECTORY(3rdparty/cair)
 #ADD_SUBDIRECTORY(extensions/widgets/demowidget)
-
-# *** Setup CPack ***
-SET(CPACK_GENERATOR "NSIS")
-SET(CPACK_PACKAGE_NAME "plexydesktop")
-SET(CPACK_PACKAGE_VENDOR "plexyplanet.org")
-SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Extend your Desktop")
-SET(CPACK_PACKAGE_VERSION ${APPLICATION_MAIN_VERSION})
-SET(CPACK_PACKAGE_VERSION_MAJOR ${LIB_MAJOR})
-SET(CPACK_PACKAGE_VERSION_MINOR ${LIB_MINOR})
-SET(CPACK_PACKAGE_VERSION_PATCH ${LIB_RELEASE})
-SET(CPACK_PACKAGE_INSTALL_DIRECTORY "PlexyDesk Installer")

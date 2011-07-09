@@ -76,6 +76,7 @@ int main( int argc, char * *argv )
     desktopSize = QDesktopWidget().availableGeometry().size();
 #endif
 
+    view->setWindowTitle("plexydesk");
     view->enableOpenGL(accel);
 
     view->setScene(&scene);
