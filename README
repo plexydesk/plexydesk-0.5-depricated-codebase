@@ -1,8 +1,26 @@
-Building On Linux:
-=================
+Building On Linux (debug mode):
+===============================
+From sources root folder do:
 
 mkdir build
 cd build
-cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Debug -DCMAKE_VERBOSE_MAKEFILE=true -DCMAKE_CXX_FLAGS_DEBUG="-g -O0" -DCMAKE_CXX_FLAGS_DEBUG==true ..
+cmake ../ -DCMAKE_INSTALL_PREFIX:STRING=/usr -DCMAKE_BUILD_TYPE:STRING=Debug -DCMAKE_VERBOSE_MAKEFILE:BOOL=true -DCMAKE_CXX_FLAGS_DEBUG:STRING="-g -O0"
 make install
+
+
+Building On Linux (release mode):
+=================================
+From sources root folder do:
+
+mkdir build
+cd build
+cmake ../ -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
+make install
+
+
+Building On Windows:
+====================
+Please follow the instructions on http://www.plexyplanet.org/win_build
+
+
 

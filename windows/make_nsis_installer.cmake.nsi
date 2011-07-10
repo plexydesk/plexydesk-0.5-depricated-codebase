@@ -12,9 +12,10 @@
 !define PRODUCT_VERSION "@APPLICATION_MAIN_VERSION@"
 !define PRODUCT_PUBLISHER "@APPLICATION_NAME@ Team"
 !define PRODUCT_WEB_SITE "http://www.plexyplanet.org/"
+!define PRODUCT_WEB_SITE_SHORT "plexyplanet.org"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\${PRODUCT_BIN_NAME}.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
-!define PRODUCT_REGKEY "Software\${PRODUCT_PUBLISHER}\${PRODUCT_NAME}"
+!define PRODUCT_REGKEY "Software\${PRODUCT_WEB_SITE_SHORT}\${PRODUCT_BIN_NAME}"
 
 ; Choose a targeted windows version. We do not support versions less than 5.0 !
 !define MINIMAL_OS "5.0"
