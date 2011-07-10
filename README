@@ -1,0 +1,8 @@
+Building On Linux:
+=================
+
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Debug -DCMAKE_VERBOSE_MAKEFILE=true -DCMAKE_CXX_FLAGS_DEBUG="-g -O0" -DCMAKE_CXX_FLAGS_DEBUG==true ..
+make install
+
