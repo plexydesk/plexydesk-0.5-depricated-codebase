@@ -148,8 +148,8 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/social/libs/service
     ${CMAKE_SOURCE_DIR}/panel
     ${CMAKE_BINARY_DIR}/panel
-    ${CMAKE_SOURCE_DIR}/artwork/themepacks/default/folderview/resources
-    ${CMAKE_BINARY_DIR}/artwork/themepacks/default/folderview/resources
+#    ${CMAKE_SOURCE_DIR}/extensions/qml/folders/
+#    ${CMAKE_BINARY_DIR}/extensions/qml/folders/
     ${QT_INCLUDE_DIR}
     )
 
