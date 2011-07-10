@@ -455,7 +455,7 @@ void DesktopView::setTopMostWidget(const QPoint &pt)
 
 void DesktopView::keyReleaseEvent(QKeyEvent *event)
 {
-    if((event->key() == Qt::Key_Backspace) && event->modifiers() == (Qt::ShiftModifier | Qt::ControlModifier))
+    if((event->key() == Qt::Key_Q) && event->modifiers() == (Qt::ShiftModifier | Qt::ControlModifier))
         emit closeApplication();
 
     QGraphicsView::keyReleaseEvent(event);
