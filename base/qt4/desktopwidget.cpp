@@ -61,8 +61,10 @@ public:
     QGraphicsObject *qmlChild;
 };
 
-DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget) :
-    QGraphicsRectItem(rect), d(new Private)
+DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QObject *parent) :
+    QObject(parent),
+    QGraphicsRectItem(rect),
+    d(new Private)
 {
     d->proxyWidget = 0;
     d->qmlChild = 0;
@@ -189,7 +191,7 @@ void DesktopWidget::qmlFromUrl(const QUrl &url)
         return;
     }
     d->qmlChild =
-        qobject_cast<QGraphicsObject *>(component.create());
+        qobject_cast<QGraphicsObject *>(component.create(engine->rootContext()));
     QRectF objectRect = d->qmlChild->boundingRect();
     QRectF borderRect(objectRect.x(),
             objectRect.y(),

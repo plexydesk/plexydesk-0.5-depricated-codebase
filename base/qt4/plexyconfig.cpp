@@ -112,6 +112,15 @@ Config::Config(const QString &organization,
     qDebug() << Q_FUNC_INFO << d->mData;
 }
 
+Config::~Config()
+{
+    if (engine) {
+        delete engine;
+    }
+
+    delete d;
+}
+
 void Config::read()
 {
     d->mData["proxyOn"] = d->mSettings->value("proxyOn");

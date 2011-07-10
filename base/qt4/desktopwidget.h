@@ -60,7 +60,7 @@ public :
      * optional QWidget embedded
      */
 
-    DesktopWidget(const QRectF &rect, QWidget *embeddedWidget = 0);
+    DesktopWidget(const QRectF &rect, QWidget *embeddedWidget = 0, QObject *parent = 0);
     virtual ~DesktopWidget();
 
     virtual QRectF boundingRect() const;

@@ -13,6 +13,7 @@ class ThemepackLoader : public QObject
 
 public:
     explicit ThemepackLoader(const QString &themeName, QObject *parent = 0);
+    virtual ~ThemepackLoader();
 
     void setThemeName(const QString &name);
 

@@ -30,12 +30,17 @@ ThemepackLoader::ThemepackLoader(const QString &themeName, QObject *parent) :
     qDebug() << Q_FUNC_INFO << themeName;
     d->mSettings = new QSettings(QDir::toNativeSeparators(
                                  mainConfig.absoluteFilePath("main.cfg")),
-                             QSettings::IniFormat, parent);
+                             QSettings::IniFormat, this);
 
     d->mThemeCfgFile = QDir::toNativeSeparators(d->mSettings->fileName());
     d->mBasePath = QDir::toNativeSeparators(mainConfig.absolutePath());
 
     qDebug() << Q_FUNC_INFO << d->mThemeCfgFile;
+}
+
+ThemepackLoader::~ThemepackLoader()
+{
+    delete d;
 }
 
 QString ThemepackLoader::wallpaper()

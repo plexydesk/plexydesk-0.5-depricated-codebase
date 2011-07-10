@@ -73,8 +73,6 @@ public:
     }
     AbstractPluginInterface *bIface;
     BackdropPlugin *bgPlugin;
-    QGraphicsGridLayout *gridLayout;
-    QSharedPointer<ViewLayer> layer;
     ThemepackLoader *mThemeLoader;
     float row;
     float column;
@@ -114,11 +112,8 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
         PlexyDesk::Config::getInstance()->setWallpaper(d->mThemeLoader->wallpaper());
     }
     d->bgPlugin = static_cast<BackdropPlugin *>(PluginLoader::getInstance()->instance("classicbackdrop"));
-    d->gridLayout = new QGraphicsGridLayout();
     d->row = d->column = 48.0;
     d->margin = 10.0;
-    d->layer = QSharedPointer<ViewLayer>(new ViewLayer(this));
-    d->layer->showLayer(QLatin1String("Widgets"));
 
     /* Effects */
 
@@ -127,7 +122,6 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
 
     connect(Config::getInstance(), SIGNAL(configChanged()), this, SLOT(backgroundChanged()));
     connect(Config::getInstance(), SIGNAL(widgetAdded()), this, SLOT(onNewWidget()));
-    connect(Config::getInstance(), SIGNAL(layerChange()), d->layer.data(), SLOT(switchLayer()));
 
 #ifdef Q_WS_X11
     if (checkXCompositeExt()) {
@@ -176,7 +170,7 @@ void DesktopView::enableOpenGL(bool state)
 
 void DesktopView::showLayer(const QString &layer)
 {
-    d->layer->showLayer(layer);
+    Q_UNUSED(layer);
 }
 
 void DesktopView::setThemePack(const QString &name)
@@ -198,7 +192,7 @@ void DesktopView::setThemePack(const QString &name)
 
         Q_FOREACH(const QString &qmlWidget, d->mThemeLoader->widgets("QML")) {
             qDebug() << Q_FUNC_INFO << "Loading qml " << qmlWidget;
-            DesktopWidget *parent = new DesktopWidget(QRectF(0,0,0,0));
+            DesktopWidget *parent = new DesktopWidget(QRectF(0,0,0,0), 0, this);
             parent->qmlFromUrl(QUrl(d->mThemeLoader->qmlFilesFromTheme(qmlWidget)));
             scene()->addItem(parent);
             connect(parent, SIGNAL(close()), this, SLOT(closeDesktopWidget()));
@@ -346,7 +340,6 @@ void DesktopView::addExtension(const QString &name,
             } else {
                 widget->setPos(pos);
             }
-            d->layer->addItem(layerName, widget);
 
             connect(widget, SIGNAL(close()), this, SLOT(closeDesktopWidget()));
         }
@@ -399,7 +392,7 @@ void DesktopView::dragEnterEvent (QDragEnterEvent * event)
     if (droppedFile.toString().contains(".qml")) {
 
         qDebug() << Q_FUNC_INFO << droppedFile;
-        DesktopWidget *parent = new DesktopWidget(QRectF(0,0,0,0));
+        DesktopWidget *parent = new DesktopWidget(QRectF(0,0,0,0), 0, this);
         parent->qmlFromUrl(droppedFile);
         scene()->addItem(parent);
         connect(parent, SIGNAL(close()), this, SLOT(closeDesktopWidget()));
