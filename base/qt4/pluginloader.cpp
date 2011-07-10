@@ -88,7 +88,7 @@ void PluginLoader::load(const QString &interface, const QString &pluginName)
                 "/lib/plexyext/lib" + pluginName + ".dylib"));
 #endif
 
-#if Q_WS_X11
+#ifdef Q_WS_X11
     QPluginLoader loader(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() + 
                 "/lib/plexyext/lib" + pluginName + ".so"));
 #endif
