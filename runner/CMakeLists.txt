@@ -29,16 +29,16 @@ IF (NOT APPLE)
     ENDIF(UNIX)
     IF(WIN32)
         INCLUDE_DIRECTORIES(
-            ${CMAKE_SOURCE_DIR}/artwork/windows
-            ${CMAKE_BINARY_DIR}/artwork/windows
+            ${CMAKE_SOURCE_DIR}/windows
+            ${CMAKE_BINARY_DIR}/windows
             )
         IF(MINGW)
             SET(resourceFiles
-                ${CMAKE_BINARY_DIR}/artwork/windows/${APPLICATION_EXE_NAME}_rc.o
+                ${CMAKE_BINARY_DIR}/windows/${APPLICATION_EXE_NAME}_rc.o
                 )
         ELSE(MINGW)
             SET(resourceFiles
-                ${CMAKE_BINARY_DIR}/artwork/windows/${APPLICATION_EXE_NAME}_windres.rc
+                ${CMAKE_BINARY_DIR}/windows/${APPLICATION_EXE_NAME}_windres.rc
                 )
         ENDIF(MINGW)
     ENDIF(WIN32)

@@ -64,28 +64,31 @@
 !endif
 
 ; Check and fix command line parameters
-!if ${PRODUCT_PLATFORM}=="x64"
-  !if ${PRODUCT_VC_VERSION}=="VC9"
-    !define VC_URL ${VC9_REDIST_x64_URL}
-    !define VC_MD5 ${VC9_REDIST_x64_MD5}
-    !define VC_SEARCH ${VC9_REDIST_x64_SEARCH}
+!if ${PRODUCT_PLATFORM} == "x64"
+  !if ${PRODUCT_VC_VERSION} == "VC9"
+    !define VC_URL "${VC9_REDIST_x64_URL}"
+    !define VC_MD5 "${VC9_REDIST_x64_MD5}"
+    !define VC_SEARCH "${VC9_REDIST_x64_SEARCH}"
   !else
-    !define /redef ${PRODUCT_VC_VERSION} "VC10"
-    !define VC_URL ${VC10_REDIST_x64_URL}
-    !define VC_MD5 ${VC10_REDIST_x64_MD5}
-    !define VC_SEARCH ${VC10_REDIST_x64_SEARCH}
+    !undef PRODUCT_VC_VERSION
+    !define PRODUCT_VC_VERSION "VC10"
+    !define VC_URL "${VC10_REDIST_x64_URL}"
+    !define VC_MD5 "${VC10_REDIST_x64_MD5}"
+    !define VC_SEARCH "${VC10_REDIST_x64_SEARCH}"
   !endif
 !else
-  !define /redef ${PRODUCT_PLATFORM} "x86"
-  !if ${PRODUCT_VC_VERSION}=="VC9"
-    !define VC_URL ${VC9_REDIST_x86_URL}
-    !define VC_MD5 ${VC9_REDIST_x86_MD5}
-    !define VC_SEARCH ${VC9_REDIST_x86_SEARCH}
+  !undef PRODUCT_PLATFORM
+  !define PRODUCT_PLATFORM "x86"
+  !if ${PRODUCT_VC_VERSION} == "VC9"
+    !define VC_URL "${VC9_REDIST_x86_URL}"
+    !define VC_MD5 "${VC9_REDIST_x86_MD5}"
+    !define VC_SEARCH "${VC9_REDIST_x86_SEARCH}"
   !else
-    !define /redef ${PRODUCT_VC_VERSION} "VC10"
-    !define VC_URL ${VC10_REDIST_x86_URL}
-    !define VC_MD5 ${VC10_REDIST_x86_MD5}
-    !define VC_SEARCH ${VC10_REDIST_x86_SEARCH}
+    !undef PRODUCT_VC_VERSION
+    !define PRODUCT_VC_VERSION "VC10"
+    !define VC_URL "${VC10_REDIST_x86_URL}"
+    !define VC_MD5 "${VC10_REDIST_x86_MD5}"
+    !define VC_SEARCH "${VC10_REDIST_x86_SEARCH}"
   !endif
 !endif
 
@@ -113,12 +116,13 @@ SetCompressorDictSize 32
 !define MULTIUSER_EXECUTIONLEVEL Highest
 !define MULTIUSER_MUI
 !define MULTIUSER_INSTALLMODE_COMMANDLINE
-!define MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_KEY ${PRODUCT_REGKEY}
+!define MULTIUSER_PLATFORM ${PRODUCT_PLATFORM}
+!define MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_KEY "${PRODUCT_REGKEY}"
 !define MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_VALUENAME "NSIS:MultiUser"
 !define MULTIUSER_INSTALLMODE_INSTDIR "${PRODUCT_NAME}"
-!define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_KEY ${PRODUCT_REGKEY}
-!define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_VALUENAME "NSIS:InstallPath"
-!include "MultiUser.nsh"
+!define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_KEY "${PRODUCT_REGKEY}"
+!define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_VALUENAME "NSIS:InstallPath_${PRODUCT_PLATFORM}"
+!include "${PRODUCT_SOURCES_PATH}\windows\nsis-unicode\include\MultiUser.nsh"
 !include "MUI2.nsh"
 
 ;--------------------------------
@@ -133,8 +137,6 @@ SetCompressorDictSize 32
 ; MUI Settings
 !define MUI_ABORTWARNING
 !define MUI_ABORTWARNING_CANCEL_DEFAULT
-!define MUI_LANGDLL_ALLLANGUAGES
-!define MUI_LANGDLL_ALWAYSSHOW
 !define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\modern-install.ico"
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
 
@@ -145,6 +147,8 @@ SetCompressorDictSize 32
 !define MUI_LANGDLL_REGISTRY_ROOT SHELL_CONTEXT
 !define MUI_LANGDLL_REGISTRY_KEY "${PRODUCT_REGKEY}"
 !define MUI_LANGDLL_REGISTRY_VALUENAME "NSIS:Language"
+!define MUI_LANGDLL_ALLLANGUAGES
+!define MUI_LANGDLL_ALWAYSSHOW
 
 ; Welcome page
 !insertmacro MUI_PAGE_WELCOME
@@ -164,16 +168,13 @@ var /GLOBAL ICONS_GROUP
 !define MUI_STARTMENUPAGE_REGISTRY_ROOT SHELL_CONTEXT
 !define MUI_STARTMENUPAGE_REGISTRY_KEY "${PRODUCT_REGKEY}"
 !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "NSIS:StartMenuDir"
-!insertmacro MUI_PAGE_STARTMENU Application $ICONS_GROUP
+!insertmacro MUI_PAGE_STARTMENU Application "$ICONS_GROUP"
 
 ; Instfiles page
 !insertmacro MUI_PAGE_INSTFILES
 
 ; Finish page
 !define MUI_FINISHPAGE_NOAUTOCLOSE
-!define MUI_FINISHPAGE_RUN_NOTCHECKED
-!define MUI_FINISHPAGE_RUN_TEXT "Launch ${PRODUCT_NAME}"
-!define MUI_FINISHPAGE_RUN "$INSTDIR\bin\${PRODUCT_BIN_NAME}.exe"
 !insertmacro MUI_PAGE_FINISH
 
 ; Uninstaller pages
@@ -185,7 +186,7 @@ var /GLOBAL ICONS_GROUP
 
 ; Reserve files (go to header block if SOLID key is used in compression)
 !insertmacro MUI_RESERVEFILE_LANGDLL
-!insertmacro MUI_RESERVEFILE_INSTALLOPTIONS
+ReserveFile '${NSISDIR}\Plugins\InstallOptions.dll'
 
 ; Language files
 !insertmacro MUI_LANGUAGE "English"
@@ -203,7 +204,7 @@ var /GLOBAL ICONS_GROUP
 
 ;--------------------------------
 ; Main settings
-Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
+Name "${PRODUCT_NAME}(${PRODUCT_PLATFORM}) ${PRODUCT_VERSION}"
 OutFile "${PRODUCT_SOURCES_PATH}\INSTALLERS\${PRODUCT_NAME}_${PRODUCT_VERSION}-Installer_${PRODUCT_PLATFORM}_${PRODUCT_VC_VERSION}.exe"
 
 ; Installer file version tab properties
@@ -216,11 +217,12 @@ VIAddVersionKey "LegalCopyright" "LGPL v3"
 VIAddVersionKey "FileDescription" "${PRODUCT_NAME} Windows Installer"
 VIAddVersionKey "Comments" "A Qt4 customised desktop"
 
-BrandingText "${PRODUCT_NAME} for Windows v${PRODUCT_VERSION}"
+BrandingText "${PRODUCT_NAME}(${PRODUCT_PLATFORM}) for Windows v${PRODUCT_VERSION}"
 
-TargetMinimalOS ${MINIMAL_OS}
-InstType "Full"
+; Unicode will be implemented in NSIS 2.50. Comment till then to avoid errors.
+;TargetMinimalOS ${MINIMAL_OS}
 InstType "Normal"
+InstType "Full"
 ShowInstDetails show
 ShowUnInstDetails show
 
@@ -236,8 +238,11 @@ Function .onInit
   MessageBox MB_OK|MB_ICONEXCLAMATION \
              "The ${PRODUCT_NAME} Installer is already running."
   Abort
+  
+  ClearErrors
 
   !insertmacro MULTIUSER_INIT
+
   ; Check in which install mode we run and set the necessary Registry Root Key
   ; that all actions will be upon. This is needed for modifying PATH env.
   ${If} $MultiUser.InstallMode == "AllUsers"
@@ -248,7 +253,7 @@ Function .onInit
 
   !insertmacro MUI_LANGDLL_DISPLAY
 
-  ;Check to see if there is an old installed version of PlexyDesk
+  ; Check to see if there is an old installed version of PlexyDesk
   ; First check with the same install mode (HKLM or HKCU depending on the mode)
   ReadRegStr $R0 SHELL_CONTEXT \
              "${PRODUCT_UNINST_KEY}" \
@@ -259,6 +264,7 @@ Function .onInit
                  "${PRODUCT_NAME} is already installed. \
                  $\nYou should remove the already installed version first. \
                  $\n$\nClick `OK` to remove the existing version or `Cancel` to cancel this installation." \
+                 /SD IDOK \
                  IDOK +2
       Abort
 
@@ -266,61 +272,71 @@ Function .onInit
       ${WordReplace} $R3 '"' "" "+" $R3
 
       ClearErrors
-      ExecWait '"$R0 /KEEP_SETTINGS _?=$R3"' ;Run the uninstaller of the old version
+      ExecWait '"$R0" /KEEP_SETTINGS _?=$R3' ;Run the uninstaller of the old version
 
-      Delete "$R3\*.*"
-      RMDir "$R3"
-
-      IfErrors +1 done
+      IfErrors +1 remove_uninstaller
       MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
                  "The old installation of ${PRODUCT_NAME} could't be removed. \
                  $\n$\nClick `OK` to continue with this installation or `Cancel` to cancel the installation." \
+                 /SD IDOK \
                  IDOK done_install_mode
       Abort
-  ${EndIf}
 
-  done_install_mode:
-
-  ; Next check if it is installed in the oposite mode
-  var REG_ROOT_TMP
-  ${If} $REG_ROOT == "HKLM"
-    StrCpy $REG_ROOT_TMP "HKCU"
-  ${Else}
-    StrCpy $REG_ROOT_TMP "HKLM"
-  ${EndIf}
-
-  ReadRegStr $R0 $REG_ROOT_TMP \
-             "${PRODUCT_UNINST_KEY}" \
-             "UninstallString"
-
-  ${If} $R0 != ""
-      MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
-                 "${PRODUCT_NAME} is already installed for another user. \
-                 $\nYou should remove the already installed version first. \
-                 $\n$\nClick `OK` to remove the existing version or `Cancel` to cancel this installation." \
-                 IDOK +2
-      Abort
-
-      ${WordFind} "$R0" "\" "-2{*" $R3
-      ${WordReplace} $R3 '"' "" "+" $R3
-
-      ClearErrors
-      ExecWait '"$R0 /KEEP_SETTINGS _?=$R3"' ;Run the uninstaller of the old version
-
+      remove_uninstaller:
       Delete "$R3\*.*"
       RMDir "$R3"
 
-      IfErrors +1 done
-      MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
-                 "The old installation of ${PRODUCT_NAME}for your other user could't be removed. \
-                 $\n$\nClick `OK` to continue with this installation or `Cancel` to cancel the installation." \
-                 IDOK done_all
-      Abort
+      done_install_mode:
+
   ${EndIf}
 
-  done_all:
 
-  ; TODO: Check to see if it is 64bit install (registry/prog files)
+  ; Next check if it is installed in the oposite mode.
+  ; Do this only if we have permissions
+  ${if} $MultiUser.Privileges == "Admin"
+  ${orif} $MultiUser.Privileges == "Power"
+    ${If} $REG_ROOT == "HKLM"
+      ReadRegStr $R0 "HKCU" \
+                 "${PRODUCT_UNINST_KEY}" \
+                 "UninstallString"
+    ${Else}
+      ReadRegStr $R0 "HKLM" \
+                 "${PRODUCT_UNINST_KEY}" \
+                 "UninstallString"
+    ${EndIf}
+
+    ${If} $R0 != ""
+        MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
+                   "${PRODUCT_NAME} is already installed for another user. \
+                   $\nYou should remove the already installed version first. \
+                   $\n$\nClick `OK` to remove the existing version or `Cancel` to cancel this installation." \
+                   /SD IDOK \
+                   IDOK +2
+        Abort
+
+        ${WordFind} "$R0" "\" "-2{*" $R3
+        ${WordReplace} $R3 '"' "" "+" $R3
+
+        ClearErrors
+        ExecWait '"$R0" /KEEP_SETTINGS _?=$R3' ;Run the uninstaller of the old version
+
+
+        IfErrors +1 remove_installer_2
+        MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
+                   "The old installation of ${PRODUCT_NAME}for your other user could't be removed. \
+                   $\n$\nClick `OK` to continue with this installation or `Cancel` to cancel the installation." \
+                   /SD IDOK \
+                   IDOK done_all
+        Abort
+
+        remove_installer_2:
+        Delete "$R3\*.*"
+        RMDir "$R3"
+
+        done_all:
+
+    ${EndIf}
+  ${endif}
 
 FunctionEnd
 
@@ -334,22 +350,59 @@ Function un.onInit
   MessageBox MB_OK|MB_ICONEXCLAMATION \
              "The ${PRODUCT_NAME} Uninstaller is already running."
   Abort
+  
+  ClearErrors
 
   ; Parse command line parameter /KEEP_SETTINGS
+  StrCpy $KEEP_SETTINGS_UNINSTALL "FALSE"
   ${GetParameters} $R0
   ClearErrors
   ${GetOptions} $R0 /KEEP_SETTINGS $0
   IfErrors +2
     StrCpy $KEEP_SETTINGS_UNINSTALL "TRUE"
+    
+  ClearErrors
 
   !insertmacro MULTIUSER_UNINIT
-  ; Check in which install mode we run and set the necessary Registry Root Key
+
+  ; Check in which uninstall mode we run and set the necessary Registry Root Key
   ; that all actions will be upon. This is needed for modifying PATH env.
   ${If} $MultiUser.InstallMode == "AllUsers"
     StrCpy $REG_ROOT "HKLM"
   ${Else}
     StrCpy $REG_ROOT "HKCU"
   ${EndIf}
+
+  ; With the current install mode (got from registry's HKLM or HKCU), check to
+  ; see if there is an uninstall information for PlexyDesk. If no such info
+  ; go into the oposite mode
+  ReadRegStr $R0 SHELL_CONTEXT \
+             "${PRODUCT_UNINST_KEY}" \
+             "UninstallString"
+
+  ${If} $R0 == ""
+    ${If} $REG_ROOT == "HKLM"
+      Call un.MultiUser.InstallMode.CurrentUser
+      StrCpy $REG_ROOT "HKCU"
+    ${Else}
+      Call un.MultiUser.InstallMode.AllUsers
+      StrCpy $REG_ROOT "HKLM"
+    ${EndIf}
+  ${EndIf}
+
+  ; Check if oposite mode has an uninstall info. If not bring error and abort.
+  ReadRegStr $R0 SHELL_CONTEXT \
+             "${PRODUCT_UNINST_KEY}" \
+             "UninstallString"
+
+  ${If} $R0 == ""
+      MessageBox MB_OK|MB_ICONEXCLAMATION|MB_SETFOREGROUND \
+                 "Any uninstall information for ${PRODUCT_NAME} is missing. \
+                 $\n$\nThe application cannot be uninstalled. \
+                 $\n$\nPlease click `OK` to exit the uninstallation."
+      Abort
+  ${EndIf}
+
 
   !insertmacro MUI_UNGETLANGUAGE
 FunctionEnd
@@ -370,27 +423,37 @@ Section "!${PRODUCT_NAME} Application" SEC01
 SectionEnd
 
 
-Section "Microsoft VC core files (Webinstall)" SEC02
+Section "Microsoft VC files (Webinstall)" SEC02
   ; Selected for "Full" install only. Used in "Full" install.
-  SectionIn 1
+  SectionIn 2
 
   ; Download Microsoft VC if selected
   retry_download:
   DetailPrint "Downloading Microsoft ${PRODUCT_VC_VERSION} (${PRODUCT_PLATFORM})..."
-
-  inetc::get /TIMEOUT 30000 /RESUME "" \
-             /CAPTION "Microsoft VC Redistributable Downloader" \
-             /BANNER "Downloading Microsoft ${PRODUCT_VC_VERSION} (${PRODUCT_PLATFORM})..." \
-             "${VC_URL}" \
-             "$PLUGINSDIR\${PRODUCT_VC_VERSION}_redist_${PRODUCT_PLATFORM}.exe" /END
+  InitPluginsDir
+  NSISdl::download /TIMEOUT=30000 "${VC_URL}" \
+             "$PLUGINSDIR\${PRODUCT_VC_VERSION}_redist_${PRODUCT_PLATFORM}.exe"
   Pop $R0
-  StrCmp $R0 "OK" check_file
+
+  StrCmp $R0 "success" check_file
 
   ; Getting not OK does not necessarily mean there was a download error, so check first.
-  ${If} $R0 != "OK"
-    DetailPrint "Downloading Microsoft ${PRODUCT_VC_VERSION} (${PRODUCT_PLATFORM}) FAILED!$\n \
-                Error message was:$\n \
-                $R0"
+  ${If} $R0 == "cancel"
+    DetailPrint "The download CANCELED!"
+    MessageBox MB_YESNO|MB_ICONQUESTION|MB_SETFOREGROUND \
+               "Cancel the download of Microsoft ${PRODUCT_VC_VERSION} (${PRODUCT_PLATFORM})?" \
+               /SD IDYES \
+               IDNO retry_download \
+               IDYES install_done
+  ${Else}
+    DetailPrint "The download FAILED!"
+    MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION|MB_SETFOREGROUND \
+               "The download failed with this error:$\n $R0 $\n \
+               $\nShall we retry the download? \
+               $\n(If this is not the first time you get this message, please choose the CANCEL button.)" \
+               /SD IDCANCEL \
+               IDRETRY retry_download \
+               IDCANCEL section_failed
   ${EndIf}
 
   check_file:
@@ -400,9 +463,9 @@ Section "Microsoft VC core files (Webinstall)" SEC02
   StrCmp $0 "${VC_MD5}" download_done
 
   MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION|MB_SETFOREGROUND \
-             "The downloaded Microsoft ${PRODUCT_VC_VERSION} (${PRODUCT_PLATFORM}) is broken!$\n \
-             Shall we retry the download?$\n \
-             (If this is not the first time you get this message, please choose the CANCEL button.)" \
+             "The downloaded Microsoft ${PRODUCT_VC_VERSION} (${PRODUCT_PLATFORM}) is broken! \
+             $\nShall we retry the download? \
+             $\n(If this is not the first time you get this message, please choose the CANCEL button.)" \
              /SD IDCANCEL \
              IDRETRY retry_download \
              IDCANCEL section_failed
@@ -416,19 +479,19 @@ Section "Microsoft VC core files (Webinstall)" SEC02
   ExecWait '"$PLUGINSDIR\${PRODUCT_VC_VERSION}_redist_${PRODUCT_PLATFORM}.exe"'
   IfErrors 0 install_done
     MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION|MB_SETFOREGROUND \
-               "The installation of Microsoft ${PRODUCT_VC_VERSION} (${PRODUCT_PLATFORM}) FAILED!$\n \
-               Shall we retry the installation?$\n \
-               (If this is not the first time you get this message, please choose the CANCEL button.)" \
+               "The installation of Microsoft ${PRODUCT_VC_VERSION} (${PRODUCT_PLATFORM}) FAILED! \
+               $\nShall we retry the installation? \
+               $\n(If this is not the first time you get this message, please choose the CANCEL button.)" \
                /SD IDCANCEL \
                IDRETRY retry_install
 
   section_failed:
     MessageBox MB_OK|MB_ICONEXCLAMATION|MB_SETFOREGROUND \
-               "The use of the Microsoft ${PRODUCT_VC_VERSION} (${PRODUCT_PLATFORM}) component FAILED!$\n \
-               When this Installer finishes, please try to manually download the Microsoft \
-               ${PRODUCT_VC_VERSION} (${PRODUCT_PLATFORM}) component from the Microsoft Homepage.$\n \
-               There you can either search for $\"${VC_SEARCH}$\", or use this direct download link:$\n \
-               ${VC_URL}"
+               "The use of the Microsoft ${PRODUCT_VC_VERSION} (${PRODUCT_PLATFORM}) component FAILED! \
+               $\nWhen this Installer finishes, please try to manually download the Microsoft \
+               ${PRODUCT_VC_VERSION} (${PRODUCT_PLATFORM}) component from the Microsoft Homepage. \
+               $\nThere you can either search for $\"${VC_SEARCH}$\", or use this direct download link: \
+               $\n${VC_URL}"
 
   install_done:
 SectionEnd
@@ -444,6 +507,15 @@ LangString DESC_SEC02 ${LANG_ENGLISH} "Download and Install the VC redistributio
 
 
 Section -Post
+  ; Refresh in which install mode we run and set the necessary Registry Root Key
+  ; that all actions will be upon. This is needed for modifying PATH env.
+  ; Refresh is needed 'cause the user could've changed it in install mode page.
+  ${If} $MultiUser.InstallMode == "AllUsers"
+    StrCpy $REG_ROOT "HKLM"
+  ${Else}
+    StrCpy $REG_ROOT "HKCU"
+  ${EndIf}
+
   ; Selected for both "Full" and "Normal" install. Always used. Invisible.
   SectionIn 1 2 RO
 
@@ -454,16 +526,19 @@ Section -Post
   ; Create the PlexyDesk shortcuts
   DetailPrint "Creating the necessary ${PRODUCT_NAME}'s shortcuts..."
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
+  StrCpy $R0 $OUTDIR ; Just remember our working dir
+  SetOutPath "$INSTDIR\bin" ; A trick to set the working folder of the shortcuts
   CreateDirectory "$SMPROGRAMS\$ICONS_GROUP"
   CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\${PRODUCT_NAME}.lnk" "$INSTDIR\bin\${PRODUCT_BIN_NAME}.exe" \
                  "" "$INSTDIR\${PRODUCT_BIN_NAME}.ico" "" "" "" "Start ${PRODUCT_NAME}"
-  CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\bin\${PRODUCT_NAME}.exe" \
+  CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\bin\${PRODUCT_BIN_NAME}.exe" \
                  "" "$INSTDIR\${PRODUCT_BIN_NAME}.ico" "" "" "" "Start ${PRODUCT_NAME}"
   WriteIniStr "$INSTDIR\${PRODUCT_NAME}.url" "InternetShortcut" "URL" "${PRODUCT_WEB_SITE}"
   CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\${PRODUCT_NAME} Online.lnk" "$INSTDIR\${PRODUCT_NAME}.url" \
                  "" "$INSTDIR\${PRODUCT_BIN_NAME}.ico" "" "" "" "Visit ${PRODUCT_NAME}'s Homepage"
   CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Uninstall ${PRODUCT_NAME}.lnk" "$INSTDIR\uninst.exe" \
                  "" "" "" "" "" "Uninstall ${PRODUCT_NAME}"
+  SetOutPath "$R0"
   !insertmacro MUI_STARTMENU_WRITE_END
 
   ; Add the necessary PlexyDesk Registry Keys
@@ -477,6 +552,10 @@ Section -Post
   WriteRegStr SHELL_CONTEXT "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
   WriteRegDWORD SHELL_CONTEXT "${PRODUCT_UNINST_KEY}" "NoModify" 1
   WriteRegDWORD SHELL_CONTEXT "${PRODUCT_UNINST_KEY}" "NoRepair" 1
+  
+  ; Add multiuser registry keys
+  WriteRegStr SHELL_CONTEXT "${PRODUCT_REGKEY}" "NSIS:MultiUser" "$MultiUser.InstallMode"
+  WriteRegStr SHELL_CONTEXT "${PRODUCT_REGKEY}" "NSIS:InstallPath_${PRODUCT_PLATFORM}" "$INSTDIR"
 
   ; Modify qt.conf
   DetailPrint "Modifying QT configuration file to work with ${PRODUCT_NAME} ..."
@@ -484,7 +563,7 @@ Section -Post
 
   ; Add lib to PATH env variable
   DetailPrint "Adding ${PRODUCT_NAME} to PATH..."
-  ${EnvVarUpdate} $0 "PATH" "A" "$REG_ROOT" "$INSTDIR\lib\qt4\bin"
+  ${EnvVarUpdate} $0 "PATH" "A" "$REG_ROOT" "$INSTDIR\lib"
 SectionEnd
 
 
@@ -497,7 +576,7 @@ Section Uninstall
   SendMessage $0 ${WM_CLOSE} 0 0
 
   ; Remove all PlexyDesk shortcuts
-  !insertmacro MUI_STARTMENU_GETFOLDER "Application" $ICONS_GROUP
+  !insertmacro MUI_STARTMENU_GETFOLDER "Application" "$ICONS_GROUP"
 
   DetailPrint "Removing all ${PRODUCT_NAME} shortcuts..."
   Delete "$SMPROGRAMS\$ICONS_GROUP\${PRODUCT_NAME}.lnk"
@@ -508,26 +587,28 @@ Section Uninstall
 
   ; Remove all PlexyDesk installed files
   DetailPrint "Removing all files installed by ${PRODUCT_NAME}..."
-  Delete /REBOOTOK "$INSTDIR\*.*"
-  RMDir /r /REBOOTOK "$INSTDIR\bin"
-  RMDir /r /REBOOTOK "$INSTDIR\lib"
-  RMDir /r /REBOOTOK "$INSTDIR\share"
-  RMDir /REBOOTOK "$INSTDIR"
+  Delete "$INSTDIR\*.*"
+  RMDir /r "$INSTDIR\bin"
+  RMDir /r "$INSTDIR\lib"
+  RMDir /r "$INSTDIR\share"
+  RMDir "$INSTDIR"
 
   ; Remove all PlexyDesk Registry entries
   DetailPrint "Removing all ${PRODUCT_NAME} Registry Keys..."
   DeleteRegKey SHELL_CONTEXT "${PRODUCT_UNINST_KEY}"
   DeleteRegKey SHELL_CONTEXT "${PRODUCT_DIR_REGKEY}"
 
-  ; Keep installer settings? This will not appear if it is an uninstall suggestion
-  ; during install.
+  ; Keep installer settings? This will not appear if it is an uninstall
+  ; suggestion during install.
   StrCmp $KEEP_SETTINGS_UNINSTALL "TRUE" keep_settings
-  MessageBox MB_YESNO "Would you like to keep your ${PRODUCT_NAME} settings?" \
+  MessageBox MB_YESNO|MB_ICONQUESTION \
+             "Would you like to keep your ${PRODUCT_NAME} settings?" \
+             /SD IDNO \
              IDYES keep_settings
   DeleteRegKey SHELL_CONTEXT "${PRODUCT_REGKEY}"
 
   keep_settings:
   ; Remove lib from PATH env variable
   DetailPrint "Removing ${PRODUCT_NAME} from PATH..."
-  ${un.EnvVarUpdate} $0 "PATH" "R" "$REG_ROOT" "$INSTDIR\lib\qt4\bin"
+  ${un.EnvVarUpdate} $0 "PATH" "R" "$REG_ROOT" "$INSTDIR\lib"
 SectionEnd

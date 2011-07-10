@@ -20,7 +20,7 @@ echo Creating an INSTALLERS folder ...
 echo.
 mkdir INSTALLERS
 
-create_build:
+:create_build
 rem We better build out of the sources
 IF EXIST "%CURRENT_PATH%\build" GOTO go_to_build
 echo Creating a build folder ...
@@ -204,11 +204,7 @@ del /Q /F "%FINAL_PATH%\lib\qt4\bin\QtCL*"
 echo.
 echo Creating project NSIS package ...
 echo.
-"makensis"   /DPRODUCT_PLATFORM=%PROJECT_PLATFORM% \
-             /DPRODUCT_VC_VERSION=%PROJECT_VC% \
-             /DPRODUCT_SOURCES_PATH=%CURRENT_PATH% \
-             /DPRODUCT_BIN_SOURCES_PATH=%FINAL_PATH% \
-             "%CURRENT_PATH%\build\windows\make_nsis_installer.nsi"
+makensis /V1 /DPRODUCT_PLATFORM=%PROJECT_PLATFORM% /DPRODUCT_VC_VERSION=%PROJECT_VC% /DPRODUCT_SOURCES_PATH=%CURRENT_PATH% /DPRODUCT_BIN_SOURCES_PATH=%FINAL_PATH% "%CURRENT_PATH%\build\windows\make_nsis_installer.nsi"
 
 :END_INSTALL
 
