@@ -19,6 +19,7 @@
 
 #include <QtCore>
 #include <QtGui>
+#include <QIcon>
 #include <debug.h>
 
 #ifdef Q_WS_X11
@@ -55,9 +56,12 @@ int main( int argc, char * *argv )
     qInstallMsgHandler(plexyWindowsLogger);
     QApplication app(argc, argv);
 
+    QString appIconPath = PlexyDesk::Config::getInstance()->plexydeskBasePath() + "/share/plexy/plexydesk.png";
+    app.setWindowIcon(QIcon::QIcon(QDir::toNativeSeparators(appIconPath)));
+    app.setApplicationName("PlexyDesk")
+
 #ifdef Q_WS_WIN
-    QString pluginPath = QString(PLEXPREFIX) + "/bin/plugins/imageformats/";
-    QDir pluginDir(QDir::toNativeSeparators(pluginPath));
+    QString pluginPath = PlexyDesk::Config::getInstance()->plexydeskBasePath() + "/lib/qt4/plugins/imageformats";
     app.addLibraryPath(QDir::toNativeSeparators(pluginPath));
 #endif
 
@@ -81,13 +85,13 @@ int main( int argc, char * *argv )
 
     view->setScene(&scene);
 
-   view->addWallpaperItem();
+    view->addWallpaperItem();
 
     QObject::connect(view.data(), SIGNAL(closeApplication()), &app, SLOT(quit()));
     QRect r = QDesktopWidget().availableGeometry();
     view->move(r.x(), r.y());
     view->resize(desktopSize);
-    scene.setSceneRect(QDesktopWidget().availableGeometry()); //TODO Resolution changes ?
+    scene.setSceneRect(QDesktopWidget().availableGeometry()); // TODO: Resolution changes ?
     view->setSceneRect(QDesktopWidget().availableGeometry());
     view->ensureVisible(QDesktopWidget().availableGeometry());
     view->setDragMode(QGraphicsView::RubberBandDrag);
