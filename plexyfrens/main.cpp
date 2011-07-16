@@ -49,8 +49,8 @@ int main( int argc, char * *argv )
 {
     QApplication app(argc, argv);
 #ifdef Q_WS_WIN
-    QString pluginPath = app.applicationDirPath() + "/plugins/imageformats";
-    app.addLibraryPath(pluginPath);
+    QString pluginPath = PlexyDesk::Config::getInstance()->plexydeskBasePath() + "/lib/qt4/plugins/imageformats";
+    app.addLibraryPath(QDir::toNativeSeparators(pluginPath));
 #endif
     QRectF rect(0, 0, 800, 600);
     Canvas scene;
