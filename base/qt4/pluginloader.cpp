@@ -46,7 +46,7 @@ public:
 PluginLoader::PluginLoader() : d(new Private)
 {
     d->prefix = QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() +
-        QString(QLatin1String("/share/plexydesk/ext/groups/")));
+        QString(QLatin1String("/share/plexy/ext/groups/")));
 }
 
 PluginLoader::~PluginLoader()
@@ -84,17 +84,17 @@ void PluginLoader::load(const QString &interface, const QString &pluginName)
         return;
 
 #ifdef Q_WS_MAC
-    QPluginLoader loader(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() + 
+    QPluginLoader loader(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() +
                 "/lib/plexyext/lib" + pluginName + ".dylib"));
 #endif
 
 #ifdef Q_WS_X11
-    QPluginLoader loader(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() + 
+    QPluginLoader loader(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() +
                 "/lib/plexyext/lib" + pluginName + ".so"));
 #endif
 
 #ifdef Q_WS_WIN
-    QPluginLoader loader(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() + 
+    QPluginLoader loader(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() +
                 "/lib/plexyext/lib" + pluginName + ".dll"));
 #endif
 

@@ -39,6 +39,7 @@
 #include "frienditem.h"
 
 #include <plexy.h>
+#include <plexyconfig.h>
 #include <desktopwidget.h>
 #include <config.h>
 #include <QPainter>
@@ -52,8 +53,10 @@ FriendItem::FriendItem(QGraphicsItem *parent)
 {
     mShade = 0;
     setParentItem(parent);
-    mPanel = QImage(QString(PLEXPREFIX) + "/theme/skins/default/widget/friendswidget/panel.png");
-    mIcon = QPixmap(QString(PLEXPREFIX) + "/theme/skins/default/widget/friendswidget/face.png");
+    mPanel = QImage(QDir::toNativeSeparators(
+                        PlexyDesk::Config::getInstance()->plexydeskBasePath() + "/share/plexy/theme/skins/default/widget/friendswidget/panel.png"));
+    mIcon = QPixmap(QDir::toNativeSeparators(
+                        PlexyDesk::Config::getInstance()->plexydeskBasePath() + "/share/plexy/theme/skins/default/widget/friendswidget/face.png"));
 }
 
 FriendItem::~FriendItem()

@@ -39,6 +39,7 @@
 #include "friendswidget.h"
 
 #include <plexy.h>
+#include <plexyconfig.h>
 #include <QPixmap>
 #include <QBitmap>
 #include <QPaintEvent>
@@ -50,7 +51,9 @@ FriendsWidget::FriendsWidget(const QRectF &rect, QWidget *widget)
     : DesktopWidget(rect, widget)
 {
     mShade = 0;
-    setPath(QString(PLEXPREFIX) + "/theme/skins/default/widget/friendswidget");
+    setPath(QDir::toNativeSeparators(
+                    PlexyDesk::Config::getInstance()->plexydeskBasePath() +
+                    "/share/plexy/theme/skins/default/widget/friendswidget"));
     setDockImage(QPixmap(mPrefix + "icon.png"));
     drawFriendsWidget();
 }

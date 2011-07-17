@@ -1,4 +1,8 @@
-ADD_SUBDIRECTORY(tests)
+# Check if we use any Debug in the final release and if so compile the tests
+IF(CMAKE_BUILD_TYPE MATCHES ".*Deb.*")
+    ADD_SUBDIRECTORY(test)
+ENDIF(CMAKE_BUILD_TYPE MATCHES ".*Deb.*")
+
 
 INCLUDE_DIRECTORIES(
     ${QT_INCLUDES}
@@ -51,14 +55,12 @@ IF(MINGW)
 ENDIF(MINGW)
 
 TARGET_LINK_LIBRARIES(plexymime
+    ${PLEXY_CORE_LIBRARY}
     ${libs}
     )
 
-IF (NOT WIN32)
-    INSTALL(TARGETS plexymime DESTINATION lib)
-ELSEIF(WIN32)
-    INSTALL(TARGETS plexymime DESTINATION bin)
-ENDIF(NOT WIN32)
+INSTALL(TARGETS plexymime DESTINATION lib)
+
 
 IF (APPLE OR WIN32)
     FILE(GLOB XML_FILES *.xml)

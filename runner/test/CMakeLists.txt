@@ -9,35 +9,35 @@ SET(sourceFiles
     ${CMAKE_SOURCE_DIR}/runner/iconprovider.cpp
     ${CMAKE_SOURCE_DIR}/runner/iconjob.cpp
     ${CMAKE_SOURCE_DIR}/runner/themepackloader.cpp
-)
+    )
 
-set(headerFiles
+SET(headerFiles
     testicon.h
     ${CMAKE_SOURCE_DIR}/runner/iconprovider.h
     ${CMAKE_SOURCE_DIR}/runner/iconjob.h
     ${CMAKE_SOURCE_DIR}/runner/themepackloader.h
-)
+    )
 
-set(QTMOC_TEST_SRCS
+SET(QTMOC_TEST_SRCS
     testicon.h
     ${CMAKE_SOURCE_DIR}/runner/iconprovider.h
     ${CMAKE_SOURCE_DIR}/runner/iconjob.h
     ${CMAKE_SOURCE_DIR}/runner/themepackloader.h
-)
+    )
 
-qt4_wrap_cpp(QT_MOC_SRCS_TEST ${QTMOC_TEST_SRCS})
+QT4_WRAP_CPP(QT_MOC_SRCS_TEST ${QTMOC_TEST_SRCS})
 
-set(sourceFiles
+SET(sourceFiles
     ${sourceFiles}
     ${headerFiles}
-)
+    )
 
-set(libs
+SET(libs
     ${PLEXY_CORE_LIBRARY}
     ${QT_QTCORE_LIBRARY}
     ${QT_QTXMLPATTERNS_LIBRARY}
     ${QT_QTTEST_LIBRARY}
-)
+    )
 
 ADD_EXECUTABLE(plexy_icon_test ${sourceFiles} ${QT_MOC_SRCS_TEST})
 
@@ -45,6 +45,6 @@ TARGET_LINK_LIBRARIES(
     plexy_icon_test
     plexymime
     ${libs}
-)
+    )
 
 INSTALL(TARGETS plexy_icon_test DESTINATION bin)

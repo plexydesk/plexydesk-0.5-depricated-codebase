@@ -1,4 +1,8 @@
-ADD_SUBDIRECTORY(test)
+# Check if we use any Debug in the final release and if so compile the tests
+IF(CMAKE_BUILD_TYPE MATCHES ".*Deb.*")
+    ADD_SUBDIRECTORY(test)
+ENDIF(CMAKE_BUILD_TYPE MATCHES ".*Deb.*")
+
 
 INCLUDE_DIRECTORIES(
     ${QT_INCLUDES}
@@ -36,8 +40,4 @@ TARGET_LINK_LIBRARIES(
     ${QT_QTSVG_LIBRARY}
     )
 
-IF(WIN32)
-    INSTALL(TARGETS plexyjson DESTINATION bin)
-ELSEIF(WIN32)
-    INSTALL(TARGETS plexyjson DESTINATION lib)
-ENDIF(WIN32)
+INSTALL(TARGETS plexyjson DESTINATION lib)

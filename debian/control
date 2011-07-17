@@ -1,15 +1,40 @@
 Source: plexydesk
 Section: x11
 Priority: extra
-Maintainer: Siraj Razick <sirajrazick@me.com>
-Build-Depends: cmake, cdbs, debhelper (>= 5), libqt4-dev (>= 4.4.1), ffmpeg (>= 0.cvs20070307), libavformat-dev (>= 0.cvs20070307), libavutil-dev (>= 0.cvs20070307), libavcodec-dev (>= 0.cvs20070307), libqimageblitz4 (>= 0.0.4), libqt4-opengl-dev (>= 4.4.1), libsm-dev (>= 1.1.1-1), libxext-dev (>= 1.0.4-1), libxcomposite-dev (>= 0.4.1-1), libxdamage-dev (>= 1.1.2-1), libqimageblitz-dev, libxrender-dev, libxcomposite-dev, libxdamage-dev, libqtwebkit-dev
+Maintainer: PhobosK <phobosk@kbfx.net>
+Build-Depends:  debhelper (>= 5),
+                cdbs,
+                cmake,
+                libqt4-dev (>= 4.4.1),
+                libqt4-opengl-dev (>= 4.4.1),
+                libqtwebkit-dev,
+                ffmpeg (>= 0.cvs20070307),
+                libavformat-dev (>= 0.cvs20070307),
+                libavutil-dev (>= 0.cvs20070307),
+                libavcodec-dev (>= 0.cvs20070307),
+                libsm-dev (>= 1.1.1-1),
+                libxext-dev (>= 1.0.4-1),
+                libxcomposite-dev (>= 0.4.1-1),
+                libxdamage-dev (>= 1.1.2-1),
+                libqimageblitz-dev,
+                libxrender-dev
 Standards-Version: 3.8.0
-
+Homepage: http://www.plexyplanet.org
 
 Package: plexydesk
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, cmake, cdbs, libqt4-dev (>= 4.4.0), ffmpeg (>= 0.cvs20070307), libqimageblitz-dev, libxrender-dev, libxcomposite-dev, libxdamage-dev, libqt4-opengl-dev, libqt4-dev, libqt4-declarative, libqt4-dbus, libqtwebkit-dev, libqt4-declarative-folderlistmodel
-Description: PlexyDesk will render your workspace and help organize all your information.
- Plexy is a Desktop, and it's not a Desktop Environment like KDE or GNOME. PlexyDesk will render your workspace and help organize all your information with a touch, yes heard us right.
- Plexy will support multi touch screens. Plexy might not be the new Desktop Environment you came looking for, but it will be the Ultimate Desktop Experience you would ever get.
- The Aim of PlexDesk? team is to create "A Desktop which is easy to communicate. Create and Simply cool!".
+Depends: ${shlibs:Depends}, ${misc:Depends},
+         ffmpeg (>= 0.cvs20070307),
+         libqimageblitz4 (>= 0.0.4),
+         libqt4-declarative,
+         libqt4-declarative-folderlistmodel,
+         libqt4-dbus,
+         libqtwebkit4,
+         libqtwebkit-qmlwebkitplugin
+Description: PlexyDesk is a Desktop extension which lets you efficiently use your desktop background.
+ .
+ PlexyDesk is a lightweight Desktop, and it's not a Desktop Environment like KDE or GNOME.
+ PlexyDesk will render your workspace and help organise all your information with a touch, yes heard us right.
+ PlexyDesk will support multi touch screens.
+ PlexyDesk might not be the new Desktop Environment you came looking for, but it will be the Ultimate Desktop Experience you would ever get.
+ The aim of the PlexyDesk Team is to create "A Desktop which is easy to communicate with, Create and Simply cool!"

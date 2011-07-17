@@ -5,7 +5,7 @@
 #include <QDir>
 #include <config.h>
 
- 
+
 QString readFile(QString filename)
 {
     QFile file(filename);
@@ -25,7 +25,9 @@ void TestJson::loadJsons()
 {
     mFetchComplete = false;
     JsonHandler json;
-    QString fbinfo = readFile(QString(QString(SOURCE_DIR) + "/plexylib/fbjson/test/data/fbstatus.json"));
+    QString fbinfo = readFile(QDir::toNativeSeparators(
+                                PlexyDesk::Config::getInstance()->plexydeskBasePath() +
+                                "/share/plexy/fbjson/data/fbstatus.json"));
     QVERIFY(!fbinfo.isEmpty());
     JsonData data = json.property(fbinfo, "comments");
     QCOMPARE(data.type() , JsonData::Object);

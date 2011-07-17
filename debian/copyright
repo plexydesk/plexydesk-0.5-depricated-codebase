@@ -1,18 +1,21 @@
-This package was debianized by Johnny Saenz A. <saenzac@gmail.com> on
-Sat, 06 Sep 2008 20:07:12 -0500.
+Format-Specification: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?view=co&rev=174
+Upstream-Name: PlexyDesk
+Upstream-Contact: Siraj Razick <siraj@kde.org>
+Maintainer: PhobosK <phobosk@kbfx.net>
+Source: http://sourceforge.net/projects/plexydesk/files/Source%20Packages
+Comment: This package was initially debianized by Johnny Saenz A. <saenzac@gmail.com>
 
-It was downloaded from 
+Files: *
+Copyright: 2008-2011, Siraj Razick <siraj@kde.org>
+License: LGPL-3+
 
-Upstream Author: 
+Files: debian/*
+       windows/*
+Copyright: 2011, PhobosK <phobosk@kbfx.net>
+License: LGPL-3+
 
-	Johnny Saenz <saenzac@gmail.com>
 
-Copyright: 
-
-	Siraj Razick <siraj.razick@plexydesk.org>
-
-License:
-
+License: LGPL-3+
    GNU LESSER GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 
@@ -25,7 +28,7 @@ License:
 the terms and conditions of version 3 of the GNU General Public
 License, supplemented by the additional permissions listed below.
 
-  0. Additional Definitions. 
+  0. Additional Definitions.
 
   As used herein, "this License" refers to version 3 of the GNU Lesser
 General Public License, and the "GNU GPL" refers to version 3 of the GNU
@@ -126,7 +129,7 @@ the following:
        a copy of the Library already present on the user's computer
        system, and (b) will operate properly with a modified version
        of the Library that is interface-compatible with the Linked
-       Version. 
+       Version.
 
    e) Provide Installation Information, but only if you would otherwise
    be required to provide such information under section 6 of the
@@ -181,4 +184,3 @@ Library.
 
 On Debian systems, the complete text of the GNU General
 Public License can be found in `/usr/share/common-licenses/GPL'.
-

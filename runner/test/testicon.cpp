@@ -59,15 +59,15 @@ void TestIcon::loadThemePackInit()
 
     QCOMPARE(themeLoader->wallpaper(),
             QDir::toNativeSeparators(
-                QString(PlexyDesk::Config::getInstance()->plexydeskBasePath()) +
-                QString("//share/plexy/themepack/default/resources/default.png")));
+                PlexyDesk::Config::getInstance()->plexydeskBasePath() +
+                "//share/plexy/themepack/default/resources/default.png"));
 
     QCOMPARE(themeLoader->widgets("native").count() , 1);
 
-    QCOMPARE(themeLoader->qmlFilesFromTheme("weather") , 
+    QCOMPARE(themeLoader->qmlFilesFromTheme("weather") ,
             QDir::toNativeSeparators(
-                 QString(PlexyDesk::Config::getInstance()->plexydeskBasePath()) +
-                 QString("/share/plexy/themepack/default/weather/weather.qml")));
+                 PlexyDesk::Config::getInstance()->plexydeskBasePath() +
+                 "/share/plexy/themepack/default/weather/weather.qml"));
     Q_FOREACH(const QString &qmlWidget, themeLoader->widgets("QML")) {
        qDebug() <<  themeLoader->qmlFilesFromTheme(qmlWidget);
        PlexyDesk::DesktopWidget *parent = new PlexyDesk::DesktopWidget(QRectF(0,0,0,0));
