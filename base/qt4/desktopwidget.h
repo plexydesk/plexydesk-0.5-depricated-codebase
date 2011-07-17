@@ -35,10 +35,12 @@
 
 #include <plexy.h>
 #include <plexyconfig.h>
+#include <shadereffectitem.h>
+
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT DesktopWidget : public QObject, public QGraphicsRectItem
+class PLEXYDESK_EXPORT DesktopWidget : public ShaderEffectItem
 {
     Q_OBJECT
     Q_ENUMS(State)
@@ -60,10 +62,13 @@ public :
      * optional QWidget embedded
      */
 
-    DesktopWidget(const QRectF &rect, QWidget *embeddedWidget = 0, QObject *parent = 0);
+    DesktopWidget(const QRectF &rect, QWidget *embeddedWidget = 0, QDeclarativeItem *parent = 0);
     virtual ~DesktopWidget();
 
     virtual QRectF boundingRect() const;
+    QRectF rect() const;
+    void setRect(const QRectF &rect);
+
     void drawBackdrop(bool draw);
 
     void configState(State s);

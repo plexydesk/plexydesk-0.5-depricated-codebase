@@ -97,6 +97,7 @@ SET(libs
     ${DBUS_LIB}
     ${QT_QTNETWORK_LIBRARY}
     ${QT_QTDECLARATIVE_LIBRARY}
+    plexyshaders
     )
 
 ADD_LIBRARY(${PLEXY_CORE_LIBRARY} SHARED ${sourceFiles} ${QT_MOC_SRCS})

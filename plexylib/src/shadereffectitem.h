@@ -46,12 +46,13 @@
 #include <QtOpenGL>
 #include "shadereffectsource.h"
 #include "scenegraph/qsggeometry.h"
+#include <plexy.h>
 
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-class ShaderEffectItem : public QDeclarativeItem
+class  PLEXYDESK_EXPORT ShaderEffectItem : public QDeclarativeItem
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)

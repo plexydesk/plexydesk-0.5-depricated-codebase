@@ -43,6 +43,7 @@ public:
     }
     ~Private() {
     }
+    QRectF mBoundingRect;
     QTimeLine *zoomin;
     QTimeLine *zoomout;
     QTimer *spintimer;
@@ -61,9 +62,8 @@ public:
     QGraphicsObject *qmlChild;
 };
 
-DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QObject *parent) :
-    QObject(parent),
-    QGraphicsRectItem(rect),
+DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QDeclarativeItem *parent) :
+    ShaderEffectItem(parent),
     d(new Private)
 {
     d->proxyWidget = 0;
@@ -124,6 +124,21 @@ DesktopWidget::~DesktopWidget()
     delete d;
 }
 
+QRectF DesktopWidget::boundingRect() const
+{
+    return d->mBoundingRect;
+}
+
+QRectF DesktopWidget::rect() const
+{
+    return d->mBoundingRect;
+}
+
+void DesktopWidget::setRect(const QRectF &rect)
+{
+    d->mBoundingRect = rect;
+}
+
 void DesktopWidget::zoomDone()
 {
     prepareGeometryChange();
@@ -154,11 +169,6 @@ void DesktopWidget::zoomOut(int frame)
     if (d->opacity >= 0.0) {
         //d->opacity -= 0.2;
     }
-}
-
-QRectF DesktopWidget::boundingRect() const
-{
-    return rect();
 }
 
 void DesktopWidget::setDockImage(QPixmap img)
@@ -229,7 +239,7 @@ bool DesktopWidget::isQMLWidget() const
 
 void DesktopWidget::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
-    QGraphicsRectItem::hoverEnterEvent(event);
+    QDeclarativeItem::hoverEnterEvent(event);
 }
 
 void DesktopWidget::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -264,7 +274,7 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
         }
         setState(DOCK);
         prepareGeometryChange();
-        this->setRect(0, 0, d->dock.width(), d->dock.height());
+        this->setRect(QRectF(0, 0, d->dock.width(), d->dock.height()));
         if (d->proxyWidget) {
             d->proxyWidget->hide();
         }
@@ -329,9 +339,9 @@ void DesktopWidget::configState(DesktopWidget::State s)
     resetMatrix();
     prepareGeometryChange();
     if (s == DOCK) {
-        setRect(0, 0, d->dock.width(), d->dock.height());
+        setRect(QRectF(0, 0, d->dock.width(), d->dock.height()));
     } else {
-        setRect(0, 0, d->panel.width(), d->panel.height());
+        setRect(QRectF(0, 0, d->panel.width(), d->panel.height()));
     }
     d->s = s;
     if (d->proxyWidget) {

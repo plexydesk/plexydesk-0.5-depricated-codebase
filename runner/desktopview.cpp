@@ -192,7 +192,8 @@ void DesktopView::setThemePack(const QString &name)
 
         Q_FOREACH(const QString &qmlWidget, d->mThemeLoader->widgets("QML")) {
             qDebug() << Q_FUNC_INFO << "Loading qml " << qmlWidget;
-            DesktopWidget *parent = new DesktopWidget(QRectF(0,0,0,0), 0, this);
+            //FIX ME : Memory leak
+            DesktopWidget *parent = new DesktopWidget(QRectF(0,0,0,0), 0, 0);
             parent->qmlFromUrl(QUrl(d->mThemeLoader->qmlFilesFromTheme(qmlWidget)));
             scene()->addItem(parent);
             connect(parent, SIGNAL(close()), this, SLOT(closeDesktopWidget()));
@@ -392,7 +393,7 @@ void DesktopView::dragEnterEvent (QDragEnterEvent * event)
     if (droppedFile.toString().contains(".qml")) {
 
         qDebug() << Q_FUNC_INFO << droppedFile;
-        DesktopWidget *parent = new DesktopWidget(QRectF(0,0,0,0), 0, this);
+        DesktopWidget *parent = new DesktopWidget(QRectF(0,0,0,0), 0, 0);
         parent->qmlFromUrl(droppedFile);
         scene()->addItem(parent);
         connect(parent, SIGNAL(close()), this, SLOT(closeDesktopWidget()));
