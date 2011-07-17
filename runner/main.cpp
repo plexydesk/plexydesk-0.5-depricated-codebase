@@ -57,8 +57,8 @@ int main( int argc, char * *argv )
     QApplication app(argc, argv);
 
     QString appIconPath = PlexyDesk::Config::getInstance()->plexydeskBasePath() + "/share/plexy/plexydesk.png";
-    app.setWindowIcon(QIcon::QIcon(QDir::toNativeSeparators(appIconPath)));
-    app.setApplicationName("PlexyDesk")
+    app.setWindowIcon(QIcon(QDir::toNativeSeparators(appIconPath)));
+    app.setApplicationName(QString(PLEXYNAME));
 
 #ifdef Q_WS_WIN
     QString pluginPath = PlexyDesk::Config::getInstance()->plexydeskBasePath() + "/lib/qt4/plugins/imageformats";
@@ -80,7 +80,7 @@ int main( int argc, char * *argv )
     desktopSize = QDesktopWidget().availableGeometry().size();
 #endif
 
-    view->setWindowTitle("plexydesk");
+    view->setWindowTitle(QString(PLEXYNAME));
     view->enableOpenGL(accel);
 
     view->setScene(&scene);

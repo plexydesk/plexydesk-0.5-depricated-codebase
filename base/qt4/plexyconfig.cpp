@@ -85,7 +85,7 @@ Config::Config(const QString &organization,
 
     if (d->mSettings->value("CurrentWallpaper").toString().isNull()) {
         d->mData["CurrentWallpaper"] = QDir::toNativeSeparators(
-                Config::plexydeskBasePath() + 
+                Config::plexydeskBasePath() +
                 QLatin1String("/share/plexy/skins/default/default.png"));
     }
 
@@ -133,7 +133,7 @@ void Config::read()
     d->mData["openGL"] = d->mSettings->value("openGL");
     d->mData["themepack"] = d->mSettings->value("themepack");
 
-    qDebug() << "Read: " << d->mData; 
+    qDebug() << "Read: " << d->mData;
 }
 
 void Config::writeToFile()
@@ -277,7 +277,7 @@ QString Config::plexydeskBasePath()
 #ifdef Q_WS_X11
     QString basePath(qgetenv("PLEXYDESK_DIR"));
     if (basePath.isEmpty() || basePath.isNull()) {
-        return PLEXPREFIX;
+        return PLEXYPREFIX;
     }
 
     return basePath;

@@ -29,7 +29,7 @@
 QPlexyMime::QPlexyMime(QObject *parent)
     : QObject(parent)
 {
-    QFile sourceDocument( QDir::toNativeSeparators(QString(PLEXPREFIX) +
+    QFile sourceDocument( QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->plexydeskBasePath() +
                 "/share/plexy/mime/freedesktop.org.xml"));
     sourceDocument.open(QIODevice::ReadOnly);
 
@@ -153,7 +153,7 @@ bool QPlexyMime::getGenericMime(const QString &mimeType, QFileInfo *fileInfo)
 
     if(result->isEmpty())
     {
-        emit cannotFound("Cannot found mime type.", mimeType);
+        emit cannotFound("Cannot find mime type.", mimeType);
         return false;
     }
 
@@ -198,8 +198,8 @@ void QPlexyMime::internalFromFileName(const QString &fileName)
 
     if(result->isEmpty())
     {
-        qWarning("Cannot found mime for specified filename.");
-        emit cannotFound("Cannot found mime for specified filename.", fileName);
+        qWarning("Cannot find mime for specified filename.");
+        emit cannotFound("Cannot find mime for specified filename.", fileName);
         return;
     }
 
@@ -246,7 +246,7 @@ void QPlexyMime::internalGenericIconName(const QString &mimeType)
 
     if(result->isEmpty())
     {
-        emit cannotFound("Cannot found icon name for specified mime.", mimeType);
+        emit cannotFound("Cannot find icon name for specified mime.", mimeType);
         return;
     }
 
@@ -291,7 +291,7 @@ void QPlexyMime::internalExpandedAcronym(const QString &mimeType)
 
     if(result->isEmpty())
     {
-        emit cannotFound("Cannot found expanded acronym for specified mime.", mimeType);
+        emit cannotFound("Cannot find expanded acronym for specified mime.", mimeType);
         return;
     }
 
@@ -339,7 +339,7 @@ void QPlexyMime::internalDescription(const QString &mimeType, const QString &lan
 
         if(result->isEmpty())
         {
-            emit cannotFound("Cannot found description for specified mime type.", qMakePair(mimeType, lang));
+            emit cannotFound("Cannot find description for specified mime type.", qMakePair(mimeType, lang));
             return;
         }
 
@@ -364,7 +364,7 @@ void QPlexyMime::internalDescription(const QString &mimeType, const QString &lan
 
         if(result->isEmpty())
         {
-            emit cannotFound("Cannot found description for specified mime type and language.", mimeType);
+            emit cannotFound("Cannot find description for specified mime type and language.", mimeType);
             return;
         }
 
@@ -411,7 +411,7 @@ void QPlexyMime::internalSubclassOfMime(const QString &mimeType)
 
     if(result->isEmpty())
     {
-        emit cannotFound("Cannot found subclass of mime for specified mime.", mimeType);
+        emit cannotFound("Cannot find subclass of mime for specified mime.", mimeType);
         return;
     }
 
@@ -456,7 +456,7 @@ void QPlexyMime::internalAcronym(const QString &mimeType)
 
     if(result->isEmpty())
     {
-        emit cannotFound("Cannot found acronym for specified mime.", mimeType);
+        emit cannotFound("Cannot find acronym for specified mime.", mimeType);
         return;
     }
 
@@ -501,7 +501,7 @@ void QPlexyMime::internalAlias(const QString &mimeType)
 
     if(result->isEmpty())
     {
-        emit cannotFound("Cannot found alias for specified mime.", mimeType);
+        emit cannotFound("Cannot find alias for specified mime.", mimeType);
         return;
     }
 

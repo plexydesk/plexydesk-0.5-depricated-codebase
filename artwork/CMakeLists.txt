@@ -5,5 +5,5 @@ ADD_SUBDIRECTORY(generic-widget)
 
 #FILE(GLOB PNGFILES *.png)
 
-INSTALL(FILES "artwork/icons/plexydesk.png" DESTINATION share/plexy)
+INSTALL(FILES "icons/plexydesk.png" DESTINATION share/plexy)
 #INSTALL(FILES ${PNGFILES} DESTINATION share/plexy/skins/default)

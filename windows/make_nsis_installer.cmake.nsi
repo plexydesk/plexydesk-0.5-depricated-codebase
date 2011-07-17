@@ -239,7 +239,7 @@ Function .onInit
   MessageBox MB_OK|MB_ICONEXCLAMATION \
              "The ${PRODUCT_NAME} Installer is already running."
   Abort
-  
+
   ClearErrors
 
   !insertmacro MULTIUSER_INIT
@@ -351,7 +351,7 @@ Function un.onInit
   MessageBox MB_OK|MB_ICONEXCLAMATION \
              "The ${PRODUCT_NAME} Uninstaller is already running."
   Abort
-  
+
   ClearErrors
 
   ; Parse command line parameter /KEEP_SETTINGS
@@ -361,7 +361,7 @@ Function un.onInit
   ${GetOptions} $R0 /KEEP_SETTINGS $0
   IfErrors +2
     StrCpy $KEEP_SETTINGS_UNINSTALL "TRUE"
-    
+
   ClearErrors
 
   !insertmacro MULTIUSER_UNINIT
@@ -553,7 +553,7 @@ Section -Post
   WriteRegStr SHELL_CONTEXT "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
   WriteRegDWORD SHELL_CONTEXT "${PRODUCT_UNINST_KEY}" "NoModify" 1
   WriteRegDWORD SHELL_CONTEXT "${PRODUCT_UNINST_KEY}" "NoRepair" 1
-  
+
   ; Add multiuser registry keys
   WriteRegStr SHELL_CONTEXT "${PRODUCT_REGKEY}" "NSIS:MultiUser" "$MultiUser.InstallMode"
   WriteRegStr SHELL_CONTEXT "${PRODUCT_REGKEY}" "NSIS:InstallPath_${PRODUCT_PLATFORM}" "$INSTDIR"
@@ -573,7 +573,7 @@ Section Uninstall
   ; Close any open instances of PlexyDesk
   !include WinMessages.nsh
   DetailPrint "Closing all ${PRODUCT_NAME} running instances..."
-  FindWindow $0 "QWidget" "${PRODUCT_BIN_NAME}"
+  FindWindow $0 "QWidget" "${PRODUCT_NAME}"
   SendMessage $0 ${WM_CLOSE} 0 0
 
   ; Remove all PlexyDesk shortcuts

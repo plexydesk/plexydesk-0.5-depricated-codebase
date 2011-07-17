@@ -7,12 +7,16 @@
 #include <QSvgRenderer>
 #include <config.h>
 
+#include <plexyconfig.h>
+
 class Frame : public QGraphicsRectItem
 {
 public:
     Frame(const QRectF &rect, QGraphicsItem *parent = 0) : QGraphicsRectItem(rect, parent) {
         setFlag(QGraphicsItem::ItemIsMovable, true);
-        render.load(QString(PLEXPREFIX) + "/share/plexy/skins/default/welcome/welcome.svg");
+        render.load(QDir::toNativeSeparators(
+                        PlexyDesk::Config::getInstance()->plexydeskBasePath() +
+                        "/share/plexy/skins/default/welcome/welcome.svg"));
     }
     void  paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
 private:
