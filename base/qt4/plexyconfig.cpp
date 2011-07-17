@@ -85,7 +85,7 @@ Config::Config(const QString &organization,
 
     if (d->mSettings->value("CurrentWallpaper").toString().isNull()) {
         d->mData["CurrentWallpaper"] = QDir::toNativeSeparators(
-                Config::plexydeskBasePath() +
+                Config::getInstance()->plexydeskBasePath() +
                 QLatin1String("/share/plexy/skins/default/default.png"));
     }
 
@@ -268,8 +268,8 @@ QString Config::plexydeskBasePath()
 {
 #ifndef Q_WS_X11
     QDir binaryPath (QCoreApplication::applicationDirPath());
-    qDebug() << Q_FUNC_INFO  << QDir::toNativeSeparators(binaryPath.canonicalPath());
     if (binaryPath.cdUp()) {
+        qDebug() << Q_FUNC_INFO  << QDir::toNativeSeparators(binaryPath.canonicalPath());
         return QDir::toNativeSeparators(binaryPath.canonicalPath());
     }
 #endif

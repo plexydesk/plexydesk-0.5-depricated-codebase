@@ -95,7 +95,7 @@ void PluginLoader::load(const QString &interface, const QString &pluginName)
 
 #ifdef Q_WS_WIN
     QPluginLoader loader(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() +
-                "/lib/plexyext/lib" + pluginName + ".dll"));
+                "/lib/plexyext/" + pluginName + ".dll"));
 #endif
 
     QObject *plugin = loader.instance();
@@ -118,7 +118,7 @@ void PluginLoader::load(const QString &interface, const QString &pluginName)
         }
 
     } else {
-        qDebug() << loader.errorString() << endl;;
+        qDebug() << loader.errorString() << "Failed plugin: " << pluginName << endl;
     }
 }
 
