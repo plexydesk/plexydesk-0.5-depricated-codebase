@@ -190,16 +190,16 @@ msbuild /target:Build /v:%COMPILER_DEBUG_LEVEL% /p:Configuration=%RELEASE_TYPE% 
 echo.
 echo Copying QT files to %FINAL_PATH% ...
 echo.
-xcopy /Q /Y "%QTDIR%\bin\*.dll" "%FINAL_PATH%\lib\qt4\bin\"
+xcopy /Q /Y "%QTDIR%\lib\*.dll" "%FINAL_PATH%\lib\qt4\lib\"
 xcopy /E /Q /Y "%QTDIR%\imports\*.*"  "%FINAL_PATH%\lib\qt4\imports\"
 xcopy /E /Q /Y "%QTDIR%\plugins\*.*" "%FINAL_PATH%\lib\qt4\plugins\"
 
 echo.
 echo Deleting unnecessary QT files ...
 echo.
-del /Q /F "%FINAL_PATH%\lib\qt4\bin\QtDesigner*"
-del /Q /F "%FINAL_PATH%\lib\qt4\bin\QTHelp*"
-del /Q /F "%FINAL_PATH%\lib\qt4\bin\QtCL*"
+del /Q /F "%FINAL_PATH%\lib\qt4\lib\QtDesigner*"
+del /Q /F "%FINAL_PATH%\lib\qt4\lib\QTHelp*"
+del /Q /F "%FINAL_PATH%\lib\qt4\lib\QtCL*"
 
 echo.
 echo Creating project NSIS package ...
