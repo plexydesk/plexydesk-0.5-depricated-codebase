@@ -136,6 +136,7 @@ INCLUDE_DIRECTORIES(
 #    ${CMAKE_BINARY_DIR}/plexylib
     ${CMAKE_SOURCE_DIR}/base/qt4
     ${CMAKE_BINARY_DIR}/base/qt4
+    ${CMAKE_SOURCE_DIR}/plexylib/src/
     ${CMAKE_SOURCE_DIR}/runner
     ${CMAKE_BINARY_DIR}/runner
     ${CMAKE_BINARY_DIR}/base/gtk
@@ -161,8 +162,6 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/social/libs/service
     ${CMAKE_SOURCE_DIR}/panel
     ${CMAKE_BINARY_DIR}/panel
-#    ${CMAKE_SOURCE_DIR}/extensions/qml/folders/
-#    ${CMAKE_BINARY_DIR}/extensions/qml/folders/
     ${CMAKE_SOURCE_DIR}/windows
     ${CMAKE_BINARY_DIR}/windows
     ${QT_INCLUDE_DIR}
@@ -196,6 +195,7 @@ IF(WIN32)
 ENDIF(WIN32)
 
 # *** ALL PLATFORMS ***
+ADD_SUBDIRECTORY(plexylib/src)
 ADD_SUBDIRECTORY(base/qt4)
 ADD_SUBDIRECTORY(extensions/widgets/clock)
 ADD_SUBDIRECTORY(extensions/backdrop/classicdrop)
