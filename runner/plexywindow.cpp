@@ -95,7 +95,7 @@ void PlexyWindows::bind()
         qDebug() <<  Q_FUNC_INFO<< "Grabbing Xserver " << endl;
         XWindowAttributes attr;
         XGetWindowAttributes(d->display, d->window, &d->attrib);
-        setRect(d->attrib.x, d->attrib.y, d->attrib.width/5, d->attrib.height/5);
+        setRect(QRectF(d->attrib.x, d->attrib.y, d->attrib.width/5, d->attrib.height/5));
         if (d->attrib.map_state == IsViewable) {
             d->pixmap = XCompositeNameWindowPixmap (d->display, d->window);
             if (d->pixmap == None) {

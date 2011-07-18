@@ -278,7 +278,7 @@ void DesktopView::loadWindows()
            PlexyWindows *_window = new PlexyWindows(dpy, children[i], &attr);
            _window->configState(DesktopWidget::NORMALSIDE);
            scene()->addItem(_window);
-           _window->setRect(0,0, 200, 200);
+           _window->setRect(QRectF(0,0, 200, 200));
            _window->show();
         }
     }
