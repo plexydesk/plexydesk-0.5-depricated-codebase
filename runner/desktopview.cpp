@@ -107,7 +107,8 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
     /* init */
 
     d->mThemeLoader = new ThemepackLoader(PlexyDesk::Config::getInstance()->themepackName(), this);
-    if (!d->mThemeLoader->wallpaper().isEmpty()) {
+    qDebug() << Q_FUNC_INFO << PlexyDesk::Config::getInstance()->wallpaper();
+    if (PlexyDesk::Config::getInstance()->wallpaper().isEmpty()) {
         qDebug() << Q_FUNC_INFO << d->mThemeLoader->wallpaper();
         PlexyDesk::Config::getInstance()->setWallpaper(d->mThemeLoader->wallpaper());
     }
@@ -181,7 +182,9 @@ void DesktopView::setThemePack(const QString &name)
         // TODO
         // ERROR HANDLING 
         d->mThemeLoader = new ThemepackLoader(name, this);
-        PlexyDesk::Config::getInstance()->setWallpaper(d->mThemeLoader->wallpaper());
+        if (PlexyDesk::Config::getInstance()->wallpaper().isEmpty()) {
+            PlexyDesk::Config::getInstance()->setWallpaper(d->mThemeLoader->wallpaper());
+        }
 
         Q_FOREACH(const QString &nativeWidget, d->mThemeLoader->widgets("native")) {
             qDebug() << Q_FUNC_INFO << nativeWidget;

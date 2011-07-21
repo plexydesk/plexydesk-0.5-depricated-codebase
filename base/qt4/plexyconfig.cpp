@@ -48,7 +48,8 @@ QDeclarativeEngine *Config::engine = 0;
 Config *Config::getInstance()
 {
     if (config == 0) {
-        config = new Config("plexydesk", "plexydesktop");
+        config = new Config(QLatin1String("plexydesk"), 
+                QLatin1String("plexydesktop"));
         return config;
     } else {
         return config;
@@ -84,9 +85,7 @@ Config::Config(const QString &organization,
     read();
 
     if (d->mSettings->value("CurrentWallpaper").toString().isNull()) {
-        d->mData["CurrentWallpaper"] = QDir::toNativeSeparators(
-                Config::getInstance()->plexydeskBasePath() +
-                QLatin1String("/share/plexy/skins/default/default.png"));
+        d->mData["CurrentWallpaper"] = QString();
     }
 
 
@@ -98,9 +97,8 @@ Config::Config(const QString &organization,
         d->mData["themepack"] = QLatin1String("default");
     }
 
-   // if (widgetList.count() <= 0) {
-        writeToFile();
-   // }
+    writeToFile();
+
 #ifdef Q_WS_X11
     // register  with dbus
     new ConfigAdaptor(this);

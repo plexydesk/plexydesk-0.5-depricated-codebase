@@ -91,11 +91,19 @@ void BgPlugin::data(QVariant &data)
 QGraphicsItem *BgPlugin::item()
 {
     if (mBackgroundItem == NULL) {
-
-        QSize desktopSize = QDesktopWidget().screenGeometry().size();
-
+        QSize desktopSize;
+#ifdef Q_WS_MAC
+       desktopSize = QDesktopWidget().screenGeometry().size();
+#else
+       desktopSize = QDesktopWidget().availableGeometry().size();
+#endif
         QPixmapCache::setCacheLimit((desktopSize.height()* desktopSize.width() * 32)/8);
-        mBackgroundItem = new QGraphicsPixmapItem(*mBackgroundPixmap);
+
+        mBackgroundCache = mBackgroundPixmap->scaled(desktopSize.width(), desktopSize.height(),
+                Qt::KeepAspectRatioByExpanding,
+                Qt::SmoothTransformation);
+
+        mBackgroundItem = new QGraphicsPixmapItem(mBackgroundCache);
         mBlurEffect = new QGraphicsBlurEffect();
         mBlurEffect->setBlurHints(QGraphicsBlurEffect::AnimationHint);
         mBlurAnimation = new QPropertyAnimation(mBlurEffect, "blurRadius");
