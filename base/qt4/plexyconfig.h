@@ -26,6 +26,7 @@
 #include <QSettings>
 #include <QStringList>
 #include <QDeclarativeEngine>
+#include <imagecache.h>
 
 #define QmlEngine() PlexyDesk::Config::qmlEngine();
 

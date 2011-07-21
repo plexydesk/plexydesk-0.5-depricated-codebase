@@ -62,6 +62,7 @@ QDeclarativeEngine *Config::qmlEngine()
         engine = new QDeclarativeEngine;
         engine->addImportPath(QDir::toNativeSeparators(
                     Config::getInstance()->plexydeskBasePath() + QLatin1String("/lib/qt4/imports/")));
+        engine->addImageProvider(QLatin1String("plexydesk"), new ImageCache);
         return engine;
     } else {
         return engine;

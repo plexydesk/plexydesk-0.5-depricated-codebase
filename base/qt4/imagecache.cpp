@@ -1,11 +1,10 @@
 #include <imagecache.h>
 #include <QSvgRenderer>
 #include <QtDebug>
+#include <QObject>
 
 namespace PlexyDesk
 {
-
-ImageCache *ImageCache::staticObject = NULL;
 
 class ImageCache::Private
 {
@@ -25,14 +24,8 @@ void ImageCache::clear()
     d->map.clear();
 }
 
-ImageCache *ImageCache::instance() {
-    if (!staticObject)
-        return new ImageCache();
-
-    return staticObject;
-}
-
-ImageCache::ImageCache() : d(new Private)
+ImageCache::ImageCache(QDeclarativeImageProvider::ImageType type) :
+    QDeclarativeImageProvider(type), d(new Private)
 {
     load("default");
 }
@@ -42,12 +35,22 @@ ImageCache::~ImageCache()
     delete d;
 }
 
+QPixmap ImageCache::requestPixmap(const QString &id, QSize *size, const QSize &requestedSize)
+{
+    if (size->width() <= 0 && size->height() <= 0) {
+        return get(id);
+    }
+    QPixmap rv = get(id).scaled(requestedSize.width(), requestedSize.height(),
+                            Qt::KeepAspectRatioByExpanding,
+                            Qt::SmoothTransformation);
+    return rv;
+}
 void ImageCache::load(const QString &themename)
 {
     QString prefix = QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() +
-            QLatin1String("/theme/") +
+            QLatin1String("/share/plexy/themepack/") +
             themename
-            + QLatin1String("/"));
+            + QLatin1String("/resources/"));
 
     QDir dir(prefix);
     dir.setFilter(QDir::Files);
@@ -56,7 +59,7 @@ void ImageCache::load(const QString &themename)
     for (int i = 0; i < list.size(); i++)
     {
         QFileInfo file = list.at(i);
-        d->map[file.completeBaseName()] = QPixmap(file.absoluteFilePath());
+        d->map[file.completeBaseName()] = QPixmap(QDir::toNativeSeparators(file.absoluteFilePath()));
         d->fileHash[file.completeBaseName()] = file.absoluteFilePath();
     }
 }

@@ -5,26 +5,28 @@
 #include <QtGui>
 #include <plexy.h>
 #include <plexyconfig.h>
+#include <QDeclarativeImageProvider>
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT ImageCache : public QObject
+class PLEXYDESK_EXPORT ImageCache : public QDeclarativeImageProvider
 {
-    Q_OBJECT
 public:
+    ImageCache(QDeclarativeImageProvider::ImageType type = QDeclarativeImageProvider::Pixmap);
     virtual ~ImageCache();
+
+    QPixmap requestPixmap(const QString &id, QSize *size, const QSize &requestedSize);
+
+protected:
     void load(const QString &themename);
     QPixmap get(const QString &name);
-    static ImageCache *instance();
     void clear();
     bool drawSvg(QPainter *painter,
          QRectF rect, const QString &str);
 
 private:
-    ImageCache();
     class Private;
     Private *const d;
-    static ImageCache *staticObject;
 };
 }
 

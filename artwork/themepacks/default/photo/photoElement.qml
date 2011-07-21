@@ -7,11 +7,11 @@ Rectangle {
     color : "transparent"
 
     Image {
-        source:"photoElement_images/background.png"
-        id:background
-        x:0 ; y:0
         width:200 * 2 
         height:176 * 2
+        source:"image://plexydesk/background"
+        id:background
+        x:0 ; y:0
     }
 
     Image {
