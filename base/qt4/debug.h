@@ -3,11 +3,19 @@
 
 #include <QFile>
 #include <QTextStream>
+#include <QDateTime>
+#include <config.h>
 
 
 static void plexyWindowsLogger(QtMsgType type, const char *msg)
 {
-    static QFile data("plexydesk_log.txt");
+    if (strcmp(BUILD_MODE, "Release") == 0) {
+        return;
+    }
+
+    static QFile data(QDir::QDir::toNativeSeparators(
+                QDir::tempPath() +
+                QString("/plexydesk_log_%1.txt").arg(QDateTime::currentDateTime().toString())));
     data.close();
     if (!data.open(QFile::WriteOnly | QFile::Append)) {
         return;
