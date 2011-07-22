@@ -558,9 +558,10 @@ Section -Post
   WriteRegStr SHELL_CONTEXT "${PRODUCT_REGKEY}" "NSIS:MultiUser" "$MultiUser.InstallMode"
   WriteRegStr SHELL_CONTEXT "${PRODUCT_REGKEY}" "NSIS:InstallPath_${PRODUCT_PLATFORM}" "$INSTDIR"
 
-  ; Modify qt.conf
+  ; Modify qt.conf. QT uses it properly only if it has Unix path delimiters
   DetailPrint "Modifying QT configuration file to work with ${PRODUCT_NAME} ..."
-  WriteINIStr "$INSTDIR\bin\qt.conf" "Paths" "Prefix" "$INSTDIR\lib\qt4"
+  ${WordReplace} " $INSTDIR\lib\qt4" "\" "/" "+*" $R5
+  WriteINIStr "$INSTDIR\bin\qt.conf" "Paths" "Prefix" $R5
 
   ; Add lib to PATH env variable
   DetailPrint "Adding ${PRODUCT_NAME} to PATH..."

@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=@APPLICATION_NAME@
+GenericName=Desktop Orginiser
+GenericName[bg]=Организатор за работната площ
+Comment=Helps you efficiently organise and use your Desktop.
+Comment[bg]=Ефективно организира и променя работната Ви площ.
+Exec=@CMAKE_INSTALL_PREFIX@/bin/@APPLICATION_EXE_NAME@
+TryExec=@CMAKE_INSTALL_PREFIX@/bin/@APPLICATION_EXE_NAME@
+Icon=@CMAKE_INSTALL_PREFIX@/share/plexy/@APPLICATION_EXE_NAME@.png
+Terminal=false
+Categories=Qt;System;

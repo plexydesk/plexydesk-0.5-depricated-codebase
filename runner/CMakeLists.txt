@@ -127,3 +127,7 @@ TARGET_LINK_LIBRARIES(
 
 ########### Install files ###############
 INSTALL(TARGETS plexydesk DESTINATION bin)
+
+IF(UNIX)
+    INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/plexydesk.desktop DESTINATION share/applications)
+ENDIF(UNIX)
