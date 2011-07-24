@@ -12,14 +12,18 @@ SET(sourceFiles
     baserender.cpp
     desktopwidget.cpp
     extensionfactory.cpp
-#    fakemime.cpp
-#    httpjobhandler.cpp
     imagecache.cpp
     netwm.cpp
     pendingjob.cpp
     plexyconfig.cpp
     pluginloader.cpp
     viewlayer.cpp
+    shaders/shadereffect.cpp
+    shaders/shadereffectbuffer.cpp
+    shaders/shadereffectitem.cpp
+    shaders/shadereffectsource.cpp
+    shaders/scenegraph/qsggeometry.cpp
+
     )
 
 SET(headerFiles
@@ -34,8 +38,6 @@ SET(headerFiles
    dataplugin.h
    desktopwidget.h
    extensionfactory.h
-#   fakemime.h
-#   httpjobhandler.h
    imagecache.h
    netwm.h
    netwm_def.h
@@ -48,6 +50,12 @@ SET(headerFiles
    viewlayer.h
    widgetinterface.h
    widgetplugin.h
+   shaders/shadereffect.h
+   shaders/shadereffectbuffer.h
+   shaders/shadereffectitem.h
+   shaders/shadereffectsource.h
+   shaders/scenegraph/qsggeometry.h
+
    )
 
 SET(MOC_SRCS
@@ -59,7 +67,6 @@ SET(MOC_SRCS
    datainterface.h
    dataplugin.h
    desktopwidget.h
-#   httpjobhandler.h
    imagecache.h
    pendingjob.h
    plexyconfig.h
@@ -69,6 +76,11 @@ SET(MOC_SRCS
    viewlayer.h
    widgetinterface.h
    widgetplugin.h
+   shaders/shadereffect.h
+   shaders/shadereffectbuffer.h
+   shaders/shadereffectitem.h
+   shaders/shadereffectsource.h
+   shaders/scenegraph/qsggeometry.h
    )
 
 # DBUS is working only under linux for now
@@ -97,7 +109,6 @@ SET(libs
     ${DBUS_LIB}
     ${QT_QTNETWORK_LIBRARY}
     ${QT_QTDECLARATIVE_LIBRARY}
-    plexyshaders
     )
 
 ADD_LIBRARY(${PLEXY_CORE_LIBRARY} SHARED ${sourceFiles} ${QT_MOC_SRCS})

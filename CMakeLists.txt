@@ -140,7 +140,7 @@ INCLUDE_DIRECTORIES(
 #    ${CMAKE_BINARY_DIR}/plexylib
     ${CMAKE_SOURCE_DIR}/base/qt4
     ${CMAKE_BINARY_DIR}/base/qt4
-    ${CMAKE_SOURCE_DIR}/plexylib/src/
+    ${CMAKE_SOURCE_DIR}/base/qt4/shaders
     ${CMAKE_SOURCE_DIR}/runner
     ${CMAKE_BINARY_DIR}/runner
     ${CMAKE_BINARY_DIR}/base/gtk
@@ -199,7 +199,6 @@ IF(WIN32)
 ENDIF(WIN32)
 
 # *** ALL PLATFORMS ***
-ADD_SUBDIRECTORY(plexylib/src)
 ADD_SUBDIRECTORY(base/qt4)
 ADD_SUBDIRECTORY(extensions/widgets/clock)
 ADD_SUBDIRECTORY(extensions/backdrop/classicdrop)
