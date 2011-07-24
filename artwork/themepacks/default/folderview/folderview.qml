@@ -37,7 +37,7 @@ Rectangle{
         parent : backgroundHolder
         asynchronous : true
         focus: false
-        source: "image://plexydesk/folderview_background"
+        source: "image://plexydesk/qml_widget_background"
     }
 
     Text{

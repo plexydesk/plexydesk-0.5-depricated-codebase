@@ -304,7 +304,7 @@ Rectangle {
         anchors.fill: parent
         asynchronous : true
         z: -10
-        source: "image://plexydesk/welcom_background"
+        source: "image://plexydesk/qml_widget_background"
     }
 
     Rectangle {
