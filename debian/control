@@ -5,8 +5,8 @@ Maintainer: PhobosK <phobosk@kbfx.net>
 Build-Depends:  debhelper (>= 5),
                 cdbs,
                 cmake,
-                libqt4-dev (>= 4.4.1),
-                libqt4-opengl-dev (>= 4.4.1),
+                libqt4-dev (>= 4.7.0),
+                libqt4-opengl-dev (>= 4.7.0),
                 libqtwebkit-dev,
                 ffmpeg (>= 0.cvs20070307),
                 libavformat-dev (>= 0.cvs20070307),
@@ -31,7 +31,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends},
          libqt4-dbus,
          libqtwebkit4,
          libqtwebkit-qmlwebkitplugin
-Description: PlexyDesk is a Desktop extension which lets you efficiently use your desktop background.
+Description: PlexyDesk is a Desktop extension which lets you efficiently organise and use your Desktop.
  .
  PlexyDesk is a lightweight Desktop, and it's not a Desktop Environment like KDE or GNOME.
  PlexyDesk will render your workspace and help organise all your information with a touch, yes heard us right.

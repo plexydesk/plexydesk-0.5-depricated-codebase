@@ -108,8 +108,8 @@ SetCompressorDictSize 32
 
 ;--------------------------------
 ; Additional plugin folders. Uses CMake sources path for windows
-!addplugindir "${PRODUCT_SOURCES_PATH}\windows\nsis-unicode\plugins"
-!addincludedir "${PRODUCT_SOURCES_PATH}\windows\nsis-unicode\include"
+!addplugindir "${PRODUCT_SOURCES_PATH}\dist\windows\nsis-unicode\plugins"
+!addincludedir "${PRODUCT_SOURCES_PATH}\dist\windows\nsis-unicode\include"
 
 
 ;--------------------------------
@@ -123,7 +123,7 @@ SetCompressorDictSize 32
 !define MULTIUSER_INSTALLMODE_INSTDIR "${PRODUCT_NAME}"
 !define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_KEY "${PRODUCT_REGKEY}"
 !define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_VALUENAME "NSIS:InstallPath_${PRODUCT_PLATFORM}"
-!include "${PRODUCT_SOURCES_PATH}\windows\nsis-unicode\include\MultiUser.nsh"
+!include "${PRODUCT_SOURCES_PATH}\dist\windows\nsis-unicode\include\MultiUser.nsh"
 !include "MUI2.nsh"
 
 ;--------------------------------

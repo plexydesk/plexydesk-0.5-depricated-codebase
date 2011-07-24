@@ -10,7 +10,6 @@ PROJECT(PlexyDesktop)
 SET(LIB_MAJOR 0)
 SET(LIB_MINOR 6)
 SET(LIB_RELEASE 0)
-SET(LIB_SUB_RELEASE 1)
 SET(APPLICATION_INTERNAL_VERSION "20110703")
 SET(APPLICATION_DATE "2011-07-03")
 SET(APPLICATION_EXE_NAME plexydesk)
@@ -19,7 +18,7 @@ SET(PLEXY_CORE_LIBRARY plexydeskcore)
 
 # Auto defined project variables
 SET(APPLICATION_NAME "${PROJECT_NAME}")
-SET(APPLICATION_MAIN_VERSION "${LIB_MAJOR}.${LIB_MINOR}.${LIB_RELEASE}.${LIB_SUB_RELEASE}")
+SET(APPLICATION_MAIN_VERSION "${LIB_MAJOR}.${LIB_MINOR}.${LIB_RELEASE}")
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 CMAKE_POLICY(SET CMP0003 OLD)
@@ -27,7 +26,7 @@ CMAKE_POLICY(SET CMP0003 OLD)
 SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmakemodules)
 
 # Needed/optional packages definitions
-FIND_PACKAGE(Qt4 REQUIRED)
+FIND_PACKAGE(Qt4 4.7.0 REQUIRED)
 FIND_PACKAGE(FFMPEG) #optional
 FIND_PACKAGE(OpenCV) #optional
 FIND_PACKAGE(QImageBlitz REQUIRED)
@@ -103,8 +102,8 @@ CONFIGURE_FILE(
     "${CMAKE_CURRENT_BINARY_DIR}/runner/plexydesk.desktop"
     @ONLY)
 CONFIGURE_FILE(
-    "${CMAKE_CURRENT_SOURCE_DIR}/windows/make_nsis_installer.cmake.nsi"
-    "${CMAKE_CURRENT_BINARY_DIR}/windows/make_nsis_installer.nsi"
+    "${CMAKE_CURRENT_SOURCE_DIR}/dist/windows/make_nsis_installer.cmake.nsi"
+    "${CMAKE_CURRENT_BINARY_DIR}/dist/windows/make_nsis_installer.nsi"
     @ONLY)
 CONFIGURE_FILE(
     "${CMAKE_CURRENT_SOURCE_DIR}/cmakemodules/cmake_uninstall.cmake.in"
@@ -120,16 +119,16 @@ ADD_CUSTOM_TARGET(uninstall
 # Then add the resource to the sources files as "resourceFiles" and use them
 # in the final target to be compiled (for an example see the runner/CMakeLists.txt)
 CONFIGURE_FILE(
-    "${CMAKE_CURRENT_SOURCE_DIR}/windows/${APPLICATION_EXE_NAME}_windres.rc.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/windows/${APPLICATION_EXE_NAME}_windres.rc")
+    "${CMAKE_CURRENT_SOURCE_DIR}/dist/windows/${APPLICATION_EXE_NAME}_windres.rc.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/dist/windows/${APPLICATION_EXE_NAME}_windres.rc")
 IF(MINGW)
     ADD_CUSTOM_COMMAND(
         OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/wally_rc.o
         COMMAND windres.exe
-                  -I ${CMAKE_CURRENT_SOURCE_DIR}/windows
-                  -o ${CMAKE_CURRENT_BINARY_DIR}/windows/${APPLICATION_EXE_NAME}_rc.o
-                  -i ${CMAKE_CURRENT_BINARY_DIR}/windows/windres.rc
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/windows
+                  -I ${CMAKE_CURRENT_SOURCE_DIR}/dist/windows
+                  -o ${CMAKE_CURRENT_BINARY_DIR}/dist/windows/${APPLICATION_EXE_NAME}_rc.o
+                  -i ${CMAKE_CURRENT_BINARY_DIR}/dist/windows/windres.rc
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/dist/windows
         COMMENT "Generating windows RC file ...")
 ENDIF(MINGW)
 
@@ -166,8 +165,8 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/social/libs/service
     ${CMAKE_SOURCE_DIR}/panel
     ${CMAKE_BINARY_DIR}/panel
-    ${CMAKE_SOURCE_DIR}/windows
-    ${CMAKE_BINARY_DIR}/windows
+    ${CMAKE_SOURCE_DIR}/dist/windows
+    ${CMAKE_BINARY_DIR}/dist/windows
     ${QT_INCLUDE_DIR}
     )
 
@@ -195,7 +194,7 @@ IF (NOT APPLE)
 ENDIF (NOT APPLE)
 
 IF(WIN32)
-    ADD_SUBDIRECTORY(windows)
+    ADD_SUBDIRECTORY(dist/windows)
 ENDIF(WIN32)
 
 # *** ALL PLATFORMS ***

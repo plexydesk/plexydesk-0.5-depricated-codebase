@@ -4,8 +4,6 @@ rem Script for building and packing PlexyDesk on Windows Platform
 rem Author: PhobosK <phobosk@kbfx.net>
 rem License: LGPLv3
 
-CLS
-set CURRENT_PATH=%cd%
 
 rem QT x86 configured with MS VS 2010 with the folowing options:
 rem configure -release -opensource -qt-zlib -qt-libpng -qt-libmng -qt-libtiff -qt-libjpeg -platform win32-msvc2010
@@ -14,15 +12,23 @@ rem QT x64 configured with MS VS 2010 with the folowing options:
 rem configure -release -opensource -qt-zlib -qt-libpng -qt-libmng -qt-libtiff -qt-libjpeg
 
 
+CLS
+set CURRENT_PATH=%cd%
+
+rem Make sure we do all operations from the GIT source path
+cd /d %~dp0
+cd ..
+set GIT_PATH=%cd%
+
 rem First we create a folder where all Installers will go
-IF EXIST "%CURRENT_PATH%\INSTALLERS" GOTO create_build
+IF EXIST "%GIT_PATH%\INSTALLERS" GOTO create_build
 echo Creating an INSTALLERS folder ...
 echo.
 mkdir INSTALLERS
 
 :create_build
 rem We better build out of the sources
-IF EXIST "%CURRENT_PATH%\build" GOTO go_to_build
+IF EXIST "%GIT_PATH%\build" GOTO go_to_build
 echo Creating a build folder ...
 echo.
 mkdir build
@@ -204,7 +210,7 @@ del /Q /F "%FINAL_PATH%\lib\qt4\lib\QtCL*"
 echo.
 echo Creating project NSIS package ...
 echo.
-makensis /V1 /DPRODUCT_PLATFORM=%PROJECT_PLATFORM% /DPRODUCT_VC_VERSION=%PROJECT_VC% /DPRODUCT_SOURCES_PATH=%CURRENT_PATH% /DPRODUCT_BIN_SOURCES_PATH=%FINAL_PATH% "%CURRENT_PATH%\build\windows\make_nsis_installer.nsi"
+makensis /V1 /DPRODUCT_PLATFORM=%PROJECT_PLATFORM% /DPRODUCT_VC_VERSION=%PROJECT_VC% /DPRODUCT_SOURCES_PATH=%GIT_PATH% /DPRODUCT_BIN_SOURCES_PATH=%FINAL_PATH% "%GIT_PATH%\build\dist\windows\make_nsis_installer.nsi"
 
 :END_INSTALL
 
@@ -213,7 +219,8 @@ echo All done.
 echo.
 echo You can find the prepared package for Windows in this folder:
 echo.
-echo %CURRENT_PATH%\INSTALLERS
+echo %GIT_PATH%\INSTALLERS
 echo.
 
-cd ..
+cd "%CURRENT_PATH"
+
