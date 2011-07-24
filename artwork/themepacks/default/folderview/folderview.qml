@@ -37,7 +37,7 @@ Rectangle{
         parent : backgroundHolder
         asynchronous : true
         focus: false
-        source: "resources/images/background.png"
+        source: "image://plexydesk/folderview_background"
     }
 
     Text{
@@ -130,7 +130,7 @@ Rectangle{
         anchors.bottomMargin: 49
         asynchronous : true
         parent : backgroundHolder
-        source: "resources/images/Back.png"
+        source: "image://plexydesk/Back"
         opacity: 1
         MouseArea {
             id: mouse_area1

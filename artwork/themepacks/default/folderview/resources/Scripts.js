@@ -61,39 +61,39 @@ function getFolderName(flm)
 function getTypeIcon(type)
 {
     if(type === "")
-        return "images/folder.png";
+        return "image://plexydesk/folder";
     else if(type === "pdf")
-        return "images/pdf.png";
+        return "image://plexydesk/pdf";
     else if(type === "txt" || type === "doc" || type === "docx" || type === "sh")
-        return "images/doc.png";
+        return "image://plexydesk/doc";
     else if (type === "png" || type === "PNG")
-        return "images/png.png";
+        return "image://plexydesk/png";
     else if (type=== "jpeg" || type == "jpg" || type === "JPG" || type === "JPEG")
-        return "images/jpeg.png"
+        return "image://plexydesk/jpeg"
     else if (type === "zip"||type ==="rar"||type ==="gz")
-        return "images/zip.png";
+        return "image://plexydesk/zip";
     else if (type === "mpeg" || type === "MPEG" || type === "MPG" || type === "mpg" || type === "AVI" || type === "avi" || type === "mov" || type === "MOV")
-        return "images/mov.png";
+        return "image://plexydesk/mov";
     else if (type === "WMA" || type === "wma")
-        return "images/wma.png";
+        return "image://plexydesk/wma";
     else if (type === "mp3" || type === "MP3" || type === "m3u")
-        return "images/music.png";
+        return "image://plexydesk/music";
     else if (type === "cpp")
-        return "images/cpp.png";
+        return "image://plexydesk/cpp";
     else if (type === "h")
-        return "images/h.png";
+        return "image://plexydesk/h";
     else if (type === "html")
-        return "images/html.png";
+        return "image://plexydesk/html";
     else if (type === "o" || type === "out")
-        return "images/o.png";
+        return "image://plexydesk/o";
     else if (type === "iso" || type === "bin" || type === "nrg" || type === "daa")
-        return "images/iso.png";
+        return "image://plexydesk/iso";
     else if (type=== "exe")
-        return "images/exe.png";
+        return "image://plexydesk/exe.png";
     else if (type === "java")
-	return "images/java.png";
+	return "image://plexydesk/java";
     else
-        return "images/default.png";
+        return "image://plexydesk/default";
 }
 
 function getType(filename)
