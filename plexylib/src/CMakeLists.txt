@@ -1,7 +1,3 @@
-#ADD_SUBDIRECTORY(test)
-
-Project (PlexyDesktop)
-
 INCLUDE_DIRECTORIES(
     ${QT_INCLUDES}
     )

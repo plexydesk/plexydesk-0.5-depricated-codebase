@@ -52,7 +52,7 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-class  PLEXYDESK_EXPORT ShaderEffectItem : public QDeclarativeItem
+class  ShaderEffectItem : public QDeclarativeItem
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)

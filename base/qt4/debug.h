@@ -5,6 +5,7 @@
 #include <QTextStream>
 #include <QDateTime>
 #include <config.h>
+#include <QDir>
 
 
 static void plexyWindowsLogger(QtMsgType type, const char *msg)
@@ -13,7 +14,7 @@ static void plexyWindowsLogger(QtMsgType type, const char *msg)
         return;
     }
 
-    static QFile data(QDir::QDir::toNativeSeparators(
+    static QFile data(QDir::toNativeSeparators(
                 QDir::tempPath() +
                 QString("/plexydesk_log_%1.txt").arg(QDateTime::currentDateTime().toString())));
     data.close();
