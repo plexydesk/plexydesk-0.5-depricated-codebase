@@ -9,7 +9,7 @@ Rectangle {
     Image {
         width:200 * 2 
         height:176 * 2
-        source:"image://plexydesk/background"
+        source:"image://plexydesk/photo_background"
         id:background
         x:0 ; y:0
     }

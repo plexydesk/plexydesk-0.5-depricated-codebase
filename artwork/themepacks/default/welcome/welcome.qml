@@ -18,7 +18,6 @@
 *******************************************************************************/
 import Qt 4.7
 import "scripts/Scripts.js" as Scripts
-import "images"
 
 
 Rectangle {
@@ -305,7 +304,7 @@ Rectangle {
         anchors.fill: parent
         asynchronous : true
         z: -10
-        source: "images/background.png"
+        source: "image://plexydesk/welcom_background"
     }
 
     Rectangle {
@@ -373,7 +372,7 @@ Rectangle {
             y: 25
             width: 30
             height: 25
-            source: "images/back.png"
+            source: "image://plexydesk/back"
             asynchronous : true
             opacity: 0
             Behavior on opacity {
@@ -481,7 +480,7 @@ Rectangle {
                 width: 30
                 height: 25
                 fillMode: "PreserveAspectFit"
-                source: "images/back.png"
+                source: "image://plexydesk/back"
                 opacity: 1
             }
 
