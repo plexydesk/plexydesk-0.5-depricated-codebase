@@ -50,13 +50,12 @@ BuildRequires:  libsm6-devel, libxext6-devel, libxcomposite1-devel, libxdamage-d
 %define fedora_version      %(rpm -q --queryformat '%{VERSION}' fedora-release)
 %define fedora_vernum       %(echo "%{fedora_version}" | tr -d '.')
 Group:		User Interface/Desktops
-Release:	%{rpm_release}.FC%{fedora_vernum}
-Requires:	ffmpeg
-Requires:   libqimageblitz4 >= 4.0, libqtdeclarative4 >= 4.7.0, libqtdbus4 >= 4.7.0
-Requires:	libqtwebkit4 >= 4.7.0, libqtopengl4 >= 4.7.0
-Requires:	libsm6, libxext6, libxcomposite1, libxdamage1, libxrender1
-BuildRequires:  libqt4-devel >= 4.7.0, libqimageblitz-devel, libffmpeg-devel
-BuildRequires:  libsm6-devel, libxext6-devel, libxcomposite1-devel, libxdamage-devel, libxrender1-devel
+Release:	%{rpm_release}.fc%{fedora_vernum}
+Requires:	ffmpeg, ffmpeg-libs
+Requires:	qimageblitz
+Requires:	libSM, libXext, libXcomposite, libXdamage, libXrender
+BuildRequires:  qt4-devel >= 4.7.0, qimageblitz-devel, ffmpeg-devel
+BuildRequires:  libSM-devel, libXext-devel, libXcomposite-devel, libXdamage-devel, libXrender-devel
 %endif
 
 
