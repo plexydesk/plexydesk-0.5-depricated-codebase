@@ -12,10 +12,10 @@ Rectangle {
         source:"image://plexydesk/qml_widget_background"
         id:background
         x:0 ; y:0
+        opacity : 0.5
     }
 
     Image {
-        parent : background
         source : "http://www.wallpaperstop.com/wallpapers/baby-wallpapers/cute-baby-wallpaper-240x150-0912045.jpg"
         id:pasted_layer
         x:37 * 2 ; y:40 * 2 

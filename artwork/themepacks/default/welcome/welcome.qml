@@ -300,7 +300,7 @@ Rectangle {
 
     Image {
         id: image1
-        opacity: 1
+        opacity: 0.5
         anchors.fill: parent
         asynchronous : true
         z: -10

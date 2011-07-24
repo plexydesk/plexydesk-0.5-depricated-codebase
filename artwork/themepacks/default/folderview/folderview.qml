@@ -38,6 +38,7 @@ Rectangle{
         asynchronous : true
         focus: false
         source: "image://plexydesk/qml_widget_background"
+        opacity : 0.5
     }
 
     Text{
