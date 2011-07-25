@@ -25,7 +25,7 @@ namespace PlexyDesk
 {
 ImagePileWidget::ImagePileWidget(const QRectF &rect, QWidget *widget) : DesktopWidget(rect, widget)
 {
-    setDockImage(QPixmap(applicationDirPath() + "/share/plexy/skins/widgets/widget01/pila.png"));
+    setDockImage(QPixmap(applicationDirPath() + "/share/plexy/skins/widgets/base-widget/pila.png"));
     cover = QImage(200, 200, QImage::Format_ARGB32_Premultiplied);
 }
 

@@ -24,7 +24,7 @@ namespace PlexyDesk
 {
 WidgetItem::WidgetItem(const QRectF &rect, QWidget *widget) : DesktopWidget(rect, widget)
 {
-    setDockImage(QPixmap("/usr/share/plexy/skins/widgets/widget01/schedulepng.png"));
+    setDockImage(QPixmap("/usr/share/plexy/skins/widgets/base-widget/schedule.png"));
 }
 
 WidgetItem::~WidgetItem()

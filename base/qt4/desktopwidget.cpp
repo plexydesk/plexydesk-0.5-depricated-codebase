@@ -84,13 +84,13 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QDeclarativeIt
     d->scale = 1;
 
     d->panel = QPixmap(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath()  +
-         QLatin1String( "/share/plexy/skins/widgets/widget01/Panel.png")));
+         QLatin1String( "/share/plexy/skins/widgets/base-widget/panel.png")));
 
     d->back = QPixmap(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath()  +
-         QLatin1String("/share/plexy/skins/widgets/widget01/reverse.png")));
+         QLatin1String("/share/plexy/skins/widgets/base-widget/reverse.png")));
 
     d->dock = QPixmap(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() +
-         QLatin1String("/share/plexy/skins/widgets/widget01/Icon.png")));
+         QLatin1String("/share/plexy/skins/widgets/base-widget/icon.png")));
 
     setCacheMode(QGraphicsItem::ItemCoordinateCache, d->panel.size());
     setCacheMode(DeviceCoordinateCache);
@@ -250,7 +250,7 @@ void DesktopWidget::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->buttons() != Qt::LeftButton) {
-        /* We will let the widgets decide what to do with 
+        /* We will let the widgets decide what to do with
            left clicks
            */
         QGraphicsItem::mouseDoubleClickEvent(event);

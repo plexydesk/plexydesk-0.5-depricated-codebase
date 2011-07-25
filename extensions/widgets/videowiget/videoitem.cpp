@@ -34,8 +34,8 @@ VideoItem::VideoItem(const QRectF &rect, QWidget *widget) : DesktopWidget(rect, 
     brush = QBrush(QColor(0, 0, 0));
     snapped = false;
     frameno = 0;
-    setDockImage(QPixmap("/usr/share/plexy/skins/widgets/widget01/xine.png"));
-    setFaceImage(QPixmap("/usr/share/plexy/skins/widgets/widget01/filmback.png"));
+    setDockImage(QPixmap("/usr/share/plexy/skins/widgets/base-widget/xine.png"));
+    setFaceImage(QPixmap("/usr/share/plexy/skins/widgets/base-widget/filmback.png"));
 
 }
 
