@@ -16,7 +16,7 @@ static void plexyWindowsLogger(QtMsgType type, const char *msg)
 
     static QFile data(QDir::toNativeSeparators(
                 QDir::tempPath() +
-                QString("/plexydesk_log_%1.txt").arg(QDateTime::currentDateTime().toString())));
+                QString("/plexydesk_log_%1.txt").arg(QDateTime::currentDateTime().toString("dd-MM-yyyy_hh-mm-ss"))));
     data.close();
     if (!data.open(QFile::WriteOnly | QFile::Append)) {
         return;
