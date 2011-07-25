@@ -97,7 +97,6 @@ ENDIF(WIN32)
 
 CONFIGURE_FILE(config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h )
 CONFIGURE_FILE(plexydesk.Doxyfile.cmake ${CMAKE_CURRENT_BINARY_DIR}/plexydesk.Doxyfile )
-CONFIGURE_FILE(org.plexydesk.daemon.service.in ${CMAKE_CURRENT_BINARY_DIR}/org.plexydesk.daemon.service)
 CONFIGURE_FILE(
     "${CMAKE_CURRENT_SOURCE_DIR}/runner/plexydesk.cmake.desktop"
     "${CMAKE_CURRENT_BINARY_DIR}/runner/plexydesk.desktop"
