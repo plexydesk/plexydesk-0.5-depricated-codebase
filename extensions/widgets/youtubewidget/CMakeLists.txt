@@ -58,5 +58,5 @@ TARGET_LINK_LIBRARIES(
     ${libs}
     )
 
-INSTALL(TARGETS plexyyoutube DESTINATION lib/plexyext)
+INSTALL(TARGETS plexyyoutube DESTINATION ${CMAKE_INSTALL_LIBDIR}/plexyext)
 INSTALL(FILES youtube.desktop DESTINATION share/plexy/ext/groups)

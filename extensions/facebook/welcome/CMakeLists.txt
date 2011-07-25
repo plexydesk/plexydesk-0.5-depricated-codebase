@@ -61,5 +61,5 @@ TARGET_LINK_LIBRARIES(
     ${libs}
     )
 
-INSTALL(TARGETS plexywelcome DESTINATION lib/plexyext)
+INSTALL(TARGETS plexywelcome DESTINATION ${CMAKE_INSTALL_LIBDIR}/plexyext)
 INSTALL(FILES welcome.desktop DESTINATION share/plexy/ext/groups)

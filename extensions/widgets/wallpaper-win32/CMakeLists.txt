@@ -68,5 +68,5 @@ TARGET_LINK_LIBRARIES(
     ${libs}
     )
 
-INSTALL(TARGETS wallpaperchange DESTINATION lib/plexyext)
+INSTALL(TARGETS wallpaperchange DESTINATION ${CMAKE_INSTALL_LIBDIR}/plexyext)
 INSTALL(FILES wallpaperchange.desktop DESTINATION share/plexy/ext/groups)

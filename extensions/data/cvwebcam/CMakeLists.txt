@@ -45,5 +45,5 @@ TARGET_LINK_LIBRARIES(
     ${libs}
     )
 
-INSTALL(TARGETS webcamengine DESTINATION lib/plexyext)
+INSTALL(TARGETS webcamengine DESTINATION ${CMAKE_INSTALL_LIBDIR}/plexyext)
 INSTALL(FILES webcam.desktop DESTINATION share/plexy/ext/groups)

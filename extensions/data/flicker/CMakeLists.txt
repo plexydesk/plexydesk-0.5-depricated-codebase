@@ -43,5 +43,5 @@ TARGET_LINK_LIBRARIES(
 	${libs}
 )
 
-INSTALL(TARGETS flickerengine DESTINATION lib/plexyext)
+INSTALL(TARGETS flickerengine DESTINATION ${CMAKE_INSTALL_LIBDIR}/plexyext)
 INSTALL(FILES flicker.desktop DESTINATION share/plexy/ext/groups)

@@ -36,5 +36,5 @@ TARGET_LINK_LIBRARIES(
     ${QT_QTOPENGL_LIBRARY}
     )
 
-INSTALL(TARGETS localphotosengine DESTINATION lib/plexyext)
+INSTALL(TARGETS localphotosengine DESTINATION ${CMAKE_INSTALL_LIBDIR}/plexyext)
 INSTALL(FILES localphotos.desktop DESTINATION share/plexy/ext/groups)

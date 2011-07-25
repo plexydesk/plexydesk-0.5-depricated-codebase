@@ -48,7 +48,7 @@ QDeclarativeEngine *Config::engine = 0;
 Config *Config::getInstance()
 {
     if (config == 0) {
-        config = new Config(QLatin1String("plexydesk"), 
+        config = new Config(QLatin1String("plexydesk"),
                 QLatin1String("plexydesktop"));
         return config;
     } else {
@@ -61,7 +61,7 @@ QDeclarativeEngine *Config::qmlEngine()
     if (engine == 0) {
         engine = new QDeclarativeEngine;
         engine->addImportPath(QDir::toNativeSeparators(
-                    Config::getInstance()->plexydeskBasePath() + QLatin1String("/lib/qt4/imports/")));
+                    Config::getInstance()->plexydeskBasePath() + "/" + PLEXYLIBDIR + "/qt4/imports/"));
         engine->addImageProvider(QLatin1String("plexydesk"), new ImageCache);
         return engine;
     } else {

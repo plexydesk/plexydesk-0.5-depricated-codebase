@@ -43,5 +43,5 @@ TARGET_LINK_LIBRARIES(
     ${libs}
     )
 
-INSTALL(TARGETS utubeengine DESTINATION lib/plexyext)
+INSTALL(TARGETS utubeengine DESTINATION ${CMAKE_INSTALL_LIBDIR}/plexyext)
 INSTALL(FILES utube.desktop DESTINATION share/plexy/ext/groups)

@@ -50,5 +50,5 @@ TARGET_LINK_LIBRARIES(
     ${libs}
     )
 
-INSTALL(TARGETS imagepil DESTINATION lib/plexyext)
+INSTALL(TARGETS imagepil DESTINATION ${CMAKE_INSTALL_LIBDIR}/plexyext)
 INSTALL(FILES imagepil.desktop DESTINATION share/plexy/ext/groups)

@@ -49,5 +49,5 @@ TARGET_LINK_LIBRARIES(
     ${libs}
     )
 
-INSTALL(TARGETS plexytwit DESTINATION lib/plexyext)
+INSTALL(TARGETS plexytwit DESTINATION ${CMAKE_INSTALL_LIBDIR}/plexyext)
 INSTALL(FILES twit.desktop DESTINATION share/plexy/ext/groups)

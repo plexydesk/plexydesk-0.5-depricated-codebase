@@ -62,5 +62,5 @@ ELSE(WIN32)
         )
 ENDIF(WIN32)
 
-INSTALL(TARGETS videoengine DESTINATION lib/plexyext)
+INSTALL(TARGETS videoengine DESTINATION ${CMAKE_INSTALL_LIBDIR}/plexyext)
 INSTALL(FILES videoengine.desktop DESTINATION share/plexy/ext/groups)

@@ -54,5 +54,5 @@ TARGET_LINK_LIBRARIES(
     ${libs}
     )
 
-INSTALL(TARGETS plexyclock DESTINATION lib/plexyext)
+INSTALL(TARGETS plexyclock DESTINATION ${CMAKE_INSTALL_LIBDIR}/plexyext)
 INSTALL(FILES clock.desktop DESTINATION share/plexy/ext/groups)

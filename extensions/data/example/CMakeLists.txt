@@ -35,5 +35,5 @@ TARGET_LINK_LIBRARIES(
 	       ${QT_QTOPENGL_LIBRARY}
        )
 
-INSTALL(TARGETS exampleengine DESTINATION lib/plexyext)
+INSTALL(TARGETS exampleengine DESTINATION ${CMAKE_INSTALL_LIBDIR}/plexyext)
 INSTALL(FILES example.desktop DESTINATION share/plexy/ext/groups)

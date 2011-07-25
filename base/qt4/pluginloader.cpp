@@ -26,6 +26,7 @@
 #include <QStringList>
 
 #include <debug.h>
+#include <config.h>
 
 namespace PlexyDesk
 {
@@ -90,7 +91,7 @@ void PluginLoader::load(const QString &interface, const QString &pluginName)
 
 #ifdef Q_WS_X11
     QPluginLoader loader(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() +
-                "/lib/plexyext/lib" + pluginName + ".so"));
+                "/" + PLEXYLIBDIR + "/plexyext/lib" + pluginName + ".so"));
 #endif
 
 #ifdef Q_WS_WIN

@@ -53,5 +53,5 @@ TARGET_LINK_LIBRARIES(
     ${libs}
     )
 
-INSTALL(TARGETS guardianplugin DESTINATION lib/plexyext)
+INSTALL(TARGETS guardianplugin DESTINATION ${CMAKE_INSTALL_LIBDIR}/plexyext)
 INSTALL(FILES guardianplugin.desktop DESTINATION share/plexy/ext/groups)

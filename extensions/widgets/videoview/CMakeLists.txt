@@ -49,5 +49,5 @@ TARGET_LINK_LIBRARIES(
     ${libs}
     )
 
-INSTALL(TARGETS videoview DESTINATION lib/plexyext)
+INSTALL(TARGETS videoview DESTINATION ${CMAKE_INSTALL_LIBDIR}/plexyext)
 INSTALL(FILES videoview.desktop DESTINATION share/plexy/ext/groups)

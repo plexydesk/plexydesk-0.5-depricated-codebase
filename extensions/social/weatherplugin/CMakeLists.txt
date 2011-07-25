@@ -53,5 +53,5 @@ TARGET_LINK_LIBRARIES(
     ${libs}
     )
 
-INSTALL(TARGETS weatherplugin DESTINATION lib/plexyext)
+INSTALL(TARGETS weatherplugin DESTINATION ${CMAKE_INSTALL_LIBDIR}/plexyext)
 INSTALL(FILES weatherplugin.desktop DESTINATION share/plexy/ext/groups)

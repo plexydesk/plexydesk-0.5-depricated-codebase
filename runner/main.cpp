@@ -45,6 +45,7 @@
 #include <canvas.h>
 #include <plexyconfig.h>
 #include <debug.h>
+#include <config.h>
 
 //using namespace PlexyDesk;
 
