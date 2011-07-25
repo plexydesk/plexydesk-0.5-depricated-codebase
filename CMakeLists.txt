@@ -136,28 +136,22 @@ ENDIF(MINGW)
 INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
-#    ${CMAKE_SOURCE_DIR}/plexylib
-#    ${CMAKE_BINARY_DIR}/plexylib
     ${CMAKE_SOURCE_DIR}/base/qt4
     ${CMAKE_BINARY_DIR}/base/qt4
     ${CMAKE_SOURCE_DIR}/base/qt4/shaders
+    ${CMAKE_BINARY_DIR}/base/qt4/shaders
     ${CMAKE_SOURCE_DIR}/runner
     ${CMAKE_BINARY_DIR}/runner
-    ${CMAKE_BINARY_DIR}/base/gtk
     ${CMAKE_SOURCE_DIR}/modules/libplexyirc
     ${CMAKE_BINARY_DIR}/modules/libplexyirc
-    ${CMAKE_SOURCE_DIR}/modules/QtWin
-    ${CMAKE_BINARY_DIR}/modules/QtWin
-    ${CMAKE_SOURCE_DIR}/plexylib/fbjson
-    ${CMAKE_BINARY_DIR}/plexylib/fbjson
-    ${CMAKE_SOURCE_DIR}/widgets/gtk
-    ${CMAKE_SOURCE_DIR}/3rdparty/lqr
+    ${CMAKE_SOURCE_DIR}/modules/fbjson
+    ${CMAKE_BINARY_DIR}/modules/fbjson
     ${CMAKE_SOURCE_DIR}/3rdparty/mime
     ${CMAKE_BINARY_DIR}/3rdparty/mime
     ${CMAKE_SOURCE_DIR}/3rdparty/qplexymime
     ${CMAKE_BINARY_DIR}/3rdparty/qplexymime
-    ${CMAKE_SOURCE_DIR}/3rdparty/qplexyiconprovider
     ${CMAKE_SOURCE_DIR}/3rdparty/webitem
+    ${CMAKE_BINARY_DIR}/3rdparty/webitem
     ${CMAKE_SOURCE_DIR}/3rdparty/webitem/lib
     ${CMAKE_BINARY_DIR}/3rdparty/webitem/lib
     ${CMAKE_SOURCE_DIR}/social
@@ -174,8 +168,6 @@ INCLUDE_DIRECTORIES(
 IF (NOT APPLE)
     IF (UNIX)
         # *** LINUX ONLY ***
-#        ADD_SUBDIRECTORY(plexywm)
-
         ADD_SUBDIRECTORY(panel)
         ADD_SUBDIRECTORY(social)
         ADD_SUBDIRECTORY(social/accountsmanager)
@@ -199,16 +191,15 @@ IF(WIN32)
 ENDIF(WIN32)
 
 # *** ALL PLATFORMS ***
-ADD_SUBDIRECTORY(base/qt4)
-ADD_SUBDIRECTORY(extensions/widgets/clock)
-ADD_SUBDIRECTORY(extensions/backdrop/classicdrop)
-ADD_SUBDIRECTORY(data)
-ADD_SUBDIRECTORY(runner)
-ADD_SUBDIRECTORY(plexylib/fbjson)
 ADD_SUBDIRECTORY(3rdparty/libmagic)
 ADD_SUBDIRECTORY(3rdparty/mime)
 ADD_SUBDIRECTORY(3rdparty/qplexymime)
 ADD_SUBDIRECTORY(3rdparty/webitem)
+ADD_SUBDIRECTORY(base/qt4)
+ADD_SUBDIRECTORY(extensions/widgets/clock)
+ADD_SUBDIRECTORY(extensions/backdrop/classicdrop)
+ADD_SUBDIRECTORY(runner)
+ADD_SUBDIRECTORY(modules/fbjson)
 
 # *** UI widgets - ALL PLATFORMS ***
 # Youtube is diabled ListView is now at extensions/widgets
