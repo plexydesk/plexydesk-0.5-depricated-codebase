@@ -1,0 +1,20 @@
+PURPOSE OF THE PLEXYDESK-EXTRAS BRANCH:
+=======================================
+
+This branch is for storing different extras for PlexyDesk.
+These include:
+* Wallpapers
+* Buttons
+* Icons
+* GIMP resources used for the design of PlexyDesk
+* Widgets etc. etc.
+
+It has no install scripts or whatever.
+The branch is used only as an additional resource for the users of PlexyDesk.
+That is if they want to change any of PlexyDesk's resources and add their own ones.
+
+
+
+A NOTE FOR THE DEVELOPERS:
+==========================
+Please DO NOT merge any other branch here. Thanks.
