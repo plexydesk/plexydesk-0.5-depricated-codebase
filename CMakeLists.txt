@@ -221,8 +221,6 @@ ADD_SUBDIRECTORY(extensions/data/rest)
 
 # *** Themes and themepacks - ALL PLATFORMS ***
 ADD_SUBDIRECTORY(artwork)
-ADD_SUBDIRECTORY(artwork/plexyfren_theme/default)
-ADD_SUBDIRECTORY(artwork/themepacks/default)
 ADD_SUBDIRECTORY(extensions/qml/folders)
 
 
