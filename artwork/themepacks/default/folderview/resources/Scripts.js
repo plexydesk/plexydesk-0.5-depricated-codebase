@@ -93,7 +93,7 @@ function getTypeIcon(type)
     else if (type === "java")
 	return "image://plexydesk/java";
     else
-        return "image://plexydesk/default";
+        return "image://plexydesk/unknown";
 }
 
 function getType(filename)
