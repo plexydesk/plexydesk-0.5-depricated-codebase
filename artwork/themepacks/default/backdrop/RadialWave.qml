@@ -4,7 +4,7 @@
 ** All rights reserved.
 ** Contact: Nokia Corporation (qt-info@nokia.com)
 **
-** This file is part of the QML Shaders plugin of the Qt Toolkit.
+** This file is part of the examples of the Qt Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** No Commercial Usage
@@ -38,23 +38,48 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
+
 import Qt 4.7
 import Qt.labs.shaders 1.0
 
 Item {
-    width: backgroundSize.width
+    id: main
+    width : backgroundSize.width
     height: backgroundSize.height
-
-    Image {
-        id: image
-        width: parent.width
-        height: parent.height * 0.65
-        source: backgroundImage
-        smooth: false
+    ShaderEffectSource {
+        id: thesource
+        sourceItem: Image { source: backgroundImage }
+        live: false
+        hideSource: false
     }
-    Water {
-        sourceItem: image
-        intensity: 5
-        height: parent.height - image.height
+
+    RadialWaveEffect {
+        id: layer
+        anchors.fill: parent;
+        source: thesource
+
+        wave: 0.0
+        waveOriginX: 0.5
+        waveOriginY: 0.5
+        waveWidth: 0.01
+
+        NumberAnimation on wave {
+            id: waveAnim
+            running: true
+            loops: 1
+            easing.type: "OutInBounce"
+            from: 0.0000; to: 3.0000;
+            duration: 10000
+        }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        onPressed: {
+            waveAnim.stop()
+            layer.waveOriginX = mouseX / main.width
+            layer.waveOriginY = mouseY / main.height
+            waveAnim.start()
+        }
     }
 }

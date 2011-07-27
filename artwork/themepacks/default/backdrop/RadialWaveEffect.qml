@@ -4,7 +4,7 @@
 ** All rights reserved.
 ** Contact: Nokia Corporation (qt-info@nokia.com)
 **
-** This file is part of the QML Shaders plugin of the Qt Toolkit.
+** This file is part of the examples of the Qt Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** No Commercial Usage
@@ -38,23 +38,44 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
+
 import Qt 4.7
 import Qt.labs.shaders 1.0
 
-Item {
-    width: backgroundSize.width
-    height: backgroundSize.height
+ShaderEffectItem {
+    id: effect
 
-    Image {
-        id: image
-        width: parent.width
-        height: parent.height * 0.65
-        source: backgroundImage
-        smooth: false
-    }
-    Water {
-        sourceItem: image
-        intensity: 5
-        height: parent.height - image.height
-    }
+    property real wave: 0.3
+    property real waveOriginX: 0.5
+    property real waveOriginY: 0.5
+    property real waveWidth: 0.01
+    property real aspectRatio: width/height
+    property variant source: 0
+
+    fragmentShader:
+        "
+        varying mediump vec2 qt_TexCoord0;
+        uniform sampler2D source;
+        uniform highp float wave;
+        uniform highp float waveWidth;
+        uniform highp float waveOriginX;
+        uniform highp float waveOriginY;
+        uniform highp float aspectRatio;
+
+        void main(void)
+        {
+        mediump vec2 texCoord2 = qt_TexCoord0;
+        mediump vec2 origin = vec2(waveOriginX, (1.0 - waveOriginY) / aspectRatio);
+
+        highp float fragmentDistance = distance(vec2(texCoord2.s, texCoord2.t / aspectRatio), origin);
+        highp float waveLength = waveWidth + fragmentDistance * 0.25;
+
+        if ( fragmentDistance > wave && fragmentDistance < wave + waveLength) {
+            highp float distanceFromWaveEdge = min(abs(wave - fragmentDistance), abs(wave + waveLength - fragmentDistance));
+            texCoord2 += sin(1.57075 * distanceFromWaveEdge / waveLength) * distanceFromWaveEdge * 0.08 / fragmentDistance;
+        }
+
+        gl_FragColor = texture2D(source, texCoord2.st);
+        }
+        "
 }
