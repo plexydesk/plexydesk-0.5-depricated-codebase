@@ -57,6 +57,7 @@ private:
     QGraphicsBlurEffect *mBlurEffect;
     PlexyDesk::ThemepackLoader *mThemePack;
     PlexyDesk::DesktopWidget *mBackgroundItem;
+    QGraphicsPixmapItem *mBackgroundItemPixmap;
 };
 
 #endif //PLEXY_CLASSIC_BACKDROP_H

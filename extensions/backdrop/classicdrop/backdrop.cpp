@@ -54,14 +54,34 @@ BgPlugin::~BgPlugin()
 
 void BgPlugin::changeWallpaperItem()
 {
-     QDeclarativeContext *context = PlexyDesk::Config::qmlEngine()->rootContext();
+     if (PlexyDesk::Config::getInstance()->isOpenGL()) {
 
-     context->setContextProperty("backgroundImage",
-             QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->wallpaper()));
+          QDeclarativeContext *context = PlexyDesk::Config::qmlEngine()->rootContext();
 
-     mBackgroundItem->qmlFromUrl(QUrl(mThemePack->qmlBackdropFromTheme()));
+          context->setContextProperty("backgroundImage",
+                 QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->wallpaper()));
 
-     mBlurAnimation->start();
+          mBackgroundItem->qmlFromUrl(QUrl(mThemePack->qmlBackdropFromTheme()));
+     } else {
+         QSize desktopSize = QDesktopWidget().screenGeometry().size();
+
+         if (mBackgroundPixmap) {
+             delete mBackgroundPixmap;
+         }
+
+         mBackgroundPixmap = new QPixmap(PlexyDesk::Config::getInstance()->wallpaper());
+
+         if (mBackgroundPixmap->isNull()) {
+             return;
+         }
+
+         mBackgroundCache = mBackgroundPixmap->scaled(desktopSize.width(), desktopSize.height(),
+                 Qt::KeepAspectRatioByExpanding,
+                 Qt::SmoothTransformation);
+         mBackgroundItemPixmap->setPixmap(mBackgroundCache);
+    }
+
+    mBlurAnimation->start();
 }
 void BgPlugin::data(QVariant &data)
 {
@@ -90,15 +110,6 @@ QGraphicsItem *BgPlugin::item()
                 Qt::KeepAspectRatioByExpanding,
                 Qt::SmoothTransformation);
 
-
-        context->setContextProperty("backgroundImage",
-                QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->wallpaper()));
-
-        mBackgroundItem = new PlexyDesk::DesktopWidget(QRectF(0.0, 0.0, desktopSize.width(),
-                    desktopSize.height()));
-        mBackgroundItem->qmlFromUrl(QUrl(mThemePack->qmlBackdropFromTheme()));
-        mBackgroundItem->setFlag(QGraphicsItem::ItemIsMovable, false);
-
         mBlurEffect = new QGraphicsBlurEffect();
         mBlurEffect->setBlurHints(QGraphicsBlurEffect::AnimationHint);
         mBlurAnimation = new QPropertyAnimation(mBlurEffect, "blurRadius");
@@ -106,15 +117,31 @@ QGraphicsItem *BgPlugin::item()
         mBlurAnimation->setStartValue(5.0);
         mBlurAnimation->setEndValue(0.0);
 
-        mBackgroundItem->setGraphicsEffect(mBlurEffect);
-        mBackgroundItem->setCacheMode(QGraphicsItem::ItemCoordinateCache);
+        connect(PlexyDesk::Config::getInstance(), SIGNAL(wallpaperChanged()), 
+                this, SLOT(changeWallpaperItem()));
 
-        connect(PlexyDesk::Config::getInstance(),
-                SIGNAL(wallpaperChanged()), this,
-                SLOT(changeWallpaperItem()));
 
-        mBlurAnimation->start();
-    }
 
-    return mBackgroundItem;
+        if (PlexyDesk::Config::getInstance()->isOpenGL()) {
+            context->setContextProperty("backgroundImage",
+                QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->wallpaper()));
+
+            mBackgroundItem = new PlexyDesk::DesktopWidget(QRectF(0.0, 0.0, desktopSize.width(),
+                    desktopSize.height()));
+            mBackgroundItem->qmlFromUrl(QUrl(mThemePack->qmlBackdropFromTheme()));
+            mBackgroundItem->setFlag(QGraphicsItem::ItemIsMovable, false);
+
+            mBackgroundItem->setGraphicsEffect(mBlurEffect);
+            mBackgroundItem->setCacheMode(QGraphicsItem::ItemCoordinateCache);
+            mBlurAnimation->start();
+            return mBackgroundItem;
+        } else {
+            mBackgroundItemPixmap = new QGraphicsPixmapItem(mBackgroundCache);
+            mBackgroundItemPixmap->setGraphicsEffect(mBlurEffect);
+            mBackgroundItemPixmap->setCacheMode(QGraphicsItem::ItemCoordinateCache);
+            mBlurAnimation->start();
+            return mBackgroundItemPixmap;
+        }
+
+      }
 }
