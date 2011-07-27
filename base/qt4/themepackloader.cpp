@@ -6,6 +6,8 @@
 #include <QDesktopWidget>
 #include <QRect>
 
+namespace PlexyDesk
+{
 
 class ThemepackLoader::ThemepackLoaderPrivate
 {
@@ -55,6 +57,20 @@ QString ThemepackLoader::wallpaper()
 
     return QDir::toNativeSeparators(prefix.absoluteFilePath(rv));
 }
+
+QString ThemepackLoader::qmlBackdropFromTheme()
+{
+    QString rv;
+    d->mSettings->beginGroup(QLatin1String("main"));
+    rv = d->mSettings->value("qml_wallpaper").toString();
+    d->mSettings->endGroup();
+
+    QDir
+        prefix(QString("%1/%2/%3").arg(d->mThemePackPath).arg(d->mThemeName).arg(QLatin1String("backdrop/")));
+
+    return QDir::toNativeSeparators(prefix.absoluteFilePath(rv));
+}
+
 
 QStringList ThemepackLoader::widgets(const QString &expType)
 {
@@ -146,3 +162,5 @@ void ThemepackLoader::setThemeName(const QString &name)
 {
     Q_UNUSED(name);
 }
+
+} // namespace plexydesk

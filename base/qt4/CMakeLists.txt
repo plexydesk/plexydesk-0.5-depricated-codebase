@@ -18,6 +18,7 @@ SET(sourceFiles
     plexyconfig.cpp
     pluginloader.cpp
     viewlayer.cpp
+    themepackloader.cpp 
     shaders/shadereffect.cpp
     shaders/shadereffectbuffer.cpp
     shaders/shadereffectitem.cpp
@@ -50,6 +51,7 @@ SET(headerFiles
    viewlayer.h
    widgetinterface.h
    widgetplugin.h
+   themepackloader.h
    shaders/shadereffect.h
    shaders/shadereffectbuffer.h
    shaders/shadereffectitem.h
@@ -76,6 +78,7 @@ SET(MOC_SRCS
    viewlayer.h
    widgetinterface.h
    widgetplugin.h
+   themepackloader.h
    shaders/shadereffect.h
    shaders/shadereffectbuffer.h
    shaders/shadereffectitem.h

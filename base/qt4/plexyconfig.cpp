@@ -23,6 +23,8 @@
 #include <QHash>
 #include <config.h>
 #include <QCoreApplication>
+#include <shadereffectitem.h>
+#include <shadereffectsource.h>
 
 #ifdef Q_WS_X11
 #include <configadaptor.h>
@@ -59,6 +61,8 @@ Config *Config::getInstance()
 QDeclarativeEngine *Config::qmlEngine()
 {
     if (engine == 0) {
+        qmlRegisterType<ShaderEffectItem>("Qt.labs.shaders", 1, 0, "ShaderEffectItem");
+        qmlRegisterType<ShaderEffectSource>("Qt.labs.shaders", 1, 0, "ShaderEffectSource");
         engine = new QDeclarativeEngine;
         engine->addImportPath(QDir::toNativeSeparators(
                     Config::getInstance()->plexydeskBasePath() + "/" + PLEXYLIBDIR + "/qt4/imports/"));

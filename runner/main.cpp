@@ -57,7 +57,12 @@ int main( int argc, char * *argv )
     qInstallMsgHandler(plexyWindowsLogger);
 #endif
 
-    qInstallMsgHandler(plexyWindowsLogger);
+    QByteArray debug_settings = qgetenv("PLEXYDESK_DEBUG");
+
+    if (debug_settings != "enable") {
+       qInstallMsgHandler(plexyWindowsLogger);
+    }
+
     QApplication app(argc, argv);
 
     QString appIconPath = PlexyDesk::Config::getInstance()->plexydeskBasePath() + "/share/plexy/plexydesk.png";

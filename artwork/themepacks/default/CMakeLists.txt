@@ -76,3 +76,9 @@ INSTALL(FILES ${PHOTOVIEWER} DESTINATION share/plexy/themepack/default/photoview
 INSTALL(FILES ${PHOTOVIEWER_COM} DESTINATION share/plexy/themepack/default/photoviewer/PhotoViewerCore)
 INSTALL(FILES ${PHOTOVIEWER_IMG} DESTINATION ${RES_DEST})
 INSTALL(FILES ${PHOTOVIEWER_SCR} DESTINATION share/plexy/themepack/default/photoviewer/PhotoViewerCore/script)
+
+#wallpaper item
+FILE (GLOB WALL_QML_ITEMS backdrop/*.qml)
+
+INSTALL(FILES ${WALL_QML_ITEMS} DESTINATION share/plexy/themepack/default/backdrop)
+

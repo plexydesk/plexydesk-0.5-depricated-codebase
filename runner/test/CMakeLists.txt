@@ -8,21 +8,21 @@ SET(sourceFiles
     testicon.cpp
     ${CMAKE_SOURCE_DIR}/runner/iconprovider.cpp
     ${CMAKE_SOURCE_DIR}/runner/iconjob.cpp
-    ${CMAKE_SOURCE_DIR}/runner/themepackloader.cpp
+    ${CMAKE_SOURCE_DIR}/base/qt4/themepackloader.cpp
     )
 
 SET(headerFiles
     testicon.h
     ${CMAKE_SOURCE_DIR}/runner/iconprovider.h
     ${CMAKE_SOURCE_DIR}/runner/iconjob.h
-    ${CMAKE_SOURCE_DIR}/runner/themepackloader.h
+    ${CMAKE_SOURCE_DIR}/base/qt4/themepackloader.h
     )
 
 SET(QTMOC_TEST_SRCS
     testicon.h
     ${CMAKE_SOURCE_DIR}/runner/iconprovider.h
     ${CMAKE_SOURCE_DIR}/runner/iconjob.h
-    ${CMAKE_SOURCE_DIR}/runner/themepackloader.h
+    ${CMAKE_SOURCE_DIR}/base/qt4/themepackloader.h
     )
 
 QT4_WRAP_CPP(QT_MOC_SRCS_TEST ${QTMOC_TEST_SRCS})

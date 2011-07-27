@@ -188,14 +188,18 @@ void DesktopWidget::setBackFaceImage(QPixmap img)
 
 void DesktopWidget::qmlFromUrl(const QUrl &url)
 {
-    qDebug() << Q_FUNC_INFO << url.toString() << endl;
+    qDebug() << Q_FUNC_INFO << url << endl;
+    if (d->qmlChild) {
+        delete d->qmlChild;
+    }
+
     QDeclarativeEngine *engine = QmlEngine();
-    QDeclarativeComponent component(engine, url.toString(QUrl::StripTrailingSlash |
-                QUrl::RemoveScheme));
+    QDeclarativeComponent component(engine, url);
+
     if (!component.isReady()) {
         if (component.isError()) {
             Q_FOREACH(QDeclarativeError error, component.errors()) {
-                qDebug() << Q_FUNC_INFO << error.toString();
+                qDebug() << Q_FUNC_INFO << "Component Error" << error.toString();
             }
         }
         return;

@@ -55,7 +55,7 @@ void TestIcon::onInvalidFinished()
 
 void TestIcon::loadThemePackInit()
 {
-    ThemepackLoader *themeLoader = new ThemepackLoader("default");
+    PlexyDesk::ThemepackLoader *themeLoader = new PlexyDesk::ThemepackLoader("default");
 
     QCOMPARE(themeLoader->wallpaper(),
             QDir::toNativeSeparators(

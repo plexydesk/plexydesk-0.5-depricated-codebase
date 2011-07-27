@@ -26,6 +26,8 @@
 #include <QPixmap>
 #include <plexy.h>
 #include <config.h>
+#include <themepackloader.h>
+#include <desktopwidget.h>
 #include <backdropplugin.h>
 #include <QPropertyAnimation>
 #include <QGraphicsBlurEffect>
@@ -51,9 +53,10 @@ Q_SIGNALS:
 private:
     QPixmap mBackgroundCache;
     QPixmap *mBackgroundPixmap;
-    QGraphicsPixmapItem *mBackgroundItem;
     QPropertyAnimation *mBlurAnimation;
     QGraphicsBlurEffect *mBlurEffect;
+    PlexyDesk::ThemepackLoader *mThemePack;
+    PlexyDesk::DesktopWidget *mBackgroundItem;
 };
 
 #endif //PLEXY_CLASSIC_BACKDROP_H

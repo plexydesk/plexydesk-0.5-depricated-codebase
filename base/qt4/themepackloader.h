@@ -6,7 +6,10 @@
 #include <QPoint>
 #include <desktopwidget.h>
 
-class ThemepackLoader : public QObject
+namespace PlexyDesk
+{
+
+class PLEXYDESK_EXPORT ThemepackLoader : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString themeName READ QString WRITE setThemeName)
@@ -17,17 +20,17 @@ public:
 
     void setThemeName(const QString &name);
 
-    QString wallpaper();
     QStringList widgets(const QString &type);
-    QString qmlFilesFromTheme(const QString &themeName);
     QPoint widgetPos(const QString &name);
+
+    QString wallpaper();
+    QString qmlFilesFromTheme(const QString &themeName);
+    QString qmlBackdropFromTheme();
+
     PlexyDesk::DesktopWidget::State widgetView(const QString &name);
 
-
-signals:
+Q_SIGNALS:
     void ready();
-
-public slots:
 
 private:
     void scanThemepackPrefix();
@@ -35,5 +38,7 @@ private:
     class ThemepackLoaderPrivate;
     ThemepackLoaderPrivate *const d;
 };
+
+} // namespace PlexyDesk
 
 #endif // THEMEPACKLOADER_H

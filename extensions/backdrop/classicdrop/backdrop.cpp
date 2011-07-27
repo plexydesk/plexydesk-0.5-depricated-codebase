@@ -21,10 +21,12 @@
 #include <plexyconfig.h>
 #include <QDir>
 #include <QPixmapCache>
+#include <QDeclarativeContext>
 
 BgPlugin::BgPlugin(QObject *object)
     : BackdropPlugin(object)
 {
+    mThemePack = new PlexyDesk::ThemepackLoader("default", this);
     mBackgroundPixmap =
      new QPixmap(QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->wallpaper()));
     mBackgroundItem = NULL;
@@ -52,30 +54,14 @@ BgPlugin::~BgPlugin()
 
 void BgPlugin::changeWallpaperItem()
 {
-    qDebug() << Q_FUNC_INFO << "Wallpaper Changed";
-    if (mBackgroundPixmap) {
-        delete mBackgroundPixmap;
-    }
+     QDeclarativeContext *context = PlexyDesk::Config::qmlEngine()->rootContext();
 
-    mBackgroundPixmap = new QPixmap(PlexyDesk::Config::getInstance()->wallpaper());
+     context->setContextProperty("backgroundImage",
+             QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->wallpaper()));
 
-    if (mBackgroundPixmap->isNull()) {
-        return;
-    }
+     mBackgroundItem->qmlFromUrl(QUrl(mThemePack->qmlBackdropFromTheme()));
 
-     //get desktop size
-    QSize desktopSize;
-#ifdef Q_WS_MAC
-    desktopSize = QDesktopWidget().screenGeometry().size();
-#else
-    desktopSize = QDesktopWidget().availableGeometry().size();
-#endif
-    mBackgroundCache = mBackgroundPixmap->scaled(desktopSize.width(), desktopSize.height(),
-                Qt::KeepAspectRatioByExpanding,
-                Qt::SmoothTransformation);
-
-   mBackgroundItem->setPixmap(mBackgroundCache);
-   mBlurAnimation->start();
+     mBlurAnimation->start();
 }
 void BgPlugin::data(QVariant &data)
 {
@@ -92,18 +78,27 @@ QGraphicsItem *BgPlugin::item()
 {
     if (mBackgroundItem == NULL) {
         QSize desktopSize;
-#ifdef Q_WS_MAC
-       desktopSize = QDesktopWidget().screenGeometry().size();
-#else
-       desktopSize = QDesktopWidget().availableGeometry().size();
-#endif
+
+        QDeclarativeContext *context = PlexyDesk::Config::qmlEngine()->rootContext();
+        desktopSize = QDesktopWidget().screenGeometry().size();
+
+        context->setContextProperty("backgroundSize", desktopSize);
+
         QPixmapCache::setCacheLimit((desktopSize.height()* desktopSize.width() * 32)/8);
 
         mBackgroundCache = mBackgroundPixmap->scaled(desktopSize.width(), desktopSize.height(),
                 Qt::KeepAspectRatioByExpanding,
                 Qt::SmoothTransformation);
 
-        mBackgroundItem = new QGraphicsPixmapItem(mBackgroundCache);
+
+        context->setContextProperty("backgroundImage",
+                QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->wallpaper()));
+
+        mBackgroundItem = new PlexyDesk::DesktopWidget(QRectF(0.0, 0.0, desktopSize.width(),
+                    desktopSize.height()));
+        mBackgroundItem->qmlFromUrl(QUrl(mThemePack->qmlBackdropFromTheme()));
+        mBackgroundItem->setFlag(QGraphicsItem::ItemIsMovable, false);
+
         mBlurEffect = new QGraphicsBlurEffect();
         mBlurEffect->setBlurHints(QGraphicsBlurEffect::AnimationHint);
         mBlurAnimation = new QPropertyAnimation(mBlurEffect, "blurRadius");
