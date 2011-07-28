@@ -49,6 +49,9 @@
 
 static QTransform savedWorldTransform;
 
+namespace PlexyDesk
+{
+	
 ShaderEffect::ShaderEffect(QObject *parent)
     : QGraphicsEffect(parent)
     , m_changed(true)
@@ -189,4 +192,5 @@ bool ShaderEffect::hideOriginal() const
             return true;
     }
     return false;
+}
 }

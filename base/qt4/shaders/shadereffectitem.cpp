@@ -199,6 +199,8 @@ Rectangle {
 
 */
 
+namespace PlexyDesk
+{
 ShaderEffectItem::ShaderEffectItem(QDeclarativeItem *parent)
     : QDeclarativeItem(parent)
     , m_meshResolution(1, 1)
@@ -916,4 +918,6 @@ void ShaderEffectItem::lookThroughShaderCode(const QString &code)
 void ShaderEffectItem::handleVisibilityChange()
 {
     setActive(isVisible());
+}
+	
 }

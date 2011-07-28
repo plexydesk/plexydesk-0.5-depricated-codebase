@@ -42,16 +42,17 @@
 #ifndef SHADEREFFECTSOURCE_H
 #define SHADEREFFECTSOURCE_H
 
+#include <plexy.h>
 #include <QDeclarativeItem>
 #include <QtOpenGL>
 
-QT_BEGIN_HEADER
-
-QT_BEGIN_NAMESPACE
+namespace PlexyDesk 
+	
+{
 
 class ShaderEffectBuffer;
 
-class ShaderEffectSource : public QDeclarativeItem
+class PLEXYDESK_EXPORT ShaderEffectSource : public QDeclarativeItem
 {
     Q_OBJECT
     Q_PROPERTY(QDeclarativeItem *sourceItem READ sourceItem WRITE setSourceItem NOTIFY sourceItemChanged)
@@ -150,9 +151,6 @@ private:
     bool m_mirrored : 1;
 };
 
-QT_END_HEADER
-
-QT_END_NAMESPACE
-
+}
 
 #endif // SHADEREFFECTSOURCE_H

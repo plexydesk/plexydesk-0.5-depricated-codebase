@@ -86,7 +86,9 @@ Config::Config(const QString &organization,
     d->mData["proxyPasswd"] = QVariant(QLatin1String(""));
     d->mData["proxyPort"] = QVariant(3128);
     d->mData["openGL"] = QVariant(false);
-
+#ifdef Q_WS_MAC
+    d->mData["openGL"] = QVariant(true);
+#endif
     read();
 
     if (d->mSettings->value("CurrentWallpaper").toString().isNull()) {
@@ -148,7 +150,7 @@ void Config::writeToFile()
     d->mSettings->setValue("proxyPort", d->mData["proxyPort"].toInt());
     d->mSettings->setValue("CurrentWallpaper", d->mData["CurrentWallpaper"].toString());
     d->mSettings->setValue("iconTheme", d->mData["iconTheme"].toString());
-    d->mSettings->setValue("openGL", d->mData["openGL"].toString());
+    d->mSettings->setValue("openGL", d->mData["openGL"].toBool());
     d->mSettings->setValue("themepack", d->mData["themepack"].toString());
     d->mSettings->sync();
 }

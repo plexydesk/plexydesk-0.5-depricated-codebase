@@ -66,6 +66,9 @@
 
 */
 
+namespace PlexyDesk
+{
+
 ShaderEffectSource::ShaderEffectSource(QDeclarativeItem *parent)
     : QDeclarativeItem(parent)
     , m_sourceItem(0)
@@ -469,4 +472,6 @@ void ShaderEffectSource::detachSourceItem()
     m_multisampledFbo = 0;
 
     m_dirtyTexture = true;
+}
+
 }

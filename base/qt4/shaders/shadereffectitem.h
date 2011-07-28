@@ -48,12 +48,10 @@
 #include "scenegraph/qsggeometry.h"
 #include <plexy.h>
 
-QT_BEGIN_HEADER
-
-QT_BEGIN_NAMESPACE
-
-class  ShaderEffectItem : public QDeclarativeItem
+namespace PlexyDesk
 {
+
+class PLEXYDESK_EXPORT  ShaderEffectItem : public QDeclarativeItem {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
     Q_PROPERTY(QString fragmentShader READ fragmentShader WRITE setFragmentShader NOTIFY fragmentShaderChanged)
@@ -146,8 +144,5 @@ private:
     bool m_defaultVertexShader : 1;
 };
 
-QT_END_HEADER
-
-QT_END_NAMESPACE
-
+} // namespace PlexyDesk
 #endif // SHADEREFFECTITEM_H

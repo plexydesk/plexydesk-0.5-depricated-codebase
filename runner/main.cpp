@@ -83,6 +83,7 @@ int main( int argc, char * *argv )
     QSize desktopSize;
 #ifdef Q_WS_MAC
     accel = true;
+    PlexyDesk::Config::getInstance()->setOpenGL(true);
     desktopSize = QDesktopWidget().screenGeometry().size();
 #else
     accel = PlexyDesk::Config::getInstance()->isOpenGL();

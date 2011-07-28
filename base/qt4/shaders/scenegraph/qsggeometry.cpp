@@ -41,9 +41,8 @@
 
 #include "qsggeometry.h"
 
-QT_BEGIN_NAMESPACE
-
-
+namespace PlexyDesk
+{
 /*!
     Convenience function which returns attributes to be used for 2D solid
     color drawing.
@@ -306,5 +305,4 @@ void QSGGeometry::updateTexturedRectGeometry(QSGGeometry *g, const QRectF &rect,
     v[3].tx = textureRect.right();
     v[3].ty = textureRect.bottom();
 }
-
-QT_END_NAMESPACE
+}

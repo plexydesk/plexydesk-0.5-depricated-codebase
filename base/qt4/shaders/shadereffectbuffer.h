@@ -42,21 +42,19 @@
 #ifndef SHADEREFFECTBUFFER_H
 #define SHADEREFFECTBUFFER_H
 
+#include <plexy.h>
 #include <QtOpenGL>
 
-QT_BEGIN_HEADER
+namespace PlexyDesk
+{
 
-QT_BEGIN_NAMESPACE
-
-class ShaderEffectBuffer : public QGLFramebufferObject
+class PLEXYDESK_EXPORT ShaderEffectBuffer : public QGLFramebufferObject
 {
 public:
     ShaderEffectBuffer(const QSize &size, const QGLFramebufferObjectFormat &format);
     ~ShaderEffectBuffer();
 };
 
-QT_END_HEADER
-
-QT_END_NAMESPACE
+}
 
 #endif // SHADEREFFECTBUFFER_H

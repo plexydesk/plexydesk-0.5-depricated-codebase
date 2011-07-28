@@ -42,15 +42,15 @@
 #ifndef SHADEREFFECT_H
 #define SHADEREFFECT_H
 
+#include <plexy.h>
 #include <QGraphicsEffect>
 
-QT_BEGIN_HEADER
-
-QT_BEGIN_NAMESPACE
+namespace PlexyDesk
+{
 
 class ShaderEffectSource;
 
-class ShaderEffect : public QGraphicsEffect
+class PLEXYDESK_EXPORT ShaderEffect : public QGraphicsEffect
 {
     Q_OBJECT
 
@@ -74,8 +74,6 @@ public:
     bool m_changed : 1;
 };
 
-QT_END_HEADER
-
-QT_END_NAMESPACE
+}
 
 #endif // SHADEREFFECT_H

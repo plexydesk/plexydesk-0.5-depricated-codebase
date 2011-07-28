@@ -42,13 +42,13 @@
 #ifndef QSGGEOMETRY_H
 #define QSGGEOMETRY_H
 
+#include <plexy.h>
 #include <QtOpenGL/qgl.h>
 
-QT_BEGIN_HEADER
-
-QT_BEGIN_NAMESPACE
-
-class QSGGeometry
+namespace PlexyDesk
+{
+	
+class PLEXYDESK_EXPORT QSGGeometry
 {
 public:
     struct Attribute
@@ -227,8 +227,6 @@ inline const QSGGeometry::ColoredPoint2D *QSGGeometry::vertexDataAsColoredPoint2
     return (const ColoredPoint2D *) m_data;
 }
 
-QT_END_NAMESPACE
-
-QT_END_HEADER
+}
 
 #endif // QSGGEOMETRY_H
