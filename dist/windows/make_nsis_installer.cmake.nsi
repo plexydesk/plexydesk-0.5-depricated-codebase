@@ -211,7 +211,7 @@ OutFile "${PRODUCT_SOURCES_PATH}\INSTALLERS\${PRODUCT_NAME}_${PRODUCT_VERSION}-I
 ; Installer file version tab properties
 VIProductVersion "${PRODUCT_VERSION}"
 VIAddVersionKey "ProductName" "${PRODUCT_NAME}"
-VIAddVersionKey "ProductVersion" "${PRODUCT_VERSION}"
+VIAddVersionKey "ProductVersion" "${PRODUCT_VERSION}.0"
 VIAddVersionKey "FileVersion" "${PRODUCT_VERSION}"
 VIAddVersionKey "CompanyName" "${PRODUCT_PUBLISHER}"
 VIAddVersionKey "LegalCopyright" "LGPL v3"

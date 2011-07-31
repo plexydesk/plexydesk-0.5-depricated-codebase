@@ -7,8 +7,7 @@ SET(WEATHER weather/weather.qml)
 
 # Photo CMAKE entries
 SET(PHOTO photo/photoElement.qml)
-SET(PHOTO_IMGS photo/photoElement_images/photo_background.png)
-SET(PHOTO_IMG_1 photo/photoElement_images/pasted_layer.png)
+SET(GLOB PHOTO_IMGS photo/photoElement_images/*.png)
 
 # Folderview CMAKE entries
 SET(FOLDERVIEW folderview/folderview.qml)
@@ -31,6 +30,28 @@ FILE(GLOB PHOTOVIEWER_COM photoviewer/PhotoViewerCore/*.qml)
 FILE(GLOB PHOTOVIEWER_IMG photoviewer/PhotoViewerCore/images/*.png)
 SET(PHOTOVIEWER_SCR photoviewer/PhotoViewerCore/script/script.js)
 
+
+# *** Check files in the final QT resources folder are unique - UNIX PLATFORMS ***
+# PLEASE ADD TO $UNIQUE_RC_FILES BELOW ALL RESOURCE FILES THAT GO TO ${RES_DEST}
+IF (UNIX)
+    MESSAGE(STATUS "Checking for name clashes in the QT RESOURCE folder...")
+    SET(UNIQUE_RC_FILES ${PNGFILES}
+                        ${JPEGFILES}
+                        ${SVGFILES}
+                        ${PHOTO_IMGS}
+                        ${FOLDERVIEW_IMGS}
+                        ${DIGITALCLOCK_IMGS}
+                        ${WELCOMEIMGS}
+                        ${PHOTOVIEWER_IMG}
+                        )
+    EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/cmakemodules/get_duplicate_files.sh "${UNIQUE_RC_FILES}"
+                    OUTPUT_VARIABLE OUT_UNIQ
+                    )
+    IF(NOT ${OUT_UNIQ} STREQUAL "")
+        MESSAGE(FATAL_ERROR "There are name clashes in the QT RESOURCE folder:\n${OUT_UNIQ}")
+    ENDIF(NOT ${OUT_UNIQ} STREQUAL "")
+ENDIF (UNIX)
+
 INSTALL(FILES ${PNGFILES}  DESTINATION ${RES_DEST})
 INSTALL(FILES ${JPEGFILES}  DESTINATION ${RES_DEST})
 INSTALL(FILES ${SVGFILES}  DESTINATION ${RES_DEST})
@@ -38,7 +59,6 @@ INSTALL(FILES ${CFG}  DESTINATION share/plexy/themepack/default)
 INSTALL(FILES ${WEATHER}  DESTINATION share/plexy/themepack/default/weather)
 INSTALL(FILES ${PHOTO}  DESTINATION share/plexy/themepack/default/photo)
 INSTALL(FILES ${PHOTO_IMGS}  DESTINATION ${RES_DEST})
-INSTALL(FILES ${PHOTO_IMG_1}  DESTINATION ${RES_DEST})
 
 INSTALL(FILES ${FOLDERVIEW} DESTINATION share/plexy/themepack/default/folderview)
 INSTALL(FILES ${FOLDERVIEW_RES_QML} DESTINATION share/plexy/themepack/default/folderview/resources)

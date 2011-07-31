@@ -18,13 +18,13 @@
 *******************************************************************************/
 .pragma library
 
-var infoDesktop = "\tPlexyDesk is a extension which lets you customize your desktop workspace.With Plexydesk you can add your own graphics,QML Widgets and even write extensions to change the way your desktop works.";
+var infoDesktop = "\tPlexyDesk is an extension which lets you customize your desktop workspace.\nWith PlexyDesk you can add your own graphics, QML Widgets and even write extensions to change the way your desktop works.";
 var infoAddingWidget = "\tJust \"Drag'n'Drop\" any QML Widget from your File Manager or the Web and watch the widget come alive!.";
 var addWidgetCommand = "";
 var infoDeleteWidget = "\tNot supported Currently";
-var infoChangeWallpaper = "\tWith Plexydesk just \"Drag'n'Drop\" any image to change your wallpaper ";
-var infoDevelopment = "\tIf you are good or even interested in VOIP Technologies,OpenGL,Mathematics and Physics,Have Experience with libjingle or willing to code using it,2D Graphics and Art Work,GTK and Qt 4.x,Write howtos,Report Bugs and Beta testing or Just good at gossiping? We would like to hear from you. The Plexydesk Team and the rest of the community will indeed appreciate your valuable contribution.";
-var infoWiki = "\tVisit our Wiki \n\thttp://redmine.plexyplanet.org/\n\thttp://plexyplanet.org/";
+var infoChangeWallpaper = "\tWith PlexyDesk just \"Drag'n'Drop\" any image to change your wallpaper.";
+var infoDevelopment = "\tIf you are good or even interested in: VOIP Technologies, OpenGL, Mathematics and Physics, Have experience with libjingle (or you are willing to code using it), 2D Graphics and Artwork, GTK and Qt 4.x, Know how to write HOWTOS, Report Bugs and Beta testing experienced or Just good at gossiping?\nWe would like to hear from you. The PlexyDesk Team and the rest of the community will indeed appreciate your valuable contribution.";
+var infoWiki = "\tVisit our Wiki at:\n\thttp://redmine.plexyplanet.org/projects/plexydesk/wiki\n\thttp://www.plexyplanet.org/";
 
 function changeState(base,stt) {
     base.state = stt;
@@ -88,5 +88,3 @@ function onExitedDo(back)
     back.color ="#5c5c5c";
     back.opacity = 0.8;
 }
-
-

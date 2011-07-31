@@ -50,13 +50,13 @@ ENDIF (NOT CMAKE_BUILD_TYPE)
 # For the targets add ${WIN_APPLICATION} as second argument if you want a non
 # console application like:
 # example: ADD_EXECUTABLE(exe_target ${WIN_APPLICATION} ${sourceFiles})
-IF(CMAKE_BUILD_TYPE MATCHES ".*Deb.*")
+IF(CMAKE_BUILD_TYPE MATCHES "Debug")
     MESSAGE(STATUS "Setting Debug flags ...")
     SET(WIN_APPLICATION "")
-ELSE(CMAKE_BUILD_TYPE MATCHES ".*Deb.*")
+ELSE(CMAKE_BUILD_TYPE MATCHES "Debug")
     # Note: the WIN32 is ignored on other platforms than Windows
     SET(WIN_APPLICATION "WIN32")
-ENDIF(CMAKE_BUILD_TYPE MATCHES ".*Deb.*")
+ENDIF(CMAKE_BUILD_TYPE MATCHES "Debug")
 
 
 # Check on Windows if we have used CMAKE_INSTALL_PREFIX or default it to
