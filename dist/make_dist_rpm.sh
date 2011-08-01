@@ -68,7 +68,6 @@ cat <<END >>${HOME}/.rpmmacros
 # Add your name and e-mail into the %packager field below. You may also want to
 # replace vendor with yourself.
 %packager               PlexyDesk Team <webmaster@plexyplanet.org>
-%distribution           Mandriva Linux
 %vendor                 PlexyDesk Team
 ###plexydesk rpmbuild additions###
 END
