@@ -57,7 +57,7 @@ Group:		Graphical desktop/Other
 Release:	%{rpm_release}mdv%{product_version}
 Requires:	ffmpeg
 Requires:	libqimageblitz4 >= 4.0, libqtdeclarative4 >= 4.7.0, libqtdbus4 >= 4.7.0
-Requires:	libqtwebkit4 >= 4.7.0, libqtopengl4 >= 4.7.0
+Requires:	libqtwebkit4 >= 4.7.0, libqtopengl4 >= 4.7.0, qt4-qmlviewer
 Requires:	libsm6, libxext6, libxcomposite1, libxdamage1, libxrender1
 BuildRequires:  libqt4-devel >= 4.7.0, libqimageblitz-devel, libffmpeg-devel
 BuildRequires:  libsm6-devel, libxext6-devel, libxcomposite1-devel, libxdamage-devel, libxrender1-devel
@@ -72,7 +72,7 @@ Group:		Graphical desktop/Other
 Release:	%{rpm_release}.pclos%{product_version}
 Requires:	ffmpeg
 Requires:	libqimageblitz4 >= 4.0, libqtdeclarative4 >= 4.7.0, libqtdbus4 >= 4.7.0
-Requires:	libqtwebkit4 >= 4.7.0, libqtopengl4 >= 4.7.0
+Requires:	libqtwebkit4 >= 4.7.0, libqtopengl4 >= 4.7.0, qt4-qmlviewer
 Requires:	libsm6, libxext6, libxcomposite1, libxdamage1, libxrender1
 BuildRequires:  libqt4-devel >= 4.7.0, libqimageblitz-devel, libffmpeg-devel
 BuildRequires:  libsm-devel, libxext-devel, libxcomposite-devel, libxdamage-devel, libxrender-devel
@@ -110,10 +110,10 @@ The aim of the PlexyDesk Team is to create "A Desktop which is easy to communica
 %define _cmake_debug Debug
 %define cmake_debug_flag -DCMAKE_BUILD_TYPE=Debug
 # Mandriva has the debug package already defined, so do not define it again
-%if %{is_mandrake} < 1
-%debug_package
-%endif
 %if %{is_pclinuxos}
+%define _enable_debug_packages 1
+%endif
+%if %{is_mandrake} < 1
 %debug_package
 %endif
 %else
@@ -132,7 +132,10 @@ export DESTDIR=${RPM_BUILD_ROOT}
 # If it is Mandriva, use its specific cmake macro.
 # Fedora has a cmake macro too, but it is not out of source build
 %if %{is_mandrake}
-%{cmake}
+%if %{is_pclinuxos}
+%setup_compile_flags
+%endif
+%{cmake} -ULIB_INSTALL_DIR -UCMAKE_INSTALL_LIBDIR
 %else
 rm -Rf build
 mkdir build
