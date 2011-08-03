@@ -67,6 +67,9 @@ BuildRequires:  libsm6-devel, libxext6-devel, libxcomposite1-devel, libxdamage-d
 
 # Is this PCLinuxOS? If yes, define specific options for it.
 # Needs adding "unstable" repo so rpm-build works
+# NOTE: PCLinuxOS support is discontinued and will not be updated anymore
+# The code here though will stay, so our users be able to amend it if needed.
+# For more info please visit: http://www.plexyplanet.org/pclos
 %if %{is_pclinuxos}
 Group:		Graphical desktop/Other
 Release:	%{rpm_release}.pclos%{product_version}

@@ -28,10 +28,15 @@ NOTE: Have in mind that the best way to install PlexyDesk is using your distribu
       - Mandriva
       - openSuSE
       - Fedora
-      - PCLinuxOS
+      - PCLinuxOS*
       - Ubuntu
       - Debian and its derivatives
 
+PCLinuxOS support for building its native packages is dropped now (though the code
+that supports the rpm build will remain intact). At present PlexyDesk is known to
+build and work on the 2011.6 version of pclos.
+To find more info on the possible solutions you have, please visit our homepage:
+http://www.plexyplanet.org/pclos
 
 
 Building On Linux (debug mode):
@@ -85,7 +90,6 @@ supports building RPMs for these distributions:
   - Mandriva
   - openSuSE
   - Fedora
-  - PCLinuxOS
   - Ubuntu
   - Debian and its derivatives
 
