@@ -1,1 +1,60 @@
-* Facebook
+plexydesk-0.6.0    03 Jul 2011
+
+  * Feature #52: Create mac osx application bundle
+  * Feature #53: Create .deb files for plexydesk
+  * Feature #55: Depricate the following classes from the core library
+  * Feature #58: digital clock with QML
+  * Feature #66: Commits to review
+  * Release #42: Icon contaner
+  * Bug #61: Folder view does not monitor file system changes
+  * Bug #64: FolderView Widget does not show the Desktop files
+  * Bug #65: Native widgets are not loading, find out why
+  * Bug #67: plexy doesn't load jpeg images on windows
+  * Bug #68: dragging and dropping images does not work on windows
+
+
+plexydesk-0.5.21    27 May 2011
+
+  * Fixes: qml plugin install path on Ubuntu
+  * Build fix for Ubuntu
+  * New QML digital clock
+  * New Icon Container
+  * Fixes: stacking order of qml items
+  * Integration with Desktop service to run apps
+  * New QML C++ extension for Loading directories
+
+
+plexydesk-0.5.20    20 May 2011
+
+  * Feature #1: Review Varuna's commits
+  * Feature #2: remove all plugins from compiling
+  * Feature #3: review classic-background plugin
+  * Feature #4: Windows platform support
+  * Feature #8: support qml loading
+  * Feature #12: test cases for icon provider and qplexymime
+  * Feature #14: Merge windows branch with master
+  * Feature #19: QML secene for backdrop so we render them
+  * Feature #25: Test isssue close
+  * Feature #31: Light box for redmine
+  * Feature #46: Widget can't be closed
+  * Feature #48: theme packsupport
+  * Support #23: Upgrade our website to look cool
+  * Support #44: Directly visiting http://redmine.plexyplanet.org/login leads to a internal login error
+  * Release #26: Move canvas from base/qt4 to runner
+  * Release #27: Canvas should handle the background drawing
+  * Bug #36: Crash at wallpaper change
+  * Bug #43: plexydesk does not compile on macosx
+  * Bug #45: QML Widgets are not clicped to the parent
+  * Bug #47: memory leak in loading qml
+  * Bug #51: plexydesk crashes when dropping wallpapers
+
+
+plexydesk-0.2.1    15 Jan 2011
+
+  * Working Debian files
+  * Facebook application skeleton
+
+
+plexydesk-0.0.1alpha    06 Sep 2008
+
+  * Initial Release.

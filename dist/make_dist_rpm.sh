@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# This script prepares rpm files from the GIT tree
+# This script prepares rpm files from the GIT/base tree
+# It uses some env variables that may be set before it is run
+# If they are not set it autodetects them from main CMakeLists.txt
 
 color_ok="\\033[1;32m"
 color_error="\\033[1;31m"
@@ -21,8 +23,17 @@ prog_warn(){
 	echo -e "${color_warn}$@${color_normal}"
 	}
 
+check_app_version() {
+	_APP_NAME="$( grep -e '\W*SET\W*(\W*APPLICATION_EXE_NAME' ${GIT_DIR}/CMakeLists.txt | sed -r 's/^\W*SET\W*APPLICATION_EXE_NAME\W*(\w*)\W*\)/\1/' )"
+
+	_APP_VERSION_MAJOR="$( grep -e '\W*SET\W*(\W*LIB_MAJOR' ${GIT_DIR}/CMakeLists.txt | sed -r 's/^\W*SET\W*LIB_MAJOR\W*(\w*)\W*\)/\1/' )"
+	_APP_VERSION_MINOR="$( grep -e '\W*SET\W*(\W*LIB_MINOR' ${GIT_DIR}/CMakeLists.txt | sed -r 's/^\W*SET\W*LIB_MINOR\W*(\w*)\W*\)/\1/' )"
+	_APP_VERSION_RELEASE="$( grep -e '\W*SET\W*(\W*LIB_RELEASE' ${GIT_DIR}/CMakeLists.txt | sed -r 's/^\W*SET\W*LIB_RELEASE\W*(\w*)\W*\)/\1/' )"
+	_APP_VERSION="${_APP_VERSION_MAJOR}.${_APP_VERSION_MINOR}.${_APP_VERSION_RELEASE}"
+	}
+
 create_rpm_structures(){
-	cd ${BUILD_DIR}
+	cd "${BUILD_DIR}"
 
 	cleanup_rpmrc_additions
 
@@ -45,7 +56,7 @@ create_rpm_structures(){
 
 	prog_ok "Adding the necessary rpm resources to ${HOME}/.rpmrc..."
 
-cat <<END >>${HOME}/.rpmrc
+cat <<END >>"${HOME}/.rpmrc"
 ###plexydesk rpmbuild additions###
 # These will be autoremoved when rpmbuild is ready
 # Please do not modify the lines starting with ###
@@ -58,7 +69,7 @@ END
 
 	prog_ok "Adding the necessary rpm resources to ${HOME}/.rpmmacros..."
 
-cat <<END >>${HOME}/.rpmmacros
+cat <<END >>"${HOME}/.rpmmacros"
 ###plexydesk rpmbuild additions###
 # These will be autoremoved when rpmbuild is ready
 # Please do not modify the lines starting with ###
@@ -73,7 +84,7 @@ cat <<END >>${HOME}/.rpmmacros
 END
 
 	# Ensure we go back to base GIT folder
-	cd ${GIT_DIR}
+	cd "${GIT_DIR}"
 	}
 
 cleanup_rpmrc_additions(){
@@ -96,26 +107,42 @@ fi
 CUR_DIR=`pwd`
 SCRIPT_DIR="$( cd "$( dirname "$0" )" && pwd )"
 GIT_DIR="$( dirname "${SCRIPT_DIR}" )"
-BUILD_DIR="${GIT_DIR}/build"
 
-export READY_DIR="${GIT_DIR}/INSTALLERS"
-export APP_NAME="plexydesk"
-export APP_VERSION="0.6.0"
+_BUILD_DIR="${GIT_DIR}/build"
+_READY_DIR="${GIT_DIR}/INSTALLERS"
+check_app_version
+
+if [ -z "${BUILD_DIR}" ] ; then
+	prog_warn "The shell variable BUILD_DIR is not set. Using the built-in one... (${_BUILD_DIR})"
+	export BUILD_DIR="${_BUILD_DIR}"
+fi
+if [ -z "${READY_DIR}" ] ; then
+	prog_warn "The shell variable READY_DIR is not set. Using the built-in one... (${_READY_DIR})"
+	export READY_DIR="${_READY_DIR}"
+fi
+if [ -z "${APP_NAME}" ] ; then
+	prog_warn "The shell variable APP_NAME is not set. Using the built-in one... (${_APP_NAME})"
+	export APP_NAME="${_APP_NAME}"
+fi
+if [ -z "${APP_VERSION}" ] ; then
+	prog_warn "The shell variable APP_VERSION is not set. Using the built-in one... (${_APP_VERSION})"
+	export APP_VERSION="${_APP_VERSION}"
+fi
 
 # We will work from the base GIT folder
-cd ${GIT_DIR}
+cd "${GIT_DIR}"
 
-# Ensure we are in the GIT repo
-if ! [ -d '.git' ]; then
-	prog_err "The $(pwd) is not a GIT directory. ABORTING..."
-	cd ${CUR_DIR}
+# Ensure we are in the base folder
+if ! [ -f 'AUTHORS' ]; then
+	prog_err "The $(pwd) is not the base ${APP_NAME} folder. ABORTING..."
+	cd "${CUR_DIR}"
 	exit 1
 fi
 
 # Ensure we have all folders created
-if ! [ -d "${READY_DIR}" ]; then
-	prog_ok "Creating ${READY_DIR} folder..."
-	mkdir -p "${READY_DIR}"
+if ! [ -d "${READY_DIR}/rpm" ]; then
+	prog_ok "Creating ${READY_DIR}/rpm folder..."
+	mkdir -p "${READY_DIR}/rpm"
 fi
 if ! [ -d "${BUILD_DIR}" ]; then
 	prog_ok "Creating ${BUILD_DIR} folder..."
@@ -129,9 +156,9 @@ if ! [ -f "${READY_DIR}/${APP_NAME}-${APP_VERSION}.tar.bz2" ]; then
 	dist/make_dist_source.sh
 
 	if [ $? -ne 0 ]; then
-		prog_err "Creating the dist RPM files at stage: dist sources tarball prepare..."
+		prog_err "Creating the dist RPM files at stage: dist source tarball prepare..."
 		cleanup_rpmrc_additions
-		cd ${CUR_DIR}
+		cd "${CUR_DIR}"
 		exit 1
 	fi
 fi
@@ -145,18 +172,26 @@ rpmbuild -ba dist/plexydesk.spec
 if [ $? -ne 0 ]; then
     prog_err "Creating the dist RPM files..."
     cleanup_rpmrc_additions
-	cd ${CUR_DIR}
+	cd "${CUR_DIR}"
 	exit 1
 fi
 
 cleanup_rpmrc_additions
 
-prog_ok "Copying the dist RPM files to ${READY_DIR} folder..."
-find "${BUILD_DIR}/rpm" -name "*.rpm" -exec cp -v "{}" "${READY_DIR}/" \;
+prog_ok "Copying the dist RPM files to ${READY_DIR}/rpm folder..."
+find "${BUILD_DIR}/rpm" -name "*.rpm" -exec cp "{}" "${READY_DIR}/rpm" \;
 
-prog_ok "Dist RPM files are ready.\nDon't forget to sign them with 'rpm --resign' if they will be distributed.\nYou can find the dist RPM files here:"
-prog_warn "  ${READY_DIR}\n"
+if ! [ -z "${GPGKEY}" ] ; then
+	prog_ok "Signing the RPM packages with the GPG key ${GPGKEY}..."
+	rpm --resign ${READY_DIR}/rpm/*.rpm
+fi
 
-ls -la ${READY_DIR}
+prog_ok "Dist RPM files are ready."
+if [ -z "${GPGKEY}" ] ; then
+	prog_warn "Don't forget to sign them with 'rpm --resign *.rpm' if they will be distributed."
+fi
+prog_warn "You can find the dist RPM files here:\n  ${READY_DIR}/rpm\n"
 
-cd ${CUR_DIR}
+ls -la "${READY_DIR}/rpm"
+
+cd "${CUR_DIR}"

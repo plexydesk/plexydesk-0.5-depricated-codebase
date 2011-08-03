@@ -1,33 +1,111 @@
+Getting PlexyDesk source files:
+===============================
+You can get PlexyDesk sources via two methods:
+
+METHOD 1:
+---------
+1. Go to a folder of your choice where you will build PlexyDesk.
+   For example /tmp/plexy
+2. git clone git@github.com:sirajrazick/plexydesk.git
+3. cd plexydesk
+
+METHOD 2:
+---------
+1. Go to a folder of your choice where you will build PlexyDesk.
+   For example /tmp/plexy
+2. Get the source tarball from our download page - http://www.plexyplanet.org/download#source
+3. tar xjvf plexydesk-X.X.X.tar.bz2
+   where X.X.X is the version number of PlexyDesk
+4. cd plexydesk-X.X.X
+   where X.X.X is the version number of PlexyDesk
+
+Both methods will lead you in the sources root folder.
+Next continue with building depending on what you are after.
+
+NOTE: Have in mind that the best way to install PlexyDesk is using your distribution
+      native package system. PlexyDesk now supports building packages for these
+      distributions (see howto do it below):
+      - Mandriva
+      - openSuSE
+      - Fedora
+      - PCLinuxOS
+      - Ubuntu
+      - Debian and its derivatives
+
+
+
 Building On Linux (debug mode):
 ===============================
+This is valid for all distributions.
 From sources root folder do:
 
 mkdir build
 cd build
 cmake ../ -DCMAKE_INSTALL_PREFIX:STRING=/usr -DCMAKE_BUILD_TYPE:STRING=Debug -DCMAKE_VERBOSE_MAKEFILE:BOOL=true -DCMAKE_CXX_FLAGS_DEBUG:STRING="-g -O0"
-make install
+make
+sudo make install
 
 
 
 Building On Linux (release mode):
 =================================
+This is valid for all distributions.
 From sources root folder do:
 
 mkdir build
 cd build
 cmake ../ -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
-make install
+make
+sudo make install
 
 
 
 Building a Debian/Ubuntu package on Linux:
 ==========================================
+This can be done if your distribution is a Debian derivative.
 From sources root folder do:
 
-debuild -I
+dist/make_dist_deb.sh
 
-In the folder right above the sources root, you will find the debian packages and
-the packaged source tree without the GIT support files.
+and follow the instructions.
+When the plexydesk_X.X.X_YYYY.deb is ready you may install it using the deb standard
+command:
+
+dpkg -i INSTALLERS/deb/plexydesk_X.X.X_YYYY.deb
+
+NOTE: If some of the dependencies are not satisfied, use your package manager to install
+them first and then do the "dpkg -i plexydesk_X.X.X_YYYY.deb" again.
+
+
+
+Building an RPM package on Linux:
+=================================
+This can be done if your distribution is an RPM distribution. Currently PlexyDesk
+supports building RPMs for these distributions:
+  - Mandriva
+  - openSuSE
+  - Fedora
+  - PCLinuxOS
+  - Ubuntu
+  - Debian and its derivatives
+
+If you know for sure that your distribution is an RPM one, but it is not in the above
+list, please try this method first and it may work due to the included support
+even of unknown RPM distros.
+
+First be sure you have already installed the rpm-build package.
+Next from sources root folder do:
+
+dist/make_dist_rpm.sh
+
+and follow the instructions.
+When the plexydesk-X.X.X-YYYYYYY.rpm is ready you may install it using the rpm standard
+command:
+
+rpm -ivp INSTALLERS/rpm/plexydesk-X.X.X-YYYYYYY.rpm
+
+NOTE: If some of the dependencies are not satisfied, use your package manager to install
+them first and then do the "rpm -ivp plexydesk-X.X.X-YYYYYYY.rpm" again.
 
 
 

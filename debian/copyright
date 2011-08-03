@@ -10,7 +10,10 @@ Copyright: 2008-2011, Siraj Razick <siraj@kde.org>
 License: LGPL-3+
 
 Files: debian/*
-       windows/*
+       dist/windows/*
+       dist/*.spec
+       dist/*.sh
+       dist/*.bat
 Copyright: 2011, PhobosK <phobosk@kbfx.net>
 License: LGPL-3+
 

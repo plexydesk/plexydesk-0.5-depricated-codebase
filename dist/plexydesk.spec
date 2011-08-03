@@ -6,9 +6,9 @@
 
 
 
-# Do not alter anything below this line.
-# All you need to do is add a Changelog entry at the end of the file.
-#####################################################################
+# Do not alter anything below this line if you do not know what you are doing.
+# All you need to do, is add a Changelog entry at the end of the file.
+##############################################################################
 # Test for rpm distros
 %define is_unknown %(test -e /etc/mandrake-release -o -e /etc/SuSE-release -o -e /etc/fedora-release -o -e /etc/pclinuxos-release && echo 0 || echo 1)
 %define is_suse %(test -e /etc/SuSE-release && echo 1 || echo 0)
@@ -65,7 +65,7 @@ BuildRequires:  libsm6-devel, libxext6-devel, libxcomposite1-devel, libxdamage-d
 %endif
 
 
-# Is this PCLinux? If yes, define specific options for it.
+# Is this PCLinuxOS? If yes, define specific options for it.
 # Needs adding "unstable" repo so rpm-build works
 %if %{is_pclinuxos}
 Group:		Graphical desktop/Other

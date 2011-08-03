@@ -18,7 +18,7 @@ Build-Depends:  debhelper (>= 5),
                 libxdamage-dev (>= 1.1.2-1),
                 libqimageblitz-dev,
                 libxrender-dev
-Standards-Version: 3.8.0
+Standards-Version: 3.9.1
 Homepage: http://www.plexyplanet.org
 
 Package: plexydesk
@@ -31,10 +31,15 @@ Depends: ${shlibs:Depends}, ${misc:Depends},
          libqt4-dbus,
          libqtwebkit4,
          libqtwebkit-qmlwebkitplugin
-Description: PlexyDesk is a Desktop extension which lets you efficiently organise and use your Desktop.
+Description: A Desktop extension which lets you efficiently organise and use
+ your Desktop.
  .
- PlexyDesk is a lightweight Desktop, and it's not a Desktop Environment like KDE or GNOME.
- PlexyDesk will render your workspace and help organise all your information with a touch, yes heard us right.
+ PlexyDesk is a lightweight Desktop, and it's not a Desktop Environment like
+ KDE or GNOME.
+ PlexyDesk will render your workspace and help organise all your information
+ with a touch, yes heard us right.
  PlexyDesk will support multi touch screens.
- PlexyDesk might not be the new Desktop Environment you came looking for, but it will be the Ultimate Desktop Experience you would ever get.
- The aim of the PlexyDesk Team is to create "A Desktop which is easy to communicate with, Create and Simply cool!"
+ PlexyDesk might not be the new Desktop Environment you came looking for, but
+ it will be the Ultimate Desktop Experience you would ever get.
+ The aim of the PlexyDesk Team is to create "A Desktop which is easy to
+ communicate with, Create and Simply cool!"
