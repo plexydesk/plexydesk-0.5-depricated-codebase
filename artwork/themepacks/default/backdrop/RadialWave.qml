@@ -48,7 +48,9 @@ Item {
     height: backgroundSize.height
     ShaderEffectSource {
         id: thesource
-        sourceItem: Image { source: backgroundImage }
+        sourceItem: Image { source: backgroundImage
+                            fillMode : Image.PreserveAspectCrop
+                          }
         live: false
         hideSource: false
     }
