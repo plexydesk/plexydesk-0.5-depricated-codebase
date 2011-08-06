@@ -17,35 +17,35 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
+#include <config.h>
+
 #include <QtCore>
 #include <QtGui>
-#include <QIcon>
 #include <QDeclarativeComponent>
 #include <QIcon>
-#include <QDeclarativeComponent>
+
+// plexy
+#include <plexy.h>
+#include "desktopview.h"
+#include <plexyconfig.h>
+#include <baserender.h>
+#include <pluginloader.h>
+#include <datainterface.h>
 #include <debug.h>
+
 
 #ifdef Q_WS_X11
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <signal.h>
 
-#include <unistd.h>
 #include <X11/Xlib.h>
 #include <QX11Info>
+
 #include <netwm.h>
 #endif
 
-//plexy
-#include <plexy.h>
-#include <baserender.h>
-#include "desktopview.h"
-#include <pluginloader.h>
-#include <datainterface.h>
-#include <canvas.h>
-#include <plexyconfig.h>
-#include <debug.h>
-#include <config.h>
 
 //using namespace PlexyDesk;
 
@@ -53,13 +53,11 @@ int main( int argc, char * *argv )
 {
 #ifndef Q_WS_MAC
     QApplication::setGraphicsSystem(QLatin1String("raster"));
-#elif Q_WS_WIN
-    qInstallMsgHandler(plexyWindowsLogger);
 #endif
 
-    QByteArray debug_settings = qgetenv("PLEXYDESK_DEBUG");
+    QByteArray debug_settings = qgetenv("PLEXYDESK_CONSOLE_DEBUG").toLower();
 
-    if (debug_settings != "enable") {
+    if (debug_settings != "enable" && debug_settings != "true" && debug_settings != "1" ) {
        qInstallMsgHandler(plexyWindowsLogger);
     }
 

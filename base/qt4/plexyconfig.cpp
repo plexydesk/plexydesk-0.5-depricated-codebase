@@ -16,19 +16,25 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#include "plexyconfig.h"
-#include <desktopwidget.h>
+
+#include <config.h>
+
+#include <QCoreApplication>
 #include <QDeclarativeEngine>
 #include <QDir>
 #include <QHash>
-#include <config.h>
-#include <QCoreApplication>
+
+#include <QtDebug>
+
+#include "plexyconfig.h"
+#include <desktopwidget.h>
 #include <shadereffectitem.h>
 #include <shadereffectsource.h>
 
 #ifdef Q_WS_X11
 #include <configadaptor.h>
 #endif
+
 
 namespace PlexyDesk
 {
@@ -95,6 +101,9 @@ Config::Config(const QString &organization,
         d->mData["CurrentWallpaper"] = QString();
     }
 
+    if (d->mSettings->value("CurrentWallpaperMode").toString().isNull()) {
+        d->mData["CurrentWallpaperMode"] = QString("IgnoreAspectRatio");
+    }
 
     if (d->mSettings->value("iconTheme").toString().isNull()) {
         d->mData["iconTheme"] = QLatin1String("default");
@@ -107,7 +116,7 @@ Config::Config(const QString &organization,
     writeToFile();
 
 #ifdef Q_WS_X11
-    // register  with dbus
+    // register with dbus
     new ConfigAdaptor(this);
     QDBusConnection dbus = QDBusConnection::sessionBus();
     dbus.registerObject("/data", this);
@@ -134,11 +143,12 @@ void Config::read()
     d->mData["proxyPasswd"] = d->mSettings->value("proxyPasswd");
     d->mData["proxyPort"] =  d->mSettings->value("proxyPort");
     d->mData["CurrentWallpaper"] = d->mSettings->value("CurrentWallpaper");
+    d->mData["CurrentWallpaperMode"] = d->mSettings->value("CurrentWallpaperMode");
     d->mData["iconTheme"] = d->mSettings->value("iconTheme");
     d->mData["openGL"] = d->mSettings->value("openGL");
     d->mData["themepack"] = d->mSettings->value("themepack");
 
-    qDebug() << "Read: " << d->mData;
+    qDebug()  << Q_FUNC_INFO << "Read: " << d->mData;
 }
 
 void Config::writeToFile()
@@ -149,10 +159,13 @@ void Config::writeToFile()
     d->mSettings->setValue("ProxyPasswd", d->mData["proxyPasswd"].toString());;
     d->mSettings->setValue("proxyPort", d->mData["proxyPort"].toInt());
     d->mSettings->setValue("CurrentWallpaper", d->mData["CurrentWallpaper"].toString());
+    d->mSettings->setValue("CurrentWallpaperMode", d->mData["CurrentWallpaperMode"].toString());
     d->mSettings->setValue("iconTheme", d->mData["iconTheme"].toString());
     d->mSettings->setValue("openGL", d->mData["openGL"].toBool());
     d->mSettings->setValue("themepack", d->mData["themepack"].toString());
     d->mSettings->sync();
+
+    qDebug()  << Q_FUNC_INFO << "Write: " << d->mData;
 }
 
 void Config::setWallpaper(const QString &str)
@@ -161,6 +174,15 @@ void Config::setWallpaper(const QString &str)
     d->mData["CurrentWallpaper"] = QVariant(str);
     d->mSettings->setValue("CurrentWallpaper",
             d->mData["CurrentWallpaper"].toString());
+    Q_EMIT wallpaperChanged();
+}
+
+void Config::setWallpaperMode(const QString &str)
+{
+    qDebug() << Q_FUNC_INFO << str;
+    d->mData["CurrentWallpaperMode"] = QVariant(str);
+    d->mSettings->setValue("CurrentWallpaperMode",
+            d->mData["CurrentWallpaperMode"].toString());
     Q_EMIT wallpaperChanged();
 }
 
@@ -181,11 +203,16 @@ void Config::changeLayer()
 }
 
 
-//gettres
+// getters
 
 QString Config::wallpaper() const
 {
     return d->mData["CurrentWallpaper"].toString();
+}
+
+QString Config::wallpaperMode() const
+{
+    return d->mData["CurrentWallpaperMode"].toString();
 }
 
 bool Config::isProxyOn() const
@@ -228,7 +255,7 @@ bool Config::isOpenGL() const
     return d->mData["openGL"].toBool();
 }
 
-//setters
+// setters
 void Config::setProxyOn(bool enable)
 {
     d->mData["proxyOn"] = enable;
@@ -274,7 +301,7 @@ QString Config::plexydeskBasePath()
 #ifndef Q_WS_X11
     QDir binaryPath (QCoreApplication::applicationDirPath());
     if (binaryPath.cdUp()) {
-        qDebug() << Q_FUNC_INFO  << QDir::toNativeSeparators(binaryPath.canonicalPath());
+        qDebug() << Q_FUNC_INFO << QDir::toNativeSeparators(binaryPath.canonicalPath());
         return QDir::toNativeSeparators(binaryPath.canonicalPath());
     }
 #endif
@@ -287,7 +314,6 @@ QString Config::plexydeskBasePath()
 
     return basePath;
 #endif
-
 }
 
 }

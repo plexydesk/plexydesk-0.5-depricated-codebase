@@ -20,13 +20,14 @@
 #ifndef PLEXY_CONIFG_LINUX_QT_H
 #define PLEXY_CONIFG_LINUX_QT_H
 
-#include <plexy.h>
-
-#include <QNetworkProxy>
-#include <QSettings>
-#include <QStringList>
 #include <QDeclarativeEngine>
+#include <QSettings>
+#include <QNetworkProxy>
+#include <QStringList>
+
+#include <plexy.h>
 #include <imagecache.h>
+
 
 #define QmlEngine() PlexyDesk::Config::qmlEngine();
 
@@ -36,6 +37,7 @@ class PLEXYDESK_EXPORT Config : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString wallpaper READ wallpaper WRITE setWallpaper NOTIFY wallpaperChanged)
+    Q_PROPERTY(QString wallpaperMode READ wallpaperMode WRITE setWallpaperMode NOTIFY wallpaperChanged)
     Q_PROPERTY(bool proxy READ isProxyOn WRITE setProxyOn NOTIFY proxyChanged)
     Q_PROPERTY(int port READ proxyPort WRITE setProxyPort NOTIFY proxyPortChanged)
     Q_PROPERTY(QString proxyURL READ proxyURL WRITE setProxyURL NOTIFY proxyURLChanged)
@@ -43,7 +45,7 @@ class PLEXYDESK_EXPORT Config : public QObject
     Q_PROPERTY(QString proxyPasswd READ proxyPasswd WRITE setProxyPasswd NOTIFY proxyPasswdChanged)
     Q_PROPERTY(QString themepackName READ themepackName WRITE setThemepackName NOTIFY themepackNameChanged)
     Q_PROPERTY(QString iconTheme READ iconTheme WRITE setIconTheme NOTIFY iconThemechanged)
-    Q_PROPERTY(bool openGL READ isOpenGL WRITE setOpenGL NOTIFY openGLChanged) 
+    Q_PROPERTY(bool openGL READ isOpenGL WRITE setOpenGL NOTIFY openGLChanged)
 
 public:
     static Config *getInstance();
@@ -54,6 +56,7 @@ public:
     void writeToFile();
 
     QString wallpaper() const;
+    QString wallpaperMode() const;
     bool isProxyOn() const;
     int proxyPort() const;
     QString proxyURL() const;
@@ -67,7 +70,7 @@ public:
     void setProxyPort(int port);
     void setProxyURL(const QString &url);
     void setProxyUser(const QString &user);
-    void setProxyPasswd(const QString &pass); 
+    void setProxyPasswd(const QString &pass);
     void setThemepackName(const QString &name);
     void setIconTheme(const QString &name);
     void setOpenGL(bool enable);
@@ -76,6 +79,7 @@ public:
 
 public Q_SLOTS:
     void setWallpaper(const QString &str);
+    void setWallpaperMode(const QString &str);
     void addWidget(const QString &widget);
     void changeLayer();
 

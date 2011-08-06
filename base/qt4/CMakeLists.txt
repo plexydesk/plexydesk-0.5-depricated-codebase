@@ -17,8 +17,8 @@ SET(sourceFiles
     pendingjob.cpp
     plexyconfig.cpp
     pluginloader.cpp
+    themepackloader.cpp
     viewlayer.cpp
-    themepackloader.cpp 
     shaders/shadereffect.cpp
     shaders/shadereffectbuffer.cpp
     shaders/shadereffectitem.cpp
@@ -28,37 +28,36 @@ SET(sourceFiles
     )
 
 SET(headerFiles
-   plexy.h
-   debug.h
-   abstractplugininterface.h
-   backdropinterface.h
-   backdropplugin.h
-   baseplugin.h
-   baserender.h
-   datainterface.h
-   dataplugin.h
-   desktopwidget.h
-   extensionfactory.h
-   imagecache.h
-   netwm.h
-   netwm_def.h
-   netwm_p.h
-   pendingjob.h
-   plexyconfig.h
-   pluginloader.h
-   socialinterface.h
-   socialplugin.h
-   viewlayer.h
-   widgetinterface.h
-   widgetplugin.h
-   themepackloader.h
-   shaders/shadereffect.h
-   shaders/shadereffectbuffer.h
-   shaders/shadereffectitem.h
-   shaders/shadereffectsource.h
-   shaders/scenegraph/qsggeometry.h
-
-   )
+    plexy.h
+    debug.h
+    abstractplugininterface.h
+    backdropinterface.h
+    backdropplugin.h
+    baseplugin.h
+    baserender.h
+    datainterface.h
+    dataplugin.h
+    desktopwidget.h
+    extensionfactory.h
+    imagecache.h
+    netwm.h
+    netwm_def.h
+    netwm_p.h
+    pendingjob.h
+    plexyconfig.h
+    pluginloader.h
+    socialinterface.h
+    socialplugin.h
+    themepackloader.h
+    viewlayer.h
+    widgetinterface.h
+    widgetplugin.h
+    shaders/shadereffect.h
+    shaders/shadereffectbuffer.h
+    shaders/shadereffectitem.h
+    shaders/shadereffectsource.h
+    shaders/scenegraph/qsggeometry.h
+    )
 
 SET(MOC_SRCS
    abstractplugininterface.h
@@ -75,10 +74,10 @@ SET(MOC_SRCS
    pluginloader.h
    socialinterface.h
    socialplugin.h
+   themepackloader.h
    viewlayer.h
    widgetinterface.h
    widgetplugin.h
-   themepackloader.h
    shaders/shadereffect.h
    shaders/shadereffectbuffer.h
    shaders/shadereffectitem.h

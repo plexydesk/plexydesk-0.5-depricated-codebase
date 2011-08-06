@@ -16,23 +16,25 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#include "desktopwidget.h"
-#include <plexy.h>
-#include <debug.h>
 
 #include <QCoreApplication>
-#include <QGraphicsProxyWidget>
+#include <QGraphicsObject>
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
-#include <QPainter>
 #include <QStyleOptionGraphicsItem>
+#include <QGraphicsProxyWidget>
+#include <QPainter>
 #include <QTimeLine>
 #include <QTimer>
-
-#include <QDeclarativeEngine>
-#include <QGraphicsObject>
-#include <QDeclarativeComponent>
 #include <QDir>
+#include <QDeclarativeEngine>
+#include <QDeclarativeComponent>
+
+#include <QtDebug>
+
+#include "desktopwidget.h"
+#include <plexy.h>
+
 
 namespace PlexyDesk
 {
@@ -188,19 +190,20 @@ void DesktopWidget::setBackFaceImage(QPixmap img)
 
 void DesktopWidget::qmlFromUrl(const QUrl &url)
 {
-    qDebug() << Q_FUNC_INFO << url << endl;
+    qDebug() << Q_FUNC_INFO << url;
     if (d->qmlChild) {
         delete d->qmlChild;
     }
 
     QDeclarativeEngine *engine = QmlEngine();
-    QDeclarativeComponent component(engine, url.toString(QUrl::StripTrailingSlash |
-                                    QUrl::RemoveScheme));
+    QDeclarativeComponent component(engine, QDir::cleanPath(
+                                                        url.toString(QUrl::StripTrailingSlash |
+                                                        QUrl::RemoveScheme)));
 
     if (!component.isReady()) {
         if (component.isError()) {
             Q_FOREACH(QDeclarativeError error, component.errors()) {
-                qDebug() << Q_FUNC_INFO << "Component Error" << error.toString();
+                qDebug() << Q_FUNC_INFO << "Component Error: " << error.toString();
             }
         }
         return;

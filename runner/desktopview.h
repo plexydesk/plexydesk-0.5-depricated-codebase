@@ -16,12 +16,15 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
+
 #ifndef PLEXY_DESKTOP_VIEW_H
 #define PLEXY_DESKTOP_VIEW_H
 
 #include <QGraphicsView>
+
 #include <plexy.h>
 #include <desktopwidget.h>
+
 
 class DesktopView : public QGraphicsView
 {
@@ -62,9 +65,11 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
     void paintEvent(QPaintEvent *event);
+    bool checkDropped (const QString &file);
     virtual void dropEvent(QDropEvent *event);
-    void dragEnterEvent (QDragEnterEvent * event);
-    
+    virtual void dragEnterEvent (QDragEnterEvent * event);
+    virtual void dragMoveEvent (QDragMoveEvent * event);
+
 
 private:
     class Private;

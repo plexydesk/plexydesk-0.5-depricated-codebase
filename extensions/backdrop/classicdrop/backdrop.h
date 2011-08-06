@@ -19,18 +19,20 @@
 #ifndef PLEXY_CLASSIC_BACKDROP_H
 #define PLEXY_CLASSIC_BACKDROP_H
 
-#include <QPainter>
+#include <config.h>
+
 #include <QDesktopWidget>
 #include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
 #include <QPixmap>
-#include <plexy.h>
-#include <config.h>
-#include <themepackloader.h>
-#include <desktopwidget.h>
-#include <backdropplugin.h>
+#include <QPainter>
 #include <QPropertyAnimation>
 #include <QGraphicsBlurEffect>
+
+#include <plexy.h>
+#include <backdropplugin.h>
+#include <themepackloader.h>
+#include <desktopwidget.h>
 
 class BgPlugin : public PlexyDesk::BackdropPlugin
 {

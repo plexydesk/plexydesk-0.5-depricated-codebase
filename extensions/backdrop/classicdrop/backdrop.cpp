@@ -16,19 +16,24 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#include "backdrop.h"
-#include <desktopwidget.h>
-#include <plexyconfig.h>
+
 #include <QDir>
 #include <QPixmapCache>
 #include <QDeclarativeContext>
+
+#include <QtDebug>
+
+#include "backdrop.h"
+#include <desktopwidget.h>
+#include <plexyconfig.h>
+
 
 BgPlugin::BgPlugin(QObject *object)
     : BackdropPlugin(object)
 {
     mThemePack = new PlexyDesk::ThemepackLoader("default", this);
     mBackgroundPixmap =
-     new QPixmap(QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->wallpaper()));
+      new QPixmap(QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->wallpaper()));
     mBackgroundItem = NULL;
 }
 
@@ -50,7 +55,6 @@ BgPlugin::~BgPlugin()
         delete mBlurEffect;
     }
 }
-
 
 void BgPlugin::changeWallpaperItem()
 {
@@ -75,14 +79,16 @@ void BgPlugin::changeWallpaperItem()
              return;
          }
 
+    // TODO: Make use of the PlexyDesk::Config::getInstance()->wallpaperMode() option
          mBackgroundCache = mBackgroundPixmap->scaled(desktopSize.width(), desktopSize.height(),
-                 Qt::KeepAspectRatioByExpanding,
+                 Qt::IgnoreAspectRatio,
                  Qt::SmoothTransformation);
          mBackgroundItemPixmap->setPixmap(mBackgroundCache);
     }
 
     mBlurAnimation->start();
 }
+
 void BgPlugin::data(QVariant &data)
 {
     QImage wall = data.value<QImage>();
@@ -106,8 +112,9 @@ QGraphicsItem *BgPlugin::item()
 
         QPixmapCache::setCacheLimit((desktopSize.height()* desktopSize.width() * 32)/8);
 
+        // TODO: Make use of the PlexyDesk::Config::getInstance()->wallpaperMode() option
         mBackgroundCache = mBackgroundPixmap->scaled(desktopSize.width(), desktopSize.height(),
-                Qt::KeepAspectRatioByExpanding,
+                Qt::IgnoreAspectRatio,
                 Qt::SmoothTransformation);
 
         mBlurEffect = new QGraphicsBlurEffect();

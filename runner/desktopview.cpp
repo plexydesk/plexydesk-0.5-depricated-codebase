@@ -16,7 +16,19 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
+
+#include <QGLWidget>
+#include <QGraphicsGridLayout>
+#include <QGraphicsDropShadowEffect>
+#include <QFutureWatcher>
+#include <QSharedPointer>
+#include <QDir>
+#include <QtDebug>
+
 #include "desktopview.h"
+#include "icon.h"
+#include "iconprovider.h"
+#include "themepackloader.h"
 #include <desktopwidget.h>
 #include <backdropinterface.h>
 #include <pluginloader.h>
@@ -24,17 +36,11 @@
 #include <backdropplugin.h>
 #include <widgetplugin.h>
 #include <viewlayer.h>
-#include "icon.h"
-#include "iconprovider.h"
 #include <qplexymime.h>
 
-#include <QGLWidget>
-#include <QGraphicsGridLayout>
-#include <QDir>
-#include <QFutureWatcher>
-#include <QtDebug>
-#include <QSharedPointer>
-#include <QGraphicsDropShadowEffect>
+#if QT_VERSION < 0x04600
+#include <QPropertyAnimation>
+#endif
 
 #ifdef Q_WS_X11
 #include <plexywindow.h>
@@ -43,23 +49,19 @@ extern "C" {
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/Xatom.h>
-#include <X11/extensions/shape.h>
-#include <X11/cursorfont.h>
 #include <X11/extensions/Xcomposite.h>
 #include <X11/extensions/Xdamage.h>
 #include <X11/extensions/Xrender.h>
+#include <X11/extensions/shape.h>
+#include <X11/cursorfont.h>
 #include <GL/gl.h>  // Header File For The OpenGL32 Library
 #include <GL/glu.h> // Header File For The GLu32 Library
 }
 
 #include <QX11Info>
+
 #endif
 
-#if QT_VERSION < 0x04600
-#include <QPropertyAnimation>
-#endif
-
-#include "themepackloader.h"
 
 using namespace PlexyDesk;
 
@@ -73,7 +75,7 @@ public:
     }
     AbstractPluginInterface *bIface;
     BackdropPlugin *bgPlugin;
-    ThemepackLoader *mThemeLoader;
+    PlexyDesk::ThemepackLoader *mThemeLoader;
     float row;
     float column;
     float margin;
@@ -106,7 +108,7 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
 
     /* init */
 
-    d->mThemeLoader = new ThemepackLoader(PlexyDesk::Config::getInstance()->themepackName(), this);
+    d->mThemeLoader = new PlexyDesk::ThemepackLoader(PlexyDesk::Config::getInstance()->themepackName(), this);
     qDebug() << Q_FUNC_INFO << PlexyDesk::Config::getInstance()->wallpaper();
     if (PlexyDesk::Config::getInstance()->wallpaper().isEmpty()) {
         qDebug() << Q_FUNC_INFO << d->mThemeLoader->wallpaper();
@@ -128,7 +130,7 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
     if (checkXCompositeExt()) {
         qDebug() << Q_FUNC_INFO << "Supports Composite Ext: Yes";
         // TODO:
-        // load composite layer 
+        // load composite layer
     } else {
         qDebug() << Q_FUNC_INFO << "Supports Composite Ext: No";
     }
@@ -180,8 +182,8 @@ void DesktopView::setThemePack(const QString &name)
         delete d->mThemeLoader;
 
         // TODO
-        // ERROR HANDLING 
-        d->mThemeLoader = new ThemepackLoader(name, this);
+        // ERROR HANDLING
+        d->mThemeLoader = new PlexyDesk::ThemepackLoader(name, this);
         if (PlexyDesk::Config::getInstance()->wallpaper().isEmpty()) {
             PlexyDesk::Config::getInstance()->setWallpaper(d->mThemeLoader->wallpaper());
         }
@@ -194,7 +196,7 @@ void DesktopView::setThemePack(const QString &name)
         }
 
         Q_FOREACH(const QString &qmlWidget, d->mThemeLoader->widgets("QML")) {
-            qDebug() << Q_FUNC_INFO << "Loading qml " << qmlWidget;
+            qDebug() << Q_FUNC_INFO << "Loading QML: " << qmlWidget;
             //FIX ME : Memory leak
             DesktopWidget *parent = new DesktopWidget(QRectF(0,0,0,0), 0, 0);
             parent->qmlFromUrl(QUrl(d->mThemeLoader->qmlFilesFromTheme(qmlWidget)));
@@ -323,7 +325,7 @@ void DesktopView::backgroundChanged()
 
    \param name String name of the widget as specified by the desktop file
 
-   \param layerName Name of the layer you want add the widget to 
+   \param layerName Name of the layer you want add the widget to
  */
 
 void DesktopView::addExtension(const QString &name,
@@ -374,41 +376,68 @@ void DesktopView::paintEvent(QPaintEvent * event)
 
 void DesktopView::dropEvent(QDropEvent * event)
 {
-    qDebug() << Q_FUNC_INFO;
-    event->accept();
+    if ( !event )
+        return;
+
+    if ( event->mimeData()->urls().count() <= 0 ) {
+        qDebug() << "Drop ignored...";
+        return;
+    }
+
+    const QString droppedFile = event->mimeData()->urls().value(0).toLocalFile();
+
+    if ( !checkDropped(droppedFile) ) {
+        qDebug() << "Drop ignored...";
+        return;
+    }
+
+    qDebug() << Q_FUNC_INFO << "Dropped file: " << droppedFile ;
+
+    if ( droppedFile.contains(".qml") ) {
+        qDebug() << "QML Drop accepted...";
+        DesktopWidget *parent = new DesktopWidget(QRectF(0,0,0,0), 0, 0);
+        parent->qmlFromUrl(QUrl(droppedFile));
+        scene()->addItem(parent);
+        connect(parent, SIGNAL(close()), this, SLOT(closeDesktopWidget()));
+        event->acceptProposedAction();
+        return;
+    }
+
+    qDebug() << "IMAGE Drop accepted...";
+    Config::getInstance()->setWallpaper(droppedFile);
+    event->acceptProposedAction();
 }
 
 void DesktopView::dragEnterEvent (QDragEnterEvent * event)
 {
-    if (!event) {
+    if ( !event )
         return;
-    } else {
-        event->accept();
-        event->setDropAction(Qt::MoveAction);
-    }
 
-    if ( event->mimeData()->urls().count() <= 0 ) {
+    if ( event->mimeData()->urls().count() >= 0 ) {
+        const QString droppedFile = event->mimeData()->urls().value(0).toLocalFile();
+        if ( checkDropped(droppedFile) )
+            event->accept();
+    }
+}
+
+void DesktopView::dragMoveEvent (QDragMoveEvent * event)
+{
+    if ( !event )
         return;
-    }
 
-    const QUrl droppedFile = event->mimeData()->urls().value(0).toString(QUrl::StripTrailingSlash |
-            QUrl::RemoveScheme);
-    if (droppedFile.toString().contains(".qml")) {
+    event->accept();
+}
 
-        qDebug() << Q_FUNC_INFO << droppedFile;
-        DesktopWidget *parent = new DesktopWidget(QRectF(0,0,0,0), 0, 0);
-        parent->qmlFromUrl(droppedFile);
-        scene()->addItem(parent);
-        connect(parent, SIGNAL(close()), this, SLOT(closeDesktopWidget()));
-        return;
-    }
-    if (event->mimeData()->hasUrls()) {
-        QFileInfo info(event->mimeData()->urls().value(0).toLocalFile());
-        if (!info.isDir() && !QPixmap(event->mimeData()->urls().value(0).toLocalFile()).isNull()) {
-           Config::getInstance()->setWallpaper(event->mimeData()->urls().value(0).toLocalFile());
-        }
-    }
+bool DesktopView::checkDropped (const QString &file)
+{
+    if ( file.contains(".qml") )
+        return true;
 
+    QFileInfo info(file);
+    if ( !info.isDir() && !QPixmap(file).isNull() )
+        return true;
+
+    return false;
 }
 
 void DesktopView::drawBackground(QPainter *painter, const QRectF &rect)

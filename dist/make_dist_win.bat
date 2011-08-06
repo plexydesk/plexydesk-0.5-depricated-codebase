@@ -181,39 +181,60 @@ set COMPILER_DEBUG_LEVEL=q
 echo.
 echo Creating files with CMake ...
 echo.
+set STAGE=CREATING CMAKE FILES
 cmake ../ -DCMAKE_INSTALL_PREFIX:STRING="%FINAL_PATH_FIXED%" -DCMAKE_BUILD_TYPE:STRING="%RELEASE_TYPE%" -G "%MSVC_VERSION%"
+if %ERRORLEVEL% NEQ 0 goto ERROR
+
 
 echo.
 echo Building project ...
 echo.
+set STAGE=BUILDING THE PROJECT
 msbuild PlexyDesktop.sln /v:%COMPILER_DEBUG_LEVEL% /t:Build /p:Configuration=%RELEASE_TYPE% /nologo
+if %ERRORLEVEL% NEQ 0 goto ERROR
+
 
 echo.
 echo Installing project ...
 echo.
+set STAGE=INSTALLING THE PROJECT
 msbuild /target:Build /v:%COMPILER_DEBUG_LEVEL% /p:Configuration=%RELEASE_TYPE% INSTALL.%PROJECT_EXT% /nologo
+if %ERRORLEVEL% NEQ 0 goto ERROR
+
 
 echo.
 echo Copying QT files to %FINAL_PATH% ...
 echo.
+set STAGE=COPYING QT FILES
 xcopy /Q /Y "%QTDIR%\lib\*.dll" "%FINAL_PATH%\lib\qt4\lib\"
+if %ERRORLEVEL% NEQ 0 goto ERROR
 xcopy /E /Q /Y "%QTDIR%\imports\*.*"  "%FINAL_PATH%\lib\qt4\imports\"
+if %ERRORLEVEL% NEQ 0 goto ERROR
 xcopy /E /Q /Y "%QTDIR%\plugins\*.*" "%FINAL_PATH%\lib\qt4\plugins\"
+if %ERRORLEVEL% NEQ 0 goto ERROR
+
 
 echo.
 echo Deleting unnecessary QT files ...
 echo.
+set STAGE=DELETING UNNECESSARRY QT FILES
 del /Q /F "%FINAL_PATH%\lib\qt4\lib\QtDesigner*"
+if %ERRORLEVEL% NEQ 0 goto ERROR
 del /Q /F "%FINAL_PATH%\lib\qt4\lib\QTHelp*"
+if %ERRORLEVEL% NEQ 0 goto ERROR
 del /Q /F "%FINAL_PATH%\lib\qt4\lib\QtCL*"
+if %ERRORLEVEL% NEQ 0 goto ERROR
+
 
 echo.
 echo Creating project NSIS package ...
 echo.
+set STAGE=CREATING PLEXYDESK NSIS PACKAGE
 makensis /V1 /DPRODUCT_PLATFORM=%PROJECT_PLATFORM% /DPRODUCT_VC_VERSION=%PROJECT_VC% /DPRODUCT_SOURCES_PATH=%GIT_PATH% /DPRODUCT_BIN_SOURCES_PATH=%FINAL_PATH% "%GIT_PATH%\build\dist\windows\make_nsis_installer.nsi"
+if %ERRORLEVEL% NEQ 0 goto ERROR
 
-:END_INSTALL
 
+:SUCCESS
 echo.
 echo All done.
 echo.
@@ -221,6 +242,15 @@ echo You can find the prepared package for Windows in this folder:
 echo.
 echo %GIT_PATH%\INSTALLERS
 echo.
+goto END_INSTALL
 
-cd "%CURRENT_PATH"
 
+:ERROR
+echo.
+echo There was an error in stage: %STAGE%
+echo Look at the output above to get more info on this error.
+echo.
+
+
+:END_INSTALL
+cd %CURRENT_PATH%

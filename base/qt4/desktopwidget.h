@@ -52,7 +52,8 @@ public :
         BACKSIDE
     };
 
-    /** \brief Constructor
+    /**
+     * \brief Constructor
      * \param rect Defines the bounding rectangular area of a
      * desktop widget
      * \param embeddedWidget an optional parameter to embed a regular

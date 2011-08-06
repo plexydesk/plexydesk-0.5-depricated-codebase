@@ -54,11 +54,11 @@ Rectangle{
         style: Text.Raised
         opacity: 1
     }
-   
+
     Rectangle
     {
         id: rectangle1
-        parent : backgroundHolder 
+        parent : backgroundHolder
         width: 400
         height: 320
         clip: true
@@ -106,7 +106,7 @@ Rectangle{
 
     }
 
-    FolderView 
+    FolderView
     {
        id : folderView
     }

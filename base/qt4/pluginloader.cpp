@@ -16,17 +16,20 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#include "pluginloader.h"
-#include "extensionfactory.h"
-#include <plexyconfig.h>
-#include <QDebug>
+
+#include <config.h>
+
 #include <QDir>
 #include <QPluginLoader>
 #include <QSettings>
 #include <QStringList>
 
-#include <debug.h>
-#include <config.h>
+#include <QDebug>
+
+#include "pluginloader.h"
+#include "extensionfactory.h"
+#include <plexyconfig.h>
+
 
 namespace PlexyDesk
 {
