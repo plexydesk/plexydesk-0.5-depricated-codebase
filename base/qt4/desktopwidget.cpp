@@ -194,7 +194,8 @@ void DesktopWidget::qmlFromUrl(const QUrl &url)
     }
 
     QDeclarativeEngine *engine = QmlEngine();
-    QDeclarativeComponent component(engine, url);
+    QDeclarativeComponent component(engine, url.toString(QUrl::StripTrailingSlash |
+                                    QUrl::RemoveScheme));
 
     if (!component.isReady()) {
         if (component.isError()) {
