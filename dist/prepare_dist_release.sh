@@ -41,7 +41,7 @@ check_app_version() {
 	APP_VERSION_RELEASE="$( grep -e '\W*SET\W*(\W*LIB_RELEASE' ${GIT_DIR}/CMakeLists.txt | sed -r 's/^\W*SET\W*LIB_RELEASE\W*(\w*)\W*\)/\1/' )"
 	export APP_VERSION="${APP_VERSION_MAJOR}.${APP_VERSION_MINOR}.${APP_VERSION_RELEASE}"
 
-	APP_DEBUG="$( grep -e '\W*SET\W*(\W*CMAKE_BUILD_TYPE' ${GIT_DIR}/CMakeLists.txt | sed -r 's/^\W*SET\W*CMAKE_BUILD_TYPE\W*(\w*)\W*\)/\1/' )"
+	APP_DEBUG="$( grep -e '\W*SET\W*(\W*CMAKE_BUILD_TYPE' ${GIT_DIR}/CMakeLists.txt | sed -r 's/^\W*SET\W*CMAKE_BUILD_TYPE\W*(\w*)\W*$/\1/' )"
 	}
 
 get_version_input() {
@@ -244,7 +244,7 @@ prog_ok "Applying the required changes in ${GIT_DIR}/CMakeLists.txt..."
 sed -i -r "s/^\W*(SET\W*LIB_MAJOR\W*)\w*(\W*\).*)/\1${APP_VERSION_MAJOR}\2/" "${GIT_DIR}/CMakeLists.txt"
 sed -i -r "s/^\W*(SET\W*LIB_MINOR\W*)\w*(\W*\).*)/\1${APP_VERSION_MINOR}\2/" "${GIT_DIR}/CMakeLists.txt"
 sed -i -r "s/^\W*(SET\W*LIB_RELEASE\W*)\w*(\W*\).*)/\1${APP_VERSION_RELEASE}\2/" "${GIT_DIR}/CMakeLists.txt"
-sed -i -r "s/^\W*(SET\W*CMAKE_BUILD_TYPE\W*)\w*(\W*\).*)/\1${APP_DEBUG}\2/" "${GIT_DIR}/CMakeLists.txt"
+sed -i -r "s/^(\W*SET\W*CMAKE_BUILD_TYPE\W*)\w*(.*)/\1${APP_DEBUG}\2/" "${GIT_DIR}/CMakeLists.txt"
 sed -i -r "s/^\W*(SET\W*APPLICATION_INTERNAL_VERSION\W*)\w*(\W*\).*)/\1${DATE_APP_VERSION}\2/" "${GIT_DIR}/CMakeLists.txt"
 sed -i -r "s/^\W*(SET\W*APPLICATION_DATE\W*)\w*-\w*-\w*(\W*\).*)/\1${DATE_APP}\2/" "${GIT_DIR}/CMakeLists.txt"
 

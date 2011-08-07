@@ -93,7 +93,7 @@ bool getLessThanWidget(const QGraphicsItem *it1, const QGraphicsItem *it2)
 
 DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView(scene, parent), d(new Private)
 {
-    /* setup */
+    /* Setup */
     setWindowFlags(Qt::FramelessWindowHint |
                    Qt::WindowStaysOnBottomHint);
 
@@ -108,7 +108,7 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
 
     d->openglOn = false;
 
-    /* init */
+    /* Init */
 
     d->mThemeLoader = new PlexyDesk::ThemepackLoader(PlexyDesk::Config::getInstance()->themepackName(), this);
     d->mPhotoDialogProvider = NULL;
@@ -134,8 +134,7 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
 #ifdef Q_WS_X11
     if (checkXCompositeExt()) {
         qDebug() << Q_FUNC_INFO << "Supports Composite Ext: Yes";
-        // TODO:
-        // load composite layer
+        // TODO: load composite layer
     } else {
         qDebug() << Q_FUNC_INFO << "Supports Composite Ext: No";
     }
@@ -186,8 +185,7 @@ void DesktopView::setThemePack(const QString &name)
     if (d->mThemeLoader) {
         delete d->mThemeLoader;
 
-        // TODO
-        // ERROR HANDLING
+        // TODO: ERROR HANDLING
         d->mThemeLoader = new PlexyDesk::ThemepackLoader(name, this);
         if (PlexyDesk::Config::getInstance()->wallpaper().isEmpty()) {
             PlexyDesk::Config::getInstance()->setWallpaper(d->mThemeLoader->wallpaper());
@@ -202,7 +200,7 @@ void DesktopView::setThemePack(const QString &name)
 
         Q_FOREACH(const QString &qmlWidget, d->mThemeLoader->widgets("QML")) {
             qDebug() << Q_FUNC_INFO << "Loading QML: " << qmlWidget;
-            //FIX ME : Memory leak
+            // FIXME : Memory leak
             DesktopWidget *parent = new DesktopWidget(QRectF(0,0,0,0), 0, 0);
             parent->qmlFromUrl(QUrl(d->mThemeLoader->qmlFilesFromTheme(qmlWidget)));
             scene()->addItem(parent);
@@ -228,7 +226,7 @@ void DesktopView::addWallpaperItem()
 #ifdef Q_WS_X11
 bool DesktopView::checkXCompositeExt()
 {
-    /* We don't support this feature in Windows and MacosX */
+    /* We don't support this feature on Windows and MacosX */
 
     int event_base, error_base;
     if (XCompositeQueryExtension(QX11Info::display(), &event_base, &error_base)) {
@@ -371,7 +369,8 @@ void DesktopView::addCoreExtension(const QString &name)
     }
     delete provider;
 }
-   //small speed up , try if the speed is too low
+
+// Small speed up , try if the speed is too low
 void DesktopView::paintEvent(QPaintEvent * event)
 {
    QPaintEvent *newEvent=new QPaintEvent(event->region().boundingRect());
@@ -511,7 +510,7 @@ void DesktopView::drawBackground(QPainter *painter, const QRectF &rect)
 
 void DesktopView::mousePressEvent(QMouseEvent *event)
 {
-    // commenting out due to qml stacking problem
+    // Commented out due to QML stacking problem
     //setTopMostWidget(event->pos());
     QGraphicsView::mousePressEvent(event);
 }

@@ -24,9 +24,9 @@
 #include <QDeclarativeComponent>
 #include <QIcon>
 
-// plexy
 #include <plexy.h>
 #include "desktopview.h"
+#include "plexytray.h"
 #include <plexyconfig.h>
 #include <baserender.h>
 #include <pluginloader.h>
@@ -47,8 +47,6 @@
 #endif
 
 
-//using namespace PlexyDesk;
-
 int main( int argc, char * *argv )
 {
 #ifndef Q_WS_MAC
@@ -64,7 +62,8 @@ int main( int argc, char * *argv )
     QApplication app(argc, argv);
 
     QString appIconPath = PlexyDesk::Config::getInstance()->plexydeskBasePath() + "/share/plexy/plexydesk.png";
-    app.setWindowIcon(QIcon(QDir::toNativeSeparators(appIconPath)));
+    QIcon appIcon=QIcon(QDir::toNativeSeparators(appIconPath));
+    app.setWindowIcon(appIcon);
     app.setApplicationName(QString(PLEXYNAME));
 
 #ifdef Q_WS_WIN
@@ -124,6 +123,10 @@ int main( int argc, char * *argv )
     view->showLayer(QLatin1String("Widgets"));
     view->registerPhotoDialog();
 
+    QApplication::setQuitOnLastWindowClosed(false);
+
+    /* Set tray icon */
+    PlexyTray *trayIcon = new PlexyTray(view->window(), appIcon);
 
     return app.exec();
 }

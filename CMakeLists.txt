@@ -15,15 +15,6 @@ SET(APPLICATION_DATE 2011-08-03)
 SET(APPLICATION_EXE_NAME plexydesk)
 SET(PLEXY_CORE_LIBRARY plexydeskcore)
 
-# Global variable CMAKE_BUILD_TYPE handling
-# None (CMAKE_C_FLAGS or CMAKE_CXX_FLAGS used)
-# Debug (CMAKE_C_FLAGS_DEBUG or CMAKE_CXX_FLAGS_DEBUG)
-# Release (CMAKE_C_FLAGS_RELEASE or CMAKE_CXX_FLAGS_RELEASE)
-# RelWithDebInfo (CMAKE_C_FLAGS_RELWITHDEBINFO or CMAKE_CXX_FLAGS_RELWITHDEBINFO
-# MinSizeRel (CMAKE_C_FLAGS_MINSIZEREL or CMAKE_CXX_FLAGS_MINSIZEREL)
-# By default we should set it to Release. This can be overridden by a -D command
-# line switch.
-SET(CMAKE_BUILD_TYPE Debug)
 
 # Auto defined project variables
 SET(APPLICATION_NAME "${PROJECT_NAME}")
@@ -41,6 +32,21 @@ FIND_PACKAGE(OpenCV) #optional
 FIND_PACKAGE(QImageBlitz REQUIRED)
 FIND_PACKAGE(OpenGL REQUIRED)
 
+
+# Global variable CMAKE_BUILD_TYPE handling
+# None (CMAKE_C_FLAGS or CMAKE_CXX_FLAGS used)
+# Debug (CMAKE_C_FLAGS_DEBUG or CMAKE_CXX_FLAGS_DEBUG)
+# Release (CMAKE_C_FLAGS_RELEASE or CMAKE_CXX_FLAGS_RELEASE)
+# RelWithDebInfo (CMAKE_C_FLAGS_RELWITHDEBINFO or CMAKE_CXX_FLAGS_RELWITHDEBINFO
+# MinSizeRel (CMAKE_C_FLAGS_MINSIZEREL or CMAKE_CXX_FLAGS_MINSIZEREL)
+# By default we should set it to Release. This can be overridden by a -D command
+# line switch.
+IF (NOT CMAKE_BUILD_TYPE)
+    SET(CMAKE_BUILD_TYPE Release
+        CACHE
+        STRING "Specify build type: None Debug Release RelWithDebInfo MinSizeRel."
+        FORCE)
+ENDIF (NOT CMAKE_BUILD_TYPE)
 
 # Check if we use any Debug in the final release and if so use console in Windows
 # For the targets add ${WIN_APPLICATION} as second argument if you want a non

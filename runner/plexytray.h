@@ -1,7 +1,7 @@
 /*******************************************************************************
 * This file is part of PlexyDesk.
 *  Maintained by : Siraj Razick <siraj@kde.org>
-*  Authored By  :
+*  Authored By  : PhobosK <phobosk@kbfx.net>
 *
 *  PlexyDesk is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU Lesser General Public License as published by
@@ -17,32 +17,38 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
-#ifndef ICONPROVIDER_H
-#define ICONPROVIDER_H
+#ifndef PLEXYTRAY_H
+#define PLEXYTRAY_H
 
-#include <config.h>
+#include "config.h"
 
-#include <QtCore>
+#include <QSystemTrayIcon>
 
-#include <iconjob.h>
 #include <plexy.h>
 
 
-namespace PlexyDesk
-{
+class QMenu;
+class QAction;
 
-class IconProvider : public QObject
+class PlexyTray : public QSystemTrayIcon
 {
     Q_OBJECT
+
 public:
-    IconProvider();
-    IconJobPtr requestIcon(const QString &name, const QString &);
+    PlexyTray(QObject *parent, QIcon &icon);
+    virtual ~PlexyTray();
+
+private Q_SLOTS:
+    void trayIconClicked(QSystemTrayIcon::ActivationReason reason);
+    void appQuit();
+    void showAbout();
+
 private:
-    class Private;
-    Private *const d;
+    QSystemTrayIcon *trayIcon;
+    QMenu *trayIconMenu;
+    QAction *appnameAction;
+    QAction *aboutAction;
+    QAction *quitAction;
 };
 
-typedef QSharedPointer<IconProvider> IconProviderPtr;
-}
-
-#endif // ICONPROVIDER_H
+#endif // PLEXYTRAY_H
