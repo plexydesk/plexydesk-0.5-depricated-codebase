@@ -122,6 +122,7 @@ int main( int argc, char * *argv )
 
     view->setThemePack(PlexyDesk::Config::getInstance()->themepackName());
     view->showLayer(QLatin1String("Widgets"));
+    view->registerPhotoDialog();
 
 
     return app.exec();

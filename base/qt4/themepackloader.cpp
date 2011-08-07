@@ -52,7 +52,6 @@ ThemepackLoader::ThemepackLoader(const QString &themeName, QObject *parent) :
         QString("%1/%2").arg(PlexyDesk::Config::getInstance()->plexydeskBasePath()).arg("/share/plexy/themepack");
     d->mThemeName = themeName;
     QDir mainConfig(QString("%1/%2/").arg(d->mThemePackPath).arg(themeName));
-    qDebug() << Q_FUNC_INFO << themeName;
     d->mSettings = new QSettings(QDir::toNativeSeparators(
                                  mainConfig.absoluteFilePath("main.cfg")),
                              QSettings::IniFormat, this);
@@ -60,6 +59,7 @@ ThemepackLoader::ThemepackLoader(const QString &themeName, QObject *parent) :
     d->mThemeCfgFile = QDir::toNativeSeparators(d->mSettings->fileName());
     d->mBasePath = QDir::toNativeSeparators(mainConfig.absolutePath());
 
+    qDebug() << Q_FUNC_INFO << themeName;
     qDebug() << Q_FUNC_INFO << d->mThemeCfgFile;
 }
 
@@ -99,7 +99,7 @@ QStringList ThemepackLoader::widgets(const QString &expType)
     QStringList rv;
     Q_FOREACH(const QString &key, d->mSettings->childGroups()) {
         qDebug() << Q_FUNC_INFO << key;
-        if (key == QLatin1String("main")) {
+        if (key == QLatin1String("main") || key == QLatin1String("hidden")) {
             continue;
         }
         d->mSettings->beginGroup(key);
@@ -113,6 +113,20 @@ QStringList ThemepackLoader::widgets(const QString &expType)
     }
 
     return rv;
+}
+
+QString ThemepackLoader::hiddenQmlWidgets(const QString &name)
+{
+    QString rv;
+    d->mSettings->beginGroup(QLatin1String("hidden"));
+    rv = d->mSettings->value(name).toString();
+    d->mSettings->endGroup();
+
+    QDir
+        prefix(QString("%1/%2/").arg(d->mThemePackPath).
+                arg(d->mThemeName));
+
+    return QDir::toNativeSeparators(prefix.absoluteFilePath(rv));
 }
 
 QString ThemepackLoader::qmlFilesFromTheme(const QString &name)

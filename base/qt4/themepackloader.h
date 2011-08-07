@@ -23,6 +23,8 @@ public:
     QStringList widgets(const QString &type);
     QPoint widgetPos(const QString &name);
 
+    QString hiddenQmlWidgets(const QString &name);
+
     QString wallpaper();
     QString qmlFilesFromTheme(const QString &themeName);
     QString qmlBackdropFromTheme();

@@ -23,11 +23,12 @@
 #include <QDeclarativeEngine>
 #include <QDir>
 #include <QHash>
-
 #include <QtDebug>
-
 #include "plexyconfig.h"
 #include <desktopwidget.h>
+#include <config.h>
+#include <QCoreApplication>
+#include <QDeclarativeContext>
 #include <shadereffectitem.h>
 #include <shadereffectsource.h>
 
@@ -73,6 +74,7 @@ QDeclarativeEngine *Config::qmlEngine()
         engine->addImportPath(QDir::toNativeSeparators(
                     Config::getInstance()->plexydeskBasePath() + "/" + PLEXYLIBDIR + "/qt4/imports/"));
         engine->addImageProvider(QLatin1String("plexydesk"), new ImageCache);
+        engine->rootContext()->setContextProperty("plexydeskconfig", Config::getInstance());
         return engine;
     } else {
         return engine;
@@ -144,6 +146,7 @@ void Config::read()
     d->mData["proxyPort"] =  d->mSettings->value("proxyPort");
     d->mData["CurrentWallpaper"] = d->mSettings->value("CurrentWallpaper");
     d->mData["CurrentWallpaperMode"] = d->mSettings->value("CurrentWallpaperMode");
+    d->mData["photo"] = d->mSettings->value("photo");
     d->mData["iconTheme"] = d->mSettings->value("iconTheme");
     d->mData["openGL"] = d->mSettings->value("openGL");
     d->mData["themepack"] = d->mSettings->value("themepack");
@@ -160,6 +163,7 @@ void Config::writeToFile()
     d->mSettings->setValue("proxyPort", d->mData["proxyPort"].toInt());
     d->mSettings->setValue("CurrentWallpaper", d->mData["CurrentWallpaper"].toString());
     d->mSettings->setValue("CurrentWallpaperMode", d->mData["CurrentWallpaperMode"].toString());
+    d->mSettings->setValue("photo", d->mData["photo"].toString());
     d->mSettings->setValue("iconTheme", d->mData["iconTheme"].toString());
     d->mSettings->setValue("openGL", d->mData["openGL"].toBool());
     d->mSettings->setValue("themepack", d->mData["themepack"].toString());
@@ -184,6 +188,15 @@ void Config::setWallpaperMode(const QString &str)
     d->mSettings->setValue("CurrentWallpaperMode",
             d->mData["CurrentWallpaperMode"].toString());
     Q_EMIT wallpaperChanged();
+}
+
+void Config::setPhoto(const QString &str)
+{
+    qDebug() << Q_FUNC_INFO << str;
+    d->mData["photo"] = QVariant(str);
+    d->mSettings->setValue("photo",
+            d->mData["photo"].toString());
+    Q_EMIT photoChanged();
 }
 
 void Config::addWidget(const QString &widget)
@@ -213,6 +226,11 @@ QString Config::wallpaper() const
 QString Config::wallpaperMode() const
 {
     return d->mData["CurrentWallpaperMode"].toString();
+}
+
+QString Config::photo() const
+{
+    return d->mData["photo"].toString();
 }
 
 bool Config::isProxyOn() const

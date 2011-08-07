@@ -38,6 +38,7 @@ class PLEXYDESK_EXPORT Config : public QObject
     Q_OBJECT
     Q_PROPERTY(QString wallpaper READ wallpaper WRITE setWallpaper NOTIFY wallpaperChanged)
     Q_PROPERTY(QString wallpaperMode READ wallpaperMode WRITE setWallpaperMode NOTIFY wallpaperChanged)
+    Q_PROPERTY(QString photo READ photo WRITE setPhoto NOTIFY photoChanged)
     Q_PROPERTY(bool proxy READ isProxyOn WRITE setProxyOn NOTIFY proxyChanged)
     Q_PROPERTY(int port READ proxyPort WRITE setProxyPort NOTIFY proxyPortChanged)
     Q_PROPERTY(QString proxyURL READ proxyURL WRITE setProxyURL NOTIFY proxyURLChanged)
@@ -57,6 +58,7 @@ public:
 
     QString wallpaper() const;
     QString wallpaperMode() const;
+    QString photo() const;
     bool isProxyOn() const;
     int proxyPort() const;
     QString proxyURL() const;
@@ -80,12 +82,14 @@ public:
 public Q_SLOTS:
     void setWallpaper(const QString &str);
     void setWallpaperMode(const QString &str);
+    void setPhoto(const QString &str);
     void addWidget(const QString &widget);
     void changeLayer();
 
 Q_SIGNALS:
     void configChanged();
     void wallpaperChanged();
+    void photoChanged();
     void widgetAdded();
     void layerChange();
     void proxyChanged();

@@ -76,6 +76,8 @@ public:
     AbstractPluginInterface *bIface;
     BackdropPlugin *bgPlugin;
     PlexyDesk::ThemepackLoader *mThemeLoader;
+    WidgetPlugin *mPhotoDialogProvider;
+    DesktopWidget *mPhotoDialog;
     float row;
     float column;
     float margin;
@@ -109,6 +111,9 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
     /* init */
 
     d->mThemeLoader = new PlexyDesk::ThemepackLoader(PlexyDesk::Config::getInstance()->themepackName(), this);
+    d->mPhotoDialogProvider = NULL;
+    d->mPhotoDialog = NULL;
+    d->mThemeLoader = new ThemepackLoader(PlexyDesk::Config::getInstance()->themepackName(), this);
     qDebug() << Q_FUNC_INFO << PlexyDesk::Config::getInstance()->wallpaper();
     if (PlexyDesk::Config::getInstance()->wallpaper().isEmpty()) {
         qDebug() << Q_FUNC_INFO << d->mThemeLoader->wallpaper();
@@ -342,7 +347,7 @@ void DesktopView::addExtension(const QString &name,
             scene()->addItem(widget);
             if (pos.x() == 0 && pos.y() == 0) {
                 widget->setPos(d->row, d->column);
-                d->row += widget->boundingRect().width()+d->margin;
+                //d->row += widget->boundingRect().width()+d->margin;
             } else {
                 widget->setPos(pos);
             }
@@ -403,8 +408,19 @@ void DesktopView::dropEvent(QDropEvent * event)
         return;
     }
 
+   if (d->mPhotoDialog) {
+       d->mPhotoDialog->show();
+       d->mPhotoDialog->configState(DesktopWidget::NORMALSIDE);
+       QVariantMap data;
+       data["photo_path"] = QVariant(droppedFile);
+
+       if (d->mPhotoDialogProvider) {
+                    d->mPhotoDialogProvider->setData(data);
+            }
+        }
+
     qDebug() << "IMAGE Drop accepted...";
-    Config::getInstance()->setWallpaper(droppedFile);
+//    Config::getInstance()->setWallpaper(droppedFile);
     event->acceptProposedAction();
 }
 
@@ -418,6 +434,43 @@ void DesktopView::dragEnterEvent (QDragEnterEvent * event)
         if ( checkDropped(droppedFile) )
             event->accept();
     }
+}
+
+void DesktopView::registerPhotoDialog()
+{
+    if (d->mPhotoDialog) {
+        delete d->mPhotoDialog;
+    }
+
+    if (d->mPhotoDialogProvider) {
+        delete d->mPhotoDialogProvider;
+    }
+
+    const QString name = "photoframe";
+    const QPoint pos (0.0, 0.0);
+    WidgetPlugin *provider = static_cast<WidgetPlugin *>(PluginLoader::getInstance()->instance(name));
+    if (provider) {
+        DesktopWidget *widget = (DesktopWidget *) provider->item();
+        if (widget) {
+            //widget->configState(state);
+            scene()->addItem(widget);
+
+            const QRectF viewRect (0.0, 0.0, this->width(), this->height());
+            const QPointF center = viewRect.center();
+
+            float x_pos = center.x() - (widget->boundingRect().width()/2);
+            float y_pos = center.y() - (widget->boundingRect().height()/2);
+
+            widget->setPos(x_pos, y_pos);
+
+            d->mPhotoDialog = widget;
+            connect(widget, SIGNAL(close()), this, SLOT(closeDesktopWidget()));
+            d->mPhotoDialog->hide();
+            d->mPhotoDialog->configState(DesktopWidget::NORMALSIDE);
+        }
+    }
+
+    d->mPhotoDialogProvider = provider;
 }
 
 void DesktopView::dragMoveEvent (QDragMoveEvent * event)

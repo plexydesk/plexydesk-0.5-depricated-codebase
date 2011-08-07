@@ -27,31 +27,43 @@
 #include "pictureflow.h"
 #include "imageitem.h"
 #include <widgetplugin.h>
+#include <themepackloader.h>
 
 class QLineEdit;
 class QWidget;
 
-class VISIBLE_SYM ImagePlugin : public PlexyDesk::WidgetPlugin
+class ImagePlugin : public PlexyDesk::WidgetPlugin
 {
     Q_OBJECT
+    Q_PROPERTY(QString imageSource READ imageSource WRITE setImageSource NOTIFY imageSourceChanged)
 
 public:
     ImagePlugin(QObject *object = 0);
     virtual ~ImagePlugin();
     virtual QGraphicsItem *item(); // {};
+
+    void setData(const QVariantMap &data);
+    QString imageSource() {
+        return mImageSource;
+    }
+
 public slots:
     void onDataReady();
-
+    void setImageSource(const QString &src)
+    {
+        mImageSource = src;
+    }
     void searchImage();
+
 signals:
     void change();
     void sendData(QVariant &);
+    void imageSourceChanged();
+    
 private:
-    PictureFlow *flow;
-    QWidget *base;
-    QLineEdit *search;
-    PlexyDesk::DataPlugin *flickrEngine;
-    PlexyDesk::ImagePileWidget *widget;
+    PlexyDesk::ThemepackLoader *mThemePack;
+    PlexyDesk::DesktopWidget *mFrameParentitem;
+    QString mImageSource;
 };
 
 #endif

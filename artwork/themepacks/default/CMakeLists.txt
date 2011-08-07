@@ -7,7 +7,13 @@ SET(WEATHER weather/weather.qml)
 
 # Photo CMAKE entries
 SET(PHOTO photo/photoElement.qml)
-SET(GLOB PHOTO_IMGS photo/photoElement_images/*.png)
+SET(GLOB PHOTO_IMGS photo/photoElement_images/*.*)
+
+#Photo Frame entries
+
+SET(PHOTO_FRAME photoframe/photoframe.qml)
+FILE(GLOB PHOTO_FRAME_IMGS photoframe/frameimages/*.png)
+
 
 # Folderview CMAKE entries
 SET(FOLDERVIEW folderview/folderview.qml)
@@ -43,6 +49,7 @@ IF (UNIX)
                         ${DIGITALCLOCK_IMGS}
                         ${WELCOMEIMGS}
                         ${PHOTOVIEWER_IMG}
+                        ${PHOTO_FRAME_IMGS}
                         )
     EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/cmakemodules/get_duplicate_files.sh "${UNIQUE_RC_FILES}"
                     OUTPUT_VARIABLE OUT_UNIQ
@@ -57,8 +64,13 @@ INSTALL(FILES ${JPEGFILES}  DESTINATION ${RES_DEST})
 INSTALL(FILES ${SVGFILES}  DESTINATION ${RES_DEST})
 INSTALL(FILES ${CFG}  DESTINATION share/plexy/themepack/default)
 INSTALL(FILES ${WEATHER}  DESTINATION share/plexy/themepack/default/weather)
+
 INSTALL(FILES ${PHOTO}  DESTINATION share/plexy/themepack/default/photo)
 INSTALL(FILES ${PHOTO_IMGS}  DESTINATION ${RES_DEST})
+
+INSTALL(FILES ${PHOTO_FRAME}  DESTINATION share/plexy/themepack/default/photoframe)
+INSTALL(FILES ${PHOTO_FRAME_IMGS}  DESTINATION ${RES_DEST})
+
 
 INSTALL(FILES ${FOLDERVIEW} DESTINATION share/plexy/themepack/default/folderview)
 INSTALL(FILES ${FOLDERVIEW_RES_QML} DESTINATION share/plexy/themepack/default/folderview/resources)

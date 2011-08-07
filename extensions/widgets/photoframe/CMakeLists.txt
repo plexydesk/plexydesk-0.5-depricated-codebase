@@ -8,23 +8,17 @@ INCLUDE_DIRECTORIES(
     )
 
 SET(sourceFiles
-    imageitem.cpp
     interface.cpp
-    pictureflow.cpp
     imageplugin.cpp
     )
 
 SET(headerFiles
-    imageitem.h
     interface.h
-    pictureflow.h
     imageplugin.h
     )
 
 SET(QTMOC_SRCS
-    imageitem.h
     interface.h
-    pictureflow.h
     imageplugin.h
     )
 
@@ -42,13 +36,13 @@ SET(libs
     ${QT_QTOPENGL_LIBRARY}
     )
 
-ADD_LIBRARY(imagepil SHARED ${sourceFiles} ${QT_MOC_SRCS})
+ADD_LIBRARY(photoframe SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(
-    imagepil
+    photoframe
     ${PLEXY_CORE_LIBRARY}
     ${libs}
     )
 
-INSTALL(TARGETS imagepil DESTINATION ${CMAKE_INSTALL_LIBDIR}/plexyext)
-INSTALL(FILES imagepil.desktop DESTINATION share/plexy/ext/groups)
+INSTALL(TARGETS photoframe DESTINATION ${CMAKE_INSTALL_LIBDIR}/plexyext)
+INSTALL(FILES photoframe.desktop DESTINATION share/plexy/ext/groups)

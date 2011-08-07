@@ -77,6 +77,7 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QDeclarativeIt
         d->proxyWidget->show();
     }
 
+    d->mBoundingRect = rect;
     d->backdrop = true;
     d->opacity = 1.0;
     d->saveRect = rect;
@@ -139,6 +140,8 @@ QRectF DesktopWidget::rect() const
 void DesktopWidget::setRect(const QRectF &rect)
 {
     d->mBoundingRect = rect;
+    prepareGeometryChange();
+    resetMatrix();
 }
 
 void DesktopWidget::zoomDone()
@@ -208,20 +211,18 @@ void DesktopWidget::qmlFromUrl(const QUrl &url)
         }
         return;
     }
+
     d->qmlChild =
         qobject_cast<QGraphicsObject *>(component.create(engine->rootContext()));
     QRectF objectRect = d->qmlChild->boundingRect();
-    QRectF borderRect(objectRect.x(),
-            objectRect.y(),
-            objectRect.width(),
-            objectRect.height());
-    d->saveRect = borderRect;
-    setRect(borderRect);
+
+    d->saveRect = objectRect;
+    setRect(objectRect);
+
     d->qmlChild->setParentItem(this);
     d->qmlChild->setFlag(QGraphicsItem::ItemIsFocusable, true);
     d->qmlChild->setFlag(QGraphicsItem::ItemIsSelectable, true);
     d->qmlChild->setCacheMode(QGraphicsItem::DeviceCoordinateCache);
-    update();
 
     // forward signals
     connect(engine, SIGNAL(quit()), this, SLOT(onQmlQuit()));
@@ -229,7 +230,6 @@ void DesktopWidget::qmlFromUrl(const QUrl &url)
 
 void DesktopWidget::onQmlQuit()
 {
-    qDebug() << Q_FUNC_INFO ;
     d->qmlChild->hide();
     scene()->removeItem(d->qmlChild);
     d->qmlChild->setParentItem(0);
@@ -344,8 +344,13 @@ void DesktopWidget::setState(DesktopWidget::State s)
 
 void DesktopWidget::configState(DesktopWidget::State s)
 {
+    if (s == d->s) {
+        return ;
+    }
+
     resetMatrix();
     prepareGeometryChange();
+    
     if (s == DOCK) {
         setRect(QRectF(0, 0, d->dock.width(), d->dock.height()));
     } else {
@@ -355,6 +360,31 @@ void DesktopWidget::configState(DesktopWidget::State s)
     if (d->proxyWidget) {
         d->proxyWidget->hide();
     }
+
+    if (d->s == DOCK) {
+        if (d->qmlChild) {
+            d->qmlChild->show();
+        }
+        setState(NORMALSIDE);
+        prepareGeometryChange();
+        this->setRect(d->saveRect);
+        if (d->proxyWidget) {
+            d->proxyWidget->show();
+        }
+        d->zoomin->start();
+    } else {
+        if (d->qmlChild) {
+            d->qmlChild->hide();
+        }
+        setState(DOCK);
+        prepareGeometryChange();
+        this->setRect(QRectF(0, 0, d->dock.width(), d->dock.height()));
+        if (d->proxyWidget) {
+            d->proxyWidget->hide();
+        }
+        d->zoomout->start();
+    }
+
 }
 
 void DesktopWidget::paintBackSide(QPainter *p, const QRectF &rect)

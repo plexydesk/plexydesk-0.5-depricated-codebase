@@ -31,6 +31,9 @@
 BgPlugin::BgPlugin(QObject *object)
     : BackdropPlugin(object)
 {
+    // TODO: bug#112
+    // read the theme name from settings
+
     mThemePack = new PlexyDesk::ThemepackLoader("default", this);
     mBackgroundPixmap =
       new QPixmap(QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->wallpaper()));
@@ -128,7 +131,6 @@ QGraphicsItem *BgPlugin::item()
 
         connect(PlexyDesk::Config::getInstance(), SIGNAL(wallpaperChanged()),
                 this, SLOT(changeWallpaperItem()));
-
 
 
         if (PlexyDesk::Config::getInstance()->isOpenGL()) {

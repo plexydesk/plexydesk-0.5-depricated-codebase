@@ -45,6 +45,7 @@ public:
     void showLayer(const QString &name);
     void setThemePack(const QString &name);
     void addWallpaperItem();
+    void registerPhotoDialog();
 
 #ifdef Q_WS_X11
     bool checkXCompositeExt();
