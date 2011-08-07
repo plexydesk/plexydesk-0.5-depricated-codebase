@@ -136,7 +136,7 @@ QPoint ThemepackLoader::widgetPos(const QString &name)
     d->mSettings->beginGroup(name);
     int x = 0;
     int y = 0;
-    QRect screenRect = QDesktopWidget().availableGeometry();
+    QRect screenRect = QDesktopWidget().screenGeometry();
 
     QString x_value = d->mSettings->value("x").toString();
     QString y_value = d->mSettings->value("y").toString();

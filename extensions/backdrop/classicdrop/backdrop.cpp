@@ -62,6 +62,8 @@ void BgPlugin::changeWallpaperItem()
 
           QDeclarativeContext *context = PlexyDesk::Config::qmlEngine()->rootContext();
 
+          // TODO: Make use of the PlexyDesk::Config::getInstance()->wallpaperMode() option
+          // to set the context backgroundImage fillMode
           context->setContextProperty("backgroundImage",
                  QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->wallpaper()));
 
@@ -79,7 +81,7 @@ void BgPlugin::changeWallpaperItem()
              return;
          }
 
-    // TODO: Make use of the PlexyDesk::Config::getInstance()->wallpaperMode() option
+         // TODO: Make use of the PlexyDesk::Config::getInstance()->wallpaperMode() option
          mBackgroundCache = mBackgroundPixmap->scaled(desktopSize.width(), desktopSize.height(),
                  Qt::IgnoreAspectRatio,
                  Qt::SmoothTransformation);
@@ -124,7 +126,7 @@ QGraphicsItem *BgPlugin::item()
         mBlurAnimation->setStartValue(5.0);
         mBlurAnimation->setEndValue(0.0);
 
-        connect(PlexyDesk::Config::getInstance(), SIGNAL(wallpaperChanged()), 
+        connect(PlexyDesk::Config::getInstance(), SIGNAL(wallpaperChanged()),
                 this, SLOT(changeWallpaperItem()));
 
 
@@ -149,6 +151,5 @@ QGraphicsItem *BgPlugin::item()
             mBlurAnimation->start();
             return mBackgroundItemPixmap;
         }
-
-      }
+    }
 }

@@ -49,7 +49,9 @@ Item {
     ShaderEffectSource {
         id: thesource
         sourceItem: Image { source: backgroundImage
-                            fillMode : Image.PreserveAspectCrop
+                            fillMode : Image.Stretch
+                            width: main.width
+                            height: main.height
                           }
         live: false
         hideSource: false

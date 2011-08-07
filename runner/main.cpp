@@ -77,16 +77,15 @@ int main( int argc, char * *argv )
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 
     QSharedPointer<DesktopView> view = QSharedPointer<DesktopView>(new DesktopView(0));
-    bool accel = PlexyDesk::Config::getInstance()->isOpenGL();
-    QSize desktopSize;
+
 #ifdef Q_WS_MAC
-    accel = true;
     PlexyDesk::Config::getInstance()->setOpenGL(true);
-    desktopSize = QDesktopWidget().screenGeometry().size();
-#else
-    accel = PlexyDesk::Config::getInstance()->isOpenGL();
-    desktopSize = QDesktopWidget().availableGeometry().size();
 #endif
+
+    bool accel = PlexyDesk::Config::getInstance()->isOpenGL();
+
+    // TODO: Multihead screen config handling
+    QSize desktopSize = QDesktopWidget().screenGeometry().size();
 
     view->setWindowTitle(QString(PLEXYNAME));
     view->enableOpenGL(accel);
@@ -96,12 +95,14 @@ int main( int argc, char * *argv )
     view->addWallpaperItem();
 
     QObject::connect(view.data(), SIGNAL(closeApplication()), &app, SLOT(quit()));
-    QRect r = QDesktopWidget().availableGeometry();
+
+    // TODO: Resolution changes handling
+    QRect r = QDesktopWidget().screenGeometry();
     view->move(r.x(), r.y());
     view->resize(desktopSize);
-    scene.setSceneRect(QDesktopWidget().availableGeometry()); // TODO: Resolution changes ?
-    view->setSceneRect(QDesktopWidget().availableGeometry());
-    view->ensureVisible(QDesktopWidget().availableGeometry());
+    scene.setSceneRect(QDesktopWidget().screenGeometry());
+    view->setSceneRect(QDesktopWidget().screenGeometry());
+    view->ensureVisible(QDesktopWidget().screenGeometry());
     view->setDragMode(QGraphicsView::RubberBandDrag);
 
 #ifdef Q_WS_WIN
