@@ -1,10 +1,15 @@
 INCLUDE_DIRECTORIES(
 	   ${QT_INCLUDES}
-	   ${CMAKE_BINARY_DIR}/3rdparty/win32/ffmpeg/include
 	   ${QT_QTOPENGL_INCLUDE_DIR}
 	   ${QT_QTNETWORK_INCLUDE_DIR}
 	   ${QT_QTTEST_INCLUDE_DIR}
 		 )
+
+IF(WIN32)
+    INCLUDE_DIRECTORIES(
+           ${CMAKE_BINARY_DIR}/3rdparty/win32/ffmpeg/include
+           )
+ENDIF(WIN32)
 
 SET(sourceFiles
     video.cpp
@@ -16,7 +21,6 @@ SET(headerFiles
     ivideointerface.h
     video.h
     vplayer.h
-    config.h
     )
 
 SET(QTMOC_SRCS

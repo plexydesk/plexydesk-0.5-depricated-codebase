@@ -1,40 +1,64 @@
-#Contributor: Lukas Appelhans <l.appelhans@gmx.de>
-pkgname=plexydesk-svn
-pkgver=254
+# This is the PlexyDesk PKGBUILD file.
+
+# See http://wiki.archlinux.org/index.php/VCS_PKGBUILD_Guidelines
+# for more information on packaging from GIT sources.
+
+# Contributors:
+#       Lukas Appelhans <l.appelhans@gmx.de>
+#       Tucos <baspape@gmail.com>
+
+# Maintainer: Tucos <baspape@gmail.com>
+
+pkgname=plexydesk-git
+pkgver=20110807
 pkgrel=1
-pkgdesc="A Modular Desktop Renderer"
-url="http://plexydesk.org"
-license="LGPL3"
-arch=('i686' 'amd64')
-depends=('qt-copy-svn')
-makedepends=('subversion' 'cmake')
+pkgdesc="A Desktop extension which lets you efficiently organize and use your Desktop"
+arch=('i686' 'x86_64')
+url="http://www.plexyplanet.org/"
+license=('LGPL3')
+groups=()
+depends=('qt' 'libxcomposite')
+makedepends=('git')
 provides=('plexydesk')
 conflicts=('plexydesk')
+replaces=()
+backup=()
+options=()
+install=
 source=()
-md5sums=()
+noextract=()
+md5sums=() #generate with 'makepkg -g'
 
-_svnmod="plexydesk-read-only"
-_svntrunk="http://plexydesk.googlecode.com/svn/trunk/"
+_gitroot="https://github.com/siraj/plexydesk.git"
+_gitname="plexydesk"
 
 build() {
-    cd $startdir/src
-    #mkdir -p ~/.subversion; touch ~/.subversion/servers
-    msg "Connecting to the SVN server...."
-    svn co $_svntrunk $_svnmod
+  cd "$srcdir"
+  msg "Connecting to GIT server...."
 
-    [ -d ./$_svnmod-build ] && rm -fr ./$_svnmod-build
-    cp -r ./$_svnmod ./$_svnmod-build
-    cd ./$_svnmod-build
+  if [ -d $_gitname ] ; then
+    cd $_gitname && git pull origin
+    msg "The local files are updated."
+  else
+    git clone $_gitroot $_gitname
+  fi
 
-    msg "SVN checkout done or server timeout"
-    msg "Starting cmake..."
-    export FFMPEG_DIR=$startdir/src/$_svnmod/cmakemodules
+  msg "GIT checkout done or server timeout"
+  msg "Starting make..."
 
-    cmake -DCMAKE_INSTALL_PREFIX=$startdir/pkg/ . || return 1
+  rm -rf "$srcdir/$_gitname-build"
+  mkdir "$srcdir/$_gitname-build" && cd $_
 
-    msg "Starting make..."
-
-    make || return 1
-    make install
+  cmake -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DFFMPEG_INCLUDE_DIR=/usr/include \
+        -DFFMPEG_LIBRARY=/usr/lib/libavutil.so \
+        "$srcdir/plexydesk"
+  make
 }
- 
+
+package() {
+  cd "$srcdir/$_gitname-build"
+  make DESTDIR="$pkgdir/" install
+  mv "$pkgdir/usr/lib64" "$pkgdir/usr/lib"
+}

@@ -16,12 +16,14 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#include "ivideointerface.h"
+
+#include <QtPlugin>
+
 #include "video.h"
+#include "ivideointerface.h"
 #include <desktopwidget.h>
 #include <plexyconfig.h>
 
-#include <QtPlugin>
 
 IVideoInterface::IVideoInterface(QObject *object)
 {

@@ -20,12 +20,12 @@
 #ifndef V_PLAYER_H
 #define V_PLAYER_H
 
-#include <plexy.h>
+#include "config.h"
 
 #include <QObject>
 #include <QImage>
 
-#include "config.h"
+#include <plexy.h>
 
 namespace PlexyDesk
 {

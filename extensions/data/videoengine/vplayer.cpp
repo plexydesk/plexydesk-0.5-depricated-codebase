@@ -17,8 +17,6 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
-#include "vplayer.h"
-
 #include <QLabel>
 #include <QTimer>
 #include <QFile>
@@ -33,6 +31,8 @@ extern "C" {
 #include <ffmpeg/avcodec.h>
 #include <ffmpeg/avformat.h>
 #endif
+
+#include "vplayer.h"
 
 namespace PlexyDesk
 {

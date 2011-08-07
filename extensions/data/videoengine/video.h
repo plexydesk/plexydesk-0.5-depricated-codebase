@@ -19,13 +19,14 @@
 #ifndef VIDEIO_DATA_H
 #define VIDEIO_DATA_H
 
+#include "config.h"
+
+#include "vplayer.h"
 #include <plexy.h>
 #include <backdropinterface.h>
 #include <abstractplugininterface.h>
 #include <datainterface.h>
 
-#include "vplayer.h"
-#include "config.h"
 
 class VIDEOENGINE_EXPORT VideoData : public PlexyDesk::DataPlugin
 {

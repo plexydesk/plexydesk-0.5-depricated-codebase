@@ -16,8 +16,13 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
+
 #ifndef VIDEO_DATA_I
 #define VIDEO_DATA_I
+
+#include "config.h"
+
+#include <QObject>
 
 #include <plexy.h>
 #include <backdropinterface.h>
@@ -25,9 +30,6 @@
 #include <datainterface.h>
 #include <dataplugin.h>
 
-#include <QObject>
-
-#include "config.h"
 
 class VIDEOENGINE_EXPORT IVideoInterface : public PlexyDesk::DataInterface
 {
