@@ -182,7 +182,7 @@ IF (NOT APPLE)
 
     IF(NOT WIN32)
         IF(FFMPEG_FOUND)
-            ADD_SUBDIRECTORY(extensions/data/videoengine)
+#            ADD_SUBDIRECTORY(extensions/data/videoengine)
         ENDIF(FFMPEG_FOUND)
     ENDIF(NOT WIN32)
 ENDIF (NOT APPLE)

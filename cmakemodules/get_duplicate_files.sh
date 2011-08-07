@@ -8,13 +8,13 @@ SAVEIFS=$IFS
 IFS=$';'
 
 for a in `echo "$@"`; do
-    FILE_NAMES="${FILE_NAMES} `basename \"$a\"`"
-    FILE_NAMES_LONG="${FILE_NAMES_LONG}$a\n"
+    FILE_NAMES="`basename \"$a\"` ${FILE_NAMES}"
+    FILE_NAMES_LONG="$a\n${FILE_NAMES_LONG}"
 done
 
 IFS=$SAVEIFS
 
-RESULT=$( echo ${FILE_NAMES} | sed -e "sQ\\(\..\{3\}\\) Q\1\nQg" | sort | uniq -D | uniq )
+RESULT=$( echo ${FILE_NAMES} | sed -r "s/(\..{3}) /\1\n/g" | sort | uniq -D | uniq )
 
 if [ -n "${RESULT}" ]; then
     for b in "${RESULT}"; do
