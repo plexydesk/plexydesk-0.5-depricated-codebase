@@ -51,8 +51,7 @@ build() {
 
   cmake -DCMAKE_INSTALL_PREFIX=/usr \
         -DCMAKE_BUILD_TYPE=Release \
-        -DFFMPEG_INCLUDE_DIR=/usr/include \
-        -DFFMPEG_LIBRARY=/usr/lib/libavutil.so \
+        -DCMAKE_INSTALL_LIBDIR=lib \
         "$srcdir/plexydesk"
   make
 }
@@ -60,5 +59,4 @@ build() {
 package() {
   cd "$srcdir/$_gitname-build"
   make DESTDIR="$pkgdir/" install
-  mv "$pkgdir/usr/lib64" "$pkgdir/usr/lib"
 }
