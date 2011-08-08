@@ -72,14 +72,32 @@ IF(WIN32)
 ENDIF(WIN32)
 
 
+INCLUDE(PkgConfigGetVar)
+INCLUDE(GNUInstallDirs)
+
+# *** QT vars handling ***
 # This will cause cmake to include and link against the OpenGL module.
 # Set all flags first and then use the QT_USE_FILE to set everything.
 # Note that QT_USE_FILE also sets QT_DEFINITIONS
 SET(QT_USE_OPENGL TRUE)
 INCLUDE(${QT_USE_FILE})
 
-INCLUDE(PkgConfigGetVar)
-INCLUDE(GNUInstallDirs)
+SET(QT_IMPORTS_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/qt4/imports)
+
+# On Windows we use a predefined QT_IMPORTS_INSTALL_DIR
+IF (NOT WIN32)
+
+# Workaround for platforms that do not provide it (Ubuntu)
+IF(NOT QT_IMPORTS_DIR)
+    MESSAGE("QT_IMPORTS_DIR not present...\nUsing a built in one: ${CMAKE_INSTALL_FULL_LIBDIR}/qt4/imports")
+    SET(QT_IMPORTS_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/qt4/imports)
+ELSE(NOT QT_IMPORTS_DIR)
+    # Making QT_IMPORTS_INSTALL_DIR relative. This is a dirty hack but should work
+    STRING(REGEX REPLACE "^/usr/" "" QT_IMPORTS_INSTALL_DIR "${QT_IMPORTS_DIR}")
+    MESSAGE(STATUS "Relative QT Imports path set to: ${QT_IMPORTS_INSTALL_DIR}")
+ENDIF(NOT QT_IMPORTS_DIR)
+
+ENDIF(NOT WIN32)
 
 INCLUDE_DIRECTORIES (
     ${CMAKE_SOURCE_DIR}

@@ -151,6 +151,10 @@ QPoint ThemepackLoader::widgetPos(const QString &name)
     int x = 0;
     int y = 0;
     QRect screenRect = QDesktopWidget().screenGeometry();
+#ifdef Q_WS_WIN
+    // A 1px hack to make the widget fullscreen and not covering the toolbar on Win
+    screenRect.setHeight(screenRect.height()-1);
+#endif
 
     QString x_value = d->mSettings->value("x").toString();
     QString y_value = d->mSettings->value("y").toString();

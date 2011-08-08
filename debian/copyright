@@ -17,6 +17,10 @@ Files: debian/*
 Copyright: 2011, PhobosK <phobosk@kbfx.net>
 License: LGPL-3+
 
+Files: dist/archlinux/*
+Copyright: 2011, Tucos <baspape@gmail.com>
+License: LGPL-3+
+
 
 License: LGPL-3+
    GNU LESSER GENERAL PUBLIC LICENSE

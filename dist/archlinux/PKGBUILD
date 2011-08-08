@@ -10,7 +10,7 @@
 # Maintainer: Tucos <baspape@gmail.com>
 
 pkgname=plexydesk-git
-pkgver=20110807
+pkgver=20110808
 pkgrel=1
 pkgdesc="A Desktop extension which lets you efficiently organize and use your Desktop"
 arch=('i686' 'x86_64')
@@ -31,6 +31,7 @@ md5sums=() #generate with 'makepkg -g'
 
 _gitroot="https://github.com/siraj/plexydesk.git"
 _gitname="plexydesk"
+debugbuild=false
 
 build() {
   cd "$srcdir"
@@ -50,8 +51,8 @@ build() {
   mkdir "$srcdir/$_gitname-build" && cd $_
 
   cmake -DCMAKE_INSTALL_PREFIX=/usr \
-        -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_LIBDIR=lib \
+        -DCMAKE_BUILD_TYPE=Release \
         "$srcdir/plexydesk"
   make
 }

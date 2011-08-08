@@ -54,6 +54,7 @@ SET(sourceFiles
     icon.cpp
     iconjob.cpp
     iconprovider.cpp
+#    plexyeventhandler.cpp
     plexypanel.cpp
     plexytray.cpp
     ${extra_source}
@@ -65,6 +66,7 @@ SET(headerFiles
     icon.h
     iconjob.h
     iconprovider.h
+#    plexyeventhandler.h
     plexypanel.h
     plexytray.h
     ${extra_headers}
@@ -75,6 +77,7 @@ SET(QTMOC_SRCS
     icon.h
     iconjob.h
     iconprovider.h
+#    plexyeventhandler.h
     plexypanel.h
     plexytray.h
     ${extra_headers}

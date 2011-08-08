@@ -62,6 +62,11 @@ extern "C" {
 
 #endif
 
+#ifdef Q_WS_WIN
+// Keep that if we want other native direct manipulations on Windows
+//#include <windows.h>
+#endif
+
 
 using namespace PlexyDesk;
 
@@ -94,17 +99,34 @@ bool getLessThanWidget(const QGraphicsItem *it1, const QGraphicsItem *it2)
 DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView(scene, parent), d(new Private)
 {
     /* Setup */
+
+#ifdef Q_WS_WIN
+    // The QT::Tool flag is needed so PlexyDesk is excluded from Win taskbar
+    setWindowFlags(QT::Tool |
+                   Qt::FramelessWindowHint |
+                   Qt::WindowStaysOnBottomHint);
+#else
     setWindowFlags(Qt::FramelessWindowHint |
                    Qt::WindowStaysOnBottomHint);
+#endif
 
     setFrameStyle(QFrame::NoFrame);
 
-    setAttribute(Qt::WA_QuitOnClose, true);
+    setAttribute(Qt::WA_QuitOnClose);
+
+#ifdef Q_WS_WIN
+    // Needed so it gets no focus on win when starting up
+    setAttribute(Qt::WA_ShowWithoutActivating);
+
+    // Keep the next one if we ever need native direct manipulation on Win
+    //::SetWindowPos(this->winId(), HWND_BOTTOM, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE | SWP_NOACTIVATE );
+#endif
 
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     setAlignment(Qt::AlignLeft | Qt::AlignTop);
+
 
     d->openglOn = false;
 

@@ -89,7 +89,7 @@ function getTypeIcon(type)
     else if (type === "iso" || type === "bin" || type === "nrg" || type === "daa")
         return "image://plexydesk/iso";
     else if (type=== "exe")
-        return "image://plexydesk/exe.png";
+        return "image://plexydesk/exe";
     else if (type === "java")
 	return "image://plexydesk/java";
     else

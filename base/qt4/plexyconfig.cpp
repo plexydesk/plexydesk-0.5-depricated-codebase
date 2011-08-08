@@ -72,7 +72,7 @@ QDeclarativeEngine *Config::qmlEngine()
         qmlRegisterType<ShaderEffectSource>("Qt.labs.shaders", 1, 0, "ShaderEffectSource");
         engine = new QDeclarativeEngine;
         engine->addImportPath(QDir::toNativeSeparators(
-                    Config::getInstance()->plexydeskBasePath() + "/" + PLEXYLIBDIR + "/qt4/imports/"));
+                    Config::getInstance()->plexydeskBasePath() + "/" + PLEXYQTIMPORTSDIR + "/"));
         engine->addImageProvider(QLatin1String("plexydesk"), new ImageCache);
         engine->rootContext()->setContextProperty("plexydeskconfig", Config::getInstance());
         return engine;

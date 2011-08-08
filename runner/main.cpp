@@ -25,6 +25,8 @@
 #include <QIcon>
 
 #include <plexy.h>
+// We do not use this for now. Commented.
+//#include "plexyeventhandler.h"
 #include "desktopview.h"
 #include "plexytray.h"
 #include <plexyconfig.h>
@@ -77,6 +79,13 @@ int main( int argc, char * *argv )
 
     QSharedPointer<DesktopView> view = QSharedPointer<DesktopView>(new DesktopView(0));
 
+/*
+    // This is kept if we ever need a special event handler for the app and view
+    PlexyEventHandler *eventHandle = new PlexyEventHandler();
+    app.installEventFilter(eventHandle);
+    view->installEventFilter(eventHandle);
+*/
+
 #ifdef Q_WS_MAC
     PlexyDesk::Config::getInstance()->setOpenGL(true);
 #endif
@@ -85,6 +94,10 @@ int main( int argc, char * *argv )
 
     // TODO: Multihead screen config handling
     QSize desktopSize = QDesktopWidget().screenGeometry().size();
+#ifdef Q_WS_WIN
+    // A 1px hack to make the widget fullscreen and not covering the toolbar on Win
+    desktopSize.setHeight(desktopSize.height()-1);
+#endif
 
     view->setWindowTitle(QString(PLEXYNAME));
     view->enableOpenGL(accel);
@@ -97,17 +110,16 @@ int main( int argc, char * *argv )
 
     // TODO: Resolution changes handling
     QRect r = QDesktopWidget().screenGeometry();
+#ifdef Q_WS_WIN
+    // A 1px hack to make the widget fullscreen and not covering the toolbar on Win
+    r.setHeight(r.height()-1); //win
+#endif
     view->move(r.x(), r.y());
     view->resize(desktopSize);
-    scene.setSceneRect(QDesktopWidget().screenGeometry());
-    view->setSceneRect(QDesktopWidget().screenGeometry());
-    view->ensureVisible(QDesktopWidget().screenGeometry());
+    scene.setSceneRect(r);
+    view->setSceneRect(r);
+    view->ensureVisible(r);
     view->setDragMode(QGraphicsView::RubberBandDrag);
-
-#ifdef Q_WS_WIN
-    /// \brief: remove plexy from taskbar
-    view->move(0, 0);
-#endif
 
 #ifdef Q_WS_X11
     NETWinInfo info(QX11Info::display(), view->winId(), QX11Info::appRootWindow(), NET::WMDesktop );

@@ -72,26 +72,30 @@ void BgPlugin::changeWallpaperItem()
 
           mBackgroundItem->qmlFromUrl(QUrl(mThemePack->qmlBackdropFromTheme()));
      } else {
-         QSize desktopSize = QDesktopWidget().screenGeometry().size();
+          QSize desktopSize = QDesktopWidget().screenGeometry().size();
+#ifdef Q_WS_WIN
+          // A 1px hack to make the widget fullscreen and not covering the toolbar on Win
+          desktopSize.setHeight(desktopSize.height()-1);
+#endif
 
-         if (mBackgroundPixmap) {
-             delete mBackgroundPixmap;
-         }
+          if (mBackgroundPixmap) {
+              delete mBackgroundPixmap;
+          }
 
-         mBackgroundPixmap = new QPixmap(PlexyDesk::Config::getInstance()->wallpaper());
+          mBackgroundPixmap = new QPixmap(PlexyDesk::Config::getInstance()->wallpaper());
 
-         if (mBackgroundPixmap->isNull()) {
-             return;
-         }
+          if (mBackgroundPixmap->isNull()) {
+              return;
+          }
 
-         // TODO: Make use of the PlexyDesk::Config::getInstance()->wallpaperMode() option
-         mBackgroundCache = mBackgroundPixmap->scaled(desktopSize.width(), desktopSize.height(),
-                 Qt::IgnoreAspectRatio,
-                 Qt::SmoothTransformation);
-         mBackgroundItemPixmap->setPixmap(mBackgroundCache);
-    }
+          // TODO: Make use of the PlexyDesk::Config::getInstance()->wallpaperMode() option
+          mBackgroundCache = mBackgroundPixmap->scaled(desktopSize.width(), desktopSize.height(),
+                  Qt::IgnoreAspectRatio,
+                  Qt::SmoothTransformation);
+          mBackgroundItemPixmap->setPixmap(mBackgroundCache);
+        }
 
-    mBlurAnimation->start();
+     mBlurAnimation->start();
 }
 
 void BgPlugin::data(QVariant &data)
@@ -112,6 +116,10 @@ QGraphicsItem *BgPlugin::item()
 
         QDeclarativeContext *context = PlexyDesk::Config::qmlEngine()->rootContext();
         desktopSize = QDesktopWidget().screenGeometry().size();
+#ifdef Q_WS_WIN
+        // A 1px hack to make the widget fullscreen and not covering the toolbar on Win
+        desktopSize.setHeight(desktopSize.height()-1);
+#endif
 
         context->setContextProperty("backgroundSize", desktopSize);
 

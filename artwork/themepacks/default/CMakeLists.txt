@@ -37,27 +37,29 @@ FILE(GLOB PHOTOVIEWER_IMG photoviewer/PhotoViewerCore/images/*.png)
 SET(PHOTOVIEWER_SCR photoviewer/PhotoViewerCore/script/script.js)
 
 
-# *** Check files in the final QT resources folder are unique - UNIX PLATFORMS ***
+# *** Check files in the final QT resources folder are unique - LINUX PLATFORMS ***
 # PLEASE ADD TO $UNIQUE_RC_FILES BELOW ALL RESOURCE FILES THAT GO TO ${RES_DEST}
-IF (UNIX)
-    MESSAGE(STATUS "Checking for name clashes in the QT RESOURCE folder...")
-    SET(UNIQUE_RC_FILES ${PNGFILES}
-                        ${JPEGFILES}
-                        ${SVGFILES}
-                        ${PHOTO_IMGS}
-                        ${FOLDERVIEW_IMGS}
-                        ${DIGITALCLOCK_IMGS}
-                        ${WELCOMEIMGS}
-                        ${PHOTOVIEWER_IMG}
-                        ${PHOTO_FRAME_IMGS}
+IF (NOT APPLE)
+    IF (UNIX)
+        MESSAGE(STATUS "Checking for name clashes in the QT RESOURCE folder...")
+        SET(UNIQUE_RC_FILES ${PNGFILES}
+                            ${JPEGFILES}
+                            ${SVGFILES}
+                            ${PHOTO_IMGS}
+                            ${FOLDERVIEW_IMGS}
+                            ${DIGITALCLOCK_IMGS}
+                            ${WELCOMEIMGS}
+                            ${PHOTOVIEWER_IMG}
+                            ${PHOTO_FRAME_IMGS}
+                            )
+        EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/cmakemodules/get_duplicate_files.sh "${UNIQUE_RC_FILES}"
+                        OUTPUT_VARIABLE OUT_UNIQ
                         )
-    EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/cmakemodules/get_duplicate_files.sh "${UNIQUE_RC_FILES}"
-                    OUTPUT_VARIABLE OUT_UNIQ
-                    )
-    IF(NOT ${OUT_UNIQ} STREQUAL "")
-        MESSAGE(FATAL_ERROR "There are name clashes in the QT RESOURCE folder:\n${OUT_UNIQ}")
-    ENDIF(NOT ${OUT_UNIQ} STREQUAL "")
-ENDIF (UNIX)
+        IF(NOT ${OUT_UNIQ} STREQUAL "")
+            MESSAGE(FATAL_ERROR "There are name clashes in the QT RESOURCE folder:\n${OUT_UNIQ}")
+        ENDIF(NOT ${OUT_UNIQ} STREQUAL "")
+    ENDIF (UNIX)
+ENDIF (NOT APPLE)
 
 INSTALL(FILES ${PNGFILES}  DESTINATION ${RES_DEST})
 INSTALL(FILES ${JPEGFILES}  DESTINATION ${RES_DEST})
@@ -93,4 +95,3 @@ INSTALL(FILES ${PHOTOVIEWER_SCR} DESTINATION share/plexy/themepack/default/photo
 FILE (GLOB WALL_QML_ITEMS backdrop/*.qml)
 
 INSTALL(FILES ${WALL_QML_ITEMS} DESTINATION share/plexy/themepack/default/backdrop)
-
