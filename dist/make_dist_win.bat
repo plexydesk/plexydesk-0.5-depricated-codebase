@@ -118,28 +118,28 @@ echo.
 echo Setting release type to: Debug
 echo.
 set RELEASE_TYPE=Debug
-set PROJECT_DEBUG=_debug
+set PROJECT_DEBUG=debug
 goto end_rel_type
 
 :msr
 echo Setting release type to: MinSizeRel
 echo.
 set RELEASE_TYPE=MinSizeRel
-set PROJECT_DEBUG=
+set PROJECT_DEBUG=none
 goto end_rel_type
 
 :rdbg
 echo Setting release type to: RelWithDebInfo
 echo.
 set RELEASE_TYPE=RelWithDebInfo
-set PROJECT_DEBUG=_debug
+set PROJECT_DEBUG=debug
 goto end_rel_type
 
 :rel
 echo Setting release type to: Release
 echo.
 set RELEASE_TYPE=Release
-set PROJECT_DEBUG=
+set PROJECT_DEBUG=none
 :end_rel_type
 
 
@@ -186,7 +186,7 @@ echo.
 echo Creating files with CMake ...
 echo.
 set STAGE=CREATING CMAKE FILES
-cmake ../ -DCMAKE_INSTALL_PREFIX:STRING="%FINAL_PATH_FIXED%" -DCMAKE_BUILD_TYPE:STRING="%RELEASE_TYPE%" -G "%MSVC_VERSION%"
+cmake ../ -DCMAKE_INSTALL_PREFIX="%FINAL_PATH_FIXED%" -DCMAKE_BUILD_TYPE="%RELEASE_TYPE%" -G "%MSVC_VERSION%"
 if %ERRORLEVEL% NEQ 0 goto ERROR
 
 

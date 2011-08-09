@@ -102,7 +102,7 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
 
 #ifdef Q_WS_WIN
     // The QT::Tool flag is needed so PlexyDesk is excluded from Win taskbar
-    setWindowFlags(QT::Tool |
+    setWindowFlags(Qt::Tool |
                    Qt::FramelessWindowHint |
                    Qt::WindowStaysOnBottomHint);
 #else

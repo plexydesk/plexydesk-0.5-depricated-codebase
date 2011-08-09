@@ -57,7 +57,15 @@
 !endif
 
 !ifndef PRODUCT_DEBUG
-  !define PRODUCT_DEBUG ""
+  !define PRODUCT_DEBUG "none"
+!endif
+
+!if ${PRODUCT_DEBUG} == "debug"
+  !define PRODUCT_DEBUG_INTERNAL "_debug"
+!else
+  !undef PRODUCT_DEBUG
+  !define PRODUCT_DEBUG "none"
+  !define PRODUCT_DEBUG_INTERNAL ""
 !endif
 
 !ifndef PRODUCT_SOURCES_PATH
@@ -210,7 +218,7 @@ ReserveFile '${NSISDIR}\Plugins\InstallOptions.dll'
 ;--------------------------------
 ; Main settings
 Name "${PRODUCT_NAME}(${PRODUCT_PLATFORM}) ${PRODUCT_VERSION}"
-OutFile "${PRODUCT_SOURCES_PATH}\INSTALLERS\${PRODUCT_NAME}_${PRODUCT_VERSION}-Installer_${PRODUCT_PLATFORM}_${PRODUCT_VC_VERSION}${PRODUCT_DEBUG}.exe"
+OutFile "${PRODUCT_SOURCES_PATH}\INSTALLERS\${PRODUCT_NAME}_${PRODUCT_VERSION}-Installer_${PRODUCT_PLATFORM}_${PRODUCT_VC_VERSION}${PRODUCT_DEBUG_INTERNAL}.exe"
 
 ; Installer file version tab properties
 VIProductVersion "${PRODUCT_VERSION}.0"
@@ -222,7 +230,7 @@ VIAddVersionKey "LegalCopyright" "LGPL v3"
 VIAddVersionKey "FileDescription" "${PRODUCT_NAME} Windows Installer"
 VIAddVersionKey "Comments" "A Qt4 customised desktop"
 
-BrandingText "${PRODUCT_NAME}(${PRODUCT_PLATFORM}) for Windows v${PRODUCT_VERSION}${PRODUCT_DEBUG}"
+BrandingText "${PRODUCT_NAME}(${PRODUCT_PLATFORM}) for Windows v${PRODUCT_VERSION}${PRODUCT_DEBUG_INTERNAL}"
 
 ; Unicode will be implemented in NSIS 2.50. Comment till then to avoid errors.
 ;TargetMinimalOS ${MINIMAL_OS}
@@ -424,7 +432,7 @@ Section "!${PRODUCT_NAME} Application" SEC01
   ; Copy files to install path
   DetailPrint "Copying ${PRODUCT_NAME}'s files to the install destination..."
   SetOutPath "$INSTDIR"
-  ${If} ${PRODUCT_DEBUG} == ""
+  ${If} ${PRODUCT_DEBUG} == "none"
     File /r /x *.lib /x *.obj /x *.res /x *.exp /x *.ilk /x *.pdb "${PRODUCT_BIN_SOURCES_PATH}\*.*"
   ${Else}
     File /r /x *.lib /x *.obj /x *.res /x *.exp "${PRODUCT_BIN_SOURCES_PATH}\*.*"
