@@ -18,7 +18,13 @@ SET(headerFiles
     scenegraph/qsggeometry.h
     )
 
-QT4_WRAP_CPP(QT_MOC_SRCS ${headerFiles})
+SET(mocFiles
+    shadereffect.h
+    shadereffectitem.h
+    shadereffectsource.h
+    )
+
+QT4_WRAP_CPP(QT_MOC_SRCS ${mocFiles})
 
 SET(sourceFiles
     ${sourceFiles}

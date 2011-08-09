@@ -68,7 +68,6 @@ SET(MOC_SRCS
    datainterface.h
    dataplugin.h
    desktopwidget.h
-   imagecache.h
    pendingjob.h
    plexyconfig.h
    pluginloader.h
@@ -79,10 +78,8 @@ SET(MOC_SRCS
    widgetinterface.h
    widgetplugin.h
    shaders/shadereffect.h
-   shaders/shadereffectbuffer.h
    shaders/shadereffectitem.h
    shaders/shadereffectsource.h
-   shaders/scenegraph/qsggeometry.h
    )
 
 # DBUS is working only under linux for now
