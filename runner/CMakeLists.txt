@@ -37,7 +37,7 @@ IF (NOT APPLE)
             )
         IF(MINGW)
             SET(resourceFiles
-                ${CMAKE_BINARY_DIR}/dist/windows/${APPLICATION_EXE_NAME}_rc.o
+                ${CMAKE_BINARY_DIR}/dist/windows/${APPLICATION_EXE_NAME}_windres.rc
                 )
         ELSE(MINGW)
             SET(resourceFiles
