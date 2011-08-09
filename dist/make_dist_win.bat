@@ -118,24 +118,28 @@ echo.
 echo Setting release type to: Debug
 echo.
 set RELEASE_TYPE=Debug
+set PROJECT_DEBUG=_debug
 goto end_rel_type
 
 :msr
 echo Setting release type to: MinSizeRel
 echo.
 set RELEASE_TYPE=MinSizeRel
+set PROJECT_DEBUG=
 goto end_rel_type
 
 :rdbg
 echo Setting release type to: RelWithDebInfo
 echo.
 set RELEASE_TYPE=RelWithDebInfo
+set PROJECT_DEBUG=_debug
 goto end_rel_type
 
 :rel
 echo Setting release type to: Release
 echo.
 set RELEASE_TYPE=Release
+set PROJECT_DEBUG=
 :end_rel_type
 
 
@@ -230,7 +234,7 @@ echo.
 echo Creating project NSIS package ...
 echo.
 set STAGE=CREATING PLEXYDESK NSIS PACKAGE
-makensis /V1 /DPRODUCT_PLATFORM=%PROJECT_PLATFORM% /DPRODUCT_VC_VERSION=%PROJECT_VC% /DPRODUCT_SOURCES_PATH=%GIT_PATH% /DPRODUCT_BIN_SOURCES_PATH=%FINAL_PATH% "%GIT_PATH%\build\dist\windows\make_nsis_installer.nsi"
+makensis /V1 /DPRODUCT_PLATFORM=%PROJECT_PLATFORM% /DPRODUCT_VC_VERSION=%PROJECT_VC% /DPRODUCT_DEBUG=%PROJECT_DEBUG% /DPRODUCT_SOURCES_PATH=%GIT_PATH% /DPRODUCT_BIN_SOURCES_PATH=%FINAL_PATH% "%GIT_PATH%\build\dist\windows\make_nsis_installer.nsi"
 if %ERRORLEVEL% NEQ 0 goto ERROR
 
 

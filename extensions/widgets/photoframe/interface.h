@@ -27,14 +27,15 @@
 #include "pictureflow.h"
 #include "imageitem.h"
 
-class VISIBLE_SYM Interface : public PlexyDesk::WidgetInterface
+
+class  Interface : public PlexyDesk::WidgetInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
 public :
         Interface(QObject *object = 0);
-    PlexyDesk::BasePlugin *instance();
+        PlexyDesk::BasePlugin *instance();
 };
 
 #endif

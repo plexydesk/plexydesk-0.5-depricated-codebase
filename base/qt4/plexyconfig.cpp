@@ -98,16 +98,34 @@ Config::Config(const QString &organization,
     d->mData["openGL"] = QVariant(true);
 #endif
     read();
-
-    if (d->mSettings->value("CurrentWallpaper").toString().isNull()) {
-        d->mData["CurrentWallpaper"] = QString();
+    QString suffix="4x3";
+    QSize desktopSize = QDesktopWidget().screenGeometry().size();
+    float screenRatio = float(desktopSize.width())/float(desktopSize.height());
+    if (screenRatio > 1.333) {
+        suffix="16x9";
     }
 
-    if (d->mSettings->value("CurrentWallpaperMode").toString().isNull()) {
+    if (d->mSettings->value("CurrentWallpaper").toString().isEmpty()) {
+        d->mData["CurrentWallpaper"] = QDir::toNativeSeparators(
+                                            plexydeskBasePath()
+                                            + "/" + QString(PLEXYRESOURCESDIR)
+                                            + "/default-"
+                                            + suffix
+                                            + ".png");
+    }
+
+    if (d->mSettings->value("CurrentWallpaperMode").toString().isEmpty()) {
         d->mData["CurrentWallpaperMode"] = QString("IgnoreAspectRatio");
     }
 
-    if (d->mSettings->value("iconTheme").toString().isNull()) {
+    if (d->mSettings->value("photo").toString().isEmpty()) {
+        d->mData["photo"] = QDir::toNativeSeparators(
+                                            plexydeskBasePath()
+                                            + "/" + QString(PLEXYRESOURCESDIR)
+                                            + "/default-photo.png");
+    }
+
+    if (d->mSettings->value("iconTheme").toString().isEmpty()) {
         d->mData["iconTheme"] = QLatin1String("default");
     }
 

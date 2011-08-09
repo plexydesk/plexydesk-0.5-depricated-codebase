@@ -14,7 +14,7 @@ done
 
 IFS=$SAVEIFS
 
-RESULT=$( echo ${FILE_NAMES} | sed -r "s/(\..{3}) /\1\n/g" | sort | uniq -D | uniq )
+RESULT=$( echo ${FILE_NAMES} | sed -r "s/(\..{3}) /\1\n/g" | sort | uniq -Di | uniq )
 
 if [ -n "${RESULT}" ]; then
     for b in "${RESULT}"; do

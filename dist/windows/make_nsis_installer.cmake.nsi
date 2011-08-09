@@ -56,6 +56,10 @@
   !define PRODUCT_VC_VERSION "VC10"
 !endif
 
+!ifndef PRODUCT_DEBUG
+  !define PRODUCT_DEBUG ""
+!endif
+
 !ifndef PRODUCT_SOURCES_PATH
   !define PRODUCT_SOURCES_PATH "@CMAKE_SOURCE_DIR@" ; Normalized later
 !endif
@@ -206,7 +210,7 @@ ReserveFile '${NSISDIR}\Plugins\InstallOptions.dll'
 ;--------------------------------
 ; Main settings
 Name "${PRODUCT_NAME}(${PRODUCT_PLATFORM}) ${PRODUCT_VERSION}"
-OutFile "${PRODUCT_SOURCES_PATH}\INSTALLERS\${PRODUCT_NAME}_${PRODUCT_VERSION}-Installer_${PRODUCT_PLATFORM}_${PRODUCT_VC_VERSION}.exe"
+OutFile "${PRODUCT_SOURCES_PATH}\INSTALLERS\${PRODUCT_NAME}_${PRODUCT_VERSION}-Installer_${PRODUCT_PLATFORM}_${PRODUCT_VC_VERSION}${PRODUCT_DEBUG}.exe"
 
 ; Installer file version tab properties
 VIProductVersion "${PRODUCT_VERSION}.0"
@@ -218,7 +222,7 @@ VIAddVersionKey "LegalCopyright" "LGPL v3"
 VIAddVersionKey "FileDescription" "${PRODUCT_NAME} Windows Installer"
 VIAddVersionKey "Comments" "A Qt4 customised desktop"
 
-BrandingText "${PRODUCT_NAME}(${PRODUCT_PLATFORM}) for Windows v${PRODUCT_VERSION}"
+BrandingText "${PRODUCT_NAME}(${PRODUCT_PLATFORM}) for Windows v${PRODUCT_VERSION}${PRODUCT_DEBUG}"
 
 ; Unicode will be implemented in NSIS 2.50. Comment till then to avoid errors.
 ;TargetMinimalOS ${MINIMAL_OS}
@@ -420,7 +424,11 @@ Section "!${PRODUCT_NAME} Application" SEC01
   ; Copy files to install path
   DetailPrint "Copying ${PRODUCT_NAME}'s files to the install destination..."
   SetOutPath "$INSTDIR"
-  File /r /x *.lib /x *.obj /x *.res /x *.exp "${PRODUCT_BIN_SOURCES_PATH}\*.*"
+  ${If} ${PRODUCT_DEBUG} == ""
+    File /r /x *.lib /x *.obj /x *.res /x *.exp /x *.ilk /x *.pdb "${PRODUCT_BIN_SOURCES_PATH}\*.*"
+  ${Else}
+    File /r /x *.lib /x *.obj /x *.res /x *.exp "${PRODUCT_BIN_SOURCES_PATH}\*.*"
+  ${EndIf}
 SectionEnd
 
 

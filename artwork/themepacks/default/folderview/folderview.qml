@@ -130,7 +130,7 @@ Rectangle{
         anchors.bottomMargin: 49
         asynchronous : true
         parent : backgroundHolder
-        source: "image://plexydesk/Back"
+        source: "image://plexydesk/back"
         opacity: 1
         MouseArea {
             id: mouse_area1

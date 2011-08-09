@@ -17,11 +17,12 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
+#include <QtPlugin>
+
 #include "interface.h"
 #include "imageplugin.h"
 #include <pluginloader.h>
 
-#include <QtPlugin>
 
 Interface::Interface(QObject *object)
 {
