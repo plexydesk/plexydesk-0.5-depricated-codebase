@@ -9,11 +9,15 @@ Files: *
 Copyright: 2008-2011, Siraj Razick <siraj@kde.org>
 License: LGPL-3+
 
+Files: dist/*.bat
+Copyright: 2011, PhobosK <phobosk@kbfx.net>
+           2011, Dariusz Mikulski <dariusz.mikulski@gmail.com>
+License: LGPL-3+
+
 Files: debian/*
        dist/windows/*
        dist/*.spec
        dist/*.sh
-       dist/*.bat
 Copyright: 2011, PhobosK <phobosk@kbfx.net>
 License: LGPL-3+
 

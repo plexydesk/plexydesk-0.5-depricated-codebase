@@ -51,7 +51,7 @@ Rectangle {
         anchors.top: gettingstarted.bottom
         anchors.topMargin: 5
         anchors.left: gettingstarted.right
-        anchors.leftMargin: -20
+        anchors.leftMargin: -40
         font.pixelSize: 30
         Behavior on opacity {
             NumberAnimation{duration : 100}

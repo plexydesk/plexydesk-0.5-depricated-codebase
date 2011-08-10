@@ -76,32 +76,40 @@
   !define PRODUCT_BIN_SOURCES_PATH "@CMAKE_INSTALL_PREFIX@" ; Normalized later
 !endif
 
-; Check and fix command line parameters
-!if ${PRODUCT_PLATFORM} == "x64"
-  !if ${PRODUCT_VC_VERSION} == "VC9"
-    !define VC_URL "${VC9_REDIST_x64_URL}"
-    !define VC_MD5 "${VC9_REDIST_x64_MD5}"
-    !define VC_SEARCH "${VC9_REDIST_x64_SEARCH}"
-  !else
-    !undef PRODUCT_VC_VERSION
-    !define PRODUCT_VC_VERSION "VC10"
-    !define VC_URL "${VC10_REDIST_x64_URL}"
-    !define VC_MD5 "${VC10_REDIST_x64_MD5}"
-    !define VC_SEARCH "${VC10_REDIST_x64_SEARCH}"
-  !endif
+!if ${PRODUCT_VC_VERSION} == "none"
+  !define IS_MINGW "TRUE"
+  !undef PRODUCT_VC_VERSION
+  !define PRODUCT_VC_VERSION "MinGW"
 !else
-  !undef PRODUCT_PLATFORM
-  !define PRODUCT_PLATFORM "x86"
-  !if ${PRODUCT_VC_VERSION} == "VC9"
-    !define VC_URL "${VC9_REDIST_x86_URL}"
-    !define VC_MD5 "${VC9_REDIST_x86_MD5}"
-    !define VC_SEARCH "${VC9_REDIST_x86_SEARCH}"
+  !define IS_MINGW "FALSE"
+
+  ; Check and fix command line parameters
+  !if ${PRODUCT_PLATFORM} == "x64"
+    !if ${PRODUCT_VC_VERSION} == "VC9"
+      !define VC_URL "${VC9_REDIST_x64_URL}"
+      !define VC_MD5 "${VC9_REDIST_x64_MD5}"
+      !define VC_SEARCH "${VC9_REDIST_x64_SEARCH}"
+    !else
+      !undef PRODUCT_VC_VERSION
+      !define PRODUCT_VC_VERSION "VC10"
+      !define VC_URL "${VC10_REDIST_x64_URL}"
+      !define VC_MD5 "${VC10_REDIST_x64_MD5}"
+      !define VC_SEARCH "${VC10_REDIST_x64_SEARCH}"
+    !endif
   !else
-    !undef PRODUCT_VC_VERSION
-    !define PRODUCT_VC_VERSION "VC10"
-    !define VC_URL "${VC10_REDIST_x86_URL}"
-    !define VC_MD5 "${VC10_REDIST_x86_MD5}"
-    !define VC_SEARCH "${VC10_REDIST_x86_SEARCH}"
+    !undef PRODUCT_PLATFORM
+    !define PRODUCT_PLATFORM "x86"
+    !if ${PRODUCT_VC_VERSION} == "VC9"
+      !define VC_URL "${VC9_REDIST_x86_URL}"
+      !define VC_MD5 "${VC9_REDIST_x86_MD5}"
+      !define VC_SEARCH "${VC9_REDIST_x86_SEARCH}"
+    !else
+      !undef PRODUCT_VC_VERSION
+      !define PRODUCT_VC_VERSION "VC10"
+      !define VC_URL "${VC10_REDIST_x86_URL}"
+      !define VC_MD5 "${VC10_REDIST_x86_MD5}"
+      !define VC_SEARCH "${VC10_REDIST_x86_SEARCH}"
+    !endif
   !endif
 !endif
 
@@ -113,9 +121,12 @@ var /GLOBAL KEEP_SETTINGS_UNINSTALL
 !searchreplace PRODUCT_BIN_SOURCES_PATH "${PRODUCT_BIN_SOURCES_PATH}" "/" "\"
 
 ;--------------------------------
-; Compressor
-SetCompressor /SOLID lzma
-SetCompressorDictSize 32
+; Compressor. Debug versions are a way too big and nsis
+; gets an error while compressing it with lzma. Defaulting to zlib
+!if ${PRODUCT_DEBUG} == "none"
+  SetCompressor /SOLID lzma
+  SetCompressorDictSize 32
+!endif
 
 
 ;--------------------------------
@@ -169,8 +180,10 @@ SetCompressorDictSize 32
 ; License page
 !insertmacro MUI_PAGE_LICENSE "${PRODUCT_SOURCES_PATH}\COPYING"
 
-; Components page
-!insertmacro MUI_PAGE_COMPONENTS
+; Components page. We show it if it is a VC compiled PlexyDesk
+!if ${IS_MINGW} == "FALSE"
+  !insertmacro MUI_PAGE_COMPONENTS
+!endif
 
 ; Directory page
 !insertmacro MUI_PAGE_DIRECTORY
@@ -433,9 +446,9 @@ Section "!${PRODUCT_NAME} Application" SEC01
   DetailPrint "Copying ${PRODUCT_NAME}'s files to the install destination..."
   SetOutPath "$INSTDIR"
   ${If} ${PRODUCT_DEBUG} == "none"
-    File /r /x *.lib /x *.obj /x *.res /x *.exp /x *.ilk /x *.pdb "${PRODUCT_BIN_SOURCES_PATH}\*.*"
+    File /r /x *.lib /x *.a /x *.obj /x *.res /x *.exp /x *.ilk /x *.pdb "${PRODUCT_BIN_SOURCES_PATH}\*.*"
   ${Else}
-    File /r /x *.lib /x *.obj /x *.res /x *.exp "${PRODUCT_BIN_SOURCES_PATH}\*.*"
+    File /r /x *.lib /x *.a /x *.obj /x *.res /x *.exp "${PRODUCT_BIN_SOURCES_PATH}\*.*"
   ${EndIf}
 SectionEnd
 
@@ -579,8 +592,9 @@ Section -Post
   ${WordReplace} " $INSTDIR\lib\qt4" "\" "/" "+*" $R5
   WriteINIStr "$INSTDIR\bin\qt.conf" "Paths" "Prefix" $R5
 
-  ; Add lib to PATH env variable
+  ; Add lib and qt4\lib to PATH env variable
   DetailPrint "Adding ${PRODUCT_NAME} to PATH..."
+  ${EnvVarUpdate} $0 "PATH" "A" "$REG_ROOT" "$INSTDIR\lib\qt4\lib"
   ${EnvVarUpdate} $0 "PATH" "A" "$REG_ROOT" "$INSTDIR\lib"
 SectionEnd
 
@@ -626,7 +640,8 @@ Section Uninstall
   DeleteRegKey SHELL_CONTEXT "${PRODUCT_REGKEY}"
 
   keep_settings:
-  ; Remove lib from PATH env variable
+  ; Remove lib and qt4\lib from PATH env variable. Order is essential here.
   DetailPrint "Removing ${PRODUCT_NAME} from PATH..."
+  ${un.EnvVarUpdate} $0 "PATH" "R" "$REG_ROOT" "$INSTDIR\lib\qt4\lib"
   ${un.EnvVarUpdate} $0 "PATH" "R" "$REG_ROOT" "$INSTDIR\lib"
 SectionEnd

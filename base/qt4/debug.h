@@ -11,7 +11,8 @@
 
 static void plexyWindowsLogger(QtMsgType type, const char *msg)
 {
-    if (QString::compare(BUILD_MODE, "Release", Qt::CaseInsensitive) == 0) {
+    if (QString::compare(BUILD_MODE, "Release", Qt::CaseInsensitive) == 0
+        || QString::compare(BUILD_MODE, "MinSizeRel", Qt::CaseInsensitive) == 0) {
         return;
     }
 

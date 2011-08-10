@@ -125,14 +125,14 @@ If you need a debug output from PlexyDesk, you have two methods:
 
 METHOD 1:
 ---------
-PlexyDesk if build in Debugging Mode, will create a log file in your temp folder
+PlexyDesk if built in Debugging Mode, will create a log file in your temp folder
 (depending on your platform) that will be named plexydesk_log_DATE-TIME.txt
 You can see the output in this file.
 
 METHOD 2:
 ---------
-You may debug PlexyDesk by starting it in console (any platform) and using the
-environment variable: PLEXYDESK_CONSOLE_DEBUG. Set it to "enable", "true" or 1
-(all are case insensitive). For Windows for example do it by issuing this command
-on the command line of your Command prompt:
+You may debug PlexyDesk (only if built in Debugging Mode) by starting it in console
+(any platform) and using the environment variable: PLEXYDESK_CONSOLE_DEBUG.
+Set it to "enable", "true" or 1 (all are case insensitive). For Windows for example
+do it by issuing this command on the command line of your Command prompt:
 SET PLEXYDESK_CONSOLE_DEBUG=true
