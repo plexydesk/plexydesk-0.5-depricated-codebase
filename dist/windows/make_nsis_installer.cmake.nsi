@@ -587,14 +587,15 @@ Section -Post
   WriteRegStr SHELL_CONTEXT "${PRODUCT_REGKEY}" "NSIS:MultiUser" "$MultiUser.InstallMode"
   WriteRegStr SHELL_CONTEXT "${PRODUCT_REGKEY}" "NSIS:InstallPath_${PRODUCT_PLATFORM}" "$INSTDIR"
 
-  ; Modify qt.conf. QT uses it properly only if it has Unix path delimiters
+  ; Modify qt.conf. QT (bug) uses it properly only if it has Unix path delimiters
   DetailPrint "Modifying QT configuration file to work with ${PRODUCT_NAME} ..."
   ${WordReplace} " $INSTDIR\lib\qt4" "\" "/" "+*" $R5
   WriteINIStr "$INSTDIR\bin\qt.conf" "Paths" "Prefix" $R5
+  ${WordReplace} " $INSTDIR\lib" "\" "/" "+*" $R6
+  WriteINIStr "$INSTDIR\bin\qt.conf" "Paths" "Libraries" $R6
 
-  ; Add lib and qt4\lib to PATH env variable
+  ; Add lib to PATH env variable
   DetailPrint "Adding ${PRODUCT_NAME} to PATH..."
-  ${EnvVarUpdate} $0 "PATH" "A" "$REG_ROOT" "$INSTDIR\lib\qt4\lib"
   ${EnvVarUpdate} $0 "PATH" "A" "$REG_ROOT" "$INSTDIR\lib"
 SectionEnd
 
@@ -640,8 +641,7 @@ Section Uninstall
   DeleteRegKey SHELL_CONTEXT "${PRODUCT_REGKEY}"
 
   keep_settings:
-  ; Remove lib and qt4\lib from PATH env variable. Order is essential here.
+  ; Remove lib from PATH env variable.
   DetailPrint "Removing ${PRODUCT_NAME} from PATH..."
-  ${un.EnvVarUpdate} $0 "PATH" "R" "$REG_ROOT" "$INSTDIR\lib\qt4\lib"
   ${un.EnvVarUpdate} $0 "PATH" "R" "$REG_ROOT" "$INSTDIR\lib"
 SectionEnd

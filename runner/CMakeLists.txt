@@ -35,17 +35,10 @@ IF (NOT APPLE)
             ${CMAKE_SOURCE_DIR}/dist/windows
             ${CMAKE_BINARY_DIR}/dist/windows
             )
-        IF(MINGW)
-            SET(resourceFiles
+        SET(resourceFiles
                 ${CMAKE_BINARY_DIR}/dist/windows/${APPLICATION_EXE_NAME}_windres.rc
                 )
-        ELSE(MINGW)
-            SET(resourceFiles
-                ${CMAKE_BINARY_DIR}/dist/windows/${APPLICATION_EXE_NAME}_windres.rc
-                )
-        ENDIF(MINGW)
     ENDIF(WIN32)
-
 ENDIF(NOT APPLE)
 
 ########### Source files ###############
