@@ -2,6 +2,7 @@
 * This file is part of PlexyDesk.
 *  Maintained by : Siraj Razick <siraj@kde.org>
 *  Authored By  : Varuna Lekamwasam <vrlekamwasam@gmail.com>
+*                 PhobosK <phobosk@kbfx.net>
 *
 *  PlexyDesk is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU Lesser General Public License as published by
@@ -19,11 +20,15 @@
 
 .pragma library
 
+
 function goUp(flm,backHold,back,rec1,ct,bb)
 {
-    flm.folder = flm.parentFolder.toString();
+    var _folder = flm.parentFolder.toString();
+    if(_folder == "") return;
+    flm.folder = _folder;
     setOpacityBug(backHold,back,rec1,ct,bb);
 }
+
 function goInto(to,flm,ic,flv)
 {
     var cpath = flm.folder.toString();
@@ -33,6 +38,7 @@ function goInto(to,flm,ic,flv)
     if(type !== "")
         flv.openFile(npath);
 }
+
 function getIconName(flm)
 {
     return flm.folder.toString();
@@ -44,18 +50,16 @@ function getFolderName(flm)
     if(vpath.length < 2)
         return vpath;
 
-    if (vpath.lastIndexOf('/') != vpath.length-1)
-    {
+    if (vpath.lastIndexOf('/') != vpath.length-1) {
         var name1 = vpath.substring(0,vpath.length);
         var tp1 = name1
         return name1.substring(tp1.lastIndexOf('/')+1,tp1.length);
-    }
-    else
-    {
+        }
+    else {
         var name = vpath.substring(0,vpath.length-1);
         var tp = name
         return name.substring(tp.lastIndexOf('/')+1,tp.length);
-    }
+        }
 }
 
 function getTypeIcon(type)
@@ -91,7 +95,7 @@ function getTypeIcon(type)
     else if (type=== "exe")
         return "image://plexydesk/exe";
     else if (type === "java")
-	return "image://plexydesk/java";
+        return "image://plexydesk/java";
     else
         return "image://plexydesk/unknown";
 }
@@ -100,13 +104,11 @@ function getType(filename)
 {
     var isDotThere = filename.lastIndexOf('.');
     if (isDotThere > 0){
-    var type = filename.substring(isDotThere+1,filename.length);
-    return type;
-    }
+        var type = filename.substring(isDotThere+1,filename.length);
+        return type;
+        }
     else
-    {
         return "";
-    }
 }
 
 function getFileName(filename)
@@ -120,9 +122,9 @@ function getFileName(filename)
 
 function setImageViewer(ic,iv,imt,path,type,name)
 {
-        ic.state = "viewImage"
-        iv.source = path;
-        imt.text = name;
+    ic.state = "viewImage";
+    iv.source = path;
+    imt.text = name;
 }
 
 function setOpacityBug(backHold,back,rec1,ct,bb)
@@ -137,7 +139,6 @@ function setOpacityBug(backHold,back,rec1,ct,bb)
 function setZIndexes(back,ct,bb)
 {
     back.z = -100;
-    ct.z = 50
+    ct.z = 50;
     bb.z = 50;
 }
-
