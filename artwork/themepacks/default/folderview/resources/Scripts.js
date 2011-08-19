@@ -64,38 +64,96 @@ function getFolderName(flm)
 
 function getTypeIcon(type)
 {
+    type = type.toLowerCase();
+
     if(type === "")
         return "image://plexydesk/folder";
-    else if(type === "pdf")
-        return "image://plexydesk/pdf";
-    else if(type === "txt" || type === "doc" || type === "docx" || type === "sh")
-        return "image://plexydesk/doc";
-    else if (type === "png" || type === "PNG")
-        return "image://plexydesk/png";
-    else if (type=== "jpeg" || type == "jpg" || type === "JPG" || type === "JPEG")
-        return "image://plexydesk/jpeg"
-    else if (type === "zip"||type ==="rar"||type ==="gz")
-        return "image://plexydesk/zip";
-    else if (type === "mpeg" || type === "MPEG" || type === "MPG" || type === "mpg" || type === "AVI" || type === "avi" || type === "mov" || type === "MOV")
-        return "image://plexydesk/mov";
-    else if (type === "WMA" || type === "wma")
-        return "image://plexydesk/wma";
-    else if (type === "mp3" || type === "MP3" || type === "m3u")
-        return "image://plexydesk/music";
+
+    /* Executables */
+    else if (type === "exe")
+        return "image://plexydesk/exe";
+    else if (type === "lnk")
+        return "image://plexydesk/lnk";
+    else if(type === "sh" || type === "bat")
+        return "image://plexydesk/script";
+    else if(type === "desktop")
+        return "image://plexydesk/exec";
+
+    /* Sources */
     else if (type === "cpp")
         return "image://plexydesk/cpp";
+    else if (type === "c")
+        return "image://plexydesk/c";
     else if (type === "h")
         return "image://plexydesk/h";
-    else if (type === "html")
-        return "image://plexydesk/html";
     else if (type === "o" || type === "out")
-        return "image://plexydesk/o";
+        return "image://plexydesk/obj";
+
+    /* Int. Lang. */
+    else if (type === "php" || type === "phtml" || type === "php3" || type === "php4" || type === "php5")
+        return "image://plexydesk/php";
+    else if (type === "pl")
+        return "image://plexydesk/pl";
+    else if (type === "py" || type === "pyc")
+        return "image://plexydesk/py";
+    else if (type === "java" || type === "jnlp" || type === "jar")
+        return "image://plexydesk/java";
+    else if (type === "js")
+        return "image://plexydesk/js";
+    else if (type === "rb")
+        return "image://plexydesk/rb";
+    else if (type === "xml")
+        return "image://plexydesk/xml";
+
+    /* Documents */
+    else if(type === "pdf")
+        return "image://plexydesk/pdf";
+    else if(type === "txt")
+        return "image://plexydesk/txt";
+    else if(type === "doc" || type === "docx" || type === "odt" || type === "rtf")
+        return "image://plexydesk/doc";
+    else if(type === "xls" || type === "xlsx" || type === "xlt" || type === "xltx" || type === "xlb" || type === "ods")
+        return "image://plexydesk/xls";
+    else if(type === "ppt" || type === "pptx" || type === "pps" || type === "ppsx" || type === "odp")
+        return "image://plexydesk/ppt";
+    else if(type === "db" || type === "odb")
+        return "image://plexydesk/odb";
+    else if (type === "html" || type === "htm" || type === "shtml")
+        return "image://plexydesk/html";
+    else if (type === "url")
+        return "image://plexydesk/url";
+
+    /* Images */
+    else if (type === "png" || type === "jpeg" || type == "jpg" || type === "bmp" || type === "tiff")
+        return "image://plexydesk/img";
+    else if (type === "svg")
+        return "image://plexydesk/svg"
+
+    /* Archives */
+    else if (type === "zip" || type ==="rar" || type ==="7z" || type ==="gz" || type === "bz2" || type === "cab" || type === "sit")
+        return "image://plexydesk/archive";
+
+    /* Video */
+    else if (type === "mpeg" || type === "mpg" || type === "avi" || type === "mp4" || type === "m4v" || type === "mkv" || type === "wmv" || type === "mov" || type === "aiff")
+        return "image://plexydesk/video";
+
+    /* Audio */
+    else if (type === "mp3" || type === "wma" || type === "flac" || type === "m3u")
+        return "image://plexydesk/audio";
+
+    /* Disc Images */
     else if (type === "iso" || type === "bin" || type === "nrg" || type === "daa")
         return "image://plexydesk/iso";
-    else if (type=== "exe")
-        return "image://plexydesk/exe";
-    else if (type === "java")
-        return "image://plexydesk/java";
+
+    /* Packages */
+    else if (type === "rpm" || type === "deb" || type === "dmg" || type === "tgz" || type === "ebuild")
+        return "image://plexydesk/package";
+
+    /* Misc */
+    else if (type === "torrent")
+        return "image://plexydesk/torrent";
+
+    /* Unknown */
     else
         return "image://plexydesk/unknown";
 }
