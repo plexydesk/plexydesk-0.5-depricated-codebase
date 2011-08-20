@@ -18,7 +18,6 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
-
 #ifndef TESTMIME_H
 #define TESTMIME_H
 
@@ -27,11 +26,17 @@
 
 #include <qplexymime.h>
 
+
 class TestMime : public QObject
 {
     Q_OBJECT
+
 public:
     TestMime(QObject *parent = 0);
+    ~TestMime();
+
+Q_SIGNALS:
+    void closeApplication();
 
 public slots:
     void startTest();

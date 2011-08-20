@@ -18,19 +18,28 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
-#include "qplexymime.h"
-
 #include <QtDebug>
 #include <QFile>
 #include <QtConcurrentRun>
 #include <QDir>
+
 #include <plexyconfig.h>
+#include "qplexymime.h"
+
 
 QPlexyMime::QPlexyMime(QObject *parent)
     : QObject(parent)
 {
-    QFile sourceDocument( QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->plexydeskBasePath() +
-                "/share/plexy/mime/freedesktop.org.xml"));
+    QString xmlPath;
+
+#if  defined (Q_WS_MAC)  || defined (Q_WS_WIN)
+    xmlPath = QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->plexydeskBasePath() +
+                "/share/plexy/mime/freedesktop.org.xml");
+#else
+    xmlPath = "/usr/share/mime/packages/freedesktop.org.xml";
+#endif
+
+    QFile sourceDocument(xmlPath);
     sourceDocument.open(QIODevice::ReadOnly);
 
     mInternalQuery = QString("declare namespace ns = 'http://www.freedesktop.org/standards/shared-mime-info';\ndeclare variable $internalFile external;\n");
@@ -38,7 +47,9 @@ QPlexyMime::QPlexyMime(QObject *parent)
     mInternalOutput = sourceDocument.readAll();
     sourceDocument.close();
 
+#ifdef QT_NO_CONCURRENT
     mMutex = new QMutex(QMutex::NonRecursive);
+#endif
 
     qRegisterMetaType<MimePairType>("MimePairType");
     qRegisterMetaType<MimeWithLangType>("MimeWithLangType");
@@ -57,7 +68,9 @@ QPlexyMime::QPlexyMime(QObject *parent)
 
 QPlexyMime::~QPlexyMime()
 {
+#ifdef QT_NO_CONCURRENT
     delete mMutex;
+#endif
     delete mFileNameMimeCache;
     delete mGenericExtMimeCache;
     delete mGenericMimeIconNameCache;
@@ -133,11 +146,13 @@ bool QPlexyMime::getGenericMime(const QString &mimeType, QFileInfo *fileInfo)
 {
     if (mimeType.isEmpty())
     {
-        emit cannotFound("Mime type is empty.", mimeType);
+        Q_EMIT cannotFound("Mime type is empty.", mimeType);
         return false;
     }
 
+#ifdef QT_NO_CONCURRENT
     mMutex->lock();
+#endif
 
     QString *result = new QString;
     if(!mGenericExtMimeCache->contains(mimeType))
@@ -149,11 +164,13 @@ bool QPlexyMime::getGenericMime(const QString &mimeType, QFileInfo *fileInfo)
     else
         result = mGenericExtMimeCache->object(mimeType);
 
+#ifdef QT_NO_CONCURRENT
     mMutex->unlock();
+#endif
 
     if(result->isEmpty())
     {
-        emit cannotFound("Cannot find mime type.", mimeType);
+        Q_EMIT cannotFound("Cannot find mime type.", mimeType);
         return false;
     }
 
@@ -169,7 +186,7 @@ bool QPlexyMime::getGenericMime(const QString &mimeType, QFileInfo *fileInfo)
 void QPlexyMime::fromFileName(const QString &fileName)
 {
 #ifndef QT_NO_CONCURRENT
-    QtConcurrent::run(this, &QPlexyMime::internalFromFileName, fileName);
+    QtConcurrent::run(this, &QPlexyMime::internalFromFileName, fileName).waitForFinished();
 #else
     internalFromFileName(fileName);
 #endif
@@ -181,7 +198,9 @@ void QPlexyMime::internalFromFileName(const QString &fileName)
     fileInfo.setFile(fileName);
     QString ext = fileInfo.suffix();
 
+#ifdef QT_NO_CONCURRENT
     mMutex->lock();
+#endif
 
     QString *result = new QString;
     if(!mFileNameMimeCache->contains(ext))
@@ -194,18 +213,20 @@ void QPlexyMime::internalFromFileName(const QString &fileName)
     else
         result = mFileNameMimeCache->object(ext);
 
+#ifdef QT_NO_CONCURRENT
     mMutex->unlock();
+#endif
 
     if(result->isEmpty())
     {
         qWarning("Cannot find mime for specified filename.");
-        emit cannotFound("Cannot find mime for specified filename.", fileName);
+        Q_EMIT cannotFound("Cannot find mime for specified filename.", fileName);
         return;
     }
 
     MimePairType pairMime(fileName, result->simplified());
 
-    emit fromFileNameMime(pairMime);
+    Q_EMIT fromFileNameMime(pairMime);
 
     return;
 }
@@ -213,7 +234,7 @@ void QPlexyMime::internalFromFileName(const QString &fileName)
 void QPlexyMime::genericIconName(const QString &mimeType)
 {
 #ifndef QT_NO_CONCURRENT
-    QtConcurrent::run(this, &QPlexyMime::internalGenericIconName, mimeType);
+    QtConcurrent::run(this, &QPlexyMime::internalGenericIconName, mimeType).waitForFinished();
 #else
     internalGenericIconName(mimeType);
 #endif
@@ -230,7 +251,9 @@ void QPlexyMime::internalGenericIconName(const QString &mimeType)
 
     QString ext = fileInfo.suffix();
 
+#ifdef QT_NO_CONCURRENT
     mMutex->lock();
+#endif
 
     QString *result = new QString;
     if(!mGenericMimeIconNameCache->contains(mimeType))
@@ -242,23 +265,25 @@ void QPlexyMime::internalGenericIconName(const QString &mimeType)
     else
         result = mGenericMimeIconNameCache->object(mimeType);
 
+#ifdef QT_NO_CONCURRENT
     mMutex->unlock();
+#endif
 
     if(result->isEmpty())
     {
-        emit cannotFound("Cannot find icon name for specified mime.", mimeType);
+        Q_EMIT cannotFound("Cannot find icon name for specified mime.", mimeType);
         return;
     }
 
     MimePairType pairMime(mimeType, result->simplified());
 
-    emit genericIconNameMime(pairMime);
+    Q_EMIT genericIconNameMime(pairMime);
 }
 
 void QPlexyMime::expandedAcronym(const QString &mimeType)
 {
 #ifndef QT_NO_CONCURRENT
-    QtConcurrent::run(this, &QPlexyMime::internalExpandedAcronym, mimeType);
+    QtConcurrent::run(this, &QPlexyMime::internalExpandedAcronym, mimeType).waitForFinished();
 #else
     internalExpandedAcronym(mimeType);
 #endif
@@ -275,7 +300,9 @@ void QPlexyMime::internalExpandedAcronym(const QString &mimeType)
 
     QString ext = fileInfo.suffix();
 
+#ifdef QT_NO_CONCURRENT
     mMutex->lock();
+#endif
 
     QString *result = new QString;
     if(!mExpandedAcronymMimeAcronymCache->contains(mimeType))
@@ -287,23 +314,25 @@ void QPlexyMime::internalExpandedAcronym(const QString &mimeType)
     else
         result = mExpandedAcronymMimeAcronymCache->object(mimeType);
 
+#ifdef QT_NO_CONCURRENT
     mMutex->unlock();
+#endif
 
     if(result->isEmpty())
     {
-        emit cannotFound("Cannot find expanded acronym for specified mime.", mimeType);
+        Q_EMIT cannotFound("Cannot find expanded acronym for specified mime.", mimeType);
         return;
     }
 
     MimePairType pairMime(mimeType, result->simplified());
 
-    emit expandedAcronymMime(pairMime);
+    Q_EMIT expandedAcronymMime(pairMime);
 }
 
 void QPlexyMime::description(const QString &mimeType, const QString &lang)
 {
 #ifndef QT_NO_CONCURRENT
-    QtConcurrent::run(this, &QPlexyMime::internalDescription, mimeType, lang);
+    QtConcurrent::run(this, &QPlexyMime::internalDescription, mimeType, lang).waitForFinished();
 #else
     internalDescription(mimeType, lang);
 #endif
@@ -320,7 +349,9 @@ void QPlexyMime::internalDescription(const QString &mimeType, const QString &lan
 
     QString ext = fileInfo.suffix();
 
+#ifdef QT_NO_CONCURRENT
     mMutex->lock();
+#endif
 
     if(lang.isEmpty())
     {
@@ -335,17 +366,19 @@ void QPlexyMime::internalDescription(const QString &mimeType, const QString &lan
         else
             result = mDescriptionCache->object(mimeType);
 
+#ifdef QT_NO_CONCURRENT
         mMutex->unlock();
+#endif
 
         if(result->isEmpty())
         {
-            emit cannotFound("Cannot find description for specified mime type.", qMakePair(mimeType, lang));
+            Q_EMIT cannotFound("Cannot find description for specified mime type.", qMakePair(mimeType, lang));
             return;
         }
 
         MimeWithListType mimeWithList(mimeType, *result);
 
-        emit descriptionWithList(mimeWithList);
+        Q_EMIT descriptionWithList(mimeWithList);
     }
     else
     {
@@ -360,25 +393,27 @@ void QPlexyMime::internalDescription(const QString &mimeType, const QString &lan
         else
             result = mDescriptionCacheWithLang->object(qMakePair(mimeType, lang));
 
+#ifdef QT_NO_CONCURRENT
         mMutex->unlock();
+#endif
 
         if(result->isEmpty())
         {
-            emit cannotFound("Cannot find description for specified mime type and language.", mimeType);
+            Q_EMIT cannotFound("Cannot find description for specified mime type and language.", mimeType);
             return;
         }
 
         MimePairType pairMime(mimeType, lang);
         MimeWithLangType hashMimeWithLang(pairMime, result->simplified());
 
-        emit descriptionWithLang(hashMimeWithLang);
+        Q_EMIT descriptionWithLang(hashMimeWithLang);
     }
 }
 
 void QPlexyMime::subclassOfMime(const QString &mimeType)
 {
 #ifndef QT_NO_CONCURRENT
-    QtConcurrent::run(this, &QPlexyMime::internalSubclassOfMime, mimeType);
+    QtConcurrent::run(this, &QPlexyMime::internalSubclassOfMime, mimeType).waitForFinished();
 #else
     internalSubclassOfMime(mimeType);
 #endif
@@ -395,7 +430,9 @@ void QPlexyMime::internalSubclassOfMime(const QString &mimeType)
 
     QString ext = fileInfo.suffix();
 
+#ifdef QT_NO_CONCURRENT
     mMutex->lock();
+#endif
 
     QString *result = new QString;
     if(!mSubclassOfMimeCache->contains(mimeType))
@@ -407,23 +444,25 @@ void QPlexyMime::internalSubclassOfMime(const QString &mimeType)
     else
         result = mSubclassOfMimeCache->object(mimeType);
 
+#ifdef QT_NO_CONCURRENT
     mMutex->unlock();
+#endif
 
     if(result->isEmpty())
     {
-        emit cannotFound("Cannot find subclass of mime for specified mime.", mimeType);
+        Q_EMIT cannotFound("Cannot find subclass of mime for specified mime.", mimeType);
         return;
     }
 
     MimePairType pairMime(mimeType, result->simplified());
 
-    emit subclassMime(pairMime);
+    Q_EMIT subclassMime(pairMime);
 }
 
 void QPlexyMime::acronym(const QString &mimeType)
 {
 #ifndef QT_NO_CONCURRENT
-    QtConcurrent::run(this, &QPlexyMime::internalAcronym, mimeType);
+    QtConcurrent::run(this, &QPlexyMime::internalAcronym, mimeType).waitForFinished();
 #else
     internalAcronym(mimeType);
 #endif
@@ -440,7 +479,9 @@ void QPlexyMime::internalAcronym(const QString &mimeType)
 
     QString ext = fileInfo.suffix();
 
+#ifdef QT_NO_CONCURRENT
     mMutex->lock();
+#endif
 
     QString *result = new QString;
     if(!mAcronymMimeCache->contains(mimeType))
@@ -452,23 +493,25 @@ void QPlexyMime::internalAcronym(const QString &mimeType)
     else
         result = mAcronymMimeCache->object(mimeType);
 
+#ifdef QT_NO_CONCURRENT
     mMutex->unlock();
+#endif
 
     if(result->isEmpty())
     {
-        emit cannotFound("Cannot find acronym for specified mime.", mimeType);
+        Q_EMIT cannotFound("Cannot find acronym for specified mime.", mimeType);
         return;
     }
 
     MimePairType pairMime(mimeType, result->simplified());
 
-    emit acronymMime(pairMime);
+    Q_EMIT acronymMime(pairMime);
 }
 
 void QPlexyMime::alias(const QString &mimeType)
 {
 #ifndef QT_NO_CONCURRENT
-    QtConcurrent::run(this, &QPlexyMime::internalAlias, mimeType);
+    QtConcurrent::run(this, &QPlexyMime::internalAlias, mimeType).waitForFinished();
 #else
     internalAlias(mimeType);
 #endif
@@ -485,7 +528,9 @@ void QPlexyMime::internalAlias(const QString &mimeType)
 
     QString ext = fileInfo.suffix();
 
+#ifdef QT_NO_CONCURRENT
     mMutex->lock();
+#endif
 
     QString *result = new QString;
     if(!mAliasMimeCache->contains(mimeType))
@@ -497,17 +542,19 @@ void QPlexyMime::internalAlias(const QString &mimeType)
     else
         result = mAliasMimeCache->object(mimeType);
 
+#ifdef QT_NO_CONCURRENT
     mMutex->unlock();
+#endif
 
     if(result->isEmpty())
     {
-        emit cannotFound("Cannot find alias for specified mime.", mimeType);
+        Q_EMIT cannotFound("Cannot find alias for specified mime.", mimeType);
         return;
     }
 
     MimePairType pairMime(mimeType, result->simplified());
 
-    emit aliasMime(pairMime);
+    Q_EMIT aliasMime(pairMime);
 }
 
 /*

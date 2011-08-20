@@ -31,9 +31,9 @@
 #include <QMutex>
 #include <QCache>
 #include <QStringList>
-#include <plexyconfig.h>
-
 #include <QtCore/qglobal.h>
+
+#include <plexyconfig.h>
 
 #if defined(plexymime_EXPORTS)
 #  define QPLEXYMIME_EXPORT Q_DECL_EXPORT
@@ -48,6 +48,7 @@ typedef QPair<QString, QStringList> MimeWithListType;
 class QPLEXYMIME_EXPORT QPlexyMime : public QObject
 {
     Q_OBJECT
+
 public:
     QPlexyMime(QObject *parent = 0);
     ~QPlexyMime();
@@ -60,7 +61,7 @@ public:
     void acronym(const QString &mimeType);
     void alias(const QString &mimeType);
 
-signals:
+Q_SIGNALS:
     void cannotFound(const QString errorName, const QString);
     void cannotFound(const QString errorName, const MimePairType);
     void fromFileNameMime(const MimePairType);
@@ -92,9 +93,11 @@ private:
     QString evaluate(const QString &);
     QStringList evaluateToList(const QString &);
 
+#ifdef QT_NO_CONCURRENT
+    QMutex *mMutex;
+#endif
     QString mInternalQuery;
     QByteArray mInternalOutput;
-    QMutex *mMutex;
     QCache<QString, QString> *mFileNameMimeCache;
     QCache<QString, QString> *mGenericExtMimeCache;
     QCache<QString, QString> *mGenericMimeIconNameCache;

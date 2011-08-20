@@ -1,3 +1,9 @@
+# Check if we use any Debug in the final release and if so compile the tests
+IF(CMAKE_BUILD_TYPE MATCHES ".*Deb.*")
+    ADD_SUBDIRECTORY(test)
+ENDIF(CMAKE_BUILD_TYPE MATCHES ".*Deb.*")
+
+
 INCLUDE_DIRECTORIES(
     ${QT_INCLUDES}
     ${QT_QTNETWORK_INCLUDE_DIR}
@@ -42,8 +48,8 @@ IF(MINGW)
         )
 ENDIF(MINGW)
 
-TARGET_LINK_LIBRARIES(
-    mimetype
+TARGET_LINK_LIBRARIES(mimetype
+    ${PLEXY_CORE_LIBRARY}
     ${libs}
     )
 

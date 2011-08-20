@@ -24,6 +24,7 @@ Homepage: http://www.plexyplanet.org
 Package: plexydesk
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
+         shared-mime-info,
          ffmpeg (>= 0.cvs20070307),
          libqimageblitz4 (>= 0.0.4),
          libqt4-declarative,

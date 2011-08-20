@@ -211,7 +211,6 @@ IF(WIN32)
 ENDIF(WIN32)
 
 # *** ALL PLATFORMS ***
-ADD_SUBDIRECTORY(3rdparty/libmagic)
 ADD_SUBDIRECTORY(3rdparty/mime)
 ADD_SUBDIRECTORY(3rdparty/qplexymime)
 ADD_SUBDIRECTORY(3rdparty/webitem)

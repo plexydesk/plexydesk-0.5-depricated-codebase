@@ -17,22 +17,25 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
+#include <QApplication>
+#include <QtDebug>
+
 #include "testmime.h"
 
-#include <QCoreApplication>
-#include <QtDebug>
 
 int main (int argc, char * *argv)
 {
-    QCoreApplication app(argc, argv);
+    QApplication app(argc, argv);
     using namespace PlexyDesk;
 
     TestMime mime(&app);
+    QObject::connect(&mime, SIGNAL(closeApplication()), &app, SLOT(quit()),Qt::QueuedConnection);
 
     return app.exec();
+
 /*
-        QPlexyMime mime;
-        qDebug() << "From file name:" << mime.fromFileName("test.rtf");
+    QPlexyMime mime;
+    qDebug() << "From file name:" << mime.fromFileName("test.rtf");
     qDebug() << "Gneric icon name:" << mime.genericIconName();
     qDebug() << "Expanded acronym:" << mime.expandedAcronym();
     qDebug() << "Description:" << mime.description();
@@ -43,12 +46,12 @@ int main (int argc, char * *argv)
     qDebug() << "Alias:" << mime.alias();
 
     qDebug() << "***********************************************";
-        qDebug() << "Gneric icon name:" << mime.genericIconNameMime("application/rtf");
-        qDebug() << "Expanded acronym:" << mime.expandedAcronymMime("application/rtf");
-        qDebug() << "Description:" << mime.descriptionMime("application/rtf");
-        qDebug() << "Description localized (uk):" << mime.descriptionMime("application/rtf", "uk");
-        qDebug() << "Subclass Of:" << mime.subClassOfMime("application/rtf");
-        qDebug() << "Acronym:" << mime.acronymMime("application/rtf");
-        qDebug() << "Alias:" << mime.aliasMime("application/rtf");
+    qDebug() << "Gneric icon name:" << mime.genericIconNameMime("application/rtf");
+    qDebug() << "Expanded acronym:" << mime.expandedAcronymMime("application/rtf");
+    qDebug() << "Description:" << mime.descriptionMime("application/rtf");
+    qDebug() << "Description localized (uk):" << mime.descriptionMime("application/rtf", "uk");
+    qDebug() << "Subclass Of:" << mime.subClassOfMime("application/rtf");
+    qDebug() << "Acronym:" << mime.acronymMime("application/rtf");
+    qDebug() << "Alias:" << mime.aliasMime("application/rtf");
  */
 }

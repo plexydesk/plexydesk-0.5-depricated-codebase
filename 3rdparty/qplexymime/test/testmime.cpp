@@ -18,16 +18,22 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
+#include <QTimer>
+#include <QApplication>
 
 #include "testmime.h"
 
-#include <QTimer>
-#include <QCoreApplication>
 
 TestMime::TestMime(QObject *parent)
     : QObject(parent)
 {
     QTimer::singleShot(1000, this, SLOT(startTest()));
+}
+
+TestMime::~TestMime()
+{
+    disconnect(mMime,0,0,0);
+    delete mMime;
 }
 
 void TestMime::startTest()
@@ -61,11 +67,11 @@ void TestMime::startTest()
     }
     */
 
-///    for(int i=0; i<100; i++) {
     mMime->fromFileName("test.pdf");
     mMime->fromFileName("test.desktop");
-    /*
     mMime->fromFileName("test.exe");
+
+    /*
     mMime->fromFileName("test.xml");
     mMime->fromFileName("test.cpp");
     mMime->fromFileName("test.la");
@@ -79,11 +85,9 @@ void TestMime::startTest()
     mMime->fromFileName("test.tiff");
     mMime->fromFileName("test.png");
     mMime->fromFileName("test.bmp");
-    mMime->fromFileName("test.pdf");
     */
- //  }
 
-
+    Q_EMIT closeApplication();
 }
 
 void TestMime::cannotFound(const QString error, const QString str)
@@ -96,7 +100,7 @@ void TestMime::fromFileNameMime(const MimePairType mimeType)
     if(mimeType.second.isEmpty())
         return;
 
-    qDebug() << "fromFileNameMime()" << mimeType;
+   qDebug() << "fromFileNameMime()" << mimeType;
 
     mMime->genericIconName(mimeType.second);
     mMime->expandedAcronym(mimeType.second);

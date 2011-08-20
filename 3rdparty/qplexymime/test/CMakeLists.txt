@@ -28,13 +28,12 @@ SET(libs
     ${QT_QTXMLPATTERNS_LIBRARY}
     )
 
-ADD_EXECUTABLE(plexymimetest ${sourceFiles} ${QT_MOC_SRCS})
+ADD_EXECUTABLE(plexy_mime_test ${sourceFiles} ${QT_MOC_SRCS})
 
-TARGET_LINK_LIBRARIES(
-    plexymimetest
+TARGET_LINK_LIBRARIES(plexy_mime_test
     plexymime
     ${PLEXY_CORE_LIBRARY}
     ${libs}
     )
 
-INSTALL(TARGETS plexymimetest DESTINATION bin)
+INSTALL(TARGETS plexy_mime_test DESTINATION bin)

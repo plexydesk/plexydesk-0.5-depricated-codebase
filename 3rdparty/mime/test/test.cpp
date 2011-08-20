@@ -29,21 +29,26 @@ int main (int argc, char * *argv) {
     QCoreApplication app(argc, argv);
 
     QFreeDesktopMime mime;
-    qDebug() << mime.genericIconName("application/pkcs7-mime");
-    qDebug() << mime.description("application/epub+zip");
-    qDebug() << mime.expandedAcronym("text/x-xslfo");
-    qDebug() << mime.description("text/x-xslfo");
-    qDebug() << mime.acronym("text/x-xslfo");
-    qDebug() << mime.alias("text/x-xslfo");
+    qDebug() << "genericIconName(application/pkcs7-mime): " << mime.genericIconName("application/pkcs7-mime");
+    qDebug() << "description(application/epub+zip): " << mime.description("application/epub+zip");
+    qDebug() << "expandedAcronym(text/x-xslfo): " << mime.expandedAcronym("text/x-xslfo");
+    qDebug() << "description(text/x-xslfo): " << mime.description("text/x-xslfo");
+    qDebug() << "acronym(text/x-xslfo): " << mime.acronym("text/x-xslfo");
+    qDebug() << "alias(text/x-xslfo): " << mime.alias("text/x-xslfo");
 
+    qDebug() << "\ntest.jpg: ";
     qDebug() << mime.fromFileName("test.jpg");
     qDebug() << mime.description();
+    qDebug() << "\ntest.png: ";
     qDebug() << mime.fromFileName("test.png");
     qDebug() << mime.description();
+    qDebug() << "\ntest.txt: ";
     qDebug() << mime.fromFileName("test.txt");
     qDebug() << mime.description();
+    qDebug() << "\ntest.cpp: ";
     qDebug() << mime.fromFileName("test.cpp");
     qDebug() << mime.description();
+    qDebug() << "\ntest.h: ";
     qDebug() << mime.fromFileName("test.h");
     qDebug() << mime.description();
 
@@ -60,4 +65,3 @@ int main (int argc, char * *argv) {
 
     return(0);
 }
-

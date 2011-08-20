@@ -98,6 +98,7 @@ Summary:	A Desktop extension which lets you efficiently organize and use your De
 BuildRoot:	%{_tmppath}/build-%{name}-%{version}-root
 Vendor:		PlexyDesk Team
 Source:		%{name}-%{version}.tar.bz2
+Requires:	shared-mime-info
 BuildRequires:	glibc-devel, cmake >= 2.6, automake, libtool
 
 

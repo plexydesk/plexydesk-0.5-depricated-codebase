@@ -25,6 +25,9 @@
 // Quartica File Info
 #include "freedesktopmime.h"
 
+// PlexyDesk includes
+#include <plexyconfig.h>
+
 // =============================================================================
 //  FreeDesktopMime: INTERNAL Methods
 // =============================================================================
@@ -236,8 +239,16 @@ public:
 QFreeDesktopMime::QFreeDesktopMime (QObject *parent)
     : QObject(parent), d(new QFreeDesktopMime::Private)
 {
+    QString xmlPath;
+
+#if  defined (Q_WS_MAC)  || defined (Q_WS_WIN)
+    xmlPath = QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->plexydeskBasePath() +
+                "/share/plexy/mime/freedesktop.org.xml");
+#else
+    xmlPath = "/usr/share/mime/packages/freedesktop.org.xml";
+#endif
     // Load Xml Freedesktop
-    QFile xml(":/freedesktopmime.xml");
+    QFile xml(xmlPath);
     if (xml.open(QIODevice::ReadOnly)) {
         d->xmlDocument.setContent(&xml);
         xml.close();

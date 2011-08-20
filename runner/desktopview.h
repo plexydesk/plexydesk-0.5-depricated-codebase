@@ -37,9 +37,9 @@ public:
     void addRender(QGraphicsScene *scene);
     void addCoreExtension(const QString &name);
     void addExtension(const QString &name,
-            const QString &layer = QLatin1String("Widgets"),
-            const QPoint &pos = QPoint(0, 0),
-            PlexyDesk::DesktopWidget::State state = PlexyDesk::DesktopWidget::DOCK);
+    const QString &layer = QLatin1String("Widgets"),
+    const QPoint &pos = QPoint(0, 0),
+    PlexyDesk::DesktopWidget::State state = PlexyDesk::DesktopWidget::DOCK);
     void addDesktopItem(QGraphicsItem *item);
     void enableOpenGL(bool);
     void showLayer(const QString &name);
