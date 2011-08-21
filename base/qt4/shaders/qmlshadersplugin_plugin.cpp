@@ -47,8 +47,8 @@
 
 void qmlshaderspluginPlugin::registerTypes(const char *uri)
 {
-    qmlRegisterType<ShaderEffectItem>(uri, 1, 0, "ShaderEffectItem");
-    qmlRegisterType<ShaderEffectSource>(uri, 1, 0, "ShaderEffectSource");
+    qmlRegisterType<PlexyDesk::ShaderEffectItem>(uri, 1, 0, "ShaderEffectItem");
+    qmlRegisterType<PlexyDesk::ShaderEffectSource>(uri, 1, 0, "ShaderEffectSource");
 }
 
 Q_EXPORT_PLUGIN2(qmlshadersplugin, qmlshaderspluginPlugin)

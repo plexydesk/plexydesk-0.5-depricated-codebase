@@ -62,7 +62,7 @@
 
 #define __SYSTEM_HAVE_GCC_VISIBILITY
 
-#if defined(_WIN32)
+#if defined(Q_CC_MSVC)
   #if defined(plexydeskcore_EXPORTS)
     #define  PLEXYDESK_EXPORT __declspec(dllexport)
   #else
