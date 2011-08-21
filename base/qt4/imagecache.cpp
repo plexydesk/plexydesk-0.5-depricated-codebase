@@ -1,7 +1,29 @@
-#include <imagecache.h>
+/*******************************************************************************
+* This file is part of PlexyDesk.
+*  Maintained by : Siraj Razick <siraj@kde.org>
+*  Authored By  : Siraj Razick <siraj@kde.org>
+*                 PhobosK <phobosk@kbfx.net>
+*
+*  PlexyDesk is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU Lesser General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  PlexyDesk is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU Lesser General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
+*******************************************************************************/
+
 #include <QSvgRenderer>
 #include <QtDebug>
 #include <QObject>
+
+#include <imagecache.h>
+
 
 namespace PlexyDesk
 {
@@ -45,6 +67,7 @@ QPixmap ImageCache::requestPixmap(const QString &id, QSize *size, const QSize &r
                             Qt::SmoothTransformation);
     return rv;
 }
+
 void ImageCache::load(const QString &themename)
 {
     QString prefix = QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() +
@@ -64,9 +87,30 @@ void ImageCache::load(const QString &themename)
     }
 }
 
+void ImageCache::addToCached(QString &imgfile, QString &filename, QString &themename)
+{
+    QString prefix = QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() +
+            QLatin1String("/share/plexy/themepack/") +
+            themename
+            + QLatin1String("/resources/"));
+
+    QFileInfo file = prefix + imgfile;
+    d->map[filename] = QPixmap(QDir::toNativeSeparators(file.absoluteFilePath()));
+    d->fileHash[filename] = file.absoluteFilePath();
+}
+
+
 QPixmap ImageCache::get(const QString &name)
 {
     return d->map[name];
+}
+
+bool ImageCache::isCached(QString &filename)
+{
+    if ((d->fileHash[filename]).isNull())
+        return false;
+
+    return true;
 }
 
 bool ImageCache::drawSvg(QPainter *p, QRectF rect, const QString &file)
@@ -79,6 +123,7 @@ bool ImageCache::drawSvg(QPainter *p, QRectF rect, const QString &file)
         d->render.render(p, rect);
         return true;
     }
+
     return false;
 }
 } //namespace

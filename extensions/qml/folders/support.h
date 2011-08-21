@@ -2,6 +2,7 @@
 * This file is part of PlexyDesk.
 *  Maintained by : Siraj Razick <siraj@kde.org>
 *  Authored By  : Varuna Lekamwasam <vrlekamwasam@gmail.com>
+*                 PhobosK <phobosk@kbfx.net>
 *
 *  PlexyDesk is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU Lesser General Public License as published by
@@ -21,6 +22,12 @@
 #define FOLDERSUPPORT_H
 #include <qdeclarative.h>
 #include <QDeclarativeParserStatus>
+#include <QDeclarativeItem>
+#include <QDeclarativeContext>
+#include <QDeclarativeImageProvider>
+
+#include <imagecache.h>
+
 
 #if defined(folderview_EXPORTS)
 #define FOLDERVIEW_EXPORT Q_DECL_EXPORT
@@ -31,20 +38,30 @@
 QT_MODULE(Declarative)
 
 class QDeclarativeContext;
+class QDeclarativeItem;
 
 class FOLDERVIEW_EXPORT Support : public QObject, public QDeclarativeParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
-    Q_PROPERTY(QString home READ home);
+    Q_PROPERTY(QString home READ home NOTIFY homeChanged)
 
 public:
     Support(QObject *parent = 0);
     ~Support();
+
     QString home();
+    Q_INVOKABLE QString setMimeType(QString file);
     Q_INVOKABLE bool openFile(QString file);
     virtual void classBegin(){}
     virtual void componentComplete(){}
+
+Q_SIGNALS:
+    void homeChanged();
+
+private:
+    PlexyDesk::ImageCache *mImageCache;
+    void setMimeTypeImage(QString mimetype, QString filenamemd5);
 };
 
 QML_DECLARE_TYPE(Support)

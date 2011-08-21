@@ -24,7 +24,7 @@ import "Scripts.js" as Scripts
 
 Rectangle {
     property alias filename: hidden.text
-    property string type: Scripts.getType(filename)
+    property alias typeIcon: iconImage.source
     id: icon
     width: parent.width
     height: parent.height
@@ -38,7 +38,6 @@ Rectangle {
 
     Image {
         id:iconImage
-        source: Scripts.getTypeIcon(type)
         anchors.horizontalCenter: icon.horizontalCenter
         anchors.horizontalCenterOffset: 0
         anchors.verticalCenter: icon.verticalCenter

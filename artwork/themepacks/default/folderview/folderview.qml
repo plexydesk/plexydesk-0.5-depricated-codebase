@@ -79,7 +79,7 @@ Rectangle{
             anchors.leftMargin: ( parent.width - (parseInt(parent.width/100) * 100) )/2
             cellWidth : 100
             cellHeight : 100
-            cacheBuffer : 40
+            cacheBuffer : 1000
             snapMode : GridView.SnapToRow
             model: flm
             delegate: fileDelegate
@@ -92,7 +92,12 @@ Rectangle{
                     id: iconRect
                     width: 100
                     height: 100
-                    Icon {filename: fileName}
+
+                    Icon {
+                        filename: fileName
+                        typeIcon: Mime.setMimeType(filePath)
+                    }
+
                     opacity: 0.8
                     color: "#00000000"
 
@@ -114,7 +119,7 @@ Rectangle{
 
     FolderListModel {
         id: flm
-        folder:folderView.home
+        folder: folderView.home
         sortField : FolderListModel.Type
         nameFilters: ["*"]
     }

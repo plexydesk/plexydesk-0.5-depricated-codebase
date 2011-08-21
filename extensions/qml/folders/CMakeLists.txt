@@ -42,8 +42,8 @@ ADD_LIBRARY(folderview  SHARED ${sourceFiles} ${QT_MOC_SRCS})
 #        )
 #ENDIF(MINGW)
 
-TARGET_LINK_LIBRARIES(
-    folderview
+TARGET_LINK_LIBRARIES(folderview
+    mimetype
     ${libs}
     )
 
