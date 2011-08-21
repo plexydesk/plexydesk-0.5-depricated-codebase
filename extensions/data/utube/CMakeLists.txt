@@ -1,10 +1,3 @@
-INCLUDE_DIRECTORIES(
-	   ${QT_INCLUDES}
-	   ${QT_QTOPENGL_INCLUDE_DIR}
-	   ${QT_QTNETWORK_INCLUDE_DIR}
-	   ${QT_QTTEST_INCLUDE_DIR}
-	   )
-
 SET (sourceFiles
     utube.cpp
     youtubedatainterface.cpp
@@ -37,8 +30,7 @@ SET(libs
 
 ADD_LIBRARY(utubeengine SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
-TARGET_LINK_LIBRARIES(
-    utubeengine
+TARGET_LINK_LIBRARIES(utubeengine
     ${PLEXY_CORE_LIBRARY}
     ${libs}
     )

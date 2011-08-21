@@ -1,9 +1,3 @@
-SET(QT_USE_QTDECLARATIVE ON)
-
-INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    )
-
 SET(sourceFiles
     plugin.cpp
     support.cpp
@@ -28,19 +22,19 @@ SET(sourceFiles
 
 SET(libs
     ${PLEXY_CORE_LIBRARY}
+    ${QT_QTSCRIPT_LIBRARY}
+    ${QT_QTDECLARATIVE_LIBRARY}
     )
 
 ADD_LIBRARY(folderview  SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
-#SET_TARGET_PROPERTIES(folderview PROPERTIES DEFINE_SYMBOL Q_DECLARATIVE_EXPORT)
-
-#IF(MINGW)
-#    SET_TARGET_PROPERTIES(desktopview PROPERTIES
-#        IMPORT_SUFFIX ".lib"
-#        IMPORT_PREFIX ""
-#        PREFIX ""
-#        )
-#ENDIF(MINGW)
+IF(MINGW)
+    SET_TARGET_PROPERTIES(folderview PROPERTIES
+        IMPORT_SUFFIX ".lib"
+        IMPORT_PREFIX ""
+        PREFIX ""
+        )
+ENDIF(MINGW)
 
 TARGET_LINK_LIBRARIES(folderview
     mimetype
@@ -48,5 +42,5 @@ TARGET_LINK_LIBRARIES(folderview
     )
 
 # Note QT_IMPORTS_INSTALL_DIR is relative and handled in the main CMakeLists.txt file
-INSTALL(TARGETS folderview DESTINATION ${QT_IMPORTS_INSTALL_DIR}/FolderView)
-INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/qmldir  DESTINATION ${QT_IMPORTS_INSTALL_DIR}/FolderView)
+INSTALL(TARGETS folderview DESTINATION ${QT_IMPORTS_INSTALL_DIR}/PlexyDesk/FolderView)
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/qmldir  DESTINATION ${QT_IMPORTS_INSTALL_DIR}/PlexyDesk/FolderView)

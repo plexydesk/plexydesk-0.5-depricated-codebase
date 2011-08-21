@@ -19,13 +19,6 @@ SET(sourceFiles
 
 ADD_LIBRARY(plexyirc SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
-INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    ${QT_QTNETWORK_INCLUDE_DIR}
-    ${QT_QTXML_INCLUDE_DIR}
-    ${QT_QTTEST_INCLUDE_DIR}
-    )
-
 SET(libs
     ${QT_QTGUI_LIBRARY}
     ${QT_QTXML_LIBRARY}
@@ -34,8 +27,7 @@ SET(libs
     ${QT_QTSVG_LIBRARY}
     )
 
-TARGET_LINK_LIBRARIES(
-    plexyirc
+TARGET_LINK_LIBRARIES(plexyirc
     ${libs}
     )
 

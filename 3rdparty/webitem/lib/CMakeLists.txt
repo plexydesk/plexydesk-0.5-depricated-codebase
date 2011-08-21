@@ -1,7 +1,3 @@
-INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    )
-
 SET(sourceFiles
     qwebviewitem.cpp
     )
@@ -39,8 +35,7 @@ SET(libs
     ${QT_QTSVG_LIBRARY}
     )
 
-TARGET_LINK_LIBRARIES(
-    webqgv
+TARGET_LINK_LIBRARIES(webqgv
     ${libs}
     )
 

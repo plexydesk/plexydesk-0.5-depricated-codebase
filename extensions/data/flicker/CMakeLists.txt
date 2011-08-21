@@ -1,10 +1,3 @@
-INCLUDE_DIRECTORIES(
-	   ${QT_INCLUDES}
-	   ${QT_QTOPENGL_INCLUDE_DIR}
-	   ${QT_QTNETWORK_INCLUDE_DIR}
-	   ${QT_QTTEST_INCLUDE_DIR}
-	   )
-
 SET(sourceFiles
     flicker.cpp
     flickerinterface.cpp
@@ -37,10 +30,9 @@ SET(libs
 
 ADD_LIBRARY(flickerengine SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
-TARGET_LINK_LIBRARIES(
-	flickerengine
-	${PLEXY_CORE_LIBRARY}
-	${libs}
+TARGET_LINK_LIBRARIES(flickerengine
+        ${PLEXY_CORE_LIBRARY}
+        ${libs}
 )
 
 INSTALL(TARGETS flickerengine DESTINATION ${CMAKE_INSTALL_LIBDIR}/plexyext)

@@ -16,12 +16,13 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#include "baserender.h"
 
 #include <QPaintEvent>
 #include <QPainter>
 #include <QtCore/QtGlobal>
 #include <QtOpenGL>
+
+#include "baserender.h"
 
 #ifdef Q_WS_WIN
 #define GL_MULTISAMPLE 0x809D

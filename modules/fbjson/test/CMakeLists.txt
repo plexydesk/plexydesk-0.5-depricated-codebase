@@ -1,11 +1,5 @@
 ADD_SUBDIRECTORY(data)
 
-INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    ${QT_QTXMLPATTERNS_INCLUDE_DIR}
-    ${QT_QTTEST_INCLUDE_DIR}
-    )
-
 SET(sourceFiles
     testjson.cpp
     )
@@ -34,8 +28,7 @@ SET(libs
 
 ADD_EXECUTABLE(plexy_json_test ${sourceFiles} ${QT_MOC_SRCS_TEST})
 
-TARGET_LINK_LIBRARIES(
-    plexy_json_test
+TARGET_LINK_LIBRARIES(plexy_json_test
     plexymime
     plexyjson
     ${libs}

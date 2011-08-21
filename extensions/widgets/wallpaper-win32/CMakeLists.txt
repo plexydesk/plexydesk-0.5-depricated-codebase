@@ -1,9 +1,3 @@
-INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    ${QT_QTOPENGL_INCLUDE_DIR}
-    ${QT_QTNETWORK_INCLUDE_DIR}
-    )
-
 SET(sourceFiles
     wallpaper.cpp
     wallpaperwidget.cpp
@@ -61,8 +55,7 @@ SET(libs
     ${QT_QTOPENGL_LIBRARY}
     )
 
-TARGET_LINK_LIBRARIES(
-    wallpaperchange
+TARGET_LINK_LIBRARIES(wallpaperchange
     ${PLEXY_CORE_LIBRARY}
 #    qtviz
     ${libs}

@@ -1,10 +1,3 @@
-INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    ${QT_QTOPENGL_INCLUDE_DIR}
-    ${QT_QTNETWORK_INCLUDE_DIR}
-    ${QT_QTTEST_INCLUDE_DIR}
-    )
-
 SET(sourceFiles
     authplugin.cpp
     authwidgetinterface.cpp
@@ -39,8 +32,7 @@ SET(libs
 
 ADD_LIBRARY(plexyauth SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
-TARGET_LINK_LIBRARIES(
-    plexyauth
+TARGET_LINK_LIBRARIES(plexyauth
     ${PLEXY_CORE_LIBRARY}
     plexyjson
     webqgv

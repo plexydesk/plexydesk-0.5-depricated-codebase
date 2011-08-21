@@ -1,12 +1,5 @@
 ADD_SUBDIRECTORY(img)
 
-INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    ${QT_QTOPENGL_INCLUDE_DIR}
-    ${QT_QTNETWORK_INCLUDE_DIR}
-    ${QT_QTTEST_INCLUDE_DIR}
-    )
-
 SET(sourceFiles
     interface.cpp
     imageplugin.cpp
@@ -38,8 +31,7 @@ SET(libs
 
 ADD_LIBRARY(photoframe SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
-TARGET_LINK_LIBRARIES(
-    photoframe
+TARGET_LINK_LIBRARIES(photoframe
     ${PLEXY_CORE_LIBRARY}
     ${libs}
     )

@@ -1,12 +1,5 @@
 ADD_SUBDIRECTORY(twit)
 
-INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    ${QT_QTOPENGL_INCLUDE_DIR}
-    ${QT_QTNETWORK_INCLUDE_DIR}
-    ${QT_QTTEST_INCLUDE_DIR}
-    )
-
 SET(sourceFiles
     videoentity.cpp
     twit.cpp
@@ -43,8 +36,7 @@ SET(libs
 
 ADD_LIBRARY(plexytwit SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
-TARGET_LINK_LIBRARIES(
-    plexytwit
+TARGET_LINK_LIBRARIES(plexytwit
     ${PLEXY_CORE_LIBRARY}
     ${libs}
     )

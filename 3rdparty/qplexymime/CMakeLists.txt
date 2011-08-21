@@ -4,11 +4,6 @@ IF(CMAKE_BUILD_TYPE MATCHES ".*Deb.*")
 ENDIF(CMAKE_BUILD_TYPE MATCHES ".*Deb.*")
 
 
-INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    ${QT_QTXMLPATTERNS_INCLUDE_DIR}
-    )
-
 SET(resourceFiles
     qplexymime.qrc
     )

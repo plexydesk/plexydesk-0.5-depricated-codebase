@@ -34,17 +34,9 @@ SET(libs
     ${QT_QTOPENGL_LIBRARY}
     )
 
-INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    ${QT_QTOPENGL_INCLUDE_DIR}
-    ${QT_QTNETWORK_INCLUDE_DIR}
-    ${QT_QTTEST_INCLUDE_DIR}
-    )
-
 ADD_LIBRARY(videoview SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
-TARGET_LINK_LIBRARIES(
-    videoview
+TARGET_LINK_LIBRARIES(videoview
     ${PLEXY_CORE_LIBRARY}
     ${libs}
     )

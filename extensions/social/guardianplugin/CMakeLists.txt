@@ -1,10 +1,3 @@
-INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    ${QT_QTOPENGL_INCLUDE_DIR}
-    ${QT_QTNETWORK_INCLUDE_DIR}
-    ${QT_QTTEST_INCLUDE_DIR}
-    )
-
 SET(sourceFiles
     guardianplugin.cpp
     guardianplugininterface.cpp
@@ -44,11 +37,9 @@ ADD_DEFINITIONS(-DQT_NO_DEBUG)
 ADD_DEFINITIONS(-DQT_SHARED)
 
 ADD_LIBRARY(guardianplugin SHARED ${sourceFiles} ${QT_MOC_SRCS})
-#ADD_LIBRARY($$qtLibraryTarget(guardianplugin) ${$$qtLibraryTarget(guardianplugin)_sources})
 
 
-TARGET_LINK_LIBRARIES(
-    guardianplugin
+TARGET_LINK_LIBRARIES(guardianplugin
     qtviz
     ${libs}
     )

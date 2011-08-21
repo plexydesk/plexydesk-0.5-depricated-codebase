@@ -21,8 +21,10 @@
 
 void QmlSupportPlugin::registerTypes(const char *uri)
 {
-    qmlRegisterType<Support>(uri,1,0,"FolderView");
+        Q_ASSERT(QLatin1String(uri) == QLatin1String("PlexyDesk.FolderView"));
+#ifndef QT_NO_DIRMODEL
+        qmlRegisterType<Support>(uri,1,0,"FolderView");
+#endif
 }
 
 Q_EXPORT_PLUGIN2(folderview, QmlSupportPlugin);
-

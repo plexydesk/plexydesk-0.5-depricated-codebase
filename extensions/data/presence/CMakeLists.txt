@@ -1,10 +1,6 @@
 FIND_PACKAGE(TelepathyQt4)
 
 INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    ${QT_QTOPENGL_INCLUDE_DIR}
-    ${QT_QTNETWORK_INCLUDE_DIR}
-    ${QT_QTTEST_INCLUDE_DIR}
     ${TELEPATHY_QT4_INCLUDE_DIR}
     )
 
@@ -41,8 +37,7 @@ SET(libs
 
 ADD_LIBRARY(presenceengine SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
-TARGET_LINK_LIBRARIES(
-    presenceengine
+TARGET_LINK_LIBRARIES(presenceengine
     qtviz
     ${libs}
     )

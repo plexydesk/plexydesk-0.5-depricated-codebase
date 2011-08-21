@@ -1,9 +1,3 @@
-INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    ${QT_QTXMLPATTERNS_INCLUDE_DIR}
-    ${QT_QTTEST_INCLUDE_DIR}
-    )
-
 SET(sourceFiles
     testicon.cpp
     ${CMAKE_SOURCE_DIR}/runner/iconprovider.cpp
@@ -38,8 +32,7 @@ SET(libs
 
 ADD_EXECUTABLE(plexy_icon_test ${sourceFiles} ${QT_MOC_SRCS_TEST})
 
-TARGET_LINK_LIBRARIES(
-    plexy_icon_test
+TARGET_LINK_LIBRARIES(plexy_icon_test
     plexymime
     ${PLEXY_CORE_LIBRARY}
     ${libs}

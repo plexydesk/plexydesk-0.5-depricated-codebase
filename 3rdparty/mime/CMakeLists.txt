@@ -4,13 +4,6 @@ IF(CMAKE_BUILD_TYPE MATCHES ".*Deb.*")
 ENDIF(CMAKE_BUILD_TYPE MATCHES ".*Deb.*")
 
 
-INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    ${QT_QTNETWORK_INCLUDE_DIR}
-    ${QT_QTXML_INCLUDE_DIR}
-    ${QT_QTTEST_INCLUDE_DIR}
-    )
-
 SET (sourceFiles
     freedesktopmime.cpp
     )

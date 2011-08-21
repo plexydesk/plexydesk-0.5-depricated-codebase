@@ -1,12 +1,5 @@
 #ADD_SUBDIRECTORY(youtube)
 
-INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    ${QT_QTOPENGL_INCLUDE_DIR}
-    ${QT_QTNETWORK_INCLUDE_DIR}
-    ${QT_QTTEST_INCLUDE_DIR}
-    )
-
 SET(sourceFiles
     sociotwitter.cpp
     sociotwitterinterface.cpp
@@ -41,8 +34,7 @@ SET(libs
 
 ADD_LIBRARY(sociotweets SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
-TARGET_LINK_LIBRARIES(
-    sociotweets
+TARGET_LINK_LIBRARIES(sociotweets
     qtviz
     ${libs}
     )

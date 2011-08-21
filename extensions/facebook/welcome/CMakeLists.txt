@@ -1,10 +1,6 @@
 #ADD_SUBDIRECTORY(welcome)
 
 INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    ${QT_QTOPENGL_INCLUDE_DIR}
-    ${QT_QTNETWORK_INCLUDE_DIR}
-    ${QT_QTTEST_INCLUDE_DIR}
     ${QIMAGE_BLITZ_INCLUDE_DIR}/qimageblitz
     )
 
@@ -46,7 +42,8 @@ SET(sourceFiles
     ${headerFiles}
     )
 
-SET(libs ${QT_QTGUI_LIBRARY}
+SET(libs
+    ${QT_QTGUI_LIBRARY}
     ${OPENGL_LIBRARIES}
     ${QT_QTCORE_LIBRARY}
     ${QT_QTOPENGL_LIBRARY}
@@ -55,8 +52,7 @@ SET(libs ${QT_QTGUI_LIBRARY}
 
 ADD_LIBRARY(plexywelcome SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
-TARGET_LINK_LIBRARIES(
-    plexywelcome
+TARGET_LINK_LIBRARIES(plexywelcome
     ${PLEXY_CORE_LIBRARY}
     ${libs}
     )

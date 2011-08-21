@@ -1,8 +1,3 @@
-INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    ${QT_QTXMLPATTERNS_INCLUDE_DIR}
-    )
-
 SET(sourceFiles
     test.cpp
     testmime.cpp

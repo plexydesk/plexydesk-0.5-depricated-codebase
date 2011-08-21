@@ -1,9 +1,5 @@
 INCLUDE_DIRECTORIES(
     ${WEBKIT_TRUNK}/WebKit/qt/Api
-    ${QT_INCLUDES}
-    ${QT_QTOPENGL_INCLUDE_DIR}
-    ${QT_QTNETWORK_INCLUDE_DIR}
-    ${QT_QTTEST_INCLUDE_DIR}
     ${X11_INCLUDE_DIR}
     )
 
@@ -21,8 +17,7 @@ ADD_EXECUTABLE(stefani ${stefani_PART_SRCS})
 
 LINK_DIRECTORIES(${WEBKIT_TRUNK}/WebKitBuild/${MODE}/lib)
 
-TARGET_LINK_LIBRARIES(
-    stefani
+TARGET_LINK_LIBRARIES(stefani
     webqgv
     QtWebKit.so
     )

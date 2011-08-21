@@ -1,10 +1,5 @@
 ADD_SUBDIRECTORY(cpu)
 
-INCLUDE_DIRECTORIES(
-      ${QT_INCLUDES}
-      ${QT_QTOPENGL_INCLUDE_DIR}
-      )
-
 SET(plexycpusrc
     cpu.cpp
     cpuwidget.cpp
@@ -38,7 +33,10 @@ SET(libs
     )
 
 ADD_LIBRARY(plexycpu SHARED ${sourceFiles})
-TARGET_LINK_LIBRARIES(plexycpu ${libs})
+
+TARGET_LINK_LIBRARIES(plexycpu
+    ${libs}
+    )
 
 INSTALL(TARGETS plexycpu DESTINATION ${CMAKE_INSTALL_LIBDIR}/plexyext)
 INSTALL(FILES cpu.desktop DESTINATION share/plexy/ext/groups)

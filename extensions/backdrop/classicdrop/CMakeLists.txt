@@ -1,12 +1,3 @@
-PROJECT(classicbackdrop)
-
-INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    ${QT_QTOPENGL_INCLUDE_DIR}
-    ${QT_QTNETWORK_INCLUDE_DIR}
-    ${QT_QTTEST_INCLUDE_DIR}
-    )
-
 SET(sourceFiles
     backdrop.cpp
     classicinterface.cpp
@@ -46,8 +37,7 @@ IF(MINGW)
         )
 ENDIF(MINGW)
 
-TARGET_LINK_LIBRARIES(
-    classicbackdrop
+TARGET_LINK_LIBRARIES(classicbackdrop
     ${PLEXY_CORE_LIBRARY}
     ${libs}
     )

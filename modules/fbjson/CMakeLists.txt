@@ -4,10 +4,6 @@ IF(CMAKE_BUILD_TYPE MATCHES ".*Deb.*")
 ENDIF(CMAKE_BUILD_TYPE MATCHES ".*Deb.*")
 
 
-INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    )
-
 SET(sourceFiles
     jsonhandler.cpp
     )
@@ -31,8 +27,7 @@ IF(MINGW)
         )
 ENDIF(MINGW)
 
-TARGET_LINK_LIBRARIES(
-    plexyjson
+TARGET_LINK_LIBRARIES(plexyjson
     ${QT_QTSCRIPT_LIBRARY}
     ${QT_QTWEBKIT_LIBRARY}
     ${QT_QTGUI_LIBRARY}

@@ -1,10 +1,3 @@
-INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    ${QT_QTOPENGL_INCLUDE_DIR}
-    ${QT_QTNETWORK_INCLUDE_DIR}
-    ${QT_QTTEST_INCLUDE_DIR}
-    )
-
 SET(sourceFiles
     abstractplugininterface.cpp
     backdropinterface.cpp
@@ -120,8 +113,7 @@ IF(MINGW)
         )
 ENDIF(MINGW)
 
-TARGET_LINK_LIBRARIES(
-    ${PLEXY_CORE_LIBRARY}
+TARGET_LINK_LIBRARIES(${PLEXY_CORE_LIBRARY}
     ${libs}
     )
 

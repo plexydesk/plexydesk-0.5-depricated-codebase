@@ -20,7 +20,7 @@
 
 import Qt 4.7
 import Qt.labs.folderlistmodel 1.0
-import FolderView 1.0
+import PlexyDesk.FolderView 1.0
 import "resources"
 import "resources/Scripts.js" as Scripts
 

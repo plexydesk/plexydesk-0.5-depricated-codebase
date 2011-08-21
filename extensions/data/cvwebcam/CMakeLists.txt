@@ -1,8 +1,4 @@
 INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    ${QT_QTOPENGL_INCLUDE_DIR}
-    ${QT_QTNETWORK_INCLUDE_DIR}
-    ${QT_QTTEST_INCLUDE_DIR}
     ${OPENCV_INCLUDE_DIR}
     )
 
@@ -39,8 +35,7 @@ SET(libs
 
 ADD_LIBRARY(webcamengine SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
-TARGET_LINK_LIBRARIES(
-    webcamengine
+TARGET_LINK_LIBRARIES(webcamengine
     ${PLEXY_CORE_LIBRARY}
     ${libs}
     )

@@ -1,10 +1,3 @@
-INCLUDE_DIRECTORIES(
-	   ${QT_INCLUDES}
-	   ${QT_QTOPENGL_INCLUDE_DIR}
-	   ${QT_QTNETWORK_INCLUDE_DIR}
-	   ${QT_QTTEST_INCLUDE_DIR}
-		 )
-
 IF(WIN32)
     INCLUDE_DIRECTORIES(
            ${CMAKE_BINARY_DIR}/3rdparty/win32/ffmpeg/include
@@ -39,8 +32,7 @@ SET(sourceFiles
 ADD_LIBRARY (videoengine SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 IF(WIN32)
-    TARGET_LINK_LIBRARIES(
-        videoengine
+    TARGET_LINK_LIBRARIES(videoengine
         qtviz
         ${CMAKE_SOURCE_DIR}/3rdparty/win32/ffmpeg/lib/avutil-49
         ${CMAKE_SOURCE_DIR}/3rdparty/win32/ffmpeg/lib/avformat-51
@@ -52,8 +44,7 @@ IF(WIN32)
         ${QT_QTOPENGL_LIBRARY}
         )
 ELSE(WIN32)
-    TARGET_LINK_LIBRARIES(
-        videoengine
+    TARGET_LINK_LIBRARIES(videoengine
         qtviz
         avutil
         avformat

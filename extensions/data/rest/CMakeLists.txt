@@ -1,10 +1,3 @@
-INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    ${QT_QTOPENGL_INCLUDE_DIR}
-    ${QT_QTNETWORK_INCLUDE_DIR}
-    ${QT_QTTEST_INCLUDE_DIR}
-    )
-
 SET (sourceFiles
     rest.cpp
     restinterface.cpp
@@ -42,8 +35,7 @@ IF(MINGW)
         )
 ENDIF(MINGW)
 
-TARGET_LINK_LIBRARIES(
-    restengine
+TARGET_LINK_LIBRARIES(restengine
     ${PLEXY_CORE_LIBRARY}
     ${libs}
     )

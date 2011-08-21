@@ -1,10 +1,3 @@
-INCLUDE_DIRECTORIES(
-	${QT_INCLUDES}
-	${QT_QTOPENGL_INCLUDE_DIR}
-	${QT_QTNETWORK_INCLUDE_DIR}
-	${QT_QTTEST_INCLUDE_DIR}
-	)
-
 SET(sourceFiles
     ircengine.cpp
     ircengineinterface.cpp
@@ -37,8 +30,7 @@ SET(libs
 
 ADD_LIBRARY(ircengine SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
-TARGET_LINK_LIBRARIES(
-    ircengine
+TARGET_LINK_LIBRARIES(ircengine
     qtviz
     ${libs}
     )

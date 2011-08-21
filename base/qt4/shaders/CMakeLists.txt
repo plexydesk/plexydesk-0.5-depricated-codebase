@@ -1,7 +1,3 @@
-INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    )
-
 SET(sourceFiles
     shadereffect.cpp
     shadereffectbuffer.cpp
@@ -42,8 +38,7 @@ IF(MINGW)
         )
 ENDIF(MINGW)
 
-TARGET_LINK_LIBRARIES(
-    plexyshaders
+TARGET_LINK_LIBRARIES(plexyshaders
     ${QT_QTSCRIPT_LIBRARY}
     ${QT_QTWEBKIT_LIBRARY}
     ${QT_QTGUI_LIBRARY}

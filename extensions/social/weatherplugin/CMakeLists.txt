@@ -1,10 +1,3 @@
-INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    ${QT_QTOPENGL_INCLUDE_DIR}
-    ${QT_QTNETWORK_INCLUDE_DIR}
-    ${QT_QTTEST_INCLUDE_DIR}
-    )
-
 SET(sourceFiles
     weatherplugin.cpp
     weatherplugininterface.cpp
@@ -44,11 +37,9 @@ ADD_DEFINITIONS(-DQT_NO_DEBUG)
 ADD_DEFINITIONS(-DQT_SHARED)
 
 ADD_LIBRARY(weatherplugin SHARED ${sourceFiles} ${QT_MOC_SRCS})
-#ADD_LIBRARY($$qtLibraryTarget(weatherplugin) ${$$qtLibraryTarget(weatherplugin)_sources})
 
 
-TARGET_LINK_LIBRARIES(
-    weatherplugin
+TARGET_LINK_LIBRARIES(weatherplugin
     qtviz
     ${libs}
     )

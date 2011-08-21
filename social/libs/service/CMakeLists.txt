@@ -1,10 +1,3 @@
-INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    ${QT_QTOPENGL_INCLUDE_DIR}
-    ${QT_QTNETWORK_INCLUDE_DIR}
-    ${QT_QTTEST_INCLUDE_DIR}
-    )
-
 SET(sourceFiles
     socialaccessmanager.cpp
     )
@@ -34,8 +27,7 @@ SET(libs
 
 ADD_LIBRARY(plexysocialservice SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
-TARGET_LINK_LIBRARIES(
-    plexysocialservice
+TARGET_LINK_LIBRARIES(plexysocialservice
     ${libs}
     )
 

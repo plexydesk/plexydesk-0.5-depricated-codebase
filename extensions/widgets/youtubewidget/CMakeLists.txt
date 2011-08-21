@@ -1,12 +1,5 @@
 ADD_SUBDIRECTORY(youtube)
 
-INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    ${QT_QTOPENGL_INCLUDE_DIR}
-    ${QT_QTNETWORK_INCLUDE_DIR}
-    ${QT_QTTEST_INCLUDE_DIR}
-    )
-
 SET(sourceFiles
     videoentity.cpp
     youtube.cpp
@@ -52,8 +45,7 @@ IF(MINGW)
         )
 ENDIF(MINGW)
 
-TARGET_LINK_LIBRARIES(
-    plexyyoutube
+TARGET_LINK_LIBRARIES(plexyyoutube
     ${PLEXY_CORE_LIBRARY}
     ${libs}
     )

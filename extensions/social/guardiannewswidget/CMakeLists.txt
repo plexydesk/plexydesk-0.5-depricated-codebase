@@ -1,12 +1,5 @@
 ADD_SUBDIRECTORY(guardiannews)
 
-INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    ${QT_QTOPENGL_INCLUDE_DIR}
-    ${QT_QTNETWORK_INCLUDE_DIR}
-    ${QT_QTTEST_INCLUDE_DIR}
-    )
-
 SET(sourceFiles
     guardiannews.cpp
     guardiannewsinterface.cpp
@@ -43,8 +36,7 @@ SET(libs
 
 ADD_LIBRARY(guardiannews SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
-TARGET_LINK_LIBRARIES(
-    guardiannews
+TARGET_LINK_LIBRARIES(guardiannews
     qtviz
     ${libs}
     )

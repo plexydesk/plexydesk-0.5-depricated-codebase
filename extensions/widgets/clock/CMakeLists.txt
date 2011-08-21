@@ -1,12 +1,5 @@
 ADD_SUBDIRECTORY(clock)
 
-INCLUDE_DIRECTORIES(
-    ${QT_INCLUDES}
-    ${QT_QTOPENGL_INCLUDE_DIR}
-    ${QT_QTNETWORK_INCLUDE_DIR}
-    ${QT_QTTEST_INCLUDE_DIR}
-    )
-
 SET(clocksourceFiles
     clock.cpp
     clockwidget.cpp
@@ -49,8 +42,7 @@ IF(MINGW)
         )
 ENDIF(MINGW)
 
-TARGET_LINK_LIBRARIES(
-    plexyclock
+TARGET_LINK_LIBRARIES(plexyclock
     ${libs}
     )
 
