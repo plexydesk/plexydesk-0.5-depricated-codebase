@@ -27,7 +27,7 @@ CMAKE_POLICY(SET CMP0003 OLD)
 SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmakemodules)
 
 # Needed/optional packages definitions
-FIND_PACKAGE(Qt4 4.7.0  COMPONENTS QtCore QtGui QtOpenGL QtXml QtDeclarative QSql QSvg REQUIRED)
+FIND_PACKAGE(Qt4 4.7.0 COMPONENTS QtCore QtGui QtOpenGL QtXml QtDeclarative QtSql QtSvg REQUIRED)
 FIND_PACKAGE(FFMPEG) #optional
 FIND_PACKAGE(OpenCV) #optional
 FIND_PACKAGE(QImageBlitz REQUIRED)
