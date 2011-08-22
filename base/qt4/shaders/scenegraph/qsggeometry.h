@@ -45,10 +45,12 @@
 #include <plexy.h>
 #include <QtOpenGL/qgl.h>
 
+#include <shaders_global.h>
+
 namespace PlexyDesk
 {
 	
-class PLEXYDESK_EXPORT QSGGeometry
+class SHADERSSHARED_EXPORT QSGGeometry
 {
 public:
     struct Attribute

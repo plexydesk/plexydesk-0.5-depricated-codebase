@@ -62,18 +62,10 @@
 
 #define __SYSTEM_HAVE_GCC_VISIBILITY
 
-#if defined(Q_CC_MSVC)
-  #if defined(plexydeskcore_EXPORTS)
-    #define  PLEXYDESK_EXPORT __declspec(dllexport)
-  #else
-    #define  PLEXYDESK_EXPORT __declspec(dllimport)
-  #endif
+#if defined(plexydeskcore_EXPORTS)
+  #define  PLEXYDESK_EXPORT Q_DECL_EXPORT
 #else
-    #ifdef __SYSTEM_HAVE_GCC_VISIBILITY
-        #define HIDDEN_SYM __attribute__ ((visibility("hidden")))
-        #define VISIBLE_SYM __attribute__ ((visibility("default")))
-        #define PLEXYDESK_EXPORT __attribute__ ((visibility("default")))
-    #endif
+  #define  PLEXYDESK_EXPORT Q_DECL_IMPORT
 #endif
 
 //TODO

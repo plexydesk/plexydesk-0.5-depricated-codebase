@@ -45,10 +45,12 @@
 #include <plexy.h>
 #include <QtOpenGL>
 
+#include "shaders_global.h"
+
 namespace PlexyDesk
 {
 
-class PLEXYDESK_EXPORT ShaderEffectBuffer : public QGLFramebufferObject
+class SHADERSSHARED_EXPORT ShaderEffectBuffer : public QGLFramebufferObject
 {
 public:
     ShaderEffectBuffer(const QSize &size, const QGLFramebufferObjectFormat &format);

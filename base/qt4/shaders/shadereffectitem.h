@@ -48,10 +48,12 @@
 #include "scenegraph/qsggeometry.h"
 #include <plexy.h>
 
+#include "shaders_global.h"
+
 namespace PlexyDesk
 {
 
-class PLEXYDESK_EXPORT  ShaderEffectItem : public QDeclarativeItem {
+class SHADERSSHARED_EXPORT  ShaderEffectItem : public QDeclarativeItem {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
     Q_PROPERTY(QString fragmentShader READ fragmentShader WRITE setFragmentShader NOTIFY fragmentShaderChanged)

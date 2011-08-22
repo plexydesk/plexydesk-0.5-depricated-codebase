@@ -46,13 +46,15 @@
 #include <QDeclarativeItem>
 #include <QtOpenGL>
 
+#include "shaders_global.h"
+
 namespace PlexyDesk 
 	
 {
 
 class ShaderEffectBuffer;
 
-class PLEXYDESK_EXPORT ShaderEffectSource : public QDeclarativeItem
+class SHADERSSHARED_EXPORT ShaderEffectSource : public QDeclarativeItem
 {
     Q_OBJECT
     Q_PROPERTY(QDeclarativeItem *sourceItem READ sourceItem WRITE setSourceItem NOTIFY sourceItemChanged)

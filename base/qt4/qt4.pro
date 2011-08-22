@@ -11,6 +11,10 @@ QT += core gui opengl declarative network svg
 
 INCLUDEPATH += shaders
 
+DEFINES += plexydeskcore_EXPORTS
+
+CONFIG += qt
+
 SOURCES = abstractplugininterface.cpp \
 		backdropinterface.cpp \
 		backdropplugin.cpp \
@@ -50,6 +54,7 @@ HEADERS = abstractplugininterface.h \
 		widgetinterface.h \
 		widgetplugin.h
 
-LIBS += -L$$top_destdir -lqmlshadersplugin
+LIBS += -L$$top_destdir -lplexyshaders
 
 TARGET = plexydeskcore
+

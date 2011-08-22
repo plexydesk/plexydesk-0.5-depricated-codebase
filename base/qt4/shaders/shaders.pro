@@ -7,9 +7,11 @@ srcdir      = qmlshadersplugin
 
 INCLUDEPATH += ../../qt4
 TEMPLATE = lib
-TARGET = qmlshadersplugin
+TARGET = plexyshaders
 QT += declarative opengl
 CONFIG += qt plugin
+
+DEFINES += plexyshaders_EXPORTS
 
 TARGETPATH = Qt/labs/shaders
 target.path = $$[QT_INSTALL_IMPORTS]/$$TARGETPATH
@@ -45,7 +47,8 @@ HEADERS += \
     shadereffectitem.h \
     shadereffectsource.h \
     scenegraph/qsggeometry.h \
-    shadereffectbuffer.h
+    shadereffectbuffer.h \
+    shaders_global.h
 
 OTHER_FILES = qmldir
 
