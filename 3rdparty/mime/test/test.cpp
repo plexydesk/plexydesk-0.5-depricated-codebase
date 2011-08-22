@@ -17,7 +17,7 @@
  *  along with Quartica.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QCoreApplication>
+#include <QApplication>
 #include <QFileInfo>
 #include <QDir>
 
@@ -26,7 +26,7 @@
 #include "freedesktopmime.h"
 
 int main (int argc, char * *argv) {
-    QCoreApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     QFreeDesktopMime mime;
     qDebug() << "genericIconName(application/pkcs7-mime): " << mime.genericIconName("application/pkcs7-mime");

@@ -207,7 +207,7 @@ void QDeclarativeFolderListModel::SetToHome()
 
 QVariant QDeclarativeFolderListModel::getMimeTypeImagePath(const QString file) const
 {
-    QString fileLocal = QUrl(file).toLocalFile();
+    QString fileLocal = file;
 
     QString filenameMD5 = QString(QCryptographicHash::hash(fileLocal.toUtf8(), QCryptographicHash::Md5)
                                         .toHex().toUpper());

@@ -605,8 +605,9 @@ Section Uninstall
   ; Close any open instances of PlexyDesk
   !include WinMessages.nsh
   DetailPrint "Closing all ${PRODUCT_NAME} running instances..."
-  FindWindow $0 "QWidget" "${PRODUCT_NAME}"
-  SendMessage $0 ${WM_CLOSE} 0 0
+  FindWindow $0 "QTool" "${PRODUCT_NAME}"
+  SendMessage $0 ${WM_CLOSE} 0 0 /TIMEOUT=5000
+  Sleep 3000
 
   ; Remove all PlexyDesk shortcuts
   !insertmacro MUI_STARTMENU_GETFOLDER "Application" "$ICONS_GROUP"

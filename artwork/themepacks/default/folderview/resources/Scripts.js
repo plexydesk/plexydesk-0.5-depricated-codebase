@@ -23,7 +23,7 @@
 
 function goUp(flm,backHold,back,rec1,ct,bb)
 {
-    var _folder = flm.parentFolder.toString();
+    var _folder = flm.parentFolder.toString().replace(/^.*\/\.\.$/, "file:");
     if(_folder == "") return;
     flm.folder = _folder;
     setOpacityBug(backHold,back,rec1,ct,bb);

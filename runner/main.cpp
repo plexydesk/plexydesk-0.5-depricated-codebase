@@ -135,7 +135,8 @@ int main( int argc, char * *argv )
     view->showLayer(QLatin1String("Widgets"));
     view->registerPhotoDialog();
 
-    QApplication::setQuitOnLastWindowClosed(false);
+    // Set this to false if you need a "close to tray" functionality when systray exists
+    QApplication::setQuitOnLastWindowClosed(true);
 
     /* Set tray icon */
     PlexyTray *trayIcon = new PlexyTray(view->window(), appIcon);
