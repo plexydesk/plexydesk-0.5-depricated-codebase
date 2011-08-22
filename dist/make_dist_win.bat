@@ -367,9 +367,6 @@ xcopy %COPY_DEBUG_LEVEL% /R /Y "%QT_LIB_DIR_COPY%\QtWebKit4.dll" "%FINAL_PATH%\l
 xcopy %COPY_DEBUG_LEVEL% /R /Y "%QT_LIB_DIR_COPY%\QtXml4.dll" "%FINAL_PATH%\lib\"
 xcopy %COPY_DEBUG_LEVEL% /R /Y "%QT_LIB_DIR_COPY%\QtXmlPatterns4.dll" "%FINAL_PATH%\lib\"
 
-xcopy %COPY_DEBUG_LEVEL% /R /Y "%QTDIR%\imports\Qt\labs\folderlistmodel\qmldir" "%FINAL_PATH%\lib\qt4\imports\Qt\labs\folderlistmodel\"
-xcopy %COPY_DEBUG_LEVEL% /R /Y "%QTDIR%\imports\Qt\labs\folderlistmodel\qmlfolderlistmodelplugin.dll" "%FINAL_PATH%\lib\qt4\imports\Qt\labs\folderlistmodel\"
-
 xcopy %COPY_DEBUG_LEVEL% /R /Y "%QTDIR%\imports\Qt\labs\gestures\qmldir" "%FINAL_PATH%\lib\qt4\imports\Qt\labs\gestures\"
 xcopy %COPY_DEBUG_LEVEL% /R /Y "%QTDIR%\imports\Qt\labs\gestures\qmlgesturesplugin.dll" "%FINAL_PATH%\lib\qt4\imports\Qt\labs\gestures\"
 
@@ -445,9 +442,6 @@ xcopy %COPY_DEBUG_LEVEL% /R /Y "%QT_LIB_DIR_COPY%\QtTestd4.dll" "%FINAL_PATH%\li
 xcopy %COPY_DEBUG_LEVEL% /R /Y "%QT_LIB_DIR_COPY%\QtWebKitd4.dll" "%FINAL_PATH%\lib\"
 xcopy %COPY_DEBUG_LEVEL% /R /Y "%QT_LIB_DIR_COPY%\QtXmld4.dll" "%FINAL_PATH%\lib\"
 xcopy %COPY_DEBUG_LEVEL% /R /Y "%QT_LIB_DIR_COPY%\QtXmlPatternsd4.dll" "%FINAL_PATH%\lib\"
-
-xcopy %COPY_DEBUG_LEVEL% /R /Y "%QTDIR%\imports\Qt\labs\folderlistmodel\qmldir" "%FINAL_PATH%\lib\qt4\imports\Qt\labs\folderlistmodel\"
-xcopy %COPY_DEBUG_LEVEL% /R /Y "%QTDIR%\imports\Qt\labs\folderlistmodel\qmlfolderlistmodelplugind.dll" "%FINAL_PATH%\lib\qt4\imports\Qt\labs\folderlistmodel\"
 
 xcopy %COPY_DEBUG_LEVEL% /R /Y "%QTDIR%\imports\Qt\labs\gestures\qmldir" "%FINAL_PATH%\lib\qt4\imports\Qt\labs\gestures\"
 xcopy %COPY_DEBUG_LEVEL% /R /Y "%QTDIR%\imports\Qt\labs\gestures\qmlgesturesplugind.dll" "%FINAL_PATH%\lib\qt4\imports\Qt\labs\gestures\"

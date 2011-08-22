@@ -225,7 +225,7 @@ ENDIF(WIN32)
 # *** ALL PLATFORMS ***
 ADD_SUBDIRECTORY(3rdparty/mime)
 ADD_SUBDIRECTORY(3rdparty/qplexymime)
-#ADD_SUBDIRECTORY(3rdparty/qt/src/imports/folderlistmodel)
+ADD_SUBDIRECTORY(3rdparty/qt/folderlistmodel)
 ADD_SUBDIRECTORY(3rdparty/webitem)
 ADD_SUBDIRECTORY(base/qt4)
 ADD_SUBDIRECTORY(extensions/widgets/clock)
@@ -245,7 +245,6 @@ ADD_SUBDIRECTORY(extensions/data/rest)
 
 # *** Themes and themepacks - ALL PLATFORMS ***
 ADD_SUBDIRECTORY(artwork)
-ADD_SUBDIRECTORY(extensions/qml/folders)
 
 
 # *** Removed from building - ALL PLATFORMS ***

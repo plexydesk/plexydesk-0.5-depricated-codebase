@@ -105,7 +105,7 @@ QPixmap ImageCache::get(const QString &name)
     return d->map[name];
 }
 
-bool ImageCache::isCached(QString &filename)
+bool ImageCache::isCached(QString &filename) const
 {
     if ((d->fileHash[filename]).isNull())
         return false;

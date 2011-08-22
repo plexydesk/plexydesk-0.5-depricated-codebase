@@ -28,7 +28,6 @@ Depends: ${shlibs:Depends}, ${misc:Depends},
          ffmpeg (>= 0.cvs20070307),
          libqimageblitz4 (>= 0.0.4),
          libqt4-declarative,
-         libqt4-declarative-folderlistmodel,
          libqt4-dbus,
          libqtwebkit4,
          libqtwebkit-qmlwebkitplugin

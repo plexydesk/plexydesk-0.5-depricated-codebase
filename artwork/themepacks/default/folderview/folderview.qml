@@ -19,8 +19,7 @@
 *******************************************************************************/
 
 import Qt 4.7
-import Qt.labs.folderlistmodel 1.0
-import PlexyDesk.FolderView 1.0
+import PlexyDesk.FolderListModel 1.0
 import "resources"
 import "resources/Scripts.js" as Scripts
 
@@ -95,7 +94,10 @@ Rectangle{
 
                     Icon {
                         filename: fileName
-                        typeIcon: Mime.setMimeType(filePath)
+                        /* The one below is slow but accurate */
+                        //typeIcon: fileMimeIcon
+                        /* The one below is very fast but not so accurate */
+                        typeIcon: fileTypeIcon
                     }
 
                     opacity: 0.8
@@ -106,20 +108,15 @@ Rectangle{
                         hoverEnabled: true
                         onEntered: iconRect.opacity = 1.0
                         onExited:  iconRect.opacity = 0.8
-                        onClicked: Scripts.goInto(fileName,flm,backgroundHolder,folderView)
+                        onClicked: Scripts.goInto(fileName,flm,backgroundHolder)
                     }
                 }
             }
         }
     }
 
-    FolderView {
-        id : folderView
-    }
-
     FolderListModel {
         id: flm
-        folder: folderView.home
         sortField : FolderListModel.Type
         nameFilters: ["*"]
     }

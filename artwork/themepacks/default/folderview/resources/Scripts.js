@@ -29,13 +29,13 @@ function goUp(flm,backHold,back,rec1,ct,bb)
     setOpacityBug(backHold,back,rec1,ct,bb);
 }
 
-function goInto(to,flm,ic,flv)
+function goInto(to,flm,ic)
 {
     var cpath = flm.folder.toString();
     var npath = cpath + "/" + to;
     flm.folder = npath;
-    // Folders are not opened. Handled internally by FolderView
-    flv.openFile(npath);
+    // Folders are not opened. Handled internally by FolderListModel
+    flm.openFile(npath);
 }
 
 function getFolderName(flm)
@@ -47,13 +47,18 @@ function getFolderName(flm)
     if (vpath.lastIndexOf('/') != vpath.length-1) {
         var name1 = vpath.substring(0,vpath.length);
         var tp1 = name1
-        return name1.substring(tp1.lastIndexOf('/')+1,tp1.length);
+        vpath = name1.substring(tp1.lastIndexOf('/')+1,tp1.length);
         }
     else {
         var name = vpath.substring(0,vpath.length-1);
         var tp = name
-        return name.substring(tp.lastIndexOf('/')+1,tp.length);
+        vpath = name.substring(tp.lastIndexOf('/')+1,tp.length);
         }
+
+    if (vpath.length > 30)
+        return vpath.substring(0,27) + "...";
+    else
+        return vpath;
 }
 
 function getFileName(filename)

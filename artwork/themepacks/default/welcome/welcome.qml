@@ -425,6 +425,7 @@ Rectangle {
             color: "#ffffff"
             text: "info_desc"
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+            /* Not yet supported? */
             horizontalAlignment: Text.AlignJustify
             font.pixelSize: 12
             opacity: 0

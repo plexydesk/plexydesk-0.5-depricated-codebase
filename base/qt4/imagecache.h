@@ -38,7 +38,7 @@ public:
     virtual ~ImageCache();
 
     QPixmap requestPixmap(const QString &id, QSize *size, const QSize &requestedSize);
-    bool isCached(QString &filename);
+    bool isCached(QString &filename)  const;
     void addToCached(QString &imgfile, QString &filename, QString &themename);
 
 protected:
