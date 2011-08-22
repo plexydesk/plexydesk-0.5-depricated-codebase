@@ -41,7 +41,7 @@ public:
     QString path;
 };
 
-Icon::Icon(IconProviderPtr icon, QPlexyMime *mime, const QRectF &rect, QWidget *embeddedWidget) : DesktopWidget(rect), d(new Private)
+Icon::Icon(IconProviderPtr icon, QPlexyMime *mime, const QRectF &rect, QWidget * /*embeddedWidget*/) : DesktopWidget(rect), d(new Private)
 {
     d->valid = false;
     d->iconprovider = icon;
@@ -129,7 +129,7 @@ void Icon::paintDockView(QPainter *painter, const QRectF &rect)
     drawText(painter, rect);
 }
 
-void Icon::drawText(QPainter *painter, const QRectF &rect)
+void Icon::drawText(QPainter *painter, const QRectF & /*rect*/)
 {
     float x = (this->boundingRect().width() - d->icon.width()) / 2;
     float y = boundingRect().height() - x; // - (d->icon.height() +x );

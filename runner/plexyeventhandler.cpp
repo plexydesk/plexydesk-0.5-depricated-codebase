@@ -31,9 +31,9 @@
 bool PlexyEventHandler::eventFilter(QObject *obj, QEvent *event)
 {
     DesktopView *mainwidget = qobject_cast<DesktopView *>(obj);
-    QApplication *qapplication = qobject_cast<QApplication *>(obj);
 
 /*
+    QApplication *qapplication = qobject_cast<QApplication *>(obj);
     // This is for event debugging. Produces a lot of output. Disabled
     if (mainwidget != 0){
            qDebug()<< mainwidget << "...." << event->type();

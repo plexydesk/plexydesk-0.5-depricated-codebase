@@ -35,7 +35,7 @@
 
 #include <plexy.h>
 #include <plexyconfig.h>
-#include <shadereffectitem.h>
+#include "shaders/shadereffectitem.h"
 
 
 namespace PlexyDesk
@@ -105,12 +105,23 @@ protected:
     virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 
-    virtual void paintExtFace(QPainter *painter,
-            const QStyleOptionGraphicsItem *option, QWidget *widget = 0) {};
-    virtual void paintExtBackFace(QPainter *painter,
-         const QStyleOptionGraphicsItem *option, QWidget *widget = 0) {};
-    virtual void paintExtDockFace(QPainter *painter,
-         const QStyleOptionGraphicsItem *it, QWidget *widget = 0) {};
+    virtual void paintExtFace(QPainter * /*painter*/,
+            const QStyleOptionGraphicsItem * /*option*/, QWidget *widget = 0)
+    {
+        Q_UNUSED(widget);
+    };
+
+    virtual void paintExtBackFace(QPainter * /*painter*/,
+         const QStyleOptionGraphicsItem * /*option*/, QWidget *widget = 0)
+    {
+        Q_UNUSED(widget);
+    };
+
+    virtual void paintExtDockFace(QPainter * /*painter*/,
+         const QStyleOptionGraphicsItem * /*it*/, QWidget *widget = 0)
+    {
+        Q_UNUSED(widget);
+    };
 
     virtual void paintBackSide(QPainter *painter, const QRectF &rect);
     virtual void paintViewSide(QPainter *painter, const QRectF &rect);

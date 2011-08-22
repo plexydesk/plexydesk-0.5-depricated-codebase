@@ -9,6 +9,11 @@ TEMPLATE = app
 
 QT += core gui opengl declarative network xml xmlpatterns
 
+# TODO:
+#RC_FILE = $$top_srcdir/dist/windows/plexydesk.rc
+
+DESTDIR = $$top_destdir
+
 INCLUDEPATH += $$top_srcdir/base/qt4 $$top_srcdir/base/qt4/shaders $$top_srcdir/3rdparty/qplexymime
 
 SOURCES += desktopview.cpp \
@@ -35,7 +40,14 @@ unix {
             XAtoms.h
 }
 
-LIBS += -L../base/qt4 -lplexyeskcore
-#LIBS += -L../logic -L../gui -llogic -lgui
+CONFIG(debug, debug|release) {
+    LIBS += -lplexymimed -lplexyshadersd -lplexydeskcored
+}
 
-TARGET = runner
+CONFIG(release, debug|release) {
+    LIBS += -lplexymime -lplexyshaders -lplexydeskcore
+}
+
+TARGET = plexydesk
+
+include($$top_srcdir/deploy.pri)

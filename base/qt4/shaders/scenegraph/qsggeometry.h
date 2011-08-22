@@ -45,7 +45,7 @@
 #include <plexy.h>
 #include <QtOpenGL/qgl.h>
 
-#include <shaders_global.h>
+#include "../shaders_global.h"
 
 namespace PlexyDesk
 {

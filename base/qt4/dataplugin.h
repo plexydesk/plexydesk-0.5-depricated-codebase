@@ -54,6 +54,7 @@ class PLEXYDESK_EXPORT DataPlugin : public BasePlugin
     Q_OBJECT
 public:
     DataPlugin(QObject *object = 0) {
+        Q_UNUSED(object);
     }
     virtual ~DataPlugin() {
     }

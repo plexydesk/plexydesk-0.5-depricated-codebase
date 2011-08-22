@@ -11,10 +11,15 @@ class PLEXYDESK_EXPORT SocialPlugin : public BasePlugin
 {
     Q_OBJECT
 public:
-    SocialPlugin(QObject *object = 0) {
+    SocialPlugin(QObject *object = 0)
+    {
+        Q_UNUSED(object);
     }
-    virtual ~SocialPlugin() {
+
+    virtual ~SocialPlugin()
+    {
     }
+
 public slots:
     virtual void pushSocial(QVariant &) = 0;
 signals:

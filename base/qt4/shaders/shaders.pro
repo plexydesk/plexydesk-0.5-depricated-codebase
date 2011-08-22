@@ -13,6 +13,8 @@ CONFIG += qt plugin
 
 DEFINES += plexyshaders_EXPORTS
 
+DESTDIR = $$top_destdir
+
 TARGETPATH = Qt/labs/shaders
 target.path = $$[QT_INSTALL_IMPORTS]/$$TARGETPATH
 
@@ -64,3 +66,5 @@ qmlfiles.files = qmldir
 qmlfiles.path = $$[QT_INSTALL_IMPORTS]/$$TARGETPATH
 
 INSTALLS += target qmlfiles
+
+include($$top_srcdir/deploy.pri)

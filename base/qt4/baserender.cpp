@@ -113,6 +113,8 @@ void BaseRender::resizeGL(int w, int h)
 
 void BaseRender::paintEvent(QPaintEvent *event)
 {
+    Q_UNUSED(event);
+
     QPainter p;
     p.begin(this);
     p.setRenderHint(QPainter::Antialiasing);

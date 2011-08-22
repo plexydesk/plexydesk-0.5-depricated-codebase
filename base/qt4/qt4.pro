@@ -9,9 +9,11 @@ TEMPLATE = lib
 
 QT += core gui opengl declarative network svg
 
-INCLUDEPATH += shaders
+INCLUDEPATH += $$top_srcdir/base/qt4/shaders
 
 DEFINES += plexydeskcore_EXPORTS
+
+DESTDIR = $$top_destdir
 
 CONFIG += qt
 
@@ -54,7 +56,14 @@ HEADERS = abstractplugininterface.h \
 		widgetinterface.h \
 		widgetplugin.h
 
-LIBS += -L$$top_destdir -lplexyshaders
+CONFIG(debug, debug|release) {
+    LIBS += -lplexyshadersd
+}
+
+CONFIG(release, debug|release) {
+    LIBS += -lplexyshaders
+}
 
 TARGET = plexydeskcore
 
+include($$top_srcdir/deploy.pri)
