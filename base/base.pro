@@ -1,3 +1,3 @@
 TEMPLATE = subdirs
 
-SUBDIRS = qt4/shaders
+SUBDIRS = qt4/shaders qt4
