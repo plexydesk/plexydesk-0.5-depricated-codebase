@@ -92,8 +92,8 @@ QDeclarativeEngine *Config::newQmlEngine()
 
 Config::Config(const QString &organization,
      const QString &application, QObject *parent) :
-    d(new Private),
-    QObject(parent)
+    QObject(parent),
+    d(new Private)
 {
     d->mSettings = new QSettings(organization, application, this);
 
@@ -365,6 +365,8 @@ QString Config::plexydeskBasePath()
 
     return basePath;
 #endif
+
+    return QString();
 }
 
 }
