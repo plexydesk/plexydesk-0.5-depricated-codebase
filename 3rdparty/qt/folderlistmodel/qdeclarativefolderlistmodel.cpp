@@ -310,7 +310,7 @@ QVariant QDeclarativeFolderListModel::getMimeTypeImagePath(const QString file) c
         imgfile = "iso.png";
 
     /* Packages */
-    else if (mimeType.contains(QRegExp("x-(apple-diskimage|rpm|deb)", Qt::CaseInsensitive)))
+    else if (mimeType.contains(QRegExp("x-(apple-diskimage|rpm|deb|msi)", Qt::CaseInsensitive)))
         imgfile = "package.png";
 
     /* Misc */
@@ -330,12 +330,13 @@ QVariant QDeclarativeFolderListModel::getFileTypeImagePath(const QString file) c
 {
     QString fileType = file.toLower().section(" ",0,0);
 
-//    qDebug() << "Requested icon for: " << file << " -> " << fileType;
-
     QString imgfile;
 
-    if (fileType.compare("folder") == 0)
+    // On win folders are reported as "File Folder", on Lin as "Folder"
+    if (file.contains("folder", Qt::CaseInsensitive))
         imgfile = "folder";
+    else if (file.contains(QRegExp("drive|device", Qt::CaseInsensitive)))
+        imgfile = "hdd";
 
     /* Executables */
     else if (fileType.compare("exe") == 0)
@@ -420,7 +421,7 @@ QVariant QDeclarativeFolderListModel::getFileTypeImagePath(const QString file) c
         imgfile = "iso";
 
     /* Packages */
-    else if (fileType.contains(QRegExp("^(rpm|deb|dmg|tgz|ebuild)")))
+    else if (fileType.contains(QRegExp("^(rpm|deb|dmg|tgz|ebuild|msi)")))
         imgfile = "package";
 
     /* Misc */
@@ -430,6 +431,8 @@ QVariant QDeclarativeFolderListModel::getFileTypeImagePath(const QString file) c
     /* Unknown */
     else
         imgfile = "unknown";
+
+//    qDebug() << "Requested icon for: " << file << " (" << fileType << ") --> image://plexydesk/" << imgfile;
 
     return QVariant("image://plexydesk/" + imgfile);
 }
