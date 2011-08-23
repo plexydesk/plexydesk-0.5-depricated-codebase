@@ -65,6 +65,6 @@ OTHER_FILES = qmldir
 qmlfiles.files = qmldir
 qmlfiles.path = $$[QT_INSTALL_IMPORTS]/$$TARGETPATH
 
-INSTALLS += target qmlfiles
+INSTALLS += qmlfiles
 
 include($$top_srcdir/deploy.pri)
