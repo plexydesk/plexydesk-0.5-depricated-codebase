@@ -27,4 +27,5 @@ LIBS += -lplexyshaders -lplexydeskcore
 
 TARGET = plexymime
 
-include($$top_srcdir/deploy.pri)
+target.path = $$top_destdir
+INSTALLS += target

@@ -23,4 +23,5 @@ HEADERS = qwebviewitem.h
 
 TARGET = webqgv
 
-include($$top_srcdir/deploy.pri)
+target.path = $$top_destdir
+INSTALLS += target

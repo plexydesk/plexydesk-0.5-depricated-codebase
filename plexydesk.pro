@@ -36,8 +36,6 @@ else {
     system(echo $${LITERAL_HASH}define BUILD_MODE \"Release\" >> build\\config.h)
 }
 
-message("Copying files")
-
 top_srcdir  = .\
 
 ! include( $$top_srcdir/common.pri ) {
@@ -67,39 +65,63 @@ system($$copyenv artwork\\themepacks\\default\\main.cfg $${sharedir}\\plexy\\the
 system($$copyenv artwork\\icons\\plexydesk.png $${sharedir}\\plexy\\)
 system($$copyenv artwork\\widgets\\* $${sharedir}\\plexy\\skins\\widgets\\)
 
-message("Copying Qt libraries")
-QT_COPY_TO   = $$replace(OUT_PWD,/,\\)\\$${DESTDIR}
+QT_COPY_TO   = $$replace(OUT_PWD,/,\\)\\$${DESTDIR}\\
 
-CONFIG(debug, debug|release) {
-    system($$copyenv %QTDIR%\\bin\\QtCored4.dll $${QT_COPY_TO})
-    system($$copyenv %QTDIR%\\bin\\QtGuid4.dll $${QT_COPY_TO})
-    system($$copyenv %QTDIR%\\bin\\QtMultimediad4.dll $${QT_COPY_TO})
-    system($$copyenv %QTDIR%\\bin\\QtNetworkd4.dll $${QT_COPY_TO})
-    system($$copyenv %QTDIR%\\bin\\QtScriptd4.dll $${QT_COPY_TO})
-    system($$copyenv %QTDIR%\\bin\\QtWebKitd4.dll $${QT_COPY_TO})
-    system($$copyenv %QTDIR%\\bin\\QtXmld4.dll $${QT_COPY_TO})
-    system($$copyenv %QTDIR%\\bin\\QtDeclaratived4.dll $${QT_COPY_TO})
-    system($$copyenv %QTDIR%\\bin\\QtOpenGLd4.dll $${QT_COPY_TO})
-    system($$copyenv %QTDIR%\\bin\\QtScriptd4.dll $${QT_COPY_TO})
-    system($$copyenv %QTDIR%\\bin\\QtScriptToolsd4.dll $${QT_COPY_TO})
-    system($$copyenv %QTDIR%\\bin\\QtSqld4.dll $${QT_COPY_TO})
-    system($$copyenv %QTDIR%\\bin\\QtSvgd4.dll $${QT_COPY_TO})
-    system($$copyenv %QTDIR%\\bin\\QtXmlPatternsd4.dll $${QT_COPY_TO})
+win32 {
+    CONFIG(debug, debug|release) {
+        system($$copyenv %QTDIR%\\bin\\QtCored4.dll $${QT_COPY_TO})
+        system($$copyenv %QTDIR%\\bin\\QtGuid4.dll $${QT_COPY_TO})
+        system($$copyenv %QTDIR%\\bin\\QtMultimediad4.dll $${QT_COPY_TO})
+        system($$copyenv %QTDIR%\\bin\\QtNetworkd4.dll $${QT_COPY_TO})
+        system($$copyenv %QTDIR%\\bin\\QtScriptd4.dll $${QT_COPY_TO})
+        system($$copyenv %QTDIR%\\bin\\QtWebKitd4.dll $${QT_COPY_TO})
+        system($$copyenv %QTDIR%\\bin\\QtXmld4.dll $${QT_COPY_TO})
+        system($$copyenv %QTDIR%\\bin\\QtDeclaratived4.dll $${QT_COPY_TO})
+        system($$copyenv %QTDIR%\\bin\\QtOpenGLd4.dll $${QT_COPY_TO})
+        system($$copyenv %QTDIR%\\bin\\QtScriptd4.dll $${QT_COPY_TO})
+        system($$copyenv %QTDIR%\\bin\\QtScriptToolsd4.dll $${QT_COPY_TO})
+        system($$copyenv %QTDIR%\\bin\\QtSqld4.dll $${QT_COPY_TO})
+        system($$copyenv %QTDIR%\\bin\\QtSvgd4.dll $${QT_COPY_TO})
+        system($$copyenv %QTDIR%\\bin\\QtXmlPatternsd4.dll $${QT_COPY_TO})
+    }
+
+    CONFIG(release, debug|release) {
+        system($$copyenv %QTDIR%\\bin\\QtCore4.dll $${QT_COPY_TO})
+        system($$copyenv %QTDIR%\\bin\\QtGui4.dll $${QT_COPY_TO})
+        system($$copyenv %QTDIR%\\bin\\QtMultimedia4.dll $${QT_COPY_TO})
+        system($$copyenv %QTDIR%\\bin\\QtNetwork4.dll $${QT_COPY_TO})
+        system($$copyenv %QTDIR%\\bin\\QtScript4.dll $${QT_COPY_TO})
+        system($$copyenv %QTDIR%\\bin\\QtWebKit4.dll $${QT_COPY_TO})
+        system($$copyenv %QTDIR%\\bin\\QtXml4.dll $${QT_COPY_TO})
+        system($$copyenv %QTDIR%\\bin\\QtDeclarative4.dll $${QT_COPY_TO})
+        system($$copyenv %QTDIR%\\bin\\QtOpenGL4.dll $${QT_COPY_TO})
+        system($$copyenv %QTDIR%\\bin\\QtScript4.dll $${QT_COPY_TO})
+        system($$copyenv %QTDIR%\\bin\\QtScriptTools4.dll $${QT_COPY_TO})
+        system($$copyenv %QTDIR%\\bin\\QtSql4.dll $${QT_COPY_TO})
+        system($$copyenv %QTDIR%\\bin\\QtSvg4.dll $${QT_COPY_TO})
+        system($$copyenv %QTDIR%\\bin\\QtXmlPatterns4.dll $${QT_COPY_TO})
+    }
 }
 
 CONFIG(release, debug|release) {
-    system($$copyenv %QTDIR%\\bin\\QtCore4.dll $${QT_COPY_TO})
-    system($$copyenv %QTDIR%\\bin\\QtGui4.dll $${QT_COPY_TO})
-    system($$copyenv %QTDIR%\\bin\\QtMultimedia4.dll $${QT_COPY_TO})
-    system($$copyenv %QTDIR%\\bin\\QtNetwork4.dll $${QT_COPY_TO})
-    system($$copyenv %QTDIR%\\bin\\QtScript4.dll $${QT_COPY_TO})
-    system($$copyenv %QTDIR%\\bin\\QtWebKit4.dll $${QT_COPY_TO})
-    system($$copyenv %QTDIR%\\bin\\QtXml4.dll $${QT_COPY_TO})
-    system($$copyenv %QTDIR%\\bin\\QtDeclarative4.dll $${QT_COPY_TO})
-    system($$copyenv %QTDIR%\\bin\\QtOpenGL4.dll $${QT_COPY_TO})
-    system($$copyenv %QTDIR%\\bin\\QtScript4.dll $${QT_COPY_TO})
-    system($$copyenv %QTDIR%\\bin\\QtScriptTools4.dll $${QT_COPY_TO})
-    system($$copyenv %QTDIR%\\bin\\QtSql4.dll $${QT_COPY_TO})
-    system($$copyenv %QTDIR%\\bin\\QtSvg4.dll $${QT_COPY_TO})
-    system($$copyenv %QTDIR%\\bin\\QtXmlPatterns4.dll $${QT_COPY_TO})
+    build_postfix = release
 }
+
+CONFIG(debug, debug|release) {
+    build_postfix = debug
+}
+
+qtconf = $${PWD}/build/$$build_postfix/lib/qt4
+
+unix {
+    system(rm \"$${top_destdir}\\qt.conf\")
+    system(touch NUL \"$${top_destdir}\\qt.conf\")
+}
+
+win32 {
+    system(del \"$${top_destdir}\\qt.conf\")
+    system(copy NUL \"$${top_destdir}\\qt.conf\")
+}
+
+system(echo [Paths] >> \"$$top_destdir\\qt.conf\")
+system(echo Prefix = $${qtconf} >> \"$$top_destdir\\qt.conf\")

@@ -29,7 +29,7 @@ LIBS += -lplexyshaders -lplexydeskcore
 TARGET = plexyclock
 
 desktop_files.files = clock.desktop
-desktop_files.path = $$top_destdir/share/plexy/ext/groups
+desktop_files.path = $$sharedir/plexy/ext/groups
 
 SKIN_FILES = clock/background.png \
         clock/clock-shadow.png \
@@ -46,10 +46,8 @@ SKIN_FILES = clock/background.png \
         clock/thedot.png
 
 clock_skin_files.files = $$SKIN_FILES
-clock_skin_files.path = $$top_destdir/share/plexy/skins/default/clock
+clock_skin_files.path = $$sharedir/plexy/skins/default/clock
 
 INSTALLS += clock_skin_files
-
 INSTALLS += desktop_files
 
-include($$top_srcdir/deploy.pri)

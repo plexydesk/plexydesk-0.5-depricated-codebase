@@ -60,4 +60,5 @@ LIBS += -lplexyshaders
 
 TARGET = plexydeskcore
 
-include($$top_srcdir/deploy.pri)
+target.path = $$top_destdir
+INSTALLS += target

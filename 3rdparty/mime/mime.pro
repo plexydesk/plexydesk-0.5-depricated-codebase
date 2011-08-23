@@ -26,4 +26,5 @@ LIBS += -lplexyshaders -lplexydeskcore
 
 TARGET = mimetype
 
-include($$top_srcdir/deploy.pri)
+target.path = $$top_destdir
+INSTALLS += target
