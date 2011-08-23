@@ -22,7 +22,7 @@
 
 Clock::Clock(QObject *object)
 {
-
+    Q_UNUSED(object);
 }
 
 Clock::~Clock()

@@ -40,13 +40,7 @@ unix {
             XAtoms.h
 }
 
-CONFIG(debug, debug|release) {
-    LIBS += -lplexymimed -lplexyshadersd -lplexydeskcored
-}
-
-CONFIG(release, debug|release) {
-    LIBS += -lplexymime -lplexyshaders -lplexydeskcore
-}
+LIBS += -lplexymime -lplexyshaders -lplexydeskcore
 
 TARGET = plexydesk
 

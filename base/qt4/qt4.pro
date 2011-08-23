@@ -56,13 +56,7 @@ HEADERS = abstractplugininterface.h \
 		widgetinterface.h \
 		widgetplugin.h
 
-CONFIG(debug, debug|release) {
-    LIBS += -lplexyshadersd
-}
-
-CONFIG(release, debug|release) {
-    LIBS += -lplexyshaders
-}
+LIBS += -lplexyshaders
 
 TARGET = plexydeskcore
 

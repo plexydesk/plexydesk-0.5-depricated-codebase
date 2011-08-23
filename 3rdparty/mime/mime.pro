@@ -19,15 +19,10 @@ DESTDIR = $$top_destdir
 
 SOURCES = freedesktopmime.cpp
 
-HEADERS = freedesktopmime.h
+HEADERS = freedesktopmime.h \
+        mime_globals.h
 
-CONFIG(debug, debug|release) {
-    LIBS += -lplexyshadersd -lplexydeskcored
-}
-
-CONFIG(release, debug|release) {
-    LIBS += -lplexyshaders -lplexydeskcore
-}
+LIBS += -lplexyshaders -lplexydeskcore
 
 TARGET = mimetype
 

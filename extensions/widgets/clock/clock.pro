@@ -24,13 +24,7 @@ HEADERS = clock.h \
         clockinterface.h \
         clockwidget.h
 
-CONFIG(debug, debug|release) {
-    LIBS += -lplexyshadersd -lplexydeskcored
-}
-
-CONFIG(release, debug|release) {
-    LIBS += -lplexyshaders -lplexydeskcore
-}
+LIBS += -lplexyshaders -lplexydeskcore
 
 TARGET = plexyclock
 

@@ -26,7 +26,7 @@ win32 {
 system(echo $${LITERAL_HASH}define PLEXYNAME \"$${ApplicationName}\" >> build\\config.h)
 system(echo $${LITERAL_HASH}define PLEXYVERSION \"$${ApplicationMainVersion}\" >> build\\config.h)
 system(echo $${LITERAL_HASH}define PLEXYDATE \"$${ApplicationDate}\" >> build\\config.h)
-system(echo $${LITERAL_HASH}define PLEXYQTIMPORTSDIR \"qt4\\\\imports\" >> build\\config.h)
+system(echo $${LITERAL_HASH}define PLEXYQTIMPORTSDIR \"qt4//imports//\" >> build\\config.h)
 system(echo $${LITERAL_HASH}define PLEXYRESOURCESDIR \"$${ResourcesDir}\" >> build\\config.h)
 
 CONFIG(debug, debug|release) {

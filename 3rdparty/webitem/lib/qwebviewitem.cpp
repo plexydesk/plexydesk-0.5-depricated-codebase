@@ -199,6 +199,9 @@ void QWebViewItem::setPage(QWebPage *page)
 
 void QWebViewItem::scrollReqest(int dx, int dy, const QRect &r)
 {
+    Q_UNUSED(dx);
+    Q_UNUSED(dy);
+
     update(r);
 }
 
@@ -461,8 +464,10 @@ void QWebViewItem::resizeEvent(QResizeEvent *e)
 
 /*! \reimp
  */
-void QWebViewItem::paint ( QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget  )
+void QWebViewItem::paint ( QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {
+    Q_UNUSED(widget);
+
     if (!d->page)
         return;
 

@@ -31,9 +31,13 @@ class ClockInterface : public PlexyDesk::WidgetInterface
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
 public :
-        ClockInterface(QObject *object = 0) {
+    ClockInterface(QObject *object = 0)
+    {
+        Q_UNUSED(object);
     }
-    PlexyDesk::BasePlugin *instance() {
+
+    PlexyDesk::BasePlugin *instance()
+    {
         return new Clock(this);
     }
 };

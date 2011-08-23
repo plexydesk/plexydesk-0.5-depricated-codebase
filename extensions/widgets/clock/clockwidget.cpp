@@ -181,7 +181,7 @@ void ClockWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem *e, Q
              date.width(), date.height()), date);
 }
 
-void ClockWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *widget)
+void ClockWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem *, QWidget *)
 {
 /*
     p->setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing | QPainter::HighQualityAntialiasing);
