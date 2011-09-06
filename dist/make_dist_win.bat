@@ -1,4 +1,4 @@
-@echo off
+rem @echo off
 
 rem Script for building and packing PlexyDesk on a Windows Platform
 rem Authors:
@@ -269,18 +269,21 @@ echo You are missing the QTDIR in your PATH. Set it first. Aborting
 goto ERROR
 
 :check_mingw_var
+echo bla
 if "%MINGW_VERSION%" EQU "none" goto clean_env_var
-if "%MINGW_BIN_DIR%" NEQ "" goto clean_env_var
+if "%MINGW_BIN_DIR%" NEQ "" goto clean_env_var_mingw
 echo You are missing the MINGW_BIN_DIR in your PATH. Set it first. Aborting
 goto ERROR
 
+:clean_env_var_mingw
+if "%MINGW_BIN_DIR:~-1,1%" EQU "\" set MINGW_BIN_DIR=%MINGW_BIN_DIR:~0,-1%
+echo Found MINGW_BIN_DIR: %MINGW_BIN_DIR%
+
 :clean_env_var
 rem Then cleanup trailing slashes from env variables. xcopy doesn't like two backslashes
-if "%MINGW_BIN_DIR:~-1,1%" EQU "\" set MINGW_BIN_DIR=%MINGW_BIN_DIR:~0,-1%
 if "%QTDIR:~-1,1%" EQU "\" set QTDIR=%QTDIR:~0,-1%
 
 echo Found QTDIR: %QTDIR%
-echo Found MINGW_BIN_DIR: %MINGW_BIN_DIR%
 echo.
 
 rem Then ensure we have any debug/release QT libs
