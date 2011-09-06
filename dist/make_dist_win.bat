@@ -1,4 +1,4 @@
-rem @echo off
+@echo off
 
 rem Script for building and packing PlexyDesk on a Windows Platform
 rem Authors:
@@ -269,7 +269,6 @@ echo You are missing the QTDIR in your PATH. Set it first. Aborting
 goto ERROR
 
 :check_mingw_var
-echo bla
 if "%MINGW_VERSION%" EQU "none" goto clean_env_var
 if "%MINGW_BIN_DIR%" NEQ "" goto clean_env_var_mingw
 echo You are missing the MINGW_BIN_DIR in your PATH. Set it first. Aborting

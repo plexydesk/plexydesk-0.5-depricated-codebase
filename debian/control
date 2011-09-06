@@ -30,9 +30,8 @@ Depends: ${shlibs:Depends}, ${misc:Depends},
          libqt4-declarative,
          libqt4-dbus,
          libqtwebkit4,
-         libqtwebkit-qmlwebkitplugin
-Description: A Desktop extension which lets you efficiently organise and use
- your Desktop.
+         libqtwebkit4-declarative | libqtwebkit-qmlwebkitplugin
+Description: A Desktop extension letting you efficiently organise and use your Desktop
  .
  PlexyDesk is a lightweight Desktop, and it's not a Desktop Environment like
  KDE or GNOME.
