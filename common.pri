@@ -1,4 +1,4 @@
-INCLUDEPATH += . .. $$top_srcdir/build
+INCLUDEPATH += . .. $${top_srcdir}/build
 
 CONFIG(release, debug|release) {
     build_postfix = release
@@ -8,20 +8,21 @@ CONFIG(debug, debug|release) {
     build_postfix = debug
 }
 
-top_builddir     = $$top_srcdir\\output\\$$build_postfix
-top_destdir      = $$top_srcdir\\build\\$$build_postfix\\bin
-top_destdirlib   = $$top_srcdir\\build\\$$build_postfix\\lib
-builddir         = $$top_builddir\\$$srcdir
-plexyext         = $$top_destdirlib\\plexyext
-sharedir         = $$top_srcdir\\build\\$$build_postfix\\share
+top_builddir     = $${OUT_PWD}/$${top_srcdir}/build/plexydesk-ready-build
+top_destdirbin   = $${top_builddir}/bin
+top_destdirlib   = $${top_builddir}/lib
+top_outdir       = $${OUT_PWD}/$${top_srcdir}/build
 
-OBJECTS_DIR      = $$builddir\\.objs
-MOC_DIR          = $$builddir\\.mocs
-UI_DIR           = $$builddir\\.uis
-RCC_DIR          = $$builddir\\.rccs
+builddir         = $${top_outdir}/$${build_postfix}/$${srcdir}
+plexyext         = $${top_destdirlib}/plexyext
+sharedir         = $${top_builddir}/share
 
-DESTDIR          = $$top_destdir
+OBJECTS_DIR      = $$builddir/.objs
+MOC_DIR          = $$builddir/.mocs
+UI_DIR           = $$builddir/.uis
+RCC_DIR          = $$builddir/.rccs
+DESTDIR          = $$builddir
 
-LIBS += -L$$top_destdirlib -L$$top_destdir
+LIBS += -L$$top_destdirlib -L$$top_destdirbin
 
 DEPENDPATH += . $$top_srcdir

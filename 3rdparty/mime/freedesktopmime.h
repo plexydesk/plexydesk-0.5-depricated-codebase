@@ -23,7 +23,7 @@
 #include <QDomElement>
 #include <QFile>
 
-#include "config.h"
+#include "mime_globals.h"
 
 class MIME_EXPORT QFreeDesktopMime : public QObject {
     Q_OBJECT

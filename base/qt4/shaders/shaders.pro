@@ -1,11 +1,11 @@
 top_srcdir  = ../../..
-srcdir      = qmlshadersplugin
+srcdir = plexyshaders
 
-! include( $$top_srcdir/common.pri ) {
+! include( $${top_srcdir}/common.pri ) {
     error( Couldn\'t find the common.pri file! )
 }
 
-INCLUDEPATH += ../../qt4
+INCLUDEPATH += $${IN_PWD}/../
 TEMPLATE = lib
 TARGET = plexyshaders
 QT += declarative opengl
@@ -13,7 +13,7 @@ CONFIG += qt plugin
 
 DEFINES += plexyshaders_EXPORTS
 
-DESTDIR = $$top_destdir
+win32:!wince*:DLLDESTDIR = $${top_destdirlib}
 
 TARGETPATH = Qt/labs/shaders
 target.path = $$[QT_INSTALL_IMPORTS]/$$TARGETPATH
@@ -54,8 +54,8 @@ HEADERS += \
 
 OTHER_FILES = qmldir
 
-!equals(_PRO_FILE_PWD_, $$OUT_PWD) {
-    copy_qmldir.target = $$OUT_PWD/qmldir
+!equals(_PRO_FILE_PWD_, $${DESTDIR}) {
+    copy_qmldir.target = $${DESTDIR}/qmldir
     copy_qmldir.depends = $$_PRO_FILE_PWD_/qmldir
     copy_qmldir.commands = $(COPY_FILE) \"$$replace(copy_qmldir.depends, /, $$QMAKE_DIR_SEP)\" \"$$replace(copy_qmldir.target, /, $$QMAKE_DIR_SEP)\"
     QMAKE_EXTRA_TARGETS += copy_qmldir
@@ -67,5 +67,5 @@ qmlfiles.path = $$[QT_INSTALL_IMPORTS]/$$TARGETPATH
 
 INSTALLS += qmlfiles
 
-target.path = $$top_destdir
+target.path = $$top_destdirlib
 INSTALLS += target
