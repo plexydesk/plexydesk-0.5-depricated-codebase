@@ -17,52 +17,52 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
-#include "imageplugin.h"
+#include "folderplugin.h"
 #include <pluginloader.h>
 #include <desktopwidget.h>
 #include <QDeclarativeContext>
 
-ImagePlugin::ImagePlugin(QObject *object) :
+FolderPlugin::FolderPlugin(QObject *object) :
     mFrameParentitem(0)
 {
    mThemePack = new PlexyDesk::ThemepackLoader("default", this);
 }
 
-ImagePlugin::~ImagePlugin()
+FolderPlugin::~FolderPlugin()
 {
     if (mThemePack) {
         delete mThemePack;
     }
 }
 
-void ImagePlugin::searchImage()
+void FolderPlugin::searchImage()
 {
 }
 
 
-void ImagePlugin::onDataReady()
+void FolderPlugin::onDataReady()
 {
 }
 
-void ImagePlugin::setData(const QVariantMap &data)
+void FolderPlugin::setData(const QVariantMap &data)
 {
     qDebug() << Q_FUNC_INFO << data;
       QString photo_path = data["photo_path"].toString();
       if (! photo_path.isEmpty() || ! photo_path.isNull()) {
           mImageSource = photo_path;
-          emit imageSourceChanged();
+          emit dirSourceChanged();
       }
 }
 
-QGraphicsItem *ImagePlugin::item()
+QGraphicsItem *FolderPlugin::item()
 {
    if (mFrameParentitem == NULL) {
        mFrameParentitem = new PlexyDesk::DesktopWidget(QRectF(0.0, 0.0, 400.0, 400.0));
        QDeclarativeContext *context = PlexyDesk::Config::qmlEngine()->rootContext();
-       const QString qmlData = mThemePack->hiddenQmlWidgets(QLatin1String("photo"));
+       const QString qmlData = mThemePack->hiddenQmlWidgets(QLatin1String("folderview"));
 
        qDebug() << Q_FUNC_INFO << qmlData;
-       context->setContextProperty("PhotoSource", this);
+       context->setContextProperty("DirSource", this);
        mFrameParentitem->qmlFromUrl(QUrl(qmlData));
    }
 
