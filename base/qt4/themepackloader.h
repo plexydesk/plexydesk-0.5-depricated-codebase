@@ -28,6 +28,7 @@ public:
     QString wallpaper();
     QString qmlFilesFromTheme(const QString &themeName);
     QString qmlBackdropFromTheme();
+    QVariant getProperty(const QString &themeName, const QString &prop);
 
     PlexyDesk::DesktopWidget::State widgetView(const QString &name);
 

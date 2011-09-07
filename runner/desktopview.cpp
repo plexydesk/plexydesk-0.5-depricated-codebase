@@ -87,7 +87,6 @@ public:
     float column;
     float margin;
     bool openglOn;
-    QGraphicsDropShadowEffect *mShadowEffect;
     QGraphicsItem *backgroundWallpaperItem;
 };
 
@@ -144,11 +143,6 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
     d->bgPlugin = static_cast<BackdropPlugin *>(PluginLoader::getInstance()->instance("classicbackdrop"));
     d->row = d->column = 48.0;
     d->margin = 10.0;
-
-    /* Effects */
-
-    d->mShadowEffect = new QGraphicsDropShadowEffect(this);
-    d->mShadowEffect->setBlurRadius(8.0);
 
     connect(Config::getInstance(), SIGNAL(configChanged()), this, SLOT(backgroundChanged()));
     connect(Config::getInstance(), SIGNAL(widgetAdded()), this, SLOT(onNewWidget()));
@@ -229,6 +223,17 @@ void DesktopView::setThemePack(const QString &name)
             connect(parent, SIGNAL(close()), this, SLOT(closeDesktopWidget()));
             QPoint pos = d->mThemeLoader->widgetPos(qmlWidget);
             parent->setPos(pos);
+
+            //check shadow prop
+
+            bool shadow_on = d->mThemeLoader->getProperty(qmlWidget, "shadow").toBool();
+            qDebug() << Q_FUNC_INFO << qmlWidget << " Shadow On :" << shadow_on;
+            if(shadow_on) {
+              QGraphicsDropShadowEffect * effect  = new QGraphicsDropShadowEffect(this);
+              effect->setBlurRadius(8.0);
+              effect->setColor(QColor(0, 0, 0));
+              parent->setGraphicsEffect(effect);
+            }
         }
 
     }

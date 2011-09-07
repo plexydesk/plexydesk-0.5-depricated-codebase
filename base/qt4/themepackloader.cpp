@@ -129,6 +129,16 @@ QString ThemepackLoader::hiddenQmlWidgets(const QString &name)
     return QDir::toNativeSeparators(prefix.absoluteFilePath(rv));
 }
 
+QVariant ThemepackLoader::getProperty(const QString &widgetName, const QString &prop)
+{
+    QVariant rv;
+    d->mSettings->beginGroup(widgetName);
+    rv = d->mSettings->value(prop);
+    d->mSettings->endGroup();
+
+    return rv; 
+}
+
 QString ThemepackLoader::qmlFilesFromTheme(const QString &name)
 {
     d->mSettings->beginGroup(name);
