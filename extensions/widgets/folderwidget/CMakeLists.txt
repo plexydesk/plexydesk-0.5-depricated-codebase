@@ -1,4 +1,5 @@
-ADD_SUBDIRECTORY(img)
+# photoframe widget already provides these
+#ADD_SUBDIRECTORY(img)
 
 SET(sourceFiles
     interface.cpp
