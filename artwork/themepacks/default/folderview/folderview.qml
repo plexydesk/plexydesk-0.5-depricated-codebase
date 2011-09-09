@@ -118,6 +118,7 @@ Rectangle{
     FolderListModel {
         id: flm
         sortField : FolderListModel.Type
+        folder : DirSource.dirSource
         nameFilters: ["*"]
     }
 

@@ -47,11 +47,11 @@ void ImagePlugin::onDataReady()
 void ImagePlugin::setData(const QVariantMap &data)
 {
     qDebug() << Q_FUNC_INFO << data;
-      QString photo_path = data["photo_path"].toString();
-      if (! photo_path.isEmpty() || ! photo_path.isNull()) {
-          mImageSource = photo_path;
-          emit imageSourceChanged();
-      }
+    QString photo_path = data["photo_path"].toString();
+    if (! photo_path.isEmpty() || ! photo_path.isNull()) {
+        mImageSource = photo_path;
+        emit imageSourceChanged();
+    }
 }
 
 QGraphicsItem *ImagePlugin::item()

@@ -51,6 +51,8 @@ class PLEXYDESK_EXPORT Config : public QObject
 public:
     static Config *getInstance();
     static QDeclarativeEngine *qmlEngine();
+    static QDeclarativeEngine *newQmlEngine();
+
     virtual ~Config();
 
     void read();

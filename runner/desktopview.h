@@ -24,6 +24,7 @@
 
 #include <plexy.h>
 #include <desktopwidget.h>
+#include <widgetplugin.h>
 
 
 class DesktopView : public QGraphicsView
@@ -46,6 +47,7 @@ public:
     void setThemePack(const QString &name);
     void addWallpaperItem();
     void registerPhotoDialog();
+    PlexyDesk::WidgetPlugin *registerHandler(const QString &name);
 
 #ifdef Q_WS_X11
     bool checkXCompositeExt();

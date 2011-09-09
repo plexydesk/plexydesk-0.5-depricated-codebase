@@ -81,8 +81,13 @@ public:
     AbstractPluginInterface *bIface;
     BackdropPlugin *bgPlugin;
     PlexyDesk::ThemepackLoader *mThemeLoader;
+
     WidgetPlugin *mPhotoDialogProvider;
     DesktopWidget *mPhotoDialog;
+
+    WidgetPlugin *mDirProvider;
+    DesktopWidget *mDirWidget;
+
     float row;
     float column;
     float margin;
@@ -134,6 +139,9 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView
     d->mThemeLoader = new PlexyDesk::ThemepackLoader(PlexyDesk::Config::getInstance()->themepackName(), this);
     d->mPhotoDialogProvider = NULL;
     d->mPhotoDialog = NULL;
+    d->mDirProvider = NULL;
+    d->mDirWidget = NULL;
+
     d->mThemeLoader = new ThemepackLoader(PlexyDesk::Config::getInstance()->themepackName(), this);
     qDebug() << Q_FUNC_INFO << PlexyDesk::Config::getInstance()->wallpaper();
     if (PlexyDesk::Config::getInstance()->wallpaper().isEmpty()) {
@@ -418,8 +426,26 @@ void DesktopView::dropEvent(QDropEvent * event)
     const QString droppedFile = event->mimeData()->urls().value(0).toLocalFile();
 
     if ( !checkDropped(droppedFile) ) {
-        qDebug() << "Drop ignored...";
-        return;
+        QFileInfo info(droppedFile);
+        if (info.isDir()) {
+           qDebug() << Q_FUNC_INFO << "Dir Handler";
+           /* handle folders */
+
+            WidgetPlugin *dirWidgetPlugin = registerHandler (QLatin1String("folderwidget"));
+
+           if(dirWidgetPlugin) {
+             QVariantMap data;
+             data["dir_path"] = QVariant(droppedFile);
+             dirWidgetPlugin->setData(data);
+           } else {
+             qWarning() << Q_FUNC_INFO << "Dir Handler Not registered";
+           }
+
+           return;
+        } else {
+            qDebug() << Q_FUNC_INFO << "Drop ignored...";
+            return;
+        }
     }
 
     qDebug() << Q_FUNC_INFO << "Dropped file: " << droppedFile ;
@@ -436,14 +462,14 @@ void DesktopView::dropEvent(QDropEvent * event)
 
    if (d->mPhotoDialog) {
        d->mPhotoDialog->show();
-       d->mPhotoDialog->configState(DesktopWidget::NORMALSIDE);
+       //d->mPhotoDialog->configState(DesktopWidget::NORMALSIDE);
        QVariantMap data;
        data["photo_path"] = QVariant(droppedFile);
 
        if (d->mPhotoDialogProvider) {
-                    d->mPhotoDialogProvider->setData(data);
-            }
-        }
+           d->mPhotoDialogProvider->setData(data);
+       }
+    }
 
     qDebug() << "IMAGE Drop accepted...";
 //    Config::getInstance()->setWallpaper(droppedFile);
@@ -457,8 +483,12 @@ void DesktopView::dragEnterEvent (QDragEnterEvent * event)
 
     if ( event->mimeData()->urls().count() >= 0 ) {
         const QString droppedFile = event->mimeData()->urls().value(0).toLocalFile();
-        if ( checkDropped(droppedFile) )
+        if ( checkDropped(droppedFile) ) 
             event->accept();
+        QFileInfo info (droppedFile);
+
+        if(info.isDir())
+          event->accept();
     }
 }
 
@@ -497,6 +527,32 @@ void DesktopView::registerPhotoDialog()
     }
 
     d->mPhotoDialogProvider = provider;
+}
+//FIXME: Refactor so that we can avoid having a method per type 
+//
+WidgetPlugin *DesktopView::registerHandler(const QString &name)
+{
+    const QPoint pos (0.0, 0.0);
+    WidgetPlugin *provider = static_cast<WidgetPlugin *>(PluginLoader::getInstance()->instance(name));
+    if (provider) {
+        DesktopWidget *widget = (DesktopWidget *) provider->item();
+        if (widget) {
+            scene()->addItem(widget);
+
+            const QRectF viewRect (0.0, 0.0, this->width(), this->height());
+            const QPointF center = viewRect.center();
+
+            float x_pos = center.x() - (widget->boundingRect().width()/2);
+            float y_pos = center.y() - (widget->boundingRect().height()/2);
+
+            widget->setPos(x_pos, y_pos);
+
+            widget->configState(DesktopWidget::NORMALSIDE);
+        }
+        return provider;
+    }
+
+    return NULL;
 }
 
 void DesktopView::dragMoveEvent (QDragMoveEvent * event)

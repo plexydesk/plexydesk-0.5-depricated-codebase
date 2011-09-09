@@ -33,7 +33,7 @@ class QWidget;
 class FolderPlugin : public PlexyDesk::WidgetPlugin
 {
     Q_OBJECT
-    Q_PROPERTY(QString dirSource READ dirSource WRITE setImageSource NOTIFY dirSourceChanged)
+    Q_PROPERTY(QString dirSource READ dirSource WRITE setDirSource NOTIFY dirSourceChanged)
 
 public:
     FolderPlugin(QObject *object = 0);
@@ -47,7 +47,7 @@ public:
 
 public slots:
     void onDataReady();
-    void setImageSource(const QString &src)
+    void setDirSource(const QString &src)
     {
         mImageSource = src;
     }

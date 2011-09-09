@@ -68,6 +68,16 @@ Config *Config::getInstance()
 QDeclarativeEngine *Config::qmlEngine()
 {
     if (engine == 0) {
+        engine = newQmlEngine();
+        return engine;
+    } else {
+        return engine;
+    }
+}
+
+
+QDeclarativeEngine *Config::newQmlEngine()
+{
         qmlRegisterType<ShaderEffectItem>("Qt.labs.shaders", 1, 0, "ShaderEffectItem");
         qmlRegisterType<ShaderEffectSource>("Qt.labs.shaders", 1, 0, "ShaderEffectSource");
         engine = new QDeclarativeEngine;
@@ -76,9 +86,6 @@ QDeclarativeEngine *Config::qmlEngine()
         engine->addImageProvider(QLatin1String("plexydesk"), new ImageCache);
         engine->rootContext()->setContextProperty("plexydeskconfig", Config::getInstance());
         return engine;
-    } else {
-        return engine;
-    }
 }
 
 Config::Config(const QString &organization,

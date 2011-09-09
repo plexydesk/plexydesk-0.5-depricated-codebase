@@ -62,6 +62,7 @@ public:
     QPointF clickPos;
     bool backdrop;
     QGraphicsObject *qmlChild;
+    QDeclarativeEngine *qmlEngine;
 };
 
 DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QDeclarativeItem *parent) :
@@ -70,6 +71,7 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QDeclarativeIt
 {
     d->proxyWidget = 0;
     d->qmlChild = 0;
+    d->qmlEngine = Config::getInstance()->newQmlEngine();
     if (widget) {
         d->proxyWidget = new QGraphicsProxyWidget(this);
         d->proxyWidget->setFocusPolicy(Qt::StrongFocus);
@@ -191,6 +193,11 @@ void DesktopWidget::setBackFaceImage(QPixmap img)
     d->back = img;
 }
 
+QDeclarativeEngine *DesktopWidget::qmlEngine() const
+{
+  return d->qmlEngine;
+}
+
 void DesktopWidget::qmlFromUrl(const QUrl &url)
 {
     qDebug() << Q_FUNC_INFO << url;
@@ -198,8 +205,7 @@ void DesktopWidget::qmlFromUrl(const QUrl &url)
         delete d->qmlChild;
     }
 
-    QDeclarativeEngine *engine = QmlEngine();
-    QDeclarativeComponent component(engine, QDir::cleanPath(
+    QDeclarativeComponent component(d->qmlEngine, QDir::cleanPath(
                                                         url.toString(QUrl::StripTrailingSlash |
                                                         QUrl::RemoveScheme)));
 
@@ -213,7 +219,7 @@ void DesktopWidget::qmlFromUrl(const QUrl &url)
     }
 
     d->qmlChild =
-        qobject_cast<QGraphicsObject *>(component.create(engine->rootContext()));
+        qobject_cast<QGraphicsObject *>(component.create(d->qmlEngine->rootContext()));
     QRectF objectRect = d->qmlChild->boundingRect();
 
     d->saveRect = objectRect;
@@ -225,7 +231,7 @@ void DesktopWidget::qmlFromUrl(const QUrl &url)
     d->qmlChild->setCacheMode(QGraphicsItem::DeviceCoordinateCache);
 
     // forward signals
-    connect(engine, SIGNAL(quit()), this, SLOT(onQmlQuit()));
+    connect(d->qmlEngine, SIGNAL(quit()), this, SLOT(onQmlQuit()));
 }
 
 void DesktopWidget::onQmlQuit()

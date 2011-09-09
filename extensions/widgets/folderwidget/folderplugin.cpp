@@ -47,9 +47,9 @@ void FolderPlugin::onDataReady()
 void FolderPlugin::setData(const QVariantMap &data)
 {
     qDebug() << Q_FUNC_INFO << data;
-      QString photo_path = data["photo_path"].toString();
-      if (! photo_path.isEmpty() || ! photo_path.isNull()) {
-          mImageSource = photo_path;
+      QString dir_path = data["dir_path"].toString();
+      if (! dir_path.isEmpty() || ! dir_path.isNull()) {
+          mImageSource = dir_path;
           emit dirSourceChanged();
       }
 }
@@ -58,7 +58,7 @@ QGraphicsItem *FolderPlugin::item()
 {
    if (mFrameParentitem == NULL) {
        mFrameParentitem = new PlexyDesk::DesktopWidget(QRectF(0.0, 0.0, 400.0, 400.0));
-       QDeclarativeContext *context = PlexyDesk::Config::qmlEngine()->rootContext();
+       QDeclarativeContext *context = mFrameParentitem->qmlEngine()->rootContext();
        const QString qmlData = mThemePack->hiddenQmlWidgets(QLatin1String("folderview"));
 
        qDebug() << Q_FUNC_INFO << qmlData;
