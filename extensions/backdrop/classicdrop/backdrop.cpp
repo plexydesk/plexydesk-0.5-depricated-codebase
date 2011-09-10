@@ -114,14 +114,12 @@ QGraphicsItem *BgPlugin::item()
     if (mBackgroundItem == NULL) {
         QSize desktopSize;
 
-        QDeclarativeContext *context = PlexyDesk::Config::qmlEngine()->rootContext();
         desktopSize = QDesktopWidget().screenGeometry().size();
 #ifdef Q_WS_WIN
         // A 1px hack to make the widget fullscreen and not covering the toolbar on Win
         desktopSize.setHeight(desktopSize.height()-1);
 #endif
 
-        context->setContextProperty("backgroundSize", desktopSize);
 
         QPixmapCache::setCacheLimit((desktopSize.height()* desktopSize.width() * 32)/8);
 
@@ -142,11 +140,14 @@ QGraphicsItem *BgPlugin::item()
 
 
         if (PlexyDesk::Config::getInstance()->isOpenGL()) {
+                       mBackgroundItem = new PlexyDesk::DesktopWidget(QRectF(0.0, 0.0, desktopSize.width(),
+                    desktopSize.height()));
+
+            QDeclarativeContext *context = mBackgroundItem->qmlEngine()->rootContext();
+            context->setContextProperty("backgroundSize", desktopSize);
             context->setContextProperty("backgroundImage",
                 QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->wallpaper()));
 
-            mBackgroundItem = new PlexyDesk::DesktopWidget(QRectF(0.0, 0.0, desktopSize.width(),
-                    desktopSize.height()));
             mBackgroundItem->qmlFromUrl(QUrl(mThemePack->qmlBackdropFromTheme()));
             mBackgroundItem->setFlag(QGraphicsItem::ItemIsMovable, false);
 
