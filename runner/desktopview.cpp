@@ -431,7 +431,7 @@ void DesktopView::dropEvent(QDropEvent * event)
            qDebug() << Q_FUNC_INFO << "Dir Handler";
            /* handle folders */
 
-            WidgetPlugin *dirWidgetPlugin = registerHandler (QLatin1String("folderwidget"));
+            WidgetPlugin *dirWidgetPlugin = registerHandler (QLatin1String("folderwidget"), true);
 
            if(dirWidgetPlugin) {
              QVariantMap data;
@@ -530,7 +530,7 @@ void DesktopView::registerPhotoDialog()
 }
 //FIXME: Refactor so that we can avoid having a method per type 
 //
-WidgetPlugin *DesktopView::registerHandler(const QString &name)
+WidgetPlugin *DesktopView::registerHandler(const QString &name, bool effects_on)
 {
     const QPoint pos (0.0, 0.0);
     WidgetPlugin *provider = static_cast<WidgetPlugin *>(PluginLoader::getInstance()->instance(name));
@@ -548,6 +548,14 @@ WidgetPlugin *DesktopView::registerHandler(const QString &name)
             widget->setPos(x_pos, y_pos);
 
             widget->configState(DesktopWidget::NORMALSIDE);
+
+            if (effects_on) {
+              QGraphicsDropShadowEffect * effect  = new QGraphicsDropShadowEffect(this);
+              effect->setBlurRadius(8.0);
+              effect->setColor(QColor(0, 0, 0));
+
+              widget->setGraphicsEffect(effect);
+            }
         }
         return provider;
     }

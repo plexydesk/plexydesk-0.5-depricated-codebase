@@ -47,7 +47,7 @@ public:
     void setThemePack(const QString &name);
     void addWallpaperItem();
     void registerPhotoDialog();
-    PlexyDesk::WidgetPlugin *registerHandler(const QString &name);
+    PlexyDesk::WidgetPlugin *registerHandler(const QString &name, bool effects_on = false);
 
 #ifdef Q_WS_X11
     bool checkXCompositeExt();
