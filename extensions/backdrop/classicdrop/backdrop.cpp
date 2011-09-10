@@ -63,7 +63,7 @@ void BgPlugin::changeWallpaperItem()
 {
      if (PlexyDesk::Config::getInstance()->isOpenGL()) {
 
-          QDeclarativeContext *context = PlexyDesk::Config::qmlEngine()->rootContext();
+          QDeclarativeContext *context = mBackgroundItem->qmlEngine()->rootContext();
 
           // TODO: Make use of the PlexyDesk::Config::getInstance()->wallpaperMode() option
           // to set the context backgroundImage fillMode
