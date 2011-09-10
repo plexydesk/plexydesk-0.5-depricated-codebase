@@ -58,7 +58,7 @@ QGraphicsItem *ImagePlugin::item()
 {
    if (mFrameParentitem == NULL) {
        mFrameParentitem = new PlexyDesk::DesktopWidget(QRectF(0.0, 0.0, 400.0, 400.0));
-       QDeclarativeContext *context = PlexyDesk::Config::qmlEngine()->rootContext();
+       QDeclarativeContext *context = mFrameParentitem->qmlEngine()->rootContext();
        const QString qmlData = mThemePack->hiddenQmlWidgets(QLatin1String("photo"));
 
        qDebug() << Q_FUNC_INFO << qmlData;
