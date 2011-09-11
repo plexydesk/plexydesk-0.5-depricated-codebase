@@ -18,8 +18,8 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
-#ifndef IMAGE_CACHE_H
-#define IMAGE_CACHE_H
+#ifndef SVG_PROVIDER_H
+#define SVG_PROVIDER_H
 
 #include <QtCore>
 #include <QtGui>
@@ -31,11 +31,11 @@
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT ImageCache : public QDeclarativeImageProvider
+class PLEXYDESK_EXPORT SvgProvider : public QDeclarativeImageProvider
 {
 public:
-    ImageCache(QDeclarativeImageProvider::ImageType type = QDeclarativeImageProvider::Pixmap);
-    virtual ~ImageCache();
+    SvgProvider(QDeclarativeImageProvider::ImageType type = QDeclarativeImageProvider::Pixmap);
+    virtual ~SvgProvider();
 
     QPixmap requestPixmap(const QString &id, QSize *size, const QSize &requestedSize);
     bool isCached(QString &filename)  const;
@@ -43,7 +43,7 @@ public:
 
 protected:
     void load(const QString &themename);
-    QPixmap get(const QString &name);
+    QPixmap get(const QString &name, const QSize &size);
     void clear();
     bool drawSvg(QPainter *painter,
     QRectF rect, const QString &str, const QString &elementId);

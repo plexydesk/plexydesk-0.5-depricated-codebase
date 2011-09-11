@@ -422,7 +422,9 @@ void DesktopView::dropEvent(QDropEvent * event)
         qDebug() << "Drop ignored...";
         return;
     }
-
+   
+    // FIXME: Refactor this ugly handling 
+    //
     const QString droppedFile = event->mimeData()->urls().value(0).toLocalFile();
 
     if ( !checkDropped(droppedFile) ) {
@@ -431,7 +433,7 @@ void DesktopView::dropEvent(QDropEvent * event)
            qDebug() << Q_FUNC_INFO << "Dir Handler";
            /* handle folders */
 
-            WidgetPlugin *dirWidgetPlugin = registerHandler (QLatin1String("folderwidget"), true);
+            WidgetPlugin *dirWidgetPlugin = registerHandler (QLatin1String("folderwidget"));
 
            if(dirWidgetPlugin) {
              QVariantMap data;
@@ -448,8 +450,6 @@ void DesktopView::dropEvent(QDropEvent * event)
         }
     }
 
-    qDebug() << Q_FUNC_INFO << "Dropped file: " << droppedFile ;
-
     if ( droppedFile.contains(".qml") ) {
         qDebug() << "QML Drop accepted...";
         DesktopWidget *parent = new DesktopWidget(QRectF(0,0,0,0), 0, 0);
@@ -462,7 +462,6 @@ void DesktopView::dropEvent(QDropEvent * event)
 
    if (d->mPhotoDialog) {
        d->mPhotoDialog->show();
-       //d->mPhotoDialog->configState(DesktopWidget::NORMALSIDE);
        QVariantMap data;
        data["photo_path"] = QVariant(droppedFile);
 
@@ -471,8 +470,6 @@ void DesktopView::dropEvent(QDropEvent * event)
        }
     }
 
-    qDebug() << "IMAGE Drop accepted...";
-//    Config::getInstance()->setWallpaper(droppedFile);
     event->acceptProposedAction();
 }
 

@@ -6,6 +6,7 @@ SET(sourceFiles
     desktopwidget.cpp
     extensionfactory.cpp
     imagecache.cpp
+    svgprovider.cpp
     netwm.cpp
     pendingjob.cpp
     plexyconfig.cpp
@@ -33,6 +34,7 @@ SET(headerFiles
     desktopwidget.h
     extensionfactory.h
     imagecache.h
+    svgprovider.h
     netwm.h
     netwm_def.h
     netwm_p.h

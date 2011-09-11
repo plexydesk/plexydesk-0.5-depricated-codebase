@@ -79,7 +79,6 @@ public :
     void setDockImage(QPixmap);
     void setFaceImage(QPixmap);
     void setBackFaceImage(QPixmap);
-
     
     QDeclarativeEngine *qmlEngine() const;
     void qmlFromUrl(const QUrl &url);

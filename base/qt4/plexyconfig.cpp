@@ -31,6 +31,7 @@
 #include <QDeclarativeContext>
 #include <shadereffectitem.h>
 #include <shadereffectsource.h>
+#include <svgprovider.h>
 
 #ifdef Q_WS_X11
 #include <configadaptor.h>
@@ -84,6 +85,7 @@ QDeclarativeEngine *Config::newQmlEngine()
         engine->addImportPath(QDir::toNativeSeparators(
                     Config::getInstance()->plexydeskBasePath() + "/" + PLEXYQTIMPORTSDIR + "/"));
         engine->addImageProvider(QLatin1String("plexydesk"), new ImageCache);
+        engine->addImageProvider(QLatin1String("plexydesk_svgprovider"), new SvgProvider);
         engine->rootContext()->setContextProperty("plexydeskconfig", Config::getInstance());
         return engine;
 }

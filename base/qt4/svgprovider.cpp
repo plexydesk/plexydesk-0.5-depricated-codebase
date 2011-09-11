@@ -22,13 +22,13 @@
 #include <QtDebug>
 #include <QObject>
 
-#include <imagecache.h>
+#include <svgprovider.h>
 
 
 namespace PlexyDesk
 {
 
-class ImageCache::Private
+class SvgProvider::Private
 {
 public:
     Private() {
@@ -41,34 +41,35 @@ public:
 
 };
 
-void ImageCache::clear()
+void SvgProvider::clear()
 {
     d->map.clear();
 }
 
-ImageCache::ImageCache(QDeclarativeImageProvider::ImageType type) :
+SvgProvider::SvgProvider(QDeclarativeImageProvider::ImageType type) :
     QDeclarativeImageProvider(type), d(new Private)
 {
     load("default");
 }
 
-ImageCache::~ImageCache()
+SvgProvider::~SvgProvider()
 {
     delete d;
 }
 
-QPixmap ImageCache::requestPixmap(const QString &id, QSize *size, const QSize &requestedSize)
+QPixmap SvgProvider::requestPixmap(const QString &id, QSize *size, const QSize &requestedSize)
 {
+    qDebug() << Q_FUNC_INFO << requestedSize;
     if (size->width() <= 0 && size->height() <= 0) {
-        return get(id);
+        return get(id, requestedSize);
     }
-    QPixmap rv = get(id).scaled(requestedSize.width(), requestedSize.height(),
-                            Qt::KeepAspectRatioByExpanding,
-                            Qt::SmoothTransformation);
+    QPixmap rv = get(id, requestedSize);
+    QSize imgSize = rv.size();
+    size = &imgSize;
     return rv;
 }
 
-void ImageCache::load(const QString &themename)
+void SvgProvider::load(const QString &themename)
 {
     QString prefix = QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() +
             QLatin1String("/share/plexy/themepack/") +
@@ -77,6 +78,7 @@ void ImageCache::load(const QString &themename)
 
     QDir dir(prefix);
     dir.setFilter(QDir::Files);
+    dir.setNameFilters(QStringList() << "*.svg" << "*.svgz");
     QFileInfoList list = dir.entryInfoList();
 
     for (int i = 0; i < list.size(); i++)
@@ -87,7 +89,7 @@ void ImageCache::load(const QString &themename)
     }
 }
 
-void ImageCache::addToCached(QString &imgfile, QString &filename, QString &themename)
+void SvgProvider::addToCached(QString &imgfile, QString &filename, QString &themename)
 {
     QString prefix = QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() +
             QLatin1String("/share/plexy/themepack/") +
@@ -100,12 +102,34 @@ void ImageCache::addToCached(QString &imgfile, QString &filename, QString &theme
 }
 
 
-QPixmap ImageCache::get(const QString &name)
+QPixmap SvgProvider::get(const QString &name, const QSize &size)
 {
-    return d->map[name];
+    QStringList itemList = name.split('#');
+    QPixmap rv (size);
+    qDebug() << Q_FUNC_INFO << itemList;
+
+    if (itemList.count() < 1) {
+      return rv; 
+    } else if (itemList.count() == 1) {
+      return d->map[name];
+    }
+   
+    rv.fill(Qt::transparent);
+    QPainter painter;
+
+    qDebug() << Q_FUNC_INFO << rv.isNull();
+    qDebug() << Q_FUNC_INFO << size;
+
+    painter.begin(&rv);
+
+    drawSvg(&painter, QRectF (0.0, 0.0, size.width(), size.height()),
+        itemList.value(0), itemList.value(1));
+
+    painter.end();
+    return rv;
 }
 
-bool ImageCache::isCached(QString &filename) const
+bool SvgProvider::isCached(QString &filename) const
 {
     if ((d->fileHash[filename]).isNull())
         return false;
@@ -113,7 +137,7 @@ bool ImageCache::isCached(QString &filename) const
     return true;
 }
 
-bool ImageCache::drawSvg(QPainter *p, QRectF rect, const QString &file, const QString &elementId)
+bool SvgProvider::drawSvg(QPainter *p, QRectF rect, const QString &file, const QString &elementId)
 {
     QString svgFile = d->fileHash[file];
     qDebug() << Q_FUNC_INFO << svgFile;

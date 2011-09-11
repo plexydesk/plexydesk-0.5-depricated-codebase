@@ -14,10 +14,7 @@ class PLEXYDESK_EXPORT WidgetPlugin : public BasePlugin
     Q_OBJECT
 public:
     virtual ~WidgetPlugin() {}
-    virtual QGraphicsItem *item()
-    {
-        return NULL;
-    }
+    virtual QGraphicsItem *item() = 0;
     virtual void setData(const QVariantMap &data) {}
 };
 }
