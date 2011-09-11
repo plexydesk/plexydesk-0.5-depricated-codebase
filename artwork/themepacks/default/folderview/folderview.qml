@@ -211,7 +211,7 @@ Image {
         z: -90
         asynchronous : true
         focus: false
-        opacity : 0.8
+        opacity : 0
         smooth : true
     }
 
