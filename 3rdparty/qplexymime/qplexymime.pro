@@ -1,7 +1,7 @@
 top_srcdir  = ../..
 srcdir      = qplexymime
 
-! include( $$top_srcdir/common.pri ) {
+! include( $${top_srcdir}/common.pri ) {
     error( Couldn\'t find the common.pri file! )
 }
 
@@ -11,11 +11,11 @@ QT += core declarative network xml xmlpatterns
 
 DEFINES += plexymime_EXPORTS
 
-INCLUDEPATH += $$top_srcdir/base/qt4
+INCLUDEPATH += $${top_srcdir}/base/qt4
+
+win32:!wince*:DLLDESTDIR = $${top_destdirbin}
 
 CONFIG += qt
-
-DESTDIR = $$top_destdir
 
 SOURCES = qplexymime.cpp
 
@@ -27,5 +27,5 @@ LIBS += -lplexyshaders -lplexydeskcore
 
 TARGET = plexymime
 
-target.path = $$top_destdir
+target.path = $${top_destdirlib}
 INSTALLS += target

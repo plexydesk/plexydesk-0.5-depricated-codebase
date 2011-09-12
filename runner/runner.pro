@@ -12,9 +12,9 @@ QT += core gui opengl declarative network xml xmlpatterns
 # TODO:
 #RC_FILE = $$top_srcdir/dist/windows/plexydesk.rc
 
-DESTDIR = $$top_destdir
+DESTDIR = $${top_destdirbin}
 
-INCLUDEPATH += $$top_srcdir/base/qt4 $$top_srcdir/base/qt4/shaders $$top_srcdir/3rdparty/qplexymime
+INCLUDEPATH += $${top_srcdir}/base/qt4 $${top_srcdir}/base/qt4/shaders $${top_srcdir}/3rdparty/qplexymime
 
 SOURCES += desktopview.cpp \
            icon.cpp \
@@ -44,4 +44,5 @@ LIBS += -lplexymime -lplexyshaders -lplexydeskcore
 
 TARGET = plexydesk
 
-include($$top_srcdir/deploy.pri)
+target.path = $${top_destdirbin}
+INSTALLS += target

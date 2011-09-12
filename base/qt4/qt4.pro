@@ -1,6 +1,7 @@
 top_srcdir  = ../..
+srcdir = plexydeskcore
 
-! include( $$top_srcdir/common.pri ) {
+! include( $${top_srcdir}/common.pri ) {
     error( Couldn\'t find the common.pri file! )
 }
 
@@ -12,8 +13,7 @@ INCLUDEPATH += $${IN_PWD}/shaders
 
 DEFINES += plexydeskcore_EXPORTS
 
-DESTDIR = $$top_destdirbin
-win32:!wince*:DLLDESTDIR = $$top_destdirbin
+win32:!wince*:DLLDESTDIR = $${top_destdirbin}
 
 CONFIG += qt
 
@@ -60,5 +60,5 @@ LIBS += -lplexyshaders
 
 TARGET = plexydeskcore
 
-target.path = $$top_destdirlib
+target.path = $${top_destdirlib}
 INSTALLS += target

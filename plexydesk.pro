@@ -11,10 +11,10 @@ ApplicationMainVersion = "0.6.0"
 ApplicationDate = "2011-08-03"
 ResourcesDir = "share/plexy/themepack/default/resources"
 
-SUBDIRS += base #3rdparty
+SUBDIRS += base 3rdparty
 
 CONFIG += ordered
-#SUBDIRS += runner extensions
+SUBDIRS += runner #extensions
 
 top_srcdir  = .\
 
@@ -113,7 +113,7 @@ system($${copyenv} $${plexydesk.icon})
 system($${copyenv} $${artwork.widgets})
 
 win32 {
-    QT_COPY_TO   = $${top_destdirlib}/
+    QT_COPY_TO   = $${top_destdirbin}/
     QT_COPY_TO   = $$replace(QT_COPY_TO,/,\\)
     QT_COPY_FROM = $${QTDIR}\\bin
 
@@ -160,7 +160,7 @@ CONFIG(debug, debug|release) {
     build_postfix = debug
 }
 
-qtconf.path = $${top_destdirbin}
+qtconf.path = $${OUT_PWD}/build/plexydesk-ready-build/bin
 qtconf.file = $${qtconf.path}/qt.conf
 
 unix {
@@ -180,4 +180,5 @@ win32 {
 }
 
 system(echo [Paths] >> $${qtconf.file})
-system(echo Prefix = $${qtconf.path} >> $${qtconf.file})
+system(echo Prefix = ../ >> $${qtconf.file})
+system(echo Plugins = lib >> $${qtconf.file})

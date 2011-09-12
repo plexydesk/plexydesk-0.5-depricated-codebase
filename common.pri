@@ -21,8 +21,8 @@ OBJECTS_DIR      = $$builddir/.objs
 MOC_DIR          = $$builddir/.mocs
 UI_DIR           = $$builddir/.uis
 RCC_DIR          = $$builddir/.rccs
-DESTDIR          = $$builddir
+DESTDIR          = $${top_destdirlib}
 
-LIBS += -L$$top_destdirlib -L$$top_destdirbin
+LIBS += -L$${top_destdirlib} -L$${top_destdirbin}
 
-DEPENDPATH += . $$top_srcdir
+DEPENDPATH += . $${top_srcdir} $${top_destdirlib}

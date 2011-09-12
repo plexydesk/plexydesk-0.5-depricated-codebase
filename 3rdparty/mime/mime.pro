@@ -1,7 +1,7 @@
 top_srcdir  = ../..
 srcdir      = mime
 
-! include( $$top_srcdir/common.pri ) {
+! include( $${top_srcdir}/common.pri ) {
     error( Couldn\'t find the common.pri file! )
 }
 
@@ -15,7 +15,7 @@ INCLUDEPATH += $$top_srcdir/base/qt4
 
 CONFIG += qt
 
-DESTDIR = $$top_destdir
+win32:!wince*:DLLDESTDIR = $${top_destdirbin}
 
 SOURCES = freedesktopmime.cpp
 
@@ -26,5 +26,5 @@ LIBS += -lplexyshaders -lplexydeskcore
 
 TARGET = mimetype
 
-target.path = $$top_destdir
+target.path = $${top_destdirlib}
 INSTALLS += target
