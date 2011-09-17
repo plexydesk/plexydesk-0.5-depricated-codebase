@@ -211,6 +211,7 @@ void DesktopView::setThemePack(const QString &name)
 
         // TODO: ERROR HANDLING
         d->mThemeLoader = new PlexyDesk::ThemepackLoader(name, this);
+        d->mThemeLoader->setRect (scene()->sceneRect());
         if (PlexyDesk::Config::getInstance()->wallpaper().isEmpty()) {
             PlexyDesk::Config::getInstance()->setWallpaper(d->mThemeLoader->wallpaper());
         }
@@ -250,10 +251,19 @@ void DesktopView::setThemePack(const QString &name)
 void DesktopView::addWallpaperItem()
 {
     if (d->bgPlugin) {
+        QRectF screenRect = scene()->sceneRect();
+        d->bgPlugin->setRect (
+            QRect (screenRect.x(),
+              screenRect.y(),
+              screenRect.width(), 
+              screenRect.height()));
+
         d->backgroundWallpaperItem = d->bgPlugin->item();
         if (d->backgroundWallpaperItem) {
             scene()->addItem(d->backgroundWallpaperItem);
             d->backgroundWallpaperItem->show();
+            d->backgroundWallpaperItem->setPos(screenRect.x(), screenRect.y());
+            scene()->update();
         }
     }
 }
@@ -406,12 +416,15 @@ void DesktopView::addCoreExtension(const QString &name)
 }
 
 // Small speed up , try if the speed is too low
+/*
 void DesktopView::paintEvent(QPaintEvent * event)
 {
    QPaintEvent *newEvent=new QPaintEvent(event->region().boundingRect());
    QGraphicsView::paintEvent(newEvent);
    delete newEvent;
 }
+
+*/
 
 void DesktopView::dropEvent(QDropEvent * event)
 {
@@ -580,9 +593,9 @@ bool DesktopView::checkDropped (const QString &file)
     return false;
 }
 
+/*
 void DesktopView::drawBackground(QPainter *painter, const QRectF &rect)
 {
-    /*
     painter->setRenderHint(QPainter::TextAntialiasing, false);
 #ifdef Q_WS_X11
     painter->setRenderHint(QPainter::QPainter::SmoothPixmapTransform, false);
@@ -593,8 +606,9 @@ void DesktopView::drawBackground(QPainter *painter, const QRectF &rect)
 
     painter->save();
     painter->restore();
-    */
 }
+
+*/
 
 void DesktopView::mousePressEvent(QMouseEvent *event)
 {

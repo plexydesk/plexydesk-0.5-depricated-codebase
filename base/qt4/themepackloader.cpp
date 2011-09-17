@@ -19,7 +19,6 @@
 
 #include <config.h>
 
-#include <QDesktopWidget>
 #include <QStringList>
 #include <QDir>
 #include <QRect>
@@ -43,6 +42,7 @@ public:
     QString mBasePath;
     QString mThemeName;
     QString mThemePackPath;
+    QRectF mScreenRect;
 };
 
 ThemepackLoader::ThemepackLoader(const QString &themeName, QObject *parent) :
@@ -153,6 +153,11 @@ QString ThemepackLoader::qmlFilesFromTheme(const QString &name)
                                     ));
 }
 
+void ThemepackLoader::setRect (const QRectF &rect)
+{
+    d->mScreenRect = rect;
+}
+
 QPoint ThemepackLoader::widgetPos(const QString &name)
 {
     // TODO: Do the same with the width and height of the widget
@@ -160,7 +165,7 @@ QPoint ThemepackLoader::widgetPos(const QString &name)
     d->mSettings->beginGroup(name);
     int x = 0;
     int y = 0;
-    QRect screenRect = QDesktopWidget().screenGeometry();
+    QRectF screenRect = d->mScreenRect;
 #ifdef Q_WS_WIN
     // A 1px hack to make the widget fullscreen and not covering the toolbar on Win
     screenRect.setHeight(screenRect.height()-1);

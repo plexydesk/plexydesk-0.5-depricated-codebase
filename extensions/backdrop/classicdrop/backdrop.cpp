@@ -59,6 +59,11 @@ BgPlugin::~BgPlugin()
     }
 }
 
+void  BgPlugin::setRect(const QRect &rect)
+{
+  mDesktopScreenRect = rect;
+}
+
 void BgPlugin::changeWallpaperItem()
 {
      if (PlexyDesk::Config::getInstance()->isOpenGL()) {
@@ -72,7 +77,7 @@ void BgPlugin::changeWallpaperItem()
 
           mBackgroundItem->qmlFromUrl(QUrl(mThemePack->qmlBackdropFromTheme()));
      } else {
-          QSize desktopSize = QDesktopWidget().screenGeometry().size();
+          QSize desktopSize = mDesktopScreenRect.size();
 #ifdef Q_WS_WIN
           // A 1px hack to make the widget fullscreen and not covering the toolbar on Win
           desktopSize.setHeight(desktopSize.height()-1);
@@ -114,7 +119,7 @@ QGraphicsItem *BgPlugin::item()
     if (mBackgroundItem == NULL) {
         QSize desktopSize;
 
-        desktopSize = QDesktopWidget().screenGeometry().size();
+        desktopSize = mDesktopScreenRect.size();
 #ifdef Q_WS_WIN
         // A 1px hack to make the widget fullscreen and not covering the toolbar on Win
         desktopSize.setHeight(desktopSize.height()-1);

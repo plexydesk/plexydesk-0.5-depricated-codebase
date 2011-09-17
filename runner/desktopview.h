@@ -64,10 +64,10 @@ public Q_SLOTS:
     void closeDesktopWidget();
 
 protected:
-    void drawBackground(QPainter *painter, const QRectF &rect);
+    //void drawBackground(QPainter *painter, const QRectF &rect);
     void mousePressEvent(QMouseEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
-    void paintEvent(QPaintEvent *event);
+    //void paintEvent(QPaintEvent *event);
     bool checkDropped (const QString &file);
     virtual void dropEvent(QDropEvent *event);
     virtual void dragEnterEvent (QDragEnterEvent * event);

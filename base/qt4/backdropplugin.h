@@ -44,6 +44,7 @@ public:
     }
 
     virtual QGraphicsItem *item() = 0;
+    virtual void setRect (const QRect &rect) = 0;
 
 public Q_SLOTS:
     virtual void pushData(QVariant &value) = 0;

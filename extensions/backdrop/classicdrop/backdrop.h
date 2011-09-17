@@ -42,6 +42,7 @@ public:
     BgPlugin(QObject *object = 0);
     virtual ~BgPlugin();
     QGraphicsItem *item();
+    void setRect (const QRect &rect);
 
 public Q_SLOTS:
     void data(QVariant &);
@@ -60,6 +61,7 @@ private:
     PlexyDesk::ThemepackLoader *mThemePack;
     PlexyDesk::DesktopWidget *mBackgroundItem;
     QGraphicsPixmapItem *mBackgroundItemPixmap;
+    QRect mDesktopScreenRect;
 };
 
 #endif //PLEXY_CLASSIC_BACKDROP_H

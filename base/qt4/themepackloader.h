@@ -32,6 +32,8 @@ public:
 
     PlexyDesk::DesktopWidget::State widgetView(const QString &name);
 
+    void setRect (const QRectF &rect);
+
 Q_SIGNALS:
     void ready();
 
