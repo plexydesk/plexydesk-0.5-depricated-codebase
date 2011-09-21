@@ -23,6 +23,8 @@
 
 #include "desktopbaseui.h"
 #include "desktopview.h"
+#include "plexytray.h"
+
 
 #if defined(Q_WS_X11) // && defined(Q_WS_MAC) ??
 #include <X11/Xlib.h>
@@ -41,6 +43,9 @@ class DesktopBaseUi::DesktopBaseUiPrivate
       QGraphicsScene *mScene;
       PlexyDesk::Config *mConfig;
       QList<DesktopView*> mViewList;
+      QString mAppIconPath;
+      QIcon mAppIcon;
+      PlexyTray *mTrayIcon;
 };
 
 
@@ -53,6 +58,9 @@ DesktopBaseUi::DesktopBaseUi(QObject *parent) :
 
 DesktopBaseUi::~DesktopBaseUi()
 {
+    if (d->mTrayIcon)
+        delete d->mTrayIcon;
+
     foreach (DesktopView * view, d->mViewList) {
         if(view)
           delete view;
@@ -63,6 +71,10 @@ DesktopBaseUi::~DesktopBaseUi()
 
 void DesktopBaseUi::setup()
 {
+
+    d->mAppIconPath = PlexyDesk::Config::getInstance()->plexydeskBasePath() +
+       QLatin1String("/share/plexy/plexydesk.png");
+    d->mAppIcon = QIcon (QDir::toNativeSeparators(d->mAppIconPath));
 
     d->mDesktopWidget = new QDesktopWidget ();
     d->mConfig = PlexyDesk::Config::getInstance();
@@ -104,6 +116,11 @@ void DesktopBaseUi::setup()
        view->showLayer(QLatin1String("Widgets"));
        view->registerPhotoDialog();
        d->mViewList.append(view);
+    }
+
+
+    if(d->mViewList.value(0)) {
+        d->mTrayIcon = new PlexyTray(d->mViewList.value(0)->window(), d->mAppIcon);
     }
 }
 

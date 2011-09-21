@@ -65,7 +65,7 @@ int main( int argc, char * *argv )
     QApplication app(argc, argv);
 
     QString appIconPath = PlexyDesk::Config::getInstance()->plexydeskBasePath() + "/share/plexy/plexydesk.png";
-    QIcon appIcon=QIcon(QDir::toNativeSeparators(appIconPath));
+    QIcon appIcon = QIcon(QDir::toNativeSeparators(appIconPath));
     app.setWindowIcon(appIcon);
     app.setApplicationName(QString(PLEXYNAME));
 
@@ -140,9 +140,6 @@ int main( int argc, char * *argv )
     // Set this to false if you need a "close to tray" functionality when systray exists
     QApplication::setQuitOnLastWindowClosed(true);
 
-    /* Set tray icon */
-    //PlexyTray *trayIcon = new PlexyTray(view->window(), appIcon);
-    //
  
     DesktopBaseUi * ui = new DesktopBaseUi();
 
