@@ -79,6 +79,7 @@ void DesktopBaseUi::setup()
        scene->setBackgroundBrush(Qt::blue);
 
        DesktopView *view = new DesktopView (scene, 0);
+       view->setWindowTitle(QString(PLEXYNAME));
        view->enableOpenGL(d->mConfig->isOpenGL());
        view->resize(desktopSize);
        view->show();
