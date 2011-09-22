@@ -11,6 +11,8 @@ public:
     virtual ~DesktopBaseUi();
 
     QRect desktopRect() const;
+public Q_SLOTS:
+    void screenResized(int screen);
 
 private:
     void setup();

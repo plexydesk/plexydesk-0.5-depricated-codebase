@@ -42,10 +42,10 @@ class DesktopBaseUi::DesktopBaseUiPrivate
       QDesktopWidget *mDesktopWidget;
       QGraphicsScene *mScene;
       PlexyDesk::Config *mConfig;
-      QList<DesktopView*> mViewList;
       QString mAppIconPath;
       QIcon mAppIcon;
       PlexyTray *mTrayIcon;
+      QMap<int, DesktopView*> mViewList;
 };
 
 
@@ -54,6 +54,8 @@ DesktopBaseUi::DesktopBaseUi(QObject *parent) :
     d (new DesktopBaseUiPrivate)
 {
     setup();
+
+    connect (d->mDesktopWidget, SIGNAL(resized(int)), this, SLOT(screenResized(int)));
 }
 
 DesktopBaseUi::~DesktopBaseUi()
@@ -61,7 +63,7 @@ DesktopBaseUi::~DesktopBaseUi()
     if (d->mTrayIcon)
         delete d->mTrayIcon;
 
-    foreach (DesktopView * view, d->mViewList) {
+    foreach (DesktopView * view, d->mViewList.values()) {
         if(view)
           delete view;
     }
@@ -85,7 +87,7 @@ void DesktopBaseUi::setup()
     for (int i = 0 ; i < d->mDesktopWidget->screenCount() ; i++ ) {
        desktopSize = d->mDesktopWidget->screenGeometry(i).size();
        QRect desktopScreenRect = d->mDesktopWidget->screenGeometry(i);
-       //scene->setBackgroundBrush(Qt::NoBrush);
+       scene->setBackgroundBrush(Qt::NoBrush);
        scene->setItemIndexMethod(QGraphicsScene::NoIndex);
 
        scene->setBackgroundBrush(Qt::blue);
@@ -115,13 +117,27 @@ void DesktopBaseUi::setup()
        view->setThemePack(PlexyDesk::Config::getInstance()->themepackName());
        view->showLayer(QLatin1String("Widgets"));
        view->registerPhotoDialog();
-       d->mViewList.append(view);
+       d->mViewList[i] = view;
     }
 
 
     if(d->mViewList.value(0)) {
         d->mTrayIcon = new PlexyTray(d->mViewList.value(0)->window(), d->mAppIcon);
     }
+}
+
+void DesktopBaseUi::screenResized(int screen)
+{
+    qDebug() << Q_FUNC_INFO << "Screen : " << screen;
+
+    DesktopView *view = d->mViewList[screen];
+    QRect desktopScreenRect = d->mDesktopWidget->screenGeometry(screen);
+
+    if(!screen)
+      return;
+
+    view->resize(desktopScreenRect.size());
+
 }
 
 QRect DesktopBaseUi::desktopRect() const
