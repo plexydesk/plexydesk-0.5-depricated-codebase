@@ -449,7 +449,7 @@ void DesktopView::dropEvent(QDropEvent * event)
 
         if(dirWidgetPlugin) {
             QVariantMap data;
-            data["dir_path"] = QVariant(droppedFile);
+            data["dir_path"] = QVariant("/" + droppedFile);
             dirWidgetPlugin->setData(data);
         } else {
             qWarning() << Q_FUNC_INFO << "Dir Handler Not registered";
