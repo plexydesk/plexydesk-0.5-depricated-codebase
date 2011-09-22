@@ -34,6 +34,8 @@ public:
     DesktopView(QGraphicsScene *scene = new QGraphicsScene(), QWidget *parent = 0);
     virtual ~DesktopView();
 
+    enum {none, folder, qml, img};
+
     void addWallpaper(const QString &path);
     void addRender(QGraphicsScene *scene);
     void addCoreExtension(const QString &name);
@@ -68,7 +70,7 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
     //void paintEvent(QPaintEvent *event);
-    bool checkDropped (const QString &file);
+    int checkDropped (const QString &file);
     virtual void dropEvent(QDropEvent *event);
     virtual void dragEnterEvent (QDragEnterEvent * event);
     virtual void dragMoveEvent (QDragMoveEvent * event);

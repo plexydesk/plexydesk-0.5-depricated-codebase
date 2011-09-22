@@ -255,7 +255,7 @@ void DesktopView::addWallpaperItem()
         d->bgPlugin->setRect (
             QRect (screenRect.x(),
               screenRect.y(),
-              screenRect.width(), 
+              screenRect.width(),
               screenRect.height()));
 
         d->backgroundWallpaperItem = d->bgPlugin->item();
@@ -435,52 +435,46 @@ void DesktopView::dropEvent(QDropEvent * event)
         qDebug() << "Drop ignored...";
         return;
     }
-   
-    // FIXME: Refactor this ugly handling 
-    //
+
+    // FIXME: Refactor this ugly handling
     const QString droppedFile = event->mimeData()->urls().value(0).toLocalFile();
 
-    if ( !checkDropped(droppedFile) ) {
-        QFileInfo info(droppedFile);
-        if (info.isDir()) {
-           qDebug() << Q_FUNC_INFO << "Dir Handler";
-           /* handle folders */
+    int droppedType = checkDropped(droppedFile);
 
-            WidgetPlugin *dirWidgetPlugin = registerHandler (QLatin1String("folderwidget"));
+    if (droppedType == folder) {
+        /* handle folders */
+        qDebug() << Q_FUNC_INFO << "Dir Drop accepted...";
 
-           if(dirWidgetPlugin) {
-             QVariantMap data;
-             data["dir_path"] = QVariant(QDir::toNativeSeparators(droppedFile));
-             dirWidgetPlugin->setData(data);
-           } else {
-             qWarning() << Q_FUNC_INFO << "Dir Handler Not registered";
-           }
+        WidgetPlugin *dirWidgetPlugin = registerHandler (QLatin1String("folderwidget"));
 
-           return;
+        if(dirWidgetPlugin) {
+            QVariantMap data;
+            data["dir_path"] = QVariant(droppedFile);
+            dirWidgetPlugin->setData(data);
         } else {
-            qDebug() << Q_FUNC_INFO << "Drop ignored...";
-            return;
+            qWarning() << Q_FUNC_INFO << "Dir Handler Not registered";
         }
-    }
-
-    if ( droppedFile.contains(".qml") ) {
-        qDebug() << "QML Drop accepted...";
+    } else if (droppedType == qml) {
+        qDebug() << Q_FUNC_INFO << "QML Drop accepted...";
         DesktopWidget *parent = new DesktopWidget(QRectF(0,0,0,0), 0, 0);
         parent->qmlFromUrl(QUrl(droppedFile));
         scene()->addItem(parent);
         connect(parent, SIGNAL(close()), this, SLOT(closeDesktopWidget()));
         event->acceptProposedAction();
+    } else if (droppedType == img) {
+        qDebug() << Q_FUNC_INFO << "Image Drop accepted...";
+        if (d->mPhotoDialog) {
+            d->mPhotoDialog->show();
+            QVariantMap data;
+            data["photo_path"] = QVariant(droppedFile);
+
+            if (d->mPhotoDialogProvider) {
+                d->mPhotoDialogProvider->setData(data);
+            }
+        }
+    } else {
+        qDebug() << Q_FUNC_INFO << "Drop ignored...";
         return;
-    }
-
-   if (d->mPhotoDialog) {
-       d->mPhotoDialog->show();
-       QVariantMap data;
-       data["photo_path"] = QVariant(droppedFile);
-
-       if (d->mPhotoDialogProvider) {
-           d->mPhotoDialogProvider->setData(data);
-       }
     }
 
     event->acceptProposedAction();
@@ -493,13 +487,32 @@ void DesktopView::dragEnterEvent (QDragEnterEvent * event)
 
     if ( event->mimeData()->urls().count() >= 0 ) {
         const QString droppedFile = event->mimeData()->urls().value(0).toLocalFile();
-        if ( checkDropped(droppedFile) ) 
+        if ( checkDropped(droppedFile) != none )
             event->accept();
-        QFileInfo info (droppedFile);
-
-        if(info.isDir())
-          event->accept();
     }
+}
+
+int DesktopView::checkDropped (const QString &file)
+{
+    if ( file.contains(".qml") )
+        return qml;
+
+    QFileInfo info(file);
+    if ( info.isDir() )
+        return folder;
+
+    if ( !info.isDir() && !QPixmap(file).isNull() )
+        return img;
+
+    return none;
+}
+
+void DesktopView::dragMoveEvent (QDragMoveEvent * event)
+{
+    if ( !event )
+        return;
+
+    event->accept();
 }
 
 void DesktopView::registerPhotoDialog()
@@ -538,8 +551,8 @@ void DesktopView::registerPhotoDialog()
 
     d->mPhotoDialogProvider = provider;
 }
-//FIXME: Refactor so that we can avoid having a method per type 
-//
+
+//FIXME: Refactor so that we can avoid having a method per type
 WidgetPlugin *DesktopView::registerHandler(const QString &name, bool effects_on)
 {
     const QPoint pos (0.0, 0.0);
@@ -573,27 +586,8 @@ WidgetPlugin *DesktopView::registerHandler(const QString &name, bool effects_on)
     return NULL;
 }
 
-void DesktopView::dragMoveEvent (QDragMoveEvent * event)
-{
-    if ( !event )
-        return;
-
-    event->accept();
-}
-
-bool DesktopView::checkDropped (const QString &file)
-{
-    if ( file.contains(".qml") )
-        return true;
-
-    QFileInfo info(file);
-    if ( !info.isDir() && !QPixmap(file).isNull() )
-        return true;
-
-    return false;
-}
-
 /*
+
 void DesktopView::drawBackground(QPainter *painter, const QRectF &rect)
 {
     painter->setRenderHint(QPainter::TextAntialiasing, false);
