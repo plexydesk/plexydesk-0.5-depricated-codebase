@@ -82,6 +82,9 @@ void DesktopBaseUi::setup()
     d->mConfig = PlexyDesk::Config::getInstance();
     QSize desktopSize = (QSize) desktopRect().size();
 
+#ifdef Q_WS_WIN
+    desktopSize.setHeight(desktopSize.height()-1);
+#endif
     QGraphicsScene *scene = new QGraphicsScene;
     d->mScene = scene;
     for (int i = 0 ; i < d->mDesktopWidget->screenCount() ; i++ ) {
