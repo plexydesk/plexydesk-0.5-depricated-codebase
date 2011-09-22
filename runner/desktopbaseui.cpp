@@ -17,14 +17,12 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
-#include <QDesktopWidget>
-
 #include <QDebug>
+#include <QDesktopWidget>
 
 #include "desktopbaseui.h"
 #include "desktopview.h"
 #include "plexytray.h"
-
 
 #if defined(Q_WS_X11) // && defined(Q_WS_MAC) ??
 #include <X11/Xlib.h>
@@ -32,24 +30,25 @@
 #include <netwm.h>
 #endif
 
+
 class DesktopBaseUi::DesktopBaseUiPrivate
 {
-  public:
-      DesktopBaseUiPrivate () {}
-      ~DesktopBaseUiPrivate () {}
+    public:
+        DesktopBaseUiPrivate () {}
+        ~DesktopBaseUiPrivate () {}
 
-      DesktopView *mDesktopView;
-      QDesktopWidget *mDesktopWidget;
-      QGraphicsScene *mScene;
-      PlexyDesk::Config *mConfig;
-      QString mAppIconPath;
-      QIcon mAppIcon;
-      PlexyTray *mTrayIcon;
-      QMap<int, DesktopView*> mViewList;
+        DesktopView *mDesktopView;
+        QDesktopWidget *mDesktopWidget;
+        QGraphicsScene *mScene;
+        PlexyDesk::Config *mConfig;
+        QString mAppIconPath;
+        QIcon mAppIcon;
+        PlexyTray *mTrayIcon;
+        QMap<int, DesktopView*> mViewList;
 };
 
 
-DesktopBaseUi::DesktopBaseUi(QObject *parent) : 
+DesktopBaseUi::DesktopBaseUi(QObject *parent) :
     QObject(parent),
     d (new DesktopBaseUiPrivate)
 {
@@ -58,6 +57,7 @@ DesktopBaseUi::DesktopBaseUi(QObject *parent) :
     connect (d->mDesktopWidget, SIGNAL(resized(int)), this, SLOT(screenResized(int)));
 }
 
+
 DesktopBaseUi::~DesktopBaseUi()
 {
     if (d->mTrayIcon)
@@ -65,7 +65,7 @@ DesktopBaseUi::~DesktopBaseUi()
 
     foreach (DesktopView * view, d->mViewList.values()) {
         if(view)
-          delete view;
+            delete view;
     }
 
     d->mViewList.clear();
@@ -82,45 +82,50 @@ void DesktopBaseUi::setup()
     d->mConfig = PlexyDesk::Config::getInstance();
     QSize desktopSize = (QSize) desktopRect().size();
 
-#ifdef Q_WS_WIN
-    desktopSize.setHeight(desktopSize.height()-1);
-#endif
     QGraphicsScene *scene = new QGraphicsScene;
     d->mScene = scene;
     for (int i = 0 ; i < d->mDesktopWidget->screenCount() ; i++ ) {
-       desktopSize = d->mDesktopWidget->screenGeometry(i).size();
-       QRect desktopScreenRect = d->mDesktopWidget->screenGeometry(i);
-       scene->setBackgroundBrush(Qt::NoBrush);
-       scene->setItemIndexMethod(QGraphicsScene::NoIndex);
+        desktopSize = d->mDesktopWidget->screenGeometry(i).size();
+#ifdef Q_WS_WIN
+        // A 1px hack to make the widget fullscreen and not covering the toolbar on Win
+        desktopSize.setHeight(desktopSize.height()-1);
+#endif
+        QRect desktopScreenRect = d->mDesktopWidget->screenGeometry(i);
+#ifdef Q_WS_WIN
+        // A 1px hack to make the widget fullscreen and not covering the toolbar on Win
+        desktopScreenRect.setHeight(desktopScreenRect.height()-1);
+#endif
+        scene->setBackgroundBrush(Qt::NoBrush);
+        scene->setItemIndexMethod(QGraphicsScene::NoIndex);
 
-       scene->setBackgroundBrush(Qt::blue);
+        scene->setBackgroundBrush(Qt::blue);
 
-       DesktopView *view = new DesktopView (scene, 0);
-       view->setWindowTitle(QString(PLEXYNAME));
-       view->enableOpenGL(d->mConfig->isOpenGL());
-       view->resize(desktopSize);
-       view->show();
-    
-       view->setWindowTitle(QString(PLEXYNAME));
-       view->enableOpenGL(d->mConfig->isOpenGL());
-       view->move(d->mDesktopWidget->screenGeometry(i).x(), 
-           d->mDesktopWidget->screenGeometry(i).y());
-       scene->setSceneRect(desktopScreenRect);
-       view->setSceneRect (desktopScreenRect);
-       view->ensureVisible(desktopScreenRect);
-       view->setDragMode(QGraphicsView::RubberBandDrag);
+        DesktopView *view = new DesktopView (scene, 0);
+        view->setWindowTitle(QString(PLEXYNAME));
+        view->enableOpenGL(d->mConfig->isOpenGL());
+        view->resize(desktopSize);
+        view->show();
+
+        view->setWindowTitle(QString(PLEXYNAME));
+        view->enableOpenGL(d->mConfig->isOpenGL());
+        view->move(d->mDesktopWidget->screenGeometry(i).x(),
+                  d->mDesktopWidget->screenGeometry(i).y());
+        scene->setSceneRect(desktopScreenRect);
+        view->setSceneRect (desktopScreenRect);
+        view->ensureVisible(desktopScreenRect);
+        view->setDragMode(QGraphicsView::RubberBandDrag);
 
 #ifdef Q_WS_X11
-       NETWinInfo info(QX11Info::display(), view->winId(), QX11Info::appRootWindow(), NET::WMDesktop );
-       info.setDesktop(NETWinInfo::OnAllDesktops);
-      info.setWindowType(NET::Desktop);
+        NETWinInfo info(QX11Info::display(), view->winId(), QX11Info::appRootWindow(), NET::WMDesktop );
+        info.setDesktop(NETWinInfo::OnAllDesktops);
+        info.setWindowType(NET::Desktop);
 #endif
 
-       view->addWallpaperItem();
-       view->setThemePack(PlexyDesk::Config::getInstance()->themepackName());
-       view->showLayer(QLatin1String("Widgets"));
-       view->registerPhotoDialog();
-       d->mViewList[i] = view;
+        view->addWallpaperItem();
+        view->setThemePack(PlexyDesk::Config::getInstance()->themepackName());
+        view->showLayer(QLatin1String("Widgets"));
+        view->registerPhotoDialog();
+        d->mViewList[i] = view;
     }
 
 
@@ -129,24 +134,29 @@ void DesktopBaseUi::setup()
     }
 }
 
+
 void DesktopBaseUi::screenResized(int screen)
 {
-    qDebug() << Q_FUNC_INFO << "Screen : " << screen;
+    qDebug() << Q_FUNC_INFO << "Screen: " << screen;
+
+    if(!screen)
+        return;
 
     DesktopView *view = d->mViewList[screen];
     QRect desktopScreenRect = d->mDesktopWidget->screenGeometry(screen);
-
-    if(!screen)
-      return;
+#ifdef Q_WS_WIN
+    // A 1px hack to make the widget fullscreen and not covering the toolbar on Win
+    desktopScreenRect.setHeight(desktopScreenRect.height()-1);
+#endif
 
     view->resize(desktopScreenRect.size());
-
 }
+
 
 QRect DesktopBaseUi::desktopRect() const
 {
    if (d->mDesktopWidget->screenCount() == 1) {
-      return d->mDesktopWidget->screenGeometry(); 
+        return d->mDesktopWidget->screenGeometry();
    }
 
    int total_width = 0;
@@ -165,4 +175,3 @@ QRect DesktopBaseUi::desktopRect() const
 
    return QRect (0, 0, total_width, total_height);
 }
-
