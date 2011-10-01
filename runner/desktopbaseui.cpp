@@ -126,6 +126,7 @@ void DesktopBaseUi::setup()
         view->showLayer(QLatin1String("Widgets"));
         view->registerPhotoDialog();
         d->mViewList[i] = view;
+        QApplication::desktop()->setParent(view);
     }
 
 
