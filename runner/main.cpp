@@ -73,70 +73,13 @@ int main( int argc, char * *argv )
     QString pluginPath = PlexyDesk::Config::getInstance()->plexydeskBasePath() + "/lib/qt4/plugins/imageformats";
     app.addLibraryPath(QDir::toNativeSeparators(pluginPath));
 #endif
-/*
-    QGraphicsScene scene;
-    scene.setBackgroundBrush(Qt::NoBrush);
-    scene.setItemIndexMethod(QGraphicsScene::NoIndex);
-
-    QSharedPointer<DesktopView> view = QSharedPointer<DesktopView>(new DesktopView(0));
-    */
-
-/*
-    // This is kept if we ever need a special event handler for the app and view
-    PlexyEventHandler *eventHandle = new PlexyEventHandler();
-    app.installEventFilter(eventHandle);
-    view->installEventFilter(eventHandle);
-*/
 
 #ifdef Q_WS_MAC
     PlexyDesk::Config::getInstance()->setOpenGL(true);
 #endif
-
-    bool accel = PlexyDesk::Config::getInstance()->isOpenGL();
-
-    // TODO: Multihead screen config handling
-    QSize desktopSize = QDesktopWidget().screenGeometry().size();
-#ifdef Q_WS_WIN
-    // A 1px hack to make the widget fullscreen and not covering the toolbar on Win
-    desktopSize.setHeight(desktopSize.height()-1);
-#endif
-
-    //view->setWindowTitle(QString(PLEXYNAME));
-    //view->enableOpenGL(accel);
-
-    //view->setScene(&scene);
-
-    //view->addWallpaperItem();
-
-    //QObject::connect(view.data(), SIGNAL(closeApplication()), &app, SLOT(quit()));
-
-    // TODO: Resolution changes handling
-    QRect r = QDesktopWidget().screenGeometry();
-#ifdef Q_WS_WIN
-    // A 1px hack to make the widget fullscreen and not covering the toolbar on Win
-    r.setHeight(r.height()-1); //win
-#endif
-    //view->move(r.x(), r.y());
-    //view->resize(desktopSize);
-    //scene.setSceneRect(r);
-    //view->setSceneRect(r);
-    ///view->ensureVisible(r);
-    //view->setDragMode(QGraphicsView::RubberBandDrag);
-/*
-#ifdef Q_WS_X11
-    NETWinInfo info(QX11Info::display(), view->winId(), QX11Info::appRootWindow(), NET::WMDesktop );
-    info.setDesktop(NETWinInfo::OnAllDesktops);
-    info.setWindowType(NET::Desktop);
-#endif
-*/
+   
     PlexyDesk::PluginLoader *loader = PlexyDesk::PluginLoader::getInstance();
     loader->scanDisk();
- //   view->show();
-
-  //  view->setThemePack(PlexyDesk::Config::getInstance()->themepackName());
-  //  view->showLayer(QLatin1String("Widgets"));
-   // view->registerPhotoDialog();
-
     // Set this to false if you need a "close to tray" functionality when systray exists
     QApplication::setQuitOnLastWindowClosed(true);
 
