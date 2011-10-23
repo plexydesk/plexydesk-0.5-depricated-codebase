@@ -1,6 +1,7 @@
 #include "testjson.h"
 #include <plexyconfig.h>
 #include <jsonhandler.h>
+#include <facebooksession.h>
 #include <QFile>
 #include <QDir>
 #include <config.h>
@@ -21,6 +22,33 @@ QString readFile(QString filename)
      }
      return rv;
 }
+
+
+void TestJson::loadSession()
+{
+
+   mLoop = new QEventLoop();
+   
+   FacebookSession *session = new FacebookSession();
+
+   QSignalSpy spy(session, SIGNAL(ready())); 
+   QVERIFY (session->hasToken());
+   
+   session->makeRequest("https://graph.facebook.com/me/feed"); 
+ 
+
+   connect (session, SIGNAL(ready()), this, SLOT (onSessionReady()));
+   
+  mLoop->exec();
+  QCOMPARE(spy.count(), 1);
+    
+}
+
+void TestJson::onSessionReady()
+{
+   mLoop->exit();
+}
+
 void TestJson::loadJsons()
 {
     mFetchComplete = false;

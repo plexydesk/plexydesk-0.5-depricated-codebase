@@ -54,7 +54,7 @@ AuthWidget::AuthWidget(const QRectF &rect, QWidget *widget) :
     if (token.isEmpty()) {
         mView->setUrl(QUrl(QLatin1String("https://graph.facebook.com/oauth/authorize?client_" \
                      "id=170356722999159&redirect_uri=http://www.facebook.com/connect" \
-                     "/login_success.html&type=user_agent&display=popup")));
+                     "/login_success.html&type=user_agent&display=popup&scope=manage_pages,read_stream&response_type=token")));
     } else {
         this->configState(DesktopWidget::DOCK);
         this->setVisible(false);
@@ -168,10 +168,11 @@ void AuthWidget::onUrlChanged(const QUrl &url)
         this->setVisible(false);
         /* save the auth token */
         PlexyDesk::Config *config = PlexyDesk::Config::getInstance();
-        config->beginGroup("facebook_plugin");
-        config->setValue("access_token",
+        QSettings *settings = config->coreSettings();
+        settings->beginGroup("facebook_plugin");
+        settings->setValue("access_token",
              fburl.queryItemValue("access_token"));
-        config->endGroup();
+        settings->endGroup();
     }
 }
 void AuthWidget::readConfig(QString &user,
@@ -186,7 +187,7 @@ void AuthWidget::data(QVariantMap &data)
 
 void AuthWidget::onReadyRead()
 {
-    JsonData result = mJsonHandle->parse(mReply->readAll());
+    JsonData result = mJsonHandle->property(mReply->readAll(), "data");
     if (result.type() == JsonData::Error) {
         this->setVisible(true);
         configState(DesktopWidget::NORMALSIDE);
@@ -201,9 +202,10 @@ void AuthWidget::onReadyRead()
 QString AuthWidget::tokenFromConfig() const
 {
     PlexyDesk::Config *config = PlexyDesk::Config::getInstance();
-    config->beginGroup("facebook_plugin");
-    QString token = config->value("access_token").toString();
-    config->endGroup();
+    QSettings *settings = config->coreSettings();;
+    settings->beginGroup("facebook_plugin");
+    QString token = settings->value("access_token").toString();
+    settings->endGroup();
     qDebug() << Q_FUNC_INFO << token;
     return token;
 }

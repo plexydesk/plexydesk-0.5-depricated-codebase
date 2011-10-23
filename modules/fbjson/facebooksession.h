@@ -12,13 +12,21 @@ class FacebookSession : public QObject
 public:
     explicit FacebookSession(QObject *parent = 0);
     void requestFriendsList();
+    bool hasToken() const;
+    QString token() const;
+    void makeRequest(const QString &url);
+    QByteArray rawData() const;
 
-signals:
+Q_SIGNALS:
     void ready();
+    void tokenReady();
 
 public Q_SLOTS:
+    void onReadyRead();
 
-
+private:
+    class Private;
+    Private *const d;
 };
 
 #endif // FACEBOOKSESSION_H

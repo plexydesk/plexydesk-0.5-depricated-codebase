@@ -6,10 +6,12 @@ ENDIF(CMAKE_BUILD_TYPE MATCHES ".*Deb.*")
 
 SET(sourceFiles
     jsonhandler.cpp
+    facebooksession.cpp
     )
 
 SET(headerFiles
     json_global.h
+    facebooksession.h
     )
 
 SET(sourceFiles
@@ -17,7 +19,10 @@ SET(sourceFiles
     ${headerFiles}
     )
 
-ADD_LIBRARY(plexyjson SHARED ${sourceFiles})
+
+QT4_WRAP_CPP(QT_MOC_SRCS ${headerFiles})
+
+ADD_LIBRARY(plexyjson SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 IF(MINGW)
     SET_TARGET_PROPERTIES(plexyjson PROPERTIES
@@ -36,3 +41,5 @@ TARGET_LINK_LIBRARIES(plexyjson
     )
 
 INSTALL(TARGETS plexyjson DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+ADD_SUBDIRECTORY (test) 

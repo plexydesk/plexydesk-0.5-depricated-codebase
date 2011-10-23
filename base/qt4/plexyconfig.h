@@ -69,6 +69,7 @@ public:
     QString themepackName() const;
     QString iconTheme() const;
     bool isOpenGL() const;
+    QSettings *coreSettings();
 
     void setProxyOn(bool enable);
     void setProxyPort(int port);

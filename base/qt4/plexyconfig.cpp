@@ -341,6 +341,12 @@ void Config::setProxyURL(const QString &url)
     d->mData["proxyURL"] = QVariant(url);
 }
 
+
+QSettings *Config::coreSettings()
+{
+   return d->mSettings;
+}
+
 QString Config::plexydeskBasePath()
 {
 #ifndef Q_WS_X11
