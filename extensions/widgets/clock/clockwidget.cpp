@@ -39,6 +39,7 @@ ClockWidget::ClockWidget(const QRectF &rect, QWidget *widget)
 
     setPath(QDir::toNativeSeparators (
                 PlexyDesk::Config::getInstance()->plexydeskBasePath() + "/share/plexy/skins/default/clock"));
+    setIconName ("Clock");
     drawClockWidget();
 }
 
@@ -180,13 +181,15 @@ void ClockWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem *e, Q
              date.width(), date.height()), date);
 }
 
-void ClockWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *)
+void ClockWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *widget)
 {
+/*
     p->setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing | QPainter::HighQualityAntialiasing);
 
     p->setPen(QColor(255, 255, 255));
     p->setFont(QFont("Bitstream Charter", 15));
     p->drawText(QRect(8, 5, 64, 64), Qt::AlignCenter, "Clock");
+*/
 }
 
 void ClockWidget::paintExtBackFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *)

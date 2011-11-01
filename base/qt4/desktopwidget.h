@@ -83,6 +83,8 @@ public :
     QDeclarativeEngine *qmlEngine() const;
     void qmlFromUrl(const QUrl &url);
     bool isQMLWidget() const;
+    
+    void setIconName(const QString &name);
 
 public Q_SLOTS:
     void zoomIn(int);

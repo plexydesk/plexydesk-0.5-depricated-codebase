@@ -63,6 +63,7 @@ public:
     bool backdrop;
     QGraphicsObject *qmlChild;
     QDeclarativeEngine *qmlEngine;
+    QString mName;
 };
 
 DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QDeclarativeItem *parent) :
@@ -71,6 +72,7 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QDeclarativeIt
 {
     d->proxyWidget = 0;
     d->qmlChild = 0;
+    d->mName = QLatin1String ("Widget");
     d->qmlEngine = Config::getInstance()->newQmlEngine();
     if (widget) {
         d->proxyWidget = new QGraphicsProxyWidget(this);
@@ -251,6 +253,11 @@ bool DesktopWidget::isQMLWidget() const
     return false;
 }
 
+void DesktopWidget::setIconName(const QString &name)
+{
+   d->mName = name;
+}
+
 void DesktopWidget::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
     QDeclarativeItem::hoverEnterEvent(event);
@@ -421,6 +428,8 @@ void DesktopWidget::paintDockView(QPainter *p, const QRectF &rect)
     p->save();
     p->setRenderHints(QPainter::SmoothPixmapTransform);
     p->drawPixmap(QRect(0, 0, rect.width(), rect.height()), d->dock);
+    p->setPen(QColor(255, 255, 255));
+    p->drawText(QRect(8, 5, 64, 64), Qt::AlignCenter, d->mName);
     p->restore();
 }
 
