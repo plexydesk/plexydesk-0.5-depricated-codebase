@@ -14,7 +14,7 @@ ResourcesDir = "share/plexy/themepack/default/resources"
 SUBDIRS += base 3rdparty
 
 CONFIG += ordered
-SUBDIRS += runner #extensions
+SUBDIRS += runner extensions
 
 top_srcdir  = .\
 
@@ -182,3 +182,4 @@ win32 {
 system(echo [Paths] >> $${qtconf.file})
 system(echo Prefix = ../ >> $${qtconf.file})
 system(echo Plugins = lib >> $${qtconf.file})
+

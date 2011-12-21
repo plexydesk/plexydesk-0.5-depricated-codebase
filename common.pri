@@ -1,5 +1,3 @@
-INCLUDEPATH += . .. $${top_srcdir}/build
-
 CONFIG(release, debug|release) {
     build_postfix = release
 }
@@ -26,3 +24,5 @@ DESTDIR          = $${top_destdirlib}
 LIBS += -L$${top_destdirlib} -L$${top_destdirbin}
 
 DEPENDPATH += . $${top_srcdir} $${top_destdirlib}
+
+INCLUDEPATH += . .. $${top_srcdir}/build $${top_outdir}
