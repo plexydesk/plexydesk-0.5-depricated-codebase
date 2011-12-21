@@ -14,6 +14,7 @@ top_outdir       = $${OUT_PWD}/$${top_srcdir}/build
 builddir         = $${top_outdir}/$${build_postfix}/$${srcdir}
 plexyext         = $${top_destdirlib}/plexyext
 sharedir         = $${top_builddir}/share
+qtimports        = $${top_builddir}/qt4/imports
 
 OBJECTS_DIR      = $$builddir/.objs
 MOC_DIR          = $$builddir/.mocs

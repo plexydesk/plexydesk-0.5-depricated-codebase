@@ -15,9 +15,6 @@ DEFINES += plexyshaders_EXPORTS
 
 win32:!wince*:DLLDESTDIR = $${top_destdirbin}
 
-TARGETPATH = Qt/labs/shaders
-target.path = $$[QT_INSTALL_IMPORTS]/$$TARGETPATH
-
 symbian: {
     TARGET.EPOCALLOWDLLDATA = 1
 
@@ -62,10 +59,12 @@ OTHER_FILES = qmldir
     PRE_TARGETDEPS += $$copy_qmldir.target
 }
 
+TARGETPATH = Qt/labs/shaders
+
 qmlfiles.files = qmldir
-qmlfiles.path = $$[QT_INSTALL_IMPORTS]/$$TARGETPATH
+qmlfiles.path = $${qtimports}/$$TARGETPATH
 
 INSTALLS += qmlfiles
 
-target.path = $${top_destdirlib}
+target.path = $${qtimports}/$$TARGETPATH
 INSTALLS += target
