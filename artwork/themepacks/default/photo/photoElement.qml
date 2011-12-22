@@ -9,7 +9,7 @@ Item {
         id:background
         width : 400
         height : 400
-        source:"image://plexydesk/qml_widget_background"
+        source: "image://plexydesk/qml_widgets_background"
         x:0 ; y:0
         opacity : 0.9
         asynchronous: true

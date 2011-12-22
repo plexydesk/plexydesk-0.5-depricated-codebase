@@ -1,3 +1,3 @@
 TEMPLATE = subdirs
 
-SUBDIRS = widgets qml
+SUBDIRS = widgets qml backdrop data

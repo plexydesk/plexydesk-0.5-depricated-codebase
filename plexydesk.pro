@@ -14,7 +14,7 @@ ResourcesDir = "share/plexy/themepack/default/resources"
 SUBDIRS += base 3rdparty
 
 CONFIG += ordered
-SUBDIRS += runner extensions
+SUBDIRS += runner extensions modules
 
 top_srcdir  = .\
 
