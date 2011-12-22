@@ -222,6 +222,7 @@ imports.to = $${qtimports}
 win32 {
     imports.directory = $$replace(imports.directory,/,\\)
     imports.to = $$replace(imports.to,/,\\)
+    system(mkdir $${imports.to})
 }
 
 system($${copyenv} $${imports.directory} $${imports.to})
