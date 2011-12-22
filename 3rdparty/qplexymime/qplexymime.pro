@@ -23,9 +23,15 @@ HEADERS = qplexymime.h
 
 RESOURCES = qplexymime.qrc
 
-LIBS += -lplexyshaders -lplexydeskcore
+DESTDIR = $${top_destdirlib}
 
 TARGET = plexymime
 
-target.path = $${top_destdirlib}
-INSTALLS += target
+LIBS += -lplexyshaders -lplexydeskcore
+
+FREEDESKTOPXML = freedesktop.org.xml \
+                mimetypes
+
+freedesktop.files = $$FREEDESKTOPXML
+freedesktop.path = $${sharedir}/plexy/mime/
+INSTALLS += freedesktop
