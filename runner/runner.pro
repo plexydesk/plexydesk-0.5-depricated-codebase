@@ -33,7 +33,7 @@ HEADERS += desktopview.h \
            plexypanel.h \
            plexytray.h
 
-unix {
+unix:!macx {
     SOURCES += plexywindow.cpp
 
     HEADERS += plexywindow.h \

@@ -87,10 +87,10 @@ themepack.resources.files = $$THEMEPACK.RESOURCES
 themepack.resources.path = $${sharedir}/plexy/themepack/default/resources
 INSTALLS += themepack.resources
 
-THEMEPACK.WEATHER.QML = weather/weather.qml
-themepack.weather.qml.files = $$THEMEPACK.WEATHER.QML
-themepack.weather.qml.path = $${sharedir}/plexy/themepack/default/weather
-INSTALLS += themepack.weather.qml
+#THEMEPACK.WEATHER.QML = weather/weather.qml
+#themepack.weather.qml.files = $$THEMEPACK.WEATHER.QML
+#themepack.weather.qml.path = $${sharedir}/plexy/themepack/default/weather
+#INSTALLS += themepack.weather.qml
 
 THEMEPACK.WELCOME.QML = welcome/welcome.qml
 themepack.welcome.qml.files = $$THEMEPACK.WELCOME.QML

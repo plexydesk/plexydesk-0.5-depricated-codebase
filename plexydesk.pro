@@ -29,7 +29,9 @@ unix {
 #    QMAKE_CXXFLAGS += -fPIC -fvisibility=default -fvisibility-inlines-hidden
 #    QMAKE_LFLAGS += -shared -rdynamic
 
-    system(mkdir $${BUILD_DIR})
+    !exists($${CONFIG_H}) {
+        system(mkdir -p $${BUILD_DIR})
+    }
     system(rm $${CONFIG_H})
     system(touch $${CONFIG_H})
 }
@@ -44,17 +46,27 @@ win32 {
     system(copy NUL $${CONFIG_H})
 }
 
-system(echo $${LITERAL_HASH}define PLEXYNAME \"$${ApplicationName}\" >> $${CONFIG_H})
-system(echo $${LITERAL_HASH}define PLEXYVERSION \"$${ApplicationMainVersion}\" >> $${CONFIG_H})
-system(echo $${LITERAL_HASH}define PLEXYDATE \"$${ApplicationDate}\" >> $${CONFIG_H})
-system(echo $${LITERAL_HASH}define PLEXYQTIMPORTSDIR \"qt4//imports//\" >> $${CONFIG_H})
-system(echo $${LITERAL_HASH}define PLEXYRESOURCESDIR \"$${ResourcesDir}\" >> $${CONFIG_H})
+win32 {
+    system(echo $${LITERAL_HASH}define PLEXYNAME \"$${ApplicationName}\" >> $${CONFIG_H})
+    system(echo $${LITERAL_HASH}define PLEXYVERSION \"$${ApplicationMainVersion}\" >> $${CONFIG_H})
+    system(echo $${LITERAL_HASH}define PLEXYDATE \"$${ApplicationDate}\" >> $${CONFIG_H})
+    system(echo $${LITERAL_HASH}define PLEXYQTIMPORTSDIR \"qt4//imports//\" >> $${CONFIG_H})
+    system(echo $${LITERAL_HASH}define PLEXYRESOURCESDIR \"$${ResourcesDir}\" >> $${CONFIG_H})
+}
+
+unix {
+    system(echo \'$${LITERAL_HASH}define PLEXYNAME \"$${ApplicationName}\"\' >> $${CONFIG_H})
+    system(echo \'$${LITERAL_HASH}define PLEXYVERSION \"$${ApplicationMainVersion}\"\' >> $${CONFIG_H})
+    system(echo \'$${LITERAL_HASH}define PLEXYDATE \"$${ApplicationDate}\"\' >> $${CONFIG_H})
+    system(echo \'$${LITERAL_HASH}define PLEXYQTIMPORTSDIR \"qt4//imports//\"\' >> $${CONFIG_H})
+    system(echo \'$${LITERAL_HASH}define PLEXYRESOURCESDIR \"$${ResourcesDir}\"\' >> $${CONFIG_H})
+}
 
 CONFIG(debug, debug|release) {
-    system(echo $${LITERAL_HASH}define BUILD_MODE \"Debug\" >> $${CONFIG_H})
+    system(echo \'$${LITERAL_HASH}define BUILD_MODE \"Debug\"\' >> $${CONFIG_H})
 }
 else {
-    system(echo $${LITERAL_HASH}define BUILD_MODE \"Release\" >> $${CONFIG_H})
+    system(echo \'$${LITERAL_HASH}define BUILD_MODE \"Release\"\' >> $${CONFIG_H})
 }
 
 win32 {
@@ -113,6 +125,10 @@ CONFIG(debug, debug|release) {
     build_postfix = debug
 }
 
+unix {
+    system(mkdir -p $${OUT_PWD}/build/plexydesk-ready-build/qt4/imports)
+}
+
 qtconf.path = $${OUT_PWD}/build/plexydesk-ready-build/bin
 qtconf.file = $${qtconf.path}/qt.conf
 
@@ -146,3 +162,4 @@ win32 {
 }
 
 system($${copyenv} $${imports.directory} $${imports.to})
+
