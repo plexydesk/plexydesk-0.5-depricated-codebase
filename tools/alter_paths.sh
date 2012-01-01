@@ -1,7 +1,7 @@
 #before you run the script run make install, then run macdeply 
 rm -rf /Applications/plexydesk.app/
 make install
-macdeployqt-4.7 /Applications/plexydesk.app/bin/plexydesk.app/
+macdeployqt-4.8 /Applications/plexydesk.app/bin/plexydesk.app/
 
 for x in /Applications/plexydesk.app/bin/plexydesk.app/Contents/MacOS/plexydesk
 do
@@ -82,5 +82,7 @@ done
 mv /Applications/plexydesk.app/bin/plexydesk.app/Contents /Applications/plexydesk.app/
 mv /Applications/plexydesk.app/lib /Applications/plexydesk.app/Contents/
 mv /Applications/plexydesk.app/share /Applications/plexydesk.app/Contents/
+
+macdeployqt-4.8 /Applications/plexydesk.app/
 
 echo Done!
