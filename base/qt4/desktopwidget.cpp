@@ -180,17 +180,17 @@ void DesktopWidget::zoomOut(int frame)
     }
 }
 
-void DesktopWidget::setDockImage(QPixmap img)
+void DesktopWidget::setDockBackground(QPixmap img)
 {
     d->dock = img;
 }
 
-void DesktopWidget::setFaceImage(QPixmap img)
+void DesktopWidget::setWidgetBackground(QPixmap img)
 {
     d->panel = img;
 }
 
-void DesktopWidget::setBackFaceImage(QPixmap img)
+void DesktopWidget::setBacksideBackground(QPixmap img)
 {
     d->back = img;
 }

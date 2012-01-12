@@ -44,6 +44,7 @@ class PLEXYDESK_EXPORT DesktopWidget : public ShaderEffectItem
 {
     Q_OBJECT
     Q_ENUMS(State)
+    Q_PROPERTY(QRectF rect READ rect WRITE setRect NOTIFY rectChanged)
 
 public :
         enum State {
@@ -64,27 +65,27 @@ public :
      */
 
     DesktopWidget(const QRectF &rect, QWidget *embeddedWidget = 0, QDeclarativeItem *parent = 0);
-    virtual ~DesktopWidget();
 
+    virtual ~DesktopWidget();
     virtual QRectF boundingRect() const;
+
     QRectF rect() const;
     void setRect(const QRectF &rect);
 
-    void drawBackdrop(bool draw);
 
-    void configState(State s);
-    void setState(State s);
+    void setIconName(const QString &name);
+
     State state();
+    void configState(State s);
 
-    void setDockImage(QPixmap);
-    void setFaceImage(QPixmap);
-    void setBackFaceImage(QPixmap);
+    void setDockBackground(QPixmap);
+    void setWidgetBackground(QPixmap);
+    void setBacksideBackground(QPixmap);
     
     QDeclarativeEngine *qmlEngine() const;
     void qmlFromUrl(const QUrl &url);
     bool isQMLWidget() const;
     
-    void setIconName(const QString &name);
 
 public Q_SLOTS:
     void zoomIn(int);
@@ -94,9 +95,16 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void close();
+    void rectChanged();
 
 private Q_SLOTS:
     void onQmlQuit();
+
+private:
+    void drawBackdrop(bool draw);
+    void setState(State s);
+
+
 
 protected:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);

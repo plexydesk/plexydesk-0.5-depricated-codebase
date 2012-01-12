@@ -18,7 +18,7 @@ SET(sourceFiles
     shaders/shadereffectitem.cpp
     shaders/shadereffectsource.cpp
     shaders/scenegraph/qsggeometry.cpp
-
+    qmldesktopwidget.cpp
     )
 
 SET(headerFiles
@@ -52,6 +52,7 @@ SET(headerFiles
     shaders/shadereffectitem.h
     shaders/shadereffectsource.h
     shaders/scenegraph/qsggeometry.h
+    qmldesktopwidget.h
     )
 
 SET(MOC_SRCS
@@ -75,6 +76,7 @@ SET(MOC_SRCS
    shaders/shadereffect.h
    shaders/shadereffectitem.h
    shaders/shadereffectsource.h
+   qmldesktopwidget.h
    )
 
 # DBUS is working only under linux for now
