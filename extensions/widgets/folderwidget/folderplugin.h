@@ -26,6 +26,7 @@
 #include <widgetinterface.h>
 #include <widgetplugin.h>
 #include <themepackloader.h>
+#include <qmldesktopwidget.h>
 
 class QLineEdit;
 class QWidget;
@@ -60,7 +61,7 @@ signals:
     
 private:
     PlexyDesk::ThemepackLoader *mThemePack;
-    PlexyDesk::DesktopWidget *mFrameParentitem;
+    PlexyDesk::QmlDesktopWidget *mFrameParentitem;
     QString mImageSource;
 };
 

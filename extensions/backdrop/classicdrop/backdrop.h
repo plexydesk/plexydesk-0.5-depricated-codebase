@@ -32,7 +32,7 @@
 #include <plexy.h>
 #include <backdropplugin.h>
 #include <themepackloader.h>
-#include <desktopwidget.h>
+#include <qmldesktopwidget.h>
 
 class BgPlugin : public PlexyDesk::BackdropPlugin
 {
@@ -59,7 +59,7 @@ private:
     QPropertyAnimation *mBlurAnimation;
     QGraphicsBlurEffect *mBlurEffect;
     PlexyDesk::ThemepackLoader *mThemePack;
-    PlexyDesk::DesktopWidget *mBackgroundItem;
+    PlexyDesk::QmlDesktopWidget *mBackgroundItem;
     QGraphicsPixmapItem *mBackgroundItemPixmap;
     QRect mDesktopScreenRect;
 };

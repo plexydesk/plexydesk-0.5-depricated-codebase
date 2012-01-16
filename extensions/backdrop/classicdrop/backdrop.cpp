@@ -68,14 +68,14 @@ void BgPlugin::changeWallpaperItem()
 {
      if (PlexyDesk::Config::getInstance()->isOpenGL()) {
 
-          QDeclarativeContext *context = mBackgroundItem->qmlEngine()->rootContext();
+          QDeclarativeContext *context = mBackgroundItem->engine()->rootContext();
 
           // TODO: Make use of the PlexyDesk::Config::getInstance()->wallpaperMode() option
           // to set the context backgroundImage fillMode
           context->setContextProperty("backgroundImage",
                  QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->wallpaper()));
 
-          mBackgroundItem->qmlFromUrl(QUrl(mThemePack->qmlBackdropFromTheme()));
+          mBackgroundItem->setSourceUrl(QUrl(mThemePack->qmlBackdropFromTheme()));
      } else {
           QSize desktopSize = mDesktopScreenRect.size();
 #ifdef Q_WS_WIN
@@ -145,15 +145,15 @@ QGraphicsItem *BgPlugin::item()
 
 
         if (PlexyDesk::Config::getInstance()->isOpenGL()) {
-                       mBackgroundItem = new PlexyDesk::DesktopWidget(QRectF(0.0, 0.0, desktopSize.width(),
+                       mBackgroundItem = new PlexyDesk::QmlDesktopWidget(QRectF(0.0, 0.0, desktopSize.width(),
                     desktopSize.height()));
 
-            QDeclarativeContext *context = mBackgroundItem->qmlEngine()->rootContext();
+            QDeclarativeContext *context = mBackgroundItem->engine()->rootContext();
             context->setContextProperty("backgroundSize", desktopSize);
             context->setContextProperty("backgroundImage",
                 QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->wallpaper()));
 
-            mBackgroundItem->qmlFromUrl(QUrl(mThemePack->qmlBackdropFromTheme()));
+            mBackgroundItem->setSourceUrl(QUrl(mThemePack->qmlBackdropFromTheme()));
             mBackgroundItem->setFlag(QGraphicsItem::ItemIsMovable, false);
 
             mBackgroundItem->setGraphicsEffect(mBlurEffect);
@@ -168,4 +168,6 @@ QGraphicsItem *BgPlugin::item()
             return mBackgroundItemPixmap;
         }
     }
+    
+    return NULL;
 }

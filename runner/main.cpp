@@ -75,7 +75,7 @@ int main( int argc, char * *argv )
 #endif
 
 #ifdef Q_WS_MAC
-    PlexyDesk::Config::getInstance()->setOpenGL(true);
+    PlexyDesk::Config::getInstance()->setOpenGL(false);
 #endif
    
     PlexyDesk::PluginLoader *loader = PlexyDesk::PluginLoader::getInstance();

@@ -61,8 +61,6 @@ public:
     int scale;
     QPointF clickPos;
     bool backdrop;
-    QGraphicsObject *qmlChild;
-    QDeclarativeEngine *qmlEngine;
     QString mName;
 };
 
@@ -71,9 +69,7 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QDeclarativeIt
     d(new Private)
 {
     d->proxyWidget = 0;
-    d->qmlChild = 0;
     d->mName = QLatin1String ("Widget");
-    d->qmlEngine = Config::getInstance()->newQmlEngine();
     if (widget) {
         d->proxyWidget = new QGraphicsProxyWidget(this);
         d->proxyWidget->setFocusPolicy(Qt::StrongFocus);
@@ -195,64 +191,6 @@ void DesktopWidget::setBacksideBackground(QPixmap img)
     d->back = img;
 }
 
-QDeclarativeEngine *DesktopWidget::qmlEngine() const
-{
-  return d->qmlEngine;
-}
-
-void DesktopWidget::qmlFromUrl(const QUrl &url)
-{
-    qDebug() << Q_FUNC_INFO << url;
-    if (d->qmlChild) {
-        delete d->qmlChild;
-    }
-
-    QDeclarativeComponent component(d->qmlEngine, QDir::cleanPath(
-                                                        url.toString(QUrl::StripTrailingSlash |
-                                                        QUrl::RemoveScheme)));
-
-    if (!component.isReady()) {
-        if (component.isError()) {
-            Q_FOREACH(QDeclarativeError error, component.errors()) {
-                qDebug() << Q_FUNC_INFO << "Component Error: " << error.toString();
-            }
-        }
-        return;
-    }
-
-    d->qmlChild =
-        qobject_cast<QGraphicsObject *>(component.create(d->qmlEngine->rootContext()));
-    QRectF objectRect = d->qmlChild->boundingRect();
-
-    d->saveRect = objectRect;
-    setRect(objectRect);
-
-    d->qmlChild->setParentItem(this);
-    d->qmlChild->setFlag(QGraphicsItem::ItemIsFocusable, true);
-    d->qmlChild->setFlag(QGraphicsItem::ItemIsSelectable, true);
-    d->qmlChild->setCacheMode(QGraphicsItem::DeviceCoordinateCache);
-
-    // forward signals
-    connect(d->qmlEngine, SIGNAL(quit()), this, SLOT(onQmlQuit()));
-}
-
-void DesktopWidget::onQmlQuit()
-{
-    d->qmlChild->hide();
-    scene()->removeItem(d->qmlChild);
-    d->qmlChild->setParentItem(0);
-    Q_EMIT close();
-}
-
-bool DesktopWidget::isQMLWidget() const
-{
-    if (d->qmlChild) {
-        return true;
-    }
-
-    return false;
-}
-
 void DesktopWidget::setIconName(const QString &name)
 {
    d->mName = name;
@@ -279,9 +217,6 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
     }
 
     if (d->s == DOCK) {
-        if (d->qmlChild) {
-            d->qmlChild->show();
-        }
         setState(NORMALSIDE);
         prepareGeometryChange();
         this->setRect(d->saveRect);
@@ -290,9 +225,6 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
         }
         d->zoomin->start();
     } else {
-        if (d->qmlChild) {
-            d->qmlChild->hide();
-        }
         setState(DOCK);
         prepareGeometryChange();
         this->setRect(QRectF(0, 0, d->dock.width(), d->dock.height()));
@@ -306,11 +238,6 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 
 void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    if (d->qmlChild) {
-        QGraphicsItem::mousePressEvent(event);
-        return;
-    }
-
     if (event->buttons() == Qt::RightButton && (state() == NORMALSIDE || state() == BACKSIDE)) {
         d->spintimer->start(18);
     }
@@ -375,9 +302,6 @@ void DesktopWidget::configState(DesktopWidget::State s)
     }
 
     if (d->s == DOCK) {
-        if (d->qmlChild) {
-            d->qmlChild->show();
-        }
         setState(NORMALSIDE);
         prepareGeometryChange();
         this->setRect(d->saveRect);
@@ -386,9 +310,6 @@ void DesktopWidget::configState(DesktopWidget::State s)
         }
         d->zoomin->start();
     } else {
-        if (d->qmlChild) {
-            d->qmlChild->hide();
-        }
         setState(DOCK);
         prepareGeometryChange();
         this->setRect(QRectF(0, 0, d->dock.width(), d->dock.height()));
@@ -413,9 +334,6 @@ void DesktopWidget::paintViewSide(QPainter *p, const QRectF &rect)
 {
     if (!d->backdrop)
         return;
-    if (d->qmlChild) {
-        return;
-    }
     p->save();
     p->setOpacity(0.8);
     p->setRenderHints(QPainter::SmoothPixmapTransform);

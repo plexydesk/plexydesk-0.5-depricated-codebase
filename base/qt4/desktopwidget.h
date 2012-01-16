@@ -82,9 +82,9 @@ public :
     void setWidgetBackground(QPixmap);
     void setBacksideBackground(QPixmap);
     
-    QDeclarativeEngine *qmlEngine() const;
-    void qmlFromUrl(const QUrl &url);
-    bool isQMLWidget() const;
+   // QDeclarativeEngine *qmlEngine() const;
+   // void qmlFromUrl(const QUrl &url);
+   // bool isQMLWidget() const;
     
 
 public Q_SLOTS:
@@ -97,8 +97,6 @@ Q_SIGNALS:
     void close();
     void rectChanged();
 
-private Q_SLOTS:
-    void onQmlQuit();
 
 private:
     void drawBackdrop(bool draw);

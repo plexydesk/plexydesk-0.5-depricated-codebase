@@ -37,6 +37,7 @@
 #include <widgetplugin.h>
 #include <viewlayer.h>
 #include <qplexymime.h>
+#include <qmldesktopwidget.h>
 
 #if QT_VERSION < 0x04600
 #include <QPropertyAnimation>
@@ -226,8 +227,8 @@ void DesktopView::setThemePack(const QString &name)
         Q_FOREACH(const QString &qmlWidget, d->mThemeLoader->widgets("QML")) {
             qDebug() << Q_FUNC_INFO << "Loading QML: " << qmlWidget;
             // FIXME : Memory leak
-            DesktopWidget *parent = new DesktopWidget(QRectF(0,0,0,0), 0, 0);
-            parent->qmlFromUrl(QUrl(d->mThemeLoader->qmlFilesFromTheme(qmlWidget)));
+            QmlDesktopWidget *parent = new QmlDesktopWidget(QRectF(0,0,0,0), 0, 0);
+            parent->setSourceUrl(QUrl(d->mThemeLoader->qmlFilesFromTheme(qmlWidget)));
             scene()->addItem(parent);
             connect(parent, SIGNAL(close()), this, SLOT(closeDesktopWidget()));
             QPoint pos = d->mThemeLoader->widgetPos(qmlWidget);
@@ -456,8 +457,8 @@ void DesktopView::dropEvent(QDropEvent * event)
         }
     } else if (droppedType == qml) {
         qDebug() << Q_FUNC_INFO << "QML Drop accepted...";
-        DesktopWidget *parent = new DesktopWidget(QRectF(0,0,0,0), 0, 0);
-        parent->qmlFromUrl(QUrl(droppedFile));
+        QmlDesktopWidget *parent = new QmlDesktopWidget(QRectF(0,0,0,0), 0, 0);
+        parent->setSourceUrl (QUrl(droppedFile));
         scene()->addItem(parent);
         connect(parent, SIGNAL(close()), this, SLOT(closeDesktopWidget()));
         event->acceptProposedAction();

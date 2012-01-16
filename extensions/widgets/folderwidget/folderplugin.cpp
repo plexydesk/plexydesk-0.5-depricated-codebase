@@ -57,13 +57,13 @@ void FolderPlugin::setData(const QVariantMap &data)
 QGraphicsItem *FolderPlugin::item()
 {
    if (mFrameParentitem == NULL) {
-       mFrameParentitem = new PlexyDesk::DesktopWidget(QRectF(0.0, 0.0, 400.0, 400.0));
-       QDeclarativeContext *context = mFrameParentitem->qmlEngine()->rootContext();
+       mFrameParentitem = new PlexyDesk::QmlDesktopWidget(QRectF(0.0, 0.0, 400.0, 400.0));
+       QDeclarativeContext *context = mFrameParentitem->engine()->rootContext();
        const QString qmlData = mThemePack->hiddenQmlWidgets(QLatin1String("folderview"));
 
        qDebug() << Q_FUNC_INFO << qmlData;
        context->setContextProperty("DirSource", this);
-       mFrameParentitem->qmlFromUrl(QUrl(qmlData));
+       mFrameParentitem->setSourceUrl (QUrl(qmlData));
    }
 
    return mFrameParentitem;
