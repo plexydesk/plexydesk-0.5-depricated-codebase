@@ -47,11 +47,11 @@ class PLEXYDESK_EXPORT DesktopWidget : public ShaderEffectItem
     Q_PROPERTY(QRectF rect READ rect WRITE setRect NOTIFY rectChanged)
 
 public :
-        enum State {
-        DOCK,
-        NORMALSIDE,
-        BACKSIDE
-    };
+    enum State {
+       DOCK,
+       VIEW,
+       BACK
+     };
 
     /**
      * \brief Constructor

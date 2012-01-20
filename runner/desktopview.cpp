@@ -333,7 +333,7 @@ void DesktopView::loadWindows()
            //pa.subwindow_mode = IncludeInferiors; // Don't clip child widgets
            //Picture picture = XRenderCreatePicture( dpy, children[i], format, CPSubwindowMode, &pa );
            PlexyWindows *_window = new PlexyWindows(dpy, children[i], &attr);
-           _window->configState(DesktopWidget::NORMALSIDE);
+           _window->configState(DesktopWidget::VIEW);
            scene()->addItem(_window);
            _window->setRect(QRectF(0,0, 200, 200));
            _window->show();
@@ -549,7 +549,7 @@ void DesktopView::registerPhotoDialog()
             d->mPhotoDialog = widget;
             connect(widget, SIGNAL(close()), this, SLOT(closeDesktopWidget()));
             d->mPhotoDialog->hide();
-            d->mPhotoDialog->configState(DesktopWidget::NORMALSIDE);
+            d->mPhotoDialog->configState(DesktopWidget::VIEW);
         }
     }
 
@@ -574,7 +574,7 @@ WidgetPlugin *DesktopView::registerHandler(const QString &name, bool effects_on)
 
             widget->setPos(x_pos, y_pos);
 
-            widget->configState(DesktopWidget::NORMALSIDE);
+            widget->configState(DesktopWidget::VIEW);
 
             if (effects_on) {
               QGraphicsDropShadowEffect * effect  = new QGraphicsDropShadowEffect(this);

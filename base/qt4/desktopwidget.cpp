@@ -81,7 +81,7 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QDeclarativeIt
     d->backdrop = true;
     d->opacity = 1.0;
     d->saveRect = rect;
-    d->s = NORMALSIDE;
+    d->s = VIEW;
     d->angle = 0;
     d->angleHide = 0;
     d->scale = 1;
@@ -221,7 +221,7 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
         return;
     }
     if (d->s == DOCK) {
-        setState(NORMALSIDE);
+        setState(VIEW);
         prepareGeometryChange();
         this->setRect(d->saveRect);
         if (d->proxyWidget) {
@@ -243,7 +243,7 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 
 void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    if (event->buttons() == Qt::RightButton && (state() == NORMALSIDE || state() == BACKSIDE)) {
+    if (event->buttons() == Qt::RightButton && (state() == VIEW || state() == BACK)) {
         d->spintimer->start(18);
     }
 }
@@ -259,10 +259,10 @@ void DesktopWidget::spin()
     mat.translate(-center.x(), -center.y());
     setTransform(mat);
     if (d->angle >= 180) {
-        if (state() == BACKSIDE) {
-            setState(NORMALSIDE);
+        if (state() == BACK) {
+            setState(VIEW);
         } else {
-            setState(BACKSIDE);
+            setState(BACK);
         }
         d->spintimer->stop();
         resetMatrix();
@@ -307,7 +307,7 @@ void DesktopWidget::configState(DesktopWidget::State s)
     }
 
     if (d->s == DOCK) {
-        setState(NORMALSIDE);
+        setState(VIEW);
         prepareGeometryChange();
         this->setRect(d->saveRect);
         if (d->proxyWidget) {
@@ -363,10 +363,10 @@ void DesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     
     painter->setOpacity(d->opacity);
     painter->setClipRect(option->exposedRect);
-    if (d->s == NORMALSIDE) {
+    if (d->s == VIEW) {
         paintViewSide(painter, option->exposedRect);
         this->paintExtFace(painter, option, widget);
-    } else if (d->s == BACKSIDE) {
+    } else if (d->s == BACK) {
         paintBackSide(painter, option->exposedRect);
         this->paintExtBackFace(painter, option, widget);
     } else if (d->s == DOCK) {

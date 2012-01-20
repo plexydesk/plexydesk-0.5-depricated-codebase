@@ -195,16 +195,16 @@ QPoint ThemepackLoader::widgetPos(const QString &name)
 
 PlexyDesk::DesktopWidget::State ThemepackLoader::widgetView(const QString &name)
 {
-    PlexyDesk::DesktopWidget::State default_state = PlexyDesk::DesktopWidget::NORMALSIDE;
+    PlexyDesk::DesktopWidget::State default_state = PlexyDesk::DesktopWidget::VIEW;
     d->mSettings->beginGroup(name);
     QString state = d->mSettings->value("view").toString().toUpper();
     if (!state.isEmpty() && !state.isNull()) {
-        if (state == "NORMALSIDE") {
+        if (state == "VIEW") {
            d->mSettings->endGroup();
            return default_state;
-        } else if (state == "BACKSIDE") {
+        } else if (state == "BACK") {
             d->mSettings->endGroup();
-            return PlexyDesk::DesktopWidget::BACKSIDE;
+            return PlexyDesk::DesktopWidget::BACK;
         } else if (state == "DOCK") {
             d->mSettings->endGroup();
             return PlexyDesk::DesktopWidget::DOCK;

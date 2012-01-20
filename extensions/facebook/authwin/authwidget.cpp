@@ -190,7 +190,7 @@ void AuthWidget::onReadyRead()
     JsonData result = mJsonHandle->property(mReply->readAll(), "data");
     if (result.type() == JsonData::Error) {
         this->setVisible(true);
-        configState(DesktopWidget::NORMALSIDE);
+        configState(DesktopWidget::VIEW);
         mView->setVisible(false);
         mView->setUrl(QUrl(QLatin1String("https://graph.facebook.com/oauth/authorize?client_" \
                      "id=170356722999159&redirect_uri=http://www.facebook.com/connect" \
