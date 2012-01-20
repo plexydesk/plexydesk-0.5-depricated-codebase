@@ -205,6 +205,11 @@ void DesktopWidget::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsItem::mouseMoveEvent(event);
 }
+    
+void DesktopWidget::setContentRect(const QRectF &rect)
+{
+    d->saveRect = rect;
+}
 
 void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
@@ -215,7 +220,6 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
         QGraphicsItem::mouseDoubleClickEvent(event);
         return;
     }
-
     if (d->s == DOCK) {
         setState(NORMALSIDE);
         prepareGeometryChange();
@@ -231,6 +235,7 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
         if (d->proxyWidget) {
             d->proxyWidget->hide();
         }
+        this->setVisible(true);
         d->zoomout->start();
     }
     QGraphicsItem::mouseDoubleClickEvent(event);
@@ -353,11 +358,9 @@ void DesktopWidget::paintDockView(QPainter *p, const QRectF &rect)
 
 void DesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    if (isObscured())
-        return;
     if (!painter->isActive())
         return;
-
+    
     painter->setOpacity(d->opacity);
     painter->setClipRect(option->exposedRect);
     if (d->s == NORMALSIDE) {

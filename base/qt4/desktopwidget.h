@@ -81,11 +81,7 @@ public :
     void setDockBackground(QPixmap);
     void setWidgetBackground(QPixmap);
     void setBacksideBackground(QPixmap);
-    
-   // QDeclarativeEngine *qmlEngine() const;
-   // void qmlFromUrl(const QUrl &url);
-   // bool isQMLWidget() const;
-    
+    void setContentRect (const QRectF &rect);
 
 public Q_SLOTS:
     void zoomIn(int);
@@ -101,8 +97,7 @@ Q_SIGNALS:
 private:
     void drawBackdrop(bool draw);
     void setState(State s);
-
-
+    
 
 protected:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);

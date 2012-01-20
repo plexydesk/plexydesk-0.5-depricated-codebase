@@ -233,11 +233,14 @@ void DesktopView::setThemePack(const QString &name)
             connect(parent, SIGNAL(close()), this, SLOT(closeDesktopWidget()));
             QPoint pos = d->mThemeLoader->widgetPos(qmlWidget);
             parent->setPos(pos);
+            parent->setContentRect(parent->boundingRect());
+            qDebug() << Q_FUNC_INFO << parent->boundingRect();
+            parent->hide();
+            parent->show();
 
             //check shadow prop
 
             bool shadow_on = d->mThemeLoader->getProperty(qmlWidget, "shadow").toBool();
-            qDebug() << Q_FUNC_INFO << qmlWidget << " Shadow On :" << shadow_on;
             if(shadow_on) {
               QGraphicsDropShadowEffect * effect  = new QGraphicsDropShadowEffect(this);
               effect->setBlurRadius(8.0);
