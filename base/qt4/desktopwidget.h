@@ -32,7 +32,6 @@
 #define PLEXY_DESKTOP_WIDGET_H
 
 #include <QGraphicsRectItem>
-
 #include <plexy.h>
 #include <plexyconfig.h>
 #include "shaders/shadereffectitem.h"
@@ -54,7 +53,7 @@ public :
      };
 
     /**
-     * \brief Constructor
+     * \brief Base Desktop widget
      * \param rect Defines the bounding rectangular area of a
      * desktop widget
      * \param embeddedWidget an optional parameter to embed a regular
@@ -67,21 +66,54 @@ public :
     DesktopWidget(const QRectF &rect, QWidget *embeddedWidget = 0, QDeclarativeItem *parent = 0);
 
     virtual ~DesktopWidget();
+    
+    /**
+     * \breif Bounding Rectangle of the Widget
+     * @returns The bounding Rectangle of the widget.
+     */
+    
     virtual QRectF boundingRect() const;
-
     QRectF rect() const;
+    
+     /**
+     *\brief Widgets Content rectangle
+     * 
+     * Set the content rectangle of the widget
+     * in situations where the widget can't 
+     * find out by it self
+     */
+    void setContentRect (const QRectF &rect);
+    
+     /**
+     * \brief Sets the Widget rectangle defined by rect
+     * \param rect Rectangle to use
+     */
     void setRect(const QRectF &rect);
 
-
+     /**
+     * \brief Sets a icon for the widget
+     * \param name Name of the icon
+     * 
+     * Icon to display when the widget is in dock mode
+     */
     void setIconName(const QString &name);
+    
+     /**
+     * \brief Name of the Widget Icon
+     * \retuns Icon name 
+     */
+    QString iconName() const;
 
+     /** 
+     *\brief Widget state
+     * returns Retuns the state of the widget
+     */
     State state();
     void configState(State s);
 
     void setDockBackground(QPixmap);
     void setWidgetBackground(QPixmap);
     void setBacksideBackground(QPixmap);
-    void setContentRect (const QRectF &rect);
 
 public Q_SLOTS:
     void zoomIn(int);
@@ -93,11 +125,9 @@ Q_SIGNALS:
     void close();
     void rectChanged();
 
-
 private:
     void drawBackdrop(bool draw);
     void setState(State s);
-    
 
 protected:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
@@ -127,7 +157,6 @@ protected:
     virtual void paintBackSide(QPainter *painter, const QRectF &rect);
     virtual void paintViewSide(QPainter *painter, const QRectF &rect);
     virtual void paintDockView(QPainter *painter, const QRectF &rect);
-
 
 private:
     class Private;
