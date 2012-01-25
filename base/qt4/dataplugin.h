@@ -49,9 +49,11 @@
  **/
 namespace PlexyDesk
 {
+
 class PLEXYDESK_EXPORT DataPlugin : public BasePlugin
 {
     Q_OBJECT
+
 public:
     DataPlugin(QObject *object = 0) {
         Q_UNUSED(object);
@@ -59,10 +61,13 @@ public:
     virtual ~DataPlugin() {
     }
     virtual QVariantMap readAll() = 0;
-public slots:
+
+public Q_SLOTS:
     virtual void pushData(QVariant &) = 0;
-signals:
+
+Q_SIGNALS:
     void dataReady();
 };
+
 }
 #endif
