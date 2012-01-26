@@ -36,7 +36,7 @@ public:
     QVariantMap data;
 };
 
-RestData::RestData(QObject *object) : d(new Private)
+RestData::RestData(QObject * /*object*/) : d(new Private)
 {
     d->manager = new QNetworkAccessManager(this);
     connect(d->manager, SIGNAL(finished(QNetworkReply *)),
@@ -84,7 +84,7 @@ void RestData::replyFinished(QNetworkReply *reply)
     Q_EMIT dataReady();
 }
 
-void RestData::handleAuth(QNetworkReply *r, QAuthenticator *auth)
+void RestData::handleAuth(QNetworkReply * /*r*/, QAuthenticator *auth)
 {
     qDebug() << Q_FUNC_INFO << d->user << ":" << d->pass;
     auth->setUser(d->user);

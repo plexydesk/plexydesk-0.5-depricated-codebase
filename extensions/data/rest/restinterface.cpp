@@ -21,7 +21,7 @@
 #include <desktopwidget.h>
 #include <plexyconfig.h>
 
-RestInterface::RestInterface(QObject *object)
+RestInterface::RestInterface(QObject * /*object*/)
 {
 }
 

@@ -26,22 +26,6 @@ themepack.digitalclock.images.files = $$THEMEPACK.DIGITALCLOCK.IMAGES
 themepack.digitalclock.images.path = $${sharedir}/plexy/themepack/default/resources
 INSTALLS += themepack.digitalclock.images
 
-THEMEPACK.FOLDERVIEW.QML = folderview/folderview.qml
-themepack.folderview.qml.files = $$THEMEPACK.FOLDERVIEW.QML
-themepack.folderview.qml.path = $${sharedir}/plexy/themepack/default/folderview
-INSTALLS += themepack.folderview.qml
-
-THEMEPACK.FOLDERVIEW.RES = folderview/resources/Icon.qml \
-                        folderview/resources/Scripts.js
-themepack.folderview.res.files = $$THEMEPACK.FOLDERVIEW.RES
-themepack.folderview.res.path = ${sharedir}/plexy/themepack/default/folderview/resources
-INSTALLS += themepack.folderview.res
-
-THEMEPACK.FOLDERVIEW.IMAGES = folderview/resources/images/*
-themepack.folderview.images.files = $$THEMEPACK.FOLDERVIEW.IMAGES
-themepack.folderview.images.path = $${sharedir}/plexy/themepack/default/resources/
-INSTALLS += themepack.folderview.images
-
 THEMEPACK.PHOTO.QML = photo/photoElement.qml
 themepack.photo.qml.files = $$THEMEPACK.PHOTO.QML
 themepack.photo.qml.path = $${sharedir}/plexy/themepack/default/photo

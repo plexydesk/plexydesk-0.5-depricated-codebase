@@ -29,20 +29,24 @@ unix {
 #    QMAKE_CXXFLAGS += -fPIC -fvisibility=default -fvisibility-inlines-hidden
 #    QMAKE_LFLAGS += -shared -rdynamic
 
-    !exists($${CONFIG_H}) {
-        system(mkdir -p $${BUILD_DIR})
+    !exists($${BUILD_DIR}) {
+        system(md $${BUILD_DIR})
     }
-    system(rm $${CONFIG_H})
+    exists($${CONFIG_H}) {
+        system(rm $${CONFIG_H})
+    }
     system(touch $${CONFIG_H})
 }
 
 win32 {
     BUILD_DIR = $$replace(BUILD_DIR,/,\\)
     CONFIG_H = $$replace(CONFIG_H,/,\\)
-    !exists($${CONFIG_H}) {
+    !exists($${BUILD_DIR}) {
         system(md $${BUILD_DIR})
     }
-    system(del $${CONFIG_H})
+    exists($${CONFIG_H}) {
+        system(del $${CONFIG_H})
+    }
     system(copy NUL $${CONFIG_H})
 }
 
@@ -52,6 +56,13 @@ win32 {
     system(echo $${LITERAL_HASH}define PLEXYDATE \"$${ApplicationDate}\" >> $${CONFIG_H})
     system(echo $${LITERAL_HASH}define PLEXYQTIMPORTSDIR \"qt4//imports//\" >> $${CONFIG_H})
     system(echo $${LITERAL_HASH}define PLEXYRESOURCESDIR \"$${ResourcesDir}\" >> $${CONFIG_H})
+
+    CONFIG(debug, debug|release) {
+        system(echo $${LITERAL_HASH}define BUILD_MODE \"Debug\" >> $${CONFIG_H})
+    }
+    else {
+        system(echo $${LITERAL_HASH}define BUILD_MODE \"Release\" >> $${CONFIG_H})
+    }
 }
 
 unix {
@@ -60,13 +71,13 @@ unix {
     system(echo \'$${LITERAL_HASH}define PLEXYDATE \"$${ApplicationDate}\"\' >> $${CONFIG_H})
     system(echo \'$${LITERAL_HASH}define PLEXYQTIMPORTSDIR \"qt4//imports//\"\' >> $${CONFIG_H})
     system(echo \'$${LITERAL_HASH}define PLEXYRESOURCESDIR \"$${ResourcesDir}\"\' >> $${CONFIG_H})
-}
 
-CONFIG(debug, debug|release) {
-    system(echo \'$${LITERAL_HASH}define BUILD_MODE \"Debug\"\' >> $${CONFIG_H})
-}
-else {
-    system(echo \'$${LITERAL_HASH}define BUILD_MODE \"Release\"\' >> $${CONFIG_H})
+    CONFIG(debug, debug|release) {
+        system(echo \'$${LITERAL_HASH}define BUILD_MODE \"Debug\"\' >> $${CONFIG_H})
+    }
+    else {
+        system(echo \'$${LITERAL_HASH}define BUILD_MODE \"Release\"\' >> $${CONFIG_H})
+    }
 }
 
 win32 {
@@ -133,7 +144,12 @@ qtconf.path = $${OUT_PWD}/build/plexydesk-ready-build/bin
 qtconf.file = $${qtconf.path}/qt.conf
 
 unix {
-    system(rm $${qtconf.file})
+    !exists($${qtconf.path}) {
+        system(md $${qtconf.path})
+    }
+    exists($${qtconf.file}) {
+        system(rm $${qtconf.file})
+    }
     system(touch $${qtconf.file})
 }
 
@@ -141,10 +157,12 @@ win32 {
     qtconf.path = $$replace(qtconf.path,/,\\)
     qtconf.file = $$replace(qtconf.file,/,\\)
 
-    !exists($${qtconf.file}) {
+    !exists($${qtconf.path}) {
         system(md $${qtconf.path})
     }
-    system(del $${qtconf.file})
+    exists($${qtconf.file}) {
+        system(del $${qtconf.file})
+    }
     system(copy NUL $${qtconf.file})
 }
 

@@ -16,7 +16,8 @@ DESTDIR = $${top_destdirbin}
 
 INCLUDEPATH += $${top_srcdir}/base/qt4 $${top_srcdir}/base/qt4/shaders $${top_srcdir}/3rdparty/qplexymime
 
-SOURCES += desktopview.cpp \
+SOURCES += desktopbaseui.cpp \
+           desktopview.cpp \
            icon.cpp \
            iconjob.cpp \
            iconprovider.cpp \
@@ -25,7 +26,8 @@ SOURCES += desktopview.cpp \
            plexypanel.cpp \
            plexytray.cpp
 
-HEADERS += desktopview.h \
+HEADERS += desktopbaseui.h \
+           desktopview.h \
            icon.h \
            iconjob.h \
            iconprovider.h \

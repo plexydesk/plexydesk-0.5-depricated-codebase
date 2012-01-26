@@ -22,7 +22,7 @@
 #include <desktopwidget.h>
 #include <QDeclarativeContext>
 
-ImagePlugin::ImagePlugin(QObject *object) :
+ImagePlugin::ImagePlugin(QObject * /*object*/) :
     mFrameParentitem(0)
 {
    mThemePack = new PlexyDesk::ThemepackLoader("default", this);

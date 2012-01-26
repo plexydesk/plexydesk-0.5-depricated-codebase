@@ -28,8 +28,9 @@ SOURCES = abstractplugininterface.cpp \
 		pendingjob.cpp \
 		plexyconfig.cpp \
 		pluginloader.cpp \
+                svgprovider.cpp \
 		themepackloader.cpp \
-		viewlayer.cpp
+                viewlayer.cpp
 
 HEADERS = abstractplugininterface.h \
 		backdropinterface.h \
@@ -51,6 +52,7 @@ HEADERS = abstractplugininterface.h \
 		pluginloader.h \
 		socialinterface.h \
 		socialplugin.h \
+                svgprovider.h \
 		themepackloader.h \
 		viewlayer.h \
 		widgetinterface.h \

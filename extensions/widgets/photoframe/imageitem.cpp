@@ -35,12 +35,12 @@ ImagePileWidget::~ImagePileWidget()
 }
 
 
-void ImagePileWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *widget)
+void ImagePileWidget::paintExtFace(QPainter * /*p*/, const QStyleOptionGraphicsItem * /*e*/, QWidget * /*widget*/)
 {
 
 }
 
-void ImagePileWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *widget)
+void ImagePileWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget * /*widget*/)
 {
     QRectF r = e->exposedRect;
     p->drawImage(QRectF(20, 20, r.width() - 40, r.height() - 40), cover);

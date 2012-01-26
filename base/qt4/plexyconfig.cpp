@@ -226,7 +226,7 @@ void Config::setPhoto(const QString &str)
     Q_EMIT photoChanged();
 }
 
-void Config::addWidget(const QString &widget)
+void Config::addWidget(const QString & /*widget*/)
 {
     //TODO: Check if this is a valid widgetname
    // widgetList.append(widget);

@@ -24,7 +24,7 @@
 #include <pluginloader.h>
 
 
-Interface::Interface(QObject *object)
+Interface::Interface(QObject * /*object*/)
 {
 }
 

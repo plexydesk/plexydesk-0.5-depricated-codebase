@@ -22,7 +22,7 @@
 
 #include <QtPlugin>
 
-ClassicBackdrop::ClassicBackdrop(QObject *object)
+ClassicBackdrop::ClassicBackdrop(QObject * /*object*/)
 {
 }
 
