@@ -10,7 +10,7 @@ SET (sourceFiles
 
 SET(headerFiles
     freedesktopmime.h
-    config.h
+    mime_globals.h
     )
 
 SET(MOC_SRCS
