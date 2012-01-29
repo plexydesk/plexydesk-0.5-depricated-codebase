@@ -10,7 +10,10 @@ public:
     DesktopBaseUi(QObject *parent = 0);
     virtual ~DesktopBaseUi();
 
+    void setDesktopView (const QString &name);
+
     QRect desktopRect() const;
+
 public Q_SLOTS:
     void screenResized(int screen);
 

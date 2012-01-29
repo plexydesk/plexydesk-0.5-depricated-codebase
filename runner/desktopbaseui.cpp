@@ -20,6 +20,10 @@
 #include <QDebug>
 #include <QDesktopWidget>
 
+#include <pluginloader.h>
+#include <abstractdesktopview.h>
+#include <desktopviewplugin.h>
+
 #include "desktopbaseui.h"
 #include "desktopview.h"
 #include "plexytray.h"
@@ -30,21 +34,22 @@
 #include <netwm.h>
 #endif
 
+using namespace PlexyDesk;
 
 class DesktopBaseUi::DesktopBaseUiPrivate
 {
     public:
         DesktopBaseUiPrivate () {}
         ~DesktopBaseUiPrivate () {}
-
-        DesktopView *mDesktopView;
+        DesktopViewPlugin *mViewPlugin;
+        AbstractDesktopView *mDesktopView;
         QDesktopWidget *mDesktopWidget;
         QGraphicsScene *mScene;
         PlexyDesk::Config *mConfig;
         QString mAppIconPath;
         QIcon mAppIcon;
         PlexyTray *mTrayIcon;
-        QMap<int, DesktopView*> mViewList;
+        QMap<int, AbstractDesktopView*> mViewList;
 };
 
 
@@ -52,6 +57,7 @@ DesktopBaseUi::DesktopBaseUi(QObject *parent) :
     QObject(parent),
     d (new DesktopBaseUiPrivate)
 {
+    setDesktopView(QLatin1String ("plexydesktopview"));
     setup();
 
     connect (d->mDesktopWidget, SIGNAL(resized(int)), this, SLOT(screenResized(int)));
@@ -63,12 +69,21 @@ DesktopBaseUi::~DesktopBaseUi()
     if (d->mTrayIcon)
         delete d->mTrayIcon;
 
-    foreach (DesktopView * view, d->mViewList.values()) {
+    foreach (AbstractDesktopView * view, d->mViewList.values()) {
         if(view)
             delete view;
     }
 
     d->mViewList.clear();
+}
+
+void DesktopBaseUi::setDesktopView(const QString &name)
+{
+    d->mViewPlugin =
+        static_cast<DesktopViewPlugin *>(
+                PluginLoader::getInstance()->instance(name));
+    qDebug() << Q_FUNC_INFO << "View Plugin " << d->mViewPlugin;
+    //FIX : handle changes
 }
 
 void DesktopBaseUi::setup()
@@ -100,7 +115,15 @@ void DesktopBaseUi::setup()
 
         scene->setBackgroundBrush(Qt::blue);
 
-        DesktopView *view = new DesktopView (scene, 0);
+        if (!d->mViewPlugin) {
+            continue;
+        }
+
+        AbstractDesktopView *view = d->mViewPlugin->view();
+        if (!view) {
+            qApp->quit();
+            continue;
+        }
         view->setWindowTitle(QString(PLEXYNAME));
         view->enableOpenGL(d->mConfig->isOpenGL());
         view->resize(desktopSize);
@@ -121,10 +144,10 @@ void DesktopBaseUi::setup()
         info.setWindowType(NET::Desktop);
 #endif
 
-        view->addWallpaperItem();
-        view->setThemePack(PlexyDesk::Config::getInstance()->themepackName());
+        //FIX: view->addWallpaperItem();
+        //FIX: view->setThemePack(PlexyDesk::Config::getInstance()->themepackName());
         view->showLayer(QLatin1String("Widgets"));
-        view->registerPhotoDialog();
+        //FIX: view->registerPhotoDialog();
         d->mViewList[i] = view;
         QApplication::desktop()->setParent(view);
     }
@@ -143,7 +166,7 @@ void DesktopBaseUi::screenResized(int screen)
     if(!screen)
         return;
 
-    DesktopView *view = d->mViewList[screen];
+    AbstractDesktopView *view = d->mViewList[screen];
     QRect desktopScreenRect = d->mDesktopWidget->screenGeometry(screen);
 #ifdef Q_WS_WIN
     // A 1px hack to make the widget fullscreen and not covering the toolbar on Win

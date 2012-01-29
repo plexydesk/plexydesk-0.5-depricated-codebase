@@ -37,15 +37,12 @@ class PLEXYDESK_EXPORT DesktopViewPlugin : public BasePlugin
     Q_OBJECT
 
 public:
-    DesktopViewPlugin(QObject *object = 0) : BasePlugin(object)
-    {
-    }
+    DesktopViewPlugin(QObject *object = 0) : BasePlugin(object){}
 
-    virtual ~DesktopViewPlugin()
-    {
-    }
+    virtual ~DesktopViewPlugin(){}
 
     virtual AbstractDesktopView *view() = 0;
+
     virtual void setRect (const QRect &rect) = 0;
 
 public Q_SLOTS:
