@@ -17,36 +17,47 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
+#ifndef PLEXY_ABSTRACT_DESKTOP_VIEW_H
+#define PLEXY_ABSTRACT_DESKTOP_VIEW_H
 
+#include <config.h>
+
+#include <QGraphicsView>
+
+#include <plexy.h>
 #include <desktopwidget.h>
-
-#ifndef PLEXYDESK_QML_DESKTOP_WIDGET_H
-#define PLEXYDESK_QML_DESKTOP_WIDGET_H
+#include <widgetplugin.h>
 
 namespace PlexyDesk
 {
-class QmlDesktopWidget : public DesktopWidget
+
+class AbstractDesktopView : public QGraphicsView
 {
     Q_OBJECT
 
 public:
-    QmlDesktopWidget(const QRectF &rect, QWidget *embeddedWidget = 0, QDeclarativeItem *parent = 0);
+    AbstractDesktopView(QGraphicsScene *scene = new QGraphicsScene(),
+            QWidget *parent = 0) {}
 
-    virtual ~QmlDesktopWidget();
+    virtual void addWallpaper(const QString &path) = 0;
 
-    QDeclarativeEngine *engine() const;
+    virtual void addCoreExtension(const QString &name) = 0;
 
-    void setSourceUrl(const QUrl &url);
+    virtual void addExtension(const QString &name,
+            const QString &layer = QLatin1String("Widgets"),
+            const QPoint &pos = QPoint(0, 0),
+            PlexyDesk::DesktopWidget::State state =
+            PlexyDesk::DesktopWidget::DOCK) = 0;
 
-public Q_SLOTS:
-    void onQuit();
+    virtual void addDesktopItem(QGraphicsItem *item) = 0;
 
-protected:
-    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
+    void enableOpenGL(bool);
 
-private:
-    class PrivateQmlDesktopWidget;
-    PrivateQmlDesktopWidget *const d;
+    virtual void showLayer(const QString &name) = 0;
+
+Q_SIGNALS:
+    void closeApplication();
 };
+
 } // namespace PlexyDesk
-#endif //PLEXYDESK_QML_DESKTOP_WIDGET_H
+#endif
