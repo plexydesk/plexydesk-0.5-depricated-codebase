@@ -236,6 +236,9 @@ ADD_SUBDIRECTORY(extensions/backdrop/classicdrop)
 ADD_SUBDIRECTORY(runner)
 ADD_SUBDIRECTORY(modules/fbjson)
 
+# *** Desktop UI Plugins ***
+ADD_SUBDIRECTORY(extensions/desktop/plexy)
+
 # *** UI widgets - ALL PLATFORMS ***
 # Youtube is diabled ListView is now at extensions/widgets
 #ADD_SUBDIRECTORY(extensions/widgets/youtubewidget)

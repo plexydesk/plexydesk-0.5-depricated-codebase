@@ -16,44 +16,25 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-
-#ifndef PLEXY_ABSTRACT_DESKTOP_VIEW_H
-#define PLEXY_ABSTRACT_DESKTOP_VIEW_H
-
-#include <config.h>
-
-#include <QGraphicsView>
+#ifndef PLEXY_CLASSIC_BACKDROP_I
+#define PLEXY_CLASSIC_BACKDROP_I
 
 #include <plexy.h>
-#include <desktopwidget.h>
-#include <widgetplugin.h>
+#include <backdropinterface.h>
+#include <datainterface.h>
+#include <pluginloader.h>
+#include <abstractplugininterface.h>
 
-namespace PlexyDesk
-{
 
-class AbstractDesktopView : public QGraphicsView
+class DesktopViewInterface : public PlexyDesk::AbstractPluginInterface
 {
     Q_OBJECT
+    Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
 public:
-    AbstractDesktopView(QGraphicsScene *scene = new QGraphicsScene(),
-            QWidget *parent = 0) : QGraphicsView (scene, parent) {}
-
-    virtual void addCoreExtension(const QString &name) = 0;
-
-    virtual void addExtension(const QString &name,
-            const QString &layer = QLatin1String("Widgets"),
-            const QPoint &pos = QPoint(0, 0),
-            PlexyDesk::DesktopWidget::State state =
-            PlexyDesk::DesktopWidget::DOCK) = 0;
-
-    virtual void enableOpenGL(bool);
-
-    virtual void showLayer(const QString &name) = 0;
-
-Q_SIGNALS:
-    void closeApplication();
+    DesktopViewInterface(QObject *object = 0);
+    virtual ~DesktopViewInterface();
+    virtual PlexyDesk::BasePlugin *instance();
 };
 
-} // namespace PlexyDesk
 #endif

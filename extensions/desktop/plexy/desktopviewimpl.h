@@ -16,44 +16,41 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-
-#ifndef PLEXY_ABSTRACT_DESKTOP_VIEW_H
-#define PLEXY_ABSTRACT_DESKTOP_VIEW_H
+#ifndef PLEXYDESK_DESKTOP_VIEW_PLUGIN_IMPL
+#define PLEXYDESK_DESKTOP_VIEW_PLUGIN_IMPL
 
 #include <config.h>
 
-#include <QGraphicsView>
+#include <QDesktopWidget>
+#include <QGraphicsItem>
+#include <QGraphicsPixmapItem>
+#include <QPixmap>
+#include <QPainter>
+#include <QPropertyAnimation>
+#include <QGraphicsBlurEffect>
 
 #include <plexy.h>
-#include <desktopwidget.h>
-#include <widgetplugin.h>
+#include <desktopviewplugin.h>
+#include <themepackloader.h>
+#include <qmldesktopwidget.h>
 
-namespace PlexyDesk
-{
-
-class AbstractDesktopView : public QGraphicsView
+class DesktopViewPluginImpl: public PlexyDesk::DesktopViewPlugin
 {
     Q_OBJECT
 
 public:
-    AbstractDesktopView(QGraphicsScene *scene = new QGraphicsScene(),
-            QWidget *parent = 0) : QGraphicsView (scene, parent) {}
+    DesktopViewPluginImpl(QObject *object = 0);
 
-    virtual void addCoreExtension(const QString &name) = 0;
+    virtual ~DesktopViewPluginImpl();
 
-    virtual void addExtension(const QString &name,
-            const QString &layer = QLatin1String("Widgets"),
-            const QPoint &pos = QPoint(0, 0),
-            PlexyDesk::DesktopWidget::State state =
-            PlexyDesk::DesktopWidget::DOCK) = 0;
+    PlexyDesk::AbstractDesktopView *view();
 
-    virtual void enableOpenGL(bool);
+    void setRect (const QRect &rect);
 
-    virtual void showLayer(const QString &name) = 0;
+public Q_SLOTS:
 
 Q_SIGNALS:
-    void closeApplication();
+    void dataChange();
 };
 
-} // namespace PlexyDesk
-#endif
+#endif //PLEXYDESK_DESKTOP_VIEW_PLUGIN_IMPL

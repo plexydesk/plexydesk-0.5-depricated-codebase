@@ -17,43 +17,43 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
-#ifndef PLEXY_ABSTRACT_DESKTOP_VIEW_H
-#define PLEXY_ABSTRACT_DESKTOP_VIEW_H
+#ifndef PLEXY_DESKTOP_PLUGIN_H
+#define PLEXY_DESKTOP_PLUGIN_H
 
 #include <config.h>
-
-#include <QGraphicsView>
-
 #include <plexy.h>
-#include <desktopwidget.h>
-#include <widgetplugin.h>
+
+#include <baseplugin.h>
+#include <abstractdesktopview.h>
+
+class QPainter;
+class QVariant;
+class QRectF;
 
 namespace PlexyDesk
 {
-
-class AbstractDesktopView : public QGraphicsView
+class PLEXYDESK_EXPORT DesktopViewPlugin : public BasePlugin
 {
     Q_OBJECT
 
 public:
-    AbstractDesktopView(QGraphicsScene *scene = new QGraphicsScene(),
-            QWidget *parent = 0) : QGraphicsView (scene, parent) {}
+    DesktopViewPlugin(QObject *object = 0) : BasePlugin(object)
+    {
+    }
 
-    virtual void addCoreExtension(const QString &name) = 0;
+    virtual ~DesktopViewPlugin()
+    {
+    }
 
-    virtual void addExtension(const QString &name,
-            const QString &layer = QLatin1String("Widgets"),
-            const QPoint &pos = QPoint(0, 0),
-            PlexyDesk::DesktopWidget::State state =
-            PlexyDesk::DesktopWidget::DOCK) = 0;
+    virtual AbstractDesktopView *view() = 0;
+    virtual void setRect (const QRect &rect) = 0;
 
-    virtual void enableOpenGL(bool);
-
-    virtual void showLayer(const QString &name) = 0;
+public Q_SLOTS:
+    virtual void pushData(QVariant &value) = 0;
 
 Q_SIGNALS:
-    void closeApplication();
+    void data(QVariant &value);
 };
+}
 
-} // namespace PlexyDesk
 #endif
