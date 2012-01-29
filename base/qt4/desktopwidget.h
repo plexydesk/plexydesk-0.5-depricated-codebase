@@ -66,15 +66,15 @@ public :
     DesktopWidget(const QRectF &rect, QWidget *embeddedWidget = 0, QDeclarativeItem *parent = 0);
 
     virtual ~DesktopWidget();
-    
+
     /**
      * \breif Bounding Rectangle of the Widget
      * @returns The bounding Rectangle of the widget.
      */
-    
+
     virtual QRectF boundingRect() const;
     QRectF rect() const;
-    
+
      /**
      *\brief Widgets Content rectangle
      * 
@@ -83,7 +83,7 @@ public :
      * find out by it self
      */
     void setContentRect (const QRectF &rect);
-    
+
      /**
      * \brief Sets the Widget rectangle defined by rect
      * \param rect Rectangle to use
@@ -97,7 +97,7 @@ public :
      * Icon to display when the widget is in dock mode
      */
     void setIconName(const QString &name);
-    
+
      /**
      * \brief Name of the Widget Icon
      * \retuns Icon name 
