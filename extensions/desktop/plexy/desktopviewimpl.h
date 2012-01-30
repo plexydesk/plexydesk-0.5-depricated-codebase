@@ -33,6 +33,7 @@
 #include <desktopviewplugin.h>
 #include <themepackloader.h>
 #include <qmldesktopwidget.h>
+#include "desktopview.h"
 
 class DesktopViewPluginImpl: public PlexyDesk::DesktopViewPlugin
 {
@@ -43,14 +44,16 @@ public:
 
     virtual ~DesktopViewPluginImpl();
 
-    PlexyDesk::AbstractDesktopView *view();
+    PlexyDesk::AbstractDesktopView *view(QGraphicsScene *scene);
 
     void setRect (const QRect &rect);
 
-public Q_SLOTS:
-
 Q_SIGNALS:
     void dataChange();
+
+private:
+    QList<DesktopView *> mViewList;
+
 };
 
 #endif //PLEXYDESK_DESKTOP_VIEW_PLUGIN_IMPL

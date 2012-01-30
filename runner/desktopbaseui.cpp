@@ -25,7 +25,6 @@
 #include <desktopviewplugin.h>
 
 #include "desktopbaseui.h"
-#include "desktopview.h"
 #include "plexytray.h"
 
 #if defined(Q_WS_X11) // && defined(Q_WS_MAC) ??
@@ -114,14 +113,14 @@ void DesktopBaseUi::setup()
         scene->setItemIndexMethod(QGraphicsScene::NoIndex);
 
         scene->setBackgroundBrush(Qt::blue);
+        scene->setSceneRect(desktopScreenRect);
 
         if (!d->mViewPlugin) {
             continue;
         }
 
-        AbstractDesktopView *view = d->mViewPlugin->view();
+        AbstractDesktopView *view = d->mViewPlugin->view(scene);
         if (!view) {
-            qApp->quit();
             continue;
         }
         view->setWindowTitle(QString(PLEXYNAME));
@@ -133,7 +132,6 @@ void DesktopBaseUi::setup()
         view->enableOpenGL(d->mConfig->isOpenGL());
         view->move(d->mDesktopWidget->screenGeometry(i).x(),
                   d->mDesktopWidget->screenGeometry(i).y());
-        scene->setSceneRect(desktopScreenRect);
         view->setSceneRect (desktopScreenRect);
         view->ensureVisible(desktopScreenRect);
         view->setDragMode(QGraphicsView::RubberBandDrag);

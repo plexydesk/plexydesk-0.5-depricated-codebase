@@ -36,7 +36,6 @@ ENDIF(NOT APPLE)
 
 ########### Source files ###############
 SET(sourceFiles
-    desktopview.cpp
     icon.cpp
     iconjob.cpp
     iconprovider.cpp
@@ -49,7 +48,6 @@ SET(sourceFiles
     )
 
 SET(headerFiles
-    desktopview.h
     icon.h
     iconjob.h
     iconprovider.h
@@ -61,7 +59,6 @@ SET(headerFiles
     )
 
 SET(QTMOC_SRCS
-    desktopview.h
     icon.h
     iconjob.h
     iconprovider.h

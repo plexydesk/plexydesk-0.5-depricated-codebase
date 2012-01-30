@@ -20,6 +20,7 @@
 #include <QDir>
 #include <QPixmapCache>
 #include <QDeclarativeContext>
+#include "desktopview.h"
 
 #include <QtDebug>
 
@@ -35,13 +36,20 @@ DesktopViewPluginImpl::DesktopViewPluginImpl(QObject *object)
 
 DesktopViewPluginImpl::~DesktopViewPluginImpl()
 {
+    qDeleteAll(mViewList.begin(), mViewList.end());
+    mViewList.clear();
 }
 
 void  DesktopViewPluginImpl::setRect(const QRect &rect)
 {
 }
 
-PlexyDesk::AbstractDesktopView  *DesktopViewPluginImpl::view()
+PlexyDesk::AbstractDesktopView  *DesktopViewPluginImpl::view(QGraphicsScene *scene)
 {
-    return NULL;
+    DesktopView *view = new DesktopView(scene);
+    view->addWallpaperItem();
+    view->setThemePack(PlexyDesk::Config::getInstance()->themepackName());
+    view->registerPhotoDialog();
+    mViewList.append(view);
+    return view;
 }

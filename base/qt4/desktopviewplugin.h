@@ -41,12 +41,9 @@ public:
 
     virtual ~DesktopViewPlugin(){}
 
-    virtual AbstractDesktopView *view() = 0;
+    virtual AbstractDesktopView *view(QGraphicsScene *scene) = 0;
 
     virtual void setRect (const QRect &rect) = 0;
-
-public Q_SLOTS:
-    virtual void pushData(QVariant &value) = 0;
 
 Q_SIGNALS:
     void data(QVariant &value);

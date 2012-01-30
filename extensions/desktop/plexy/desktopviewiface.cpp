@@ -16,10 +16,11 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#include "desktopviewiface.h"
-#include "desktopview.h"
 #include <desktopwidget.h>
 
+#include "desktopviewiface.h"
+#include "desktopview.h"
+#include "desktopviewimpl.h"
 #include <QtPlugin>
 
 DesktopViewInterface::DesktopViewInterface(QObject *object)
@@ -32,7 +33,7 @@ DesktopViewInterface::~DesktopViewInterface()
 
 PlexyDesk::BasePlugin *DesktopViewInterface::instance()
 {
-    return 0;// new BgPlugin(this);
+    return new DesktopViewPluginImpl(this);
 }
 
 

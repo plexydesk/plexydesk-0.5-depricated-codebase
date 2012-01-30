@@ -246,8 +246,10 @@ void DesktopView::setThemePack(const QString &name)
 
 void DesktopView::addWallpaperItem()
 {
+    qDebug() << Q_FUNC_INFO << d->bgPlugin;
     if (d->bgPlugin) {
         QRectF screenRect = scene()->sceneRect();
+        qDebug() << Q_FUNC_INFO << screenRect;
         d->bgPlugin->setRect (
             QRect (screenRect.x(),
               screenRect.y(),
