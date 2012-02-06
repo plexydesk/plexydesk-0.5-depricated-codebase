@@ -65,6 +65,7 @@ SET(MOC_SRCS
    baseplugin.h
    baserender.h
    datainterface.h
+   imagecache.h
    dataplugin.h
    desktopwidget.h
    pendingjob.h

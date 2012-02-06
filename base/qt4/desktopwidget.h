@@ -142,6 +142,7 @@ Q_SIGNALS:
 private:
     void drawBackdrop(bool draw);
     void setState(State s);
+    void setDefaultImages();
 
 protected:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);

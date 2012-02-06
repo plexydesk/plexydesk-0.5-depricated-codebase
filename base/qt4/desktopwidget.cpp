@@ -33,6 +33,7 @@
 #include <QtDebug>
 
 #include "desktopwidget.h"
+#include <imagecache.h>
 #include <plexy.h>
 
 
@@ -64,6 +65,9 @@ public:
     bool backdrop;
     bool mEditMode;
     QString mName;
+
+    // image cache
+    ImageCache *mCache;
 };
 
 DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QDeclarativeItem *parent) :
@@ -89,14 +93,9 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QDeclarativeIt
     d->angleHide = 0;
     d->scale = 1;
 
-    d->panel = QPixmap(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath()  +
-         QLatin1String( "/share/plexy/skins/widgets/base-widget/panel.png")));
 
-    d->back = QPixmap(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath()  +
-         QLatin1String("/share/plexy/skins/widgets/base-widget/reverse.png")));
-
-    d->dock = QPixmap(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() +
-         QLatin1String("/share/plexy/skins/widgets/base-widget/icon.png")));
+    d->mCache = new ImageCache();
+    setDefaultImages();
 
     setCacheMode(QGraphicsItem::ItemCoordinateCache, d->panel.size());
     setCacheMode(DeviceCoordinateCache);
@@ -132,6 +131,13 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QDeclarativeIt
 DesktopWidget::~DesktopWidget()
 {
     delete d;
+}
+
+void DesktopWidget::setDefaultImages()
+{
+    d->panel = d->mCache->get(QLatin1String("panel"));
+    d->back = d->mCache->get(QLatin1String("reverse"));
+    d->dock = d->mCache->get(QLatin1String("icon"));
 }
 
 QRectF DesktopWidget::boundingRect() const

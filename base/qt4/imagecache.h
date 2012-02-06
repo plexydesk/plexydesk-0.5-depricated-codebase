@@ -31,8 +31,10 @@
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT ImageCache : public QDeclarativeImageProvider
+class PLEXYDESK_EXPORT ImageCache : public QObject,  public QDeclarativeImageProvider
 {
+    Q_OBJECT
+
 public:
     ImageCache(QDeclarativeImageProvider::ImageType type = QDeclarativeImageProvider::Pixmap);
     virtual ~ImageCache();
@@ -41,12 +43,16 @@ public:
     bool isCached(QString &filename)  const;
     void addToCached(QString &imgfile, QString &filename, QString &themename);
 
+    QPixmap get(const QString &name);
+
 protected:
     void load(const QString &themename);
-    QPixmap get(const QString &name);
     void clear();
     bool drawSvg(QPainter *painter,
     QRectF rect, const QString &str, const QString &elementId);
+
+Q_SIGNALS:
+    void ready();
 
 private:
     class Private;

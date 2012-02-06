@@ -47,6 +47,7 @@ void ImageCache::clear()
 }
 
 ImageCache::ImageCache(QDeclarativeImageProvider::ImageType type) :
+    QObject (0),
     QDeclarativeImageProvider(type), d(new Private)
 {
     load("default");
@@ -85,6 +86,8 @@ void ImageCache::load(const QString &themename)
         d->map[file.completeBaseName()] = QPixmap(QDir::toNativeSeparators(file.absoluteFilePath()));
         d->fileHash[file.completeBaseName()] = file.absoluteFilePath();
     }
+
+    Q_EMIT ready();
 }
 
 void ImageCache::addToCached(QString &imgfile, QString &filename, QString &themename)
