@@ -120,6 +120,7 @@ public Q_SLOTS:
     void zoomOut(int);
     void zoomDone();
     void spin();
+    void pressHoldTimeOut();
 
 Q_SIGNALS:
     void close();
@@ -135,6 +136,7 @@ protected:
     virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
     virtual void paintExtFace(QPainter * /*painter*/,
             const QStyleOptionGraphicsItem * /*option*/, QWidget *widget = 0)
@@ -157,6 +159,7 @@ protected:
     virtual void paintBackSide(QPainter *painter, const QRectF &rect);
     virtual void paintViewSide(QPainter *painter, const QRectF &rect);
     virtual void paintDockView(QPainter *painter, const QRectF &rect);
+    virtual void paintEditMode(QPainter *painter, const QRectF &rect);
 
 private:
     class Private;

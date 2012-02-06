@@ -49,6 +49,7 @@ public:
     QTimeLine *zoomin;
     QTimeLine *zoomout;
     QTimer *spintimer;
+    QTimer *mPressHoldTimer;
     State s;
     QPixmap panel;
     QPixmap back;
@@ -61,6 +62,7 @@ public:
     int scale;
     QPointF clickPos;
     bool backdrop;
+    bool mEditMode;
     QString mName;
 };
 
@@ -78,6 +80,7 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QDeclarativeIt
     }
 
     d->mBoundingRect = rect;
+    d->mEditMode = false;
     d->backdrop = true;
     d->opacity = 1.0;
     d->saveRect = rect;
@@ -120,6 +123,10 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QDeclarativeIt
     // spin
     d->spintimer = new QTimer(this);
     connect(d->spintimer, SIGNAL(timeout()), this, SLOT(spin()));
+
+    //presshold
+    d->mPressHoldTimer = new QTimer(this);
+    connect(d->mPressHoldTimer, SIGNAL(timeout()), this, SLOT(pressHoldTimeOut()));
 }
 
 DesktopWidget::~DesktopWidget()
@@ -245,7 +252,27 @@ void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->buttons() == Qt::RightButton && (state() == VIEW || state() == BACK)) {
         d->spintimer->start(18);
+        return;
     }
+
+    if (d->mEditMode) {
+        d->mPressHoldTimer->stop();
+        Q_EMIT close();
+        return;
+    }
+
+    if (event->buttons() == Qt::LeftButton && state() == DOCK) {
+        d->mPressHoldTimer->start(3000);
+        qDebug() << Q_FUNC_INFO << "Press start";
+        return;
+    }
+}
+
+void DesktopWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    d->mPressHoldTimer->stop();
+    qDebug() << Q_FUNC_INFO << "STOP timer";
+    ShaderEffectItem::mouseReleaseEvent(event);
 }
 
 void DesktopWidget::spin()
@@ -269,6 +296,12 @@ void DesktopWidget::spin()
         setCacheMode(DeviceCoordinateCache);
         d->angle = 0;
     }
+}
+
+void DesktopWidget::pressHoldTimeOut()
+{
+    d->mEditMode = true;
+    update();
 }
 
 void DesktopWidget::drawBackdrop(bool b)
@@ -348,19 +381,34 @@ void DesktopWidget::paintViewSide(QPainter *p, const QRectF &rect)
 
 void DesktopWidget::paintDockView(QPainter *p, const QRectF &rect)
 {
-    p->save();
-    p->setRenderHints(QPainter::SmoothPixmapTransform);
-    p->drawPixmap(QRect(0, 0, rect.width(), rect.height()), d->dock);
-    p->setPen(QColor(255, 255, 255));
-    p->drawText(QRect(8, 5, 64, 64), Qt::AlignCenter, d->mName);
-    p->restore();
+    if (!d->mEditMode) {
+        p->save();
+        p->setRenderHints(QPainter::SmoothPixmapTransform);
+        p->drawPixmap(QRect(0, 0, rect.width(), rect.height()), d->dock);
+        p->setPen(QColor(255, 255, 255));
+        p->drawText(QRect(8, 5, 64, 64), Qt::AlignCenter, d->mName);
+        p->restore();
+    }
+}
+
+void DesktopWidget::paintEditMode(QPainter *p, const QRectF &rect)
+{
+    if (d->mEditMode) {
+        p->save();
+        p->setRenderHints(QPainter::SmoothPixmapTransform);
+        p->drawPixmap(QRect(0, 0, rect.width(), rect.height()), d->dock);
+        p->setPen(QColor(255, 255, 255));
+        p->drawText(QRect(8, 5, 64, 64), Qt::AlignCenter, QLatin1String ("Close"));
+        p->restore();
+    }
+
 }
 
 void DesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     if (!painter->isActive())
         return;
-    
+
     painter->setOpacity(d->opacity);
     painter->setClipRect(option->exposedRect);
     if (d->s == VIEW) {
@@ -372,6 +420,10 @@ void DesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     } else if (d->s == DOCK) {
         paintDockView(painter, option->exposedRect);
         this->paintExtDockFace(painter, option, widget);
+    }
+
+    if (d->mEditMode) {
+        this->paintEditMode(painter, option->exposedRect);
     }
 }
 
