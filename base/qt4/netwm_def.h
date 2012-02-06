@@ -255,7 +255,7 @@ struct NETStrut {
    @see http://www.freedesktop.org/standards/wm-spec/
  **/
 
-class VISIBLE_SYM NET
+class PLEXYDESK_EXPORT NET
 {
 public:
     /**

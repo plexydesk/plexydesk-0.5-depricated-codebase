@@ -30,7 +30,7 @@ CpuWidget::CpuWidget(const QRectF &rect, QWidget *widget) :
     getBaseData();
 
     setPath("/usr/share/plexy/skins/default/cpu/");
-    setDockImage(QPixmap(prefix + "icon.png"));
+    setDockBackground(QPixmap(prefix + "icon.png"));
     drawCpuWidget();
 }
 

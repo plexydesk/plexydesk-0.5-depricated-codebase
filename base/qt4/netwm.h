@@ -72,7 +72,7 @@ template <class Z> class NETRArray;
    @see KWin
  **/
 
-class VISIBLE_SYM NETRootInfo : public NET
+class PLEXYDESK_EXPORT NETRootInfo : public NET
 {
 public:
     /**
@@ -796,7 +796,7 @@ private:
    use it instead of NETRootInfo and override also the added virtual methods.
    @since 3.2
  */
-class VISIBLE_SYM NETRootInfo2
+class PLEXYDESK_EXPORT NETRootInfo2
     : public NETRootInfo
 {
 public:
@@ -887,7 +887,7 @@ protected:
    use it instead of NETRootInfo and override also the added virtual methods.
    @since 3.3
  */
-class VISIBLE_SYM NETRootInfo3
+class PLEXYDESK_EXPORT NETRootInfo3
     : public NETRootInfo2
 {
 public:
@@ -949,7 +949,7 @@ protected:
    use it instead of NETRootInfo and override also the added virtual methods.
    @since 3.5
  */
-class VISIBLE_SYM NETRootInfo4
+class PLEXYDESK_EXPORT NETRootInfo4
     : public NETRootInfo3
 {
 public:
@@ -988,7 +988,7 @@ protected:
    @see http://www.freedesktop.org/standards/wm-spec/
  **/
 
-class VISIBLE_SYM NETWinInfo : public NET
+class PLEXYDESK_EXPORT NETWinInfo : public NET
 {
 public:
     /**
