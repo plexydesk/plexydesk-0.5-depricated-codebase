@@ -198,6 +198,27 @@ void DesktopWidget::setBacksideBackground(QPixmap img)
     d->back = img;
 }
 
+void DesktopWidget::setEditMode(const bool &mode)
+{
+    if (mode) {
+        setState(DOCK);
+        prepareGeometryChange();
+        this->setRect(QRectF(0, 0, d->dock.width(), d->dock.height()));
+        if (d->proxyWidget) {
+            d->proxyWidget->hide();
+        }
+        this->setVisible(true);
+        d->zoomout->start();
+    }
+
+    d->mEditMode = mode;
+}
+
+bool DesktopWidget::editMode() const
+{
+    return d->mEditMode;
+}
+
 void DesktopWidget::setIconName(const QString &name)
 {
    d->mName = name;

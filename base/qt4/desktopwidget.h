@@ -115,6 +115,19 @@ public :
     void setWidgetBackground(QPixmap);
     void setBacksideBackground(QPixmap);
 
+    /**
+     * \breif Changes the widget mode
+     * \param mode True to put the widget in edit mode
+     * and False if you want to change back to normal mode
+     * 
+     * When you put the widget in edit mode it will go into 
+     * dock mode but if you click on the widget it will emit
+     * the close signal
+     */
+
+    void setEditMode(const bool &mode);
+    bool editMode() const;
+
 public Q_SLOTS:
     void zoomIn(int);
     void zoomOut(int);
