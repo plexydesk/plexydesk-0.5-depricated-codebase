@@ -128,6 +128,8 @@ public :
     void setEditMode(const bool &mode);
     bool editMode() const;
 
+    void drawBackdrop(bool draw);
+
 public Q_SLOTS:
     void zoomIn(int);
     void zoomOut(int);
@@ -140,9 +142,9 @@ Q_SIGNALS:
     void rectChanged();
 
 private:
-    void drawBackdrop(bool draw);
     void setState(State s);
     void setDefaultImages();
+    QPixmap drawDefaultBackground(int width, int height);
 
 protected:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);

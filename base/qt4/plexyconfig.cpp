@@ -352,7 +352,6 @@ QString Config::plexydeskBasePath()
 #ifndef Q_WS_X11
     QDir binaryPath (QCoreApplication::applicationDirPath());
     if (binaryPath.cdUp()) {
-        qDebug() << Q_FUNC_INFO << QDir::toNativeSeparators(binaryPath.canonicalPath());
         return QDir::toNativeSeparators(binaryPath.canonicalPath());
     }
 #endif

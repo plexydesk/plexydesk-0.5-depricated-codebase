@@ -41,9 +41,10 @@ public:
     bool isCached(QString &filename)  const;
     void addToCached(QString &imgfile, QString &filename, QString &themename);
 
+    QPixmap get(const QString &name, const QSize &size);
+
 protected:
     void load(const QString &themename);
-    QPixmap get(const QString &name, const QSize &size);
     void clear();
     bool drawSvg(QPainter *painter,
     QRectF rect, const QString &str, const QString &elementId);

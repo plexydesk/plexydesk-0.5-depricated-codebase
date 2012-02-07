@@ -59,7 +59,6 @@ SvgProvider::~SvgProvider()
 
 QPixmap SvgProvider::requestPixmap(const QString &id, QSize *size, const QSize &requestedSize)
 {
-    qDebug() << Q_FUNC_INFO << requestedSize;
     if (size->width() <= 0 && size->height() <= 0) {
         return get(id, requestedSize);
     }
@@ -106,19 +105,15 @@ QPixmap SvgProvider::get(const QString &name, const QSize &size)
 {
     QStringList itemList = name.split('#');
     QPixmap rv (size);
-    qDebug() << Q_FUNC_INFO << itemList;
 
     if (itemList.count() < 1) {
       return rv; 
     } else if (itemList.count() == 1) {
       return d->map[name];
     }
-   
+
     rv.fill(Qt::transparent);
     QPainter painter;
-
-    qDebug() << Q_FUNC_INFO << rv.isNull();
-    qDebug() << Q_FUNC_INFO << size;
 
     painter.begin(&rv);
 
@@ -140,7 +135,7 @@ bool SvgProvider::isCached(QString &filename) const
 bool SvgProvider::drawSvg(QPainter *p, QRectF rect, const QString &file, const QString &elementId)
 {
     QString svgFile = d->fileHash[file];
-    qDebug() << Q_FUNC_INFO << svgFile;
+
     QFileInfo fileInfo (svgFile);
     if (fileInfo.exists()) {
         d->render.load(svgFile);

@@ -226,12 +226,10 @@ void DesktopView::setThemePack(const QString &name)
             QPoint pos = d->mThemeLoader->widgetPos(qmlWidget);
             parent->setPos(pos);
             parent->setContentRect(parent->boundingRect());
-            qDebug() << Q_FUNC_INFO << parent->boundingRect();
-            parent->hide();
-            parent->show();
+            parent->setRect(parent->boundingRect());
+            parent->drawBackdrop(false);
 
             //check shadow prop
-
             bool shadow_on = d->mThemeLoader->getProperty(qmlWidget, "shadow").toBool();
             if(shadow_on) {
               QGraphicsDropShadowEffect * effect  = new QGraphicsDropShadowEffect(this);
@@ -461,6 +459,7 @@ void DesktopView::dropEvent(QDropEvent * event)
         event->acceptProposedAction();
     } else if (droppedType == img) {
         qDebug() << Q_FUNC_INFO << "Image Drop accepted...";
+        //FIXME: IF DIALOG IS DELETED, create a new dialog
         if (d->mPhotoDialog) {
             d->mPhotoDialog->show();
             QVariantMap data;
