@@ -477,6 +477,10 @@ void DesktopWidget::configState(DesktopWidget::State s)
 
 void DesktopWidget::paintBackSide(QPainter *p, const QRectF &rect)
 {
+    if (!d->backdrop) {
+        return;
+    }
+
     p->save();
     p->setOpacity(0.8);
     p->setRenderHints(QPainter::SmoothPixmapTransform);
