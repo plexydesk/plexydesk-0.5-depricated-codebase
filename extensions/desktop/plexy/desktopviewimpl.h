@@ -19,8 +19,6 @@
 #ifndef PLEXYDESK_DESKTOP_VIEW_PLUGIN_IMPL
 #define PLEXYDESK_DESKTOP_VIEW_PLUGIN_IMPL
 
-#include <config.h>
-
 #include <QDesktopWidget>
 #include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
@@ -29,11 +27,15 @@
 #include <QPropertyAnimation>
 #include <QGraphicsBlurEffect>
 
+#include <config.h>
 #include <plexy.h>
+
 #include <desktopviewplugin.h>
 #include <themepackloader.h>
 #include <qmldesktopwidget.h>
+
 #include "desktopview.h"
+#include "plexytray.h"
 
 class DesktopViewPluginImpl: public PlexyDesk::DesktopViewPlugin
 {
@@ -53,7 +55,7 @@ Q_SIGNALS:
 
 private:
     QList<DesktopView *> mViewList;
-
+    PlexyTray *mTray;
 };
 
 #endif //PLEXYDESK_DESKTOP_VIEW_PLUGIN_IMPL

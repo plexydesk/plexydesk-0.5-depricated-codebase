@@ -25,7 +25,6 @@
 #include <desktopviewplugin.h>
 
 #include "desktopbaseui.h"
-#include "plexytray.h"
 
 #if defined(Q_WS_X11) // && defined(Q_WS_MAC) ??
 #include <X11/Xlib.h>
@@ -45,9 +44,6 @@ class DesktopBaseUi::DesktopBaseUiPrivate
         QDesktopWidget *mDesktopWidget;
         QGraphicsScene *mScene;
         PlexyDesk::Config *mConfig;
-        QString mAppIconPath;
-        QIcon mAppIcon;
-        PlexyTray *mTrayIcon;
         QMap<int, AbstractDesktopView*> mViewList;
 };
 
@@ -65,9 +61,6 @@ DesktopBaseUi::DesktopBaseUi(QObject *parent) :
 
 DesktopBaseUi::~DesktopBaseUi()
 {
-    if (d->mTrayIcon)
-        delete d->mTrayIcon;
-
     foreach (AbstractDesktopView * view, d->mViewList.values()) {
         if(view)
             delete view;
@@ -87,11 +80,6 @@ void DesktopBaseUi::setDesktopView(const QString &name)
 
 void DesktopBaseUi::setup()
 {
-
-    d->mAppIconPath = PlexyDesk::Config::getInstance()->plexydeskBasePath() +
-       QLatin1String("/share/plexy/plexydesk.png");
-    d->mAppIcon = QIcon (QDir::toNativeSeparators(d->mAppIconPath));
-
     d->mDesktopWidget = new QDesktopWidget ();
     d->mConfig = PlexyDesk::Config::getInstance();
     QSize desktopSize = (QSize) desktopRect().size();
@@ -145,11 +133,6 @@ void DesktopBaseUi::setup()
         view->showLayer(QLatin1String("Widgets"));
         d->mViewList[i] = view;
         QApplication::desktop()->setParent(view);
-    }
-
-
-    if(d->mViewList.value(0)) {
-        d->mTrayIcon = new PlexyTray(d->mViewList.value(0)->window(), d->mAppIcon);
     }
 }
 

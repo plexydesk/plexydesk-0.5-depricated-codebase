@@ -42,7 +42,6 @@ SET(sourceFiles
 #    plexyeventhandler.cpp
     desktopbaseui.cpp
     plexypanel.cpp
-    plexytray.cpp
     ${extra_source}
     main.cpp
     )
@@ -54,7 +53,6 @@ SET(headerFiles
 #    plexyeventhandler.h
     desktopbaseui.h
     plexypanel.h
-    plexytray.h
     ${extra_headers}
     )
 
@@ -65,7 +63,6 @@ SET(QTMOC_SRCS
 #    plexyeventhandler.h
     desktopbaseui.h
     plexypanel.h
-    plexytray.h
     ${extra_headers}
     )
 

@@ -2,18 +2,21 @@ SET(sourceFiles
     desktopview.cpp
     desktopviewiface.cpp
     desktopviewimpl.cpp
+    plexytray.cpp
     )
 
 SET(headerFiles
     desktopview.h
     desktopviewiface.h
     desktopviewimpl.h
+    plexytray.h
     )
 
 SET(QTMOC_SRCS
     desktopview.h
     desktopviewimpl.h
     desktopviewiface.h
+    plexytray.h
     )
 
 QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})

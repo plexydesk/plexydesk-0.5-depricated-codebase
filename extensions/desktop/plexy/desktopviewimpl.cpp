@@ -17,20 +17,17 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
-#include <QDir>
 #include <QPixmapCache>
-#include <QDeclarativeContext>
-#include "desktopview.h"
-
 #include <QtDebug>
+#include <QDir>
+#include <QDeclarativeContext>
 
 #include "desktopviewimpl.h"
 #include <desktopwidget.h>
 #include <plexyconfig.h>
 
-
 DesktopViewPluginImpl::DesktopViewPluginImpl(QObject *object)
-    : DesktopViewPlugin(object)
+    : DesktopViewPlugin(object), mTray (0)
 {
 }
 
@@ -38,6 +35,10 @@ DesktopViewPluginImpl::~DesktopViewPluginImpl()
 {
     qDeleteAll(mViewList.begin(), mViewList.end());
     mViewList.clear();
+
+    if (mTray) {
+        delete mTray;
+    }
 }
 
 void  DesktopViewPluginImpl::setRect(const QRect &rect)
@@ -51,5 +52,15 @@ PlexyDesk::AbstractDesktopView  *DesktopViewPluginImpl::view(QGraphicsScene *sce
     view->setThemePack(PlexyDesk::Config::getInstance()->themepackName());
     view->registerPhotoDialog();
     mViewList.append(view);
+
+    /* system tray */
+       if (!mTray) {
+           QString appIconPath =
+               PlexyDesk::Config::getInstance()->plexydeskBasePath()
+               + "/share/plexy/plexydesk.png";
+           QIcon icon (QDir::toNativeSeparators(appIconPath));
+           mTray = new PlexyTray(view->window(), icon);
+    }
+
     return view;
 }

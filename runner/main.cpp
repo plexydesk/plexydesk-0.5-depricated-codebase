@@ -28,7 +28,6 @@
 #include <plexy.h>
 // We do not use this for now. Commented.
 //#include "plexyeventhandler.h"
-#include "plexytray.h"
 #include <plexyconfig.h>
 #include <baserender.h>
 #include <pluginloader.h>
@@ -63,7 +62,8 @@ int main( int argc, char * *argv )
 
     QApplication app(argc, argv);
 
-    QString appIconPath = PlexyDesk::Config::getInstance()->plexydeskBasePath() + "/share/plexy/plexydesk.png";
+    QString appIconPath = PlexyDesk::Config::getInstance()->plexydeskBasePath() + 
+        "/share/plexy/plexydesk.png";
     QIcon appIcon = QIcon(QDir::toNativeSeparators(appIconPath));
     app.setWindowIcon(appIcon);
     app.setApplicationName(QString(PLEXYNAME));
