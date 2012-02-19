@@ -69,20 +69,19 @@ int main( int argc, char * *argv )
     app.setApplicationName(QString(PLEXYNAME));
 
 #ifdef Q_WS_WIN
-    QString pluginPath = PlexyDesk::Config::getInstance()->plexydeskBasePath() + "/lib/qt4/plugins/imageformats";
+    QString pluginPath = PlexyDesk::Config::getInstance()->plexydeskBasePath() 
+        + "/lib/qt4/plugins/imageformats";
     app.addLibraryPath(QDir::toNativeSeparators(pluginPath));
 #endif
 
 #ifdef Q_WS_MAC
     PlexyDesk::Config::getInstance()->setOpenGL(false);
 #endif
-   
     PlexyDesk::PluginLoader *loader = PlexyDesk::PluginLoader::getInstance();
     loader->scanDisk();
     // Set this to false if you need a "close to tray" functionality when systray exists
     QApplication::setQuitOnLastWindowClosed(true);
 
- 
     DesktopBaseUi * ui = new DesktopBaseUi();
 
     return app.exec();
