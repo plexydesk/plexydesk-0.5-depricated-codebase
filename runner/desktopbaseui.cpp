@@ -98,6 +98,7 @@ void DesktopBaseUi::setup()
 
     QGraphicsScene *scene = new QGraphicsScene;
     d->mScene = scene;
+
     for (int i = 0 ; i < d->mDesktopWidget->screenCount() ; i++ ) {
         desktopSize = d->mDesktopWidget->screenGeometry(i).size();
 #ifdef Q_WS_WIN
@@ -141,11 +142,7 @@ void DesktopBaseUi::setup()
         info.setDesktop(NETWinInfo::OnAllDesktops);
         info.setWindowType(NET::Desktop);
 #endif
-
-        //FIX: view->addWallpaperItem();
-        //FIX: view->setThemePack(PlexyDesk::Config::getInstance()->themepackName());
         view->showLayer(QLatin1String("Widgets"));
-        //FIX: view->registerPhotoDialog();
         d->mViewList[i] = view;
         QApplication::desktop()->setParent(view);
     }
@@ -190,10 +187,6 @@ QRect DesktopBaseUi::desktopRect() const
         qDebug() << Q_FUNC_INFO << d->mDesktopWidget->screenGeometry(i).x();
         qDebug() << Q_FUNC_INFO << d->mDesktopWidget->screenGeometry(i).y();
    }
-
-   qDebug() << Q_FUNC_INFO << d->mDesktopWidget->screenGeometry();
-   qDebug() << Q_FUNC_INFO << total_width << "x" << total_height;
-   qDebug() << Q_FUNC_INFO << d->mDesktopWidget->isVirtualDesktop();
 
    return QRect (0, 0, total_width, total_height);
 }

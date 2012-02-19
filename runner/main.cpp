@@ -28,7 +28,6 @@
 #include <plexy.h>
 // We do not use this for now. Commented.
 //#include "plexyeventhandler.h"
-#include "desktopview.h"
 #include "plexytray.h"
 #include <plexyconfig.h>
 #include <baserender.h>

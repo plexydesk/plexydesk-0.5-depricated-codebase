@@ -101,7 +101,8 @@ bool getLessThanWidget(const QGraphicsItem *it1, const QGraphicsItem *it2)
     return it1->zValue() < it2->zValue();
 }
 
-DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : AbstractDesktopView(scene, parent), d(new Private)
+DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) :
+    AbstractDesktopView(scene, parent), d(new Private)
 {
     /* Setup */
 
@@ -144,11 +145,11 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) : AbstractDeskt
     d->mDirWidget = NULL;
 
     d->mThemeLoader = new ThemepackLoader(PlexyDesk::Config::getInstance()->themepackName(), this);
-    qDebug() << Q_FUNC_INFO << PlexyDesk::Config::getInstance()->wallpaper();
+
     if (PlexyDesk::Config::getInstance()->wallpaper().isEmpty()) {
-        qDebug() << Q_FUNC_INFO << d->mThemeLoader->wallpaper();
         PlexyDesk::Config::getInstance()->setWallpaper(d->mThemeLoader->wallpaper());
     }
+
     d->bgPlugin = static_cast<BackdropPlugin *>(PluginLoader::getInstance()->instance("classicbackdrop"));
     d->row = d->column = 48.0;
     d->margin = 10.0;
