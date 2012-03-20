@@ -6,7 +6,7 @@ METHOD 1:
 ---------
 1. Go to a folder of your choice where you will build PlexyDesk.
    For example /tmp/plexy
-2. git clone git@github.com:sirajrazick/plexydesk.git
+2. git clone git@github.com:plexydesk/plexydesk.git
 3. cd plexydesk
 
 METHOD 2:
