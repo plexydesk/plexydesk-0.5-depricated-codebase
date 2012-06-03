@@ -1,5 +1,4 @@
-# Project: PlexyDesk
-# License: LGPL3
+# Project: PlexyDesk # License: LGPL3
 # Project Author: siraj@kde.org
 # CMAKE files by: siraj@kde.org
 #                 PhobosK (phobosk@kbfx.net)
@@ -88,7 +87,11 @@ SET(QT_USE_QTXML TRUE)
 SET(QT_USE_QTSVG TRUE)
 SET(QT_USE_QTSQL TRUE)
 SET(QT_USE_QTTEST TRUE)
+IF (NOT WIN32)
+   IF (NOT APPLE)
 SET(QT_USE_QTDBUS TRUE)
+   ENDIF (NOT APPLE)
+ENDIF (NOT WIN32)
 SET(QT_USE_QTWEBKIT TRUE)
 SET(QT_USE_QTXMLPATTERNS TRUE)
 SET(QT_USE_QTSCRIPT TRUE)
