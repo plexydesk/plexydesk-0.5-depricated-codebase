@@ -35,7 +35,6 @@ public:
     }
     ~Private() {
     }
-    QHash<QString, QPixmap> map;
     QHash<QString, QString> fileHash;
     QSvgRenderer render;
 
@@ -43,7 +42,7 @@ public:
 
 void ImageCache::clear()
 {
-    d->map.clear();
+    d->fileHash.clear();
 }
 
 ImageCache::ImageCache(QDeclarativeImageProvider::ImageType type) :
@@ -83,7 +82,6 @@ void ImageCache::load(const QString &themename)
     for (int i = 0; i < list.size(); i++)
     {
         QFileInfo file = list.at(i);
-        d->map[file.completeBaseName()] = QPixmap(QDir::toNativeSeparators(file.absoluteFilePath()));
         d->fileHash[file.completeBaseName()] = file.absoluteFilePath();
     }
 
@@ -98,14 +96,13 @@ void ImageCache::addToCached(QString &imgfile, QString &filename, QString &theme
             + QLatin1String("/resources/"));
 
     QFileInfo file = prefix + imgfile;
-    d->map[filename] = QPixmap(QDir::toNativeSeparators(file.absoluteFilePath()));
     d->fileHash[filename] = file.absoluteFilePath();
 }
 
 
 QPixmap ImageCache::get(const QString &name)
 {
-    return d->map[name];
+    return QPixmap(d->fileHash[name]);
 }
 
 bool ImageCache::isCached(QString &filename) const
