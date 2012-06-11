@@ -44,6 +44,7 @@ public:
 void SvgProvider::clear()
 {
     d->map.clear();
+    d->fileHash.clear();
 }
 
 SvgProvider::SvgProvider(QDeclarativeImageProvider::ImageType type) :
