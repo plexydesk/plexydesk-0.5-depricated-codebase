@@ -164,7 +164,8 @@ QGraphicsItem *BgPlugin::item()
             mBackgroundItemPixmap = new QGraphicsPixmapItem(mBackgroundCache);
             mBackgroundItemPixmap->setGraphicsEffect(mBlurEffect);
             mBackgroundItemPixmap->setCacheMode(QGraphicsItem::ItemCoordinateCache);
-            mBlurAnimation->start();
+            //disable blur animatino to speed up 
+            //mBlurAnimation->start();
             return mBackgroundItemPixmap;
         }
     }

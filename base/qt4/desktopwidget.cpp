@@ -367,7 +367,7 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->buttons() == Qt::RightButton && (state() == VIEW || state() == BACK)) {
-        d->spintimer->start(18);
+        d->spintimer->start(36);
         return;
     }
 
@@ -398,7 +398,7 @@ void DesktopWidget::spin()
     QPointF center = boundingRect().center();
     QTransform mat = QTransform();
     mat.translate(center.x(), center.y());
-    mat.rotate(d->angle, Qt::XAxis);
+    mat.rotate(d->angle, Qt::YAxis);
     mat.translate(-center.x(), -center.y());
     setTransform(mat);
     if (d->angle >= 180) {
