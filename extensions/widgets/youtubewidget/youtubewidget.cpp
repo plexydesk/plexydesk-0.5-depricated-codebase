@@ -32,11 +32,29 @@
 namespace PlexyDesk
 {
 
-YouTubeWidget::YouTubeWidget(const QRectF &rect) :
-    ListView(rect)
+YouTubeWidget::YouTubeWidget(const QRectF &rect, QWidget *embeddedWidget, QDeclarativeItem *parent) :
+    DesktopWidget(rect, embeddedWidget, parent)
 {
+    setRect(rect);
+    setContentRect(rect);
+    mScroll = new ScrollWidget (QRectF(5.0, 5.0, rect.width() - 20, rect.height() - 20 ), embeddedWidget);
+    mScroll->setPos(10.0, 10.0);
+    mScroll->setRect(QRectF(10.0, 10.0, rect.width() - 50, rect.height() - 30));
+    mScroll->setParentItem (this);
+    mScroll->setFlag(QGraphicsItem::ItemIsMovable, false);
+
     utubeEngine = qobject_cast<PlexyDesk::DataPlugin *>(
-         PlexyDesk::PluginLoader::getInstance()->instance("utubeengine"));
+         PlexyDesk::PluginLoader::getInstance()->instance("restengine"));
+
+    QString account;
+    QString pass;
+    QVariantMap mMap;
+    mMap.insert("url", QUrl("http://doc.qt.nokia.com/4.2/qgraphicstextitem.html"));
+    mMap.insert("type", 1); //post
+    mMap.insert("user", account);
+    mMap.insert("pass", pass);
+    QVariant arg = QVariant(mMap);
+    utubeEngine->pushData(arg);
 
     if (utubeEngine) {
         connect(utubeEngine, SIGNAL(dataReady()), this, SLOT(onDataReady()));
@@ -52,27 +70,12 @@ YouTubeWidget::~YouTubeWidget()
 void YouTubeWidget::onDataReady()
 {
     QVariant data = utubeEngine->readAll()["data"];
-    mVariantMap = data.toMap();
 
-    VideoEntity videoentity;
-    videoentity.title = (mVariantMap["title"]).toString();
-    videoentity.link = (mVariantMap["link"]).toString();
-    videoentity.desc = (mVariantMap["description"]).toString();
-    videoentity.thumb = (mVariantMap["thumb"]).toString();
+    mView = new QGraphicsTextItem();
+    mView->setHtml(data.toString());
 
-    mVideos.append(videoentity);
-    view.setHeight(mVideos.size()*mItem_bg.height());
-
-    ListItem *item = new ListItem();
-    item->title = videoentity.title;
-    item->link = videoentity.link;
-    item->desc = videoentity.desc;
-    item->thumb = videoentity.thumb;
-
-    insert(item);
-
+    mScroll->addWidget (mView);
     emit dataChanged();
 }
-
 
 } // namespace PlexyDesk

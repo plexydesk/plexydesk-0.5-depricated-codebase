@@ -26,7 +26,8 @@
 #include <pluginloader.h>
 
 #include <desktopwidget.h>
-#include <listview.h>
+#include <scrollwidget.h>
+#include <QGraphicsTextItem>
 
 class QTimer;
 
@@ -34,13 +35,13 @@ namespace PlexyDesk
 {
 
 
-class YouTubeWidget : public ListView
+class YouTubeWidget : public DesktopWidget
 {
 
     Q_OBJECT
 
 public:
-    YouTubeWidget(const QRectF &rect);
+    YouTubeWidget(const QRectF &rect, QWidget *embeddedWidget = 0, QDeclarativeItem *parent = 0);
     virtual ~YouTubeWidget();
 
 public Q_SLOTS:
@@ -68,6 +69,8 @@ private:
 
     QList<VideoEntity> mVideos;
     QMap<QString, QVariant> mVariantMap;
+    QGraphicsTextItem *mView;
+    ScrollWidget *mScroll;
 };
 
 } // namespace PlexyDesk
