@@ -41,7 +41,7 @@ public:
     QString path;
 };
 
-Icon::Icon(IconProviderPtr icon, QPlexyMime *mime, const QRectF &rect, QWidget * /*embeddedWidget*/) : DesktopWidget(rect), d(new Private)
+Icon::Icon(IconProviderPtr icon, QPlexyMime *mime, const QRectF &rect, QWidget * /*embeddedWidget*/) : AbstractDesktopWidget(rect), d(new Private)
 {
     d->valid = false;
     d->iconprovider = icon;
@@ -103,7 +103,7 @@ bool Icon::isValid()
     return d->valid;
 }
 
-void Icon::paintBackSide(QPainter *painter, const QRectF &rect)
+void Icon::paintRotatedView(QPainter *painter, const QRectF &rect)
 {
     if (!d->icon.isNull()) {
         int x = (this->boundingRect().width() - d->icon.width()) / 2;
@@ -112,7 +112,7 @@ void Icon::paintBackSide(QPainter *painter, const QRectF &rect)
     drawText(painter, rect);
     // DesktopWidget::paintDockView(painter, rect);
 }
-void Icon::paintViewSide(QPainter *painter, const QRectF &rect)
+void Icon::paintFrontView(QPainter *painter, const QRectF &rect)
 {
     if (!d->icon.isNull()) {
         int x = (this->boundingRect().width() - d->icon.width()) / 2;
@@ -146,7 +146,7 @@ void Icon::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
     qDebug() << "Running" << d->exe << endl;
     QProcess::startDetached(d->exe);
-    DesktopWidget::mouseDoubleClickEvent(event);
+    AbstractDesktopWidget::mouseDoubleClickEvent(event);
 }
 
 }

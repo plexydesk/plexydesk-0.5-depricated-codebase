@@ -30,7 +30,7 @@ public:
     QString qmlBackdropFromTheme();
     QVariant getProperty(const QString &themeName, const QString &prop);
 
-    PlexyDesk::DesktopWidget::State widgetView(const QString &name);
+    PlexyDesk::AbstractDesktopWidget::State widgetView(const QString &name);
 
     void setRect (const QRectF &rect);
 

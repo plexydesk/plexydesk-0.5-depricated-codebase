@@ -11,7 +11,7 @@ public:
         clean();
     }
 
-    typedef QList <DesktopWidget *> List;
+    typedef QList <AbstractDesktopWidget *> List;
     typedef QHash <QString, List *> Layer;
 
     Layer layer;
@@ -48,7 +48,7 @@ ViewLayer::~ViewLayer()
     delete d;
 }
 
-void ViewLayer::addItem(const QString &layerName, DesktopWidget *item)
+void ViewLayer::addItem(const QString &layerName, AbstractDesktopWidget *item)
 {
     if (d->currentLayerName != layerName) {
         item->hide();

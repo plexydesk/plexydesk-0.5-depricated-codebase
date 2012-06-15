@@ -26,7 +26,7 @@
 namespace PlexyDesk
 {
   
-class ScrollWidget : public DesktopWidget
+class ScrollWidget : public AbstractDesktopWidget
 {
    Q_OBJECT
 public:

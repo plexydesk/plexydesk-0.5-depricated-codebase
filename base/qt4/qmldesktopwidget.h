@@ -25,7 +25,7 @@
 
 namespace PlexyDesk
 {
-class QmlDesktopWidget : public DesktopWidget
+class QmlDesktopWidget : public AbstractDesktopWidget
 {
     Q_OBJECT
 

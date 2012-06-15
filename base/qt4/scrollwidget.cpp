@@ -33,7 +33,7 @@ public:
 };
 
 ScrollWidget::ScrollWidget(const QRectF &rect, QWidget *embeddedWidget, QDeclarativeItem *parent)
-    : DesktopWidget(rect, embeddedWidget, parent), d (new Private)
+    : AbstractDesktopWidget(rect, embeddedWidget, parent), d (new Private)
 {
     d->mChildItem = 0;
 }

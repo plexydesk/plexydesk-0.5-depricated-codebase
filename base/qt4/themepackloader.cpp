@@ -193,9 +193,9 @@ QPoint ThemepackLoader::widgetPos(const QString &name)
     return QPoint(x, y);
 }
 
-PlexyDesk::DesktopWidget::State ThemepackLoader::widgetView(const QString &name)
+PlexyDesk::AbstractDesktopWidget::State ThemepackLoader::widgetView(const QString &name)
 {
-    PlexyDesk::DesktopWidget::State default_state = PlexyDesk::DesktopWidget::VIEW;
+    PlexyDesk::AbstractDesktopWidget::State default_state = PlexyDesk::AbstractDesktopWidget::VIEW;
     d->mSettings->beginGroup(name);
     QString state = d->mSettings->value("view").toString().toUpper();
     if (!state.isEmpty() && !state.isNull()) {
@@ -204,10 +204,10 @@ PlexyDesk::DesktopWidget::State ThemepackLoader::widgetView(const QString &name)
            return default_state;
         } else if (state == "BACK") {
             d->mSettings->endGroup();
-            return PlexyDesk::DesktopWidget::BACK;
+            return PlexyDesk::AbstractDesktopWidget::ROTATED;
         } else if (state == "DOCK") {
             d->mSettings->endGroup();
-            return PlexyDesk::DesktopWidget::DOCK;
+            return PlexyDesk::AbstractDesktopWidget::DOCKED;
         }
 
     }

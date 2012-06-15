@@ -26,7 +26,7 @@
 namespace PlexyDesk
 {
 
-class ImagePileWidget : public DesktopWidget
+class ImagePileWidget : public AbstractDesktopWidget
 {
     Q_OBJECT
 public:

@@ -27,7 +27,7 @@ extern "C" {
 #include <X11/extensions/Xdamage.h>
 }
 
-class PlexyWindows : public PlexyDesk::DesktopWidget
+class PlexyWindows : public PlexyDesk::AbstractDesktopWidget
 {
     Q_OBJECT
 public:
@@ -35,7 +35,7 @@ public:
     virtual ~PlexyWindows() {
     }
 
-    virtual void paintViewSide(QPainter *painter, const QRectF &rect);
+    virtual void paintFrontView(QPainter *painter, const QRectF &rect);
     void Destroyed ();
     void Mapped (bool override_redirect);
     void Unmapped ();

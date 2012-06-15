@@ -84,10 +84,10 @@ public:
     PlexyDesk::ThemepackLoader *mThemeLoader;
 
     WidgetPlugin *mPhotoDialogProvider;
-    DesktopWidget *mPhotoDialog;
+    AbstractDesktopWidget *mPhotoDialog;
 
     WidgetPlugin *mDirProvider;
-    DesktopWidget *mDirWidget;
+    AbstractDesktopWidget *mDirWidget;
 
     float row;
     float column;
@@ -175,7 +175,7 @@ void DesktopView::onNewWidget()
 void DesktopView::closeDesktopWidget()
 {
     qDebug() << Q_FUNC_INFO;
-    DesktopWidget *widget = qobject_cast<DesktopWidget *> (sender());
+    AbstractDesktopWidget *widget = qobject_cast<AbstractDesktopWidget *> (sender());
     if (widget) {
         scene()->removeItem(widget);
         delete widget;
@@ -228,7 +228,7 @@ void DesktopView::setThemePack(const QString &name)
             parent->setPos(pos);
             parent->setContentRect(parent->boundingRect());
             parent->setRect(parent->boundingRect());
-            parent->drawBackdrop(false);
+            parent->enableDefaultBackground(false);
 
             //check shadow prop
             bool shadow_on = d->mThemeLoader->getProperty(qmlWidget, "shadow").toBool();
@@ -376,12 +376,12 @@ void DesktopView::backgroundChanged()
 void DesktopView::addExtension(const QString &name,
         const QString &layerName,
         const QPoint &pos,
-        PlexyDesk::DesktopWidget::State state)
+        PlexyDesk::AbstractDesktopWidget::State state)
 {
     WidgetPlugin *provider = static_cast<WidgetPlugin *>(PluginLoader::getInstance()->instance(name));
     if (provider) {
         qDebug() << Q_FUNC_INFO << name << layerName;
-        DesktopWidget *widget = (DesktopWidget *) provider->item();
+        AbstractDesktopWidget *widget = (AbstractDesktopWidget *) provider->item();
         if (widget) {
             widget->configState(state);
             scene()->addItem(widget);
@@ -527,7 +527,7 @@ void DesktopView::registerPhotoDialog()
     const QPoint pos (0.0, 0.0);
     WidgetPlugin *provider = static_cast<WidgetPlugin *>(PluginLoader::getInstance()->instance(name));
     if (provider) {
-        DesktopWidget *widget = (DesktopWidget *) provider->item();
+        AbstractDesktopWidget *widget = (AbstractDesktopWidget *) provider->item();
         if (widget) {
             //widget->configState(state);
             scene()->addItem(widget);
@@ -543,7 +543,7 @@ void DesktopView::registerPhotoDialog()
             d->mPhotoDialog = widget;
             connect(widget, SIGNAL(close()), this, SLOT(closeDesktopWidget()));
             d->mPhotoDialog->hide();
-            d->mPhotoDialog->configState(DesktopWidget::VIEW);
+            d->mPhotoDialog->configState(AbstractDesktopWidget::VIEW);
         }
     }
 
@@ -556,7 +556,7 @@ WidgetPlugin *DesktopView::registerHandler(const QString &name, bool effects_on)
     const QPoint pos (0.0, 0.0);
     WidgetPlugin *provider = static_cast<WidgetPlugin *>(PluginLoader::getInstance()->instance(name));
     if (provider) {
-        DesktopWidget *widget = (DesktopWidget *) provider->item();
+        AbstractDesktopWidget *widget = (AbstractDesktopWidget *) provider->item();
         if (widget) {
             scene()->addItem(widget);
 
@@ -568,7 +568,7 @@ WidgetPlugin *DesktopView::registerHandler(const QString &name, bool effects_on)
 
             widget->setPos(x_pos, y_pos);
 
-            widget->configState(DesktopWidget::VIEW);
+            widget->configState(AbstractDesktopWidget::VIEW);
 
             if (effects_on) {
               QGraphicsDropShadowEffect * effect  = new QGraphicsDropShadowEffect(this);

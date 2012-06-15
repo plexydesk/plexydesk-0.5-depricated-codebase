@@ -44,7 +44,7 @@ public:
     void addExtension(const QString &name,
     const QString &layer = QLatin1String("Widgets"),
     const QPoint &pos = QPoint(0, 0),
-    PlexyDesk::DesktopWidget::State state = PlexyDesk::DesktopWidget::DOCK);
+    PlexyDesk::AbstractDesktopWidget::State state = PlexyDesk::AbstractDesktopWidget::DOCKED);
     void showLayer(const QString &name);
     void setThemePack(const QString &name);
     void addWallpaperItem();

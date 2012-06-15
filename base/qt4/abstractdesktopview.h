@@ -44,8 +44,8 @@ public:
     virtual void addExtension(const QString &name,
             const QString &layer = QLatin1String("Widgets"),
             const QPoint &pos = QPoint(0, 0),
-            PlexyDesk::DesktopWidget::State state =
-            PlexyDesk::DesktopWidget::DOCK) = 0;
+            PlexyDesk::AbstractDesktopWidget::State state =
+            PlexyDesk::AbstractDesktopWidget::DOCKED) = 0;
 
     virtual void enableOpenGL(bool);
 

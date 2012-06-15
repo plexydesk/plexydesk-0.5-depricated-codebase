@@ -32,7 +32,7 @@ public:
 
 
 QmlDesktopWidget::QmlDesktopWidget(const QRectF &rect, QWidget *widget, QDeclarativeItem *parent) :
-    DesktopWidget(rect, widget, parent),
+    AbstractDesktopWidget(rect, widget, parent),
     d(new PrivateQmlDesktopWidget)
 {
     d->mQmlEngine = Config::getInstance()->newQmlEngine();
@@ -92,7 +92,7 @@ void QmlDesktopWidget::onQuit()
     d->mQmlChild->hide();
     scene()->removeItem(d->mQmlChild);
     d->mQmlChild->setParentItem(0);
-    Q_EMIT close();
+    Q_EMIT closed();
 }
 
 void QmlDesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
@@ -101,12 +101,12 @@ void QmlDesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
      * So we hide the child widget and when he clicks 
      * We show the qml Child of the widget
      */
-    if (state() == DesktopWidget::VIEW)
+    if (state() == AbstractDesktopWidget::VIEW)
         d->mQmlChild->hide();
     else
         d->mQmlChild->show();
     
-    DesktopWidget::mouseDoubleClickEvent(event);
+    AbstractDesktopWidget::mouseDoubleClickEvent(event);
 }
     
 }

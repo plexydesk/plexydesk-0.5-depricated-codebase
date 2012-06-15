@@ -22,7 +22,7 @@ public:
      * created.
      * \param item is the widget we wish to add
      **/
-    void addItem(const QString &layerName, DesktopWidget *item);
+    void addItem(const QString &layerName, AbstractDesktopWidget *item);
 
    /**
     * Display the requested layer

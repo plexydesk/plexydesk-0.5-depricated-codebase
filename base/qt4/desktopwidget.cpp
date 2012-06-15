@@ -40,7 +40,7 @@
 
 namespace PlexyDesk
 {
-class DesktopWidget::Private
+class AbstractDesktopWidget::Private
 {
 public:
     Private() {
@@ -72,7 +72,7 @@ public:
     SvgProvider *mSvgRender;
 };
 
-DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QDeclarativeItem *parent) :
+AbstractDesktopWidget::AbstractDesktopWidget(const QRectF &rect, QWidget *widget, QDeclarativeItem *parent) :
     ShaderEffectItem(parent),
     d(new Private)
 {
@@ -131,20 +131,20 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QDeclarativeIt
     connect(d->mPressHoldTimer, SIGNAL(timeout()), this, SLOT(pressHoldTimeOut()));
 }
 
-DesktopWidget::~DesktopWidget()
+AbstractDesktopWidget::~AbstractDesktopWidget()
 {
     delete d;
 }
 
-void DesktopWidget::setDefaultImages()
+void AbstractDesktopWidget::setDefaultImages()
 {
-    d->dock = drawDefaultBackground(72, 72);
-    d->panel = drawDefaultBackground(boundingRect().width(),
+    d->dock = enableDefaultBackground(72, 72);
+    d->panel = enableDefaultBackground(boundingRect().width(),
             boundingRect().height());
     d->back = d->panel;
 }
 
-QPixmap DesktopWidget::drawDefaultBackground(int w, int h)
+QPixmap AbstractDesktopWidget::enableDefaultBackground(int w, int h)
 {
     if (w == 0 || h == 0) {
         return QPixmap();
@@ -226,17 +226,17 @@ QPixmap DesktopWidget::drawDefaultBackground(int w, int h)
     return QPixmap::fromImage(canvas);
 }
 
-QRectF DesktopWidget::boundingRect() const
+QRectF AbstractDesktopWidget::boundingRect() const
 {
     return d->mBoundingRect;
 }
 
-QRectF DesktopWidget::rect() const
+QRectF AbstractDesktopWidget::rect() const
 {
     return d->mBoundingRect;
 }
 
-void DesktopWidget::setRect(const QRectF &rect)
+void AbstractDesktopWidget::setRect(const QRectF &rect)
 {
     d->mBoundingRect = rect;
     prepareGeometryChange();
@@ -246,14 +246,14 @@ void DesktopWidget::setRect(const QRectF &rect)
     update();
 }
 
-void DesktopWidget::zoomDone()
+void AbstractDesktopWidget::zoomDone()
 {
     prepareGeometryChange();
     resetMatrix();
     d->opacity = 1.0;
 }
 
-void DesktopWidget::zoomIn(int frame)
+void AbstractDesktopWidget::zoomIn(int frame)
 {
     QPointF center = boundingRect().center();
     QTransform mat = QTransform();
@@ -265,7 +265,7 @@ void DesktopWidget::zoomIn(int frame)
         //d->opacity -= 0.3;
     }
 }
-void DesktopWidget::zoomOut(int frame)
+void AbstractDesktopWidget::zoomOut(int frame)
 {
     QPointF center = boundingRect().center();
     QTransform mat = QTransform();
@@ -278,25 +278,25 @@ void DesktopWidget::zoomOut(int frame)
     }
 }
 
-void DesktopWidget::setDockBackground(QPixmap img)
+void AbstractDesktopWidget::setDockBackground(QPixmap img)
 {
     d->dock = img;
 }
 
-void DesktopWidget::setWidgetBackground(QPixmap img)
+void AbstractDesktopWidget::setWidgetBackground(QPixmap img)
 {
     d->panel = img;
 }
 
-void DesktopWidget::setBacksideBackground(QPixmap img)
+void AbstractDesktopWidget::setBacksideBackground(QPixmap img)
 {
     d->back = img;
 }
 
-void DesktopWidget::setEditMode(const bool &mode)
+void AbstractDesktopWidget::setEditMode(const bool &mode)
 {
     if (mode) {
-        setState(DOCK);
+        setState(DOCKED);
         prepareGeometryChange();
         this->setRect(QRectF(0, 0, d->dock.width(), d->dock.height()));
         if (d->proxyWidget) {
@@ -309,32 +309,32 @@ void DesktopWidget::setEditMode(const bool &mode)
     d->mEditMode = mode;
 }
 
-bool DesktopWidget::editMode() const
+bool AbstractDesktopWidget::editMode() const
 {
     return d->mEditMode;
 }
 
-void DesktopWidget::setIconName(const QString &name)
+void AbstractDesktopWidget::setIconName(const QString &name)
 {
    d->mName = name;
 }
 
-void DesktopWidget::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+void AbstractDesktopWidget::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
     QDeclarativeItem::hoverEnterEvent(event);
 }
 
-void DesktopWidget::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+void AbstractDesktopWidget::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsItem::mouseMoveEvent(event);
 }
     
-void DesktopWidget::setContentRect(const QRectF &rect)
+void AbstractDesktopWidget::setContentRect(const QRectF &rect)
 {
     d->saveRect = rect;
 }
 
-void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+void AbstractDesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->buttons() != Qt::LeftButton) {
         /* We will let the widgets decide what to do with
@@ -343,7 +343,7 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
         QGraphicsItem::mouseDoubleClickEvent(event);
         return;
     }
-    if (d->s == DOCK) {
+    if (d->s == DOCKED) {
         setState(VIEW);
         prepareGeometryChange();
         this->setRect(d->saveRect);
@@ -352,7 +352,7 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
         }
         d->zoomin->start();
     } else {
-        setState(DOCK);
+        setState(DOCKED);
         prepareGeometryChange();
         this->setRect(QRectF(0, 0, d->dock.width(), d->dock.height()));
         if (d->proxyWidget) {
@@ -364,34 +364,34 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
     QGraphicsItem::mouseDoubleClickEvent(event);
 }
 
-void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
+void AbstractDesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    if (event->buttons() == Qt::RightButton && (state() == VIEW || state() == BACK)) {
+    if (event->buttons() == Qt::RightButton && (state() == VIEW || state() == ROTATED)) {
         d->spintimer->start(36);
         return;
     }
 
     if (d->mEditMode) {
         d->mPressHoldTimer->stop();
-        Q_EMIT close();
+        Q_EMIT closed();
         return;
     }
 
-    if (event->buttons() == Qt::LeftButton && state() == DOCK) {
+    if (event->buttons() == Qt::LeftButton && state() == DOCKED) {
         d->mPressHoldTimer->start(3000);
         qDebug() << Q_FUNC_INFO << "Press start";
         return;
     }
 }
 
-void DesktopWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+void AbstractDesktopWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     d->mPressHoldTimer->stop();
     qDebug() << Q_FUNC_INFO << "STOP timer";
     ShaderEffectItem::mouseReleaseEvent(event);
 }
 
-void DesktopWidget::spin()
+void AbstractDesktopWidget::spin()
 {
     d->angle += 18;
     setCacheMode(ItemCoordinateCache);
@@ -402,10 +402,10 @@ void DesktopWidget::spin()
     mat.translate(-center.x(), -center.y());
     setTransform(mat);
     if (d->angle >= 180) {
-        if (state() == BACK) {
+        if (state() == ROTATED) {
             setState(VIEW);
         } else {
-            setState(BACK);
+            setState(ROTATED);
         }
         d->spintimer->stop();
         resetMatrix();
@@ -414,29 +414,29 @@ void DesktopWidget::spin()
     }
 }
 
-void DesktopWidget::pressHoldTimeOut()
+void AbstractDesktopWidget::pressHoldTimeOut()
 {
     d->mEditMode = true;
     update();
 }
 
-void DesktopWidget::drawBackdrop(bool b)
+void AbstractDesktopWidget::enableDefaultBackground(bool b)
 {
     d->backdrop = b;
 }
 
-DesktopWidget::State DesktopWidget::state()
+AbstractDesktopWidget::State AbstractDesktopWidget::state()
 {
     return d->s;
 }
 
 
-void DesktopWidget::setState(DesktopWidget::State s)
+void AbstractDesktopWidget::setState(AbstractDesktopWidget::State s)
 {
     d->s = s;
 }
 
-void DesktopWidget::configState(DesktopWidget::State s)
+void AbstractDesktopWidget::configState(AbstractDesktopWidget::State s)
 {
     if (s == d->s) {
         return ;
@@ -445,7 +445,7 @@ void DesktopWidget::configState(DesktopWidget::State s)
     resetMatrix();
     prepareGeometryChange();
     
-    if (s == DOCK) {
+    if (s == DOCKED) {
         setRect(QRectF(0, 0, d->dock.width(), d->dock.height()));
     } else {
         setRect(QRectF(0, 0, d->panel.width(), d->panel.height()));
@@ -455,7 +455,7 @@ void DesktopWidget::configState(DesktopWidget::State s)
         d->proxyWidget->hide();
     }
 
-    if (d->s == DOCK) {
+    if (d->s == DOCKED) {
         setState(VIEW);
         prepareGeometryChange();
         this->setRect(d->saveRect);
@@ -464,7 +464,7 @@ void DesktopWidget::configState(DesktopWidget::State s)
         }
         d->zoomin->start();
     } else {
-        setState(DOCK);
+        setState(DOCKED);
         prepareGeometryChange();
         this->setRect(QRectF(0, 0, d->dock.width(), d->dock.height()));
         if (d->proxyWidget) {
@@ -475,7 +475,7 @@ void DesktopWidget::configState(DesktopWidget::State s)
 
 }
 
-void DesktopWidget::paintBackSide(QPainter *p, const QRectF &rect)
+void AbstractDesktopWidget::paintRotatedView(QPainter *p, const QRectF &rect)
 {
     if (!d->backdrop) {
         return;
@@ -488,7 +488,7 @@ void DesktopWidget::paintBackSide(QPainter *p, const QRectF &rect)
     p->restore();
 }
 
-void DesktopWidget::paintViewSide(QPainter *p, const QRectF &rect)
+void AbstractDesktopWidget::paintFrontView(QPainter *p, const QRectF &rect)
 {
     if (!d->backdrop)
         return;
@@ -499,7 +499,7 @@ void DesktopWidget::paintViewSide(QPainter *p, const QRectF &rect)
     p->restore();
 }
 
-void DesktopWidget::paintDockView(QPainter *p, const QRectF &rect)
+void AbstractDesktopWidget::paintDockView(QPainter *p, const QRectF &rect)
 {
     if (!d->mEditMode) {
         p->save();
@@ -511,7 +511,7 @@ void DesktopWidget::paintDockView(QPainter *p, const QRectF &rect)
     }
 }
 
-void DesktopWidget::paintEditMode(QPainter *p, const QRectF &rect)
+void AbstractDesktopWidget::paintEditMode(QPainter *p, const QRectF &rect)
 {
     if (d->mEditMode) {
         p->save();
@@ -524,7 +524,7 @@ void DesktopWidget::paintEditMode(QPainter *p, const QRectF &rect)
 
 }
 
-void DesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void AbstractDesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     if (!painter->isActive())
         return;
@@ -532,12 +532,12 @@ void DesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     painter->setOpacity(d->opacity);
     painter->setClipRect(option->exposedRect);
     if (d->s == VIEW) {
-        paintViewSide(painter, option->exposedRect);
+        paintFrontView(painter, option->exposedRect);
         this->paintExtFace(painter, option, widget);
-    } else if (d->s == BACK) {
-        paintBackSide(painter, option->exposedRect);
+    } else if (d->s == ROTATED) {
+        paintRotatedView(painter, option->exposedRect);
         this->paintExtBackFace(painter, option, widget);
-    } else if (d->s == DOCK) {
+    } else if (d->s == DOCKED) {
         paintDockView(painter, option->exposedRect);
         this->paintExtDockFace(painter, option, widget);
     }

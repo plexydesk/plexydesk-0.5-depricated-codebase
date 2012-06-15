@@ -39,7 +39,7 @@
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT DesktopWidget : public ShaderEffectItem
+class PLEXYDESK_EXPORT AbstractDesktopWidget : public ShaderEffectItem
 {
     Q_OBJECT
     Q_ENUMS(State)
@@ -49,7 +49,7 @@ public :
     enum State {
        DOCK,
        VIEW,
-       BACK
+       ROTATED
      };
 
     /**
@@ -63,9 +63,9 @@ public :
      * optional QWidget embedded
      */
 
-    DesktopWidget(const QRectF &rect, QWidget *embeddedWidget = 0, QDeclarativeItem *parent = 0);
+    AbstractDesktopWidget(const QRectF &rect, QWidget *embeddedWidget = 0, QDeclarativeItem *parent = 0);
 
-    virtual ~DesktopWidget();
+    virtual ~AbstractDesktopWidget();
 
     /**
      * \breif Bounding Rectangle of the Widget
@@ -128,7 +128,7 @@ public :
     void setEditMode(const bool &mode);
     bool editMode() const;
 
-    void drawBackdrop(bool draw);
+    void enableDefaultBackground(bool enable);
 
 public Q_SLOTS:
     void zoomIn(int);
@@ -144,7 +144,7 @@ Q_SIGNALS:
 private:
     void setState(State s);
     void setDefaultImages();
-    QPixmap drawDefaultBackground(int width, int height);
+    QPixmap enableDefaultBackground(int width, int height);
 
 protected:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
@@ -172,8 +172,8 @@ protected:
         Q_UNUSED(widget);
     };
 
-    virtual void paintBackSide(QPainter *painter, const QRectF &rect);
-    virtual void paintViewSide(QPainter *painter, const QRectF &rect);
+    virtual void paintRotatedView(QPainter *painter, const QRectF &rect);
+    virtual void paintFrontView(QPainter *painter, const QRectF &rect);
     virtual void paintDockView(QPainter *painter, const QRectF &rect);
     virtual void paintEditMode(QPainter *painter, const QRectF &rect);
 

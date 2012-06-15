@@ -29,7 +29,7 @@
 
 namespace PlexyDesk
 {
-class Icon : public DesktopWidget
+class Icon : public AbstractDesktopWidget
 {
     Q_OBJECT
 public:
@@ -39,8 +39,8 @@ public:
     virtual ~Icon();
     virtual void setContent(const QString &path);
     virtual bool isValid();
-    virtual void paintBackSide(QPainter *painter, const QRectF &rect);
-    virtual void paintViewSide(QPainter *painter, const QRectF &rect);
+    virtual void paintRotatedView(QPainter *painter, const QRectF &rect);
+    virtual void paintFrontView(QPainter *painter, const QRectF &rect);
     virtual void paintDockView(QPainter *painter, const QRectF &rect);
     virtual void drawText(QPainter *painter, const QRectF &rect);
 
