@@ -29,7 +29,7 @@
 #include <QPropertyAnimation>
 
 #include <plexywindow.h>
-#include <desktopwidget.h>
+#include <abstractdesktopwidget.h>
 
 #include "abstractdesktopview.h"
 

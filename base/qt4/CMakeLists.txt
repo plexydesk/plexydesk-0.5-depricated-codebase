@@ -3,7 +3,7 @@ SET(sourceFiles
     backdropinterface.cpp
     backdropplugin.cpp
     baserender.cpp
-    desktopwidget.cpp
+    abstractdesktopwidget.cpp
     extensionfactory.cpp
     imagecache.cpp
     svgprovider.cpp
@@ -20,6 +20,7 @@ SET(sourceFiles
     shaders/scenegraph/qsggeometry.cpp
     qmldesktopwidget.cpp
     abstractdesktopview.cpp
+    desktopwidget.cpp
     scrollwidget.cpp
     )
 
@@ -33,7 +34,7 @@ SET(headerFiles
     baserender.h
     datainterface.h
     dataplugin.h
-    desktopwidget.h
+    abstractdesktopwidget.h
     extensionfactory.h
     imagecache.h
     svgprovider.h
@@ -57,6 +58,7 @@ SET(headerFiles
     qmldesktopwidget.h
     abstractdesktopview.h
     desktopviewplugin.h
+    desktopwidget.h
     scrollwidget.h
     )
 
@@ -69,7 +71,7 @@ SET(MOC_SRCS
    datainterface.h
    imagecache.h
    dataplugin.h
-   desktopwidget.h
+   abstractdesktopwidget.h
    pendingjob.h
    plexyconfig.h
    pluginloader.h
@@ -85,6 +87,7 @@ SET(MOC_SRCS
    qmldesktopwidget.h
    abstractdesktopview.h
    desktopviewplugin.h
+   desktopwidget.h
    scrollwidget.h
    )
 

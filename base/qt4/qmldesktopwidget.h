@@ -18,7 +18,7 @@
 *******************************************************************************/
 
 
-#include <desktopwidget.h>
+#include <abstractdesktopwidget.h>
 
 #ifndef PLEXYDESK_QML_DESKTOP_WIDGET_H
 #define PLEXYDESK_QML_DESKTOP_WIDGET_H

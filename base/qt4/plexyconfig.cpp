@@ -25,7 +25,7 @@
 #include <QHash>
 #include <QtDebug>
 #include "plexyconfig.h"
-#include <desktopwidget.h>
+#include <abstractdesktopwidget.h>
 #include <config.h>
 #include <QCoreApplication>
 #include <QDeclarativeContext>

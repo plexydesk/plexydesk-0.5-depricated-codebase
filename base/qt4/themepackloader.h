@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QSettings>
 #include <QPoint>
-#include <desktopwidget.h>
+#include <abstractdesktopwidget.h>
 
 namespace PlexyDesk
 {

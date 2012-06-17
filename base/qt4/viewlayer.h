@@ -3,7 +3,7 @@
 
 #include <config.h>
 
-#include <desktopwidget.h>
+#include <abstractdesktopwidget.h>
 #include <plexy.h>
 
 namespace PlexyDesk

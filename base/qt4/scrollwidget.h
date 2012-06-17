@@ -18,7 +18,7 @@
 
 #include <plexy.h>
 #include <config.h>
-#include <desktopwidget.h>
+#include <abstractdesktopwidget.h>
 
 #include <QGraphicsItem>
 #include <QGraphicsObject>

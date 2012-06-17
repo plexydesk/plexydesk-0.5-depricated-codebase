@@ -25,8 +25,8 @@
 #include <QGraphicsView>
 
 #include <plexy.h>
-#include <desktopwidget.h>
 #include <widgetplugin.h>
+#include <abstractdesktopwidget.h>
 
 namespace PlexyDesk
 {
@@ -48,7 +48,6 @@ public:
             PlexyDesk::AbstractDesktopWidget::DOCKED) = 0;
 
     virtual void enableOpenGL(bool);
-
     virtual void showLayer(const QString &name) = 0;
 
 Q_SIGNALS:
