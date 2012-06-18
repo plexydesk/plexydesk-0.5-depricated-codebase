@@ -32,7 +32,7 @@ public:
 
 
 QmlDesktopWidget::QmlDesktopWidget(const QRectF &rect, QWidget *widget, QDeclarativeItem *parent) :
-    AbstractDesktopWidget(rect, widget, parent),
+    DesktopWidget(rect, widget, parent),
     d(new PrivateQmlDesktopWidget)
 {
     d->mQmlEngine = Config::getInstance()->newQmlEngine();

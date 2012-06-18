@@ -35,7 +35,6 @@
 #include "abstractdesktopwidget.h"
 #include <imagecache.h>
 #include <svgprovider.h>
-#include <plexy.h>
 
 
 namespace PlexyDesk
@@ -95,11 +94,6 @@ AbstractDesktopWidget::AbstractDesktopWidget(const QRectF &rect, QWidget *widget
     d->angleHide = 0;
     d->scale = 1;
 
-
-    d->mSvgRender = new SvgProvider();
-    d->mCache = new ImageCache();
-    setDefaultImages();
-
     setCacheMode(QGraphicsItem::ItemCoordinateCache, d->panel.size());
     setCacheMode(DeviceCoordinateCache);
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
@@ -136,96 +130,6 @@ AbstractDesktopWidget::~AbstractDesktopWidget()
     delete d;
 }
 
-void AbstractDesktopWidget::setDefaultImages()
-{
-    d->dock = enableDefaultBackground(72, 72);
-    d->panel = enableDefaultBackground(boundingRect().width(),
-            boundingRect().height());
-    d->back = d->panel;
-}
-
-QPixmap AbstractDesktopWidget::enableDefaultBackground(int w, int h)
-{
-    if (w == 0 || h == 0) {
-        return QPixmap();
-    }
-
-    /* widget top */
-    QRect dock_rect (0, 0, w, h);
-    QRect dock_topleft(0, 0, 10, 10);
-    QRect dock_topright((dock_rect.width() - 10), 0, 10, 10);
-    QRect dock_top(10, 0, (dock_rect.width() - 20), 10);
-
-    QRect dock_right((dock_rect.width() - 10), 10, 10, (dock_rect.height() - 10));
-
-    QRect dock_bottomright((dock_rect.width() - 10), (dock_rect.height() - 10), 10, 10);
-    QRect dock_bottom(10, (dock_rect.height() - 10), (dock_rect.width() - 20), 10);
-    QRect dock_bottomleft(0, (dock_rect.height() - 10), 10, 10);
-
-    QRect dock_left (0, 10, 10, (dock_rect.height() - 20));
-
-    QImage canvas (dock_rect.height(), dock_rect.width(), QImage::Format_ARGB32_Premultiplied);
-
-    QPainter svg_painter(&canvas);
-    svg_painter.setCompositionMode(QPainter::CompositionMode_Source);
-    svg_painter.setBackgroundMode(Qt::TransparentMode);
-    svg_painter.setRenderHint(QPainter::SmoothPixmapTransform);
-    svg_painter.fillRect(dock_rect, Qt::transparent);
-
-    svg_painter.save();
-    svg_painter.setPen (Qt::black);
-    svg_painter.drawRect(dock_rect);
-    svg_painter.restore();
-
-    svg_painter.save();
-    svg_painter.drawPixmap(dock_rect,
-            d->mSvgRender->get(QLatin1String("background#center"), dock_rect.size()));
-    svg_painter.restore();
-
-    svg_painter.save();
-    svg_painter.drawPixmap(dock_topleft,
-            d->mSvgRender->get(QLatin1String("background#topleft"), dock_topleft.size()));
-    svg_painter.restore();
-
-    svg_painter.save();
-    svg_painter.drawPixmap(dock_topright,
-            d->mSvgRender->get(QLatin1String("background#topright"), dock_topleft.size()));
-    svg_painter.restore();
-
-    svg_painter.save();
-    svg_painter.drawPixmap(dock_top,
-            d->mSvgRender->get(QLatin1String("background#top"), dock_top.size()));
-    svg_painter.restore();
-
-    svg_painter.save();
-    svg_painter.drawPixmap(dock_right,
-            d->mSvgRender->get(QLatin1String("background#right"), dock_right.size()));
-    svg_painter.restore();
-
-    svg_painter.save();
-    svg_painter.drawPixmap(dock_bottomright,
-            d->mSvgRender->get(QLatin1String("background#bottomright"), dock_bottomright.size()));
-    svg_painter.restore();
-
-    svg_painter.save();
-    svg_painter.drawPixmap(dock_bottom,
-            d->mSvgRender->get(QLatin1String("background#bottom"), dock_bottom.size()));
-    svg_painter.restore();
-
-    svg_painter.save(); svg_painter.drawPixmap(dock_bottomleft,
-            d->mSvgRender->get(QLatin1String("background#bottomleft"), dock_bottomleft.size()));
-    svg_painter.restore();
-
-    svg_painter.save();
-    svg_painter.drawPixmap(dock_left,
-            d->mSvgRender->get(QLatin1String("background#left"), dock_left.size()));
-    svg_painter.restore();
-
-    svg_painter.end();
-
-    return QPixmap::fromImage(canvas);
-}
-
 QRectF AbstractDesktopWidget::boundingRect() const
 {
     return d->mBoundingRect;
@@ -242,7 +146,7 @@ void AbstractDesktopWidget::setRect(const QRectF &rect)
     prepareGeometryChange();
     resetMatrix();
 
-    setDefaultImages();
+    //setDefaultImages();
     update();
 }
 
@@ -420,11 +324,6 @@ void AbstractDesktopWidget::pressHoldTimeOut()
     update();
 }
 
-void AbstractDesktopWidget::enableDefaultBackground(bool b)
-{
-    d->backdrop = b;
-}
-
 AbstractDesktopWidget::State AbstractDesktopWidget::state()
 {
     return d->s;
@@ -475,55 +374,6 @@ void AbstractDesktopWidget::configState(AbstractDesktopWidget::State s)
 
 }
 
-void AbstractDesktopWidget::paintRotatedView(QPainter *p, const QRectF &rect)
-{
-    if (!d->backdrop) {
-        return;
-    }
-
-    p->save();
-    p->setOpacity(0.8);
-    p->setRenderHints(QPainter::SmoothPixmapTransform);
-    p->drawPixmap(QRect(0, 0, rect.width(), rect.height()), d->back);
-    p->restore();
-}
-
-void AbstractDesktopWidget::paintFrontView(QPainter *p, const QRectF &rect)
-{
-    if (!d->backdrop)
-        return;
-    p->save();
-    p->setOpacity(0.8);
-    p->setRenderHints(QPainter::SmoothPixmapTransform);
-    p->drawPixmap(QRect(0, 0, d->panel.width(), d->panel.height()), d->panel);
-    p->restore();
-}
-
-void AbstractDesktopWidget::paintDockView(QPainter *p, const QRectF &rect)
-{
-    if (!d->mEditMode) {
-        p->save();
-        p->setRenderHints(QPainter::SmoothPixmapTransform);
-        p->drawPixmap(QRect(0, 0, rect.width(), rect.height()), d->dock);
-        p->setPen(QColor(255, 255, 255));
-        p->drawText(QRect(0, 0,72, 72), Qt::AlignCenter, d->mName);
-        p->restore();
-    }
-}
-
-void AbstractDesktopWidget::paintEditMode(QPainter *p, const QRectF &rect)
-{
-    if (d->mEditMode) {
-        p->save();
-        p->setRenderHints(QPainter::SmoothPixmapTransform);
-        p->drawPixmap(QRect(0, 0, rect.width(), rect.height()), d->dock);
-        p->setPen(QColor(255, 255, 255));
-        p->drawText(QRect(8, 5, 64, 64), Qt::AlignCenter, QLatin1String ("Close"));
-        p->restore();
-    }
-
-}
-
 void AbstractDesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     if (!painter->isActive())
@@ -533,13 +383,10 @@ void AbstractDesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsI
     painter->setClipRect(option->exposedRect);
     if (d->s == VIEW) {
         paintFrontView(painter, option->exposedRect);
-        this->paintExtFace(painter, option, widget);
     } else if (d->s == ROTATED) {
         paintRotatedView(painter, option->exposedRect);
-        this->paintExtBackFace(painter, option, widget);
     } else if (d->s == DOCKED) {
         paintDockView(painter, option->exposedRect);
-        this->paintExtDockFace(painter, option, widget);
     }
 
     if (d->mEditMode) {

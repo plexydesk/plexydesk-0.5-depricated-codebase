@@ -14,6 +14,21 @@ class PLEXYDESK_EXPORT DesktopWidget : public AbstractDesktopWidget
 public:
     DesktopWidget(const QRectF &rect, QWidget *embeddedWidget = 0, QDeclarativeItem *parent = 0);
     virtual ~DesktopWidget();
+
+    void enableDefaultBackground(bool enable);
+
+protected:
+    virtual void paintRotatedView(QPainter *painter, const QRectF &rect);
+    virtual void paintFrontView(QPainter *painter, const QRectF &rect);
+    virtual void paintDockView(QPainter *painter, const QRectF &rect);
+    virtual void paintEditMode(QPainter *painter, const QRectF &rect);
+
+private:
+    void setDefaultImages();
+    QPixmap genDefaultBackground(int width, int height);
+
+    class PrivateDesktopWidget;
+    PrivateDesktopWidget *const d;
 };
 
 }

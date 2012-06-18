@@ -39,6 +39,9 @@ public:
     AbstractDesktopView(QGraphicsScene *scene = new QGraphicsScene(),
             QWidget *parent = 0) : QGraphicsView (scene, parent) {}
 
+    //TODO:
+    //make the following two methods non virtual
+
     virtual void addCoreExtension(const QString &name) = 0;
 
     virtual void addExtension(const QString &name,

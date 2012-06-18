@@ -18,14 +18,14 @@
 *******************************************************************************/
 
 
-#include <abstractdesktopwidget.h>
+#include <desktopwidget.h>
 
 #ifndef PLEXYDESK_QML_DESKTOP_WIDGET_H
 #define PLEXYDESK_QML_DESKTOP_WIDGET_H
 
 namespace PlexyDesk
 {
-class QmlDesktopWidget : public AbstractDesktopWidget
+class QmlDesktopWidget : public  DesktopWidget
 {
     Q_OBJECT
 

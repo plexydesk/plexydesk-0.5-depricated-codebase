@@ -25,7 +25,7 @@
 
 #include <QTime>
 
-class ClockWidget : public PlexyDesk::AbstractDesktopWidget
+class ClockWidget : public PlexyDesk::DesktopWidget
 {
     Q_OBJECT
 

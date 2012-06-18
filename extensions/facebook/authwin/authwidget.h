@@ -31,7 +31,7 @@
 class QTimer;
 namespace PlexyDesk {
 
-class AuthWidget : public PlexyDesk::AbstractDesktopWidget
+class AuthWidget : public PlexyDesk::DesktopWidget
 {
     Q_OBJECT
 public:

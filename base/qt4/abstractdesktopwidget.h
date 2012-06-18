@@ -128,8 +128,6 @@ public :
     void setEditMode(const bool &mode);
     bool editMode() const;
 
-    void enableDefaultBackground(bool enable);
-
 public Q_SLOTS:
     void zoomIn(int);
     void zoomOut(int);
@@ -143,39 +141,19 @@ Q_SIGNALS:
 
 private:
     void setState(State s);
-    void setDefaultImages();
-    QPixmap enableDefaultBackground(int width, int height);
 
 protected:
-    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
     virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
-    virtual void paintExtFace(QPainter * /*painter*/,
-            const QStyleOptionGraphicsItem * /*option*/, QWidget *widget = 0)
-    {
-        Q_UNUSED(widget);
-    };
-
-    virtual void paintExtBackFace(QPainter * /*painter*/,
-         const QStyleOptionGraphicsItem * /*option*/, QWidget *widget = 0)
-    {
-        Q_UNUSED(widget);
-    };
-
-    virtual void paintExtDockFace(QPainter * /*painter*/,
-         const QStyleOptionGraphicsItem * /*it*/, QWidget *widget = 0)
-    {
-        Q_UNUSED(widget);
-    };
-
-    virtual void paintRotatedView(QPainter *painter, const QRectF &rect);
-    virtual void paintFrontView(QPainter *painter, const QRectF &rect);
-    virtual void paintDockView(QPainter *painter, const QRectF &rect);
-    virtual void paintEditMode(QPainter *painter, const QRectF &rect);
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
+    virtual void paintRotatedView(QPainter *painter, const QRectF &rect) = 0;
+    virtual void paintFrontView(QPainter *painter, const QRectF &rect) = 0;
+    virtual void paintDockView(QPainter *painter, const QRectF &rect) = 0;
+    virtual void paintEditMode(QPainter *painter, const QRectF &rect) = 0;
 
 private:
     class Private;
