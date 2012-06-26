@@ -1,3 +1,39 @@
+plexydesk (0.6.5) unstable; urgency=low
+
+  * Feature #11: Desktop Folder Handling
+  * Feature #54: Write rpm spec file for plexydesk
+  * Feature #71: Ability to drag and drop folders
+  * Feature #72: Animated wallpaper swictching
+  * Feature #86: define icon attribute for themepack groups
+  * Feature #96: Unable to change the display picture in the Picture Frame.
+  * Feature #100: Fix and use image cache class
+  * Feature #112: merged shaders branch
+  * Feature #128: Make Folderview work again on linux
+  * Feature #137: rewrite the main runner for the default Desktop UI
+  * Feature #146: Test for OpenGL and enable it by default
+  * Feature #156: UNABLE TO ADD OR REMOVE EXTRA WIDGETS MANUALLY
+  * Feature #162: split the QML specific stuff out of PlexydeskWidget
+  * Feature #163: Move the system tray into into view plugin
+  * Support #101: Make a plexydesk Screencast
+  * Support #104: install https://github.com/sitaramc/gitolite
+  * Bug #60: QML application quit
+  * Bug #81: plexydesk is filled with junk
+  * Bug #98: Inconsistent image paths in plexy
+  * Bug #105: Do not produce log file when in release mode
+  * Bug #107: background doesn't scale properly on start up
+  * Bug #109: Shader branch does not build on windows
+  * Bug #111: Segfault on Mandriva x86
+  * Bug #114: Windows build script fails
+  * Bug #125: windows build script fails
+  * Bug #139: The main widget should have the 'plexydesk' name assigned
+  * Bug #140: No tray icon now
+  * Bug #141: PlexyDesk is broken when Compiz running. These bugs are seen when compiz on (Tested on Gnome):
+  * Bug #142: Plexy is only on one of the virtual Desktops
+  * Bug #145: plexydesk doesn't resize properly on widows
+  * Bug #158: Folder drop in Windows opens always in My Computer
+
+ -- Siraj Razick <siraj@plexyplanet.org>  Sun, 03 June 2012 04:01:00 -0530
+
 plexydesk (0.6.0) unstable; urgency=low
 
   * Feature #53: Create .deb files for plexydesk
