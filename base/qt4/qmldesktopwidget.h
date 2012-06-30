@@ -25,12 +25,12 @@
 
 namespace PlexyDesk
 {
-class QmlDesktopWidget : public  DesktopWidget
+class QmlDesktopWidget : public DesktopWidget
 {
     Q_OBJECT
 
 public:
-    QmlDesktopWidget(const QRectF &rect, QWidget *embeddedWidget = 0, QDeclarativeItem *parent = 0);
+    QmlDesktopWidget(const QRectF &rect, QWidget *embeddedWidget = 0, QGraphicsObject *parent = 0);
 
     virtual ~QmlDesktopWidget();
 

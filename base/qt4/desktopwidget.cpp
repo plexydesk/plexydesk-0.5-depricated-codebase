@@ -54,7 +54,7 @@ public:
     SvgProvider *mSvgRender;
 };
 
-DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QDeclarativeItem *parent)
+DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QGraphicsObject *parent)
     : AbstractDesktopWidget(rect, widget, parent), d(new PrivateDesktopWidget)
 {
     d->proxyWidget = 0;

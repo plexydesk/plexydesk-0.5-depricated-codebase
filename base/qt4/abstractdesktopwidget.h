@@ -34,12 +34,12 @@
 #include <QGraphicsRectItem>
 #include <plexy.h>
 #include <plexyconfig.h>
-#include "shaders/shadereffectitem.h"
 
+class QGraphicsObject;
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT AbstractDesktopWidget : public ShaderEffectItem
+class PLEXYDESK_EXPORT AbstractDesktopWidget : public QGraphicsObject
 {
     Q_OBJECT
     Q_ENUMS(State)
@@ -63,7 +63,7 @@ public :
      * optional QWidget embedded
      */
 
-    AbstractDesktopWidget(const QRectF &rect, QWidget *embeddedWidget = 0, QDeclarativeItem *parent = 0);
+    AbstractDesktopWidget(const QRectF &rect, QWidget *embeddedWidget = 0, QGraphicsObject *parent = 0);
 
     virtual ~AbstractDesktopWidget();
 
@@ -127,7 +127,6 @@ public :
 
     void setEditMode(const bool &mode);
     bool editMode() const;
-
 public Q_SLOTS:
     void zoomIn(int);
     void zoomOut(int);

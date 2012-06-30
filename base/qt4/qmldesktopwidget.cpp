@@ -17,6 +17,7 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 #include <qmldesktopwidget.h>
+#include <QDeclarativeComponent>
 
 namespace PlexyDesk
 {
@@ -31,7 +32,7 @@ public:
 };
 
 
-QmlDesktopWidget::QmlDesktopWidget(const QRectF &rect, QWidget *widget, QDeclarativeItem *parent) :
+QmlDesktopWidget::QmlDesktopWidget(const QRectF &rect, QWidget *widget, QGraphicsObject *parent) :
     DesktopWidget(rect, widget, parent),
     d(new PrivateQmlDesktopWidget)
 {

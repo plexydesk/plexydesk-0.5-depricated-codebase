@@ -12,7 +12,7 @@ class PLEXYDESK_EXPORT DesktopWidget : public AbstractDesktopWidget
     Q_OBJECT
 
 public:
-    DesktopWidget(const QRectF &rect, QWidget *embeddedWidget = 0, QDeclarativeItem *parent = 0);
+    DesktopWidget(const QRectF &rect, QWidget *embeddedWidget = 0, QGraphicsObject *parent = 0);
     virtual ~DesktopWidget();
 
     void enableDefaultBackground(bool enable);

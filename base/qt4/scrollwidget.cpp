@@ -32,7 +32,7 @@ public:
     QGraphicsItem *mChildItem;
 };
 
-ScrollWidget::ScrollWidget(const QRectF &rect, QWidget *embeddedWidget, QDeclarativeItem *parent)
+ScrollWidget::ScrollWidget(const QRectF &rect, QWidget *embeddedWidget, QGraphicsObject *parent)
     : AbstractDesktopWidget(rect, embeddedWidget, parent), d (new Private)
 {
     d->mChildItem = 0;

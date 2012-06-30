@@ -27,8 +27,6 @@
 #include <QTimeLine>
 #include <QTimer>
 #include <QDir>
-#include <QDeclarativeEngine>
-#include <QDeclarativeComponent>
 
 #include <QtDebug>
 
@@ -71,8 +69,8 @@ public:
     SvgProvider *mSvgRender;
 };
 
-AbstractDesktopWidget::AbstractDesktopWidget(const QRectF &rect, QWidget *widget, QDeclarativeItem *parent) :
-    ShaderEffectItem(parent),
+AbstractDesktopWidget::AbstractDesktopWidget(const QRectF &rect, QWidget *widget, QGraphicsObject *parent) :
+    QGraphicsObject(parent),
     d(new Private)
 {
     d->proxyWidget = 0;
@@ -225,12 +223,12 @@ void AbstractDesktopWidget::setIconName(const QString &name)
 
 void AbstractDesktopWidget::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
-    QDeclarativeItem::hoverEnterEvent(event);
+    QGraphicsObject::hoverEnterEvent(event);
 }
 
 void AbstractDesktopWidget::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    QGraphicsItem::mouseMoveEvent(event);
+    QGraphicsObject::mouseMoveEvent(event);
 }
     
 void AbstractDesktopWidget::setContentRect(const QRectF &rect)
@@ -292,7 +290,7 @@ void AbstractDesktopWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     d->mPressHoldTimer->stop();
     qDebug() << Q_FUNC_INFO << "STOP timer";
-    ShaderEffectItem::mouseReleaseEvent(event);
+    QGraphicsObject::mouseReleaseEvent(event);
 }
 
 void AbstractDesktopWidget::spin()
