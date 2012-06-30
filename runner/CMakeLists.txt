@@ -10,13 +10,9 @@ IF (NOT APPLE)
             ${X11_INCLUDE_DIR}
             )
 
-        SET (extra_headers
-             plexywindow.h
-             )
+        SET (extra_headers)
 
-        SET (extra_source
-             plexywindow.cpp
-             )
+        SET (extra_source)
 
         SET (extra_libs
              Xcomposite

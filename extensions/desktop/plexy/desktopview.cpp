@@ -157,7 +157,7 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) :
     connect(Config::getInstance(), SIGNAL(configChanged()), this, SLOT(backgroundChanged()));
     connect(Config::getInstance(), SIGNAL(widgetAdded()), this, SLOT(onNewWidget()));
 
-#ifdef Q_WS_X11
+#if 0
     if (checkXCompositeExt()) {
         qDebug() << Q_FUNC_INFO << "Supports Composite Ext: Yes";
         // TODO: load composite layer
@@ -265,7 +265,7 @@ void DesktopView::addWallpaperItem()
     }
 }
 
-#ifdef Q_WS_X11
+#if 0
 bool DesktopView::checkXCompositeExt()
 {
     /* We don't support this feature on Windows and MacosX */
