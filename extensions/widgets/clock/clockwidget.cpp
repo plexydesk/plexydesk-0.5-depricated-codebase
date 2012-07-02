@@ -112,9 +112,8 @@ void ClockWidget::drawSeconds()
     update();
 }
 
-void ClockWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *)
+void ClockWidget::paintFrontView(QPainter *p, const QRectF &r)
 {
-    QRectF r = e->exposedRect;
     p->setCompositionMode(QPainter::CompositionMode_Source);
     p->fillRect(rect(), Qt::transparent);
     p->drawImage(QRect(0, 0, _clock_bg.width(), _clock_bg.height()), _clock_bg);
@@ -181,7 +180,7 @@ void ClockWidget::paintExtFace(QPainter *p, const QStyleOptionGraphicsItem *e, Q
              date.width(), date.height()), date);
 }
 
-void ClockWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem *, QWidget *)
+void ClockWidget::paintDockView(QPainter *p, const QRectF &rect)
 {
 /*
     p->setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing | QPainter::HighQualityAntialiasing);
@@ -190,12 +189,12 @@ void ClockWidget::paintExtDockFace(QPainter *p, const QStyleOptionGraphicsItem *
     p->setFont(QFont("Bitstream Charter", 15));
     p->drawText(QRect(8, 5, 64, 64), Qt::AlignCenter, "Clock");
 */
+    PlexyDesk::DesktopWidget::paintDockView(p, rect);
 }
 
-void ClockWidget::paintExtBackFace(QPainter *p, const QStyleOptionGraphicsItem *e, QWidget *)
+void ClockWidget::paintRotatedView(QPainter *p, const QRectF &r)
 {
-    p->setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing | QPainter::HighQualityAntialiasing);
-    QRectF r = e->exposedRect;
+    p->setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing | QPainter::HighQualityAntialiasing);;
     p->setCompositionMode(QPainter::CompositionMode_Source);
     p->fillRect(r, Qt::transparent);
     p->setCompositionMode(QPainter::CompositionMode_SourceOver);

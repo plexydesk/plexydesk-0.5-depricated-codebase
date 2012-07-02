@@ -32,9 +32,11 @@ class ClockWidget : public PlexyDesk::DesktopWidget
 public:
     ClockWidget(const QRectF &rect, QWidget *widget = 0);
     virtual ~ClockWidget();
-    virtual void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *e, QWidget *);
-    void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
-    void paintExtBackFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
+
+    void paintFrontView(QPainter *painter, const QRectF &r);
+    void paintDockView(QPainter *painter, const QRectF &rect);
+    void paintRotatedView(QPainter *painter, const QRectF &rect);
+
     void setPath(QString);
     void drawClockWidget();
 public slots:
