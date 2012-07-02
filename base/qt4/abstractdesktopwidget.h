@@ -82,7 +82,8 @@ public :
      * in situations where the widget can't 
      * find out by it self
      */
-    void setContentRect (const QRectF &rect);
+    void setContentRect(const QRectF &rect);
+    QRectF contentRect() const;
 
      /**
      * \brief Sets the Widget rectangle defined by rect
@@ -91,6 +92,7 @@ public :
     void setRect(const QRectF &rect);
 
     void setDockRect(const QRectF &rect);
+    QRectF dockRect() const;
      /**
      * \brief Sets a icon for the widget
      * \param name Name of the icon
@@ -110,11 +112,6 @@ public :
      * returns Retuns the state of the widget
      */
     State state();
-    void configState(State s);
-
-    void setDockBackground(QPixmap);
-    void setWidgetBackground(QPixmap);
-    void setBacksideBackground(QPixmap);
 
     /**
      * \breif Changes the widget mode
@@ -129,26 +126,14 @@ public :
     void setEditMode(const bool &mode);
     bool editMode() const;
 
-public Q_SLOTS:
-    void zoomIn(int);
-    void zoomOut(int);
-    void zoomDone();
-    void spin();
-    void pressHoldTimeOut();
-
 Q_SIGNALS:
     void closed();
     void rectChanged();
 
-private:
-    void setState(State s);
-
 protected:
-    virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
     virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
-    virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
+
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
     virtual void paintRotatedView(QPainter *painter, const QRectF &rect) = 0;
@@ -156,6 +141,7 @@ protected:
     virtual void paintDockView(QPainter *painter, const QRectF &rect) = 0;
     virtual void paintEditMode(QPainter *painter, const QRectF &rect) = 0;
 
+    void setState(State s);
 private:
     class Private;
     Private *const d;

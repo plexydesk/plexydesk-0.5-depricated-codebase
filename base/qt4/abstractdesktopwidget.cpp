@@ -24,15 +24,9 @@
 #include <QStyleOptionGraphicsItem>
 #include <QGraphicsProxyWidget>
 #include <QPainter>
-#include <QTimeLine>
-#include <QTimer>
-#include <QDir>
-
 #include <QtDebug>
 
 #include "abstractdesktopwidget.h"
-#include <imagecache.h>
-#include <svgprovider.h>
 
 
 namespace PlexyDesk
@@ -44,31 +38,19 @@ public:
     }
     ~Private() {
     }
-    QRectF mBoundingRect;
-    QTimeLine *zoomin;
-    QTimeLine *zoomout;
-    QTimer *spintimer;
-    QTimer *mPressHoldTimer;
-    State s;
-    QPixmap panel;
-    QPixmap back;
-    int angle;
-    int angleHide;
-    QGraphicsProxyWidget *proxyWidget;
-    double opacity;
 
-    int scale;
-    QPointF clickPos;
-    bool backdrop;
-    bool mEditMode;
+    State mWidgetState;
+
+    int mScale;
     QString mName;
-
-    // image cache
-    ImageCache *mCache;
-    SvgProvider *mSvgRender;
+    float mOpacity;
+    bool mEditMode;
 
     QRectF mDockRect;
-    QRectF saveRect;
+    QRectF mContentRect;
+    QRectF mBoundingRect;
+
+    QGraphicsProxyWidget *proxyWidget;
 };
 
 AbstractDesktopWidget::AbstractDesktopWidget(const QRectF &rect, QWidget *widget, QGraphicsObject *parent) :
@@ -84,46 +66,19 @@ AbstractDesktopWidget::AbstractDesktopWidget(const QRectF &rect, QWidget *widget
         d->proxyWidget->show();
     }
 
-    d->mBoundingRect = rect;
     d->mEditMode = false;
-    d->backdrop = true;
-    d->opacity = 1.0;
-    d->saveRect = rect;
-    d->s = VIEW;
-    d->angle = 0;
-    d->angleHide = 0;
-    d->scale = 1;
-    d->mDockRect = QRectF(0.0, 0.0, 64, 64);
+    d->mOpacity = 1.0;
+    d->mContentRect = rect;
+    d->mWidgetState = VIEW;
 
-    setCacheMode(QGraphicsItem::ItemCoordinateCache, d->panel.size());
-    setCacheMode(DeviceCoordinateCache);
+    d->mScale = 1;
+    d->mDockRect = QRectF(0.0, 0.0, 64, 64);
+    d->mBoundingRect = rect;
+
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
     setAcceptsHoverEvents(true);
-
-    // zoom in settings
-    d->zoomin = new QTimeLine(150, this);
-    d->zoomin->setFrameRange(120, 150);
-    connect(d->zoomin, SIGNAL(frameChanged(int)),
-         this, SLOT(zoomIn(int)));
-    connect(d->zoomin, SIGNAL(finished()),
-         this, SLOT(zoomDone()));
-    // zoom out
-    d->zoomout = new QTimeLine(150, this);
-    d->zoomout->setFrameRange(0, 150);
-    connect(d->zoomout, SIGNAL(frameChanged(int)),
-         this, SLOT(zoomOut(int)));
-    connect(d->zoomout, SIGNAL(finished()),
-         this, SLOT(zoomDone()));
-    d->zoomin->start();
-    // spin
-    d->spintimer = new QTimer(this);
-    connect(d->spintimer, SIGNAL(timeout()), this, SLOT(spin()));
-
-    //presshold
-    d->mPressHoldTimer = new QTimer(this);
-    connect(d->mPressHoldTimer, SIGNAL(timeout()), this, SLOT(pressHoldTimeOut()));
 }
 
 AbstractDesktopWidget::~AbstractDesktopWidget()
@@ -146,8 +101,6 @@ void AbstractDesktopWidget::setRect(const QRectF &rect)
     d->mBoundingRect = rect;
     prepareGeometryChange();
     resetMatrix();
-
-    //setDefaultImages();
     update();
 }
 
@@ -156,49 +109,9 @@ void AbstractDesktopWidget::setDockRect(const QRectF &rect)
     d->mDockRect = rect;
 }
 
-void AbstractDesktopWidget::zoomDone()
+QRectF AbstractDesktopWidget::dockRect() const
 {
-    prepareGeometryChange();
-    resetMatrix();
-    d->opacity = 1.0;
-}
-
-void AbstractDesktopWidget::zoomIn(int frame)
-{
-    QPointF center = boundingRect().center();
-    QTransform mat = QTransform();
-    mat.translate(center.x(), center.y());
-    mat.scale(frame / 150.0, frame / 150.0);
-    mat.translate(-center.x(), -center.y());
-    setTransform(mat);
-    if (d->opacity >= 0.0) {
-        //d->opacity -= 0.3;
-    }
-}
-void AbstractDesktopWidget::zoomOut(int frame)
-{
-    QPointF center = boundingRect().center();
-    QTransform mat = QTransform();
-    mat.translate(center.x(), center.y());
-    mat.scale(1 - frame / 450.0, 1 - frame / 450.0);
-    mat.translate(-center.x(), -center.y());
-    setTransform(mat);
-    if (d->opacity >= 0.0) {
-        //d->opacity -= 0.2;
-    }
-}
-
-void AbstractDesktopWidget::setDockBackground(QPixmap img)
-{
-}
-
-void AbstractDesktopWidget::setWidgetBackground(QPixmap img)
-{
-}
-
-void AbstractDesktopWidget::setBacksideBackground(QPixmap img)
-{
-    d->back = img;
+    return d->mDockRect;
 }
 
 void AbstractDesktopWidget::setEditMode(const bool &mode)
@@ -211,7 +124,6 @@ void AbstractDesktopWidget::setEditMode(const bool &mode)
             d->proxyWidget->hide();
         }
         this->setVisible(true);
-        d->zoomout->start();
     }
 
     d->mEditMode = mode;
@@ -239,143 +151,23 @@ void AbstractDesktopWidget::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     
 void AbstractDesktopWidget::setContentRect(const QRectF &rect)
 {
-    d->saveRect = rect;
+    d->mContentRect = rect;
 }
 
-void AbstractDesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+QRectF AbstractDesktopWidget::contentRect() const
 {
-    if (event->buttons() != Qt::LeftButton) {
-        /* We will let the widgets decide what to do with
-           left clicks
-           */
-        QGraphicsItem::mouseDoubleClickEvent(event);
-        return;
-    }
-    if (d->s == DOCKED) {
-        setState(VIEW);
-        prepareGeometryChange();
-        this->setRect(d->saveRect);
-        if (d->proxyWidget) {
-            d->proxyWidget->show();
-        }
-        d->zoomin->start();
-    } else {
-        setState(DOCKED);
-        prepareGeometryChange();
-        this->setRect(d->mDockRect);
-        if (d->proxyWidget) {
-            d->proxyWidget->hide();
-        }
-        this->setVisible(true);
-        d->zoomout->start();
-    }
-    QGraphicsItem::mouseDoubleClickEvent(event);
-}
-
-void AbstractDesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
-    if (event->buttons() == Qt::RightButton && (state() == VIEW || state() == ROTATED)) {
-        d->spintimer->start(36);
-        return;
-    }
-
-    if (d->mEditMode) {
-        d->mPressHoldTimer->stop();
-        Q_EMIT closed();
-        return;
-    }
-
-    if (event->buttons() == Qt::LeftButton && state() == DOCKED) {
-        d->mPressHoldTimer->start(3000);
-        qDebug() << Q_FUNC_INFO << "Press start";
-        return;
-    }
-}
-
-void AbstractDesktopWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
-{
-    d->mPressHoldTimer->stop();
-    qDebug() << Q_FUNC_INFO << "STOP timer";
-    QGraphicsObject::mouseReleaseEvent(event);
-}
-
-void AbstractDesktopWidget::spin()
-{
-    d->angle += 18;
-    setCacheMode(ItemCoordinateCache);
-    QPointF center = boundingRect().center();
-    QTransform mat = QTransform();
-    mat.translate(center.x(), center.y());
-    mat.rotate(d->angle, Qt::YAxis);
-    mat.translate(-center.x(), -center.y());
-    setTransform(mat);
-    if (d->angle >= 180) {
-        if (state() == ROTATED) {
-            setState(VIEW);
-        } else {
-            setState(ROTATED);
-        }
-        d->spintimer->stop();
-        resetMatrix();
-        setCacheMode(DeviceCoordinateCache);
-        d->angle = 0;
-    }
-}
-
-void AbstractDesktopWidget::pressHoldTimeOut()
-{
-    d->mEditMode = true;
-    update();
+    return d->mContentRect;
 }
 
 AbstractDesktopWidget::State AbstractDesktopWidget::state()
 {
-    return d->s;
+    return d->mWidgetState;
 }
 
 
 void AbstractDesktopWidget::setState(AbstractDesktopWidget::State s)
 {
-    d->s = s;
-}
-
-void AbstractDesktopWidget::configState(AbstractDesktopWidget::State s)
-{
-    if (s == d->s) {
-        return ;
-    }
-
-    resetMatrix();
-    prepareGeometryChange();
-    
-    if (s == DOCKED) {
-        setRect(d->mDockRect);
-    } else {
-        setRect(d->saveRect);
-    }
-    d->s = s;
-    if (d->proxyWidget) {
-        d->proxyWidget->hide();
-    }
-
-    if (d->s == DOCKED) {
-        setState(VIEW);
-        prepareGeometryChange();
-        this->setRect(d->saveRect);
-        if (d->proxyWidget) {
-            d->proxyWidget->show();
-        }
-        d->zoomin->start();
-    } else {
-        setState(DOCKED);
-        prepareGeometryChange();
-        this->setRect(d->mDockRect);
-        if (d->proxyWidget) {
-            d->proxyWidget->hide();
-        }
-        d->zoomout->start();
-    }
-
+    d->mWidgetState = s;
 }
 
 void AbstractDesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -383,13 +175,13 @@ void AbstractDesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsI
     if (!painter->isActive())
         return;
 
-    painter->setOpacity(d->opacity);
+    painter->setOpacity(d->mOpacity);
     painter->setClipRect(option->exposedRect);
-    if (d->s == VIEW) {
+    if (d->mWidgetState == VIEW) {
         paintFrontView(painter, option->exposedRect);
-    } else if (d->s == ROTATED) {
+    } else if (d->mWidgetState == ROTATED) {
         paintRotatedView(painter, option->exposedRect);
-    } else if (d->s == DOCKED) {
+    } else if (d->mWidgetState == DOCKED) {
         paintDockView(painter, option->exposedRect);
     }
 
