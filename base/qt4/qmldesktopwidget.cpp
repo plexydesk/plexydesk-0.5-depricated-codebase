@@ -102,11 +102,17 @@ void QmlDesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
      * So we hide the child widget and when he clicks 
      * We show the qml Child of the widget
      */
+
+    //TODO
+    // remove this hack sync with widget state signals
+
+    /*
     if (state() == AbstractDesktopWidget::VIEW)
         d->mQmlChild->hide();
     else
         d->mQmlChild->show();
-    
+    */
+
     AbstractDesktopWidget::mouseDoubleClickEvent(event);
 }
     
