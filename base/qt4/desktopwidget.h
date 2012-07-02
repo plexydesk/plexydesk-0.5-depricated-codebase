@@ -16,12 +16,24 @@ public:
     virtual ~DesktopWidget();
 
     void enableDefaultBackground(bool enable);
+    void configState(AbstractDesktopWidget::State s);
+
+public Q_SLOTS:
+    void zoomIn(int);
+    void zoomOut(int);
+    void zoomDone();
+    void spin();
+    void pressHoldTimeOut();
 
 protected:
     virtual void paintRotatedView(QPainter *painter, const QRectF &rect);
     virtual void paintFrontView(QPainter *painter, const QRectF &rect);
     virtual void paintDockView(QPainter *painter, const QRectF &rect);
     virtual void paintEditMode(QPainter *painter, const QRectF &rect);
+
+    virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
+    virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
 private:
     void setDefaultImages();
