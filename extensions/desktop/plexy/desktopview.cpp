@@ -84,10 +84,10 @@ public:
     PlexyDesk::ThemepackLoader *mThemeLoader;
 
     WidgetPlugin *mPhotoDialogProvider;
-    AbstractDesktopWidget *mPhotoDialog;
+    DesktopWidget *mPhotoDialog;
 
     WidgetPlugin *mDirProvider;
-    AbstractDesktopWidget *mDirWidget;
+    DesktopWidget *mDirWidget;
 
     float row;
     float column;
@@ -381,7 +381,7 @@ void DesktopView::addExtension(const QString &name,
     WidgetPlugin *provider = static_cast<WidgetPlugin *>(PluginLoader::getInstance()->instance(name));
     if (provider) {
         qDebug() << Q_FUNC_INFO << name << layerName;
-        AbstractDesktopWidget *widget = (AbstractDesktopWidget *) provider->item();
+        DesktopWidget *widget = (DesktopWidget *) provider->item();
         if (widget) {
             widget->configState(state);
             scene()->addItem(widget);
@@ -527,7 +527,7 @@ void DesktopView::registerPhotoDialog()
     const QPoint pos (0.0, 0.0);
     WidgetPlugin *provider = static_cast<WidgetPlugin *>(PluginLoader::getInstance()->instance(name));
     if (provider) {
-        AbstractDesktopWidget *widget = (AbstractDesktopWidget *) provider->item();
+        DesktopWidget *widget = (DesktopWidget *) provider->item();
         if (widget) {
             //widget->configState(state);
             scene()->addItem(widget);
@@ -556,7 +556,7 @@ WidgetPlugin *DesktopView::registerHandler(const QString &name, bool effects_on)
     const QPoint pos (0.0, 0.0);
     WidgetPlugin *provider = static_cast<WidgetPlugin *>(PluginLoader::getInstance()->instance(name));
     if (provider) {
-        AbstractDesktopWidget *widget = (AbstractDesktopWidget *) provider->item();
+        DesktopWidget *widget = (DesktopWidget *) provider->item();
         if (widget) {
             scene()->addItem(widget);
 
