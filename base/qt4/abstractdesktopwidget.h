@@ -90,6 +90,7 @@ public :
      */
     void setRect(const QRectF &rect);
 
+    void setDockRect(const QRectF &rect);
      /**
      * \brief Sets a icon for the widget
      * \param name Name of the icon
@@ -127,6 +128,7 @@ public :
 
     void setEditMode(const bool &mode);
     bool editMode() const;
+
 public Q_SLOTS:
     void zoomIn(int);
     void zoomOut(int);

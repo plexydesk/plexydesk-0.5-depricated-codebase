@@ -52,12 +52,11 @@ public:
     State s;
     QPixmap panel;
     QPixmap back;
-    QPixmap dock;
     int angle;
     int angleHide;
     QGraphicsProxyWidget *proxyWidget;
     double opacity;
-    QRectF saveRect;
+
     int scale;
     QPointF clickPos;
     bool backdrop;
@@ -67,6 +66,9 @@ public:
     // image cache
     ImageCache *mCache;
     SvgProvider *mSvgRender;
+
+    QRectF mDockRect;
+    QRectF saveRect;
 };
 
 AbstractDesktopWidget::AbstractDesktopWidget(const QRectF &rect, QWidget *widget, QGraphicsObject *parent) :
@@ -91,6 +93,7 @@ AbstractDesktopWidget::AbstractDesktopWidget(const QRectF &rect, QWidget *widget
     d->angle = 0;
     d->angleHide = 0;
     d->scale = 1;
+    d->mDockRect = QRectF(0.0, 0.0, 64, 64);
 
     setCacheMode(QGraphicsItem::ItemCoordinateCache, d->panel.size());
     setCacheMode(DeviceCoordinateCache);
@@ -148,6 +151,11 @@ void AbstractDesktopWidget::setRect(const QRectF &rect)
     update();
 }
 
+void AbstractDesktopWidget::setDockRect(const QRectF &rect)
+{
+    d->mDockRect = rect;
+}
+
 void AbstractDesktopWidget::zoomDone()
 {
     prepareGeometryChange();
@@ -182,12 +190,10 @@ void AbstractDesktopWidget::zoomOut(int frame)
 
 void AbstractDesktopWidget::setDockBackground(QPixmap img)
 {
-    d->dock = img;
 }
 
 void AbstractDesktopWidget::setWidgetBackground(QPixmap img)
 {
-    d->panel = img;
 }
 
 void AbstractDesktopWidget::setBacksideBackground(QPixmap img)
@@ -200,7 +206,7 @@ void AbstractDesktopWidget::setEditMode(const bool &mode)
     if (mode) {
         setState(DOCKED);
         prepareGeometryChange();
-        this->setRect(QRectF(0, 0, d->dock.width(), d->dock.height()));
+        this->setRect(d->mDockRect);
         if (d->proxyWidget) {
             d->proxyWidget->hide();
         }
@@ -256,7 +262,7 @@ void AbstractDesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *even
     } else {
         setState(DOCKED);
         prepareGeometryChange();
-        this->setRect(QRectF(0, 0, d->dock.width(), d->dock.height()));
+        this->setRect(d->mDockRect);
         if (d->proxyWidget) {
             d->proxyWidget->hide();
         }
@@ -343,9 +349,9 @@ void AbstractDesktopWidget::configState(AbstractDesktopWidget::State s)
     prepareGeometryChange();
     
     if (s == DOCKED) {
-        setRect(QRectF(0, 0, d->dock.width(), d->dock.height()));
+        setRect(d->mDockRect);
     } else {
-        setRect(QRectF(0, 0, d->panel.width(), d->panel.height()));
+        setRect(d->saveRect);
     }
     d->s = s;
     if (d->proxyWidget) {
@@ -363,7 +369,7 @@ void AbstractDesktopWidget::configState(AbstractDesktopWidget::State s)
     } else {
         setState(DOCKED);
         prepareGeometryChange();
-        this->setRect(QRectF(0, 0, d->dock.width(), d->dock.height()));
+        this->setRect(d->mDockRect);
         if (d->proxyWidget) {
             d->proxyWidget->hide();
         }
