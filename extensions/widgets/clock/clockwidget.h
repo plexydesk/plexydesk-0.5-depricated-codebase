@@ -73,6 +73,8 @@ private:
     QPixmap thedot;
     int shade;
     QImage lens;
+    QPixmap mLensePixmap;
+    QPixmap mGlossPixmap;
     QPixmap date;
 
 };

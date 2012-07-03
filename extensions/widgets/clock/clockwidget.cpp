@@ -97,6 +97,8 @@ void ClockWidget::drawClockWidget()
     p.setPen(Qt::NoPen);
     p.drawEllipse(0, 0, bounds.width(), bounds.height());
     p.end();
+    mLensePixmap = QPixmap().fromImage(lens);
+    mGlossPixmap = QPixmap().fromImage(gloss);
 }
 
 ClockWidget::~ClockWidget()
@@ -116,28 +118,36 @@ void ClockWidget::paintFrontView(QPainter *p, const QRectF &r)
 {
     p->setCompositionMode(QPainter::CompositionMode_Source);
     p->fillRect(rect(), Qt::transparent);
-    p->drawImage(QRect(0, 0, _clock_bg.width(), _clock_bg.height()), _clock_bg);
+    p->drawImage(QRectF(r.x(), r.y(), r.width(), r.height()), _clock_bg,
+                 QRectF(0.0, 0.0, _clock_bg.width(), _clock_bg.height()));
     p->setCompositionMode(QPainter::CompositionMode_SourceOver);
     p->setBackgroundMode(Qt::TransparentMode);
     p->save();
     p->setRenderHint(QPainter::SmoothPixmapTransform);
+
     if (shade == 0) {
         p->drawPixmap(_clock_bg.rect(), QPixmap().fromImage(_clock_bg));
         shade = 1;
     }
-    p->drawPixmap(QRect(16, 16, face.width(), face.height()), face);
+
+    float w_scaleFactor = r.width() / _clock_bg.width();
+    float h_scaleFactor = r.height() / _clock_bg.height();
+
     p->restore();
 
     /*Draw Hours*/
 
     p->save();
+
     p->setRenderHint(QPainter::SmoothPixmapTransform);
-    p->translate(_clock_bg.width() / 2, _clock_bg.height() / 2);
+    p->translate((_clock_bg.width()) / 2, (_clock_bg.height()) / 2);
     p->rotate(_hour);
+
     p->drawPixmap(QRect
              (-(ceil(double(_hour_hand.width()) / 2)),
-             -(_hour_hand.height() - 32), _hour_hand.width(),
-             _hour_hand.height()), _hour_hand);
+              -((_hour_hand.height()* h_scaleFactor) - (32 * h_scaleFactor)), _hour_hand.width(),
+             _hour_hand.height()), _hour_hand,
+                  QRectF(0.0, 0.0, _hour_hand.width(), _hour_hand.height()));
     p->restore();
 
     /* Draw Mins */
@@ -170,14 +180,12 @@ void ClockWidget::paintFrontView(QPainter *p, const QRectF &r)
              thedot.width(), thedot.height()), QPixmap(thedot));
     p->restore();
 
-    p->drawPixmap(QRect(29, 29, gloss.width(), gloss.height()),
-         QPixmap().fromImage(gloss));
-    p->drawPixmap(QRect(28, 28, lens.width(), lens.height()),
-         QPixmap().fromImage(lens));
+    p->drawPixmap(QRect( r.x()  + 29, r.y() + 29, mGlossPixmap.width() * w_scaleFactor,
+                         mGlossPixmap.height() * h_scaleFactor),
+                         mGlossPixmap);
 
-    p->drawPixmap(QRect
-             ((_clock_bg.width() / 4) * 3, _clock_bg.height() / 2,
-             date.width(), date.height()), date);
+    p->drawPixmap(QRect(r.x() + 28, r.y() + 28, mLensePixmap.width() * w_scaleFactor, mLensePixmap.height() * w_scaleFactor),
+         mLensePixmap);
 }
 
 void ClockWidget::paintDockView(QPainter *p, const QRectF &rect)

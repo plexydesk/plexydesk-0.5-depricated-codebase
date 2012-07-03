@@ -24,7 +24,6 @@
 #include <QSharedPointer>
 #include <QDir>
 #include <QtDebug>
-
 #include "desktopview.h"
 #include "icon.h"
 #include "iconprovider.h"
