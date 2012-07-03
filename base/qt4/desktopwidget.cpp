@@ -52,6 +52,8 @@ public:
     // image cache
     ImageCache *mCache;
     SvgProvider *mSvgRender;
+
+    QPropertyAnimation *mPropertyAnimationForZoom;
 };
 
 DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QGraphicsObject *parent)
@@ -75,7 +77,10 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QGraphicsObjec
     d->angle = 0;
     d->angleHide = 0;
     d->scale = 1;
+    d->mPropertyAnimationForZoom = new QPropertyAnimation(this);
+    d->mPropertyAnimationForZoom->setTargetObject(this);
 
+    connect(d->mPropertyAnimationForZoom, SIGNAL(finished()), this, SLOT(propertyAnimationForZoomDone()));
 
     d->mSvgRender = new SvgProvider();
     d->mCache = new ImageCache();
@@ -242,9 +247,9 @@ void DesktopWidget::paintDockView(QPainter *p, const QRectF &rect)
     if (!d->mEditMode) {
         p->save();
         p->setRenderHints(QPainter::SmoothPixmapTransform);
-        p->drawPixmap(QRect(0, 0, rect.width(), rect.height()), d->dock);
+        p->drawPixmap(QRect(rect.x(), rect.y(), rect.width(), rect.height()), d->dock);
         p->setPen(QColor(255, 255, 255));
-        p->drawText(QRect(0, 0,72, 72), Qt::AlignCenter, d->mName);
+        p->drawText(QRect(rect.x(), rect.y(), rect.width(), rect.height()), Qt::AlignCenter, d->mName);
         p->restore();
     }
 }
@@ -295,6 +300,17 @@ void DesktopWidget::zoomDone()
     prepareGeometryChange();
     resetMatrix();
     d->opacity = 1.0;
+}
+
+void DesktopWidget::propertyAnimationForZoomDone()
+{
+    if (state() == DOCKED) {
+        setState (VIEW);
+    } else {
+        setState(DOCKED);
+    }
+
+    zoomDone();
 }
 
 void DesktopWidget::zoomIn(int frame)
@@ -397,25 +413,39 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
         return;
     }
     if (state() == AbstractDesktopWidget::DOCKED) {
-        setState(AbstractDesktopWidget::VIEW);
         prepareGeometryChange();
+        //TODO: Use Animation forward and back methods
+        d->mPropertyAnimationForZoom->setPropertyName("rect");
+        d->mPropertyAnimationForZoom->setDuration(100);
+        QRectF startRect ((contentRect().width() / 2) - (dockRect().width() / 2),
+                        (contentRect().height() / 2) -(dockRect().height() /2),
+                        dockRect().width(), dockRect().height());
+        d->mPropertyAnimationForZoom->setStartValue(startRect);
+        d->mPropertyAnimationForZoom->setEndValue(contentRect());
+        d->mPropertyAnimationForZoom->setEasingCurve (QEasingCurve::InBounce);
         this->setRect(d->saveRect);
         if (d->proxyWidget) {
             d->proxyWidget->show();
         }
-        d->zoomin->start();
-    } else {
-        setState(AbstractDesktopWidget::DOCKED);
-        qDebug() << Q_FUNC_INFO << (state() == AbstractDesktopWidget::DOCKED);
+        d->mPropertyAnimationForZoom->start();
 
+    } else {
+        d->mPropertyAnimationForZoom->setPropertyName("rect");
+        d->mPropertyAnimationForZoom->setDuration(100);
+
+        QRectF endRect ((contentRect().width() / 2) - (dockRect().width() / 2),
+                        (contentRect().height() / 2) -(dockRect().height() /2),
+                        dockRect().width(), dockRect().height());
+        d->mPropertyAnimationForZoom->setEndValue(endRect);
+        d->mPropertyAnimationForZoom->setStartValue(contentRect());
+        d->mPropertyAnimationForZoom->setEasingCurve (QEasingCurve::OutBounce);
         prepareGeometryChange();
-        qDebug() << Q_FUNC_INFO << dockRect();
         this->setRect(dockRect());
         if (d->proxyWidget) {
             d->proxyWidget->hide();
         }
         this->setVisible(true);
-        d->zoomout->start();
+        d->mPropertyAnimationForZoom->start();
     }
     QGraphicsItem::mouseDoubleClickEvent(event);
 }

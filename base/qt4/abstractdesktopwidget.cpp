@@ -71,7 +71,7 @@ AbstractDesktopWidget::AbstractDesktopWidget(const QRectF &rect, QWidget *widget
     d->mContentRect = rect;
     d->mWidgetState = VIEW;
 
-    d->mScale = 1;
+    d->mScale = 1.0;
     d->mDockRect = QRectF(0.0, 0.0, 64, 64);
     d->mBoundingRect = rect;
 
@@ -163,7 +163,6 @@ AbstractDesktopWidget::State AbstractDesktopWidget::state()
 {
     return d->mWidgetState;
 }
-
 
 void AbstractDesktopWidget::setState(AbstractDesktopWidget::State s)
 {
