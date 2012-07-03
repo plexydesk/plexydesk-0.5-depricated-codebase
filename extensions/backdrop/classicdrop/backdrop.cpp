@@ -66,6 +66,7 @@ void  BgPlugin::setRect(const QRect &rect)
 
 void BgPlugin::changeWallpaperItem()
 {
+    /*
      if (PlexyDesk::Config::getInstance()->isOpenGL()) {
 
           QDeclarativeContext *context = mBackgroundItem->engine()->rootContext();
@@ -76,31 +77,31 @@ void BgPlugin::changeWallpaperItem()
                  QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->wallpaper()));
 
           mBackgroundItem->setSourceUrl(QUrl(mThemePack->qmlBackdropFromTheme()));
-     } else {
-          QSize desktopSize = mDesktopScreenRect.size();
+     }
+     */
+
+    QSize desktopSize = mDesktopScreenRect.size();
 #ifdef Q_WS_WIN
-          // A 1px hack to make the widget fullscreen and not covering the toolbar on Win
-          desktopSize.setHeight(desktopSize.height()-1);
+    // A 1px hack to make the widget fullscreen and not covering the toolbar on Win
+    desktopSize.setHeight(desktopSize.height()-1);
 #endif
 
-          if (mBackgroundPixmap) {
-              delete mBackgroundPixmap;
-          }
+    if (mBackgroundPixmap) {
+        delete mBackgroundPixmap;
+    }
 
-          mBackgroundPixmap = new QPixmap(PlexyDesk::Config::getInstance()->wallpaper());
+    mBackgroundPixmap = new QPixmap(PlexyDesk::Config::getInstance()->wallpaper());
 
-          if (mBackgroundPixmap->isNull()) {
-              return;
-          }
+    if (mBackgroundPixmap->isNull()) {
+        return;
+    }
 
-          // TODO: Make use of the PlexyDesk::Config::getInstance()->wallpaperMode() option
-          mBackgroundCache = mBackgroundPixmap->scaled(desktopSize.width(), desktopSize.height(),
-                  Qt::IgnoreAspectRatio,
-                  Qt::SmoothTransformation);
-          mBackgroundItemPixmap->setPixmap(mBackgroundCache);
-        }
+    // TODO: Make use of the PlexyDesk::Config::getInstance()->wallpaperMode() option
+    mBackgroundCache = mBackgroundPixmap->scaled(desktopSize.width(), desktopSize.height(),
+                                                 Qt::IgnoreAspectRatio,
+                                                 Qt::SmoothTransformation);
+    mBackgroundItemPixmap->setPixmap(mBackgroundCache);
 
-     mBlurAnimation->start();
 }
 
 void BgPlugin::data(QVariant &data)
@@ -144,6 +145,7 @@ QGraphicsItem *BgPlugin::item()
                 this, SLOT(changeWallpaperItem()));
 
 
+        /*
         if (PlexyDesk::Config::getInstance()->isOpenGL()) {
                        mBackgroundItem = new PlexyDesk::QmlDesktopWidget(QRectF(0.0, 0.0, desktopSize.width(),
                     desktopSize.height()));
@@ -160,14 +162,13 @@ QGraphicsItem *BgPlugin::item()
             mBackgroundItem->setCacheMode(QGraphicsItem::ItemCoordinateCache);
             mBlurAnimation->start();
             return mBackgroundItem;
-        } else {
-            mBackgroundItemPixmap = new QGraphicsPixmapItem(mBackgroundCache);
-            mBackgroundItemPixmap->setGraphicsEffect(mBlurEffect);
-            mBackgroundItemPixmap->setCacheMode(QGraphicsItem::ItemCoordinateCache);
-            //disable blur animatino to speed up 
-            //mBlurAnimation->start();
-            return mBackgroundItemPixmap;
-        }
+        } */
+        mBackgroundItemPixmap = new QGraphicsPixmapItem(mBackgroundCache);
+        mBackgroundItemPixmap->setGraphicsEffect(mBlurEffect);
+        mBackgroundItemPixmap->setCacheMode(QGraphicsItem::ItemCoordinateCache);
+        //disable blur animatino to speed up
+        mBlurAnimation->start();
+        return mBackgroundItemPixmap;
     }
     
     return NULL;

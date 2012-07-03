@@ -51,7 +51,7 @@
 int main( int argc, char * *argv )
 {
 #ifndef Q_WS_MAC
-    QApplication::setGraphicsSystem(QLatin1String("raster"));
+    QApplication::setGraphicsSystem(QLatin1String("opengl"));
 #endif
 
     QByteArray debug_settings = qgetenv("PLEXYDESK_CONSOLE_DEBUG").toLower();
@@ -75,7 +75,7 @@ int main( int argc, char * *argv )
 #endif
 
 #ifdef Q_WS_MAC
-    PlexyDesk::Config::getInstance()->setOpenGL(false);
+    PlexyDesk::Config::getInstance()->setOpenGL(true);
 #endif
     PlexyDesk::PluginLoader *loader = PlexyDesk::PluginLoader::getInstance();
     loader->scanDisk();
