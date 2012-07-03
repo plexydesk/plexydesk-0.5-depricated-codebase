@@ -30,8 +30,6 @@ public:
     }
 
     QRectF mBoundingRect;
-    QTimeLine *zoomin;
-    QTimeLine *zoomout;
     QTimer *spintimer;
     QTimer *mPressHoldTimer;
     AbstractDesktopWidget::State mWidgetState;
@@ -93,21 +91,6 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QGraphicsObjec
     setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
     setAcceptsHoverEvents(true);
 
-    // zoom in settings
-    d->zoomin = new QTimeLine(150, this);
-    d->zoomin->setFrameRange(120, 150);
-    connect(d->zoomin, SIGNAL(frameChanged(int)),
-         this, SLOT(zoomIn(int)));
-    connect(d->zoomin, SIGNAL(finished()),
-         this, SLOT(zoomDone()));
-    // zoom out
-    d->zoomout = new QTimeLine(150, this);
-    d->zoomout->setFrameRange(0, 150);
-    connect(d->zoomout, SIGNAL(frameChanged(int)),
-         this, SLOT(zoomOut(int)));
-    connect(d->zoomout, SIGNAL(finished()),
-         this, SLOT(zoomDone()));
-    d->zoomin->start();
     // spin
     d->spintimer = new QTimer(this);
     connect(d->spintimer, SIGNAL(timeout()), this, SLOT(spin()));
@@ -126,7 +109,6 @@ void DesktopWidget::enableDefaultBackground(bool enable)
 {
     d->backdrop = enable;
 }
-
 
 void DesktopWidget::setDefaultImages()
 {
