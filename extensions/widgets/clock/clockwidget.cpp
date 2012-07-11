@@ -41,6 +41,7 @@ ClockWidget::ClockWidget(const QRectF &rect, QWidget *widget)
                 PlexyDesk::Config::getInstance()->plexydeskBasePath() + "/share/plexy/skins/default/clock"));
     setIconName ("Clock");
     drawClockWidget();
+    setCacheMode(QGraphicsItem::DeviceCoordinateCache);
 }
 
 void ClockWidget::setPath(QString str)
@@ -111,24 +112,21 @@ void ClockWidget::drawSeconds()
     _secs = 6.0 * time.second();
     _mins = 6.0 * time.minute();
     _hour = 30.0 * time.hour();
+
     update();
 }
 
 void ClockWidget::paintFrontView(QPainter *p, const QRectF &r)
 {
-    p->setCompositionMode(QPainter::CompositionMode_Source);
-    p->fillRect(rect(), Qt::transparent);
+    p->setRenderHint(QPainter::HighQualityAntialiasing);
+    //p->setCompositionMode(QPainter::CompositionMode_Source);
+    //p->fillRect(rect(), Qt::transparent);
     p->drawImage(QRectF(r.x(), r.y(), r.width(), r.height()), _clock_bg,
                  QRectF(0.0, 0.0, _clock_bg.width(), _clock_bg.height()));
-    p->setCompositionMode(QPainter::CompositionMode_SourceOver);
+    //p->setCompositionMode(QPainter::CompositionMode_SourceOver);
     p->setBackgroundMode(Qt::TransparentMode);
-    p->save();
-    p->setRenderHint(QPainter::SmoothPixmapTransform);
 
-    if (shade == 0) {
-        p->drawPixmap(_clock_bg.rect(), QPixmap().fromImage(_clock_bg));
-        shade = 1;
-    }
+    p->save();
 
     float w_scaleFactor = r.width() / _clock_bg.width();
     float h_scaleFactor = r.height() / _clock_bg.height();
@@ -138,8 +136,6 @@ void ClockWidget::paintFrontView(QPainter *p, const QRectF &r)
     /*Draw Hours*/
 
     p->save();
-
-    p->setRenderHint(QPainter::SmoothPixmapTransform);
     p->translate((_clock_bg.width()) / 2, (_clock_bg.height()) / 2);
     p->rotate(_hour);
 
@@ -152,7 +148,6 @@ void ClockWidget::paintFrontView(QPainter *p, const QRectF &r)
 
     /* Draw Mins */
     p->save();
-    p->setRenderHint(QPainter::SmoothPixmapTransform);
     p->translate(_clock_bg.width() / 2, _clock_bg.height() / 2);
     p->rotate(_mins);
     p->drawPixmap(QRect
@@ -163,7 +158,7 @@ void ClockWidget::paintFrontView(QPainter *p, const QRectF &r)
 
     /*Draw Secs*/
     p->save();
-    p->setRenderHint(QPainter::SmoothPixmapTransform);
+    //p->setRenderHint(QPainter::SmoothPixmapTransform);
     p->translate(_clock_bg.width() / 2, _clock_bg.width() / 2);
     p->rotate(_secs);
     p->drawPixmap(QRect
@@ -180,9 +175,9 @@ void ClockWidget::paintFrontView(QPainter *p, const QRectF &r)
              thedot.width(), thedot.height()), QPixmap(thedot));
     p->restore();
 
+
     p->drawPixmap(QRect( r.x()  + 29, r.y() + 29, mGlossPixmap.width() * w_scaleFactor,
-                         mGlossPixmap.height() * h_scaleFactor),
-                         mGlossPixmap);
+                         mGlossPixmap.height() * h_scaleFactor), mGlossPixmap);
 
     p->drawPixmap(QRect(r.x() + 28, r.y() + 28, mLensePixmap.width() * w_scaleFactor, mLensePixmap.height() * w_scaleFactor),
          mLensePixmap);
