@@ -102,6 +102,10 @@ void BgPlugin::changeWallpaperItem()
                                                  Qt::SmoothTransformation);
     mBackgroundItemPixmap->setPixmap(mBackgroundCache);
 
+    if (mBackgroundPixmap)
+       delete mBackgroundPixmap;
+
+    mBackgroundPixmap = 0;
 }
 
 void BgPlugin::data(QVariant &data)
@@ -127,19 +131,20 @@ QGraphicsItem *BgPlugin::item()
 #endif
 
 
-        QPixmapCache::setCacheLimit((desktopSize.height()* desktopSize.width() * 32)/8);
+        //QPixmapCache::setCacheLimit((desktopSize.height()* desktopSize.width() * 32)/8);
 
         // TODO: Make use of the PlexyDesk::Config::getInstance()->wallpaperMode() option
         mBackgroundCache = mBackgroundPixmap->scaled(desktopSize.width(), desktopSize.height(),
-                Qt::IgnoreAspectRatio,
-                Qt::SmoothTransformation);
+               Qt::IgnoreAspectRatio,
+               Qt::SmoothTransformation);
 
-        mBlurEffect = new QGraphicsBlurEffect();
-        mBlurEffect->setBlurHints(QGraphicsBlurEffect::AnimationHint);
-        mBlurAnimation = new QPropertyAnimation(mBlurEffect, "blurRadius");
-        mBlurAnimation->setDuration(100);
-        mBlurAnimation->setStartValue(5.0);
-        mBlurAnimation->setEndValue(0.0);
+
+        //mBlurEffect = new QGraphicsBlurEffect();
+        //mBlurEffect->setBlurHints(QGraphicsBlurEffect::AnimationHint);
+        //mBlurAnimation = new QPropertyAnimation(mBlurEffect, "blurRadius");
+        //mBlurAnimation->setDuration(100);
+        //mBlurAnimation->setStartValue(5.0);
+        //mBlurAnimation->setEndValue(0.0);
 
         connect(PlexyDesk::Config::getInstance(), SIGNAL(wallpaperChanged()),
                 this, SLOT(changeWallpaperItem()));
@@ -164,10 +169,12 @@ QGraphicsItem *BgPlugin::item()
             return mBackgroundItem;
         } */
         mBackgroundItemPixmap = new QGraphicsPixmapItem(mBackgroundCache);
-        mBackgroundItemPixmap->setGraphicsEffect(mBlurEffect);
-        mBackgroundItemPixmap->setCacheMode(QGraphicsItem::ItemCoordinateCache);
+        //mBackgroundItemPixmap->setGraphicsEffect(mBlurEffect);
+        //mBackgroundItemPixmap->setCacheMode(QGraphicsItem::ItemCoordinateCache);
         //disable blur animatino to speed up
-        mBlurAnimation->start();
+        //mBlurAnimation->start();
+        delete mBackgroundPixmap;
+        mBackgroundPixmap = 0;
         return mBackgroundItemPixmap;
     }
     
