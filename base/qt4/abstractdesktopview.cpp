@@ -39,12 +39,11 @@ namespace PlexyDesk
 void AbstractDesktopView::enableOpenGL(bool state)
 {
     if (state) {
-        setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers |
-                        QGL::StencilBuffer |
-                        QGL::DoubleBuffer |
-                        QGL::AlphaChannel)));
+        setViewport(new QGLWidget(QGLFormat(
+                        QGL::DoubleBuffer )));
         setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
         setOptimizationFlag(QGraphicsView::DontAdjustForAntialiasing);
+        setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
     } else {
         setViewport(new QWidget);
         setCacheMode(QGraphicsView::CacheBackground);
@@ -52,6 +51,8 @@ void AbstractDesktopView::enableOpenGL(bool state)
         setOptimizationFlag(QGraphicsView::DontClipPainter);
         setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     }
+
+    viewport()->setAttribute(Qt::WA_PaintOnScreen);
 }
 
 void AbstractDesktopView::showLayer(const QString &layer)

@@ -136,7 +136,12 @@ bool AbstractDesktopWidget::editMode() const
 
 void AbstractDesktopWidget::setIconName(const QString &name)
 {
-   d->mName = name;
+    d->mName = name;
+}
+
+QString AbstractDesktopWidget::iconName() const
+{
+    return d->mName;
 }
 
 void AbstractDesktopWidget::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
