@@ -36,19 +36,20 @@ public:
     QPixmap panel;
     QPixmap back;
     QPixmap dock;
+
     int angle;
     int angleHide;
+
     QGraphicsProxyWidget *proxyWidget;
+
     double opacity;
     QRectF saveRect;
     int scale;
     QPointF clickPos;
-    bool backdrop;
+    bool mDefaultBackground;
     bool mEditMode;
-    QString mName;
 
     // image cache
-    ImageCache *mCache;
     SvgProvider *mSvgRender;
 
     QPropertyAnimation *mPropertyAnimationForZoom;
@@ -58,7 +59,6 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QGraphicsObjec
     : AbstractDesktopWidget(rect, widget, parent), d(new PrivateDesktopWidget)
 {
     d->proxyWidget = 0;
-    d->mName = QLatin1String ("Widget");
     if (widget) {
         d->proxyWidget = new QGraphicsProxyWidget(this);
         d->proxyWidget->setFocusPolicy(Qt::StrongFocus);
@@ -68,7 +68,7 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QGraphicsObjec
 
     d->mBoundingRect = rect;
     d->mEditMode = false;
-    d->backdrop = true;
+    d->mDefaultBackground = true;
     d->opacity = 1.0;
     d->saveRect = rect;
     d->mWidgetState = VIEW;
@@ -81,7 +81,6 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QGraphicsObjec
     connect(d->mPropertyAnimationForZoom, SIGNAL(finished()), this, SLOT(propertyAnimationForZoomDone()));
 
     d->mSvgRender = new SvgProvider();
-    d->mCache = new ImageCache();
     setDefaultImages();
 
     setCacheMode(QGraphicsItem::ItemCoordinateCache, d->panel.size());
@@ -107,7 +106,7 @@ DesktopWidget::~DesktopWidget()
 
 void DesktopWidget::enableDefaultBackground(bool enable)
 {
-    d->backdrop = enable;
+    d->mDefaultBackground = enable;
 }
 
 void DesktopWidget::setDefaultImages()
@@ -202,7 +201,7 @@ QPixmap DesktopWidget::genDefaultBackground(int w, int h)
 
 void DesktopWidget::paintRotatedView(QPainter *p, const QRectF &rect)
 {
-    if (!d->backdrop) {
+    if (!d->mDefaultBackground) {
         return;
     }
 
@@ -215,7 +214,7 @@ void DesktopWidget::paintRotatedView(QPainter *p, const QRectF &rect)
 
 void DesktopWidget::paintFrontView(QPainter *p, const QRectF &rect)
 {
-    if (!d->backdrop)
+    if (!d->mDefaultBackground)
         return;
     p->save();
     p->setOpacity(0.8);
@@ -231,7 +230,7 @@ void DesktopWidget::paintDockView(QPainter *p, const QRectF &rect)
         p->setRenderHints(QPainter::SmoothPixmapTransform);
         p->drawPixmap(QRect(rect.x(), rect.y(), rect.width(), rect.height()), d->dock);
         p->setPen(QColor(255, 255, 255));
-        p->drawText(QRect(rect.x(), rect.y(), rect.width(), rect.height()), Qt::AlignCenter, d->mName);
+        p->drawText(QRect(rect.x(), rect.y(), rect.width(), rect.height()), Qt::AlignCenter, iconName());
         p->restore();
     }
 }
