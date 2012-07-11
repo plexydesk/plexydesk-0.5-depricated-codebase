@@ -19,11 +19,8 @@ public:
     void configState(AbstractDesktopWidget::State s);
 
 public Q_SLOTS:
-    void zoomIn(int);
-    void zoomOut(int);
     void zoomDone();
     void propertyAnimationForZoomDone();
-    void spin();
     void pressHoldTimeOut();
 
 protected:

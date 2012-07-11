@@ -30,14 +30,12 @@ public:
     }
 
     QRectF mBoundingRect;
-    QTimer *spintimer;
     QTimer *mPressHoldTimer;
     AbstractDesktopWidget::State mWidgetState;
     QPixmap panel;
     QPixmap back;
     QPixmap dock;
 
-    int angle;
     int angleHide;
 
     QGraphicsProxyWidget *proxyWidget;
@@ -53,6 +51,7 @@ public:
     SvgProvider *mSvgRender;
 
     QPropertyAnimation *mPropertyAnimationForZoom;
+    QPropertyAnimation *mPropertyAnimationForRotation;
 };
 
 DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QGraphicsObject *parent)
@@ -72,11 +71,14 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QGraphicsObjec
     d->opacity = 1.0;
     d->saveRect = rect;
     d->mWidgetState = VIEW;
-    d->angle = 0;
     d->angleHide = 0;
     d->scale = 1;
+
     d->mPropertyAnimationForZoom = new QPropertyAnimation(this);
     d->mPropertyAnimationForZoom->setTargetObject(this);
+
+    d->mPropertyAnimationForRotation = new QPropertyAnimation(this);
+    d->mPropertyAnimationForRotation->setTargetObject(this);
 
     connect(d->mPropertyAnimationForZoom, SIGNAL(finished()), this, SLOT(propertyAnimationForZoomDone()));
 
@@ -89,10 +91,6 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QGraphicsObjec
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
     setAcceptsHoverEvents(true);
-
-    // spin
-    d->spintimer = new QTimer(this);
-    connect(d->spintimer, SIGNAL(timeout()), this, SLOT(spin()));
 
     //presshold
     d->mPressHoldTimer = new QTimer(this);
@@ -247,29 +245,6 @@ void DesktopWidget::paintEditMode(QPainter *p, const QRectF &rect)
     }
 }
 
-void DesktopWidget::spin()
-{
-    d->angle += 18;
-    setCacheMode(ItemCoordinateCache);
-    QPointF center = boundingRect().center();
-    QTransform mat = QTransform();
-    mat.translate(center.x(), center.y());
-    mat.rotate(d->angle, Qt::YAxis);
-    mat.translate(-center.x(), -center.y());
-    setTransform(mat);
-    if (d->angle >= 180) {
-        if (state() == ROTATED) {
-            setState(VIEW);
-        } else {
-            setState(ROTATED);
-        }
-        d->spintimer->stop();
-        resetMatrix();
-        setCacheMode(DeviceCoordinateCache);
-        d->angle = 0;
-    }
-}
-
 void DesktopWidget::pressHoldTimeOut()
 {
     d->mEditMode = true;
@@ -293,32 +268,6 @@ void DesktopWidget::propertyAnimationForZoomDone()
 
     zoomDone();
 }
-
-void DesktopWidget::zoomIn(int frame)
-{
-    QPointF center = boundingRect().center();
-    QTransform mat = QTransform();
-    mat.translate(center.x(), center.y());
-    mat.scale(frame / 150.0, frame / 150.0);
-    mat.translate(-center.x(), -center.y());
-    setTransform(mat);
-    if (d->opacity >= 0.0) {
-        //d->opacity -= 0.3;
-    }
-}
-void DesktopWidget::zoomOut(int frame)
-{
-    QPointF center = boundingRect().center();
-    QTransform mat = QTransform();
-    mat.translate(center.x(), center.y());
-    mat.scale(1 - frame / 450.0, 1 - frame / 450.0);
-    mat.translate(-center.x(), -center.y());
-    setTransform(mat);
-    if (d->opacity >= 0.0) {
-        //d->opacity -= 0.2;
-    }
-}
-
 
 void DesktopWidget::configState(AbstractDesktopWidget::State s)
 {
@@ -368,7 +317,14 @@ void DesktopWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->buttons() == Qt::RightButton && (state() == VIEW || state() == ROTATED)) {
-        d->spintimer->start(36);
+        //d->spintimer->start(36);
+        qDebug() << Q_FUNC_INFO << "Start spin";
+        d->mPropertyAnimationForRotation->setPropertyName("rotation");
+        d->mPropertyAnimationForRotation->setDuration(800);
+        d->mPropertyAnimationForRotation->setStartValue(0);
+        d->mPropertyAnimationForRotation->setEndValue(180);
+        d->mPropertyAnimationForRotation->setEasingCurve(QEasingCurve::InSine);
+        d->mPropertyAnimationForRotation->start();
         return;
     }
 

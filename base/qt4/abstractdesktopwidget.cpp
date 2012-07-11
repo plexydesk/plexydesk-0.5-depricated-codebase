@@ -44,6 +44,7 @@ public:
     int mScale;
     QString mName;
     float mOpacity;
+    float mAngle;
     bool mEditMode;
 
     QRectF mDockRect;
@@ -100,7 +101,12 @@ void AbstractDesktopWidget::setRect(const QRectF &rect)
 {
     d->mBoundingRect = rect;
     prepareGeometryChange();
-    resetMatrix();
+    QPointF center = boundingRect().center();
+    QTransform mat = QTransform();
+    mat.translate(center.x(), center.y());
+    mat.translate(-center.x(), -center.y());
+    setTransform(mat);
+    //resetMatrix();
     update();
 }
 
@@ -112,6 +118,11 @@ void AbstractDesktopWidget::setDockRect(const QRectF &rect)
 QRectF AbstractDesktopWidget::dockRect() const
 {
     return d->mDockRect;
+}
+
+float AbstractDesktopWidget::rotation() const
+{
+    return d->mAngle;
 }
 
 void AbstractDesktopWidget::setEditMode(const bool &mode)
@@ -191,6 +202,29 @@ void AbstractDesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsI
 
     if (d->mEditMode) {
         this->paintEditMode(painter, option->exposedRect);
+    }
+}
+
+void AbstractDesktopWidget::setRotation(float angle)
+{
+    qDebug() << Q_FUNC_INFO;
+    d->mAngle = angle;
+    setCacheMode(ItemCoordinateCache);
+    QPointF center = boundingRect().center();
+    QTransform mat = QTransform();
+    mat.translate(center.x(), center.y());
+    mat.rotate(d->mAngle, Qt::YAxis);
+    mat.translate(-center.x(), -center.y());
+    setTransform(mat);
+    if (d->mAngle >= 180) {
+        if (state() == ROTATED) {
+            setState(VIEW);
+        } else {
+            setState(ROTATED);
+        }
+        resetMatrix();
+        setCacheMode(DeviceCoordinateCache);
+        d->mAngle = 0;
     }
 }
 
