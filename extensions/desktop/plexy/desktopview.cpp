@@ -118,6 +118,8 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) :
     setFrameStyle(QFrame::NoFrame);
 
     setAttribute(Qt::WA_QuitOnClose);
+    setAttribute(Qt::WA_PaintOnScreen);
+
 
 #ifdef Q_WS_WIN
     // Needed so it gets no focus on win when starting up
@@ -240,6 +242,9 @@ void DesktopView::setThemePack(const QString &name)
         }
 
     }
+
+    if (d->mThemeLoader)
+        delete d->mThemeLoader;
 }
 
 void DesktopView::addWallpaperItem()
