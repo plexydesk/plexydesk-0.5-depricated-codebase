@@ -134,7 +134,7 @@ QPixmap DesktopWidget::genDefaultBackground(int w, int h)
 
     QRect dock_left (0, 10, 10, (dock_rect.height() - 20));
 
-    QImage canvas (dock_rect.height(), dock_rect.width(), QImage::Format_ARGB32_Premultiplied);
+    QImage canvas (dock_rect.width(), dock_rect.height(), QImage::Format_ARGB32_Premultiplied);
 
     QPainter svg_painter(&canvas);
     svg_painter.setCompositionMode(QPainter::CompositionMode_Source);
