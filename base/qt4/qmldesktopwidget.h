@@ -40,6 +40,7 @@ public:
 
 public Q_SLOTS:
     void onQuit();
+    void onStateChanged();
 
 protected:
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);

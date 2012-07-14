@@ -32,9 +32,7 @@ public:
     QRectF mBoundingRect;
     QTimer *mPressHoldTimer;
     AbstractDesktopWidget::State mWidgetState;
-    QPixmap panel;
-    QPixmap back;
-    QPixmap dock;
+    QPixmap mDefaultBackgroundPixmap;
 
     int angleHide;
 
@@ -45,6 +43,7 @@ public:
     int scale;
     QPointF clickPos;
     bool mDefaultBackground;
+    bool mHasDefaultBackground;
     bool mEditMode;
 
     // image cache
@@ -73,6 +72,7 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QGraphicsObjec
     d->mWidgetState = VIEW;
     d->angleHide = 0;
     d->scale = 1;
+    d->mHasDefaultBackground = false;
 
     d->mPropertyAnimationForZoom = new QPropertyAnimation(this);
     d->mPropertyAnimationForZoom->setTargetObject(this);
@@ -83,13 +83,13 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QGraphicsObjec
     connect(d->mPropertyAnimationForZoom, SIGNAL(finished()), this, SLOT(propertyAnimationForZoomDone()));
 
     d->mSvgRender = new SvgProvider();
-    setDefaultImages();
+    //setDefaultImages();
 
-    setCacheMode(QGraphicsItem::ItemCoordinateCache, d->panel.size());
+    setCacheMode(QGraphicsItem::ItemCoordinateCache, d->mDefaultBackgroundPixmap.size());
     setCacheMode(DeviceCoordinateCache);
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
     setFlag(QGraphicsItem::ItemIsMovable, true);
-    setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
+    setFlag(QGraphicsItem::ItemClipsChildrenToShape, false);
     setAcceptsHoverEvents(true);
 
     //presshold
@@ -104,14 +104,21 @@ DesktopWidget::~DesktopWidget()
 
 void DesktopWidget::enableDefaultBackground(bool enable)
 {
-    d->mDefaultBackground = enable;
+
+    if (!d->mHasDefaultBackground) {
+        setDefaultImages();
+    }
+     d->mDefaultBackground = enable;
 }
 
 void DesktopWidget::setDefaultImages()
 {
-    d->dock = genDefaultBackground(72, 72);
-    d->panel = genDefaultBackground(boundingRect().width(), boundingRect().height());
-    d->back = d->panel;
+    if (boundingRect().width() == 0 || boundingRect().height() == 0) {
+        d->mHasDefaultBackground = false;
+        return;
+    }
+    d->mDefaultBackgroundPixmap = genDefaultBackground(boundingRect().width(), boundingRect().height());
+    d->mHasDefaultBackground = true;
 }
 
 QPixmap DesktopWidget::genDefaultBackground(int w, int h)
@@ -206,7 +213,7 @@ void DesktopWidget::paintRotatedView(QPainter *p, const QRectF &rect)
     p->save();
     p->setOpacity(0.8);
     p->setRenderHints(QPainter::SmoothPixmapTransform);
-    p->drawPixmap(QRect(0, 0, rect.width(), rect.height()), d->back);
+    p->drawPixmap(QRect(0, 0, rect.width(), rect.height()), d->mDefaultBackgroundPixmap);
     p->restore();
 }
 
@@ -217,16 +224,19 @@ void DesktopWidget::paintFrontView(QPainter *p, const QRectF &rect)
     p->save();
     p->setOpacity(0.8);
     p->setRenderHints(QPainter::SmoothPixmapTransform);
-    p->drawPixmap(QRect(0, 0, d->panel.width(), d->panel.height()), d->panel);
+    p->drawPixmap(QRect(0, 0, d->mDefaultBackgroundPixmap.width(), d->mDefaultBackgroundPixmap.height()), d->mDefaultBackgroundPixmap);
     p->restore();
 }
 
 void DesktopWidget::paintDockView(QPainter *p, const QRectF &rect)
 {
     if (!d->mEditMode) {
+        if (d->mDefaultBackgroundPixmap.isNull())
+            setDefaultImages();
+
         p->save();
         p->setRenderHints(QPainter::SmoothPixmapTransform);
-        p->drawPixmap(QRect(rect.x(), rect.y(), rect.width(), rect.height()), d->dock);
+        p->drawPixmap(QRect(rect.x(), rect.y(), rect.width(), rect.height()), d->mDefaultBackgroundPixmap);
         p->setPen(QColor(255, 255, 255));
         p->drawText(QRect(rect.x(), rect.y(), rect.width(), rect.height()), Qt::AlignCenter, iconName());
         p->restore();
@@ -238,7 +248,7 @@ void DesktopWidget::paintEditMode(QPainter *p, const QRectF &rect)
     if (d->mEditMode) {
         p->save();
         p->setRenderHints(QPainter::SmoothPixmapTransform);
-        p->drawPixmap(QRect(0, 0, rect.width(), rect.height()), d->dock);
+        p->drawPixmap(QRect(0, 0, rect.width(), rect.height()), d->mDefaultBackgroundPixmap);
         p->setPen(QColor(255, 255, 255));
         p->drawText(QRect(8, 5, 64, 64), Qt::AlignCenter, QLatin1String ("Close"));
         p->restore();

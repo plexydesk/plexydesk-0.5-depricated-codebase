@@ -60,8 +60,8 @@ void QmlDesktopWidget::setSourceUrl(const QUrl &url)
     }
     
     QDeclarativeComponent component(d->mQmlEngine, QDir::cleanPath(
-                                                       url.toString(QUrl::StripTrailingSlash |
-                                                                    QUrl::RemoveScheme)));
+                                        url.toString(QUrl::StripTrailingSlash |
+                                                     QUrl::RemoveScheme)));
     
     if (!component.isReady()) {
         if (component.isError()) {
@@ -85,15 +85,28 @@ void QmlDesktopWidget::setSourceUrl(const QUrl &url)
     
     // forward signals
     connect(d->mQmlChild, SIGNAL(quit()), this, SLOT(onQmlQuit()));
+    connect(this, SIGNAL(rotationChanged()), this, SLOT(onStateChanged()));
 }
 
 void QmlDesktopWidget::onQuit()
 {
-    qDebug() << Q_FUNC_INFO << endl;
     d->mQmlChild->hide();
     scene()->removeItem(d->mQmlChild);
     d->mQmlChild->setParentItem(0);
     Q_EMIT closed();
+}
+
+void QmlDesktopWidget::onStateChanged()
+{
+    if(d->mQmlChild) {
+        if (state() == ROTATED) {
+            d->mQmlChild->hide();
+            enableDefaultBackground(true);
+        } else if (state() == VIEW) {
+            d->mQmlChild->show();
+            enableDefaultBackground(false);
+        }
+    }
 }
 
 void QmlDesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
@@ -102,16 +115,6 @@ void QmlDesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
      * So we hide the child widget and when he clicks 
      * We show the qml Child of the widget
      */
-
-    //TODO
-    // remove this hack sync with widget state signals
-
-    /*
-    if (state() == AbstractDesktopWidget::VIEW)
-        d->mQmlChild->hide();
-    else
-        d->mQmlChild->show();
-    */
 
     AbstractDesktopWidget::mouseDoubleClickEvent(event);
 }

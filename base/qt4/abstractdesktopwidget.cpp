@@ -167,6 +167,7 @@ void AbstractDesktopWidget::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     
 void AbstractDesktopWidget::setContentRect(const QRectF &rect)
 {
+    d->mBoundingRect = rect;
     d->mContentRect = rect;
 }
 
@@ -183,6 +184,7 @@ AbstractDesktopWidget::State AbstractDesktopWidget::state()
 void AbstractDesktopWidget::setState(AbstractDesktopWidget::State s)
 {
     d->mWidgetState = s;
+    Q_EMIT rotationChanged();
 }
 
 void AbstractDesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -207,7 +209,6 @@ void AbstractDesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsI
 
 void AbstractDesktopWidget::setRotation(float angle)
 {
-    qDebug() << Q_FUNC_INFO;
     d->mAngle = angle;
     setCacheMode(ItemCoordinateCache);
     QPointF center = boundingRect().center();
