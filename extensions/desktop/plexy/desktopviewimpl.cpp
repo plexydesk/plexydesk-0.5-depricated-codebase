@@ -53,6 +53,7 @@ PlexyDesk::AbstractDesktopView  *DesktopViewPluginImpl::view(QGraphicsScene *sce
     view->registerPhotoDialog();
     mViewList.append(view);
 
+#ifdef Q_WS_WIN
     /* system tray */
        if (!mTray) {
            QString appIconPath =
@@ -61,6 +62,6 @@ PlexyDesk::AbstractDesktopView  *DesktopViewPluginImpl::view(QGraphicsScene *sce
            QIcon icon (QDir::toNativeSeparators(appIconPath));
            mTray = new PlexyTray(view->window(), icon);
     }
-
+#endif
     return view;
 }
