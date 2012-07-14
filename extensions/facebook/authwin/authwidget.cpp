@@ -33,8 +33,8 @@
 
 namespace PlexyDesk {
 
-AuthWidget::AuthWidget(const QRectF &rect, QWidget *widget) :
-    PlexyDesk::DesktopWidget(rect, widget)
+AuthWidget::AuthWidget(const QRectF &rect) :
+    PlexyDesk::DesktopWidget(rect)
 {
     mJsonHandle = new JsonHandler();
     const QString token = tokenFromConfig();

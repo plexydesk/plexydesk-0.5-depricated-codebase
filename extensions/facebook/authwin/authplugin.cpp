@@ -22,15 +22,13 @@
 
 AuthPlugin::AuthPlugin(QObject *object)
 {
-
 }
 
 AuthPlugin::~AuthPlugin()
 {
-
 }
 
 QGraphicsItem *AuthPlugin::item()
 {
-    return new PlexyDesk::AuthWidget(QRectF(0, 0, 480, 320), 0);
+    return new PlexyDesk::AuthWidget(QRectF(0, 0, 480, 320));
 }

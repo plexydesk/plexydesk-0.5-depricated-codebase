@@ -50,22 +50,13 @@ public:
     QRectF mDockRect;
     QRectF mContentRect;
     QRectF mBoundingRect;
-
-    QGraphicsProxyWidget *proxyWidget;
 };
 
-AbstractDesktopWidget::AbstractDesktopWidget(const QRectF &rect, QWidget *widget, QGraphicsObject *parent) :
+AbstractDesktopWidget::AbstractDesktopWidget(const QRectF &rect, QGraphicsObject *parent) :
     QGraphicsObject(parent),
     d(new Private)
 {
-    d->proxyWidget = 0;
     d->mName = QLatin1String ("Widget");
-    if (widget) {
-        d->proxyWidget = new QGraphicsProxyWidget(this);
-        d->proxyWidget->setFocusPolicy(Qt::StrongFocus);
-        d->proxyWidget->setWidget(widget);
-        d->proxyWidget->show();
-    }
 
     d->mEditMode = false;
     d->mOpacity = 1.0;
@@ -131,9 +122,6 @@ void AbstractDesktopWidget::setEditMode(const bool &mode)
         setState(DOCKED);
         prepareGeometryChange();
         this->setRect(d->mDockRect);
-        if (d->proxyWidget) {
-            d->proxyWidget->hide();
-        }
         this->setVisible(true);
     }
 

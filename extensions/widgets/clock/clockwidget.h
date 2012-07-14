@@ -30,7 +30,7 @@ class ClockWidget : public PlexyDesk::DesktopWidget
     Q_OBJECT
 
 public:
-    ClockWidget(const QRectF &rect, QWidget *widget = 0);
+    ClockWidget(const QRectF &rect);
     virtual ~ClockWidget();
 
     void paintFrontView(QPainter *painter, const QRectF &r);

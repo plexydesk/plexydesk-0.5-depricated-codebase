@@ -29,176 +29,11 @@ Rectangle {
     color: "#00000000"
     opacity: 1.0
 
-    Image {
-        id: background
-        sourceSize.width: parent.width - 20
-        sourceSize.height: parent.height - 20
-        source: "image://plexydesk_svgprovider/background#center"
-        x : 10
-        y : 10
-        z: -100
-        asynchronous : true
-        opacity: 0.35
-        smooth: true
-    }
-
-    Image {
-        id: background_center
-        sourceSize.width: parent.width - 20
-        sourceSize.height: parent.height - 20
-        source: "image://plexydesk_svgprovider/background#center"
-        x : 10
-        y : 10
-        z: -100
-        asynchronous : true
-        opacity: 1
-        smooth: true
-    }
-
-
-    Image {
-        id: background_topleft
-        sourceSize.width: 10
-        sourceSize.height: 10
-        width : 10
-        height : 10
-        source: "image://plexydesk_svgprovider/background#topleft"
-        x: 0
-        y: 0
-        z: -101
-        asynchronous : true
-        opacity: 1
-        smooth: true
-    }
-
-    Image {
-        id: background_topright
-        sourceSize.width: 10
-        sourceSize.height: 10
-        width : 10
-        height : 10
-        source: "image://plexydesk_svgprovider/background#topright"
-        x: parent.width - 10
-        y: 0
-        z: -101
-        asynchronous : true
-        opacity: 1
-        smooth: true
-    }
-
-  Image {
-        id: background_top
-        sourceSize.width: 10
-        sourceSize.height: 10
-        width : parent.width - 20
-        height : 10
-        source: "image://plexydesk_svgprovider/background#top"
-        x: 10
-        y: 0
-        z: -101
-        asynchronous : true
-        opacity: 1
-        smooth: true
-    }
-
-  Image {
-        id: background_right
-        sourceSize.width: 10
-        sourceSize.height: 10
-        width : 10
-        height : parent.height - 20
-        source: "image://plexydesk_svgprovider/background#right"
-        x: parent.width - 10
-        y: 10
-        z: -101
-        asynchronous : true
-        opacity: 1
-        smooth: true
-    }
-
-Image {
-        id: background_bottomright
-        sourceSize.width: 10
-        sourceSize.height: 10
-        width : 10
-        height : 10
-        source: "image://plexydesk_svgprovider/background#bottomright"
-        x: parent.width - 10
-        y: parent.height - 10
-        z: -101
-        asynchronous : true
-        opacity: 1
-        smooth: true
-    }
-
-Image {
-        id: background_bottom
-        sourceSize.width: 10
-        sourceSize.height: 10
-        width : parent.width - 20
-        height : 10
-        source: "image://plexydesk_svgprovider/background#bottom"
-        x: 10
-        y: parent.height - 10
-        z: -101
-        asynchronous : true
-        opacity: 1
-        smooth: true
-    }
-
-Image {
-        id: background_bottomleft
-        sourceSize.width: 10
-        sourceSize.height: 10
-        width : 10
-        height : 10
-        source: "image://plexydesk_svgprovider/background#bottomleft"
-        x: 0
-        y: parent.height - 10
-        z: -101
-        asynchronous : true
-        opacity: 1
-        smooth: true
-    }
-
-Image {
-        id: background_left
-        sourceSize.width: 10
-        sourceSize.height: 10
-        width : 10
-        height : parent.height - 20
-        source: "image://plexydesk_svgprovider/background#left"
-        x: 0
-        y: 10
-        z: -101
-        asynchronous : true
-        opacity: 1
-        smooth: true
-    }
-
-
-    Image {
-        id: background_content
-        source: "image://plexydesk_svgprovider/bakground#center"
-        anchors.top: background.top
-        anchors.topMargin: 20
-        anchors.left: background.left
-        anchors.leftMargin: 20
-        z: -90
-        width: background.width - (2*20)
-        height: background.height - (2*20)
-        sourceSize.width: 400
-        sourceSize.height : 400
-        opacity: 0.8
-        asynchronous : true
-        smooth: true
-    }
-
     Text {
         id: gettingstarted
-        anchors.top: background_content.top
+        anchors.top: rectangle1.top
         anchors.topMargin: 10
-        anchors.left: background_content.left
+        anchors.left: rectangle1.left
         anchors.leftMargin: 20
         font.family: "Bitstream Charter"
         font.pixelSize: 40
@@ -235,10 +70,10 @@ Image {
         id: container
         anchors.top: plexydesk.bottom
         anchors.topMargin: 20
-        anchors.bottom: background_content.bottom
+        anchors.bottom: rectangle1.bottom
         anchors.bottomMargin: 10
-        anchors.horizontalCenter: background_content.horizontalCenter
-        width: background_content.width - 20
+        anchors.horizontalCenter: rectangle1.horizontalCenter
+        width: rectangle1.width - 20
         color: "#00000000"
         opacity: 1.0
 

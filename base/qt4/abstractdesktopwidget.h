@@ -57,14 +57,11 @@ public :
      * \brief Base Desktop widget
      * \param rect Defines the bounding rectangular area of a
      * desktop widget
-     * \param embeddedWidget an optional parameter to embed a regular
-     * QWidget.
-     *
      * This will construct a extension with default settings with an
      * optional QWidget embedded
      */
 
-    AbstractDesktopWidget(const QRectF &rect, QWidget *embeddedWidget = 0, QGraphicsObject *parent = 0);
+    AbstractDesktopWidget(const QRectF &rect, QGraphicsObject *parent = 0);
 
     virtual ~AbstractDesktopWidget();
 

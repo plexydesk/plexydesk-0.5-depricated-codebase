@@ -29,11 +29,12 @@ public:
     QUrl mQmlUrl;
     QGraphicsObject *mQmlChild;
     QDeclarativeEngine *mQmlEngine;
+    bool mHasBackground;
 };
 
 
 QmlDesktopWidget::QmlDesktopWidget(const QRectF &rect, QWidget *widget, QGraphicsObject *parent) :
-    DesktopWidget(rect, widget, parent),
+    DesktopWidget(rect, parent),
     d(new PrivateQmlDesktopWidget)
 {
     d->mQmlEngine = Config::getInstance()->newQmlEngine();
@@ -88,6 +89,17 @@ void QmlDesktopWidget::setSourceUrl(const QUrl &url)
     connect(this, SIGNAL(rotationChanged()), this, SLOT(onStateChanged()));
 }
 
+bool QmlDesktopWidget::hasBackground() const
+{
+    return d->mHasBackground;
+}
+
+void QmlDesktopWidget::setHasBackground(bool background)
+{
+    enableDefaultBackground(background);
+    d->mHasBackground = background;
+}
+
 void QmlDesktopWidget::onQuit()
 {
     d->mQmlChild->hide();
@@ -104,7 +116,8 @@ void QmlDesktopWidget::onStateChanged()
             enableDefaultBackground(true);
         } else if (state() == VIEW) {
             d->mQmlChild->show();
-            enableDefaultBackground(false);
+            if (!hasBackground())
+                enableDefaultBackground(false);
         }
     }
 }

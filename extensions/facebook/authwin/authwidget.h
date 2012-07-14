@@ -35,7 +35,7 @@ class AuthWidget : public PlexyDesk::DesktopWidget
 {
     Q_OBJECT
 public:
-    AuthWidget(const QRectF &rect, QWidget *widget = 0);
+    AuthWidget(const QRectF &rect);
     virtual ~AuthWidget();
     void readConfig(QString &user, QString &pass);
     void paintExtFace(QPainter *painter,

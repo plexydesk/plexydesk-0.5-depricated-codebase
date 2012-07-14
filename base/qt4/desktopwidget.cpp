@@ -34,13 +34,7 @@ public:
     AbstractDesktopWidget::State mWidgetState;
     QPixmap mDefaultBackgroundPixmap;
 
-    int angleHide;
-
-    QGraphicsProxyWidget *proxyWidget;
-
-    double opacity;
     QRectF saveRect;
-    int scale;
     QPointF clickPos;
     bool mDefaultBackground;
     bool mHasDefaultBackground;
@@ -53,25 +47,14 @@ public:
     QPropertyAnimation *mPropertyAnimationForRotation;
 };
 
-DesktopWidget::DesktopWidget(const QRectF &rect, QWidget *widget, QGraphicsObject *parent)
-    : AbstractDesktopWidget(rect, widget, parent), d(new PrivateDesktopWidget)
+DesktopWidget::DesktopWidget(const QRectF &rect, QGraphicsObject *parent)
+    : AbstractDesktopWidget(rect, parent), d(new PrivateDesktopWidget)
 {
-    d->proxyWidget = 0;
-    if (widget) {
-        d->proxyWidget = new QGraphicsProxyWidget(this);
-        d->proxyWidget->setFocusPolicy(Qt::StrongFocus);
-        d->proxyWidget->setWidget(widget);
-        d->proxyWidget->show();
-    }
-
     d->mBoundingRect = rect;
     d->mEditMode = false;
     d->mDefaultBackground = true;
-    d->opacity = 1.0;
     d->saveRect = rect;
     d->mWidgetState = VIEW;
-    d->angleHide = 0;
-    d->scale = 1;
     d->mHasDefaultBackground = false;
 
     d->mPropertyAnimationForZoom = new QPropertyAnimation(this);
@@ -211,7 +194,7 @@ void DesktopWidget::paintRotatedView(QPainter *p, const QRectF &rect)
     }
 
     p->save();
-    p->setOpacity(0.8);
+    //p->setOpacity(0.8);
     p->setRenderHints(QPainter::SmoothPixmapTransform);
     p->drawPixmap(QRect(0, 0, rect.width(), rect.height()), d->mDefaultBackgroundPixmap);
     p->restore();
@@ -222,7 +205,7 @@ void DesktopWidget::paintFrontView(QPainter *p, const QRectF &rect)
     if (!d->mDefaultBackground)
         return;
     p->save();
-    p->setOpacity(0.8);
+    //p->setOpacity(0.8);
     p->setRenderHints(QPainter::SmoothPixmapTransform);
     p->drawPixmap(QRect(0, 0, d->mDefaultBackgroundPixmap.width(), d->mDefaultBackgroundPixmap.height()), d->mDefaultBackgroundPixmap);
     p->restore();
@@ -265,7 +248,6 @@ void DesktopWidget::zoomDone()
 {
     prepareGeometryChange();
     resetMatrix();
-    d->opacity = 1.0;
 }
 
 void DesktopWidget::propertyAnimationForZoomDone()
@@ -285,7 +267,6 @@ void DesktopWidget::configState(AbstractDesktopWidget::State s)
         return ;
     }
 
-    qDebug() << Q_FUNC_INFO ;
     resetMatrix();
     prepareGeometryChange();
 
@@ -296,24 +277,15 @@ void DesktopWidget::configState(AbstractDesktopWidget::State s)
     }
 
     d->mWidgetState = s;
-    if (d->proxyWidget) {
-        d->proxyWidget->hide();
-    }
 
     if (d->mWidgetState == DOCKED) {
         setState(VIEW);
         prepareGeometryChange();
         this->setRect(contentRect());
-        if (d->proxyWidget) {
-            d->proxyWidget->show();
-        }
     } else {
         setState(DOCKED);
         prepareGeometryChange();
         this->setRect(dockRect());
-        if (d->proxyWidget) {
-            d->proxyWidget->hide();
-        }
     }
 }
 
@@ -371,9 +343,6 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
         d->mPropertyAnimationForZoom->setEndValue(contentRect());
         d->mPropertyAnimationForZoom->setEasingCurve (QEasingCurve::InBounce);
         this->setRect(d->saveRect);
-        if (d->proxyWidget) {
-            d->proxyWidget->show();
-        }
         d->mPropertyAnimationForZoom->start();
 
     } else {
@@ -388,9 +357,6 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
         d->mPropertyAnimationForZoom->setEasingCurve (QEasingCurve::OutBounce);
         prepareGeometryChange();
         this->setRect(dockRect());
-        if (d->proxyWidget) {
-            d->proxyWidget->hide();
-        }
         this->setVisible(true);
         d->mPropertyAnimationForZoom->start();
     }

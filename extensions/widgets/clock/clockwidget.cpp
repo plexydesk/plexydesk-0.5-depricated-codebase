@@ -32,8 +32,8 @@
 #include <QDir>
 #include <plexyconfig.h>
 
-ClockWidget::ClockWidget(const QRectF &rect, QWidget *widget)
-    : PlexyDesk::DesktopWidget(rect, widget)
+ClockWidget::ClockWidget(const QRectF &rect)
+    : PlexyDesk::DesktopWidget(rect)
 {
     shade = 0;
 

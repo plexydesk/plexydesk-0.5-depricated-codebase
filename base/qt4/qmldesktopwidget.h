@@ -38,6 +38,9 @@ public:
 
     void setSourceUrl(const QUrl &url);
 
+    bool hasBackground() const;
+    void setHasBackground(bool background);
+
 public Q_SLOTS:
     void onQuit();
     void onStateChanged();

@@ -30,7 +30,7 @@ class ScrollWidget : public AbstractDesktopWidget
 {
    Q_OBJECT
 public:
-   ScrollWidget(const QRectF &rect, QWidget *embeddedWidget = 0, QGraphicsObject *parent = 0);
+   ScrollWidget(const QRectF &rect, QGraphicsObject *parent = 0);
    virtual ~ScrollWidget();
 
    void addWidget(QGraphicsItem *widget);

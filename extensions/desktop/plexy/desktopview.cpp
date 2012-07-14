@@ -229,7 +229,11 @@ void DesktopView::setThemePack(const QString &name)
             parent->setPos(pos);
             parent->setContentRect(parent->boundingRect());
             parent->setRect(parent->boundingRect());
-            parent->enableDefaultBackground(false);
+
+            if (d->mThemeLoader->getProperty(qmlWidget, "background").toBool())
+                parent->setHasBackground(true);
+            else
+                parent->setHasBackground(false);
 
             //check shadow prop
             bool shadow_on = d->mThemeLoader->getProperty(qmlWidget, "shadow").toBool();
