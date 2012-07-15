@@ -19,14 +19,14 @@
 
 #include <config.h>
 
-#include <QGLWidget>
-#include <QGraphicsGridLayout>
-#include <QGraphicsDropShadowEffect>
-#include <QFutureWatcher>
-#include <QSharedPointer>
 #include <QDir>
 #include <QtDebug>
+#include <QGLWidget>
+#include <QFutureWatcher>
+#include <QSharedPointer>
 #include <QPropertyAnimation>
+#include <QGraphicsGridLayout>
+#include <QGraphicsDropShadowEffect>
 
 #include <plexywindow.h>
 #include <abstractdesktopwidget.h>

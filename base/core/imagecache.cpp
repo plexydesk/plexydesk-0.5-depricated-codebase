@@ -24,7 +24,6 @@
 
 #include <imagecache.h>
 
-
 namespace PlexyDesk
 {
 

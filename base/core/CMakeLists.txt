@@ -1,3 +1,48 @@
+PROJECT(plexydeskcore)
+cmake_minimum_required(VERSION 2.6)
+
+# These variables are usually set in the toplevel directory
+# but for standalone lib building it should be reset on demand
+IF (NOT LIB_MAJOR)
+    SET(LIB_MAJOR 0)
+ENDIF (NOT LIB_MAJOR)
+IF (NOT LIB_MINOR)
+    SET(LIB_MINOR 6)
+ENDIF (NOT LIB_MINOR)
+IF (NOT LIB_RELEASE)
+    SET(LIB_RELEASE 0)
+ENDIF (NOT LIB_RELEASE)
+IF (NOT PLEXY_CORE_LIBRARY)
+    SET(PLEXY_CORE_LIBRARY plexydeskcore)
+ENDIF (NOT PLEXY_CORE_LIBRARY)
+IF (NOT CMAKE_INSTALL_LIBDIR)
+    INCLUDE(GNUInstallDirs)
+ENDIF (NOT CMAKE_INSTALL_LIBDIR)
+
+# Find Qt4
+IF (NOT QT_FOUND)
+    FIND_PACKAGE(Qt4 4.7.0 COMPONENTS QtCore QtGui QtOpenGL) # QtDeclarative QtNetwork QtXml QtSvg QtDbus
+    INCLUDE(${QT_USE_FILE})
+
+    INCLUDE_DIRECTORIES (
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/shaders
+        ${CMAKE_CURRENT_BINARY_DIR}
+    )
+
+    # TODO/FIXME: -DPLEXYCORE_STANDALONE is stuff to be resolved!
+    message(WARNING "\n\nBuilding lib as a minimal standalone library. Non-functional for plexydesk now!\n\n")
+    SET(PLEXYCORE_STANDALONE 1)
+    ADD_DEFINITIONS(-DPLEXYCORE_STANDALONE)
+ENDIF (NOT QT_FOUND)
+
+# do not use config.h now
+ADD_DEFINITIONS(-DPLEXYPREFIX="${CMAKE_INSTALL_PREFIX}"
+                -DPLEXYLIBDIR="${CMAKE_INSTALL_LIBDIR}"
+                -DPLEXYQTIMPORTSDIR="${QT_IMPORTS_INSTALL_DIR}"
+                -DPLEXYRESOURCESDIR="${RESOURCES_DEST_DIR}"
+               )
+
 SET(sourceFiles
     abstractplugininterface.cpp
     abstractdesktopwidget.cpp

@@ -20,7 +20,6 @@
 #include <config.h>
 
 #include <QCoreApplication>
-#include <QDeclarativeEngine>
 #include <QDir>
 #include <QHash>
 #include <QtDebug>
@@ -28,10 +27,6 @@
 #include <abstractdesktopwidget.h>
 #include <config.h>
 #include <QCoreApplication>
-#include <QDeclarativeContext>
-//#include <shadereffectitem.h>
-//#include <shadereffectsource.h>
-#include <svgprovider.h>
 
 #ifdef Q_WS_X11
 #include <configadaptor.h>
@@ -166,7 +161,6 @@ void Config::writeToFile()
     d->mSettings->setValue("themepack", d->mData["themepack"].toString());
     d->mSettings->sync();
 
-    qDebug()  << Q_FUNC_INFO << "Write: " << d->mData;
 }
 
 void Config::setWallpaper(const QString &str)
@@ -198,8 +192,6 @@ void Config::setPhoto(const QString &str)
 
 void Config::addWidget(const QString & /*widget*/)
 {
-    //TODO: Check if this is a valid widgetname
-   // widgetList.append(widget);
     Q_EMIT configChanged();
     Q_EMIT widgetAdded();
     writeToFile();
@@ -207,11 +199,9 @@ void Config::addWidget(const QString & /*widget*/)
 
 void Config::changeLayer()
 {
-    qDebug() << Q_FUNC_INFO;
     Q_EMIT layerChange();
     Q_EMIT wallpaperChanged();
 }
-
 
 // getters
 

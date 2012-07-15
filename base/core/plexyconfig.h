@@ -105,6 +105,7 @@ private:
     Config(Config &config);
     static Config *config;
 
+
     class Private;
     Private *const d;
 

@@ -23,7 +23,6 @@
 
 #include <QtCore>
 #include <QtGui>
-#include <QDeclarativeImageProvider>
 
 #include <plexy.h>
 #include <plexyconfig.h>

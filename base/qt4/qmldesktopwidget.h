@@ -20,6 +20,8 @@
 
 #include <desktopwidget.h>
 
+#include <QDeclarativeEngine>
+
 #ifndef PLEXYDESK_QML_DESKTOP_WIDGET_H
 #define PLEXYDESK_QML_DESKTOP_WIDGET_H
 
