@@ -21,7 +21,6 @@
 #define PLEXY_BACK_PLUGIN_H
 
 #include <baseplugin.h>
-#include <config.h>
 #include <plexy.h>
 
 class QPainter;

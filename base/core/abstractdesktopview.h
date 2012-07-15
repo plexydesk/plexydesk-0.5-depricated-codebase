@@ -20,8 +20,6 @@
 #ifndef PLEXY_ABSTRACT_DESKTOP_VIEW_H
 #define PLEXY_ABSTRACT_DESKTOP_VIEW_H
 
-#include <config.h>
-
 #include <QGraphicsView>
 
 #include <plexy.h>

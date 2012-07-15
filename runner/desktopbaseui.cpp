@@ -24,6 +24,8 @@
 #include <abstractdesktopview.h>
 #include <desktopviewplugin.h>
 
+#include <config.h>
+
 #include "desktopbaseui.h"
 
 #if defined(Q_WS_X11) // && defined(Q_WS_MAC) ??
@@ -112,12 +114,16 @@ void DesktopBaseUi::setup()
         if (!view) {
             continue;
         }
+#ifdef PLEXYNAME
         view->setWindowTitle(QString(PLEXYNAME));
+#endif
         view->enableOpenGL(d->mConfig->isOpenGL());
         view->resize(desktopSize);
         view->show();
-
+#ifdef PLEXYNAME
         view->setWindowTitle(QString(PLEXYNAME));
+#endif
+
         view->enableOpenGL(d->mConfig->isOpenGL());
         view->move(d->mDesktopWidget->screenGeometry(i).x(),
                   d->mDesktopWidget->screenGeometry(i).y());

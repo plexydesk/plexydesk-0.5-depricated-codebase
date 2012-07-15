@@ -24,7 +24,6 @@
 
 #include <svgprovider.h>
 
-
 namespace PlexyDesk
 {
 

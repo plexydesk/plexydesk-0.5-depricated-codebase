@@ -1,4 +1,6 @@
 #include "plexyqmlglue.h"
+
+#include <config.h>
 #include <QSharedData>
 #include <QDir>
 #include <QDeclarativeContext>

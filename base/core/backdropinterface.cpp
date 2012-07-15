@@ -17,7 +17,6 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 #include <backdropinterface.h>
-#include <config.h>
 #include <datainterface.h>
 #include <plexy.h>
 #include <pluginloader.h>

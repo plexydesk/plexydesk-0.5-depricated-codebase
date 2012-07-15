@@ -3,7 +3,6 @@
 #define PLEXY_DATA_PLUGIN_H
 
 #include <baseplugin.h>
-#include <config.h>
 #include <plexy.h>
 
 #include <QVariantMap>

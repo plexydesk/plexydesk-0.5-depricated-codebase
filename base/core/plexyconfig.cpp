@@ -25,7 +25,6 @@
 #include <QtDebug>
 #include "plexyconfig.h"
 #include <abstractdesktopwidget.h>
-#include <config.h>
 #include <QCoreApplication>
 
 #ifdef Q_WS_X11

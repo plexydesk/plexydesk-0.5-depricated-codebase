@@ -49,7 +49,6 @@
 #ifndef __PLEXY_EXPORTS
 #define __PLEXY_EXPORTS
 
-#include <config.h>
 #include <QtCore/QtGlobal>
 
 #ifdef Q_CC_MSVC

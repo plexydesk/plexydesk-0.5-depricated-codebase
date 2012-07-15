@@ -7,7 +7,6 @@
 #include <QTextStream>
 #include <QDateTime>
 
-#include <config.h>
 
 static void plexyWindowsLogger(QtMsgType type, const char *msg)
 {

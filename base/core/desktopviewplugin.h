@@ -20,7 +20,6 @@
 #ifndef PLEXY_DESKTOP_PLUGIN_H
 #define PLEXY_DESKTOP_PLUGIN_H
 
-#include <config.h>
 #include <plexy.h>
 
 #include <baseplugin.h>
