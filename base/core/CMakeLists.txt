@@ -26,6 +26,7 @@ SET(headerFiles
     pluginloader.h
     abstractdesktopview.h
     pendingjob.h
+    desktopviewplugin.h
    )
 
 SET(MOC_SRCS
@@ -44,6 +45,7 @@ SET(MOC_SRCS
     pendingjob.h
     widgetinterface.h
     widgetplugin.h
+    desktopviewplugin.h
    )
 
 # DBUS is working only under linux for now

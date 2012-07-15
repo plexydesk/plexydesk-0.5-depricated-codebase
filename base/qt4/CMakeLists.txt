@@ -30,7 +30,6 @@ SET(headerFiles
     shaders/shadereffectsource.h
     shaders/scenegraph/qsggeometry.h
     qmldesktopwidget.h
-    desktopviewplugin.h
     desktopwidget.h
     scrollwidget.h
     )
@@ -41,12 +40,10 @@ SET(MOC_SRCS
    socialplugin.h
    themepackloader.h
    viewlayer.h
-
    shaders/shadereffect.h
    shaders/shadereffectitem.h
    shaders/shadereffectsource.h
    qmldesktopwidget.h
-   desktopviewplugin.h
    desktopwidget.h
    scrollwidget.h
    )
