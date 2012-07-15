@@ -62,6 +62,11 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QGraphicsObject *parent)
 
     d->mPropertyAnimationForRotation = new QPropertyAnimation(this);
     d->mPropertyAnimationForRotation->setTargetObject(this);
+    d->mPropertyAnimationForRotation->setPropertyName("rotation");
+    d->mPropertyAnimationForRotation->setDuration(800);
+    d->mPropertyAnimationForRotation->setStartValue(0);
+    d->mPropertyAnimationForRotation->setEndValue(180);
+    d->mPropertyAnimationForRotation->setEasingCurve(QEasingCurve::InSine);
 
     connect(d->mPropertyAnimationForZoom, SIGNAL(finished()), this, SLOT(propertyAnimationForZoomDone()));
 
@@ -292,20 +297,12 @@ void DesktopWidget::configState(AbstractDesktopWidget::State s)
 void DesktopWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     d->mPressHoldTimer->stop();
-    qDebug() << Q_FUNC_INFO << "STOP timer";
     QGraphicsObject::mouseReleaseEvent(event);
 }
 
 void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->buttons() == Qt::RightButton && (state() == VIEW || state() == ROTATED)) {
-        //d->spintimer->start(36);
-        qDebug() << Q_FUNC_INFO << "Start spin";
-        d->mPropertyAnimationForRotation->setPropertyName("rotation");
-        d->mPropertyAnimationForRotation->setDuration(800);
-        d->mPropertyAnimationForRotation->setStartValue(0);
-        d->mPropertyAnimationForRotation->setEndValue(180);
-        d->mPropertyAnimationForRotation->setEasingCurve(QEasingCurve::InSine);
         d->mPropertyAnimationForRotation->start();
         return;
     }

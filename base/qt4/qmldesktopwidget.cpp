@@ -86,7 +86,7 @@ void QmlDesktopWidget::setSourceUrl(const QUrl &url)
     
     // forward signals
     connect(d->mQmlChild, SIGNAL(quit()), this, SLOT(onQmlQuit()));
-    connect(this, SIGNAL(rotationChanged()), this, SLOT(onStateChanged()));
+    connect(this, SIGNAL(stateChanged()), this, SLOT(onStateChanged()));
 }
 
 bool QmlDesktopWidget::hasBackground() const

@@ -44,7 +44,7 @@ class PLEXYDESK_EXPORT AbstractDesktopWidget : public QGraphicsObject
     Q_OBJECT
     Q_ENUMS(State)
     Q_PROPERTY(QRectF rect READ rect WRITE setRect NOTIFY rectChanged)
-    Q_PROPERTY(float rotation READ rotation WRITE setRotation NOTIFY rotationChanged)
+    Q_PROPERTY(float rotation READ rotation WRITE setRotation NOTIFY stateChanged)
 
 public :
     enum State {
@@ -132,7 +132,7 @@ public :
 Q_SIGNALS:
     void closed();
     void rectChanged();
-    void rotationChanged();
+    void stateChanged();
 
 protected:
     virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);

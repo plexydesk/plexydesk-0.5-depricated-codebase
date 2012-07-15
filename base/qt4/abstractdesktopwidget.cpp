@@ -172,7 +172,7 @@ AbstractDesktopWidget::State AbstractDesktopWidget::state()
 void AbstractDesktopWidget::setState(AbstractDesktopWidget::State s)
 {
     d->mWidgetState = s;
-    Q_EMIT rotationChanged();
+    Q_EMIT stateChanged();
 }
 
 void AbstractDesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
