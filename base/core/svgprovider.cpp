@@ -47,8 +47,7 @@ void SvgProvider::clear()
     d->fileHash.clear();
 }
 
-SvgProvider::SvgProvider(QDeclarativeImageProvider::ImageType type) :
-    QDeclarativeImageProvider(type), d(new Private)
+SvgProvider::SvgProvider() : d(new Private)
 {
     load("default");
 }

@@ -47,7 +47,7 @@
 
 #include "qdeclarativefolderlistmodel.h"
 #include <freedesktopmime.h>
-#include <plexyconfig.h>
+#include <plexyqmlglue.h>
 
 #ifndef QT_NO_DIRMODEL
 
@@ -162,7 +162,7 @@ public:
 QDeclarativeFolderListModel::QDeclarativeFolderListModel(QObject *parent)
     : QAbstractListModel(parent)
 {
-    mImageCache = dynamic_cast<PlexyDesk::ImageCache *>(PlexyDesk::Config::qmlEngine()->imageProvider("plexydesk"));
+    mImageCache = dynamic_cast<PlexyDesk::ImageCache *>(PlexyDesk::PlexyQmlGlue::qmlEngine()->imageProvider("plexydesk"));
 
     QHash<int, QByteArray> roles;
     roles[FileNameRole] = "fileName";

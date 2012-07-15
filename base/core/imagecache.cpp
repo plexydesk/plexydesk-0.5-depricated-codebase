@@ -45,9 +45,8 @@ void ImageCache::clear()
     d->fileHash.clear();
 }
 
-ImageCache::ImageCache(QDeclarativeImageProvider::ImageType type) :
-    QObject (0),
-    QDeclarativeImageProvider(type), d(new Private)
+ImageCache::ImageCache() :
+    QObject (0), d(new Private)
 {
     load("default");
 }

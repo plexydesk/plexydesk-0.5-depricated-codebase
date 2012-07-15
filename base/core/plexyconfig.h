@@ -28,9 +28,6 @@
 #include <plexy.h>
 #include <imagecache.h>
 
-
-#define QmlEngine() PlexyDesk::Config::qmlEngine();
-
 namespace PlexyDesk
 {
 class PLEXYDESK_EXPORT Config : public QObject
@@ -50,9 +47,6 @@ class PLEXYDESK_EXPORT Config : public QObject
 
 public:
     static Config *getInstance();
-    static QDeclarativeEngine *qmlEngine();
-    static QDeclarativeEngine *newQmlEngine();
-
     virtual ~Config();
 
     void read();
@@ -110,7 +104,6 @@ private:
     Config();
     Config(Config &config);
     static Config *config;
-    static QDeclarativeEngine *engine;
 
     class Private;
     Private *const d;

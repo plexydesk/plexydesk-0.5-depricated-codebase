@@ -53,8 +53,6 @@ public:
 
 Config *Config::config = 0;
 
-QDeclarativeEngine *Config::engine = 0;
-
 Config *Config::getInstance()
 {
     if (config == 0) {
@@ -64,30 +62,6 @@ Config *Config::getInstance()
     } else {
         return config;
     }
-}
-
-QDeclarativeEngine *Config::qmlEngine()
-{
-    if (engine == 0) {
-        engine = newQmlEngine();
-        return engine;
-    } else {
-        return engine;
-    }
-}
-
-
-QDeclarativeEngine *Config::newQmlEngine()
-{
-        //qmlRegisterType<ShaderEffectItem>("Qt.labs.shaders", 1, 0, "ShaderEffectItem");
-        //qmlRegisterType<ShaderEffectSource>("Qt.labs.shaders", 1, 0, "ShaderEffectSource");
-        engine = new QDeclarativeEngine;
-        engine->addImportPath(QDir::toNativeSeparators(
-                    Config::getInstance()->plexydeskBasePath() + "/" + PLEXYQTIMPORTSDIR + "/"));
-        engine->addImageProvider(QLatin1String("plexydesk"), new ImageCache);
-        engine->addImageProvider(QLatin1String("plexydesk_svgprovider"), new SvgProvider);
-        engine->rootContext()->setContextProperty("plexydeskconfig", Config::getInstance());
-        return engine;
 }
 
 Config::Config(const QString &organization,
@@ -157,10 +131,6 @@ Config::Config(const QString &organization,
 
 Config::~Config()
 {
-    if (engine) {
-        delete engine;
-    }
-
     delete d;
 }
 

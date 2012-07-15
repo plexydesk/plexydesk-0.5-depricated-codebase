@@ -12,6 +12,9 @@ SET(sourceFiles
     qmldesktopwidget.cpp
     desktopwidget.cpp
     scrollwidget.cpp
+    plexyqmlglue.cpp
+    qmlsvgprovider.cpp
+    qmlpixmapprovider.cpp
     )
 
 SET(headerFiles 
@@ -32,6 +35,9 @@ SET(headerFiles
     qmldesktopwidget.h
     desktopwidget.h
     scrollwidget.h
+    plexyqmlglue.h
+    qmlsvgprovider.h
+    qmlpixmapprovider.h
     )
 
 SET(MOC_SRCS
@@ -46,6 +52,8 @@ SET(MOC_SRCS
    qmldesktopwidget.h
    desktopwidget.h
    scrollwidget.h
+   qmlsvgprovider.h
+   qmlpixmapprovider.h
    )
 
 # DBUS is working only under linux for now
@@ -73,6 +81,7 @@ SET(libs
     ${QT_QTSVG_LIBRARY}
     ${DBUS_LIB}
     ${QT_QTNETWORK_LIBRARY}
+    ${QT_QTDECLARATIVE_LIBRARY}
     ${PLEXY_CORE_LIBRARY}
     )
 

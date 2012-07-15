@@ -18,6 +18,7 @@
 *******************************************************************************/
 #include <qmldesktopwidget.h>
 #include <QDeclarativeComponent>
+#include <plexyqmlglue.h>
 
 namespace PlexyDesk
 {
@@ -37,7 +38,7 @@ QmlDesktopWidget::QmlDesktopWidget(const QRectF &rect, QWidget *widget, QGraphic
     DesktopWidget(rect, parent),
     d(new PrivateQmlDesktopWidget)
 {
-    d->mQmlEngine = Config::getInstance()->newQmlEngine();
+    d->mQmlEngine = PlexyQmlGlue::qmlEngine();
     d->mQmlChild = 0;
 }
 

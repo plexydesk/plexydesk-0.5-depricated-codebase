@@ -16,7 +16,7 @@ SET(sourceFiles
     )
 
 SET(libs
-    ${PLEXY_CORE_LIBRARY}
+    ${PLEXY_UI_CORE_LIBRARY}
     ${QT_QTSCRIPT_LIBRARY}
     ${QT_QTDECLARATIVE_LIBRARY}
     )

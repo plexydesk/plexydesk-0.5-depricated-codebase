@@ -31,10 +31,10 @@
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT SvgProvider : public QDeclarativeImageProvider
+class PLEXYDESK_EXPORT SvgProvider
 {
 public:
-    SvgProvider(QDeclarativeImageProvider::ImageType type = QDeclarativeImageProvider::Pixmap);
+    SvgProvider();
     virtual ~SvgProvider();
 
     QPixmap requestPixmap(const QString &id, QSize *size, const QSize &requestedSize);

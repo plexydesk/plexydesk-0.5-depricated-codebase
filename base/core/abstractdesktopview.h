@@ -1,8 +1,7 @@
 /*******************************************************************************
 * This file is part of PlexyDesk.
 *  Maintained by : Siraj Razick <siraj@kde.org>
-*  Authored By  : Siraj Razick <siraj@kde.org>
-*                 PhobosK <phobosk@kbfx.net>
+*  Authored By  :
 *
 *  PlexyDesk is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU Lesser General Public License as published by
@@ -18,46 +17,45 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
-#ifndef IMAGE_CACHE_H
-#define IMAGE_CACHE_H
+#ifndef PLEXY_ABSTRACT_DESKTOP_VIEW_H
+#define PLEXY_ABSTRACT_DESKTOP_VIEW_H
 
-#include <QtCore>
-#include <QtGui>
-#include <QDeclarativeImageProvider>
+#include <config.h>
+
+#include <QGraphicsView>
 
 #include <plexy.h>
-#include <plexyconfig.h>
-
+#include <widgetplugin.h>
+#include <abstractdesktopwidget.h>
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT ImageCache : public QObject
+
+class AbstractDesktopView : public QGraphicsView
 {
     Q_OBJECT
 
 public:
-    ImageCache();
-    virtual ~ImageCache();
+    AbstractDesktopView(QGraphicsScene *scene = new QGraphicsScene(),
+            QWidget *parent = 0) : QGraphicsView (scene, parent) {}
 
-    QPixmap requestPixmap(const QString &id, QSize *size, const QSize &requestedSize);
-    bool isCached(QString &filename)  const;
-    void addToCached(QString &imgfile, QString &filename, QString &themename);
+    //TODO:
+    //make the following two methods non virtual
 
-    QPixmap get(const QString &name);
+    virtual void addCoreExtension(const QString &name) = 0;
 
-protected:
-    void load(const QString &themename);
-    void clear();
-    bool drawSvg(QPainter *painter,
-    QRectF rect, const QString &str, const QString &elementId);
+    virtual void addExtension(const QString &name,
+            const QString &layer = QLatin1String("Widgets"),
+            const QPoint &pos = QPoint(0, 0),
+            PlexyDesk::AbstractDesktopWidget::State state =
+            PlexyDesk::AbstractDesktopWidget::DOCKED) = 0;
+
+    virtual void enableOpenGL(bool);
+    virtual void showLayer(const QString &name) = 0;
 
 Q_SIGNALS:
-    void ready();
-
-private:
-    class Private;
-    Private *const d;
+    void closeApplication();
 };
-}
 
+} // namespace PlexyDesk
 #endif
