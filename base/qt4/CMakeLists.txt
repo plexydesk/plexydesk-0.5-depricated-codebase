@@ -2,9 +2,6 @@ SET(sourceFiles
     baserender.cpp
     extensionfactory.cpp
     netwm.cpp
-    pendingjob.cpp
-    plexyconfig.cpp
-    pluginloader.cpp
     themepackloader.cpp
     viewlayer.cpp
     shaders/shadereffect.cpp
@@ -13,35 +10,26 @@ SET(sourceFiles
     shaders/shadereffectsource.cpp
     shaders/scenegraph/qsggeometry.cpp
     qmldesktopwidget.cpp
-    abstractdesktopview.cpp
     desktopwidget.cpp
     scrollwidget.cpp
     )
 
 SET(headerFiles 
     baserender.h
-    datainterface.h
-    dataplugin.h
     extensionfactory.h
     netwm.h
     netwm_def.h
     netwm_p.h
-    pendingjob.h
-    plexyconfig.h
-    pluginloader.h
     socialinterface.h
     socialplugin.h
     themepackloader.h
     viewlayer.h
-    widgetinterface.h
-    widgetplugin.h
     shaders/shadereffect.h
     shaders/shadereffectbuffer.h
     shaders/shadereffectitem.h
     shaders/shadereffectsource.h
     shaders/scenegraph/qsggeometry.h
     qmldesktopwidget.h
-    abstractdesktopview.h
     desktopviewplugin.h
     desktopwidget.h
     scrollwidget.h
@@ -49,23 +37,15 @@ SET(headerFiles
 
 SET(MOC_SRCS
    baserender.h
-   datainterface.h
-   dataplugin.h
-   abstractdesktopwidget.h
-   pendingjob.h
-   plexyconfig.h
-   pluginloader.h
    socialinterface.h
    socialplugin.h
    themepackloader.h
    viewlayer.h
-   widgetinterface.h
-   widgetplugin.h
+
    shaders/shadereffect.h
    shaders/shadereffectitem.h
    shaders/shadereffectsource.h
    qmldesktopwidget.h
-   abstractdesktopview.h
    desktopviewplugin.h
    desktopwidget.h
    scrollwidget.h
@@ -96,7 +76,7 @@ SET(libs
     ${QT_QTSVG_LIBRARY}
     ${DBUS_LIB}
     ${QT_QTNETWORK_LIBRARY}
-    ${QT_QTDECLARATIVE_LIBRARY}
+    ${PLEXY_CORE_LIBRARY}
     )
 
 ADD_LIBRARY(${PLEXY_UI_CORE_LIBRARY} SHARED ${sourceFiles} ${QT_MOC_SRCS})

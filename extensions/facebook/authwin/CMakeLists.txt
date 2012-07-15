@@ -33,7 +33,7 @@ SET(libs
 ADD_LIBRARY(plexyauth SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 TARGET_LINK_LIBRARIES(plexyauth
-    ${PLEXY_CORE_LIBRARY}
+    ${PLEXY_UI_CORE_LIBRARY}
     plexyjson
     webqgv
     ${libs}

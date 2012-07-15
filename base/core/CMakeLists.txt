@@ -1,11 +1,15 @@
 SET(sourceFiles
     abstractplugininterface.cpp
     abstractdesktopwidget.cpp
+    abstractdesktopview.cpp
     backdropinterface.cpp
     backdropplugin.cpp
     baseplugin.h
     imagecache.cpp
     svgprovider.cpp
+    plexyconfig.cpp
+    pluginloader.cpp
+    pendingjob.cpp
     )
 
 SET(headerFiles
@@ -16,8 +20,12 @@ SET(headerFiles
     baseplugin.h
     plexy.h
     debug.h
-    imagecache.h
-    svgprovider.h
+    plexyconfig.h
+    datainterface.h
+    dataplugin.h
+    pluginloader.h
+    abstractdesktopview.h
+    pendingjob.h
    )
 
 SET(MOC_SRCS
@@ -26,6 +34,16 @@ SET(MOC_SRCS
     backdropinterface.h
     backdropplugin.h
     baseplugin.h
+    datainterface.h
+    dataplugin.h
+    plexyconfig.h
+    imagecache.h
+    svgprovider.h
+    pluginloader.h
+    abstractdesktopview.h
+    pendingjob.h
+    widgetinterface.h
+    widgetplugin.h
    )
 
 # DBUS is working only under linux for now
@@ -52,6 +70,8 @@ SET(libs
     ${QT_QTOPENGL_LIBRARY}
     ${DBUS_LIB}
     ${QT_QTNETWORK_LIBRARY}
+    ${QT_QTDECLARATIVE_LIBRARY}
+    ${QT_QTSVG_LIBRARY}
     )
 
 ADD_LIBRARY(${PLEXY_CORE_LIBRARY} SHARED ${sourceFiles} ${QT_MOC_SRCS})

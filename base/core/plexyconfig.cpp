@@ -29,8 +29,8 @@
 #include <config.h>
 #include <QCoreApplication>
 #include <QDeclarativeContext>
-#include <shadereffectitem.h>
-#include <shadereffectsource.h>
+//#include <shadereffectitem.h>
+//#include <shadereffectsource.h>
 #include <svgprovider.h>
 
 #ifdef Q_WS_X11
@@ -79,8 +79,8 @@ QDeclarativeEngine *Config::qmlEngine()
 
 QDeclarativeEngine *Config::newQmlEngine()
 {
-        qmlRegisterType<ShaderEffectItem>("Qt.labs.shaders", 1, 0, "ShaderEffectItem");
-        qmlRegisterType<ShaderEffectSource>("Qt.labs.shaders", 1, 0, "ShaderEffectSource");
+        //qmlRegisterType<ShaderEffectItem>("Qt.labs.shaders", 1, 0, "ShaderEffectItem");
+        //qmlRegisterType<ShaderEffectSource>("Qt.labs.shaders", 1, 0, "ShaderEffectSource");
         engine = new QDeclarativeEngine;
         engine->addImportPath(QDir::toNativeSeparators(
                     Config::getInstance()->plexydeskBasePath() + "/" + PLEXYQTIMPORTSDIR + "/"));
