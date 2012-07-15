@@ -1,12 +1,6 @@
 SET(sourceFiles
-    abstractplugininterface.cpp
-    backdropinterface.cpp
-    backdropplugin.cpp
     baserender.cpp
-    abstractdesktopwidget.cpp
     extensionfactory.cpp
-    imagecache.cpp
-    svgprovider.cpp
     netwm.cpp
     pendingjob.cpp
     plexyconfig.cpp
@@ -24,20 +18,11 @@ SET(sourceFiles
     scrollwidget.cpp
     )
 
-SET(headerFiles
-    plexy.h
-    debug.h
-    abstractplugininterface.h
-    backdropinterface.h
-    backdropplugin.h
-    baseplugin.h
+SET(headerFiles 
     baserender.h
     datainterface.h
     dataplugin.h
-    abstractdesktopwidget.h
     extensionfactory.h
-    imagecache.h
-    svgprovider.h
     netwm.h
     netwm_def.h
     netwm_p.h
@@ -63,13 +48,8 @@ SET(headerFiles
     )
 
 SET(MOC_SRCS
-   abstractplugininterface.h
-   backdropinterface.h
-   backdropplugin.h
-   baseplugin.h
    baserender.h
    datainterface.h
-   imagecache.h
    dataplugin.h
    abstractdesktopwidget.h
    pendingjob.h
@@ -119,18 +99,18 @@ SET(libs
     ${QT_QTDECLARATIVE_LIBRARY}
     )
 
-ADD_LIBRARY(${PLEXY_CORE_LIBRARY} SHARED ${sourceFiles} ${QT_MOC_SRCS})
+ADD_LIBRARY(${PLEXY_UI_CORE_LIBRARY} SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
 IF(MINGW)
-    SET_TARGET_PROPERTIES(${PLEXY_CORE_LIBRARY} PROPERTIES
+    SET_TARGET_PROPERTIES(${PLEXY_UI_CORE_LIBRARY} PROPERTIES
         IMPORT_SUFFIX ".lib"
         IMPORT_PREFIX ""
         PREFIX ""
         )
 ENDIF(MINGW)
 
-TARGET_LINK_LIBRARIES(${PLEXY_CORE_LIBRARY}
+TARGET_LINK_LIBRARIES(${PLEXY_UI_CORE_LIBRARY}
     ${libs}
     )
 
-INSTALL(TARGETS ${PLEXY_CORE_LIBRARY} DESTINATION ${CMAKE_INSTALL_LIBDIR})
+INSTALL(TARGETS ${PLEXY_UI_CORE_LIBRARY} DESTINATION ${CMAKE_INSTALL_LIBDIR})

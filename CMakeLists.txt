@@ -12,6 +12,7 @@ SET(LIB_RELEASE 5)
 SET(APPLICATION_INTERNAL_VERSION 20110803)
 SET(APPLICATION_DATE 2011-08-03)
 SET(APPLICATION_EXE_NAME plexydesk)
+SET(PLEXY_UI_CORE_LIBRARY plexydeskuicore)
 SET(PLEXY_CORE_LIBRARY plexydeskcore)
 
 
@@ -44,8 +45,7 @@ FIND_PACKAGE(OpenGL REQUIRED)
 IF (NOT CMAKE_BUILD_TYPE)
     SET(CMAKE_BUILD_TYPE Release
         CACHE
-        STRING "Specify build type: None Debug Release RelWithDebInfo MinSizeRel."
-        FORCE)
+        STRING "Specify build type: None Debug Release RelWithDebInfo MinSizeRel." FORCE)
 ENDIF (NOT CMAKE_BUILD_TYPE)
 
 # Check if we use any Debug in the final release and if so use console in Windows
@@ -173,6 +173,8 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}
     ${CMAKE_SOURCE_DIR}/base/qt4
     ${CMAKE_BINARY_DIR}/base/qt4
+    ${CMAKE_SOURCE_DIR}/base/core
+    ${CMAKE_BINARY_DIR}/base/core
     ${CMAKE_SOURCE_DIR}/base/qt4/shaders
     ${CMAKE_BINARY_DIR}/base/qt4/shaders
     ${CMAKE_SOURCE_DIR}/runner
@@ -231,6 +233,7 @@ ADD_SUBDIRECTORY(3rdparty/qplexymime)
 ADD_SUBDIRECTORY(3rdparty/qt/folderlistmodel)
 ADD_SUBDIRECTORY(3rdparty/webitem)
 ADD_SUBDIRECTORY(base/qt4)
+ADD_SUBDIRECTORY(base/core)
 ADD_SUBDIRECTORY(extensions/widgets/clock)
 ADD_SUBDIRECTORY(extensions/widgets/photoframe)
 ADD_SUBDIRECTORY(extensions/widgets/folderwidget)
