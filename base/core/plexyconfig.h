@@ -20,7 +20,6 @@
 #ifndef PLEXY_CONIFG_LINUX_QT_H
 #define PLEXY_CONIFG_LINUX_QT_H
 
-#include <QDeclarativeEngine>
 #include <QSettings>
 #include <QNetworkProxy>
 #include <QStringList>
