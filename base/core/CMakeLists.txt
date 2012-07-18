@@ -21,7 +21,7 @@ ENDIF (NOT CMAKE_INSTALL_LIBDIR)
 
 # Find Qt4
 IF (NOT QT_FOUND)
-    FIND_PACKAGE(Qt4 4.7.0 COMPONENTS QtCore QtGui QtOpenGL) # QtDeclarative QtNetwork QtXml QtSvg QtDbus
+    FIND_PACKAGE(Qt4 4.7.0 COMPONENTS QtCore QtGui QtOpenGL)
     INCLUDE(${QT_USE_FILE})
 
     INCLUDE_DIRECTORIES (
@@ -92,15 +92,6 @@ SET(MOC_SRCS
     widgetplugin.h
     desktopviewplugin.h
    )
-
-# DBUS is working only under linux for now
-IF (NOT APPLE)
-    IF (UNIX)
-        QT4_ADD_DBUS_ADAPTOR(dbus_SRCS org.plexydesk.Config.xml
-                             plexyconfig.h PlexyDesk::Config)
-        SET (DBUS_LIB ${QT_QTDBUS_LIBRARY})
-    ENDIF(UNIX)
-ENDIF (NOT APPLE)
 
 QT4_WRAP_CPP(QT_MOC_SRCS ${MOC_SRCS})
 
