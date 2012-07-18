@@ -34,7 +34,7 @@
 #include <themepackloader.h>
 #include <qmldesktopwidget.h>
 
-class BgPlugin : public PlexyDesk::BackdropPlugin
+class BgPlugin : public PlexyDesk::BackgroundSource
 {
     Q_OBJECT
 

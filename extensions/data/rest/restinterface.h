@@ -38,7 +38,7 @@ public :
     }
 
     /* this will return a valid data plugin pointer*/
-    PlexyDesk::DataPlugin *instance();
+    PlexyDesk::DataSource *instance();
 
 };
 

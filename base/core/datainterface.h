@@ -35,7 +35,7 @@ public:
     virtual ~DataInterface()
     {
     }
-    virtual DataPlugin *instance() = 0;
+    virtual DataSource *instance() = 0;
 };
 } // namespace PlexyDesk
 

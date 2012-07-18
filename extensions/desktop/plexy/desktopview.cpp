@@ -79,7 +79,7 @@ public:
     {
     }
     AbstractPluginInterface *bIface;
-    BackdropPlugin *bgPlugin;
+    BackgroundSource *mBackgroundSource;
     PlexyDesk::ThemepackLoader *mThemeLoader;
 
     WidgetPlugin *mPhotoDialogProvider;
@@ -151,7 +151,7 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) :
         PlexyDesk::Config::getInstance()->setWallpaper(d->mThemeLoader->wallpaper());
     }
 
-    d->bgPlugin = static_cast<BackdropPlugin *>(PluginLoader::getInstance()->instance("classicbackdrop"));
+    d->mBackgroundSource = qobject_cast<BackgroundSource *>(PluginLoader::getInstance()->instance("classicbackdrop"));
     d->row = d->column = 48.0;
     d->margin = 10.0;
 
@@ -253,17 +253,17 @@ void DesktopView::setThemePack(const QString &name)
 
 void DesktopView::addWallpaperItem()
 {
-    qDebug() << Q_FUNC_INFO << d->bgPlugin;
-    if (d->bgPlugin) {
+    qDebug() << Q_FUNC_INFO << d->mBackgroundSource;
+    if (d->mBackgroundSource) {
         QRectF screenRect = scene()->sceneRect();
         qDebug() << Q_FUNC_INFO << screenRect;
-        d->bgPlugin->setRect (
+        d->mBackgroundSource->setRect (
             QRect (screenRect.x(),
               screenRect.y(),
               screenRect.width(),
               screenRect.height()));
 
-        d->backgroundWallpaperItem = d->bgPlugin->item();
+        d->backgroundWallpaperItem = d->mBackgroundSource->item();
         if (d->backgroundWallpaperItem) {
             scene()->addItem(d->backgroundWallpaperItem);
             d->backgroundWallpaperItem->show();
@@ -351,11 +351,11 @@ DesktopView::~DesktopView()
 
 void DesktopView::backgroundChanged()
 {
-    if (d->bgPlugin) {
-        delete d->bgPlugin;
+    if (d->mBackgroundSource) {
+        delete d->mBackgroundSource;
     }
-    d->bgPlugin =
-         static_cast<BackdropPlugin *>(PluginLoader::getInstance()->instance("classicbackdrop"));
+    d->mBackgroundSource =
+         qobject_cast<BackgroundSource *>(PluginLoader::getInstance()->instance("classicbackdrop"));
     if (!d->openglOn) {
         setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     }

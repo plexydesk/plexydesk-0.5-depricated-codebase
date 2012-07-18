@@ -29,7 +29,7 @@
 
 
 BgPlugin::BgPlugin(QObject *object)
-    : BackdropPlugin(object)
+    : BackgroundSource(object)
 {
     // TODO: bug#112
     // read the theme name from settings

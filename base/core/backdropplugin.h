@@ -29,16 +29,16 @@ class QRectF;
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT BackdropPlugin : public BasePlugin
+class PLEXYDESK_EXPORT BackgroundSource : public BasePlugin
 {
     Q_OBJECT
 
 public:
-    BackdropPlugin(QObject *object = 0) : BasePlugin(object)
+    BackgroundSource(QObject *object = 0) : BasePlugin(object)
     {
     }
 
-    virtual ~BackdropPlugin()
+    virtual ~BackgroundSource()
     {
     }
 
