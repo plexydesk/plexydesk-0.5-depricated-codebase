@@ -2,7 +2,7 @@
 #ifndef PLEXY_DATA_PLUGIN_H
 #define PLEXY_DATA_PLUGIN_H
 
-#include <baseplugin.h>
+#include <abstractsource.h>
 #include <plexy.h>
 
 #include <QVariantMap>
@@ -49,7 +49,7 @@
 namespace PlexyDesk
 {
 
-class PLEXYDESK_EXPORT DataSource : public BasePlugin
+class PLEXYDESK_EXPORT DataSource : public AbstractSource
 {
     Q_OBJECT
 

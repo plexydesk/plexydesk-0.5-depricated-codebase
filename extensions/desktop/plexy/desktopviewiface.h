@@ -34,7 +34,7 @@ class DesktopViewInterface : public PlexyDesk::AbstractPluginInterface
 public:
     DesktopViewInterface(QObject *object = 0);
     virtual ~DesktopViewInterface();
-    virtual PlexyDesk::BasePlugin *instance();
+    virtual PlexyDesk::AbstractSource *instance();
 };
 
 #endif

@@ -1,13 +1,13 @@
 
 #ifndef PLEXY_SOCIAL_PLUGIN_H
 #define PLEXY_SOCIAL_PLUGIN_H
-#include <baseplugin.h>
+#include <abstractsource.h>
 #include <config.h>
 #include <plexy.h>
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT SocialPlugin : public BasePlugin
+class PLEXYDESK_EXPORT SocialPlugin : public AbstractSource
 {
     Q_OBJECT
 public:

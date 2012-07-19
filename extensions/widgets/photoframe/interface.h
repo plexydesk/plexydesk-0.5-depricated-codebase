@@ -35,7 +35,7 @@ class  Interface : public PlexyDesk::WidgetInterface
 
 public :
         Interface(QObject *object = 0);
-        PlexyDesk::BasePlugin *instance();
+        PlexyDesk::AbstractSource *instance();
 };
 
 #endif

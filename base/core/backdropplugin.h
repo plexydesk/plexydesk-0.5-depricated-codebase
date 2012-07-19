@@ -20,7 +20,7 @@
 #ifndef PLEXY_BACK_PLUGIN_H
 #define PLEXY_BACK_PLUGIN_H
 
-#include <baseplugin.h>
+#include <abstractsource.h>
 #include <plexy.h>
 
 class QPainter;
@@ -29,12 +29,12 @@ class QRectF;
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT BackgroundSource : public BasePlugin
+class PLEXYDESK_EXPORT BackgroundSource : public AbstractSource
 {
     Q_OBJECT
 
 public:
-    BackgroundSource(QObject *object = 0) : BasePlugin(object)
+    BackgroundSource(QObject *object = 0) : AbstractSource(object)
     {
     }
 

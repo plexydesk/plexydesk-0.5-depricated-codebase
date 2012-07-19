@@ -31,7 +31,7 @@ DesktopViewInterface::~DesktopViewInterface()
 {
 }
 
-PlexyDesk::BasePlugin *DesktopViewInterface::instance()
+PlexyDesk::AbstractSource *DesktopViewInterface::instance()
 {
     return new DesktopViewPluginImpl(this);
 }

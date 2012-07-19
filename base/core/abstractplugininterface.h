@@ -19,8 +19,8 @@
 #ifndef PLEXY_BASE_PLUGIN_h
 #define PLEXY_BASE_PLUGIN_h
 
-#include <baseplugin.h>
 #include <plexy.h>
+#include <abstractsource.h>
 
 #include <QObject>
 
@@ -31,7 +31,7 @@ class PLEXYDESK_EXPORT AbstractPluginInterface : public QObject
     Q_OBJECT
 
 public:
-    virtual BasePlugin *instance() = 0;
+    virtual AbstractSource *instance() = 0;
 };
 } // namespace PlexyDesk
 

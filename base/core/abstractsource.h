@@ -1,5 +1,5 @@
-#ifndef BASE_PLUGIN_H
-#define BASE_PLUGIN_H
+#ifndef ABSTRACT_DATA_SOURCE_H
+#define ABSTRACT_DATA_SOURCE_H
 
 #include <plexy.h>
 
@@ -13,14 +13,15 @@
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT BasePlugin : public QObject
+class PLEXYDESK_EXPORT AbstractSource : public QObject
 {
     Q_OBJECT
 
 public:
-    BasePlugin(QObject *parent = 0) : QObject(parent)
+    AbstractSource(QObject *parent = 0) : QObject(parent)
     {
     }
+
 };
 } // namespace PlexyDesk
 

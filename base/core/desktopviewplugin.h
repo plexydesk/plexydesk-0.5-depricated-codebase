@@ -22,7 +22,7 @@
 
 #include <plexy.h>
 
-#include <baseplugin.h>
+#include <abstractsource.h>
 #include <abstractdesktopview.h>
 
 class QPainter;
@@ -31,12 +31,12 @@ class QRectF;
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT DesktopViewPlugin : public BasePlugin
+class PLEXYDESK_EXPORT DesktopViewPlugin : public AbstractSource
 {
     Q_OBJECT
 
 public:
-    DesktopViewPlugin(QObject *object = 0) : BasePlugin(object){}
+    DesktopViewPlugin(QObject *object = 0) : AbstractSource(object){}
 
     virtual ~DesktopViewPlugin(){}
 

@@ -31,7 +31,6 @@
 #include <desktopwidget.h>
 #include <backdropinterface.h>
 #include <pluginloader.h>
-#include <baseplugin.h>
 #include <backdropplugin.h>
 #include <widgetplugin.h>
 #include <viewlayer.h>

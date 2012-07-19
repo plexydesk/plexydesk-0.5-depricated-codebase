@@ -41,7 +41,7 @@ public:
     {
     }
 
-    virtual BasePlugin *instance() = 0;
+    virtual AbstractSource *instance() = 0;
 };
 } // namespace PlexyDesk
 

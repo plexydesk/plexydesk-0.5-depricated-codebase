@@ -28,7 +28,7 @@ Interface::Interface(QObject *object)
 {
 }
 
-PlexyDesk::BasePlugin *Interface::instance()
+PlexyDesk::AbstractSource *Interface::instance()
 {
     return new FolderPlugin();
 }

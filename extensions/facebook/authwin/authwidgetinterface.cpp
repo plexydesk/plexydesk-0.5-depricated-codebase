@@ -7,7 +7,7 @@ AuthInterface::AuthInterface(QObject *object)
 {
 }
 
-PlexyDesk::BasePlugin *AuthInterface::instance()
+PlexyDesk::AbstractSource *AuthInterface::instance()
 {
     return new AuthPlugin(this);
 }

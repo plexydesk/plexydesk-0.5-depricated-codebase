@@ -34,7 +34,7 @@ class ClassicBackdrop : public PlexyDesk::AbstractPluginInterface
 public:
     ClassicBackdrop(QObject *object = 0);
     virtual ~ClassicBackdrop();
-    virtual PlexyDesk::BasePlugin *instance();
+    virtual PlexyDesk::AbstractSource *instance();
 };
 
 #endif

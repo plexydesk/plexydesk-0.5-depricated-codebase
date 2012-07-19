@@ -2,14 +2,14 @@
 #ifndef PLEXY_WIDGET_PLUGIN_H
 #define PLEXY_WIDGET_PLUGIN_H
 
-#include <baseplugin.h>
+#include <abstractsource.h>
 #include <plexy.h>
 
 class QGraphicsItem;
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT WidgetPlugin : public BasePlugin
+class PLEXYDESK_EXPORT WidgetPlugin : public AbstractSource
 {
     Q_OBJECT
 public:

@@ -20,7 +20,6 @@
 #define PLUGIN_LOADER_H
 
 #include <abstractplugininterface.h>
-#include <baseplugin.h>
 #include <plexy.h>
 
 #include <QHash>
@@ -41,7 +40,7 @@ public:
     static PluginLoader *getInstance();
 
     QStringList listPlugins(const QString &types);
-    BasePlugin *instance(const QString &name);
+    AbstractSource *instance(const QString &name);
     void scanDisk();
 
 protected:

@@ -70,7 +70,7 @@ QStringList PluginLoader::listPlugins(const QString &types)
     return d->mDict[types];
 }
 
-BasePlugin *PluginLoader::instance(const QString &name)
+AbstractSource *PluginLoader::instance(const QString &name)
 {
     if (d->groups.contains(name)) {
         return d->groups[name]->instance();

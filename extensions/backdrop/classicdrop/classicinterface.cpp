@@ -30,7 +30,7 @@ ClassicBackdrop::~ClassicBackdrop()
 {
 }
 
-PlexyDesk::BasePlugin *ClassicBackdrop::instance()
+PlexyDesk::AbstractSource *ClassicBackdrop::instance()
 {
     return new BgPlugin(this);
 }

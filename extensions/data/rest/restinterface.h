@@ -25,7 +25,6 @@
 #include <abstractplugininterface.h>
 #include <QtNetwork>
 #include <datainterface.h>
-#include <dataplugin.h>
 
 class RestInterface : public PlexyDesk::DataInterface
 {

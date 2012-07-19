@@ -36,7 +36,7 @@ public :
         Q_UNUSED(object);
     }
 
-    PlexyDesk::BasePlugin *instance()
+    PlexyDesk::AbstractSource *instance()
     {
         return new Clock(this);
     }

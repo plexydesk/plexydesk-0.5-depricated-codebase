@@ -21,7 +21,7 @@
 #define PLEXY_DATA_INTERFACE
 
 #include <abstractplugininterface.h>
-#include <dataplugin.h>
+#include <datasource.h>
 
 namespace PlexyDesk
 {
@@ -35,6 +35,7 @@ public:
     virtual ~DataInterface()
     {
     }
+
     virtual DataSource *instance() = 0;
 };
 } // namespace PlexyDesk
