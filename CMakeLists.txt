@@ -132,7 +132,19 @@ IF(WIN32)
 ENDIF(WIN32)
 
 CONFIGURE_FILE(config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h )
+
+#doxygen
+find_package (Doxygen)
 CONFIGURE_FILE(plexydesk.Doxyfile.cmake ${CMAKE_CURRENT_BINARY_DIR}/plexydesk.Doxyfile )
+
+if (DOXYGEN_FOUND)
+   execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/docs/api/)
+   add_custom_target (doc ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/plexydesk.Doxyfile
+      WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/docs/api
+      COMMENT "Generating API documentation with Doxygen" VERBATIM
+      )
+endif (DOXYGEN_FOUND)
+
 CONFIGURE_FILE(
     "${CMAKE_CURRENT_SOURCE_DIR}/runner/plexydesk.cmake.desktop"
     "${CMAKE_CURRENT_BINARY_DIR}/runner/plexydesk.desktop"
