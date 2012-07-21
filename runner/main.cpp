@@ -51,6 +51,8 @@
 int main( int argc, char * *argv )
 {
 #ifndef Q_WS_MAC
+    QApplication::setGraphicsSystem(QLatin1String("raster"));
+#else
     QApplication::setGraphicsSystem(QLatin1String("opengl"));
 #endif
 

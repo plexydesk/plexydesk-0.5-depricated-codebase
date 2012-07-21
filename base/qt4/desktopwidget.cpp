@@ -73,11 +73,11 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QGraphicsObject *parent)
     d->mSvgRender = new SvgProvider();
     //setDefaultImages();
 
-    setCacheMode(QGraphicsItem::ItemCoordinateCache, d->mDefaultBackgroundPixmap.size());
+    //setCacheMode(QGraphicsItem::ItemCoordinateCache, d->mDefaultBackgroundPixmap.size());
     setCacheMode(DeviceCoordinateCache);
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
     setFlag(QGraphicsItem::ItemIsMovable, true);
-    setFlag(QGraphicsItem::ItemClipsChildrenToShape, false);
+    setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
     setAcceptsHoverEvents(true);
 
     //presshold

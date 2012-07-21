@@ -169,6 +169,7 @@ QGraphicsItem *BgPlugin::item()
             return mBackgroundItem;
         } */
         mBackgroundItemPixmap = new QGraphicsPixmapItem(mBackgroundCache);
+        mBackgroundItemPixmap->setCacheMode(QGraphicsItem::ItemCoordinateCache);
         //mBackgroundItemPixmap->setGraphicsEffect(mBlurEffect);
         //mBackgroundItemPixmap->setCacheMode(QGraphicsItem::ItemCoordinateCache);
         //disable blur animatino to speed up

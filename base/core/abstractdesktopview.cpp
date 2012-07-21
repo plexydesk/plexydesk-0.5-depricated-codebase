@@ -51,8 +51,6 @@ void AbstractDesktopView::enableOpenGL(bool state)
         setOptimizationFlag(QGraphicsView::DontClipPainter);
         setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     }
-
-    viewport()->setAttribute(Qt::WA_PaintOnScreen);
 }
 
 void AbstractDesktopView::showLayer(const QString &layer)
