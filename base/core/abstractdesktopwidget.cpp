@@ -28,15 +28,26 @@
 
 #include "abstractdesktopwidget.h"
 
+/**
+ * \class PlexyDesk::AbstractDesktopWidget
+ *
+ * \ingroup PlexyDesk
+ *
+ * \brief Base class for Visual Desktop Extensions
+ * PlexyDesk::AbstractDesktopWidget defines all the common features of a visual desktop extension.
+ * When writing visual extensions, the user must inherit from this class. So that it behaves the
+ * same way
+ */
+
 
 namespace PlexyDesk
 {
-class AbstractDesktopWidget::Private
+class AbstractDesktopWidget::PrivateAbstractDesktopWidget
 {
 public:
-    Private() {
+    PrivateAbstractDesktopWidget() {
     }
-    ~Private() {
+    ~PrivateAbstractDesktopWidget() {
     }
 
     State mWidgetState;
@@ -52,9 +63,10 @@ public:
     QRectF mBoundingRect;
 };
 
+
 AbstractDesktopWidget::AbstractDesktopWidget(const QRectF &rect, QGraphicsObject *parent) :
     QGraphicsObject(parent),
-    d(new Private)
+    d(new PrivateAbstractDesktopWidget)
 {
     d->mName = QLatin1String ("Widget");
 
@@ -152,7 +164,7 @@ void AbstractDesktopWidget::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsObject::mouseMoveEvent(event);
 }
-    
+
 void AbstractDesktopWidget::setContentRect(const QRectF &rect)
 {
     d->mBoundingRect = rect;

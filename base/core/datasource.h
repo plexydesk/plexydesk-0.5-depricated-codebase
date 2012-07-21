@@ -8,7 +8,7 @@
 #include <QVariantMap>
 
 /*!
-   \class PlexyDesk::DataPlugin
+   \class PlexyDesk::DataSource
 
    \brief Class which abstracts a data source
 
@@ -24,27 +24,27 @@
       plugins can be used from a client application.
 
       \code
-        utubeEngine = qobject_cast<PlexyDesk::DataPlugin*>(
+        utubeEngine = qobject_cast<PlexyDesk::DataSource*>(
         PlexyDesk::PluginLoader::getInstance()->instance("utubeengine"));
         if (utubeEngine) {
-         connect(utubeEngine, SIGNAL(dataReady()), this, SLOT(onDataReady()));
+            connect(utubeEngine, SIGNAL(dataReady()), this, SLOT(onDataReady()));
          }
     \endcode
 
     \section b How to write your own plugins
      When you need to provide a plugin of you own, simply inhert this and write a class and wrapp
-     the class in a DataPlugin interface. Emit dataReady() signal when you data source is ready to
+     the class in a DataSource interface. Emit dataReady() signal when you data source is ready to
      be used, and provide the data from readAll method. look at the numours examples shiped with
      plexydesk extenstions folder to get started with writting your own.
 
-     \fn PlexyDesk::DataPlugin::readAll()
+     \fn PlexyDesk::DataSource::readAll()
      \brief Provides the data of the plugin as a QVariantMap
      \returns The data as a Map of QVariant's
      \sa dataReady()
 
-     \fn PlexyDesk::DataPlugin::dataReady()
+     \fn PlexyDesk::DataSource::dataReady()
      \brief Signal emited when data is ready to be read
-     \sa DataPlugin::readAll()
+     \sa DataSource::readAll()
  **/
 namespace PlexyDesk
 {
