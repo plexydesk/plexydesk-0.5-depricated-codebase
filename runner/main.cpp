@@ -52,10 +52,7 @@ int main( int argc, char * *argv )
 {
 #ifndef Q_WS_MAC
     QApplication::setGraphicsSystem(QLatin1String("raster"));
-#else
-    QApplication::setGraphicsSystem(QLatin1String("opengl"));
 #endif
-
     QByteArray debug_settings = qgetenv("PLEXYDESK_CONSOLE_DEBUG").toLower();
 
     if (debug_settings != "enable" && debug_settings != "true" && debug_settings != "1" ) {
