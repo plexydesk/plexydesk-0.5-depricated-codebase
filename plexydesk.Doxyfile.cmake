@@ -5,7 +5,8 @@
 #---------------------------------------------------------------------------
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = PlexyDesk
-PROJECT_NUMBER         = 0.1
+PROJECT_NUMBER         = @LIB_MAJOR@.@LIB_MINOR@.@LIB_RELEASE@
+PROJECT_LOGO           = @CMAKE_CURRENT_SOURCE_DIR@/artwork/icons/plexydesk.png
 OUTPUT_DIRECTORY       = @CMAKE_CURRENT_BINARY_DIR@/docs/api/
 CREATE_SUBDIRS         = YES
 OUTPUT_LANGUAGE        = English
@@ -165,7 +166,10 @@ HTML_OUTPUT            = html
 HTML_FILE_EXTENSION    = .html
 HTML_HEADER            = 
 HTML_FOOTER            = 
-HTML_STYLESHEET        = 
+HTML_STYLESHEET        = @CMAKE_CURRENT_SOURCE_DIR@/artwork/docs/doxygen.css
+HTML_EXTRA_FILES       = @CMAKE_CURRENT_SOURCE_DIR@/artwork/docs/background_navigation.png \
+                         @CMAKE_CURRENT_SOURCE_DIR@/artwork/docs/img_downArrow.png \
+                         @CMAKE_CURRENT_SOURCE_DIR@/artwork/docs/tabs.css
 HTML_ALIGN_MEMBERS     = YES
 GENERATE_HTMLHELP      = YES
 HTML_DYNAMIC_SECTIONS  = NO
