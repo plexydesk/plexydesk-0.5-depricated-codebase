@@ -31,7 +31,7 @@ IF(MSVC)
 ENDIF(MSVC)
 
 TARGET_LINK_LIBRARIES(socialplexydaemon
-    ${PLEXY_CORE_LIBRARY}
+   ${PLEXY_UI_CORE_LIBRARY}
     ${libs}
     )
 

@@ -210,7 +210,7 @@ IF (NOT APPLE)
         ADD_SUBDIRECTORY(social/accountsmanager)
 
         # UI widgets
-        ADD_SUBDIRECTORY(extensions/widgets/cpu)
+        #ADD_SUBDIRECTORY(extensions/widgets/cpu)
 
         # Data plugins
         # ************

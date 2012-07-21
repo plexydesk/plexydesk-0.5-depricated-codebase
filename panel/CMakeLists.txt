@@ -32,7 +32,7 @@ IF(MSVC)
 ENDIF(MSVC)
 
 TARGET_LINK_LIBRARIES(plexypanel
-    ${PLEXY_CORE_LIBRARY}
+   ${PLEXY_UI_CORE_LIBRARY}
     ${libs}
     )
 

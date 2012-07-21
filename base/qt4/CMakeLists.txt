@@ -60,7 +60,7 @@ SET(MOC_SRCS
 IF (NOT APPLE)
     IF (UNIX)
         QT4_ADD_DBUS_ADAPTOR(dbus_SRCS org.plexydesk.Config.xml
-                             plexyconfig.h PlexyDesk::Config)
+                             ${CMAKE_SOURCE_DIR}/base/core/plexyconfig.h PlexyDesk::Config)
         SET (DBUS_LIB ${QT_QTDBUS_LIBRARY})
     ENDIF(UNIX)
 ENDIF (NOT APPLE)

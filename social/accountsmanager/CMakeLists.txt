@@ -56,7 +56,7 @@ IF(MSVC)
 ENDIF(MSVC)
 
 TARGET_LINK_LIBRARIES(socialplexyaccountman
-    ${PLEXY_CORE_LIBRARY}
+   ${PLEXY_UI_CORE_LIBRARY}
     ${libs}
     )
 
