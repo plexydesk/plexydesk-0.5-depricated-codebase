@@ -254,6 +254,10 @@ ADD_SUBDIRECTORY(extensions/backdrop/classicdrop)
 ADD_SUBDIRECTORY(runner)
 ADD_SUBDIRECTORY(modules/fbjson)
 
+if (APPLE)
+ADD_SUBDIRECTORY(extensions/backdrop/mac_background)
+endif (APPLE)
+
 # *** Desktop UI Plugins ***
 ADD_SUBDIRECTORY(extensions/desktop/plexy)
 

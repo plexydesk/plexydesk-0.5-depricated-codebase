@@ -68,7 +68,7 @@ public Q_SLOTS:
     void closeDesktopWidget();
 
 protected:
-    //void drawBackground(QPainter *painter, const QRectF &rect);
+    void drawBackground(QPainter *painter, const QRectF &rect);
     void mousePressEvent(QMouseEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
     //void paintEvent(QPaintEvent *event);

@@ -76,7 +76,6 @@ void DesktopBaseUi::setDesktopView(const QString &name)
     d->mViewPlugin =
         static_cast<DesktopViewPlugin *>(
                 PluginLoader::getInstance()->instance(name));
-    qDebug() << Q_FUNC_INFO << "View Plugin " << d->mViewPlugin;
     //FIX : handle changes
 }
 
@@ -100,7 +99,7 @@ void DesktopBaseUi::setup()
         // A 1px hack to make the widget fullscreen and not covering the toolbar on Win
         desktopScreenRect.setHeight(desktopScreenRect.height()-1);
 #endif
-        scene->setBackgroundBrush(Qt::NoBrush);
+        //scene->setBackgroundBrush(Qt::NoBrush);
         scene->setItemIndexMethod(QGraphicsScene::NoIndex);
 
         scene->setBackgroundBrush(Qt::transparent);
@@ -139,9 +138,18 @@ void DesktopBaseUi::setup()
         d->mViewList[i] = view;
         QWidget *parentWidget = qobject_cast<QWidget*>(parent());
         if(parentWidget) {
-            //parentWidget->resize(view->size());
             this->resize(view->size());
             view->setParent(this);
+
+#ifdef Q_WS_MAC
+            //TODO: until we write our own NSView we do this for mac (issue : 169)
+            /*- (void)drawRect:(NSRect)rect {
+                [[NSColor clearColor] set];
+                NSRectFill(rect);
+              }
+           */
+            view->setStyleSheet("background-color: transparent;");
+#endif
         }
         view->show();
         QApplication::desktop()->setParent(view);

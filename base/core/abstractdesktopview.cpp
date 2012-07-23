@@ -71,7 +71,7 @@ void AbstractDesktopView::enableOpenGL(bool state)
         setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
     } else {
         setViewport(new QWidget);
-        setCacheMode(QGraphicsView::CacheBackground);
+        setCacheMode(QGraphicsView::CacheNone);
         setOptimizationFlags(QGraphicsView::DontSavePainterState);
         setOptimizationFlag(QGraphicsView::DontClipPainter);
         setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);

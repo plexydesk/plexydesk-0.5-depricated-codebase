@@ -41,6 +41,8 @@ int main(int argc, char **argv)
     layout->setContentsMargins(0, 0, 0, 0);
     //QPushButton *pushButton = new QPushButton("An Embedded Qt Button!", nativeWidget);
     DesktopBaseUi * ui = new DesktopBaseUi(nativeWidget);
+    ui->setPalette(QPalette(Qt::transparent));
+    ui->setAutoFillBackground(true);
     ui->setAttribute(Qt::WA_LayoutUsesWidgetRect); // Don't use the layout rect calculated from QMacStyle.
     layout->addWidget(ui);
     nativeWidget->setLayout(layout);
@@ -73,7 +75,7 @@ int main(int argc, char **argv)
     ui->show();
 
     [macNSWindow setHasShadow:NO];
-    [macNSWindow setLevel:kCGDesktopIconWindowLevel];
+    [macNSWindow setLevel:kCGDesktopIconWindowLevel + 1];
     [macNSWindow makeKeyAndOrderFront:macNSWindow];
     [pool release];
     return qtApp.exec();

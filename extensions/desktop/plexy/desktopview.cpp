@@ -148,7 +148,12 @@ DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent) :
         PlexyDesk::Config::getInstance()->setWallpaper(d->mThemeLoader->wallpaper());
     }
 
+#ifndef Q_WS_MAC
     d->mBackgroundSource = qobject_cast<BackgroundSource *>(PluginLoader::getInstance()->instance("classicbackdrop"));
+#else
+     d->mBackgroundSource = qobject_cast<BackgroundSource *>(PluginLoader::getInstance()->instance("mac_background"));
+#endif
+
     d->row = d->column = 48.0;
     d->margin = 10.0;
 
@@ -178,6 +183,10 @@ void DesktopView::closeDesktopWidget()
         scene()->removeItem(widget);
         delete widget;
     }
+}
+
+void DesktopView::drawBackground(QPainter *painter, const QRectF &rect)
+{
 }
 
 void DesktopView::enableOpenGL(bool state)
