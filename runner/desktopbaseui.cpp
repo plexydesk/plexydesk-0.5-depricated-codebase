@@ -50,8 +50,8 @@ class DesktopBaseUi::DesktopBaseUiPrivate
 };
 
 
-DesktopBaseUi::DesktopBaseUi(QObject *parent) :
-    QObject(parent),
+DesktopBaseUi::DesktopBaseUi(QWidget *parent) :
+    QWidget(parent),
     d (new DesktopBaseUiPrivate)
 {
     setDesktopView(QLatin1String ("plexydesktopview"));
@@ -103,7 +103,7 @@ void DesktopBaseUi::setup()
         scene->setBackgroundBrush(Qt::NoBrush);
         scene->setItemIndexMethod(QGraphicsScene::NoIndex);
 
-        scene->setBackgroundBrush(Qt::blue);
+        scene->setBackgroundBrush(Qt::transparent);
         scene->setSceneRect(desktopScreenRect);
 
         if (!d->mViewPlugin) {
@@ -119,7 +119,6 @@ void DesktopBaseUi::setup()
 #endif
         view->enableOpenGL(d->mConfig->isOpenGL());
         view->resize(desktopSize);
-        view->show();
 #ifdef PLEXYNAME
         view->setWindowTitle(QString(PLEXYNAME));
 #endif
@@ -138,6 +137,13 @@ void DesktopBaseUi::setup()
 #endif
         view->showLayer(QLatin1String("Widgets"));
         d->mViewList[i] = view;
+        QWidget *parentWidget = qobject_cast<QWidget*>(parent());
+        if(parentWidget) {
+            //parentWidget->resize(view->size());
+            this->resize(view->size());
+            view->setParent(this);
+        }
+        view->show();
         QApplication::desktop()->setParent(view);
     }
 }
@@ -145,8 +151,6 @@ void DesktopBaseUi::setup()
 
 void DesktopBaseUi::screenResized(int screen)
 {
-    qDebug() << Q_FUNC_INFO << "Screen: " << screen;
-
     if(!screen)
         return;
 
@@ -160,7 +164,6 @@ void DesktopBaseUi::screenResized(int screen)
     view->resize(desktopScreenRect.size());
 }
 
-
 QRect DesktopBaseUi::desktopRect() const
 {
    if (d->mDesktopWidget->screenCount() == 1) {
@@ -173,8 +176,6 @@ QRect DesktopBaseUi::desktopRect() const
    for (int i = 0 ; i < d->mDesktopWidget->screenCount(); i++) {
         total_width += d->mDesktopWidget->screenGeometry(i).width();
         total_height += d->mDesktopWidget->screenGeometry(i).height();
-        qDebug() << Q_FUNC_INFO << d->mDesktopWidget->screenGeometry(i).x();
-        qDebug() << Q_FUNC_INFO << d->mDesktopWidget->screenGeometry(i).y();
    }
 
    return QRect (0, 0, total_width, total_height);

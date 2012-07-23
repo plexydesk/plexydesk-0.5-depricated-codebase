@@ -39,8 +39,16 @@ SET(sourceFiles
     desktopbaseui.cpp
     plexypanel.cpp
     ${extra_source}
-    main.cpp
     )
+
+
+if(APPLE)
+  SET(mainFiles main.mm)
+ENDIF(APPLE)
+
+IF (NOT APPLE)
+    SET(mainFiles main.cpp)
+ENDIF(NOT APPLE)
 
 SET(headerFiles
     icon.h
@@ -67,6 +75,7 @@ QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})
 SET(sourceFiles
     ${sourceFiles}
     ${headerFiles}
+    ${mainFiles}
     )
 
 IF(WIN32)
@@ -89,6 +98,18 @@ IF(UNIX)
         )
 ENDIF(UNIX)
 
+#Locate cococa framework on mac
+IF (APPLE)
+   INCLUDE_DIRECTORIES ( /System/Library/Frameworks )
+   FIND_LIBRARY(COCOA_LIBRARY Cocoa)
+   FIND_LIBRARY(GLUT_LIBRARY GLUT )
+   FIND_LIBRARY(OpenGL_LIBRARY OpenGL )
+   MARK_AS_ADVANCED (COCOA_LIBRARY
+                     GLUT_LIBRARY
+                     OpenGL_LIBRARY)
+   SET(MAC_LIBS ${COCOA_LIBRARY} ${GLUT_LIBRARY} ${OpenGL_LIBRARY})
+ENDIF(APPLE)
+
 ########### Prepare files ###############
 CMAKE_POLICY(SET CMP0003 NEW)
 
@@ -102,6 +123,7 @@ TARGET_LINK_LIBRARIES(${APPLICATION_EXE_NAME}
     ${PLEXY_UI_CORE_LIBRARY}
     plexymime
     ${libs}
+    ${MAC_LIBS}
     )
 
 ########### Install files ###############

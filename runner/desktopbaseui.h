@@ -3,11 +3,11 @@
 
 #include <QWidget>
 
-class DesktopBaseUi : public QObject
+class DesktopBaseUi : public QWidget
 {
     Q_OBJECT
 public:
-    DesktopBaseUi(QObject *parent = 0);
+    DesktopBaseUi(QWidget *parent = 0);
     virtual ~DesktopBaseUi();
 
     void setDesktopView (const QString &name);

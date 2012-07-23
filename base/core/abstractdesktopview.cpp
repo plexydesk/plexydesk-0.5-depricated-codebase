@@ -33,6 +33,31 @@
 
 #include "abstractdesktopview.h"
 
+
+
+/**
+  \class PlexyDesk::AbstractDesktopView
+
+  \brief Base class for creating DesktopViews
+
+  \fn PlexyDesk::AbstractDesktopView::enableOpenGL()
+
+  \param state Method to enable OpenGL rendering on the view, internally
+               it assigns a QGLWidget to the viewport.
+
+  \fn PlexyDesk::AbstractDesktopView::showLayer()
+
+   \fn  PlexyDesk::AbstractDesktopView::addExtension()
+   \brief Adds an Widget Extension to Plexy Desktop, give the widget
+   name in string i.e "clock" or "radio", the internals will
+   take care of the loading the widget if a plugin matching the name is
+   found.
+
+   \param name String name of the widget as specified by the desktop file
+
+   \param layerName Name of the layer you want add the widget to
+
+**/
 namespace PlexyDesk
 {
 
@@ -59,12 +84,6 @@ void AbstractDesktopView::showLayer(const QString &layer)
 }
 
 /*
-   \brief Adds an Widget Extension to Plexy Desktop, give the widget
-   name in string i.e "clock" or "radio", the internals will
-   take care of the loading the widget plugin name is correct
 
-   \param name String name of the widget as specified by the desktop file
-
-   \param layerName Name of the layer you want add the widget to
  */
 }

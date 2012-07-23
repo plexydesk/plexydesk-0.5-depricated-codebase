@@ -21,7 +21,6 @@
 
 #include <QtCore>
 #include <QtGui>
-#include <QDeclarativeComponent>
 #include <QIcon>
 
 #include <desktopbaseui.h>
@@ -47,7 +46,6 @@
 #include <netwm.h>
 #endif
 
-
 int main( int argc, char * *argv )
 {
 #ifndef Q_WS_MAC
@@ -61,14 +59,14 @@ int main( int argc, char * *argv )
 
     QApplication app(argc, argv);
 
-    QString appIconPath = PlexyDesk::Config::getInstance()->plexydeskBasePath() + 
+    QString appIconPath = PlexyDesk::Config::getInstance()->plexydeskBasePath() +
         "/share/plexy/plexydesk.png";
     QIcon appIcon = QIcon(QDir::toNativeSeparators(appIconPath));
     app.setWindowIcon(appIcon);
     app.setApplicationName(QString(PLEXYNAME));
 
 #ifdef Q_WS_WIN
-    QString pluginPath = PlexyDesk::Config::getInstance()->plexydeskBasePath() 
+    QString pluginPath = PlexyDesk::Config::getInstance()->plexydeskBasePath()
         + "/lib/qt4/plugins/imageformats";
     app.addLibraryPath(QDir::toNativeSeparators(pluginPath));
 #endif

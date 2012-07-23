@@ -26,10 +26,11 @@
       \code
         utubeEngine = qobject_cast<PlexyDesk::DataSource*>(
         PlexyDesk::PluginLoader::getInstance()->instance("utubeengine"));
+
         if (utubeEngine) {
             connect(utubeEngine, SIGNAL(dataReady()), this, SLOT(onDataReady()));
-         }
-    \endcode
+        }
+     \endcode
 
     \section b How to write your own plugins
      When you need to provide a plugin of you own, simply inhert this and write a class and wrapp
