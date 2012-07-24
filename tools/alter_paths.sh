@@ -1,7 +1,7 @@
 #before you run the script run make install, then run macdeply 
 rm -rf /Applications/plexydesk.app/
 make install
-macdeployqt-4.8 /Applications/plexydesk.app/bin/plexydesk.app/
+macdeployqt /Applications/plexydesk.app/bin/plexydesk.app/
 
 for x in /Applications/plexydesk.app/bin/plexydesk.app/Contents/MacOS/plexydesk
 do
@@ -49,9 +49,9 @@ done
 echo "Imports = imports" >> /Applications/plexydesk.app/bin/plexydesk.app/Contents/Resources/qt.conf
 mkdir /Applications/plexydesk.app/bin/plexydesk.app/Contents/imports
 
-cp -vr /Developer/Applications/Qt/imports/* /Applications/plexydesk.app/bin/plexydesk.app/Contents/imports/
+cp -vr $QTDIR/imports/* /Applications/plexydesk.app/bin/plexydesk.app/Contents/imports/
 
-for x in /Applications/plexydesk.app/bin/plexydesk.app/Contents/imports/Qt/labs/folderlistmodel/lib*
+for x in /Applications/plexydesk.app/bin/plexydesk.app/Contents/imports/Qt/labs/FolderListModel/lib*
 do
 install_name_tool -change libplexydeskcore.dylib  @executable_path/../Frameworks/libplexydeskcore.dylib $x
 install_name_tool -change libplexymime.dylib @executable_path/../Frameworks/libplexymime.dylib $x
@@ -65,7 +65,7 @@ install_name_tool -change QtDeclarative.framework/Versions/4/QtDeclarative @exec
 install_name_tool -change QtSql.framework/Versions/4/QtSql @executable_path/../Frameworks/QtDeclarative.framework/Versions/4/QtDeclarative $x
 done
 
-for x in /Applications/plexydesk.app/lib/qt4/imports/FolderView/lib*
+for x in /Applications/plexydesk.app/lib/qt4/imports/FolderListModel/lib*
 do
 install_name_tool -change libplexydeskcore.dylib  @executable_path/../Frameworks/libplexydeskcore.dylib $x
 install_name_tool -change libplexymime.dylib @executable_path/../Frameworks/libplexymime.dylib $x
@@ -83,6 +83,6 @@ mv /Applications/plexydesk.app/bin/plexydesk.app/Contents /Applications/plexydes
 mv /Applications/plexydesk.app/lib /Applications/plexydesk.app/Contents/
 mv /Applications/plexydesk.app/share /Applications/plexydesk.app/Contents/
 
-macdeployqt-4.8 /Applications/plexydesk.app/
+macdeployqt /Applications/plexydesk.app/
 
 echo Done!

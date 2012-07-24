@@ -63,10 +63,10 @@ public:
     virtual QVariantMap readAll() = 0;
 
 public Q_SLOTS:
-    virtual void pushData(QVariant &) = 0;
+    virtual void setArguments(QVariant &) = 0;
 
 Q_SIGNALS:
-    void dataReady();
+    void ready();
 };
 
 }

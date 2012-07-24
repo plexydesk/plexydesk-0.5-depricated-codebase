@@ -55,7 +55,7 @@ RestData::~RestData()
     delete d;
 }
 
-void RestData::pushData(QVariant &arg)
+void RestData::setArguments(QVariant &arg)
 {
     qDebug() << Q_FUNC_INFO << arg;
     QVariantMap param = arg.toMap();
@@ -81,12 +81,11 @@ void RestData::replyFinished(QNetworkReply *reply)
     QVariantMap response;
     response["data"] = QVariant(reply->readAll());
     d->data = response;
-    Q_EMIT dataReady();
+    Q_EMIT ready();
 }
 
 void RestData::handleAuth(QNetworkReply * /*r*/, QAuthenticator *auth)
 {
-    qDebug() << Q_FUNC_INFO << d->user << ":" << d->pass;
     auth->setUser(d->user);
     auth->setPassword(d->pass);
 }
