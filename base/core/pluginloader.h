@@ -42,6 +42,8 @@ public:
     QStringList listPlugins(const QString &types);
     AbstractSource *instance(const QString &name);
     void scanDisk();
+    void setPluginPrefix(const QString &path);
+    void pluginPrefix(); 
 
 protected:
     void loadDesktop(const QString &path);

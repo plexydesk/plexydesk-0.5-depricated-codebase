@@ -75,6 +75,19 @@ int main( int argc, char * *argv )
     PlexyDesk::Config::getInstance()->setOpenGL(true);
 #endif
     PlexyDesk::PluginLoader *loader = PlexyDesk::PluginLoader::getInstance();
+
+#ifdef Q_WS_MAC
+    loader->setPluginPrefix(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() + "/lib/plexyext/lib"));		
+#endif
+
+#ifdef Q_WS_X11
+    loader->setPluginPrefix(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() + "/" + PLEXYLIBDIR + "/plexyext/lib"));		
+#endif
+
+#ifdef Q_WS_WIN
+    loader->setPluginPrefix(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() + "/lib/plexyext/"));		
+#endif
+
     loader->scanDisk();
     // Set this to false if you need a "close to tray" functionality when systray exists
     QApplication::setQuitOnLastWindowClosed(true);

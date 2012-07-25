@@ -41,14 +41,13 @@ public:
     ~Private() {
     }
     Interface groups;
-    QString prefix;
+    QString mPluginPrefix;
     QHash<QString, QStringList> mDict;
 };
 
 PluginLoader::PluginLoader() : d(new Private)
 {
-    d->prefix = QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() +
-        QString(QLatin1String("/share/plexy/ext/groups/")));
+    d->mPluginPrefix = QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath());
 }
 
 PluginLoader::~PluginLoader()
@@ -86,18 +85,15 @@ void PluginLoader::load(const QString &interface, const QString &pluginName)
         return;
 
 #ifdef Q_WS_MAC
-    QPluginLoader loader(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() +
-                "/lib/plexyext/lib" + pluginName + ".dylib"));
+	loader (d->mPluginPrefix + pluginName + "*.dylib" );
 #endif
 
 #ifdef Q_WS_X11
-    QPluginLoader loader(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() +
-                "/" + PLEXYLIBDIR + "/plexyext/lib" + pluginName + ".so"));
+	loader (d->mPluginPrefix + pluginName + "*.so" );
 #endif
 
 #ifdef Q_WS_WIN
-    QPluginLoader loader(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() +
-                "/lib/plexyext/" + pluginName + ".dll"));
+	loader (d->mPluginPrefix + pluginName + "*.dll" );
 #endif
 
     QObject *plugin = loader.instance();
@@ -126,7 +122,7 @@ void PluginLoader::load(const QString &interface, const QString &pluginName)
 
 void PluginLoader::scanDisk()
 {
-    QDir dir(d->prefix);
+    QDir dir(d->mPluginPrefix);
     dir.setFilter(QDir::Files | QDir::Hidden | QDir::NoSymLinks);
     dir.setSorting(QDir::Size | QDir::Reversed);
     QFileInfoList list = dir.entryInfoList();
@@ -134,6 +130,15 @@ void PluginLoader::scanDisk()
         QFileInfo fileInfo = list.at(i);
         loadDesktop(d->prefix + fileInfo.fileName());
     }
+}
+
+void PluginLoader::setPluginPrefix(const QString &path)
+{
+	d->mPluginPrefix = path;
+}
+void pluginPrefix() const 
+{
+	 return d->mPluginPrefix; 
 }
 
 void PluginLoader::loadDesktop(const QString &path)

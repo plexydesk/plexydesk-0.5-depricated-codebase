@@ -51,6 +51,9 @@ int main(int argc, char **argv)
    // PlexyDesk::Config::getInstance()->setOpenGL(true);
 #endif
     PlexyDesk::PluginLoader *loader = PlexyDesk::PluginLoader::getInstance();
+#ifdef Q_WS_MAC
+    loader->setPluginPrefix();		
+#endif
     loader->scanDisk();
 
     // Set this to false if you need a "close to tray" functionality when systray exists
