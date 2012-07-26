@@ -37,7 +37,7 @@ public:
     }
     ~Private() {
     }
-    Interface groups;
+    Interface mPluginGroups;
     QString mPluginPrefix;
     QHash<QString, QStringList> mDict;
 };
@@ -67,8 +67,8 @@ QStringList PluginLoader::listPlugins(const QString &types)
 
 AbstractSource *PluginLoader::instance(const QString &name)
 {
-    if (d->groups.contains(name)) {
-        return d->groups[name]->instance();
+    if (d->mPluginGroups.contains(name)) {
+        return d->mPluginGroups[name]->instance();
     }  else {
         return 0;
     }
@@ -77,7 +77,7 @@ AbstractSource *PluginLoader::instance(const QString &name)
 void PluginLoader::load(const QString &interface, const QString &pluginName)
 {
     // plugin already loaded
-    if(d->groups.find(pluginName) != d->groups.end())
+    if(d->mPluginGroups.find(pluginName) != d->mPluginGroups.end())
         return;
 
 #ifdef Q_WS_MAC
@@ -96,7 +96,7 @@ void PluginLoader::load(const QString &interface, const QString &pluginName)
     if (plugin) {
         AbstractPluginInterface *Iface = 0;
         Iface = qobject_cast<AbstractPluginInterface *> (plugin);
-        d->groups[pluginName] = Iface;
+        d->mPluginGroups[pluginName] = Iface;
         qDebug() << "PluginLoader::load" << "Loading.." << Iface << pluginName << endl;
 
         const QStringList dictKeys = d->mDict.keys();

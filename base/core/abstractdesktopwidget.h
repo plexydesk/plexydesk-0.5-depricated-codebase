@@ -22,7 +22,6 @@
 
 #include <QGraphicsRectItem>
 #include <plexy.h>
-#include <plexyconfig.h>
 
 class QGraphicsObject;
 

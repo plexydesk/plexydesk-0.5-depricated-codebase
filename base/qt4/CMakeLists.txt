@@ -13,8 +13,11 @@ SET(sourceFiles
     desktopwidget.cpp
     scrollwidget.cpp
     plexyqmlglue.cpp
+    imagecache.cpp
+    svgprovider.cpp
     qmlsvgprovider.cpp
     qmlpixmapprovider.cpp
+    plexyconfig.cpp
     )
 
 SET(headerFiles 
@@ -36,8 +39,11 @@ SET(headerFiles
     desktopwidget.h
     scrollwidget.h
     plexyqmlglue.h
+    imagecache.h
+    svgprovider.h
     qmlsvgprovider.h
     qmlpixmapprovider.h
+    plexyconfig.h
     )
 
 SET(MOC_SRCS
@@ -52,8 +58,11 @@ SET(MOC_SRCS
    qmldesktopwidget.h
    desktopwidget.h
    scrollwidget.h
+   imagecache.h
+   svgprovider.h
    qmlsvgprovider.h
    qmlpixmapprovider.h
+   plexyconfig.h
    )
 
 # DBUS is working only under linux for now
