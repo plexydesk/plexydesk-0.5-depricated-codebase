@@ -39,6 +39,7 @@ public:
     }
     Interface mPluginGroups;
     QString mPluginPrefix;
+    QString mPluginInfoPrefix;
     QHash<QString, QStringList> mDict;
 };
 
@@ -51,11 +52,22 @@ PluginLoader::~PluginLoader()
     delete d;
 }
 
+PluginLoader *PluginLoader::getInstanceWithPrefix(const QString &desktopPrefix, const QString &libPrefix)
+{
+    if (!mInstance) {
+        mInstance = new PluginLoader();
+        qDebug() << Q_FUNC_INFO ;
+        mInstance->setPluginPrefix(libPrefix);
+        mInstance->setPluginInfoPrefix(desktopPrefix);
+        mInstance->scanForPlugins();
+    }
+    return mInstance;
+}
+
 PluginLoader *PluginLoader::getInstance()
 {
     if (!mInstance) {
         mInstance = new PluginLoader();
-        mInstance->scanForPlugins();
     }
     return mInstance;
 }
@@ -81,15 +93,15 @@ void PluginLoader::load(const QString &interface, const QString &pluginName)
         return;
 
 #ifdef Q_WS_MAC
-    QPluginLoader loader (d->mPluginPrefix + pluginName + "*.dylib" );
+    QPluginLoader loader (d->mPluginPrefix + QLatin1String("lib") + pluginName + QLatin1String(".dylib") );
 #endif
 
 #ifdef Q_WS_X11
-    QPluginLoader loader (d->mPluginPrefix + pluginName + "*.so" );
+    QPluginLoader loader (d->mPluginPrefix + QLatin1String("lib") + pluginName + ".so" );
 #endif
 
 #ifdef Q_WS_WIN
-    QPluginLoader loader (d->mPluginPrefix + pluginName + "*.dll" );
+    QPluginLoader loader (d->mPluginPrefix + pluginName + ".dll" );
 #endif
 
     QObject *plugin = loader.instance();
@@ -118,19 +130,35 @@ void PluginLoader::load(const QString &interface, const QString &pluginName)
 
 void PluginLoader::scanForPlugins()
 {
-    QDir dir(d->mPluginPrefix);
+    if (d->mPluginInfoPrefix.isEmpty() || d->mPluginInfoPrefix.isNull()) {
+        qWarning() << Q_FUNC_INFO << "Prefix undefined"
+                   << " try running PluginLoader::getInstanceWithPrefix with the correct path first";
+    }
+
+    qDebug() << d->mPluginInfoPrefix;
+    QDir dir(d->mPluginInfoPrefix);
     dir.setFilter(QDir::Files | QDir::Hidden | QDir::NoSymLinks);
     dir.setSorting(QDir::Size | QDir::Reversed);
     QFileInfoList list = dir.entryInfoList();
     for (int i = 0; i < list.size(); ++i) {
         QFileInfo fileInfo = list.at(i);
-        loadDesktop(d->mPluginPrefix + fileInfo.fileName());
+        loadDesktop(d->mPluginInfoPrefix + fileInfo.fileName());
     }
 }
 
 void PluginLoader::setPluginPrefix(const QString &path)
 {
     d->mPluginPrefix = path;
+}
+
+void PluginLoader::setPluginInfoPrefix(const QString &path)
+{
+    d->mPluginInfoPrefix = path;
+}
+
+QString PluginLoader::pluginInforPrefix() const
+{
+    return d->mPluginInfoPrefix;
 }
 
 QString PluginLoader::pluginPrefix() const

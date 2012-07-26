@@ -21,6 +21,10 @@ int main(int argc, char **argv)
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     NSLog(@"Start PlexyDesk :MacUI \n");
 
+    PlexyDesk::PluginLoader *loader =
+            PlexyDesk::PluginLoader::getInstanceWithPrefix(
+                QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->plexydeskBasePath()  + QLatin1String("/share/plexy/ext/groups/")),
+                QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->plexydeskBasePath() + QLatin1String("/lib/plexyext/")));
     QString appIconPath = PlexyDesk::Config::getInstance()->plexydeskBasePath() +
         "/share/plexy/plexydesk.png";
     QIcon appIcon = QIcon(QDir::toNativeSeparators(appIconPath));
@@ -50,11 +54,6 @@ int main(int argc, char **argv)
 #ifdef Q_WS_MAC
    // PlexyDesk::Config::getInstance()->setOpenGL(true);
 #endif
-    PlexyDesk::PluginLoader *loader = PlexyDesk::PluginLoader::getInstance();
-#ifdef Q_WS_MAC
-    loader->setPluginPrefix(QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->plexydeskBasePath() + "/lib/plexyext/lib"));
-#endif
-    loader->scanForPlugins();
 
     // Set this to false if you need a "close to tray" functionality when systray exists
     QApplication::setQuitOnLastWindowClosed(true);
