@@ -39,14 +39,14 @@
       or telling it which images to display from flicker. Code snippets below illustrates how
       plugins can be used from a client application.
 
-      \code
-        utubeEngine = qobject_cast<PlexyDesk::DataSource*>(
+    @verbatim
+        youtubeSource = qobject_cast<PlexyDesk::DataSource*>(
         PlexyDesk::PluginLoader::getInstance()->instance("utubeengine"));
 
-        if (utubeEngine) {
-            connect(utubeEngine, SIGNAL(dataReady()), this, SLOT(onDataReady()));
+        if (youtubeSource) {
+            connect(youtubeSource, SIGNAL(ready()), this, SLOT(onReady()));
         }
-     \endcode
+    @endverbatim
 
     \section b How to write your own plugins
      When you need to provide a plugin of you own, simply inhert this and write a class and wrapp
@@ -59,9 +59,21 @@
      \returns The data as a Map of QVariant's
      \sa dataReady()
 
-     \fn PlexyDesk::DataSource::dataReady()
+     \fn PlexyDesk::DataSource::ready()
      \brief Signal emited when data is ready to be read
      \sa DataSource::readAll()
+
+     \fn PlexyDesk::DataSource::setArguments();
+     \brief Arguments to be suppied for the Data Source
+
+     \paragraph This method essentially provides a way to send Data or arguments to the
+     Data source. For instance, if the data source handles a web services which
+     requries a user name and a password, the delegate can use this method to
+     send the required paramets to the data source so that it can begin it's
+     operation.
+
+     \param args The argument to be passed to the data source, The data source should
+     define the protocol to be used.
  **/
 namespace PlexyDesk
 {
@@ -79,7 +91,7 @@ public:
     virtual QVariantMap readAll() = 0;
 
 public Q_SLOTS:
-    virtual void setArguments(QVariant &) = 0;
+    virtual void setArguments(QVariant &args) = 0;
 
 Q_SIGNALS:
     void ready();
