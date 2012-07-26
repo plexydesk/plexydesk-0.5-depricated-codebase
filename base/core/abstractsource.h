@@ -3,14 +3,6 @@
 
 #include <plexy.h>
 
-#include <QCoreApplication>
-#include <QGraphicsItem>
-#include <QObject>
-#include <QString>
-#include <QSettings>
-#include <QDir>
-
-
 namespace PlexyDesk
 {
 class PLEXYDESK_EXPORT AbstractSource : public QObject

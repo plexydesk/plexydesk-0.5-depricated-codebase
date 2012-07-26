@@ -22,8 +22,6 @@
 #include <plexy.h>
 #include <abstractsource.h>
 
-#include <QObject>
-
 namespace PlexyDesk
 {
 class PLEXYDESK_EXPORT AbstractPluginInterface : public QObject

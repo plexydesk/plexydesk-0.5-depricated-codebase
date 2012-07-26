@@ -3,8 +3,6 @@
 
 #include <plexy.h>
 
-#include <QtCore>
-
 namespace PlexyDesk
 {
 class PLEXYDESK_EXPORT PendingJob : public QObject

@@ -22,9 +22,6 @@
 #include <abstractplugininterface.h>
 #include <plexy.h>
 
-#include <QHash>
-#include <QDir>
-
 namespace PlexyDesk
 {
 class PLEXYDESK_EXPORT PluginLoader : public QObject

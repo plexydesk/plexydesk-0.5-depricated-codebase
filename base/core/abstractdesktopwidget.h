@@ -20,7 +20,6 @@
 #ifndef PLEXY_DESKTOP_WIDGET_H
 #define PLEXY_DESKTOP_WIDGET_H
 
-#include <QGraphicsRectItem>
 #include <plexy.h>
 
 class QGraphicsObject;
