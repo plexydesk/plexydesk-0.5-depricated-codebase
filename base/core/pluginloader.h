@@ -43,7 +43,7 @@ public:
     AbstractSource *instance(const QString &name);
     void scanDisk();
     void setPluginPrefix(const QString &path);
-    void pluginPrefix(); 
+    QString pluginPrefix() const;
 
 protected:
     void loadDesktop(const QString &path);

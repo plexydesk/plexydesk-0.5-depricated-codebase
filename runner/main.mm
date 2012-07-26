@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 #endif
     PlexyDesk::PluginLoader *loader = PlexyDesk::PluginLoader::getInstance();
 #ifdef Q_WS_MAC
-    loader->setPluginPrefix();		
+    loader->setPluginPrefix(QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->plexydeskBasePath() + "/lib/plexyext/lib"));
 #endif
     loader->scanDisk();
 

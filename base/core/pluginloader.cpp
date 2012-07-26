@@ -85,15 +85,15 @@ void PluginLoader::load(const QString &interface, const QString &pluginName)
         return;
 
 #ifdef Q_WS_MAC
-	loader (d->mPluginPrefix + pluginName + "*.dylib" );
+    QPluginLoader loader (d->mPluginPrefix + pluginName + "*.dylib" );
 #endif
 
 #ifdef Q_WS_X11
-	loader (d->mPluginPrefix + pluginName + "*.so" );
+    QPluginLoader loader (d->mPluginPrefix + pluginName + "*.so" );
 #endif
 
 #ifdef Q_WS_WIN
-	loader (d->mPluginPrefix + pluginName + "*.dll" );
+    QPluginLoader loader (d->mPluginPrefix + pluginName + "*.dll" );
 #endif
 
     QObject *plugin = loader.instance();
@@ -128,17 +128,18 @@ void PluginLoader::scanDisk()
     QFileInfoList list = dir.entryInfoList();
     for (int i = 0; i < list.size(); ++i) {
         QFileInfo fileInfo = list.at(i);
-        loadDesktop(d->prefix + fileInfo.fileName());
+        loadDesktop(d->mPluginPrefix + fileInfo.fileName());
     }
 }
 
 void PluginLoader::setPluginPrefix(const QString &path)
 {
-	d->mPluginPrefix = path;
+    d->mPluginPrefix = path;
 }
-void pluginPrefix() const 
+
+QString PluginLoader::pluginPrefix() const
 {
-	 return d->mPluginPrefix; 
+    return d->mPluginPrefix;
 }
 
 void PluginLoader::loadDesktop(const QString &path)
