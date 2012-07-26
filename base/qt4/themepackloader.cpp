@@ -24,6 +24,7 @@
 #include <QRect>
 
 #include <QDebug>
+#include <plexyconfig.h>
 
 #include "themepackloader.h"
 
@@ -136,7 +137,7 @@ QVariant ThemepackLoader::getProperty(const QString &widgetName, const QString &
     rv = d->mSettings->value(prop);
     d->mSettings->endGroup();
 
-    return rv; 
+    return rv;
 }
 
 QString ThemepackLoader::qmlFilesFromTheme(const QString &name)

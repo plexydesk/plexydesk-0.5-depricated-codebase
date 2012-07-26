@@ -25,6 +25,7 @@
 #include <desktopviewplugin.h>
 
 #include <config.h>
+#include <plexyconfig.h>
 
 #include "desktopbaseui.h"
 
@@ -63,7 +64,7 @@ DesktopBaseUi::DesktopBaseUi(QWidget *parent) :
 
 DesktopBaseUi::~DesktopBaseUi()
 {
-    foreach (AbstractDesktopView * view, d->mViewList.values()) {
+    Q_FOREACH (AbstractDesktopView * view, d->mViewList.values()) {
         if(view)
             delete view;
     }

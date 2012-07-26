@@ -1,3 +1,4 @@
+#include <QDebug>
 #include  "viewlayer.h"
 
 namespace PlexyDesk
@@ -74,7 +75,7 @@ void ViewLayer::showLayer(const QString &layername)
     } else {
         qDebug() << Q_FUNC_INFO << layername;
         hideLayer();
-	d->currentList = d->layer[layername];
+    d->currentList = d->layer[layername];
         for (int i = 0; i < d->currentList->size(); i++) {
             if (d->currentList->at(i)) {
                 d->currentList->at(i)->show();
