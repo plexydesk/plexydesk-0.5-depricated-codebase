@@ -21,11 +21,7 @@
 #include <desktopwidget.h>
 #include <plexyconfig.h>
 
-RestInterface::RestInterface(QObject * /*object*/)
-{
-}
-
-PlexyDesk::DataSource *RestInterface::instance()
+PlexyDesk::AbstractSource *RestInterface::instance()
 {
     /* this is the plugin we are returning since plexy core
        or other plugins will expect this pointer
@@ -33,4 +29,4 @@ PlexyDesk::DataSource *RestInterface::instance()
     return new RestData();
 }
 
-Q_EXPORT_PLUGIN2(RestInterface, RestInterface)
+Q_EXPORT_PLUGIN2(restengine, RestInterface)

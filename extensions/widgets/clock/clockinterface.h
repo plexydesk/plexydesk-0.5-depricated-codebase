@@ -21,26 +21,21 @@
 
 #include <QtCore>
 #include <plexy.h>
-#include <widgetinterface.h>
 #include "clock.h"
 #include "clockwidget.h"
+#include <abstractplugininterface.h>
 
-class ClockInterface : public PlexyDesk::WidgetInterface
+class ClockInterface : public PlexyDesk::AbstractPluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
 public :
-    ClockInterface(QObject *object = 0)
-    {
-        Q_UNUSED(object);
-    }
-
     PlexyDesk::AbstractSource *instance()
     {
         return new Clock(this);
     }
 };
 
-Q_EXPORT_PLUGIN2(ClockInterface, ClockInterface)
+Q_EXPORT_PLUGIN2(plexyclock, ClockInterface)
 #endif

@@ -29,7 +29,6 @@
 #include "iconprovider.h"
 #include "themepackloader.h"
 #include <desktopwidget.h>
-#include <backdropinterface.h>
 #include <pluginloader.h>
 #include <backdropplugin.h>
 #include <widgetplugin.h>
@@ -394,7 +393,6 @@ void DesktopView::addExtension(const QString &name,
 {
     WidgetPlugin *provider = static_cast<WidgetPlugin *>(PluginLoader::getInstance()->instance(name));
     if (provider) {
-        qDebug() << Q_FUNC_INFO << name << layerName;
         DesktopWidget *widget = (DesktopWidget *) provider->item();
         if (widget) {
             widget->configState(state);

@@ -22,17 +22,13 @@
 #include <plexy.h>
 
 #include <abstractplugininterface.h>
-#include <datainterface.h>
-#include <widgetinterface.h>
 
-
-class  Interface : public PlexyDesk::WidgetInterface
+class  Interface : public PlexyDesk::AbstractPluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
 public :
-        Interface(QObject *object = 0);
         PlexyDesk::AbstractSource *instance();
 };
 

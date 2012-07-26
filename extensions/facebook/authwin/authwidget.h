@@ -18,7 +18,7 @@
 
 #ifndef PLEXY_FB_WIDGET_H
 #define PLEXY_FB_WIDGET_H
-#include <datainterface.h>
+
 #include <pluginloader.h>
 #include <jsonhandler.h>
 #include <desktopwidget.h>

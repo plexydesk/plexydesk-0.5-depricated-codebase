@@ -3,9 +3,6 @@
 
 #include <plexy.h>
 #include <abstractplugininterface.h>
-#include <datainterface.h>
-#include <widgetinterface.h>
-
 
 class PLEXYDESK_EXPORT AuthInterface : public PlexyDesk::AbstractPluginInterface
 {
@@ -13,7 +10,6 @@ class PLEXYDESK_EXPORT AuthInterface : public PlexyDesk::AbstractPluginInterface
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
 public :
-        AuthInterface(QObject *object = 0);
     PlexyDesk::AbstractSource *instance();
 };
 

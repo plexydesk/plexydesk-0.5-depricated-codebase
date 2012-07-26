@@ -20,8 +20,6 @@
 #define PLEXY_CLASSIC_BACKDROP_I
 
 #include <plexy.h>
-#include <backdropinterface.h>
-#include <datainterface.h>
 #include <pluginloader.h>
 #include <abstractplugininterface.h>
 
@@ -32,7 +30,6 @@ class DesktopViewInterface : public PlexyDesk::AbstractPluginInterface
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
 public:
-    DesktopViewInterface(QObject *object = 0);
     virtual ~DesktopViewInterface();
     virtual PlexyDesk::AbstractSource *instance();
 };

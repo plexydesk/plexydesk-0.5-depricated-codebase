@@ -20,7 +20,6 @@
 #define PLEXY_BACK_DROP_ITEM_CLASSIC_H
 
 #include <plexy.h>
-#include <datainterface.h>
 #include <desktopwidget.h>
 
 namespace PlexyDesk

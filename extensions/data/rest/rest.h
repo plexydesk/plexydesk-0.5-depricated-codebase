@@ -21,10 +21,9 @@
 
 #include <QtCore>
 #include <plexy.h>
-#include <backdropinterface.h>
 #include <abstractplugininterface.h>
+#include <datasource.h>
 #include <QtNetwork>
-#include <datainterface.h>
 
 class RestData : public PlexyDesk::DataSource
 {

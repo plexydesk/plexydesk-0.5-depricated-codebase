@@ -20,8 +20,6 @@
 #define PLEXY_CLASSIC_BACKDROP_I
 
 #include <plexy.h>
-#include <backdropinterface.h>
-#include <datainterface.h>
 #include <pluginloader.h>
 #include <abstractplugininterface.h>
 

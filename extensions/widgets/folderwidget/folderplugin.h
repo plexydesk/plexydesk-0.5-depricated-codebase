@@ -22,8 +22,6 @@
 #include <plexy.h>
 
 #include <abstractplugininterface.h>
-#include <datainterface.h>
-#include <widgetinterface.h>
 #include <widgetplugin.h>
 #include <themepackloader.h>
 #include <qmldesktopwidget.h>
@@ -58,7 +56,7 @@ signals:
     void change();
     void sendData(QVariant &);
     void dirSourceChanged();
-    
+
 private:
     PlexyDesk::ThemepackLoader *mThemePack;
     PlexyDesk::QmlDesktopWidget *mFrameParentitem;

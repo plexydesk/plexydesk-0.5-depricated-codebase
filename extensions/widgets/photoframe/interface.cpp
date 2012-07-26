@@ -21,16 +21,10 @@
 
 #include "interface.h"
 #include "imageplugin.h"
-#include <pluginloader.h>
-
-
-Interface::Interface(QObject * /*object*/)
-{
-}
 
 PlexyDesk::AbstractSource *Interface::instance()
 {
     return new ImagePlugin();
 }
 
-Q_EXPORT_PLUGIN2(Interface, Interface)
+Q_EXPORT_PLUGIN2(photoframe, Interface)

@@ -20,7 +20,6 @@
 #define PLEXY_WIDGET_CLOCK_H
 
 #include <plexy.h>
-#include <widgetinterface.h>
 #include <widgetplugin.h>
 
 

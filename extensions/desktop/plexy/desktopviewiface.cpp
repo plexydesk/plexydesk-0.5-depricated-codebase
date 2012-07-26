@@ -23,10 +23,6 @@
 #include "desktopviewimpl.h"
 #include <QtPlugin>
 
-DesktopViewInterface::DesktopViewInterface(QObject *object)
-{
-}
-
 DesktopViewInterface::~DesktopViewInterface()
 {
 }
@@ -36,5 +32,4 @@ PlexyDesk::AbstractSource *DesktopViewInterface::instance()
     return new DesktopViewPluginImpl(this);
 }
 
-
-Q_EXPORT_PLUGIN2(DesktopViewInterface, DesktopViewInterface)
+Q_EXPORT_PLUGIN2(plexydesktopview, DesktopViewInterface)

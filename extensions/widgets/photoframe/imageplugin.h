@@ -22,8 +22,6 @@
 #include <plexy.h>
 
 #include <abstractplugininterface.h>
-#include <datainterface.h>
-#include <widgetinterface.h>
 #include "pictureflow.h"
 #include "imageitem.h"
 #include <widgetplugin.h>
@@ -60,7 +58,7 @@ signals:
     void change();
     void sendData(QVariant &);
     void imageSourceChanged();
-    
+
 private:
     PlexyDesk::ThemepackLoader *mThemePack;
     PlexyDesk::QmlDesktopWidget *mFrameParentitem;
