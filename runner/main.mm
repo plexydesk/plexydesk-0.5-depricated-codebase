@@ -54,7 +54,7 @@ int main(int argc, char **argv)
 #ifdef Q_WS_MAC
     loader->setPluginPrefix(QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->plexydeskBasePath() + "/lib/plexyext/lib"));
 #endif
-    loader->scanDisk();
+    loader->scanForPlugins();
 
     // Set this to false if you need a "close to tray" functionality when systray exists
     QApplication::setQuitOnLastWindowClosed(true);

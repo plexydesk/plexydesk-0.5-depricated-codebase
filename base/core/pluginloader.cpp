@@ -21,13 +21,10 @@
 #include <QPluginLoader>
 #include <QSettings>
 #include <QStringList>
-
 #include <QDebug>
 
 #include "pluginloader.h"
 #include "extensionfactory.h"
-#include <plexyconfig.h>
-
 
 namespace PlexyDesk
 {
@@ -47,7 +44,6 @@ public:
 
 PluginLoader::PluginLoader() : d(new Private)
 {
-    d->mPluginPrefix = QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath());
 }
 
 PluginLoader::~PluginLoader()
@@ -59,7 +55,7 @@ PluginLoader *PluginLoader::getInstance()
 {
     if (!mInstance) {
         mInstance = new PluginLoader();
-        mInstance->scanDisk();
+        mInstance->scanForPlugins();
     }
     return mInstance;
 }
@@ -120,7 +116,7 @@ void PluginLoader::load(const QString &interface, const QString &pluginName)
     }
 }
 
-void PluginLoader::scanDisk()
+void PluginLoader::scanForPlugins()
 {
     QDir dir(d->mPluginPrefix);
     dir.setFilter(QDir::Files | QDir::Hidden | QDir::NoSymLinks);
