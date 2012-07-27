@@ -30,7 +30,6 @@
 #include <plexyconfig.h>
 #include <baserender.h>
 #include <pluginloader.h>
-#include <datainterface.h>
 #include <debug.h>
 
 

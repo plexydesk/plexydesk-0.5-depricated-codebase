@@ -21,6 +21,7 @@
 #define PLEXY_DESKTOP_WIDGET_H
 
 #include <plexy.h>
+#include <QtGui>
 
 class QGraphicsObject;
 

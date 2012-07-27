@@ -46,13 +46,13 @@
 #define   __net_wm_h
 
 #ifdef Q_WS_X11
+#include <plexy.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/Xatom.h>
 
 #include "netwm_def.h"
 
-#include <plexy.h>
 // forward declaration
 struct NETRootInfoPrivate;
 struct NETWinInfoPrivate;

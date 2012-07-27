@@ -22,6 +22,7 @@
 
 #include <abstractsource.h>
 #include <plexy.h>
+#include <QGraphicsItem>
 
 class QPainter;
 class QVariant;

@@ -2,6 +2,8 @@
 #define ICONJOB_H
 
 #include <pendingjob.h>
+#include <QPixmap>
+#include <QSharedPointer>
 
 class IconProvider;
 

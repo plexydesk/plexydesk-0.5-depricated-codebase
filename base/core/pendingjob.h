@@ -2,6 +2,7 @@
 #define PENDINGJOB_H
 
 #include <plexy.h>
+#include <QObject>
 
 namespace PlexyDesk
 {

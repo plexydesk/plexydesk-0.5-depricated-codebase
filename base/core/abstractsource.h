@@ -2,6 +2,7 @@
 #define ABSTRACT_DATA_SOURCE_H
 
 #include <plexy.h>
+#include <QtCore>
 
 namespace PlexyDesk
 {
