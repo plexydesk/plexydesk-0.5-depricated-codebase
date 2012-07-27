@@ -229,4 +229,11 @@ void AbstractDesktopWidget::setRotation(float angle)
     }
 }
 
+void AbstractDesktopWidget::setChildWidetVisibility(bool show)
+{
+    Q_FOREACH(QGraphicsItem *item, this->childItems()) {
+        (show) ? item->show() : item->hide();
+    }
+}
+
 } //namespace PlexyDesk

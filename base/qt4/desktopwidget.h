@@ -21,6 +21,7 @@ public:
 public Q_SLOTS:
     void zoomDone();
     void propertyAnimationForZoomDone();
+    void propertyAnimationForRotationDone();
     void pressHoldTimeOut();
 
 protected:

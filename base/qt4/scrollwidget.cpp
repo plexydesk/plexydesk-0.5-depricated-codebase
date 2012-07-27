@@ -33,7 +33,7 @@ public:
 };
 
 ScrollWidget::ScrollWidget(const QRectF &rect, QGraphicsObject *parent)
-    : AbstractDesktopWidget(rect,parent), d (new Private)
+    : DesktopWidget(rect,parent), d (new Private)
 {
     d->mChildItem = 0;
 }
@@ -78,18 +78,12 @@ void ScrollWidget::scrollBy(int x, int y)
 
 void ScrollWidget::wheelEvent(QGraphicsSceneWheelEvent *event)
 {
-    qDebug() << Q_FUNC_INFO << event->delta();
     if (event->delta() < 0) {
         scrollBy (0, -10);
     } else {
         scrollBy (0, 10);
     }
     event->accept();
-}
-
-void ScrollWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
-    //does nothing let the child stay on top
 }
 
 } // namespace PlexyDesk

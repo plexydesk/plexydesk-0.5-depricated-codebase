@@ -18,15 +18,15 @@
 
 #include <plexy.h>
 #include <config.h>
-#include <abstractdesktopwidget.h>
+#include <desktopwidget.h>
 
 #include <QGraphicsItem>
 #include <QGraphicsObject>
 
 namespace PlexyDesk
 {
-  
-class ScrollWidget : public AbstractDesktopWidget
+
+class ScrollWidget : public DesktopWidget
 {
    Q_OBJECT
 public:
@@ -38,7 +38,6 @@ public:
 
 private:
    virtual void wheelEvent (QGraphicsSceneWheelEvent * event);
-   virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
    class Private;
    Private *const d;

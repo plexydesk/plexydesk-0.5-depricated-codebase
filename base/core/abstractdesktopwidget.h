@@ -87,9 +87,11 @@ public :
     void setDockRect(const QRectF &rect);
     QRectF dockRect() const;
 
-    float rotation() const;
 
+    float rotation() const;
     void setRotation(float angle);
+
+    void setChildWidetVisibility(bool show);
 
      /**
      * \brief Sets a icon for the widget

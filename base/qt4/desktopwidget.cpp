@@ -69,6 +69,7 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QGraphicsObject *parent)
     d->mPropertyAnimationForRotation->setEasingCurve(QEasingCurve::InSine);
 
     connect(d->mPropertyAnimationForZoom, SIGNAL(finished()), this, SLOT(propertyAnimationForZoomDone()));
+    connect(d->mPropertyAnimationForRotation, SIGNAL(finished()), this, SLOT(propertyAnimationForRotationDone()));
 
     d->mSvgRender = new SvgProvider();
     //setDefaultImages();
@@ -266,6 +267,11 @@ void DesktopWidget::propertyAnimationForZoomDone()
     zoomDone();
 }
 
+void DesktopWidget::propertyAnimationForRotationDone()
+{
+    setChildWidetVisibility(true);
+}
+
 void DesktopWidget::configState(AbstractDesktopWidget::State s)
 {
     if (s == d->mWidgetState) {
@@ -303,6 +309,7 @@ void DesktopWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->buttons() == Qt::RightButton && (state() == VIEW || state() == ROTATED)) {
+        this->setChildWidetVisibility(false);
         d->mPropertyAnimationForRotation->start();
         return;
     }
