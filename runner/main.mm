@@ -36,6 +36,7 @@ int main(int argc, char **argv)
             [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, qtApp.desktop()->width() , qtApp.desktop()->height())
             styleMask:NSBorderlessWindowMask
             backing:NSBackingStoreBuffered defer:NO];
+    [macNSWindow setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
 
     QMacNativeWidget *nativeWidget = new QMacNativeWidget();
     nativeWidget->move(0, 0);
