@@ -25,20 +25,17 @@
 ImagePlugin::ImagePlugin(QObject * /*object*/) :
     mFrameParentitem(0)
 {
-   mThemePack = new PlexyDesk::ThemepackLoader("default", this);
 }
 
 ImagePlugin::~ImagePlugin()
 {
-    if (mThemePack) {
-        delete mThemePack;
-    }
+    if (mFrameParentitem)
+        delete mFrameParentitem;
 }
 
 void ImagePlugin::searchImage()
 {
 }
-
 
 void ImagePlugin::onDataReady()
 {
@@ -46,7 +43,6 @@ void ImagePlugin::onDataReady()
 
 void ImagePlugin::setData(const QVariantMap &data)
 {
-    qDebug() << Q_FUNC_INFO << data;
     QString photo_path = data["photo_path"].toString();
     if (! photo_path.isEmpty() || ! photo_path.isNull()) {
         mImageSource = photo_path;
@@ -57,13 +53,8 @@ void ImagePlugin::setData(const QVariantMap &data)
 QGraphicsItem *ImagePlugin::item()
 {
    if (mFrameParentitem == NULL) {
-       mFrameParentitem = new PlexyDesk::QmlDesktopWidget(QRectF(0.0, 0.0, 400.0, 400.0));
-       QDeclarativeContext *context = mFrameParentitem->engine()->rootContext();
-       const QString qmlData = mThemePack->hiddenQmlWidgets(QLatin1String("photo"));
-
-       qDebug() << Q_FUNC_INFO << qmlData;
-       context->setContextProperty("PhotoSource", this);
-       mFrameParentitem->setSourceUrl (QUrl(qmlData));
+       mFrameParentitem = new PhotoWidget(QRectF(0.0, 0.0, 400.0, 400.0));
+       mFrameParentitem->enableDefaultBackground(true);
    }
 
    return mFrameParentitem;

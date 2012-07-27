@@ -22,26 +22,25 @@
 
 #include "videoentity.h"
 
-#include <datainterface.h>
 #include <pluginloader.h>
 
 #include <desktopwidget.h>
 #include <scrollwidget.h>
 #include <QGraphicsTextItem>
+#include <datasource.h>
 
 class QTimer;
 
 namespace PlexyDesk
 {
 
-
-class YouTubeWidget : public DesktopWidget
+class YouTubeWidget : public ScrollWidget
 {
 
     Q_OBJECT
 
 public:
-    YouTubeWidget(const QRectF &rect, QWidget *embeddedWidget = 0, QDeclarativeItem *parent = 0);
+    YouTubeWidget(const QRectF &rect);
     virtual ~YouTubeWidget();
 
 public Q_SLOTS:
@@ -65,12 +64,11 @@ private:
     QString prefix;
     QPoint clickPos;
 
-    PlexyDesk::DataPlugin *utubeEngine;
+    PlexyDesk::DataSource *utubeEngine;
 
     QList<VideoEntity> mVideos;
     QMap<QString, QVariant> mVariantMap;
     QGraphicsTextItem *mView;
-    ScrollWidget *mScroll;
 };
 
 } // namespace PlexyDesk

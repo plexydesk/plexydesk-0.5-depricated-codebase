@@ -2,10 +2,9 @@
 #define PLEXY_YOUTUBE_H
 
 #include <plexy.h>
-#include <widgetinterface.h>
 #include <widgetplugin.h>
 
-class VISIBLE_SYM YouTube : public PlexyDesk::WidgetPlugin
+class YouTube : public PlexyDesk::WidgetPlugin
 {
     Q_OBJECT
 

@@ -26,7 +26,7 @@
 #include "imageitem.h"
 #include <widgetplugin.h>
 #include <themepackloader.h>
-#include <qmldesktopwidget.h>
+#include "photowidget.h"
 
 class QLineEdit;
 class QWidget;
@@ -60,8 +60,7 @@ signals:
     void imageSourceChanged();
 
 private:
-    PlexyDesk::ThemepackLoader *mThemePack;
-    PlexyDesk::QmlDesktopWidget *mFrameParentitem;
+    PhotoWidget *mFrameParentitem;
     QString mImageSource;
 };
 

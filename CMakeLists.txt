@@ -251,6 +251,7 @@ ADD_SUBDIRECTORY(extensions/widgets/photoframe)
 ADD_SUBDIRECTORY(extensions/widgets/folderwidget)
 ADD_SUBDIRECTORY(extensions/facebook/authwin)
 ADD_SUBDIRECTORY(extensions/backdrop/classicdrop)
+ADD_SUBDIRECTORY(extensions/widgets/youtubewidget)
 ADD_SUBDIRECTORY(runner)
 ADD_SUBDIRECTORY(modules/fbjson)
 

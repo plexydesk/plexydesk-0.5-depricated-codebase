@@ -99,7 +99,6 @@ QStringList ThemepackLoader::widgets(const QString &expType)
 {
     QStringList rv;
     Q_FOREACH(const QString &key, d->mSettings->childGroups()) {
-        qDebug() << Q_FUNC_INFO << key;
         if (key == QLatin1String("main") || key == QLatin1String("hidden")) {
             continue;
         }
@@ -145,7 +144,6 @@ QString ThemepackLoader::qmlFilesFromTheme(const QString &name)
     d->mSettings->beginGroup(name);
     QString fileName = d->mSettings->value("mainfile").toString();
     QString baseFolder = d->mSettings->value("basefolder").toString();
-    qDebug() << Q_FUNC_INFO << name << ": " << fileName;
     d->mSettings->endGroup();
 
     QDir path(QString("%1/%2").arg(d->mBasePath).arg(baseFolder));

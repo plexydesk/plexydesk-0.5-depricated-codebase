@@ -32,7 +32,7 @@ class  Interface : public PlexyDesk::AbstractPluginInterface
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
 public :
-        PlexyDesk::AbstractSource *instance();
+    PlexyDesk::AbstractSource *instance();
 };
 
 #endif

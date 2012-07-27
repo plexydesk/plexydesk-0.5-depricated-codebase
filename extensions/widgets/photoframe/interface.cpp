@@ -21,6 +21,8 @@
 
 #include "interface.h"
 #include "imageplugin.h"
+#include "imageplugin.h"
+#include <abstractsource.h>
 
 PlexyDesk::AbstractSource *Interface::instance()
 {

@@ -3,16 +3,19 @@ ADD_SUBDIRECTORY(img)
 SET(sourceFiles
     interface.cpp
     imageplugin.cpp
+    photowidget.cpp
     )
 
 SET(headerFiles
     interface.h
     imageplugin.h
+    photowidget.h
     )
 
 SET(QTMOC_SRCS
     interface.h
     imageplugin.h
+    photowidget.h
     )
 
 QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})

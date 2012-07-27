@@ -32,18 +32,15 @@
 namespace PlexyDesk
 {
 
-YouTubeWidget::YouTubeWidget(const QRectF &rect, QWidget *embeddedWidget, QDeclarativeItem *parent) :
-    DesktopWidget(rect, embeddedWidget, parent)
+YouTubeWidget::YouTubeWidget(const QRectF &rect) :
+     ScrollWidget(rect)
 {
-    setRect(rect);
     setContentRect(rect);
-    mScroll = new ScrollWidget (QRectF(5.0, 5.0, rect.width() - 20, rect.height() - 20 ), embeddedWidget);
-    mScroll->setPos(10.0, 10.0);
-    mScroll->setRect(QRectF(10.0, 10.0, rect.width() - 50, rect.height() - 30));
-    mScroll->setParentItem (this);
-    mScroll->setFlag(QGraphicsItem::ItemIsMovable, false);
 
-    utubeEngine = qobject_cast<PlexyDesk::DataPlugin *>(
+    this->enableDefaultBackground(true);
+
+
+    utubeEngine = qobject_cast<PlexyDesk::DataSource *>(
          PlexyDesk::PluginLoader::getInstance()->instance("restengine"));
 
     QString account;
@@ -54,10 +51,10 @@ YouTubeWidget::YouTubeWidget(const QRectF &rect, QWidget *embeddedWidget, QDecla
     mMap.insert("user", account);
     mMap.insert("pass", pass);
     QVariant arg = QVariant(mMap);
-    utubeEngine->pushData(arg);
+    utubeEngine->setArguments(arg);
 
     if (utubeEngine) {
-        connect(utubeEngine, SIGNAL(dataReady()), this, SLOT(onDataReady()));
+        connect(utubeEngine, SIGNAL(ready()), this, SLOT(onDataReady()));
     } else {
         qDebug("DataSource Was Null");
     }
@@ -74,7 +71,7 @@ void YouTubeWidget::onDataReady()
     mView = new QGraphicsTextItem();
     mView->setHtml(data.toString());
 
-    mScroll->addWidget (mView);
+    this->addWidget (mView);
     emit dataChanged();
 }
 
