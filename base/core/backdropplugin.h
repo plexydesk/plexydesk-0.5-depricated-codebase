@@ -47,7 +47,7 @@ public:
     virtual void setRect (const QRect &rect) = 0;
 
 public Q_SLOTS:
-    virtual void pushData(QVariant &value) = 0;
+    virtual void setArguments(QVariant &value) = 0;
 
 Q_SIGNALS:
     void data(QVariant &value);

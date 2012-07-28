@@ -61,7 +61,6 @@ DesktopBaseUi::DesktopBaseUi(QWidget *parent) :
     connect (d->mDesktopWidget, SIGNAL(resized(int)), this, SLOT(screenResized(int)));
 }
 
-
 DesktopBaseUi::~DesktopBaseUi()
 {
     Q_FOREACH (AbstractDesktopView * view, d->mViewList.values()) {

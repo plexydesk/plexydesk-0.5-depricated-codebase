@@ -36,10 +36,44 @@
  * \brief Base class for Visual Desktop Extensions
  * PlexyDesk::AbstractDesktopWidget defines all the common features of a visual desktop extension.
  * When writing visual extensions, the user must inherit from this class. So that it behaves the
- * same way
+ * same way.
  */
 
+/**
+ * \fn PlexyDesk::AbstractDesktopWidget::boundingRect()
+ * \breif Returns the Bounding rectangle of the Widget Content
+ *
+ * \paragraph This method returns the bounding Rectangle of the Widget Contents
+ * it returns the user specificed content rectangle (PlexyDesk::AbstractDesktopWidget::setContentRect())
+ * And does not automatically calculate or adjust with the content changes, The size of the content must be
+ * manually set if the content changes and this widget needs to adjust to that size.
+ *
+ * @returns The bounding Rectangle for this widget
+ * \sa PlexyDesk::AbstractDesktopWidget::setContentRect()
+ * \sa PlexyDesk::AbstractDesktopWidget::setDockRect()
+ */
 
+/**
+* \fn PlexyDesk::AbstractDesktopWidget::setContentRect()
+*\brief Set the content Rectangle of the Widget
+*
+* \paragraph Sets the content rectangle of the widget
+* in situations where the widget can't
+* find out by it self. For instance widets which changes
+* it's content during runtime or chiild QML widgets
+*
+* \param  rect The Content bounding box area
+*/
+
+/**
+  *\fn PlexyDesk::AbstractDesktopWidget::setChildWidetVisibility()
+  *
+  * \brief Hides the child items of this widget
+  *
+  * \param show Decides the visibility of the child widgets, set true to show the child elements
+  * false to hide them.
+  *
+  */
 namespace PlexyDesk
 {
 class AbstractDesktopWidget::PrivateAbstractDesktopWidget
@@ -95,24 +129,6 @@ QRectF AbstractDesktopWidget::boundingRect() const
     return d->mBoundingRect;
 }
 
-QRectF AbstractDesktopWidget::rect() const
-{
-    return d->mBoundingRect;
-}
-
-void AbstractDesktopWidget::setRect(const QRectF &rect)
-{
-    d->mBoundingRect = rect;
-    prepareGeometryChange();
-    QPointF center = boundingRect().center();
-    QTransform mat = QTransform();
-    mat.translate(center.x(), center.y());
-    mat.translate(-center.x(), -center.y());
-    setTransform(mat);
-    //resetMatrix();
-    update();
-}
-
 void AbstractDesktopWidget::setDockRect(const QRectF &rect)
 {
     d->mDockRect = rect;
@@ -133,7 +149,7 @@ void AbstractDesktopWidget::setEditMode(const bool &mode)
     if (mode) {
         setState(DOCKED);
         prepareGeometryChange();
-        this->setRect(d->mDockRect);
+        this->setContentRect(d->mDockRect);
         this->setVisible(true);
     }
 
@@ -145,12 +161,12 @@ bool AbstractDesktopWidget::editMode() const
     return d->mEditMode;
 }
 
-void AbstractDesktopWidget::setIconName(const QString &name)
+void AbstractDesktopWidget::setLabelName(const QString &name)
 {
     d->mName = name;
 }
 
-QString AbstractDesktopWidget::iconName() const
+QString AbstractDesktopWidget::label() const
 {
     return d->mName;
 }
@@ -168,7 +184,14 @@ void AbstractDesktopWidget::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 void AbstractDesktopWidget::setContentRect(const QRectF &rect)
 {
     d->mBoundingRect = rect;
-    d->mContentRect = rect;
+    prepareGeometryChange();
+    QPointF center = boundingRect().center();
+    QTransform mat = QTransform();
+    mat.translate(center.x(), center.y());
+    mat.translate(-center.x(), -center.y());
+    setTransform(mat);
+    resetMatrix();
+    update();
 }
 
 QRectF AbstractDesktopWidget::contentRect() const

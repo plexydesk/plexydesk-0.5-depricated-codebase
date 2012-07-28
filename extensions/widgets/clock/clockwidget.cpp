@@ -39,7 +39,7 @@ ClockWidget::ClockWidget(const QRectF &rect)
 
     setPath(QDir::toNativeSeparators (
                 PlexyDesk::Config::getInstance()->plexydeskBasePath() + "/share/plexy/skins/default/clock"));
-    setIconName ("Clock");
+    setLabelName ("Clock");
     drawClockWidget();
     setCacheMode(QGraphicsItem::DeviceCoordinateCache);
 }

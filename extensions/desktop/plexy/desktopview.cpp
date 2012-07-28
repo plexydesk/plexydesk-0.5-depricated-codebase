@@ -233,7 +233,7 @@ void DesktopView::setThemePack(const QString &name)
             QPoint pos = d->mThemeLoader->widgetPos(qmlWidget);
             parent->setPos(pos);
             parent->setContentRect(parent->boundingRect());
-            parent->setRect(parent->boundingRect());
+            parent->setContentRect(parent->boundingRect());
 
             if (d->mThemeLoader->getProperty(qmlWidget, "background").toBool())
                 parent->setHasBackground(true);
@@ -258,7 +258,6 @@ void DesktopView::setThemePack(const QString &name)
 
 void DesktopView::addWallpaperItem()
 {
-    qDebug() << Q_FUNC_INFO << d->mBackgroundSource;
     if (d->mBackgroundSource) {
         QRectF screenRect = scene()->sceneRect();
         qDebug() << Q_FUNC_INFO << screenRect;
@@ -408,20 +407,6 @@ void DesktopView::addExtension(const QString &name,
         }
     }
    delete provider;
-}
-
-void DesktopView::addCoreExtension(const QString &name)
-{
-    WidgetPlugin *provider = static_cast<WidgetPlugin *>(PluginLoader::getInstance()->instance(name));
-    if (provider) {
-        QGraphicsRectItem *widget = (QGraphicsRectItem *) provider->item();
-        if (widget) {
-            scene()->addItem(widget);
-            widget->setPos(d->row, d->column);
-            d->row += widget->boundingRect().width();
-        }
-    }
-    delete provider;
 }
 
 // Small speed up , try if the speed is too low

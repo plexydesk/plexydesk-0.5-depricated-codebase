@@ -38,9 +38,7 @@ public:
 
     enum {none, folder, qml, img};
 
-    void addWallpaper(const QString &path);
     void addRender(QGraphicsScene *scene);
-    void addCoreExtension(const QString &name);
     void addExtension(const QString &name,
     const QString &layer = QLatin1String("Widgets"),
     const QPoint &pos = QPoint(0, 0),

@@ -31,7 +31,7 @@ class PLEXYDESK_EXPORT AbstractDesktopWidget : public QGraphicsObject
 {
     Q_OBJECT
     Q_ENUMS(State)
-    Q_PROPERTY(QRectF rect READ rect WRITE setRect NOTIFY rectChanged)
+    Q_PROPERTY(QRectF rect READ boundingRect() WRITE setContentRect NOTIFY rectChanged)
     Q_PROPERTY(float rotation READ rotation WRITE setRotation NOTIFY stateChanged)
 
 public :
@@ -41,53 +41,16 @@ public :
        ROTATED
      };
 
-    /**
-     * \brief Abstract Base Desktop widget
-     * \param rect  Defines the initial bounding rectangular area of a
-     * desktop widget
-     * \param parent The parent Item
-     */
-
     AbstractDesktopWidget(const QRectF &rect, QGraphicsObject *parent = 0);
-
     virtual ~AbstractDesktopWidget();
-
-    /**
-     * \breif Bounding Rectangle of the Widget
-     * @returns The bounding Rectangle for this widget
-     */
 
     virtual QRectF boundingRect() const;
 
-    /**
-      * \brief Conveince Method for AbstractDesktopWidget::boundingRect
-      * @returns returns the bounding rect for this widget
-      */
-    QRectF rect() const;
-
-     /**
-     *\brief Widgets Content rectangle
-     *
-     * \paragraph Set the content rectangle of the widget
-     * in situations where the widget can't
-     * find out by it self. For instance widets which changes
-     * it's content during runtime or chiild QML widgets
-     *
-     * \param  rect The Content bounding box area
-     *
-     */
     void setContentRect(const QRectF &rect);
     QRectF contentRect() const;
 
-     /**
-     * \brief Sets the Widget rectangle defined by rect
-     * \param rect Rectangle to use
-     */
-    void setRect(const QRectF &rect);
-
     void setDockRect(const QRectF &rect);
     QRectF dockRect() const;
-
 
     float rotation() const;
     void setRotation(float angle);
@@ -95,18 +58,18 @@ public :
     void setChildWidetVisibility(bool show);
 
      /**
-     * \brief Sets a icon for the widget
+     * \brief Sets a label for the widget
      * \param name Name of the icon
      *
-     * Icon to display when the widget is in dock mode
+     * Label to display when the widget is in dock mode
      */
-    void setIconName(const QString &name);
+    void setLabelName(const QString &name);
 
      /**
-     * \brief Name of the Widget Icon
-     * \retuns Icon name
+     * \brief Returns the label text
+     * \retuns the label name
      */
-    QString iconName() const;
+    QString label() const;
 
      /**
      *\brief Widget state
@@ -123,7 +86,7 @@ public :
      * dock mode but if you click on the widget it will emit
      * the close signal
      */
-
+    // TODO: move these out from here
     void setEditMode(const bool &mode);
     bool editMode() const;
 

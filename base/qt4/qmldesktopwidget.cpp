@@ -46,7 +46,7 @@ QmlDesktopWidget::~QmlDesktopWidget()
 {
     delete d;
 }
-    
+
 QDeclarativeEngine *QmlDesktopWidget::engine() const
 {
     return d->mQmlEngine;
@@ -56,15 +56,15 @@ void QmlDesktopWidget::setSourceUrl(const QUrl &url)
 {
     d->mQmlUrl = url;
     qDebug() << Q_FUNC_INFO << url;
-    
+
     if (d->mQmlChild) {
         delete d->mQmlChild;
     }
-    
+
     QDeclarativeComponent component(d->mQmlEngine, QDir::cleanPath(
                                         url.toString(QUrl::StripTrailingSlash |
                                                      QUrl::RemoveScheme)));
-    
+
     if (!component.isReady()) {
         if (component.isError()) {
             Q_FOREACH(QDeclarativeError error, component.errors()) {
@@ -73,18 +73,18 @@ void QmlDesktopWidget::setSourceUrl(const QUrl &url)
         }
         return;
     }
-    
+
     d->mQmlChild =
         qobject_cast<QGraphicsObject *>(component.create(d->mQmlEngine->rootContext()));
     QRectF objectRect = d->mQmlChild->boundingRect();
-    
-    setRect(objectRect);
-    
+
+    setContentRect(objectRect);
+
     d->mQmlChild->setParentItem(this);
     d->mQmlChild->setFlag(QGraphicsItem::ItemIsFocusable, true);
     d->mQmlChild->setFlag(QGraphicsItem::ItemIsSelectable, true);
     d->mQmlChild->setCacheMode(QGraphicsItem::DeviceCoordinateCache);
-    
+
     // forward signals
     connect(d->mQmlChild, SIGNAL(quit()), this, SLOT(onQmlQuit()));
     connect(this, SIGNAL(stateChanged()), this, SLOT(onStateChanged()));
@@ -124,13 +124,13 @@ void QmlDesktopWidget::onStateChanged()
 }
 
 void QmlDesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
-{ 
+{
     /* When the user clicks the widget is in NORMAL mode
-     * So we hide the child widget and when he clicks 
+     * So we hide the child widget and when he clicks
      * We show the qml Child of the widget
      */
 
     AbstractDesktopWidget::mouseDoubleClickEvent(event);
 }
-    
+
 }

@@ -46,7 +46,7 @@ public:
 
 public Q_SLOTS:
     void data(QVariant &);
-    void pushData(QVariant &) {
+    void setArguments(QVariant &) {
     }
     void changeWallpaperItem();
 

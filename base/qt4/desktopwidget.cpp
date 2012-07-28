@@ -227,7 +227,7 @@ void DesktopWidget::paintDockView(QPainter *p, const QRectF &rect)
         p->setRenderHints(QPainter::SmoothPixmapTransform);
         p->drawPixmap(QRect(rect.x(), rect.y(), rect.width(), rect.height()), d->mDefaultBackgroundPixmap);
         p->setPen(QColor(255, 255, 255));
-        p->drawText(QRect(rect.x(), rect.y(), rect.width(), rect.height()), Qt::AlignCenter, iconName());
+        p->drawText(QRect(rect.x(), rect.y(), rect.width(), rect.height()), Qt::AlignCenter, label());
         p->restore();
     }
 }
@@ -282,9 +282,9 @@ void DesktopWidget::configState(AbstractDesktopWidget::State s)
     prepareGeometryChange();
 
     if (s == DOCKED) {
-        setRect(dockRect());
+        setContentRect(dockRect());
     } else {
-        setRect(contentRect());
+        setContentRect(contentRect());
     }
 
     d->mWidgetState = s;
@@ -292,11 +292,11 @@ void DesktopWidget::configState(AbstractDesktopWidget::State s)
     if (d->mWidgetState == DOCKED) {
         setState(VIEW);
         prepareGeometryChange();
-        this->setRect(contentRect());
+        this->setContentRect(contentRect());
     } else {
         setState(DOCKED);
         prepareGeometryChange();
-        this->setRect(dockRect());
+        this->setContentRect(dockRect());
     }
 }
 
@@ -346,7 +346,7 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
         d->mPropertyAnimationForZoom->setStartValue(startRect);
         d->mPropertyAnimationForZoom->setEndValue(contentRect());
         d->mPropertyAnimationForZoom->setEasingCurve (QEasingCurve::InBounce);
-        this->setRect(d->saveRect);
+        this->setContentRect(d->saveRect);
         d->mPropertyAnimationForZoom->start();
 
     } else {
@@ -360,7 +360,7 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
         d->mPropertyAnimationForZoom->setStartValue(contentRect());
         d->mPropertyAnimationForZoom->setEasingCurve (QEasingCurve::OutBounce);
         prepareGeometryChange();
-        this->setRect(dockRect());
+        this->setContentRect(dockRect());
         this->setVisible(true);
         d->mPropertyAnimationForZoom->start();
     }

@@ -27,7 +27,7 @@
 namespace PlexyDesk
 {
 
-class AbstractDesktopView : public QGraphicsView
+class PLEXYDESK_EXPORT AbstractDesktopView : public QGraphicsView
 {
     Q_OBJECT
 
@@ -35,13 +35,10 @@ public:
     AbstractDesktopView(QGraphicsScene *scene = new QGraphicsScene(),
             QWidget *parent = 0) : QGraphicsView (scene, parent) {}
 
-    virtual void addCoreExtension(const QString &name) = 0;
-
     virtual void addExtension(const QString &name,
                               const QString &layer = QLatin1String("Widgets"),
                               const QPoint &pos = QPoint(0, 0),
-                              PlexyDesk::AbstractDesktopWidget::State state =
-            PlexyDesk::AbstractDesktopWidget::DOCKED) = 0;
+                              PlexyDesk::AbstractDesktopWidget::State state = PlexyDesk::AbstractDesktopWidget::DOCKED) = 0;
 
     virtual void enableOpenGL(bool);
     virtual void showLayer(const QString &name) = 0;
