@@ -24,7 +24,7 @@
 #include <QtGui>
 
 CpuWidget::CpuWidget(const QRectF &rect, QWidget *widget) :
-    PlexyDesk::DesktopWidget(rect, widget)
+    PlexyDesk::AbstractDesktopWidget(rect, widget)
 {
     shade = false;
     getBaseData();

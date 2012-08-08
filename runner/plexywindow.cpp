@@ -48,7 +48,7 @@ public:
 };
 
 PlexyWindows::PlexyWindows(Display *dsp, Window win, XWindowAttributes *attr, QWidget *parent, Qt::WindowFlags f  )
-    : PlexyDesk::DesktopWidget(QRect(0, 0, 200, 200)), d(new Private)
+    : PlexyDesk::AbstractDesktopWidget(QRect(0, 0, 200, 200)), d(new Private)
 {
     XSelectInput (dsp, win, (PropertyChangeMask | EnterWindowMask | FocusChangeMask));
     XShapeSelectInput (dsp, win, ShapeNotifyMask);
@@ -162,9 +162,9 @@ void PlexyWindows::Damaged(XRectangle *rect)
     }
 }
 
-void PlexyWindows::paintViewSide(QPainter *painter, const QRectF &rect)
+void PlexyWindows::paintFrontView(QPainter *painter, const QRectF &rect)
 {
-    DesktopWidget::paintViewSide(painter, rect);
+    AbstractDesktopWidget::paintFrontView(painter, rect);
     painter->save();
     float width = d->plexypixmap.width() / 5;
     float height = d->plexypixmap.height() / 5;

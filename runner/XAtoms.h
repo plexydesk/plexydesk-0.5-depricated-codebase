@@ -1,4 +1,4 @@
-static char *atom_names[] = {
+static const char *atom_names[] = {
     "_NET_ACTIVE_WINDOW",
     "_NET_CLIENT_LIST",
     "_NET_CLOSE_WINDOW",

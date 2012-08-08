@@ -326,7 +326,7 @@ void DesktopView::loadWindows()
            //pa.subwindow_mode = IncludeInferiors; // Don't clip child widgets
            //Picture picture = XRenderCreatePicture( dpy, children[i], format, CPSubwindowMode, &pa );
            PlexyWindows *_window = new PlexyWindows(dpy, children[i], &attr);
-           _window->configState(DesktopWidget::VIEW);
+           _window->configState(AbstractDesktopWidget::VIEW);
            scene()->addItem(_window);
            _window->setRect(QRectF(0,0, 200, 200));
            _window->show();

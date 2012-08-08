@@ -26,7 +26,7 @@
 
 class QTimer;
 
-class CpuWidget : public PlexyDesk::DesktopWidget
+class CpuWidget : public PlexyDesk::AbstractDesktopWidget
 {
 
     Q_OBJECT

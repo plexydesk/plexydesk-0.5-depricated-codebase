@@ -47,7 +47,7 @@ class PLEXYDESK_EXPORT AbstractDesktopWidget : public ShaderEffectItem
 
 public :
     enum State {
-       DOCK,
+       DOCKED,
        VIEW,
        ROTATED
      };
@@ -138,7 +138,7 @@ public Q_SLOTS:
     void pressHoldTimeOut();
 
 Q_SIGNALS:
-    void close();
+    void closed();
     void rectChanged();
 
 private:
