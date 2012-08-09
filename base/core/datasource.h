@@ -83,11 +83,12 @@ class PLEXYDESK_EXPORT DataSource : public AbstractSource
     Q_OBJECT
 
 public:
-    DataSource(QObject *object = 0) {
-        Q_UNUSED(object);
+    DataSource(QObject *object = 0) : AbstractSource(object){
     }
+
     virtual ~DataSource() {
     }
+
     virtual QVariantMap readAll() = 0;
 
 public Q_SLOTS:
@@ -95,6 +96,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void ready();
+    void data(const QVariantMap &data);
 };
 
 }

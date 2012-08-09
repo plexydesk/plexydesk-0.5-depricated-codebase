@@ -21,16 +21,20 @@
 
 #include <plexy.h>
 #include <widgetplugin.h>
+#include <datasource.h>
 
 
 class Clock : public PlexyDesk::WidgetPlugin
 {
     Q_OBJECT
-
 public:
-    Clock(QObject *object = 0);
+    explicit Clock(QObject *object = 0);
     virtual ~Clock();
-    QGraphicsItem *item();
+    QGraphicsItem *view();
+
+private Q_SLOTS:
+    void onData(PlexyDesk::DataSource *source);
+    void onDataUpdated(const QVariantMap &);
 };
 
 

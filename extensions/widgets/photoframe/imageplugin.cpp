@@ -50,7 +50,7 @@ void ImagePlugin::setData(const QVariantMap &data)
     }
 }
 
-QGraphicsItem *ImagePlugin::item()
+QGraphicsItem *ImagePlugin::view()
 {
    if (mFrameParentitem == NULL) {
        mFrameParentitem = new PhotoWidget(QRectF(0.0, 0.0, 400.0, 400.0));

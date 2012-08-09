@@ -37,7 +37,7 @@ class FolderPlugin : public PlexyDesk::WidgetPlugin
 public:
     FolderPlugin(QObject *object = 0);
     virtual ~FolderPlugin();
-    virtual QGraphicsItem *item(); // {};
+    virtual QGraphicsItem *view(); // {};
 
     void setData(const QVariantMap &data);
     QString dirSource() {

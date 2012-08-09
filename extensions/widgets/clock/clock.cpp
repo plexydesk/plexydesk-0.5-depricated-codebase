@@ -20,17 +20,28 @@
 #include "clockwidget.h"
 
 
-Clock::Clock(QObject *object)
+Clock::Clock(QObject *object) : PlexyDesk::WidgetPlugin(object)
 {
-    Q_UNUSED(object);
+    connectToDataSource("timer");
+    connect(this, SIGNAL(data(const DataSource*)), this, SLOT(onData(DataSource*)));
 }
 
 Clock::~Clock()
 {
-
 }
 
-QGraphicsItem *Clock::item()
+QGraphicsItem *Clock::view()
 {
     return new ClockWidget(QRectF(0, 0, 210, 210));
+}
+
+void Clock::onData(PlexyDesk::DataSource *source)
+{
+    qDebug() << Q_FUNC_INFO << "Timer Data Source Recived";
+    connect(dataSource(), SIGNAL(data(const QVariantMap &)), this, SLOT(onDataUpdated(PlexyDesk::DataSource*)));
+}
+
+void Clock::onDataUpdated(const QVariantMap &data)
+{
+    qDebug() << Q_FUNC_INFO << data;
 }

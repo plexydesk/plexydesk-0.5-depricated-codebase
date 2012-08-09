@@ -116,7 +116,6 @@ void DesktopBaseUi::setup()
 #ifdef PLEXYNAME
         view->setWindowTitle(QString(PLEXYNAME));
 #endif
-        view->enableOpenGL(d->mConfig->isOpenGL());
         view->resize(desktopSize);
 #ifdef PLEXYNAME
         view->setWindowTitle(QString(PLEXYNAME));

@@ -11,7 +11,7 @@ class YouTube : public PlexyDesk::WidgetPlugin
 public:
     YouTube(QObject *object = 0);
     virtual ~YouTube();
-    QGraphicsItem *item();
+    QGraphicsItem *view();
 };
 
 #endif

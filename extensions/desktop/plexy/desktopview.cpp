@@ -392,7 +392,7 @@ void DesktopView::addExtension(const QString &name,
 {
     WidgetPlugin *provider = static_cast<WidgetPlugin *>(PluginLoader::getInstance()->instance(name));
     if (provider) {
-        DesktopWidget *widget = (DesktopWidget *) provider->item();
+        DesktopWidget *widget = (DesktopWidget *) provider->view();
         if (widget) {
             widget->configState(state);
             scene()->addItem(widget);
@@ -444,7 +444,7 @@ void DesktopView::dropEvent(QDropEvent * event)
         if(dirWidgetPlugin) {
             QVariantMap data;
             data["dir_path"] = QVariant("/" + droppedFile);
-            dirWidgetPlugin->setData(data);
+            //dirWidgetPlugin->setData(data);
         } else {
             qWarning() << Q_FUNC_INFO << "Dir Handler Not registered";
         }
@@ -463,9 +463,9 @@ void DesktopView::dropEvent(QDropEvent * event)
             QVariantMap data;
             data["photo_path"] = QVariant(droppedFile);
 
-            if (d->mPhotoDialogProvider) {
-                d->mPhotoDialogProvider->setData(data);
-            }
+            //if (d->mPhotoDialogProvider) {
+              //  d->mPhotoDialogProvider->setData(data);
+            //}
         }
     } else {
         qDebug() << Q_FUNC_INFO << "Drop ignored...";
@@ -524,7 +524,7 @@ void DesktopView::registerPhotoDialog()
     const QPoint pos (0.0, 0.0);
     WidgetPlugin *provider = static_cast<WidgetPlugin *>(PluginLoader::getInstance()->instance(name));
     if (provider) {
-        DesktopWidget *widget = (DesktopWidget *) provider->item();
+        DesktopWidget *widget = (DesktopWidget *) provider->view();
         if (widget) {
             //widget->configState(state);
             scene()->addItem(widget);
@@ -553,7 +553,7 @@ WidgetPlugin *DesktopView::registerHandler(const QString &name, bool effects_on)
     const QPoint pos (0.0, 0.0);
     WidgetPlugin *provider = static_cast<WidgetPlugin *>(PluginLoader::getInstance()->instance(name));
     if (provider) {
-        DesktopWidget *widget = (DesktopWidget *) provider->item();
+        DesktopWidget *widget = (DesktopWidget *) provider->view();
         if (widget) {
             scene()->addItem(widget);
 

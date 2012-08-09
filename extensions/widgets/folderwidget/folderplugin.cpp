@@ -54,7 +54,7 @@ void FolderPlugin::setData(const QVariantMap &data)
       }
 }
 
-QGraphicsItem *FolderPlugin::item()
+QGraphicsItem *FolderPlugin::view()
 {
    if (mFrameParentitem == NULL) {
        mFrameParentitem = new PlexyDesk::QmlDesktopWidget(QRectF(0.0, 0.0, 400.0, 400.0));

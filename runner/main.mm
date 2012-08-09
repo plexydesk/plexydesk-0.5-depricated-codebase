@@ -52,10 +52,6 @@ int main(int argc, char **argv)
     layout->addWidget(ui);
     nativeWidget->setLayout(layout);
 
-#ifdef Q_WS_MAC
-   // PlexyDesk::Config::getInstance()->setOpenGL(true);
-#endif
-
     // Set this to false if you need a "close to tray" functionality when systray exists
     QApplication::setQuitOnLastWindowClosed(true);
 
