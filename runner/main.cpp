@@ -58,6 +58,20 @@ int main( int argc, char * *argv )
 
     QApplication app(argc, argv);
 
+    PlexyDesk::PluginLoader *loader = 0;
+
+#ifdef Q_WS_X11
+    loader =
+        PlexyDesk::PluginLoader::getInstanceWithPrefix(QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->plexydeskBasePath() + QLatin1String("/share/plexy/ext/groups/")),
+                QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->plexydeskBasePath() +
+                    QLatin1String("/lib/plexyext/")));
+#endif
+
+#ifdef Q_WS_WIN
+    loader->setPluginPrefix(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() + "/lib/plexyext/"));		
+#endif
+
+
     QString appIconPath = PlexyDesk::Config::getInstance()->plexydeskBasePath() +
         "/share/plexy/plexydesk.png";
     QIcon appIcon = QIcon(QDir::toNativeSeparators(appIconPath));
@@ -73,21 +87,11 @@ int main( int argc, char * *argv )
 #ifdef Q_WS_MAC
     PlexyDesk::Config::getInstance()->setOpenGL(true);
 #endif
-    PlexyDesk::PluginLoader *loader = PlexyDesk::PluginLoader::getInstance();
 
 #ifdef Q_WS_MAC
     loader->setPluginPrefix(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() + "/lib/plexyext/lib"));		
 #endif
-
-#ifdef Q_WS_X11
-    loader->setPluginPrefix(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() + "/" + PLEXYLIBDIR + "/plexyext/lib"));		
-#endif
-
-#ifdef Q_WS_WIN
-    loader->setPluginPrefix(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() + "/lib/plexyext/"));		
-#endif
-
-    loader->scanDisk();
+    //loader->scanDisk();
     // Set this to false if you need a "close to tray" functionality when systray exists
     QApplication::setQuitOnLastWindowClosed(true);
 
