@@ -35,9 +35,8 @@ public:
     virtual ~Clock();
     QGraphicsItem *view();
 
-public slots:
-    void onData(PlexyDesk::DataSource *source);
-    void onDataUpdated(const QVariantMap &);
+public Q_SLOTS:
+    void onDataUpdated(const QVariantMap &data);
 
 private:
     QTimer *mTimer;

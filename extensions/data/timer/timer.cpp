@@ -51,14 +51,16 @@ void TimerData::setArguments(QVariant &arg)
 
 QVariantMap TimerData::readAll()
 {
-    return QVariantMap();
-}
+    QVariant timeVariant;
+    QVariantMap dataMap;
 
-bool TimerData::dataIsReady()
-{
-    return true;
+    timeVariant.setValue(QTime::currentTime());
+    dataMap["currentTime"] = timeVariant;
+
+    return dataMap;
 }
 
 void TimerData::timerEvent(QTimerEvent *event)
 {
+    Q_EMIT sourceUpdated(readAll());
 }

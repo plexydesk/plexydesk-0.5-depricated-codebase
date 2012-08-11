@@ -21,6 +21,12 @@
 
 Clock::Clock(QObject *parent) : PlexyDesk::WidgetPlugin (parent)
 {
+    clock = new ClockWidget(QRectF(0, 0, 210, 210));
+
+    if (connectToDataSource("timerengine")) {
+        connect(dataSource(), SIGNAL(data(QVariantMap)), this, SLOT(onDataUpdated(QVariantMap)));
+    }
+
 }
 
 Clock::~Clock()
@@ -32,11 +38,8 @@ QGraphicsItem *Clock::view()
     return clock;
 }
 
-void Clock::onData(PlexyDesk::DataSource *source)
-{
-    connect(dataSource(), SIGNAL(data(const QVariantMap &)), this, SLOT(onDataUpdated(PlexyDesk::DataSource*)));
-}
-
 void Clock::onDataUpdated(const QVariantMap &data)
 {
+    if (clock)
+        clock->updateTime(data);
 }

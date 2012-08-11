@@ -98,7 +98,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void ready();
-    void data(const QVariantMap &data);
+    void sourceUpdated(const QVariantMap &sourceUpdated);
 };
 
 }

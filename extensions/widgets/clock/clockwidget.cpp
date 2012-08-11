@@ -64,9 +64,7 @@ void ClockWidget::drawClockWidget()
     //date = QPixmap(prefix+"date_field.png");
     /**seconds first **/
     _secs_hand = QPixmap().fromImage(QImage(prefix + "second-hand-long.png"));
-    sec_timer = new QTimer(this);
-    connect(sec_timer, SIGNAL(timeout()), this, SLOT(drawSeconds()));
-    sec_timer->start(1000);
+
     /** Mins after that **/
     _mins_hand = QPixmap().fromImage(QImage(prefix + "second-hand.png"));
     _hour_hand = QPixmap().fromImage(QImage(prefix + "second-hand.png"));
@@ -100,6 +98,16 @@ void ClockWidget::drawClockWidget()
     p.end();
     mLensePixmap = QPixmap().fromImage(lens);
     mGlossPixmap = QPixmap().fromImage(gloss);
+}
+
+void ClockWidget::updateTime(const QVariantMap &data)
+{
+    time = data["currentTime"].toTime();
+    _secs = 6.0 * time.second();
+    _mins = 6.0 * time.minute();
+    _hour = 30.0 * time.hour();
+
+    update();
 }
 
 ClockWidget::~ClockWidget()

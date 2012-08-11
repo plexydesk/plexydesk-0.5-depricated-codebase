@@ -34,13 +34,11 @@ public:
     virtual ~TimerData();
     void init();
     QVariantMap readAll();
-    bool dataIsReady();
-    void sourceUpdated();
 
     void timerEvent ( QTimerEvent *event);
 
 public Q_SLOTS:
-    void setArguments(QVariant &data);
+    void setArguments(QVariant &sourceUpdated);
 
 private:
     class Private;

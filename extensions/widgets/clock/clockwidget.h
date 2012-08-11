@@ -40,6 +40,8 @@ public:
     void setPath(QString);
     void drawClockWidget();
 
+    void updateTime(const QVariantMap &data);
+
 public slots:
     void drawSeconds();
 
