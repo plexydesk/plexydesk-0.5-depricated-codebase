@@ -2,7 +2,6 @@
 #ifndef PLEXY_WIDGET_PLUGIN_H
 #define PLEXY_WIDGET_PLUGIN_H
 
-#include <abstractsource.h>
 #include <datasource.h>
 #include <plexy.h>
 
@@ -38,12 +37,12 @@ class QGraphicsItem;
 */
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT WidgetPlugin : public AbstractSource
+class PLEXYDESK_EXPORT WidgetPlugin : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit WidgetPlugin(QObject *parent = 0);
+    WidgetPlugin();
     virtual ~WidgetPlugin();
     virtual QGraphicsItem *view() = 0;
     virtual QStringList visibleActions() const;

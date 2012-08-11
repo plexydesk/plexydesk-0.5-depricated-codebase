@@ -4,13 +4,13 @@
 #include <plexy.h>
 #include <abstractplugininterface.h>
 
-class PLEXYDESK_EXPORT AuthInterface : public PlexyDesk::AbstractPluginInterface
+class PLEXYDESK_EXPORT AuthInterface : public QObject, public PlexyDesk::AbstractPluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
 public :
-    PlexyDesk::AbstractSource *instance();
+   QObject *instance();
 };
 
 #endif

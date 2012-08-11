@@ -24,7 +24,7 @@
 #include <abstractplugininterface.h>
 #include <QtNetwork>
 
-class RestInterface : public PlexyDesk::AbstractPluginInterface
+class RestInterface : public QObject, public PlexyDesk::AbstractPluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
@@ -33,7 +33,7 @@ public :
     virtual ~RestInterface() {}
 
     /* this will return a valid data plugin pointer*/
-    PlexyDesk::AbstractSource *instance();
+    QObject *instance();
 
 };
 

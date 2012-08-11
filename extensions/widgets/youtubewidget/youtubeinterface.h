@@ -6,14 +6,14 @@
 #include <abstractplugininterface.h>
 
 
-class YouTubeInterface : public PlexyDesk::AbstractPluginInterface
+class YouTubeInterface : public QObject, public PlexyDesk::AbstractPluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
 public :
         YouTubeInterface(QObject *object = 0);
-        PlexyDesk::AbstractSource *instance();
+        QObject *instance();
 };
 
 #endif

@@ -3,6 +3,7 @@ ADD_SUBDIRECTORY(clock)
 SET(clocksourceFiles
     clock.cpp
     clockwidget.cpp
+    clockinterface.cpp
     )
 
 SET(headerFiles
@@ -26,10 +27,6 @@ SET(sourceFiles
 
 SET(libs
     ${PLEXY_UI_CORE_LIBRARY}
-    ${QT_QTGUI_LIBRARY}
-    ${OPENGL_LIBRARIES}
-    ${QT_QTCORE_LIBRARY}
-    ${QT_QTOPENGL_LIBRARY}
     )
 
 ADD_LIBRARY(plexyclock SHARED ${sourceFiles} ${QT_MOC_SRCS})

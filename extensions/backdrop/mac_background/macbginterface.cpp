@@ -30,7 +30,7 @@ MacBackgroundPlugin::~MacBackgroundPlugin()
 {
 }
 
-PlexyDesk::AbstractSource *MacBackgroundPlugin::instance()
+QObject *MacBackgroundPlugin::instance()
 {
     return new MacBackgroundSource(this);
 }

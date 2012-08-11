@@ -23,7 +23,7 @@
 
 #include <desktopwidget.h>
 
-#include <QTime>
+#include <QTimer>
 
 class ClockWidget : public PlexyDesk::DesktopWidget
 {
@@ -41,6 +41,7 @@ public:
     void drawClockWidget();
 public slots:
     void drawSeconds();
+    void testSlot();
 
 private:
     QTimer *sec_timer;

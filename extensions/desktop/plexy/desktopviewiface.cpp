@@ -27,7 +27,7 @@ DesktopViewInterface::~DesktopViewInterface()
 {
 }
 
-PlexyDesk::AbstractSource *DesktopViewInterface::instance()
+QObject *DesktopViewInterface::instance()
 {
     return new DesktopViewPluginImpl(this);
 }

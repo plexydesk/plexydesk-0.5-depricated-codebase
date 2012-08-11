@@ -26,13 +26,13 @@
 #include "imageitem.h"
 
 
-class  Interface : public PlexyDesk::AbstractPluginInterface
+class  Interface : public QObject, public PlexyDesk::AbstractPluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
 public :
-    PlexyDesk::AbstractSource *instance();
+    QObject *instance();
 };
 
 #endif

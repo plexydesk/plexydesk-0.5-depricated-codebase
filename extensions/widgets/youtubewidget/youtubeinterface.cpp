@@ -8,7 +8,7 @@ YouTubeInterface::YouTubeInterface(QObject *object)
 {
 }
 
-PlexyDesk::AbstractSource *YouTubeInterface::instance()
+QObject *YouTubeInterface::instance()
 {
     return new YouTube(this);
 }

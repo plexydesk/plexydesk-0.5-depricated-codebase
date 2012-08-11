@@ -24,7 +24,7 @@
 #include <abstractplugininterface.h>
 
 
-class MacBackgroundPlugin : public PlexyDesk::AbstractPluginInterface
+class MacBackgroundPlugin : public QObject, public PlexyDesk::AbstractPluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
@@ -32,7 +32,7 @@ class MacBackgroundPlugin : public PlexyDesk::AbstractPluginInterface
 public:
     MacBackgroundPlugin(QObject *object = 0);
     virtual ~MacBackgroundPlugin();
-    virtual PlexyDesk::AbstractSource *instance();
+    virtual QObject *instance();
 };
 
 #endif

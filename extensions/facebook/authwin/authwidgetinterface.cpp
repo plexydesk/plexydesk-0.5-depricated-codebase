@@ -2,10 +2,9 @@
 #include "authplugin.h"
 #include <QtPlugin>
 
-
-PlexyDesk::AbstractSource *AuthInterface::instance()
+QObject *AuthInterface::instance()
 {
-    return new AuthPlugin(this);
+    return new AuthPlugin();
 }
 
 Q_EXPORT_PLUGIN2(plexyauth, AuthInterface)

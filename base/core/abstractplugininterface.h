@@ -20,17 +20,19 @@
 #define PLEXY_BASE_PLUGIN_h
 
 #include <plexy.h>
-#include <abstractsource.h>
+#include <QObject>
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT AbstractPluginInterface : public QObject
+
+class PLEXYDESK_EXPORT AbstractPluginInterface
 {
-    Q_OBJECT
 
 public:
-    virtual AbstractSource *instance() = 0;
+    virtual ~AbstractPluginInterface(){}
+    virtual QObject *instance() = 0;
 };
+
 } // namespace PlexyDesk
 
 Q_DECLARE_INTERFACE(PlexyDesk::AbstractPluginInterface, "org.plexydesk.PluginInterface")

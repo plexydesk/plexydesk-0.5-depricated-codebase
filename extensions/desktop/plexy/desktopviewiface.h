@@ -24,14 +24,14 @@
 #include <abstractplugininterface.h>
 
 
-class DesktopViewInterface : public PlexyDesk::AbstractPluginInterface
+class DesktopViewInterface : public QObject, public PlexyDesk::AbstractPluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
 
 public:
     virtual ~DesktopViewInterface();
-    virtual PlexyDesk::AbstractSource *instance();
+    virtual QObject *instance();
 };
 
 #endif

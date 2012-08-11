@@ -24,7 +24,7 @@
 #include "imageplugin.h"
 #include <abstractsource.h>
 
-PlexyDesk::AbstractSource *Interface::instance()
+QObject *Interface::instance()
 {
     return new ImagePlugin();
 }

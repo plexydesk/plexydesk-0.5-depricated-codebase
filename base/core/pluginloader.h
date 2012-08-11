@@ -21,6 +21,7 @@
 
 #include <abstractplugininterface.h>
 #include <plexy.h>
+#include <QHash>
 
 namespace PlexyDesk
 {
@@ -38,7 +39,7 @@ public:
     static PluginLoader *getInstance();
 
     QStringList listPlugins(const QString &types);
-    AbstractSource *instance(const QString &name);
+    QObject *instance(const QString &name);
     void scanForPlugins();
     void setPluginPrefix(const QString &path);
     void setPluginInfoPrefix(const QString &path);

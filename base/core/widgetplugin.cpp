@@ -12,7 +12,7 @@ public:
     DataSource *mDataSource;
 };
 
-WidgetPlugin::WidgetPlugin(QObject *parent) : AbstractSource(parent), d(new PrivateWidgetPlugin)
+WidgetPlugin::WidgetPlugin() : d(new PrivateWidgetPlugin)
 {
     d->mDataSource = 0;
 }

@@ -24,7 +24,7 @@
 #include <abstractplugininterface.h>
 
 
-class ClassicBackdrop : public PlexyDesk::AbstractPluginInterface
+class ClassicBackdrop : public QObject, public PlexyDesk::AbstractPluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
@@ -32,7 +32,7 @@ class ClassicBackdrop : public PlexyDesk::AbstractPluginInterface
 public:
     ClassicBackdrop(QObject *object = 0);
     virtual ~ClassicBackdrop();
-    virtual PlexyDesk::AbstractSource *instance();
+    virtual QObject *instance();
 };
 
 #endif

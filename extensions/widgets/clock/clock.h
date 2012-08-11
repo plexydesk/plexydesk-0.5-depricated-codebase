@@ -22,19 +22,27 @@
 #include <plexy.h>
 #include <widgetplugin.h>
 #include <datasource.h>
+#include <QTimer>
+#include "clockwidget.h"
 
 
 class Clock : public PlexyDesk::WidgetPlugin
 {
     Q_OBJECT
+
 public:
-    explicit Clock(QObject *object = 0);
+    Clock();
     virtual ~Clock();
     QGraphicsItem *view();
 
-private Q_SLOTS:
+public slots:
     void onData(PlexyDesk::DataSource *source);
     void onDataUpdated(const QVariantMap &);
+    void goData();
+
+private:
+    QTimer *mTimer;
+    ClockWidget *clock;
 };
 
 

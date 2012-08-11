@@ -22,7 +22,7 @@
 #include "interface.h"
 #include "folderplugin.h"
 
-PlexyDesk::AbstractSource *Interface::instance()
+QObject *Interface::instance()
 {
     return new FolderPlugin();
 }

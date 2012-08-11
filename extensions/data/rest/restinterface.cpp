@@ -21,7 +21,7 @@
 #include <desktopwidget.h>
 #include <plexyconfig.h>
 
-PlexyDesk::AbstractSource *RestInterface::instance()
+QObject *RestInterface::instance()
 {
     /* this is the plugin we are returning since plexy core
        or other plugins will expect this pointer
