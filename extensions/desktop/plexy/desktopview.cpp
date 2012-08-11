@@ -351,6 +351,7 @@ void DesktopView::loadWindows()
 
 DesktopView::~DesktopView()
 {
+    d->mDesktopPluginsList.clear();
     delete d;
 }
 

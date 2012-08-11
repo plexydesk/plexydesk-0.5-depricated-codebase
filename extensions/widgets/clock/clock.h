@@ -38,7 +38,6 @@ public:
 public slots:
     void onData(PlexyDesk::DataSource *source);
     void onDataUpdated(const QVariantMap &);
-    void goData();
 
 private:
     QTimer *mTimer;

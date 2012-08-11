@@ -21,14 +21,7 @@
 
 Clock::Clock()
 {
-    connectToDataSource("timer");
-    connect(this, SIGNAL(data(const DataSource*)), this, SLOT(onData(DataSource*)));
-    mTimer = new QTimer();
-    clock = new ClockWidget(QRectF(0, 0, 210, 210));
-
-    connect(mTimer, SIGNAL(timeout()), clock, SLOT(testSlot()));
-    connect(mTimer, SIGNAL(timeout()), this, SLOT(goData()));
-    mTimer->start(1000);
+    connectToDataSource(web)
 }
 
 Clock::~Clock()
@@ -42,16 +35,9 @@ QGraphicsItem *Clock::view()
 
 void Clock::onData(PlexyDesk::DataSource *source)
 {
-    qDebug() << Q_FUNC_INFO << "Timer Data Source Recived";
     connect(dataSource(), SIGNAL(data(const QVariantMap &)), this, SLOT(onDataUpdated(PlexyDesk::DataSource*)));
 }
 
 void Clock::onDataUpdated(const QVariantMap &data)
 {
-    qDebug() << Q_FUNC_INFO << data;
-}
-
-void Clock::goData()
-{
-    qDebug() << Q_FUNC_INFO;
 }

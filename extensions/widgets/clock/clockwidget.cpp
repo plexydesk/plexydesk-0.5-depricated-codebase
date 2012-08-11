@@ -116,11 +116,6 @@ void ClockWidget::drawSeconds()
     update();
 }
 
-void ClockWidget::testSlot()
-{
-    qDebug() << Q_FUNC_INFO;
-}
-
 void ClockWidget::paintFrontView(QPainter *p, const QRectF &r)
 {
     p->setRenderHint(QPainter::HighQualityAntialiasing);

@@ -39,9 +39,9 @@ public:
 
     void setPath(QString);
     void drawClockWidget();
+
 public slots:
     void drawSeconds();
-    void testSlot();
 
 private:
     QTimer *sec_timer;
