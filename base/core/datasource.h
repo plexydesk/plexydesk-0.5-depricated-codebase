@@ -20,8 +20,10 @@
 #ifndef PLEXY_DATA_PLUGIN_H
 #define PLEXY_DATA_PLUGIN_H
 
-#include <abstractsource.h>
 #include <plexy.h>
+#include <QObject>
+#include <QVariantMap>
+#include <QStringList>
 
 /*!
    \class PlexyDesk::DataSource
@@ -78,12 +80,12 @@
 namespace PlexyDesk
 {
 
-class PLEXYDESK_EXPORT DataSource : public AbstractSource
+class PLEXYDESK_EXPORT DataSource : public QObject
 {
     Q_OBJECT
 
 public:
-    DataSource(QObject *object = 0) : AbstractSource(object){
+    DataSource(QObject *object = 0) : QObject(object){
     }
 
     virtual ~DataSource() {
