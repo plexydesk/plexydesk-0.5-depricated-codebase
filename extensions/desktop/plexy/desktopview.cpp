@@ -79,6 +79,7 @@ public:
     AbstractPluginInterface *bIface;
     BackgroundSource *mBackgroundSource;
     PlexyDesk::ThemepackLoader *mThemeLoader;
+    QList<WidgetPlugin *> mDesktopPluginsList;
 
     WidgetPlugin *mPhotoDialogProvider;
     DesktopWidget *mPhotoDialog;
@@ -406,7 +407,7 @@ void DesktopView::addExtension(const QString &name,
             connect(widget, SIGNAL(close()), this, SLOT(closeDesktopWidget()));
         }
     }
-   delete provider;
+    d->mDesktopPluginsList.append(provider);
 }
 
 // Small speed up , try if the speed is too low
