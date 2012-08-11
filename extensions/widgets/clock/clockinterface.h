@@ -33,7 +33,7 @@ class ClockInterface : public QObject, public PlexyDesk::AbstractPluginInterface
 public :
     QObject *instance()
     {
-        return new Clock();
+        return new Clock(this);
     }
 
 private:

@@ -42,8 +42,9 @@ class PLEXYDESK_EXPORT WidgetPlugin : public QObject
     Q_OBJECT
 
 public:
-    WidgetPlugin();
+    WidgetPlugin(QObject *parent = 0);
     virtual ~WidgetPlugin();
+
     virtual QGraphicsItem *view() = 0;
     virtual QStringList visibleActions() const;
     virtual void requestAction(const QString& actionName);

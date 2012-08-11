@@ -31,7 +31,7 @@ class Clock : public PlexyDesk::WidgetPlugin
     Q_OBJECT
 
 public:
-    Clock();
+    Clock(QObject *parent);
     virtual ~Clock();
     QGraphicsItem *view();
 

@@ -19,9 +19,8 @@
 #include "clock.h"
 #include "clockwidget.h"
 
-Clock::Clock()
+Clock::Clock(QObject *parent) : PlexyDesk::WidgetPlugin (parent)
 {
-    connectToDataSource(web)
 }
 
 Clock::~Clock()
