@@ -2,9 +2,9 @@
 #define PLEXY_YOUTUBE_H
 
 #include <plexy.h>
-#include <widgetplugin.h>
+#include <viewcontrollerplugin.h>
 
-class AuthPlugin : public PlexyDesk::WidgetPlugin
+class AuthPlugin : public PlexyDesk::ViewControllerPlugin
 {
     Q_OBJECT
 

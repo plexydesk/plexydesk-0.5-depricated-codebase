@@ -22,14 +22,14 @@
 #include <plexy.h>
 
 #include <abstractplugininterface.h>
-#include <widgetplugin.h>
+#include <viewcontrollerplugin.h>
 #include <themepackloader.h>
 #include <qmldesktopwidget.h>
 
 class QLineEdit;
 class QWidget;
 
-class FolderPlugin : public PlexyDesk::WidgetPlugin
+class FolderPlugin : public PlexyDesk::ViewControllerPlugin
 {
     Q_OBJECT
     Q_PROPERTY(QString dirSource READ dirSource WRITE setDirSource NOTIFY dirSourceChanged)

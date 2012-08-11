@@ -19,14 +19,13 @@
 #include "clock.h"
 #include "clockwidget.h"
 
-Clock::Clock(QObject *parent) : PlexyDesk::WidgetPlugin (parent)
+Clock::Clock(QObject *parent) : PlexyDesk::ViewControllerPlugin (parent)
 {
     clock = new ClockWidget(QRectF(0, 0, 210, 210));
 
     if (connectToDataSource("timerengine")) {
-        connect(dataSource(), SIGNAL(data(QVariantMap)), this, SLOT(onDataUpdated(QVariantMap)));
+        connect(dataSource(), SIGNAL(sourceUpdated(QVariantMap)), this, SLOT(onDataUpdated(QVariantMap)));
     }
-
 }
 
 Clock::~Clock()

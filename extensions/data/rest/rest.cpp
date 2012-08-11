@@ -71,9 +71,6 @@ void RestData::setArguments(QVariant &arg)
     } else if (type == POST) {
         d->manager->post(QNetworkRequest(url), par.toAscii());
     }
-
-    // TODO:
-    // handle errors
 }
 
 void RestData::replyFinished(QNetworkReply *reply)
