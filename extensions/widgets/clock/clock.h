@@ -43,5 +43,4 @@ private:
     ClockWidget *clock;
 };
 
-
 #endif

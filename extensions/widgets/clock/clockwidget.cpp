@@ -127,11 +127,11 @@ void ClockWidget::drawSeconds()
 void ClockWidget::paintFrontView(QPainter *p, const QRectF &r)
 {
     p->setRenderHint(QPainter::HighQualityAntialiasing);
-    //p->setCompositionMode(QPainter::CompositionMode_Source);
-    //p->fillRect(rect(), Qt::transparent);
+    p->setCompositionMode(QPainter::CompositionMode_Source);
+    p->fillRect(r, Qt::transparent);
     p->drawImage(QRectF(r.x(), r.y(), r.width(), r.height()), _clock_bg,
                  QRectF(0.0, 0.0, _clock_bg.width(), _clock_bg.height()));
-    //p->setCompositionMode(QPainter::CompositionMode_SourceOver);
+    p->setCompositionMode(QPainter::CompositionMode_SourceOver);
     p->setBackgroundMode(Qt::TransparentMode);
 
     p->save();
