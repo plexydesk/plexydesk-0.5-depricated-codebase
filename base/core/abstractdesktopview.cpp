@@ -17,8 +17,6 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
-#include <config.h>
-
 #include <QDir>
 #include <QtDebug>
 #include <QGLWidget>
@@ -28,7 +26,6 @@
 #include <QGraphicsGridLayout>
 #include <QGraphicsDropShadowEffect>
 
-#include <plexywindow.h>
 #include <abstractdesktopwidget.h>
 
 #include "abstractdesktopview.h"

@@ -24,7 +24,6 @@
 #include <QDebug>
 
 #include "pluginloader.h"
-#include "extensionfactory.h"
 
 namespace PlexyDesk
 {
