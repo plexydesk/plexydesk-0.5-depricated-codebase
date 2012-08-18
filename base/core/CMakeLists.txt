@@ -70,7 +70,7 @@ SET(headerFiles
    )
 
 SET(MOC_SRCS
-    abstractplugininterface.h
+    #abstractplugininterface.h
     abstractdesktopwidget.h
     backdropplugin.h
     abstractsource.h
@@ -87,17 +87,12 @@ QT4_WRAP_CPP(QT_MOC_SRCS ${MOC_SRCS})
 SET(sourceFiles
     ${sourceFiles}
     ${headerFiles}
-    ${dbus_SRCS}
     )
 
 SET(libs
     ${QT_QTGUI_LIBRARY}
-    ${OPENGL_LIBRARIES}
     ${QT_QTCORE_LIBRARY}
     ${QT_QTOPENGL_LIBRARY}
-    ${DBUS_LIB}
-    ${QT_QTNETWORK_LIBRARY}
-    ${QT_QTSVG_LIBRARY}
     )
 
 ADD_LIBRARY(${PLEXY_CORE_LIBRARY} SHARED ${sourceFiles} ${QT_MOC_SRCS})
