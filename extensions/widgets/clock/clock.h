@@ -39,7 +39,6 @@ public Q_SLOTS:
     void onDataUpdated(const QVariantMap &data);
 
 private:
-    QTimer *mTimer;
     ClockWidget *clock;
 };
 
