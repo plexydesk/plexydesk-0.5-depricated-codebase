@@ -85,7 +85,7 @@ class PLEXYDESK_EXPORT DataSource : public QObject
     Q_OBJECT
 
 public:
-    DataSource(QObject *object = 0) : QObject(object){
+    DataSource(QObject *object = 0) : QObject(object) {
     }
 
     virtual ~DataSource() {

@@ -30,6 +30,7 @@ Clock::Clock(QObject *parent) : PlexyDesk::ViewControllerPlugin (parent)
 
 Clock::~Clock()
 {
+    delete clock;
 }
 
 QGraphicsItem *Clock::view()
