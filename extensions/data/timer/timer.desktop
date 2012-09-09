@@ -1,0 +1,6 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Example Timer
+Type=Engine
+Comment=Provides timer service
+X-PLEXYDESK-Library=timerengine
