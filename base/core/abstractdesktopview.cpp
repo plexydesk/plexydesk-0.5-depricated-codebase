@@ -28,7 +28,7 @@
 #include <QGraphicsGridLayout>
 #include <QGraphicsDropShadowEffect>
 
-#include <plexywindow.h>
+
 #include <abstractdesktopwidget.h>
 
 #include "abstractdesktopview.h"
