@@ -47,7 +47,7 @@ class DesktopBaseUi::DesktopBaseUiPrivate
         QDesktopWidget *mDesktopWidget;
         QGraphicsScene *mScene;
         PlexyDesk::Config *mConfig;
-        QMap<int, AbstractDesktopView*> mViewList;
+        QMap<int, QGraphicsView*> mViewList;
 };
 
 
@@ -63,7 +63,7 @@ DesktopBaseUi::DesktopBaseUi(QWidget *parent) :
 
 DesktopBaseUi::~DesktopBaseUi()
 {
-    Q_FOREACH (AbstractDesktopView * view, d->mViewList.values()) {
+    Q_FOREACH (QGraphicsView * view, d->mViewList.values()) {
         if(view)
             delete view;
     }
@@ -109,7 +109,9 @@ void DesktopBaseUi::setup()
             continue;
         }
 
-        AbstractDesktopView *view = d->mViewPlugin->view(scene);
+        QObject *viewPlugin = d->mViewPlugin->view(scene);
+        QGraphicsView *view = qobject_cast<QGraphicsView *> (viewPlugin);
+
         if (!view) {
             continue;
         }
@@ -121,7 +123,7 @@ void DesktopBaseUi::setup()
         view->setWindowTitle(QString(PLEXYNAME));
 #endif
 
-        view->enableOpenGL(d->mConfig->isOpenGL());
+        ///view->enableOpenGL(d->mConfig->isOpenGL());
         view->move(d->mDesktopWidget->screenGeometry(i).x(),
                   d->mDesktopWidget->screenGeometry(i).y());
         view->setSceneRect (desktopScreenRect);
@@ -133,7 +135,7 @@ void DesktopBaseUi::setup()
         info.setDesktop(NETWinInfo::OnAllDesktops);
         info.setWindowType(NET::Desktop);
 #endif
-        view->showLayer(QLatin1String("Widgets"));
+        //view->showLayer(QLatin1String("Widgets"));
         d->mViewList[i] = view;
         QWidget *parentWidget = qobject_cast<QWidget*>(parent());
         if(parentWidget) {
@@ -161,7 +163,7 @@ void DesktopBaseUi::screenResized(int screen)
     if(!screen)
         return;
 
-    AbstractDesktopView *view = d->mViewList[screen];
+    QGraphicsView *view = d->mViewList[screen];
     QRect desktopScreenRect = d->mDesktopWidget->screenGeometry(screen);
 #ifdef Q_WS_WIN
     // A 1px hack to make the widget fullscreen and not covering the toolbar on Win

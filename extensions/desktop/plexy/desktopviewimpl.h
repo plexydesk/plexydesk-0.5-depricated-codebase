@@ -35,6 +35,7 @@
 #include <qmldesktopwidget.h>
 
 #include "desktopview.h"
+#include "plexydesktopview.h"
 #include "plexytray.h"
 
 class DesktopViewPluginImpl: public PlexyDesk::DesktopViewPlugin
@@ -46,7 +47,7 @@ public:
 
     virtual ~DesktopViewPluginImpl();
 
-    PlexyDesk::AbstractDesktopView *view(QGraphicsScene *scene);
+    QObject *view(QGraphicsScene *scene);
 
     void setRect (const QRect &rect);
 
@@ -54,7 +55,7 @@ Q_SIGNALS:
     void dataChange();
 
 private:
-    QList<DesktopView *> mViewList;
+    QList<PlexyDesktopView *> mViewList;
     PlexyTray *mTray;
 };
 
