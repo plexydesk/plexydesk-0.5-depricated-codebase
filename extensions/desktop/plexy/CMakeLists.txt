@@ -1,5 +1,6 @@
 SET(sourceFiles
     desktopview.cpp
+    plexydesktopview.cpp
     desktopviewiface.cpp
     desktopviewimpl.cpp
     plexytray.cpp
@@ -7,6 +8,7 @@ SET(sourceFiles
 
 SET(headerFiles
     desktopview.h
+    plexydesktopview.h
     desktopviewiface.h
     desktopviewimpl.h
     plexytray.h
@@ -14,6 +16,7 @@ SET(headerFiles
 
 SET(QTMOC_SRCS
     desktopview.h
+    plexydesktopview.h
     desktopviewimpl.h
     desktopviewiface.h
     plexytray.h

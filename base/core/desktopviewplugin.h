@@ -40,7 +40,7 @@ public:
 
     virtual ~DesktopViewPlugin(){}
 
-    virtual AbstractDesktopView *view(QGraphicsScene *scene) = 0;
+    virtual QObject *view(QGraphicsScene *scene) = 0;
 
     virtual void setRect (const QRect &rect) = 0;
 

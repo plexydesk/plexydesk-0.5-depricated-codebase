@@ -23,6 +23,7 @@
 #include <QDeclarativeContext>
 
 #include "desktopviewimpl.h"
+#include "plexydesktopview.h"
 #include <desktopwidget.h>
 #include <plexyconfig.h>
 
@@ -45,12 +46,12 @@ void  DesktopViewPluginImpl::setRect(const QRect &rect)
 {
 }
 
-PlexyDesk::AbstractDesktopView  *DesktopViewPluginImpl::view(QGraphicsScene *scene)
+QObject  *DesktopViewPluginImpl::view(QGraphicsScene *scene)
 {
-    DesktopView *view = new DesktopView(scene);
-    view->addWallpaperItem();
-    view->setThemePack(PlexyDesk::Config::getInstance()->themepackName());
-    view->registerPhotoDialog();
+    PlexyDesktopView *view = new PlexyDesktopView(scene);
+    //view->addWallpaperItem();
+    //view->setThemePack(PlexyDesk::Config::getInstance()->themepackName());
+    //view->registerPhotoDialog();
     mViewList.append(view);
 
 #ifdef Q_WS_WIN

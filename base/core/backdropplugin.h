@@ -52,6 +52,7 @@ public Q_SLOTS:
 Q_SIGNALS:
     void data(QVariant &value);
 };
+
 }
 
 #endif

@@ -39,14 +39,18 @@ public:
     enum {none, folder, qml, img};
 
     void addRender(QGraphicsScene *scene);
+
     void addExtension(const QString &name,
     const QString &layer = QLatin1String("Widgets"),
     const QPoint &pos = QPoint(0, 0),
     PlexyDesk::AbstractDesktopWidget::State state = PlexyDesk::AbstractDesktopWidget::DOCKED);
     void showLayer(const QString &name);
+
+
     void setThemePack(const QString &name);
     void addWallpaperItem();
     void registerPhotoDialog();
+
     PlexyDesk::ViewControllerPlugin *registerHandler(const QString &name, bool effects_on = false);
 
     void enableOpenGL(bool state);
