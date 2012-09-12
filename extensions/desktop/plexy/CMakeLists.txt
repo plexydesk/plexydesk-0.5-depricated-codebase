@@ -4,6 +4,8 @@ SET(sourceFiles
     desktopviewiface.cpp
     desktopviewimpl.cpp
     plexytray.cpp
+    fileiconwidget.cpp
+    iconwidgetview.cpp
     )
 
 SET(headerFiles
@@ -12,6 +14,8 @@ SET(headerFiles
     desktopviewiface.h
     desktopviewimpl.h
     plexytray.h
+    fileiconwidget.h
+    iconwidgetview.h
     )
 
 SET(QTMOC_SRCS
@@ -20,6 +24,8 @@ SET(QTMOC_SRCS
     desktopviewimpl.h
     desktopviewiface.h
     plexytray.h
+    fileiconwidget.h
+    iconwidgetview.h
     )
 
 QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})

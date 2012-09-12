@@ -4,20 +4,30 @@
 #include <pluginloader.h>
 #include <backdropplugin.h>
 #include <QGraphicsItem>
+#include <QGraphicsScene>
+
+#include "iconwidgetview.h"
+#include "fileiconwidget.h"
 
 
 class PlexyDesktopView::PrivatePlexyDesktopView
 {
 public:
     PrivatePlexyDesktopView() {}
-    ~PrivatePlexyDesktopView() {}
+    ~PrivatePlexyDesktopView()
+    {
+        mIconViews.clear();
+    }
+
+    IconWidgetView* addDirectory(const QString &path);
 
      PlexyDesk::BackgroundSource *mBackgroundSource;
      QGraphicsItem *mBackgroundItem;
+     QList<IconWidgetView *> mIconViews;
 };
 
-PlexyDesktopView::PlexyDesktopView(QGraphicsScene *scene, QWidget *parent) :
-    QGraphicsView(scene, parent),
+PlexyDesktopView::PlexyDesktopView(QGraphicsScene *parent_scene, QWidget *parent) :
+    QGraphicsView(parent_scene, parent),
     d(new PrivatePlexyDesktopView)
 {
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnBottomHint);
@@ -28,6 +38,14 @@ PlexyDesktopView::PlexyDesktopView(QGraphicsScene *scene, QWidget *parent) :
     d->mBackgroundItem = 0;
     d->mBackgroundSource = 0;
     setBackgroundSource("classicbackdrop");
+
+
+    // Load directory
+
+    IconWidgetView *view = d->addDirectory("");
+
+    scene()->addItem(view);
+    view->show();
 }
 
 bool PlexyDesktopView::setBackgroundSource(const QString &source_id)
@@ -45,7 +63,7 @@ bool PlexyDesktopView::setBackgroundSource(const QString &source_id)
         return 0;
 
     QRectF screenRect = scene()->sceneRect();
-    qDebug() << Q_FUNC_INFO << screenRect;
+
     d->mBackgroundSource->setRect (
                 QRect (screenRect.x(),
                        screenRect.y(),
@@ -59,4 +77,16 @@ bool PlexyDesktopView::setBackgroundSource(const QString &source_id)
     d->mBackgroundItem->show();
 
     return true;
+}
+
+IconWidgetView *PlexyDesktopView::PrivatePlexyDesktopView::addDirectory(const QString &path)
+{
+    //TODO Write a Stack Widget which can stack IconWidgetViews'
+    IconWidgetView *view = new IconWidgetView(QRectF(0.0, 0.0, 480.0, 320.0));
+
+    view->enableDefaultBackground(true);
+
+    mIconViews.append(view);
+
+    return view;
 }

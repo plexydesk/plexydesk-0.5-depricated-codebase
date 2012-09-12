@@ -7,13 +7,9 @@ class PlexyDesktopView : public QGraphicsView
 {
     Q_OBJECT
 public:
-    explicit PlexyDesktopView(QGraphicsScene *scene, QWidget *parent = 0);
+    explicit PlexyDesktopView(QGraphicsScene *parent_scene, QWidget *parent = 0);
 
     bool setBackgroundSource(const QString& source_id);
-    
-signals:
-    
-public slots:
 
 private:
     class PrivatePlexyDesktopView;
