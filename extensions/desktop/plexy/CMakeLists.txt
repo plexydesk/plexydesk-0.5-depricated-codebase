@@ -26,6 +26,7 @@ SET(QTMOC_SRCS
     plexytray.h
     fileiconwidget.h
     iconwidgetview.h
+
     )
 
 QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})
