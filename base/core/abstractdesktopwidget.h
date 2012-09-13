@@ -33,6 +33,7 @@ class PLEXYDESK_EXPORT AbstractDesktopWidget : public QGraphicsObject
     Q_ENUMS(State)
     Q_PROPERTY(QRectF rect READ boundingRect() WRITE setRect NOTIFY rectChanged)
     Q_PROPERTY(float rotation READ rotation WRITE setRotation NOTIFY stateChanged)
+    Q_PROPERTY(QPointF pos READ pos WRITE setPos)
 
 public :
     enum State {
