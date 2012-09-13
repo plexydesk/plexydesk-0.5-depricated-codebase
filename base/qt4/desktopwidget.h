@@ -24,6 +24,9 @@ public Q_SLOTS:
     void propertyAnimationForRotationDone();
     void pressHoldTimeOut();
 
+Q_SIGNALS:
+    void clicked();
+
 protected:
     virtual void paintRotatedView(QPainter *painter, const QRectF &rect);
     virtual void paintFrontView(QPainter *painter, const QRectF &rect);
