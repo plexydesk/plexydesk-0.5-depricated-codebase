@@ -15,6 +15,7 @@ public:
       */
     void setDirectoryPath(const QString &path);
 
+
 private:
     class PrivateIconWidgetView;
     PrivateIconWidgetView *const d;
