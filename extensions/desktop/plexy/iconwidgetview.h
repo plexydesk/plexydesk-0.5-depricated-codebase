@@ -8,6 +8,7 @@ class IconWidgetView : public PlexyDesk::ScrollWidget
     Q_OBJECT
 public:
     explicit IconWidgetView(const QRectF &rect, QGraphicsObject *parent = 0);
+    virtual ~IconWidgetView();
 
     /** \brief Sets the Directory to display
       This method will load the Directory DataSource and pass the
@@ -15,6 +16,10 @@ public:
       */
     void setDirectoryPath(const QString &path);
 
+public Q_SLOTS:
+    void onDirLoaded(const QString &path);
+    void onClicked(const QModelIndex & index);
+    void infoViewClicked();
 
 private:
     class PrivateIconWidgetView;

@@ -85,6 +85,7 @@ IconWidgetView *PlexyDesktopView::PrivatePlexyDesktopView::addDirectory(const QS
     IconWidgetView *view = new IconWidgetView(QRectF(0.0, 0.0, 480.0, 320.0));
 
     view->enableDefaultBackground(true);
+    view->setDirectoryPath(QDir::homePath() + QLatin1String("/Desktop/"));
 
     mIconViews.append(view);
 
