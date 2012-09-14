@@ -2,6 +2,7 @@
 #define PLEXYBASEUI_H
 
 #include <QWidget>
+#include <QGraphicsView>
 
 class DesktopBaseUi : public QWidget
 {
@@ -13,6 +14,8 @@ public:
     void setDesktopView (const QString &name);
 
     QRect desktopRect() const;
+
+    QList<QGraphicsView*> views() const;
 
 public Q_SLOTS:
     void screenResized(int screen);

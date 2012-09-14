@@ -18,7 +18,6 @@ int main(int argc, char **argv)
 {
     QApplication qtApp(argc, argv);
 
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     NSLog(@"Start PlexyDesk :MacUI \n");
 
     PlexyDesk::PluginLoader *loader =
@@ -31,51 +30,16 @@ int main(int argc, char **argv)
     qtApp.setWindowIcon(appIcon);
     qtApp.setApplicationName(QString(PLEXYNAME));
 
+    //PlexyDesk Base Desktop View
+    DesktopBaseUi * ui = new DesktopBaseUi();
 
-    NSWindow *macNSWindow =
-            [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, qtApp.desktop()->width() , qtApp.desktop()->height())
-            styleMask:NSBorderlessWindowMask
-            backing:NSBackingStoreBuffered defer:NO];
-    [macNSWindow setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
+    Q_FOREACH (QGraphicsView *child_desktop, ui->views()) {
+        NSView *_desktopView = reinterpret_cast<NSView *>(child_desktop->winId());
+        [[_desktopView window] setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
+        [[_desktopView window] setHasShadow:NO];
+        [[_desktopView window] setLevel:kCGDesktopIconWindowLevel + 1];
+        [[_desktopView window] makeKeyAndOrderFront:_desktopView];
+    }
 
-    QMacNativeWidget *nativeWidget = new QMacNativeWidget();
-    nativeWidget->move(0, 0);
-    nativeWidget->setPalette(QPalette(Qt::transparent));
-    nativeWidget->setAutoFillBackground(true);
-    QVBoxLayout *layout = new QVBoxLayout();
-    layout->setContentsMargins(0, 0, 0, 0);
-    //QPushButton *pushButton = new QPushButton("An Embedded Qt Button!", nativeWidget);
-    DesktopBaseUi * ui = new DesktopBaseUi(nativeWidget);
-    ui->setPalette(QPalette(Qt::transparent));
-    ui->setAutoFillBackground(true);
-    ui->setAttribute(Qt::WA_LayoutUsesWidgetRect); // Don't use the layout rect calculated from QMacStyle.
-    layout->addWidget(ui);
-    nativeWidget->setLayout(layout);
-
-    // Set this to false if you need a "close to tray" functionality when systray exists
-    QApplication::setQuitOnLastWindowClosed(true);
-
-    NSView *nativeWidgetView = reinterpret_cast<NSView *>(nativeWidget->winId());
-    NSView *contentView = [macNSWindow contentView];
-
-
-    [contentView setAutoresizesSubviews:YES];
-    [nativeWidgetView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
-    [nativeWidgetView setAutoresizesSubviews:YES];
-    // Add the nativeWidget to the window.
-    [contentView addSubview:nativeWidgetView positioned:NSWindowAbove relativeTo:nil];
-
-    [macNSWindow setBackgroundColor:[NSColor clearColor]], [macNSWindow setOpaque:NO];
-    NSView *uiView = reinterpret_cast<NSView *>(ui->winId());
-    nativeWidget->resize(ui->size());
-    [uiView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
-
-    nativeWidget->show();
-    ui->show();
-
-    [macNSWindow setHasShadow:NO];
-    [macNSWindow setLevel:kCGDesktopIconWindowLevel + 1];
-    [macNSWindow makeKeyAndOrderFront:macNSWindow];
-    [pool release];
     return qtApp.exec();
 }

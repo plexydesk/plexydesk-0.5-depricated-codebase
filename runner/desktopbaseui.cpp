@@ -189,3 +189,8 @@ QRect DesktopBaseUi::desktopRect() const
 
    return QRect (0, 0, total_width, total_height);
 }
+
+QList<QGraphicsView *> DesktopBaseUi::views() const
+{
+    return d->mViewList.values();
+}
