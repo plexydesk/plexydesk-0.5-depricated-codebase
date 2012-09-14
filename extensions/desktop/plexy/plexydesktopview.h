@@ -11,6 +11,11 @@ public:
 
     bool setBackgroundSource(const QString& source_id);
 
+protected:
+    virtual void dropEvent(QDropEvent *event);
+    virtual void dragEnterEvent (QDragEnterEvent * event);
+    virtual void dragMoveEvent (QDragMoveEvent * event);
+
 private:
     class PrivatePlexyDesktopView;
     PrivatePlexyDesktopView *const d;
