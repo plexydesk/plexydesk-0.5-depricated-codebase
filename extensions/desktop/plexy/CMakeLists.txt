@@ -6,6 +6,7 @@ SET(sourceFiles
     plexytray.cpp
     fileiconwidget.cpp
     iconwidgetview.cpp
+    plexygraphicsscene.cpp
     )
 
 SET(headerFiles
@@ -16,6 +17,7 @@ SET(headerFiles
     plexytray.h
     fileiconwidget.h
     iconwidgetview.h
+    plexygraphicsscene.h
     )
 
 SET(QTMOC_SRCS
@@ -26,7 +28,7 @@ SET(QTMOC_SRCS
     plexytray.h
     fileiconwidget.h
     iconwidgetview.h
-
+    plexygraphicsscene.h
     )
 
 QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})

@@ -8,6 +8,7 @@
 
 #include "iconwidgetview.h"
 #include "fileiconwidget.h"
+#include "plexygraphicsscene.h"
 
 
 class PlexyDesktopView::PrivatePlexyDesktopView
@@ -24,6 +25,7 @@ public:
      PlexyDesk::BackgroundSource *mBackgroundSource;
      QGraphicsItem *mBackgroundItem;
      QList<IconWidgetView *> mIconViews;
+     PlexyGraphicsScene *mScene;
 };
 
 PlexyDesktopView::PlexyDesktopView(QGraphicsScene *parent_scene, QWidget *parent) :
@@ -46,6 +48,8 @@ PlexyDesktopView::PlexyDesktopView(QGraphicsScene *parent_scene, QWidget *parent
 
     scene()->addItem(view);
     view->show();
+    setAcceptDrops(true);
+
 }
 
 bool PlexyDesktopView::setBackgroundSource(const QString &source_id)
@@ -77,6 +81,25 @@ bool PlexyDesktopView::setBackgroundSource(const QString &source_id)
     d->mBackgroundItem->show();
 
     return true;
+}
+
+void PlexyDesktopView::dropEvent(QDropEvent *event)
+{
+    qDebug() << Q_FUNC_INFO;
+    event->acceptProposedAction();
+    event->accept();
+}
+
+void PlexyDesktopView::dragEnterEvent(QDragEnterEvent *event)
+{
+    qDebug() << Q_FUNC_INFO;
+    event->acceptProposedAction();
+}
+
+void PlexyDesktopView::dragMoveEvent(QDragMoveEvent *event)
+{
+    qDebug() << Q_FUNC_INFO;
+    event->accept();
 }
 
 IconWidgetView *PlexyDesktopView::PrivatePlexyDesktopView::addDirectory(const QString &path)
