@@ -12,7 +12,6 @@ class IconWidgetView::PrivateIconWidgetView
 public:
     PrivateIconWidgetView() {}
     ~PrivateIconWidgetView() {
-
         delete mIconView;
         delete mInfoView;
         delete mSlideAnimation;
@@ -36,8 +35,10 @@ IconWidgetView::IconWidgetView(const QRectF &rect, QGraphicsObject *parent) :
     d->mIconView->setIconSize(QSize(64, 64));
     d->mIconView->setUniformItemSizes(true);
     d->mIconView->setGridSize(QSize(96, 96));
+    d->mIconView->setAcceptDrops(true);
+    d->mIconView->setDropIndicatorShown(true);
     ///hack until we have our own painting
-    d->mIconView->setStyleSheet("background-color: transparent; color : #ffffff");
+    d->mIconView->setStyleSheet(" border : 0 ; background-color: transparent; color : #ffffff");
 
     d->mWidgetProxy->setWidget(d->mIconView);
 
@@ -62,7 +63,6 @@ IconWidgetView::IconWidgetView(const QRectF &rect, QGraphicsObject *parent) :
     d->mInfoView->show();
 
     //slide animation for info view
-
     d->mSlideAnimation = new QPropertyAnimation(d->mInfoView, "pos");
     d->mSlideAnimation->setDuration(1000);
     d->mSlideAnimation->setStartValue(infoViewPos);
