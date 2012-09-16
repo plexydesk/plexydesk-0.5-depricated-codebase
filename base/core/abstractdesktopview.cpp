@@ -28,12 +28,11 @@
 #include <QGraphicsGridLayout>
 #include <QGraphicsDropShadowEffect>
 
-
 #include <abstractdesktopwidget.h>
+#include <viewcontrollerplugin.h>
+#include <pluginloader.h>
 
 #include "abstractdesktopview.h"
-
-
 
 /**
   \class PlexyDesk::AbstractDesktopView
@@ -61,6 +60,28 @@
 namespace PlexyDesk
 {
 
+class AbstractDesktopView::PrivateAbstractDesktopView
+{
+public:
+    PrivateAbstractDesktopView() {}
+    ~PrivateAbstractDesktopView() {}
+
+    ViewControllerPlugin *mDefaultViewController;
+    QGraphicsItem *mBackgroundItem;
+};
+
+AbstractDesktopView::AbstractDesktopView(QGraphicsScene *scene, QWidget *parent) :
+    QGraphicsView(scene, parent), d(new PrivateAbstractDesktopView)
+{
+    d->mDefaultViewController = 0;
+    d->mBackgroundItem = 0;
+}
+
+AbstractDesktopView::~AbstractDesktopView()
+{
+}
+
+
 void AbstractDesktopView::enableOpenGL(bool state)
 {
     if (state) {
@@ -76,6 +97,28 @@ void AbstractDesktopView::enableOpenGL(bool state)
         setOptimizationFlag(QGraphicsView::DontClipPainter);
         setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     }
+}
+
+bool AbstractDesktopView::setBackgroundController(const QString &controller_name)
+{
+    //TODO: error handling
+    // delete the current background source before setting a new one
+    if (d->mDefaultViewController)
+        return 0;
+
+    d->mDefaultViewController =
+            qobject_cast<PlexyDesk::ViewControllerPlugin*> (PlexyDesk::PluginLoader::getInstance()->instance(controller_name));
+
+    if (!d->mDefaultViewController)
+        return 0;
+
+    d->mBackgroundItem = d->mDefaultViewController->view();
+
+    scene()->addItem(d->mBackgroundItem);
+
+    d->mBackgroundItem->show();
+
+    return true;
 }
 
 void AbstractDesktopView::showLayer(const QString &layer)
