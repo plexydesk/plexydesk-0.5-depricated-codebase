@@ -33,25 +33,19 @@
 #include <backdropplugin.h>
 #include <themepackloader.h>
 #include <qmldesktopwidget.h>
+#include <viewcontrollerplugin.h>
 
-class BgPlugin : public PlexyDesk::BackgroundSource
+class BgPlugin : public PlexyDesk::ViewControllerPlugin
 {
     Q_OBJECT
 
 public:
     BgPlugin(QObject *object = 0);
     virtual ~BgPlugin();
-    QGraphicsItem *item();
-    void setRect (const QRect &rect);
+
+    QGraphicsItem *view();
 
 public Q_SLOTS:
-    void data(QVariant &);
-    void setArguments(QVariant &) {
-    }
-    void changeWallpaperItem();
-
-Q_SIGNALS:
-    void dataChange();
 
 private:
     QPixmap mBackgroundCache;
@@ -62,6 +56,7 @@ private:
     PlexyDesk::QmlDesktopWidget *mBackgroundItem;
     QGraphicsPixmapItem *mBackgroundItemPixmap;
     QRect mDesktopScreenRect;
+    QDesktopWidget *mQtDesktopWidget;
 };
 
 #endif //PLEXY_CLASSIC_BACKDROP_H
