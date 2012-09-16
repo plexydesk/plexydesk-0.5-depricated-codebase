@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QGraphicsView>
+#include <abstractdesktopview.h>
 
 class DesktopBaseUi : public QWidget
 {
@@ -15,7 +16,7 @@ public:
 
     QRect desktopRect() const;
 
-    QList<QGraphicsView*> views() const;
+    QList<PlexyDesk::AbstractDesktopView*> views() const;
 
 public Q_SLOTS:
     void screenResized(int screen);
