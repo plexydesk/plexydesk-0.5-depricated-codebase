@@ -35,19 +35,24 @@ public:
     AbstractDesktopView(QGraphicsScene *scene = new QGraphicsScene(), QWidget *parent = 0);
     virtual ~AbstractDesktopView();
 
+    /*
     virtual void addExtension(const QString &name,
                               const QString &layer = QLatin1String("Widgets"),
                               const QPoint &pos = QPoint(0, 0),
                               PlexyDesk::AbstractDesktopWidget::State state = PlexyDesk::AbstractDesktopWidget::DOCKED) = 0;
+   */
 
     virtual void enableOpenGL(bool);
 
     virtual bool setBackgroundController(const QString &controller_name);
 
-    virtual void showLayer(const QString &name) = 0;
-
 Q_SIGNALS:
     void closeApplication();
+
+private:
+    virtual void dropEvent(QDropEvent *event);
+    virtual void dragEnterEvent(QDragEnterEvent *event);
+    virtual void dragMoveEvent(QDragMoveEvent *event);
 
 private:
     class PrivateAbstractDesktopView;

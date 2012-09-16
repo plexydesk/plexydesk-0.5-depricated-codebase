@@ -109,24 +109,32 @@ bool AbstractDesktopView::setBackgroundController(const QString &controller_name
     d->mDefaultViewController =
             qobject_cast<PlexyDesk::ViewControllerPlugin*> (PlexyDesk::PluginLoader::getInstance()->instance(controller_name));
 
-    if (!d->mDefaultViewController)
+    if (!d->mDefaultViewController) {
+        qWarning() << Q_FUNC_INFO << "Error Loading " << controller_name << " Controller";
         return 0;
+    }
 
     d->mBackgroundItem = d->mDefaultViewController->view();
-
     scene()->addItem(d->mBackgroundItem);
-
     d->mBackgroundItem->show();
+    d->mBackgroundItem->setZValue(-1);
 
     return true;
 }
 
-void AbstractDesktopView::showLayer(const QString &layer)
+void AbstractDesktopView::dropEvent(QDropEvent *event)
 {
-    Q_UNUSED(layer);
+    event->acceptProposedAction();
 }
 
-/*
+void AbstractDesktopView::dragEnterEvent(QDragEnterEvent *event)
+{
+    event->accept();
+}
 
- */
+void AbstractDesktopView::dragMoveEvent(QDragMoveEvent *event)
+{
+    event->accept();
+}
+
 }
