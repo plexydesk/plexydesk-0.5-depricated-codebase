@@ -6,6 +6,7 @@
 #include <plexy.h>
 
 class QGraphicsItem;
+class QDropEvent;
 
 /*!
 
@@ -46,8 +47,12 @@ public:
     virtual ~ViewControllerPlugin();
 
     virtual QGraphicsItem *view() = 0;
+
     virtual QStringList visibleActions() const;
-    virtual void requestAction(const QString& actionName);
+    virtual void requestAction(const QString& actionName, const QVariantMap &args);
+
+    virtual void handleDropEvent(QDropEvent *event);
+
     virtual DataSource *dataSource();
 
 protected:
