@@ -1,5 +1,6 @@
 #include <viewcontrollerplugin.h>
 #include <pluginloader.h>
+#include <QDropEvent>
 
 namespace PlexyDesk
 {
@@ -27,9 +28,13 @@ QStringList ViewControllerPlugin::visibleActions() const
     return QStringList();
 }
 
-void ViewControllerPlugin::requestAction(const QString &actionName)
+void ViewControllerPlugin::requestAction(const QString &actionName, const QVariantMap &args)
 {
     Q_EMIT actionComleted(false, QString("Invalid Action"));
+}
+
+void ViewControllerPlugin::handleDropEvent(QDropEvent *event)
+{
 }
 
 DataSource *ViewControllerPlugin::dataSource()
