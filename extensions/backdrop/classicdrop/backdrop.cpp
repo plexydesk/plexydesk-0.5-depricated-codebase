@@ -121,8 +121,6 @@ void BackgroundController::handleDropEvent(QDropEvent *event)
 
         QFileInfo info(droppedFile);
 
-        qDebug() << Q_FUNC_INFO << droppedFile;
-
         if ( !info.isDir() && !QPixmap(droppedFile).isNull() ) {
             if (mBackgroundPixmap)
                 delete mBackgroundPixmap;
