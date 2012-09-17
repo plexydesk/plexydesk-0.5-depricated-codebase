@@ -32,7 +32,7 @@ ClassicBackdrop::~ClassicBackdrop()
 
 QObject *ClassicBackdrop::instance()
 {
-    return new BgPlugin(this);
+    return new BackgroundController(this);
 }
 
 

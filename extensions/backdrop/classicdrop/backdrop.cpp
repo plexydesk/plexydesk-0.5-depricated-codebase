@@ -27,7 +27,7 @@
 #include <desktopwidget.h>
 #include <plexyconfig.h>
 
-BgPlugin::BgPlugin(QObject *object)
+BackgroundController::BackgroundController(QObject *object)
     : PlexyDesk::ViewControllerPlugin(object),
       mQtDesktopWidget(new QDesktopWidget),
       mThemePack(new PlexyDesk::ThemepackLoader("default", this)),
@@ -46,7 +46,7 @@ BgPlugin::BgPlugin(QObject *object)
 #endif
 }
 
-BgPlugin::~BgPlugin()
+BackgroundController::~BackgroundController()
 {
     if (mBackgroundItem) {
         delete mBackgroundItem;
@@ -68,7 +68,7 @@ BgPlugin::~BgPlugin()
         delete mQtDesktopWidget;
 }
 
-QGraphicsItem *BgPlugin::view()
+QGraphicsItem *BackgroundController::view()
 {
     if (mBackgroundItem == NULL) {
         QSize desktopSize;
@@ -86,7 +86,7 @@ QGraphicsItem *BgPlugin::view()
                 this, SLOT(changeWallpaperItem()));
 
         mBackgroundItemPixmap = new QGraphicsPixmapItem(mBackgroundCache);
-        mBackgroundItemPixmap->setCacheMode(QGraphicsItem::ItemCoordinateCache);
+        mBackgroundItemPixmap->setCacheMode(QGraphicsItem::NoCache);
 
         delete mBackgroundPixmap;
         mBackgroundPixmap = 0;
@@ -95,3 +95,53 @@ QGraphicsItem *BgPlugin::view()
     
     return NULL;
 }
+
+QStringList BackgroundController::visibleActions() const
+{
+    QStringList actions;
+    actions << QLatin1String ("Change Background");
+
+    return actions;
+}
+
+void BackgroundController::requestAction(const QString &actionName, const QVariantMap &args)
+{
+    if (actionName == "Change Background") {
+        //TODO change background
+    }
+}
+
+void BackgroundController::handleDropEvent(QDropEvent *event)
+{
+    ///TODO create a New Image Browser UI
+    //for now just set the pixmap picture
+
+    if ( event->mimeData()->urls().count() >= 0 ) {
+        const QString droppedFile = event->mimeData()->urls().value(0).toLocalFile();
+
+        QFileInfo info(droppedFile);
+
+        qDebug() << Q_FUNC_INFO << droppedFile;
+
+        if ( !info.isDir() && !QPixmap(droppedFile).isNull() ) {
+            if (mBackgroundPixmap)
+                delete mBackgroundPixmap;
+
+            QSize desktopSize = mDesktopScreenRect.size();
+#ifdef Q_WS_WIN
+            // A 1px hack to make the widget fullscreen and not covering the toolbar on Win
+            desktopSize.setHeight(desktopSize.height() - 1);
+#endif
+            mBackgroundItemPixmap->setCacheMode(QGraphicsItem::NoCache);
+            mBackgroundPixmap = new QPixmap(desktopSize.width(), desktopSize.height());
+            mBackgroundPixmap->load(droppedFile);
+            mBackgroundItemPixmap->setPixmap(mBackgroundPixmap->scaled(desktopSize.width(), desktopSize.height(),
+                                                                       Qt::IgnoreAspectRatio,
+                                                                       Qt::SmoothTransformation));
+
+            delete mBackgroundPixmap;
+            mBackgroundPixmap = 0;
+        }
+      }
+}
+

@@ -35,15 +35,20 @@
 #include <qmldesktopwidget.h>
 #include <viewcontrollerplugin.h>
 
-class BgPlugin : public PlexyDesk::ViewControllerPlugin
+class BackgroundController : public PlexyDesk::ViewControllerPlugin
 {
     Q_OBJECT
 
 public:
-    BgPlugin(QObject *object = 0);
-    virtual ~BgPlugin();
+    BackgroundController(QObject *object = 0);
+    virtual ~BackgroundController();
 
     QGraphicsItem *view();
+
+    QStringList visibleActions() const;
+    void requestAction(const QString& actionName, const QVariantMap &args);
+
+    void handleDropEvent(QDropEvent *event);
 
 public Q_SLOTS:
 
