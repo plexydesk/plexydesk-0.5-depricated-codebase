@@ -64,5 +64,5 @@ QObject  *DesktopViewPluginImpl::view(QGraphicsScene *scene)
            mTray = new PlexyTray(view->window(), icon);
     }
 #endif
-    return view;
+       return view;
 }
