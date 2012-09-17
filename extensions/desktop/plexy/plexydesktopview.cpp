@@ -43,24 +43,6 @@ PlexyDesktopView::PlexyDesktopView(QGraphicsScene *parent_scene, QWidget *parent
 
 }
 
-void PlexyDesktopView::dropEvent(QDropEvent *event)
-{
-    qDebug() << Q_FUNC_INFO;
-    event->acceptProposedAction();
-}
-
-void PlexyDesktopView::dragEnterEvent(QDragEnterEvent *event)
-{
-    qDebug() << Q_FUNC_INFO;
-    event->acceptProposedAction();
-}
-
-void PlexyDesktopView::dragMoveEvent(QDragMoveEvent *event)
-{
-    qDebug() << Q_FUNC_INFO;
-    event->accept();
-}
-
 IconWidgetView *PlexyDesktopView::PrivatePlexyDesktopView::addDirectory(const QString &path)
 {
     //TODO Write a Stack Widget which can stack IconWidgetViews'

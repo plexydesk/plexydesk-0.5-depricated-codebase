@@ -10,11 +10,6 @@ class PlexyDesktopView : public PlexyDesk::AbstractDesktopView
 public:
     explicit PlexyDesktopView(QGraphicsScene *parent_scene, QWidget *parent = 0);
 
-protected:
-    virtual void dropEvent(QDropEvent *event);
-    virtual void dragEnterEvent (QDragEnterEvent *event);
-    virtual void dragMoveEvent (QDragMoveEvent *event);
-
 private:
     class PrivatePlexyDesktopView;
     PrivatePlexyDesktopView *const d;
