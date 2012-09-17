@@ -22,6 +22,7 @@
 
 #include <plexy.h>
 #include <QtGui>
+#include <viewcontrollerplugin.h>
 
 class QGraphicsObject;
 
@@ -57,6 +58,9 @@ public :
     void setRotation(float angle);
 
     void setChildWidetVisibility(bool show);
+
+    void setController(ViewControllerPlugin *view_controller);
+    ViewControllerPlugin * controller() const;
 
      /**
      * \brief Sets a label for the widget

@@ -79,7 +79,7 @@ namespace PlexyDesk
 class AbstractDesktopWidget::PrivateAbstractDesktopWidget
 {
 public:
-    PrivateAbstractDesktopWidget() {
+    PrivateAbstractDesktopWidget() : mController(0) {
     }
     ~PrivateAbstractDesktopWidget() {
     }
@@ -95,6 +95,8 @@ public:
     QRectF mDockRect;
     QRectF mContentRect;
     QRectF mBoundingRect;
+
+    ViewControllerPlugin *mController;
 };
 
 
@@ -257,6 +259,16 @@ void AbstractDesktopWidget::setChildWidetVisibility(bool show)
     Q_FOREACH(QGraphicsItem *item, this->childItems()) {
         (show) ? item->show() : item->hide();
     }
+}
+
+void AbstractDesktopWidget::setController(ViewControllerPlugin *view_controller)
+{
+    d->mController = view_controller;
+}
+
+ViewControllerPlugin *AbstractDesktopWidget::controller() const
+{
+    return d->mController;
 }
 
 } //namespace PlexyDesk
