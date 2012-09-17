@@ -81,7 +81,6 @@ AbstractDesktopView::~AbstractDesktopView()
 {
 }
 
-
 void AbstractDesktopView::enableOpenGL(bool state)
 {
     if (state) {
@@ -103,6 +102,7 @@ bool AbstractDesktopView::setBackgroundController(const QString &controller_name
 {
     //TODO: error handling
     // delete the current background source before setting a new one
+
     if (d->mDefaultViewController)
         return 0;
 
@@ -124,6 +124,29 @@ bool AbstractDesktopView::setBackgroundController(const QString &controller_name
 
 void AbstractDesktopView::dropEvent(QDropEvent *event)
 {
+    if (this->scene()) {
+        QList<QGraphicsItem *> items = scene()->items(event->pos());
+
+        Q_FOREACH(QGraphicsItem *item, items) {
+
+            QGraphicsObject *itemObject = item->toGraphicsObject();
+            if (!itemObject)
+                continue;
+
+            AbstractDesktopWidget *widget = qobject_cast<AbstractDesktopWidget*> (itemObject);
+
+            if (!widget || !widget->controller() || (widget->controller() == d->mDefaultViewController))
+                continue;
+
+            widget->controller()->handleDropEvent(event);
+            return;
+        }
+    }
+
+    if (d->mDefaultViewController) {
+        d->mDefaultViewController->handleDropEvent(event);
+    }
+
     event->acceptProposedAction();
 }
 
