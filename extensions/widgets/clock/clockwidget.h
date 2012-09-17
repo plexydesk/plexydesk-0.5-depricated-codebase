@@ -37,6 +37,8 @@ public:
     void paintDockView(QPainter *painter, const QRectF &rect);
     void paintRotatedView(QPainter *painter, const QRectF &rect);
 
+    void preRenderClockImages();
+
     void setPath(QString);
     void drawClockWidget();
 
@@ -79,6 +81,14 @@ private:
     QPixmap mLensePixmap;
     QPixmap mGlossPixmap;
     QPixmap date;
+
+    /*new svg clock */
+
+    QPixmap mClockBackFace;
+    QPixmap mClockMinuteHand;
+    QPixmap mClockSecondHand;
+    QPixmap mClockHourHand;
+    QPixmap mClockScrew;
 
 };
 #endif
