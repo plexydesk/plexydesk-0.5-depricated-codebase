@@ -100,13 +100,31 @@ void SvgProvider::addToCached(QString &imgfile, QString &filename, QString &them
 }
 
 
-QPixmap SvgProvider::get(const QString &name, const QSize &size)
+QPixmap SvgProvider::get(const QString &name, const QSize &render_size)
 {
+    QSize size;
     QStringList itemList = name.split('#');
+
+    QString svgFile = d->fileHash[itemList.value(0)];
+    QFileInfo fileInfo (svgFile);
+
+    if (fileInfo.exists()) {
+        d->render.load(svgFile);
+    }
+
+    if (render_size == QSize()) {
+        //Size is not set so Create a Pixmap with the correct Item size.
+        QRectF elementBounds = d->render.boundsOnElement(itemList.value(1));
+        size.setWidth(elementBounds.width());
+        size.setHeight(elementBounds.height());
+        qDebug() << Q_FUNC_INFO << elementBounds;
+    } else
+        size = render_size;
+
     QPixmap rv (size);
 
     if (itemList.count() < 1) {
-      return rv; 
+      return rv;
     } else if (itemList.count() == 1) {
       return d->map[name];
     }
@@ -117,9 +135,10 @@ QPixmap SvgProvider::get(const QString &name, const QSize &size)
     painter.begin(&rv);
 
     drawSvg(&painter, QRectF (0.0, 0.0, size.width(), size.height()),
-        itemList.value(0), itemList.value(1));
+        svgFile, itemList.value(1));
 
     painter.end();
+
     return rv;
 }
 
@@ -133,15 +152,12 @@ bool SvgProvider::isCached(QString &filename) const
 
 bool SvgProvider::drawSvg(QPainter *p, QRectF rect, const QString &file, const QString &elementId)
 {
-    QString svgFile = d->fileHash[file];
-
-    QFileInfo fileInfo (svgFile);
-    if (fileInfo.exists()) {
-        d->render.load(svgFile);
-        d->render.render(p, elementId,  rect);
+    if (d->render.isValid()) {
+        d->render.render(p, elementId, rect);
         return true;
     }
 
     return false;
 }
+
 } //namespace
