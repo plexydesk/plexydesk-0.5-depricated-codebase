@@ -346,10 +346,11 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
         d->mPropertyAnimationForZoom->setStartValue(startRect);
         d->mPropertyAnimationForZoom->setEndValue(contentRect());
         d->mPropertyAnimationForZoom->setEasingCurve (QEasingCurve::InBounce);
-        this->setContentRect(d->saveRect);
+
         d->mPropertyAnimationForZoom->start();
 
     } else {
+        prepareGeometryChange();
         d->mPropertyAnimationForZoom->setPropertyName("rect");
         d->mPropertyAnimationForZoom->setDuration(100);
 
@@ -359,8 +360,6 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
         d->mPropertyAnimationForZoom->setEndValue(endRect);
         d->mPropertyAnimationForZoom->setStartValue(contentRect());
         d->mPropertyAnimationForZoom->setEasingCurve (QEasingCurve::OutBounce);
-        prepareGeometryChange();
-        this->setContentRect(dockRect());
         this->setVisible(true);
         d->mPropertyAnimationForZoom->start();
     }
