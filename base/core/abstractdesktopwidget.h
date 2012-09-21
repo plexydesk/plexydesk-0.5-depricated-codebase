@@ -31,7 +31,7 @@ class PLEXYDESK_EXPORT AbstractDesktopWidget : public QGraphicsObject
 {
     Q_OBJECT
     Q_ENUMS(State)
-    Q_PROPERTY(QRectF rect READ boundingRect() WRITE setContentRect NOTIFY rectChanged)
+    Q_PROPERTY(QRectF rect READ boundingRect() WRITE setRect NOTIFY rectChanged)
     Q_PROPERTY(float rotation READ rotation WRITE setRotation NOTIFY stateChanged)
 
 public :
@@ -48,6 +48,7 @@ public :
 
     void setContentRect(const QRectF &rect);
     QRectF contentRect() const;
+    void setRect(const QRectF &rect);
 
     void setDockRect(const QRectF &rect);
     QRectF dockRect() const;
