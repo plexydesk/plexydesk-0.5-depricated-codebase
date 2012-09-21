@@ -37,58 +37,22 @@ public:
     void paintDockView(QPainter *painter, const QRectF &rect);
     void paintRotatedView(QPainter *painter, const QRectF &rect);
 
-    void preRenderClockImages();
-
-    void setPath(QString);
-    void drawClockWidget();
-
     void updateTime(const QVariantMap &data);
 
-public slots:
-    void drawSeconds();
-
 private:
-    QTimer *sec_timer;
-    QTimer *mins_timer;
-    QTimer *hours_timer;
+    void preRenderClockImages();
 
-    QPixmap _secs_hand;
-    QPixmap _mins_hand;
-    QPixmap _hour_hand;
-
-    QStringList _hour_path;
-    QStringList _mins_path;
-    QStringList _secs_path;
-
-    QImage _clock_bg;
-    QImage _bg;
-    QString prefix;
-
-    double _secs;
-    double _mins;
-    double _hour;
-
-
-    int seconds;
-    int s_a;
-    QTime time;
-    QPoint clickPos;
-    QPixmap face;
-    QImage gloss;
-    QPixmap thedot;
-    int shade;
-    QImage lens;
-    QPixmap mLensePixmap;
-    QPixmap mGlossPixmap;
-    QPixmap date;
+    double mSecondValue;
+    double mMinutesValue;
+    double mHourValue;
 
     /*new svg clock */
-
     QPixmap mClockBackFace;
     QPixmap mClockMinuteHand;
     QPixmap mClockSecondHand;
     QPixmap mClockHourHand;
     QPixmap mClockScrew;
+    QPixmap mClockGlass;
 
 };
 #endif
