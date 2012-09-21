@@ -60,7 +60,19 @@
 * \paragraph Sets the content rectangle of the widget
 * in situations where the widget can't
 * find out by it self. For instance widets which changes
-* it's content during runtime or chiild QML widgets
+* it's content during runtime or chiild QML widgets.
+* Use it only if you are changing the widget size.
+*
+* \param  rect The Content bounding box area
+*/
+
+/**
+* \fn PlexyDesk::AbstractDesktopWidget::setRect()
+*\brief Set the bounding Rectangle of the Widget
+*
+* \paragraph Sets the bounding rectangle of the widget
+* in situations where the widget rectangle property needs
+* to be set.
 *
 * \param  rect The Content bounding box area
 */
@@ -185,7 +197,9 @@ void AbstractDesktopWidget::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void AbstractDesktopWidget::setContentRect(const QRectF &rect)
 {
+    d->mContentRect = rect;
     d->mBoundingRect = rect;
+
     prepareGeometryChange();
     QPointF center = boundingRect().center();
     QTransform mat = QTransform();
@@ -199,6 +213,20 @@ void AbstractDesktopWidget::setContentRect(const QRectF &rect)
 QRectF AbstractDesktopWidget::contentRect() const
 {
     return d->mContentRect;
+}
+
+void AbstractDesktopWidget::setRect(const QRectF &rect)
+{
+    d->mBoundingRect = rect;
+
+    prepareGeometryChange();
+    QPointF center = boundingRect().center();
+    QTransform mat = QTransform();
+    mat.translate(center.x(), center.y());
+    mat.translate(-center.x(), -center.y());
+    setTransform(mat);
+    resetMatrix();
+    update();
 }
 
 AbstractDesktopWidget::State AbstractDesktopWidget::state()
