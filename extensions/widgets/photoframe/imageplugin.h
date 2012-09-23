@@ -22,42 +22,23 @@
 #include <plexy.h>
 
 #include <abstractplugininterface.h>
-#include "pictureflow.h"
-#include "imageitem.h"
 #include <controllerinterface.h>
+
 #include <themepackloader.h>
 #include "photowidget.h"
+#include "imageitem.h"
 
-class QLineEdit;
-class QWidget;
-
-class ImagePlugin : public PlexyDesk::ControllerInterface
+class PhotoFrameController : public PlexyDesk::ControllerInterface
 {
     Q_OBJECT
-    Q_PROPERTY(QString imageSource READ imageSource WRITE setImageSource NOTIFY imageSourceChanged)
 
 public:
-    ImagePlugin(QObject *object = 0);
-    virtual ~ImagePlugin();
-    virtual QGraphicsItem *defaultView(); // {};
+    PhotoFrameController(QObject *object = 0);
+    virtual ~PhotoFrameController();
 
-    void setData(const QVariantMap &data);
-    QString imageSource() {
-        return mImageSource;
-    }
+    virtual QGraphicsItem *defaultView();
 
-public slots:
-    void onDataReady();
-    void setImageSource(const QString &src)
-    {
-        mImageSource = src;
-    }
-    void searchImage();
-
-signals:
-    void change();
-    void sendData(QVariant &);
-    void imageSourceChanged();
+    void handleDropEvent(PlexyDesk::AbstractDesktopWidget *widget, QDropEvent *event);
 
 private:
     PhotoWidget *mFrameParentitem;
