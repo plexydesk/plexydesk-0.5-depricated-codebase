@@ -24,7 +24,7 @@
 
 QObject *Interface::instance()
 {
-    return new FolderPlugin();
+    return new DirectoryController();
 }
 
 Q_EXPORT_PLUGIN2(folderwidget, Interface)

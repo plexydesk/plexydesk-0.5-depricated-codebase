@@ -32,7 +32,7 @@ Clock::~Clock()
 {
 }
 
-QGraphicsItem *Clock::view()
+QGraphicsItem *Clock::defaultView()
 {
     return clock;
 }

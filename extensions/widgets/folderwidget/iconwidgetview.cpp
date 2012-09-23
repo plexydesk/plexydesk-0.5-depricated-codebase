@@ -36,7 +36,7 @@ IconWidgetView::IconWidgetView(const QRectF &rect, QGraphicsObject *parent) :
     d->mIconView->setUniformItemSizes(true);
     d->mIconView->setGridSize(QSize(96, 96));
     d->mIconView->setAcceptDrops(true);
-    d->mIconView->setDropIndicatorShown(true);
+    d->mIconView->setDropIndicatorShown(false);
     ///hack until we have our own painting
     d->mIconView->setStyleSheet(" border : 0 ; background-color: transparent; color : #ffffff");
 
@@ -86,7 +86,7 @@ void IconWidgetView::setDirectoryPath(const QString &path)
 
 void IconWidgetView::onDirLoaded(const QString &path)
 {
-    qDebug() << Q_FUNC_INFO << path;
+    //qDebug() << Q_FUNC_INFO << path;
 }
 
 void IconWidgetView::onClicked(const QModelIndex &index)

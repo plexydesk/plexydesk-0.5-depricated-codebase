@@ -79,7 +79,6 @@ protected:
     virtual void dragEnterEvent (QDragEnterEvent * event);
     virtual void dragMoveEvent (QDragMoveEvent * event);
 
-
 private:
     class Private;
     Private *const d;

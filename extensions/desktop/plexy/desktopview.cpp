@@ -394,7 +394,7 @@ void DesktopView::addExtension(const QString &name,
 {
     ViewControllerPlugin *provider = static_cast<ViewControllerPlugin *>(PluginLoader::getInstance()->instance(name));
     if (provider) {
-        DesktopWidget *widget = (DesktopWidget *) provider->view();
+        DesktopWidget *widget = (DesktopWidget *) provider->defaultView();
         if (widget) {
             widget->configState(state);
             scene()->addItem(widget);
@@ -526,7 +526,7 @@ void DesktopView::registerPhotoDialog()
     const QPoint pos (0.0, 0.0);
     ViewControllerPlugin *provider = static_cast<ViewControllerPlugin *>(PluginLoader::getInstance()->instance(name));
     if (provider) {
-        DesktopWidget *widget = (DesktopWidget *) provider->view();
+        DesktopWidget *widget = (DesktopWidget *) provider->defaultView();
         if (widget) {
             //widget->configState(state);
             scene()->addItem(widget);
@@ -555,7 +555,7 @@ ViewControllerPlugin *DesktopView::registerHandler(const QString &name, bool eff
     const QPoint pos (0.0, 0.0);
     ViewControllerPlugin *provider = static_cast<ViewControllerPlugin *>(PluginLoader::getInstance()->instance(name));
     if (provider) {
-        DesktopWidget *widget = (DesktopWidget *) provider->view();
+        DesktopWidget *widget = (DesktopWidget *) provider->defaultView();
         if (widget) {
             scene()->addItem(widget);
 

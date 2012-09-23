@@ -51,6 +51,8 @@ public:
 
     void setRect (const QRect &rect);
 
+    void layout();
+
 Q_SIGNALS:
     void dataChange();
 

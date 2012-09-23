@@ -4,16 +4,19 @@
 SET(sourceFiles
     interface.cpp
     folderplugin.cpp
+    iconwidgetview.cpp
     )
 
 SET(headerFiles
     interface.h
     folderplugin.h
+    iconwidgetview.h
     )
 
 SET(QTMOC_SRCS
     interface.h
     folderplugin.h
+    iconwidgetview.h
     )
 
 QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})

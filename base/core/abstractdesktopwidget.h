@@ -24,6 +24,7 @@
 #include <QtGui>
 #include <viewcontrollerplugin.h>
 
+
 class QGraphicsObject;
 
 namespace PlexyDesk

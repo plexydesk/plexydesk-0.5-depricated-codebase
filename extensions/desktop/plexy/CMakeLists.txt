@@ -5,7 +5,6 @@ SET(sourceFiles
     desktopviewimpl.cpp
     plexytray.cpp
     fileiconwidget.cpp
-    iconwidgetview.cpp
     plexygraphicsscene.cpp
     )
 
@@ -16,7 +15,6 @@ SET(headerFiles
     desktopviewimpl.h
     plexytray.h
     fileiconwidget.h
-    iconwidgetview.h
     plexygraphicsscene.h
     )
 
@@ -27,7 +25,6 @@ SET(QTMOC_SRCS
     desktopviewiface.h
     plexytray.h
     fileiconwidget.h
-    iconwidgetview.h
     plexygraphicsscene.h
     )
 

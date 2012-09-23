@@ -11,7 +11,7 @@ class AuthPlugin : public PlexyDesk::ViewControllerPlugin
 public:
     AuthPlugin(QObject *object = 0);
     virtual ~AuthPlugin();
-    QGraphicsItem *view();
+    QGraphicsItem *defaultView();
 };
 
 #endif

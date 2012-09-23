@@ -68,7 +68,7 @@ BackgroundController::~BackgroundController()
         delete mQtDesktopWidget;
 }
 
-QGraphicsItem *BackgroundController::view()
+QGraphicsItem *BackgroundController::defaultView()
 {
     if (mBackgroundItem == NULL) {
         QSize desktopSize;
@@ -111,7 +111,7 @@ void BackgroundController::requestAction(const QString &actionName, const QVaria
     }
 }
 
-void BackgroundController::handleDropEvent(QDropEvent *event)
+void BackgroundController::handleDropEvent(PlexyDesk::AbstractDesktopWidget *widget, QDropEvent *event)
 {
     ///TODO create a New Image Browser UI
     //for now just set the pixmap picture
@@ -136,7 +136,6 @@ void BackgroundController::handleDropEvent(QDropEvent *event)
             mBackgroundItemPixmap->setPixmap(mBackgroundPixmap->scaled(desktopSize.width(), desktopSize.height(),
                                                                        Qt::IgnoreAspectRatio,
                                                                        Qt::SmoothTransformation));
-
             delete mBackgroundPixmap;
             mBackgroundPixmap = 0;
         }
