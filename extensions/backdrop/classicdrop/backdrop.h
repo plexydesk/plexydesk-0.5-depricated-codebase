@@ -33,9 +33,9 @@
 #include <backdropplugin.h>
 #include <themepackloader.h>
 #include <qmldesktopwidget.h>
-#include <viewcontrollerplugin.h>
+#include <controllerinterface.h>
 
-class BackgroundController : public PlexyDesk::ViewControllerPlugin
+class BackgroundController : public PlexyDesk::ControllerInterface
 {
     Q_OBJECT
 

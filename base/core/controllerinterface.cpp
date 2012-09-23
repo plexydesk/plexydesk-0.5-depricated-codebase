@@ -1,11 +1,11 @@
-#include <viewcontrollerplugin.h>
+#include <controllerinterface.h>
 #include <pluginloader.h>
 #include <QDropEvent>
 
 namespace PlexyDesk
 {
 
-class ViewControllerPlugin::PrivateViewControllerPlugin
+class ControllerInterface::PrivateViewControllerPlugin
 {
 public:
     PrivateViewControllerPlugin() {}
@@ -13,36 +13,36 @@ public:
     DataSource *mDataSource;
 };
 
-ViewControllerPlugin::ViewControllerPlugin(QObject *parent) : QObject(parent), d(new PrivateViewControllerPlugin)
+ControllerInterface::ControllerInterface(QObject *parent) : QObject(parent), d(new PrivateViewControllerPlugin)
 {
     d->mDataSource = 0;
 }
 
-ViewControllerPlugin::~ViewControllerPlugin()
+ControllerInterface::~ControllerInterface()
 {
     delete d;
 }
 
-QStringList ViewControllerPlugin::visibleActions() const
+QStringList ControllerInterface::visibleActions() const
 {
     return QStringList();
 }
 
-void ViewControllerPlugin::requestAction(const QString &actionName, const QVariantMap &args)
+void ControllerInterface::requestAction(const QString &actionName, const QVariantMap &args)
 {
     Q_EMIT actionComleted(false, QString("Invalid Action"));
 }
 
-void ViewControllerPlugin::handleDropEvent(AbstractDesktopWidget *widget, QDropEvent *event)
+void ControllerInterface::handleDropEvent(AbstractDesktopWidget *widget, QDropEvent *event)
 {
 }
 
-DataSource *ViewControllerPlugin::dataSource()
+DataSource *ControllerInterface::dataSource()
 {
     return d->mDataSource;
 }
 
-bool ViewControllerPlugin::connectToDataSource(const QString &source)
+bool ControllerInterface::connectToDataSource(const QString &source)
 {
    d->mDataSource =
            qobject_cast<PlexyDesk::DataSource*> (PluginLoader::getInstance()->instance(source));
@@ -55,7 +55,7 @@ bool ViewControllerPlugin::connectToDataSource(const QString &source)
    return true;
 }
 
-void ViewControllerPlugin::onReady()
+void ControllerInterface::onReady()
 {
     if(d->mDataSource)
        Q_EMIT data(d->mDataSource);

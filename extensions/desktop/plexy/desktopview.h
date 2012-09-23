@@ -24,7 +24,7 @@
 
 #include <plexy.h>
 #include <desktopwidget.h>
-#include <viewcontrollerplugin.h>
+#include <controllerinterface.h>
 #include <abstractdesktopview.h>
 
 using namespace PlexyDesk;
@@ -51,7 +51,7 @@ public:
     void addWallpaperItem();
     void registerPhotoDialog();
 
-    PlexyDesk::ViewControllerPlugin *registerHandler(const QString &name, bool effects_on = false);
+    PlexyDesk::ControllerInterface *registerHandler(const QString &name, bool effects_on = false);
 
     void enableOpenGL(bool state);
 

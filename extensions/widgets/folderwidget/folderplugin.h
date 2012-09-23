@@ -22,7 +22,7 @@
 #include <plexy.h>
 
 #include <abstractplugininterface.h>
-#include <viewcontrollerplugin.h>
+#include <controllerinterface.h>
 #include <themepackloader.h>
 #include <qmldesktopwidget.h>
 #include "iconwidgetview.h"
@@ -30,7 +30,7 @@
 class QLineEdit;
 class QWidget;
 
-class DirectoryController : public PlexyDesk::ViewControllerPlugin
+class DirectoryController : public PlexyDesk::ControllerInterface
 {
     Q_OBJECT
 

@@ -40,13 +40,13 @@ namespace PlexyDesk
 {
 class AbstractDesktopWidget;
 
-class PLEXYDESK_EXPORT ViewControllerPlugin : public QObject
+class PLEXYDESK_EXPORT ControllerInterface : public QObject
 {
     Q_OBJECT
 
 public:
-    ViewControllerPlugin(QObject *parent = 0);
-    virtual ~ViewControllerPlugin();
+    ControllerInterface(QObject *parent = 0);
+    virtual ~ControllerInterface();
 
     virtual QGraphicsItem *defaultView() = 0;
 

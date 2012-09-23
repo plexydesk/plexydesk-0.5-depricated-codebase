@@ -26,6 +26,7 @@
 #include <QPainter>
 #include <QtDebug>
 
+#include "controllerinterface.h"
 #include "abstractdesktopwidget.h"
 
 /**
@@ -108,7 +109,7 @@ public:
     QRectF mContentRect;
     QRectF mBoundingRect;
 
-    ViewControllerPlugin *mController;
+    ControllerInterface *mController;
 };
 
 
@@ -289,12 +290,12 @@ void AbstractDesktopWidget::setChildWidetVisibility(bool show)
     }
 }
 
-void AbstractDesktopWidget::setController(ViewControllerPlugin *view_controller)
+void AbstractDesktopWidget::setController(ControllerInterface *view_controller)
 {
     d->mController = view_controller;
 }
 
-ViewControllerPlugin *AbstractDesktopWidget::controller() const
+ControllerInterface *AbstractDesktopWidget::controller() const
 {
     return d->mController;
 }

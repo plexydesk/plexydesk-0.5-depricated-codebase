@@ -28,7 +28,7 @@
 #include <plexyconfig.h>
 
 BackgroundController::BackgroundController(QObject *object)
-    : PlexyDesk::ViewControllerPlugin(object),
+    : PlexyDesk::ControllerInterface(object),
       mQtDesktopWidget(new QDesktopWidget),
       mThemePack(new PlexyDesk::ThemepackLoader("default", this)),
       mBackgroundItem(0)

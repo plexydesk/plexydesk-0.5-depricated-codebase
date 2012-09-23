@@ -19,7 +19,7 @@
 #include "clock.h"
 #include "clockwidget.h"
 
-Clock::Clock(QObject *parent) : PlexyDesk::ViewControllerPlugin (parent)
+Clock::Clock(QObject *parent) : PlexyDesk::ControllerInterface (parent)
 {
     clock = new ClockWidget(QRectF(0, 0, 210, 210));
 

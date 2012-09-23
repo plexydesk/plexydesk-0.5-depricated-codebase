@@ -2,9 +2,9 @@
 #define PLEXY_YOUTUBE_H
 
 #include <plexy.h>
-#include <viewcontrollerplugin.h>
+#include <controllerinterface.h>
 
-class YouTube : public PlexyDesk::ViewControllerPlugin
+class YouTube : public PlexyDesk::ControllerInterface
 {
     Q_OBJECT
 
