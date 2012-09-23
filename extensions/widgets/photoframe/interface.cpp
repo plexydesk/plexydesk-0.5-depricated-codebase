@@ -26,7 +26,7 @@
 
 QObject *Interface::instance()
 {
-    return new ImagePlugin();
+    return new PhotoFrameController();
 }
 
 Q_EXPORT_PLUGIN2(photoframe, Interface)

@@ -22,40 +22,38 @@
 #include <desktopwidget.h>
 #include <QDeclarativeContext>
 
-ImagePlugin::ImagePlugin(QObject * /*object*/) :
+PhotoFrameController::PhotoFrameController(QObject * /*object*/) :
     mFrameParentitem(0)
 {
 }
 
-ImagePlugin::~ImagePlugin()
+PhotoFrameController::~PhotoFrameController()
 {
     if (mFrameParentitem)
         delete mFrameParentitem;
 }
 
-void ImagePlugin::searchImage()
-{
-}
-
-void ImagePlugin::onDataReady()
-{
-}
-
-void ImagePlugin::setData(const QVariantMap &data)
-{
-    QString photo_path = data["photo_path"].toString();
-    if (! photo_path.isEmpty() || ! photo_path.isNull()) {
-        mImageSource = photo_path;
-        emit imageSourceChanged();
-    }
-}
-
-QGraphicsItem *ImagePlugin::defaultView()
+QGraphicsItem *PhotoFrameController::defaultView()
 {
    if (mFrameParentitem == NULL) {
-       mFrameParentitem = new PhotoWidget(QRectF(0.0, 0.0, 400.0, 400.0));
+       mFrameParentitem = new PhotoWidget(QRectF(0.0, 0.0, 320.0, 240.0));
        mFrameParentitem->enableDefaultBackground(true);
+       mFrameParentitem->setController(this);
    }
 
    return mFrameParentitem;
+}
+
+void PhotoFrameController::handleDropEvent(PlexyDesk::AbstractDesktopWidget *widget, QDropEvent *event)
+{
+    if ( event->mimeData()->urls().count() >= 0 ) {
+        const QString droppedFile = event->mimeData()->urls().value(0).toLocalFile();
+
+        QFileInfo info(droppedFile);
+        QPixmap droppedPixmap(droppedFile);
+
+        if ( !info.isDir() && !droppedPixmap.isNull() ) {
+            mFrameParentitem->setContentImage(droppedPixmap);
+        }
+    }
 }

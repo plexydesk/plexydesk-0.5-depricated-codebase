@@ -23,6 +23,7 @@ PlexyDesktopView::PlexyDesktopView(QGraphicsScene *parent_scene, QWidget *parent
 {
     addController("folderwidget");
     addController("plexyclock");
+    addController("photoframe");
 }
 
 void PlexyDesktopView::layout()
