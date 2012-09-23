@@ -46,6 +46,10 @@ void  DesktopViewPluginImpl::setRect(const QRect &rect)
 {
 }
 
+void DesktopViewPluginImpl::layout()
+{
+}
+
 QObject  *DesktopViewPluginImpl::view(QGraphicsScene *scene)
 {
     PlexyDesktopView *view = new PlexyDesktopView(scene);

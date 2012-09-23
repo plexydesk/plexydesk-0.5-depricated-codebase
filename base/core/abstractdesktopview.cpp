@@ -66,13 +66,19 @@ public:
     PrivateAbstractDesktopView() {}
     ~PrivateAbstractDesktopView() {}
 
+    QMap<QString, ViewControllerPlugin*> mControllerMap;
     ViewControllerPlugin *mDefaultViewController;
-    QGraphicsItem *mBackgroundItem;
+    AbstractDesktopWidget *mBackgroundItem;
 };
 
 AbstractDesktopView::AbstractDesktopView(QGraphicsScene *scene, QWidget *parent) :
     QGraphicsView(scene, parent), d(new PrivateAbstractDesktopView)
 {
+    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnBottomHint);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setAlignment(Qt::AlignLeft | Qt::AlignTop);
+
     d->mDefaultViewController = 0;
     d->mBackgroundItem = 0;
 }
@@ -114,12 +120,33 @@ bool AbstractDesktopView::setBackgroundController(const QString &controller_name
         return 0;
     }
 
-    d->mBackgroundItem = d->mDefaultViewController->view();
+    d->mBackgroundItem = (AbstractDesktopWidget*) d->mDefaultViewController->defaultView();
     scene()->addItem(d->mBackgroundItem);
     d->mBackgroundItem->show();
     d->mBackgroundItem->setZValue(-1);
 
     return true;
+}
+
+void AbstractDesktopView::addController(const QString &controllerName)
+{
+    if (d->mControllerMap.keys().contains(controllerName))
+        return;
+
+    ViewControllerPlugin *controller =
+            qobject_cast<PlexyDesk::ViewControllerPlugin*> (PlexyDesk::PluginLoader::getInstance()->instance(controllerName));
+
+    if (!controller) {
+        qWarning() << Q_FUNC_INFO << "Error loading extension";
+        return;
+    }
+
+    connect(controller, SIGNAL(spawnView(AbstractDesktopWidget*)), this, SLOT(addWidgetToView(AbstractDesktopWidget*)));
+
+    d->mControllerMap[controllerName] = controller;
+    QGraphicsItem *defaultView = controller->defaultView();
+    scene()->addItem(defaultView);
+    defaultView->show();
 }
 
 void AbstractDesktopView::dropEvent(QDropEvent *event)
@@ -130,6 +157,7 @@ void AbstractDesktopView::dropEvent(QDropEvent *event)
         Q_FOREACH(QGraphicsItem *item, items) {
 
             QGraphicsObject *itemObject = item->toGraphicsObject();
+
             if (!itemObject)
                 continue;
 
@@ -138,13 +166,13 @@ void AbstractDesktopView::dropEvent(QDropEvent *event)
             if (!widget || !widget->controller() || (widget->controller() == d->mDefaultViewController))
                 continue;
 
-            widget->controller()->handleDropEvent(event);
+            widget->controller()->handleDropEvent(widget, event);
             return;
         }
     }
 
     if (d->mDefaultViewController) {
-        d->mDefaultViewController->handleDropEvent(event);
+        d->mDefaultViewController->handleDropEvent(d->mBackgroundItem, event);
     }
 
     event->acceptProposedAction();
@@ -158,6 +186,13 @@ void AbstractDesktopView::dragEnterEvent(QDragEnterEvent *event)
 void AbstractDesktopView::dragMoveEvent(QDragMoveEvent *event)
 {
     event->accept();
+}
+
+void AbstractDesktopView::addWidgetToView(AbstractDesktopWidget *widget)
+{
+    QGraphicsItem *item = (AbstractDesktopWidget*) widget;
+    scene()->addItem(item);
+    item->show();
 }
 
 }

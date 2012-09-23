@@ -25,42 +25,29 @@
 #include <viewcontrollerplugin.h>
 #include <themepackloader.h>
 #include <qmldesktopwidget.h>
+#include "iconwidgetview.h"
 
 class QLineEdit;
 class QWidget;
 
-class FolderPlugin : public PlexyDesk::ViewControllerPlugin
+class DirectoryController : public PlexyDesk::ViewControllerPlugin
 {
     Q_OBJECT
-    Q_PROPERTY(QString dirSource READ dirSource WRITE setDirSource NOTIFY dirSourceChanged)
 
 public:
-    FolderPlugin(QObject *object = 0);
-    virtual ~FolderPlugin();
-    virtual QGraphicsItem *view(); // {};
+    DirectoryController(QObject *object = 0);
+    virtual ~DirectoryController();
 
-    void setData(const QVariantMap &data);
-    QString dirSource() {
-        return mImageSource;
-    }
+    virtual QGraphicsItem *defaultView();
 
-public slots:
-    void onDataReady();
-    void setDirSource(const QString &src)
-    {
-        mImageSource = src;
-    }
-    void searchImage();
-
-signals:
-    void change();
-    void sendData(QVariant &);
-    void dirSourceChanged();
+    QStringList visibleActions() const;
+    void requestAction(const QString& actionName, const QVariantMap &args);
+    void handleDropEvent(PlexyDesk::AbstractDesktopWidget *widget, QDropEvent *event);
 
 private:
     PlexyDesk::ThemepackLoader *mThemePack;
-    PlexyDesk::QmlDesktopWidget *mFrameParentitem;
-    QString mImageSource;
+    QList<IconWidgetView*> mFolderViewList;
+
 };
 
 #endif

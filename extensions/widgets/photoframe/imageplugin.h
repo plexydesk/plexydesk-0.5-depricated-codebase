@@ -39,7 +39,7 @@ class ImagePlugin : public PlexyDesk::ViewControllerPlugin
 public:
     ImagePlugin(QObject *object = 0);
     virtual ~ImagePlugin();
-    virtual QGraphicsItem *view(); // {};
+    virtual QGraphicsItem *defaultView(); // {};
 
     void setData(const QVariantMap &data);
     QString imageSource() {

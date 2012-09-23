@@ -10,6 +10,8 @@ class PlexyDesktopView : public PlexyDesk::AbstractDesktopView
 public:
     explicit PlexyDesktopView(QGraphicsScene *parent_scene, QWidget *parent = 0);
 
+    void layout();
+
 private:
     class PrivatePlexyDesktopView;
     PrivatePlexyDesktopView *const d;

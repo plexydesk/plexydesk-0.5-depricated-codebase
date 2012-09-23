@@ -43,12 +43,12 @@ public:
     BackgroundController(QObject *object = 0);
     virtual ~BackgroundController();
 
-    QGraphicsItem *view();
+    QGraphicsItem *defaultView();
 
     QStringList visibleActions() const;
     void requestAction(const QString& actionName, const QVariantMap &args);
 
-    void handleDropEvent(QDropEvent *event);
+    void handleDropEvent(PlexyDesk::AbstractDesktopWidget *widget, QDropEvent *event);
 
 public Q_SLOTS:
 

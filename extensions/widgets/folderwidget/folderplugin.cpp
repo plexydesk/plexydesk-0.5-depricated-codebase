@@ -22,49 +22,70 @@
 #include <desktopwidget.h>
 #include <QDeclarativeContext>
 
-FolderPlugin::FolderPlugin(QObject *object) :
-    mFrameParentitem(0)
+#define ADD_DIR "addDirectory"
+#define CREATE_DIR "createDirectory"
+
+DirectoryController::DirectoryController(QObject *object) :
+    PlexyDesk::ViewControllerPlugin (object)
 {
    mThemePack = new PlexyDesk::ThemepackLoader("default", this);
+
+   IconWidgetView *view = new IconWidgetView(QRectF(0.0, 0.0, 480.0, 320.0));
+
+   view->enableDefaultBackground(true);
+   view->setDirectoryPath(QDir::homePath() + QLatin1String("/Desktop/"));
+   view->setController(this);
+   mFolderViewList.append(view);
 }
 
-FolderPlugin::~FolderPlugin()
+DirectoryController::~DirectoryController()
 {
     if (mThemePack) {
         delete mThemePack;
     }
 }
 
-void FolderPlugin::searchImage()
+QGraphicsItem *DirectoryController::defaultView()
 {
+    return mFolderViewList.at(0);
 }
 
-
-void FolderPlugin::onDataReady()
+QStringList DirectoryController::visibleActions() const
 {
+    QStringList actions;
+    actions << ADD_DIR << CREATE_DIR;
+
+    return actions;
 }
 
-void FolderPlugin::setData(const QVariantMap &data)
+void DirectoryController::requestAction(const QString &actionName, const QVariantMap &args)
 {
-    qDebug() << Q_FUNC_INFO << data;
-      QString dir_path = data["dir_path"].toString();
-      if (! dir_path.isEmpty() || ! dir_path.isNull()) {
-          mImageSource = dir_path;
-          emit dirSourceChanged();
-      }
+    qDebug() << actionName << args;
+
+    if (actionName == CREATE_DIR) {
+        qDebug() << "Not supported yet";
+    } else if (actionName == ADD_DIR) {
+        IconWidgetView *view = new IconWidgetView(QRectF(0.0, 0.0, 480.0, 320.0));
+
+        view->enableDefaultBackground(true);
+        view->setDirectoryPath(args["path"].toString());
+        view->setController(this);
+        mFolderViewList.append(view);
+        Q_EMIT spawnView(view);
+    }
 }
 
-QGraphicsItem *FolderPlugin::view()
+void DirectoryController::handleDropEvent(PlexyDesk::AbstractDesktopWidget *widget, QDropEvent *event)
 {
-   if (mFrameParentitem == NULL) {
-       mFrameParentitem = new PlexyDesk::QmlDesktopWidget(QRectF(0.0, 0.0, 400.0, 400.0));
-       QDeclarativeContext *context = mFrameParentitem->engine()->rootContext();
-       const QString qmlData = mThemePack->hiddenQmlWidgets(QLatin1String("folderview"));
+    qDebug() << Q_FUNC_INFO;
 
-       qDebug() << Q_FUNC_INFO << qmlData;
-       context->setContextProperty("DirSource", this);
-       mFrameParentitem->setSourceUrl (QUrl(qmlData));
-   }
+    const QString droppedFile = event->mimeData()->urls().value(0).toLocalFile();
+    QFileInfo fileInfo (droppedFile);
 
-   return mFrameParentitem;
+    if (fileInfo.isDir()) {
+        QVariant path = droppedFile;
+        QVariantMap args;
+        args["path"] = path;
+        requestAction(ADD_DIR, args);
+    }
 }

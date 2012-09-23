@@ -33,7 +33,7 @@ void ViewControllerPlugin::requestAction(const QString &actionName, const QVaria
     Q_EMIT actionComleted(false, QString("Invalid Action"));
 }
 
-void ViewControllerPlugin::handleDropEvent(QDropEvent *event)
+void ViewControllerPlugin::handleDropEvent(AbstractDesktopWidget *widget, QDropEvent *event)
 {
 }
 

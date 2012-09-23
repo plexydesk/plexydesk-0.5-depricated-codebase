@@ -38,6 +38,8 @@ class QDropEvent;
 */
 namespace PlexyDesk
 {
+class AbstractDesktopWidget;
+
 class PLEXYDESK_EXPORT ViewControllerPlugin : public QObject
 {
     Q_OBJECT
@@ -46,12 +48,12 @@ public:
     ViewControllerPlugin(QObject *parent = 0);
     virtual ~ViewControllerPlugin();
 
-    virtual QGraphicsItem *view() = 0;
+    virtual QGraphicsItem *defaultView() = 0;
 
     virtual QStringList visibleActions() const;
     virtual void requestAction(const QString& actionName, const QVariantMap &args);
 
-    virtual void handleDropEvent(QDropEvent *event);
+    virtual void handleDropEvent(AbstractDesktopWidget *widget, QDropEvent *event);
 
     virtual DataSource *dataSource();
 
@@ -61,6 +63,7 @@ protected:
 Q_SIGNALS:
     void actionComleted(bool, const QString &error);
     void data(const DataSource *source);
+    void spawnView(AbstractDesktopWidget *widget);
 
 private Q_SLOTS:
     virtual void onReady();

@@ -349,6 +349,7 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
         d->mPropertyAnimationForZoom->setEasingCurve (QEasingCurve::InBounce);
 
         d->mPropertyAnimationForZoom->start();
+        setChildWidetVisibility(true);
 
     } else {
         prepareGeometryChange();
@@ -363,6 +364,7 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
         d->mPropertyAnimationForZoom->setEasingCurve (QEasingCurve::OutBounce);
         this->setVisible(true);
         d->mPropertyAnimationForZoom->start();
+        setChildWidetVisibility(false);
     }
     QGraphicsItem::mouseDoubleClickEvent(event);
 }
