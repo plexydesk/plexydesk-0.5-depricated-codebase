@@ -51,7 +51,7 @@ SET(sourceFiles
     abstractsource.h
     pluginloader.cpp
     pendingjob.cpp
-    viewcontrollerplugin.cpp
+    controllerinterface.cpp
     )
 
 SET(headerFiles
@@ -66,7 +66,7 @@ SET(headerFiles
     abstractdesktopview.h
     pendingjob.h
     desktopviewplugin.h
-    viewcontrollerplugin.h
+    controllerinterface.h
    )
 
 SET(MOC_SRCS
@@ -78,7 +78,7 @@ SET(MOC_SRCS
     pluginloader.h
     abstractdesktopview.h
     pendingjob.h
-    viewcontrollerplugin.h
+    controllerinterface.h
     desktopviewplugin.h
    )
 

@@ -21,7 +21,7 @@
 #define PLEXY_ABSTRACT_DESKTOP_VIEW_H
 
 #include <plexy.h>
-#include <viewcontrollerplugin.h>
+#include <controllerinterface.h>
 #include <abstractdesktopwidget.h>
 
 namespace PlexyDesk

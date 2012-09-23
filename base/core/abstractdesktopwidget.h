@@ -22,13 +22,14 @@
 
 #include <plexy.h>
 #include <QtGui>
-#include <viewcontrollerplugin.h>
-
 
 class QGraphicsObject;
 
 namespace PlexyDesk
 {
+
+class ControllerInterface;
+
 class PLEXYDESK_EXPORT AbstractDesktopWidget : public QGraphicsObject
 {
     Q_OBJECT
@@ -61,8 +62,8 @@ public :
 
     void setChildWidetVisibility(bool show);
 
-    void setController(ViewControllerPlugin *view_controller);
-    ViewControllerPlugin * controller() const;
+    void setController(ControllerInterface *view_controller);
+    ControllerInterface * controller() const;
 
      /**
      * \brief Sets a label for the widget

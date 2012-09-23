@@ -24,14 +24,14 @@
 #include <abstractplugininterface.h>
 #include "pictureflow.h"
 #include "imageitem.h"
-#include <viewcontrollerplugin.h>
+#include <controllerinterface.h>
 #include <themepackloader.h>
 #include "photowidget.h"
 
 class QLineEdit;
 class QWidget;
 
-class ImagePlugin : public PlexyDesk::ViewControllerPlugin
+class ImagePlugin : public PlexyDesk::ControllerInterface
 {
     Q_OBJECT
     Q_PROPERTY(QString imageSource READ imageSource WRITE setImageSource NOTIFY imageSourceChanged)

@@ -29,9 +29,10 @@
 #include <QGraphicsDropShadowEffect>
 
 #include <abstractdesktopwidget.h>
-#include <viewcontrollerplugin.h>
+#include <controllerinterface.h>
 #include <pluginloader.h>
 
+#include "controllerinterface.h"
 #include "abstractdesktopview.h"
 
 /**
@@ -66,8 +67,8 @@ public:
     PrivateAbstractDesktopView() {}
     ~PrivateAbstractDesktopView() {}
 
-    QMap<QString, ViewControllerPlugin*> mControllerMap;
-    ViewControllerPlugin *mDefaultViewController;
+    QMap<QString, ControllerInterface*> mControllerMap;
+    ControllerInterface *mDefaultViewController;
     AbstractDesktopWidget *mBackgroundItem;
 };
 
@@ -113,7 +114,7 @@ bool AbstractDesktopView::setBackgroundController(const QString &controller_name
         return 0;
 
     d->mDefaultViewController =
-            qobject_cast<PlexyDesk::ViewControllerPlugin*> (PlexyDesk::PluginLoader::getInstance()->instance(controller_name));
+            qobject_cast<PlexyDesk::ControllerInterface*> (PlexyDesk::PluginLoader::getInstance()->instance(controller_name));
 
     if (!d->mDefaultViewController) {
         qWarning() << Q_FUNC_INFO << "Error Loading " << controller_name << " Controller";
@@ -133,8 +134,8 @@ void AbstractDesktopView::addController(const QString &controllerName)
     if (d->mControllerMap.keys().contains(controllerName))
         return;
 
-    ViewControllerPlugin *controller =
-            qobject_cast<PlexyDesk::ViewControllerPlugin*> (PlexyDesk::PluginLoader::getInstance()->instance(controllerName));
+    ControllerInterface *controller =
+            qobject_cast<PlexyDesk::ControllerInterface*> (PlexyDesk::PluginLoader::getInstance()->instance(controllerName));
 
     if (!controller) {
         qWarning() << Q_FUNC_INFO << "Error loading extension";

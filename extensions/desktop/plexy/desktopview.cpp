@@ -31,7 +31,7 @@
 #include <desktopwidget.h>
 #include <pluginloader.h>
 #include <backdropplugin.h>
-#include <viewcontrollerplugin.h>
+#include <controllerinterface.h>
 #include <viewlayer.h>
 #include <qplexymime.h>
 #include <qmldesktopwidget.h>
@@ -79,12 +79,12 @@ public:
     AbstractPluginInterface *bIface;
     BackgroundSource *mBackgroundSource;
     PlexyDesk::ThemepackLoader *mThemeLoader;
-    QList<ViewControllerPlugin *> mDesktopPluginsList;
+    QList<ControllerInterface *> mDesktopPluginsList;
 
-    ViewControllerPlugin *mPhotoDialogProvider;
+    ControllerInterface *mPhotoDialogProvider;
     DesktopWidget *mPhotoDialog;
 
-    ViewControllerPlugin *mDirProvider;
+    ControllerInterface *mDirProvider;
     DesktopWidget *mDirWidget;
 
     float row;
@@ -392,7 +392,7 @@ void DesktopView::addExtension(const QString &name,
         const QPoint &pos,
         PlexyDesk::AbstractDesktopWidget::State state)
 {
-    ViewControllerPlugin *provider = static_cast<ViewControllerPlugin *>(PluginLoader::getInstance()->instance(name));
+    ControllerInterface *provider = static_cast<ControllerInterface *>(PluginLoader::getInstance()->instance(name));
     if (provider) {
         DesktopWidget *widget = (DesktopWidget *) provider->defaultView();
         if (widget) {
@@ -441,7 +441,7 @@ void DesktopView::dropEvent(QDropEvent * event)
         /* handle folders */
         qDebug() << Q_FUNC_INFO << "Dir Drop accepted...";
 
-        ViewControllerPlugin *dirWidgetPlugin = registerHandler (QLatin1String("folderwidget"));
+        ControllerInterface *dirWidgetPlugin = registerHandler (QLatin1String("folderwidget"));
 
         if(dirWidgetPlugin) {
             QVariantMap data;
@@ -524,7 +524,7 @@ void DesktopView::registerPhotoDialog()
 
     const QString name = "photoframe";
     const QPoint pos (0.0, 0.0);
-    ViewControllerPlugin *provider = static_cast<ViewControllerPlugin *>(PluginLoader::getInstance()->instance(name));
+    ControllerInterface *provider = static_cast<ControllerInterface *>(PluginLoader::getInstance()->instance(name));
     if (provider) {
         DesktopWidget *widget = (DesktopWidget *) provider->defaultView();
         if (widget) {
@@ -550,10 +550,10 @@ void DesktopView::registerPhotoDialog()
 }
 
 //FIXME: Refactor so that we can avoid having a method per type
-ViewControllerPlugin *DesktopView::registerHandler(const QString &name, bool effects_on)
+ControllerInterface *DesktopView::registerHandler(const QString &name, bool effects_on)
 {
     const QPoint pos (0.0, 0.0);
-    ViewControllerPlugin *provider = static_cast<ViewControllerPlugin *>(PluginLoader::getInstance()->instance(name));
+    ControllerInterface *provider = static_cast<ControllerInterface *>(PluginLoader::getInstance()->instance(name));
     if (provider) {
         DesktopWidget *widget = (DesktopWidget *) provider->defaultView();
         if (widget) {

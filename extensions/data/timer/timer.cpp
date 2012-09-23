@@ -19,7 +19,7 @@
 #include <desktopwidget.h>
 #include <plexyconfig.h>
 #include <QTimer>
-#include <viewcontrollerplugin.h>
+#include <controllerinterface.h>
 
 class TimerData::Private
 {
