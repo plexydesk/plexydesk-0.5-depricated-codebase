@@ -122,6 +122,9 @@ bool AbstractDesktopView::setBackgroundController(const QString &controller_name
     }
 
     d->mBackgroundItem = (AbstractDesktopWidget*) d->mDefaultViewController->defaultView();
+    d->mBackgroundItem->setContentRect(this->sceneRect());
+    d->mBackgroundItem->setRect(this->sceneRect());
+    qDebug() << Q_FUNC_INFO << this->sceneRect();
     scene()->addItem(d->mBackgroundItem);
     d->mBackgroundItem->show();
     d->mBackgroundItem->setZValue(-1);

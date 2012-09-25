@@ -1,16 +1,19 @@
 SET(sourceFiles
     backdrop.cpp
     classicinterface.cpp
+    classicbackgroundrender.cpp
     )
 
 SET(headerFiles
     backdrop.h
     classicinterface.h
+    classicbackgroundrender.h
     )
 
 SET(QTMOC_SRCS
     backdrop.h
     classicinterface.h
+    classicbackgroundrender.h
     )
 
 QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})

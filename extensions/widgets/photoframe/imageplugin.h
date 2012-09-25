@@ -36,7 +36,7 @@ public:
     PhotoFrameController(QObject *object = 0);
     virtual ~PhotoFrameController();
 
-    virtual QGraphicsItem *defaultView();
+    PlexyDesk::AbstractDesktopWidget *defaultView();
 
     void handleDropEvent(PlexyDesk::AbstractDesktopWidget *widget, QDropEvent *event);
 

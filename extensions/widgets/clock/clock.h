@@ -33,7 +33,7 @@ class Clock : public PlexyDesk::ControllerInterface
 public:
     Clock(QObject *parent);
     virtual ~Clock();
-    QGraphicsItem *defaultView();
+    PlexyDesk::AbstractDesktopWidget *defaultView();
 
 public Q_SLOTS:
     void onDataUpdated(const QVariantMap &data);

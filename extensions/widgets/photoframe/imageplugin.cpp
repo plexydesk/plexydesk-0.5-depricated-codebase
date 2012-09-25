@@ -33,7 +33,7 @@ PhotoFrameController::~PhotoFrameController()
         delete mFrameParentitem;
 }
 
-QGraphicsItem *PhotoFrameController::defaultView()
+PlexyDesk::AbstractDesktopWidget *PhotoFrameController::defaultView()
 {
    if (mFrameParentitem == NULL) {
        mFrameParentitem = new PhotoWidget(QRectF(0.0, 0.0, 320.0, 240.0));
