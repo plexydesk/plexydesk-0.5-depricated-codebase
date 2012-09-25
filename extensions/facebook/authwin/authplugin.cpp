@@ -28,7 +28,7 @@ AuthPlugin::~AuthPlugin()
 {
 }
 
-QGraphicsItem *AuthPlugin::defaultView()
+PlexyDesk::AbstractDesktopWidget *AuthPlugin::defaultView()
 {
     return new PlexyDesk::AuthWidget(QRectF(0, 0, 480, 320));
 }

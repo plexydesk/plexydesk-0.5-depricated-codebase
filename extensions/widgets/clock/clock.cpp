@@ -32,7 +32,7 @@ Clock::~Clock()
 {
 }
 
-QGraphicsItem *Clock::defaultView()
+PlexyDesk::AbstractDesktopWidget *Clock::defaultView()
 {
     return clock;
 }

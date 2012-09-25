@@ -29,33 +29,16 @@
 
 BackgroundController::BackgroundController(QObject *object)
     : PlexyDesk::ControllerInterface(object),
-      mQtDesktopWidget(new QDesktopWidget),
-      mThemePack(new PlexyDesk::ThemepackLoader("default", this)),
-      mBackgroundItem(0)
+      mThemePack(new PlexyDesk::ThemepackLoader("default", this))
 {
     // TODO: bug#112
     // read the theme name from settings
-
-    mBackgroundPixmap =
-      new QPixmap(QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->wallpaper()));
-
-    mDesktopScreenRect = mQtDesktopWidget->screenGeometry(0);
-#ifdef Q_WS_WIN
-    // A 1px hack to make the widget fullscreen and not covering the toolbar on Win
-    mDesktopScreenRect.setHeight(desktopScreenRect.height()-1);
-#endif
+    mBackgroundRender = new ClassicBackgroundRender(QRectF(0.0, 0.0, 0.0, 0.0), 0,
+                                                    QImage(QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->wallpaper())));
 }
 
 BackgroundController::~BackgroundController()
 {
-    if (mBackgroundItem) {
-        delete mBackgroundItem;
-    }
-
-    if (mBackgroundPixmap) {
-        delete mBackgroundPixmap;
-    }
-
     if (mBlurAnimation) {
         delete mBlurAnimation;
     }
@@ -64,36 +47,14 @@ BackgroundController::~BackgroundController()
         delete mBlurEffect;
     }
 
-    if (mQtDesktopWidget)
-        delete mQtDesktopWidget;
+    if (mBackgroundRender)
+        delete mBackgroundRender;
 }
 
-QGraphicsItem *BackgroundController::defaultView()
+PlexyDesk::AbstractDesktopWidget *BackgroundController::defaultView()
 {
-    if (mBackgroundItem == NULL) {
-        QSize desktopSize;
+    return mBackgroundRender;
 
-        desktopSize = mDesktopScreenRect.size();
-#ifdef Q_WS_WIN
-        // A 1px hack to make the widget fullscreen and not covering the toolbar on Win
-        desktopSize.setHeight(desktopSize.height()-1);
-#endif
-        mBackgroundCache = mBackgroundPixmap->scaled(desktopSize.width(), desktopSize.height(),
-               Qt::IgnoreAspectRatio,
-               Qt::SmoothTransformation);
-
-        connect(PlexyDesk::Config::getInstance(), SIGNAL(wallpaperChanged()),
-                this, SLOT(changeWallpaperItem()));
-
-        mBackgroundItemPixmap = new QGraphicsPixmapItem(mBackgroundCache);
-        mBackgroundItemPixmap->setCacheMode(QGraphicsItem::NoCache);
-
-        delete mBackgroundPixmap;
-        mBackgroundPixmap = 0;
-        return mBackgroundItemPixmap;
-    }
-    
-    return NULL;
 }
 
 QStringList BackgroundController::visibleActions() const
@@ -121,23 +82,8 @@ void BackgroundController::handleDropEvent(PlexyDesk::AbstractDesktopWidget *wid
 
         QFileInfo info(droppedFile);
 
-        if ( !info.isDir() && !QPixmap(droppedFile).isNull() ) {
-            if (mBackgroundPixmap)
-                delete mBackgroundPixmap;
-
-            QSize desktopSize = mDesktopScreenRect.size();
-#ifdef Q_WS_WIN
-            // A 1px hack to make the widget fullscreen and not covering the toolbar on Win
-            desktopSize.setHeight(desktopSize.height() - 1);
-#endif
-            mBackgroundItemPixmap->setCacheMode(QGraphicsItem::NoCache);
-            mBackgroundPixmap = new QPixmap(desktopSize.width(), desktopSize.height());
-            mBackgroundPixmap->load(droppedFile);
-            mBackgroundItemPixmap->setPixmap(mBackgroundPixmap->scaled(desktopSize.width(), desktopSize.height(),
-                                                                       Qt::IgnoreAspectRatio,
-                                                                       Qt::SmoothTransformation));
-            delete mBackgroundPixmap;
-            mBackgroundPixmap = 0;
+        if ( !info.isDir()) {
+            mBackgroundRender->setBackgroundImage(droppedFile);
         }
       }
 }

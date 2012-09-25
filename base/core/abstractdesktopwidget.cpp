@@ -87,6 +87,16 @@
   * false to hide them.
   *
   */
+
+/** PlexyDesk::AbstractDesktopWidget::setLabel
+  * \fn
+  * \brief Sets a label for the widget
+  * \param name Name of the icon
+  *
+  * Label to display when the widget is in dock mode
+  */
+
+
 namespace PlexyDesk
 {
 class AbstractDesktopWidget::PrivateAbstractDesktopWidget

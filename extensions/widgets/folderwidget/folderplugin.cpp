@@ -45,7 +45,7 @@ DirectoryController::~DirectoryController()
     }
 }
 
-QGraphicsItem *DirectoryController::defaultView()
+PlexyDesk::AbstractDesktopWidget *DirectoryController::defaultView()
 {
     return mFolderViewList.at(0);
 }

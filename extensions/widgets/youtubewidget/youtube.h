@@ -11,7 +11,7 @@ class YouTube : public PlexyDesk::ControllerInterface
 public:
     YouTube(QObject *object = 0);
     virtual ~YouTube();
-    QGraphicsItem *defaultView();
+    PlexyDesk::AbstractDesktopWidget *defaultView();
 };
 
 #endif

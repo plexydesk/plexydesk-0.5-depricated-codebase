@@ -29,7 +29,7 @@ YouTube::~YouTube()
 
 }
 
-QGraphicsItem *YouTube::defaultView()
+PlexyDesk::AbstractDesktopWidget *YouTube::defaultView()
 {
     return new PlexyDesk::YouTubeWidget(QRectF(0, 0, 480, 320));
 }

@@ -45,7 +45,7 @@ public :
        ROTATED
      };
 
-    AbstractDesktopWidget(const QRectF &rect, QGraphicsObject *parent = 0);
+    explicit AbstractDesktopWidget(const QRectF &rect, QGraphicsObject *parent = 0);
     virtual ~AbstractDesktopWidget();
 
     virtual QRectF boundingRect() const;
@@ -65,12 +65,6 @@ public :
     void setController(ControllerInterface *view_controller);
     ControllerInterface * controller() const;
 
-     /**
-     * \brief Sets a label for the widget
-     * \param name Name of the icon
-     *
-     * Label to display when the widget is in dock mode
-     */
     void setLabelName(const QString &name);
 
      /**

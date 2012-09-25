@@ -38,7 +38,7 @@ public:
     DirectoryController(QObject *object = 0);
     virtual ~DirectoryController();
 
-    virtual QGraphicsItem *defaultView();
+    PlexyDesk::AbstractDesktopWidget *defaultView();
 
     QStringList visibleActions() const;
     void requestAction(const QString& actionName, const QVariantMap &args);

@@ -35,6 +35,8 @@
 #include <qmldesktopwidget.h>
 #include <controllerinterface.h>
 
+#include  "classicbackgroundrender.h"
+
 class BackgroundController : public PlexyDesk::ControllerInterface
 {
     Q_OBJECT
@@ -43,7 +45,7 @@ public:
     BackgroundController(QObject *object = 0);
     virtual ~BackgroundController();
 
-    QGraphicsItem *defaultView();
+    PlexyDesk::AbstractDesktopWidget *defaultView();
 
     QStringList visibleActions() const;
     void requestAction(const QString& actionName, const QVariantMap &args);
@@ -53,15 +55,10 @@ public:
 public Q_SLOTS:
 
 private:
-    QPixmap mBackgroundCache;
-    QPixmap *mBackgroundPixmap;
     QPropertyAnimation *mBlurAnimation;
     QGraphicsBlurEffect *mBlurEffect;
     PlexyDesk::ThemepackLoader *mThemePack;
-    PlexyDesk::QmlDesktopWidget *mBackgroundItem;
-    QGraphicsPixmapItem *mBackgroundItemPixmap;
-    QRect mDesktopScreenRect;
-    QDesktopWidget *mQtDesktopWidget;
+    ClassicBackgroundRender *mBackgroundRender;
 };
 
 #endif //PLEXY_CLASSIC_BACKDROP_H

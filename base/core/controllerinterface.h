@@ -48,7 +48,7 @@ public:
     ControllerInterface(QObject *parent = 0);
     virtual ~ControllerInterface();
 
-    virtual QGraphicsItem *defaultView() = 0;
+    virtual AbstractDesktopWidget *defaultView() = 0;
 
     virtual QStringList visibleActions() const;
     virtual void requestAction(const QString& actionName, const QVariantMap &args);
