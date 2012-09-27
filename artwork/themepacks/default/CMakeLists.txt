@@ -2,6 +2,7 @@ FILE(GLOB PNGFILES resources/*.png )
 FILE(GLOB JPEGFILES resources/*.jpg )
 FILE(GLOB SVGFILES resources/*.svg )
 FILE(GLOB CFG main.cfg)
+FILE(GLOB LAYOUT layout.xml)
 SET(WEATHER weather/weather.qml)
 
 # Photo CMAKE entries
@@ -64,6 +65,7 @@ INSTALL(FILES ${PNGFILES}  DESTINATION ${RESOURCES_DEST_DIR})
 INSTALL(FILES ${JPEGFILES}  DESTINATION ${RESOURCES_DEST_DIR})
 INSTALL(FILES ${SVGFILES}  DESTINATION ${RESOURCES_DEST_DIR})
 INSTALL(FILES ${CFG}  DESTINATION share/plexy/themepack/default)
+INSTALL(FILES ${LAYOUT}  DESTINATION share/plexy/themepack/default)
 INSTALL(FILES ${WEATHER}  DESTINATION share/plexy/themepack/default/weather)
 
 INSTALL(FILES ${PHOTO}  DESTINATION share/plexy/themepack/default/photo)

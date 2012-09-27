@@ -19,9 +19,6 @@ void ClassicBackgroundRender::paintRotatedView(QPainter *painter, const QRectF &
 
 void ClassicBackgroundRender::paintFrontView(QPainter *painter, const QRectF &rect)
 {
-//    qDebug() << Q_FUNC_INFO << rect;
-//    qDebug() << Q_FUNC_INFO << contentRect();
-//    qDebug() << Q_FUNC_INFO << boundingRect();
     painter->drawImage(contentRect(), mBackgroundImage);
 }
 

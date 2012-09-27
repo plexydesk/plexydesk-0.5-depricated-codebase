@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widgets>
+    <widget name="plexyclock">
+        <position x="10" y="10"></position>
+    </widget>
+</widgets>
