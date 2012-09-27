@@ -20,6 +20,9 @@ public:
 
     void setThemeName(const QString &name);
 
+    QStringList desktopWidgets() const;
+    QString positionForWidget(const QString &name);
+
     QStringList widgets(const QString &type);
     QPoint widgetPos(const QString &name);
 

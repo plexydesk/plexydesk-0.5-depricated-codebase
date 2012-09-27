@@ -22,12 +22,12 @@
 #include <QStringList>
 #include <QDir>
 #include <QRect>
-
 #include <QDebug>
+#include <QDomDocument>
+
 #include <plexyconfig.h>
 
 #include "themepackloader.h"
-
 
 namespace PlexyDesk
 {
@@ -44,6 +44,14 @@ public:
     QString mThemeName;
     QString mThemePackPath;
     QRectF mScreenRect;
+
+    QString mXmlConfigFile;
+    QDomDocument mXmlDocumentRoot;
+    QFile *mXmlRawFile;
+
+    //todo until we write a proper render tree.
+    QHash<QString, QPoint> mWidgetPosition;
+    QHash<QString, QString> mWidgetFeatures;
 };
 
 ThemepackLoader::ThemepackLoader(const QString &themeName, QObject *parent) :
@@ -60,8 +68,16 @@ ThemepackLoader::ThemepackLoader(const QString &themeName, QObject *parent) :
     d->mThemeCfgFile = QDir::toNativeSeparators(d->mSettings->fileName());
     d->mBasePath = QDir::toNativeSeparators(mainConfig.absolutePath());
 
-    qDebug() << Q_FUNC_INFO << themeName;
-    qDebug() << Q_FUNC_INFO << d->mThemeCfgFile;
+    d->mXmlConfigFile = mainConfig.absoluteFilePath("layout.xml");
+    d->mXmlRawFile = new QFile(d->mXmlConfigFile);
+
+    if (!d->mXmlRawFile->open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << Q_FUNC_INFO << "Failed to open " << d->mXmlConfigFile;
+    } else {
+         if (!d->mXmlDocumentRoot.setContent(d->mXmlRawFile)) {
+             qWarning() << Q_FUNC_INFO << "Failed to load the xml file";
+         }
+    }
 }
 
 ThemepackLoader::~ThemepackLoader()
@@ -219,6 +235,47 @@ PlexyDesk::AbstractDesktopWidget::State ThemepackLoader::widgetView(const QStrin
 void ThemepackLoader::setThemeName(const QString &name)
 {
     Q_UNUSED(name);
+}
+
+QStringList ThemepackLoader::desktopWidgets() const
+{
+    QStringList rv;
+    if (!d->mXmlDocumentRoot.hasChildNodes())
+        return rv;
+
+    QDomNodeList widgetNodeList = d->mXmlDocumentRoot.documentElement().elementsByTagName("widget");
+
+    for(int index = 0;index < widgetNodeList.count(); index++) {
+        QDomElement widgetElement = widgetNodeList.at(index).toElement();
+
+        QString currentWidgetStringName = widgetElement.attribute("name");
+        rv.append(currentWidgetStringName);
+
+        QDomNode widgetEntries= widgetElement.firstChild();
+
+        while(!widgetEntries.isNull()) {
+            QDomElement subEntry = widgetEntries.toElement();
+            QString tag = subEntry.tagName();
+
+
+
+            if (tag == "effect") {
+
+            } else if(tag == "x") {
+
+            } else if (tag == "y") {
+
+            }
+
+            widgetEntries = widgetEntries.nextSibling();
+        }
+    }
+
+    return rv;
+}
+
+QString ThemepackLoader::positionForWidget(const QString &name)
+{
 }
 
 } // namespace plexydesk

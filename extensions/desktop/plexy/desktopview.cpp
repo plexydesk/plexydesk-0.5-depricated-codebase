@@ -218,10 +218,9 @@ void DesktopView::setThemePack(const QString &name)
         }
 
         Q_FOREACH(const QString &nativeWidget, d->mThemeLoader->widgets("native")) {
-            qDebug() << Q_FUNC_INFO << nativeWidget;
             QPoint pos = d->mThemeLoader->widgetPos(nativeWidget);
             addExtension(nativeWidget, QLatin1String("Widgets"), pos,
-                    d->mThemeLoader->widgetView(nativeWidget));
+                         d->mThemeLoader->widgetView(nativeWidget));
         }
 
         Q_FOREACH(const QString &qmlWidget, d->mThemeLoader->widgets("QML")) {
@@ -244,10 +243,10 @@ void DesktopView::setThemePack(const QString &name)
             //check shadow prop
             bool shadow_on = d->mThemeLoader->getProperty(qmlWidget, "shadow").toBool();
             if(shadow_on) {
-              QGraphicsDropShadowEffect * effect  = new QGraphicsDropShadowEffect(this);
-              effect->setBlurRadius(8.0);
-              effect->setColor(QColor(0, 0, 0));
-              parent->setGraphicsEffect(effect);
+                QGraphicsDropShadowEffect * effect  = new QGraphicsDropShadowEffect(this);
+                effect->setBlurRadius(8.0);
+                effect->setColor(QColor(0, 0, 0));
+                parent->setGraphicsEffect(effect);
             }
         }
 
