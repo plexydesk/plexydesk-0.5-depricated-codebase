@@ -86,6 +86,7 @@ AbstractDesktopView::AbstractDesktopView(QGraphicsScene *scene, QWidget *parent)
 
 AbstractDesktopView::~AbstractDesktopView()
 {
+    delete d;
 }
 
 void AbstractDesktopView::enableOpenGL(bool state)
