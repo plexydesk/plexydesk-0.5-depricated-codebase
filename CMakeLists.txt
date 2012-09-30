@@ -33,6 +33,8 @@ FIND_PACKAGE(OpenCV) #optional
 FIND_PACKAGE(QImageBlitz REQUIRED)
 FIND_PACKAGE(OpenGL REQUIRED)
 
+FIND_PACKAGE(BISON REQUIRED)
+FIND_PACKAGE(FLEX REQUIRED)
 
 # Global variable CMAKE_BUILD_TYPE handling
 # None (CMAKE_C_FLAGS or CMAKE_CXX_FLAGS used)
@@ -196,6 +198,8 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}/modules/fbjson
     ${CMAKE_BINARY_DIR}/modules/fbjson
     ${CMAKE_SOURCE_DIR}/3rdparty/mime
+    ${CMAKE_SOURCE_DIR}/3rdparty/json-cpp
+    ${CMAKE_SOURCE_DIR}/3rdparty/json-cpp/json/
     ${CMAKE_BINARY_DIR}/3rdparty/mime
     ${CMAKE_SOURCE_DIR}/3rdparty/qplexymime
     ${CMAKE_BINARY_DIR}/3rdparty/qplexymime
@@ -241,6 +245,7 @@ ENDIF(WIN32)
 
 # *** ALL PLATFORMS ***
 ADD_SUBDIRECTORY(3rdparty/mime)
+ADD_SUBDIRECTORY(3rdparty/json-cpp/)
 ADD_SUBDIRECTORY(3rdparty/qplexymime)
 ADD_SUBDIRECTORY(3rdparty/qt/folderlistmodel)
 ADD_SUBDIRECTORY(3rdparty/webitem)
