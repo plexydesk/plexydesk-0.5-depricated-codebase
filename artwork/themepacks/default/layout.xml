@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <widgets>
+    <widget name="classicbackdrop">
+        <rect x="10" y="10" width="desktop-width" height="desktop-height"></rect>
+    </widget>
     <widget name="plexyclock">
-        <position x="10" y="10"></position>
+        <rect x="10" y="10"></rect>
     </widget>
 </widgets>

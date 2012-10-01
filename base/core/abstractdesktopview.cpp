@@ -27,6 +27,7 @@
 #include <QPropertyAnimation>
 #include <QGraphicsGridLayout>
 #include <QGraphicsDropShadowEffect>
+#include <QDomDocument>
 
 #include <abstractdesktopwidget.h>
 #include <controllerinterface.h>
@@ -70,6 +71,7 @@ public:
     QMap<QString, ControllerInterface*> mControllerMap;
     ControllerInterface *mDefaultViewController;
     AbstractDesktopWidget *mBackgroundItem;
+    QDomDocument *mSessionTree;
 };
 
 AbstractDesktopView::AbstractDesktopView(QGraphicsScene *scene, QWidget *parent) :
@@ -82,6 +84,9 @@ AbstractDesktopView::AbstractDesktopView(QGraphicsScene *scene, QWidget *parent)
 
     d->mDefaultViewController = 0;
     d->mBackgroundItem = 0;
+
+    d->mSessionTree = new QDomDocument("Session");
+    d->mSessionTree->createProcessingInstruction("xml", "version=\"1.0\" encoding=\"utf-8\"");
 }
 
 AbstractDesktopView::~AbstractDesktopView()
@@ -125,8 +130,9 @@ bool AbstractDesktopView::setBackgroundController(const QString &controller_name
     d->mBackgroundItem = (AbstractDesktopWidget*) d->mDefaultViewController->defaultView();
     d->mBackgroundItem->setContentRect(this->sceneRect());
     d->mBackgroundItem->setRect(this->sceneRect());
-    qDebug() << Q_FUNC_INFO << this->sceneRect();
+
     scene()->addItem(d->mBackgroundItem);
+
     d->mBackgroundItem->show();
     d->mBackgroundItem->setZValue(-1);
 
