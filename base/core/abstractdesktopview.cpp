@@ -72,6 +72,7 @@ public:
     ControllerInterface *mDefaultViewController;
     AbstractDesktopWidget *mBackgroundItem;
     QDomDocument *mSessionTree;
+    QDomElement mRootElement;
 };
 
 AbstractDesktopView::AbstractDesktopView(QGraphicsScene *scene, QWidget *parent) :
@@ -86,7 +87,9 @@ AbstractDesktopView::AbstractDesktopView(QGraphicsScene *scene, QWidget *parent)
     d->mBackgroundItem = 0;
 
     d->mSessionTree = new QDomDocument("Session");
-    d->mSessionTree->createProcessingInstruction("xml", "version=\"1.0\" encoding=\"utf-8\"");
+    d->mSessionTree->appendChild(d->mSessionTree->createProcessingInstruction("xml", "version=\"1.0\" encoding=\"utf-8\""));
+    d->mRootElement = d->mSessionTree->createElement("session");
+    d->mSessionTree->appendChild(d->mRootElement);
 }
 
 AbstractDesktopView::~AbstractDesktopView()
@@ -136,6 +139,7 @@ bool AbstractDesktopView::setBackgroundController(const QString &controller_name
     d->mBackgroundItem->show();
     d->mBackgroundItem->setZValue(-1);
 
+    d->mDefaultViewController->setViewport(this);
     return true;
 }
 
@@ -156,8 +160,23 @@ void AbstractDesktopView::addController(const QString &controllerName)
 
     d->mControllerMap[controllerName] = controller;
     QGraphicsItem *defaultView = controller->defaultView();
+
     scene()->addItem(defaultView);
+
     defaultView->show();
+
+    controller->setViewport(this);
+    controller->setControllerName(controllerName);
+
+    QDomElement widget = d->mSessionTree->createElement("widget");
+    widget.setAttribute("controller", controllerName);
+    QDomElement geometry = d->mSessionTree->createElement("geometry");
+    geometry.setAttribute("x", defaultView->boundingRect().x());
+    geometry.setAttribute("y", defaultView->boundingRect().y());
+    widget.appendChild(geometry);
+    d->mRootElement.appendChild(widget);
+
+    qDebug() << Q_FUNC_INFO << d->mSessionTree->toString();
 }
 
 void AbstractDesktopView::dropEvent(QDropEvent *event)
@@ -204,6 +223,11 @@ void AbstractDesktopView::addWidgetToView(AbstractDesktopWidget *widget)
     QGraphicsItem *item = (AbstractDesktopWidget*) widget;
     scene()->addItem(item);
     item->show();
+}
+
+void AbstractDesktopView::sessionDataForController(const QString &controllerName, const QString &key, const QString &value)
+{
+    qDebug() << Q_FUNC_INFO << "::" << controllerName<<":" <<key << ":" << value;
 }
 
 }

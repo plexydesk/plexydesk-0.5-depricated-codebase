@@ -164,7 +164,7 @@ QString ThemepackLoader::qmlFilesFromTheme(const QString &name)
 
     QDir path(QString("%1/%2").arg(d->mBasePath).arg(baseFolder));
     return (QDir::toNativeSeparators(QDir::cleanPath(
-                                            path.absoluteFilePath(fileName))
+                                     path.absoluteFilePath(fileName))
                                     ));
 }
 

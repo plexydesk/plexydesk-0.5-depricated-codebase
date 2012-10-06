@@ -44,11 +44,14 @@ public:
 
     virtual void layout() = 0;
 
+    virtual void sessionDataForController(const QString &controllerName, const QString &key, const QString &value);
+
 Q_SIGNALS:
     void closeApplication();
 
 public Q_SLOTS:
     void addWidgetToView(AbstractDesktopWidget *widget);
+
 
 private:
     virtual void dropEvent(QDropEvent *event);
