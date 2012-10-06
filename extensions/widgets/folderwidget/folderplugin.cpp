@@ -50,6 +50,10 @@ PlexyDesk::AbstractDesktopWidget *DirectoryController::defaultView()
     return mFolderViewList.at(0);
 }
 
+void DirectoryController::revokeSession(const QString &key, const QString &value)
+{
+}
+
 QStringList DirectoryController::visibleActions() const
 {
     QStringList actions;

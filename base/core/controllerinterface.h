@@ -39,6 +39,7 @@ class QDropEvent;
 namespace PlexyDesk
 {
 class AbstractDesktopWidget;
+class AbstractDesktopView;
 
 class PLEXYDESK_EXPORT ControllerInterface : public QObject
 {
@@ -50,12 +51,23 @@ public:
 
     virtual AbstractDesktopWidget *defaultView() = 0;
 
+    void setViewport(AbstractDesktopView *view);
+
+    AbstractDesktopView *viewport();
+
+    virtual void revokeSession(const QString &key, const QString &value) = 0;
+
     virtual QStringList visibleActions() const;
+
     virtual void requestAction(const QString& actionName, const QVariantMap &args);
 
     virtual void handleDropEvent(AbstractDesktopWidget *widget, QDropEvent *event);
 
     virtual DataSource *dataSource();
+
+    virtual void setControllerName(const QString &name);
+
+    virtual QString controllerName() const;
 
 protected:
     virtual bool connectToDataSource(const QString &source);
@@ -64,6 +76,7 @@ Q_SIGNALS:
     void actionComleted(bool, const QString &error);
     void data(const DataSource *source);
     void spawnView(AbstractDesktopWidget *widget);
+    void commitSessionData(const QString &key, const QString &value);
 
 private Q_SLOTS:
     virtual void onReady();

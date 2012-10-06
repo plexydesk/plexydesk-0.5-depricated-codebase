@@ -12,6 +12,7 @@ public:
     AuthPlugin(QObject *object = 0);
     virtual ~AuthPlugin();
     PlexyDesk::AbstractDesktopWidget *defaultView();
+    void revokeSession(const QString &key, const QString &value);
 };
 
 #endif

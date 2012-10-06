@@ -44,6 +44,10 @@ PlexyDesk::AbstractDesktopWidget *PhotoFrameController::defaultView()
    return mFrameParentitem;
 }
 
+void PhotoFrameController::revokeSession(const QString &key, const QString &value)
+{
+}
+
 void PhotoFrameController::handleDropEvent(PlexyDesk::AbstractDesktopWidget *widget, QDropEvent *event)
 {
     if ( event->mimeData()->urls().count() >= 0 ) {

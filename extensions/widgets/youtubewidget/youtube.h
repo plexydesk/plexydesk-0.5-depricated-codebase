@@ -12,6 +12,7 @@ public:
     YouTube(QObject *object = 0);
     virtual ~YouTube();
     PlexyDesk::AbstractDesktopWidget *defaultView();
+    void revokeSession(const QString &key, const QString &value);
 };
 
 #endif

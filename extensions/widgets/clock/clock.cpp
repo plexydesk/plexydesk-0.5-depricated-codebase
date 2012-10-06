@@ -37,6 +37,10 @@ PlexyDesk::AbstractDesktopWidget *Clock::defaultView()
     return clock;
 }
 
+void Clock::revokeSession(const QString &key, const QString &value)
+{
+}
+
 void Clock::onDataUpdated(const QVariantMap &data)
 {
     if (clock)
