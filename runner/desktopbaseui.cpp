@@ -111,8 +111,6 @@ void DesktopBaseUi::setup()
 
         view->setSceneRect (desktopScreenRect);
 
-        view->setBackgroundController("classicbackdrop");
-
         view->setDragMode(QGraphicsView::RubberBandDrag);
 
 #ifdef Q_WS_X11
