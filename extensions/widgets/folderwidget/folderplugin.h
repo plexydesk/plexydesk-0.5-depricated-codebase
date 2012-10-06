@@ -40,6 +40,8 @@ public:
 
     PlexyDesk::AbstractDesktopWidget *defaultView();
 
+    void revokeSession(const QString &key, const QString &value);
+
     QStringList visibleActions() const;
     void requestAction(const QString& actionName, const QVariantMap &args);
     void handleDropEvent(PlexyDesk::AbstractDesktopWidget *widget, QDropEvent *event);

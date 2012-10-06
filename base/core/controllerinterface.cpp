@@ -1,6 +1,7 @@
 #include <controllerinterface.h>
 #include <pluginloader.h>
 #include <QDropEvent>
+#include <QDebug>
 
 namespace PlexyDesk
 {
@@ -11,16 +12,30 @@ public:
     PrivateViewControllerPlugin() {}
     ~PrivateViewControllerPlugin() {}
     DataSource *mDataSource;
+    AbstractDesktopView *mViewport;
+    QString mName;
 };
 
 ControllerInterface::ControllerInterface(QObject *parent) : QObject(parent), d(new PrivateViewControllerPlugin)
 {
     d->mDataSource = 0;
+    d->mViewport = 0;
 }
 
 ControllerInterface::~ControllerInterface()
 {
     delete d;
+}
+
+void ControllerInterface::setViewport(AbstractDesktopView *view)
+{
+    qDebug() << Q_FUNC_INFO ;
+    d->mViewport = view;
+}
+
+AbstractDesktopView *ControllerInterface::viewport()
+{
+    return d->mViewport;
 }
 
 QStringList ControllerInterface::visibleActions() const
@@ -40,6 +55,16 @@ void ControllerInterface::handleDropEvent(AbstractDesktopWidget *widget, QDropEv
 DataSource *ControllerInterface::dataSource()
 {
     return d->mDataSource;
+}
+
+void ControllerInterface::setControllerName(const QString &name)
+{
+    d->mName = name;
+}
+
+QString ControllerInterface::controllerName() const
+{
+    return d->mName;
 }
 
 bool ControllerInterface::connectToDataSource(const QString &source)

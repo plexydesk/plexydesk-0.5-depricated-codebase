@@ -20,6 +20,7 @@
 #include <QDir>
 #include <QPixmapCache>
 #include <QDeclarativeContext>
+#include <abstractdesktopview.h>
 
 #include <QtDebug>
 
@@ -57,6 +58,10 @@ PlexyDesk::AbstractDesktopWidget *BackgroundController::defaultView()
 
 }
 
+void BackgroundController::revokeSession(const QString &key, const QString &value)
+{
+}
+
 QStringList BackgroundController::visibleActions() const
 {
     QStringList actions;
@@ -84,7 +89,11 @@ void BackgroundController::handleDropEvent(PlexyDesk::AbstractDesktopWidget *wid
 
         if ( !info.isDir()) {
             mBackgroundRender->setBackgroundImage(droppedFile);
+            if (viewport()) {
+                viewport()->sessionDataForController(controllerName(),"background", droppedFile);
+            } else
+                qDebug() << Q_FUNC_INFO << viewport();
         }
-      }
+    }
 }
 
