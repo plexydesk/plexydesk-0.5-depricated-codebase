@@ -9,4 +9,7 @@
     <widget name="photoframe">
         <rect x="65%" y="40%"></rect>
     </widget>
+    <widget name="folderwidget">
+        <rect x="10%" y="10%"></rect>
+    </widget>
 </widgets>

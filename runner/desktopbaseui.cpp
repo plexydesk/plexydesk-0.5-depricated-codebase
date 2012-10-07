@@ -61,6 +61,7 @@ DesktopBaseUi::DesktopBaseUi(QWidget *parent) :
 
 DesktopBaseUi::~DesktopBaseUi()
 {
+    qDebug() << Q_FUNC_INFO;
     Q_FOREACH (QGraphicsView * view, d->mViewList.values()) {
         if(view)
             delete view;

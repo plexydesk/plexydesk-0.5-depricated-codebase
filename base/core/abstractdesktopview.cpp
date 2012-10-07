@@ -98,6 +98,7 @@ AbstractDesktopView::AbstractDesktopView(QGraphicsScene *scene, QWidget *parent)
 
 AbstractDesktopView::~AbstractDesktopView()
 {
+    qDebug() << Q_FUNC_INFO;
     delete d;
 }
 
@@ -211,8 +212,6 @@ void AbstractDesktopView::dropEvent(QDropEvent *event)
 
             AbstractDesktopWidget *widget = qobject_cast<AbstractDesktopWidget*> (itemObject);
 
-            qDebug() << Q_FUNC_INFO << widget;
-            qDebug() << Q_FUNC_INFO << widget->controller();
             if (!widget || !widget->controller())
                 continue;
 
