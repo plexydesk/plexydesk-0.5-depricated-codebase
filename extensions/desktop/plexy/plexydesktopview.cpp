@@ -24,9 +24,13 @@ PlexyDesktopView::PlexyDesktopView(QGraphicsScene *parent_scene, QWidget *parent
     PlexyDesk::AbstractDesktopView(parent_scene, parent),
     d(new PrivatePlexyDesktopView)
 {
-//    addController("folderwidget");
-//    addController("plexyclock");
-//    addController("photoframe");
+    d->mThemeLoader = new PlexyDesk::ThemepackLoader("default", this);
+
+    QStringList widgets = d->mThemeLoader->desktopWidgets();
+
+    Q_FOREACH(const QString &widget, widgets) {
+        addController(widget);
+    }
 }
 
 PlexyDesktopView::~PlexyDesktopView()
@@ -36,14 +40,13 @@ PlexyDesktopView::~PlexyDesktopView()
 
 void PlexyDesktopView::layout()
 {
-    d->mThemeLoader = new PlexyDesk::ThemepackLoader("default", this);
+    Q_FOREACH(const QString &controllerName, currentControllers()) {
 
-    QStringList widgets = d->mThemeLoader->desktopWidgets();
+        QRectF rect = d->mThemeLoader->positionForWidget(controllerName, this);
 
-    qDebug() << Q_FUNC_INFO << widgets;
-
-    Q_FOREACH(QString widget, widgets) {
-        addController(widget);
+        PlexyDesk::ControllerInterface *controllerPtr = controllerByName(controllerName);
+        if (controllerPtr) {
+            controllerPtr->setViewRect(rect);
+        }
     }
-
 }

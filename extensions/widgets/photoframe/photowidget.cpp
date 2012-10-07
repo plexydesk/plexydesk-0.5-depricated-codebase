@@ -56,7 +56,7 @@ void PhotoWidget::paintFrontView(QPainter *painter, const QRectF &rect)
         //painter->translate(frameWidth, frameWidth);
         //painter->drawPixmap(rect.x(), rect.y(), rect.width() - (frameWidth * 2), rect.height() - (frameWidth * 2), mContentPixmap);
 
-        painter->drawPixmap(rect.x(), rect.y(), rect.width(), rect.height(), mContentPixmap);
+        painter->drawPixmap(0.0, 0.0, rect.width(), rect.height(), mContentPixmap);
     }
 }
 

@@ -24,6 +24,7 @@
 #include <QRect>
 #include <QDebug>
 #include <QDomDocument>
+#include <QDomNamedNodeMap>
 
 #include <plexyconfig.h>
 
@@ -255,17 +256,7 @@ QStringList ThemepackLoader::desktopWidgets() const
 
         while(!widgetEntries.isNull()) {
             QDomElement subEntry = widgetEntries.toElement();
-            QString tag = subEntry.tagName();
-
-
-
-            if (tag == "effect") {
-
-            } else if(tag == "x") {
-
-            } else if (tag == "y") {
-
-            }
+            //QString tag = subEntry.tagName();
 
             widgetEntries = widgetEntries.nextSibling();
         }
@@ -274,8 +265,78 @@ QStringList ThemepackLoader::desktopWidgets() const
     return rv;
 }
 
-QString ThemepackLoader::positionForWidget(const QString &name)
+QRectF ThemepackLoader::positionForWidget(const QString &name, PlexyDesk::AbstractDesktopView *view)
 {
+    QDomNodeList widgetNodeList = d->mXmlDocumentRoot.documentElement().elementsByTagName("widget");
+    QRectF rect;
+
+    for(int index = 0; index < widgetNodeList.count(); index++) {
+        QDomElement widgetElement = widgetNodeList.at(index).toElement();
+
+        qDebug() << Q_FUNC_INFO << widgetElement.attribute("name");
+
+        if (widgetElement.attribute("name") != name)
+            continue;
+
+        if (widgetElement.hasChildNodes()) {
+            QDomElement rectElement = widgetElement.firstChildElement("rect");
+
+            QDomAttr x = rectElement.attributeNode("x");
+            QDomAttr y = rectElement.attributeNode("y");
+
+            QDomAttr widthAttr = rectElement.attributeNode("width");
+            QDomAttr heightAttr = rectElement.attributeNode("height");
+
+            QString widthString = widthAttr.value();
+            QString heightString = heightAttr.value();
+
+            float width = 0.0f;
+            float height = 0.0f;
+            float x_coord = 0.0f;
+            float y_coord = 0.0f;
+
+            if (widthString.contains("%")) {
+                width = toScreenValue(widthString, view->sceneRect().width());
+            } else
+                x_coord = x.value().toFloat();
+
+            if (heightString.contains("%")) {
+                height = toScreenValue(heightString, view->sceneRect().height());
+            } else
+                y_coord = x.value().toFloat();
+
+            if (x.value().contains("%")) {
+                x_coord = toScreenValue(x.value(), view->sceneRect().width());
+            }
+
+            if (y.value().contains("%")) {
+                y_coord = toScreenValue(y.value(), view->sceneRect().height());
+            }
+
+            if (widthString == "device-width") {
+                width = view->sceneRect().width();
+            }
+
+            if (heightString == "device-height") {
+                height = view->sceneRect().height();
+            }
+
+            rect = QRectF( x_coord, y_coord, width, height);
+        }
+    }
+
+    return rect;
+}
+
+int ThemepackLoader::toScreenValue(const QString &val, int max_distance)
+{
+    QRegExp rx("(\\d+)");
+
+    rx.indexIn(val, 0);
+    int _x = rx.cap(1).toUInt();
+    _x = (max_distance/100) * _x;
+
+    return _x;
 }
 
 } // namespace plexydesk

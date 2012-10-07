@@ -98,9 +98,6 @@ Q_SIGNALS:
     void stateChanged();
 
 protected:
-    virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
-
-    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
     virtual void paintRotatedView(QPainter *painter, const QRectF &rect) = 0;

@@ -90,6 +90,10 @@ AbstractDesktopView::AbstractDesktopView(QGraphicsScene *scene, QWidget *parent)
     d->mSessionTree->appendChild(d->mSessionTree->createProcessingInstruction("xml", "version=\"1.0\" encoding=\"utf-8\""));
     d->mRootElement = d->mSessionTree->createElement("session");
     d->mSessionTree->appendChild(d->mRootElement);
+
+    setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
+    setOptimizationFlag(QGraphicsView::DontAdjustForAntialiasing);
+    setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
 }
 
 AbstractDesktopView::~AbstractDesktopView()
@@ -102,7 +106,7 @@ void AbstractDesktopView::enableOpenGL(bool state)
     if (state) {
         setViewport(new QGLWidget(QGLFormat(
                         QGL::DoubleBuffer )));
-        setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
+        setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
         setOptimizationFlag(QGraphicsView::DontAdjustForAntialiasing);
         setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
     } else {
@@ -179,32 +183,47 @@ void AbstractDesktopView::addController(const QString &controllerName)
     qDebug() << Q_FUNC_INFO << d->mSessionTree->toString();
 }
 
+QStringList AbstractDesktopView::currentControllers() const
+{
+    return d->mControllerMap.keys();
+}
+
+ControllerInterface *AbstractDesktopView::controllerByName(const QString &name)
+{
+    return d->mControllerMap[name];
+}
+
 void AbstractDesktopView::dropEvent(QDropEvent *event)
 {
+    qDebug() << Q_FUNC_INFO;
     if (this->scene()) {
+        qDebug() << Q_FUNC_INFO;
         QList<QGraphicsItem *> items = scene()->items(event->pos());
 
         Q_FOREACH(QGraphicsItem *item, items) {
+            qDebug() << Q_FUNC_INFO << "INside";
 
             QGraphicsObject *itemObject = item->toGraphicsObject();
 
-            if (!itemObject)
+            if (!itemObject) {
                 continue;
+            }
 
             AbstractDesktopWidget *widget = qobject_cast<AbstractDesktopWidget*> (itemObject);
 
-            if (!widget || !widget->controller() || (widget->controller() == d->mDefaultViewController))
+            qDebug() << Q_FUNC_INFO << widget;
+            qDebug() << Q_FUNC_INFO << widget->controller();
+            if (!widget || !widget->controller())
                 continue;
+
+            qDebug() << Q_FUNC_INFO;
 
             widget->controller()->handleDropEvent(widget, event);
             return;
         }
     }
 
-    if (d->mDefaultViewController) {
-        d->mDefaultViewController->handleDropEvent(d->mBackgroundItem, event);
-    }
-
+    scene()->update(this->sceneRect());
     event->acceptProposedAction();
 }
 
@@ -217,6 +236,7 @@ void AbstractDesktopView::dragMoveEvent(QDragMoveEvent *event)
 {
     event->accept();
 }
+
 
 void AbstractDesktopView::addWidgetToView(AbstractDesktopWidget *widget)
 {

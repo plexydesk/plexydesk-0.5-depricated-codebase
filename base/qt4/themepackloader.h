@@ -5,6 +5,7 @@
 #include <QSettings>
 #include <QPoint>
 #include <abstractdesktopwidget.h>
+#include <abstractdesktopview.h>
 
 namespace PlexyDesk
 {
@@ -21,7 +22,7 @@ public:
     void setThemeName(const QString &name);
 
     QStringList desktopWidgets() const;
-    QString positionForWidget(const QString &name);
+    QRectF positionForWidget(const QString &name, PlexyDesk::AbstractDesktopView *view);
 
     QStringList widgets(const QString &type);
     QPoint widgetPos(const QString &name);
@@ -42,6 +43,7 @@ Q_SIGNALS:
 
 private:
     void scanThemepackPrefix();
+    int toScreenValue(const QString &val, int max_distance);
 
     class ThemepackLoaderPrivate;
     ThemepackLoaderPrivate *const d;

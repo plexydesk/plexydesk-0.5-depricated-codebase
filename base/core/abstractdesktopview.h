@@ -41,6 +41,8 @@ public:
     virtual bool setBackgroundController(const QString &controller_name);
 
     virtual void addController(const QString &controllerName);
+    virtual QStringList currentControllers() const;
+    virtual ControllerInterface *controllerByName(const QString &name);
 
     virtual void layout() = 0;
 
