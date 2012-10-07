@@ -283,6 +283,16 @@ void AbstractDesktopWidget::setRotation(float angle)
     }
 }
 
+float AbstractDesktopWidget::scaleFactorForWidth() const
+{
+    return contentRect().width() / boundingRect().width();
+}
+
+float AbstractDesktopWidget::scaleFactorForHeight() const
+{
+    return contentRect().height() / boundingRect().height();
+}
+
 void AbstractDesktopWidget::setChildWidetVisibility(bool show)
 {
     Q_FOREACH(QGraphicsItem *item, this->childItems()) {

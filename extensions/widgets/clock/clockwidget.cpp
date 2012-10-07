@@ -78,15 +78,17 @@ void ClockWidget::paintFrontView(QPainter *p, const QRectF &r)
     p->setBackgroundMode(Qt::TransparentMode);
 
     p->drawPixmap(r.x(), r.y(), r.width(), r.height(), mClockBackFace);
+    float scaleFactorHorizontal = contentRect().width() / boundingRect().width();
+    float scaleFactorVerticle = contentRect().height() / boundingRect().height();
 
     /* Draw Minute Hand */
     p->save();
     p->setCompositionMode(QPainter::CompositionMode_SourceOver);
     p->setRenderHint(QPainter::Antialiasing);
     p->setRenderHint(QPainter::SmoothPixmapTransform);
-    p->translate( (r.width() / 2), (r.height() / 2));
+    p->translate( r.x() + (r.width() / 2), r.y() + (r.height() / 2));
     p->rotate(180 + mMinutesValue);
-    p->drawPixmap(-(mClockMinuteHand.width() / 2) , 0, mClockMinuteHand.width(), mClockMinuteHand.height(), mClockMinuteHand);
+    p->drawPixmap(-(mClockMinuteHand.width() / 2) , 0, mClockMinuteHand.width() / scaleFactorHorizontal, mClockMinuteHand.height() / scaleFactorVerticle, mClockMinuteHand);
     p->restore();
 
     /* Draw Hour Hand */
@@ -94,11 +96,11 @@ void ClockWidget::paintFrontView(QPainter *p, const QRectF &r)
     p->setCompositionMode(QPainter::CompositionMode_SourceOver);
     p->setRenderHint(QPainter::Antialiasing);
     p->setRenderHint(QPainter::SmoothPixmapTransform);
-    p->translate( (r.width() / 2), (r.height() / 2));
+    p->translate( r.x() + (r.width() / 2), r.y() + (r.height() / 2));
     p->rotate(180 + mHourValue);
-    p->drawPixmap(-(mClockHourHand.width() / 2) , 0, mClockHourHand.width(), mClockHourHand.height(), mClockHourHand);
+    p->drawPixmap(-(mClockHourHand.width() / 2) , 0, mClockHourHand.width() / scaleFactorHorizontal, mClockHourHand.height() / scaleFactorVerticle, mClockHourHand);
     p->setOpacity(0.2);
-    p->drawPixmap(-(mClockHourHand.width() / 2) + 2 , 2, mClockHourHand.width(), mClockHourHand.height(), mClockHourHand);
+    p->drawPixmap(-(mClockHourHand.width() / 2) + 2 , 2, mClockHourHand.width() / scaleFactorHorizontal, mClockHourHand.height() / scaleFactorVerticle, mClockHourHand);
     p->restore();
 
     /* Draw Second Hand */
@@ -106,11 +108,11 @@ void ClockWidget::paintFrontView(QPainter *p, const QRectF &r)
     p->setRenderHint(QPainter::Antialiasing);
     p->setRenderHint(QPainter::SmoothPixmapTransform);
     p->setCompositionMode(QPainter::CompositionMode_SourceOver);
-    p->translate( (r.width() / 2), (r.height() / 2));
+    p->translate( r.x() + (r.width() / 2), r.y() + (r.height() / 2));
     p->rotate(180 + mSecondValue);
-    p->drawPixmap( -(mClockSecondHand.width() / 2) , 0 , mClockSecondHand.width(), mClockSecondHand.height(), mClockSecondHand);
+    p->drawPixmap( -(mClockSecondHand.width() / 2) , 0 , mClockSecondHand.width() / scaleFactorHorizontal, mClockSecondHand.height() / scaleFactorVerticle, mClockSecondHand);
     p->setOpacity(0.3);
-    p->drawPixmap( -(mClockSecondHand.width() / 2) + 2 , 2 , mClockSecondHand.width(), mClockSecondHand.height(), mClockSecondHand);
+    p->drawPixmap( -(mClockSecondHand.width() / 2) + 2 , 2 , mClockSecondHand.width() / scaleFactorHorizontal, mClockSecondHand.height() / scaleFactorVerticle, mClockSecondHand);
     p->restore();
 
     /* Draw the Clock Screw  */
@@ -118,8 +120,8 @@ void ClockWidget::paintFrontView(QPainter *p, const QRectF &r)
     p->setRenderHint(QPainter::Antialiasing);
     p->setRenderHint(QPainter::SmoothPixmapTransform);
     p->setCompositionMode(QPainter::CompositionMode_SourceOver);
-    p->translate((r.width() / 2) , (r.height() / 2));
-    p->drawPixmap( -(mClockScrew.width() / 2) , -(mClockScrew.height() / 2), mClockScrew.width(), mClockScrew.height(), mClockScrew);
+    p->translate(r.x() + (r.width() / 2) , r.y() + (r.height() / 2));
+    p->drawPixmap( -(mClockScrew.width() / 2) , -(mClockScrew.height() / 2), mClockScrew.width() / scaleFactorHorizontal, mClockScrew.height() / scaleFactorVerticle, mClockScrew);
     p->restore();
 
     /* Draw Glass */
@@ -127,8 +129,8 @@ void ClockWidget::paintFrontView(QPainter *p, const QRectF &r)
     p->setRenderHint(QPainter::Antialiasing);
     p->setRenderHint(QPainter::SmoothPixmapTransform);
     p->setCompositionMode(QPainter::CompositionMode_SourceOver);
-    p->translate((r.width() / 2) , (r.height() / 2));
-    p->drawPixmap( -(mClockGlass.width() / 2) , -(mClockGlass.height() / 2), mClockGlass.width(), mClockGlass.height(), mClockGlass);
+    p->translate(r.x() + (r.width() / 2) , r.y() + (r.height() / 2));
+    p->drawPixmap( -(mClockGlass.width() / 2) , -(mClockGlass.height() / 2), mClockGlass.width() / scaleFactorHorizontal, mClockGlass.height() / scaleFactorVerticle, mClockGlass);
     p->restore();
 }
 
