@@ -304,7 +304,7 @@ void DesktopWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     d->mPressHoldTimer->stop();
     Q_EMIT clicked();
-    AbstractDesktopWidget::mouseReleaseEvent(event);
+    QGraphicsItem::mouseReleaseEvent(event);
 }
 
 void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -326,6 +326,7 @@ void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
         qDebug() << Q_FUNC_INFO << "Press start";
         return;
     }
+    QGraphicsItem::mousePressEvent(event);
 }
 void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
