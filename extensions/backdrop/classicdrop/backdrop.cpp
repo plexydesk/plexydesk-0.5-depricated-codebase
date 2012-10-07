@@ -97,3 +97,10 @@ void BackgroundController::handleDropEvent(PlexyDesk::AbstractDesktopWidget *wid
     }
 }
 
+void BackgroundController::setViewRect(const QRectF &rect)
+{
+    if (mBackgroundRender) {
+        mBackgroundRender->setContentRect(rect);
+    }
+}
+

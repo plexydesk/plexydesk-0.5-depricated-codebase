@@ -51,9 +51,11 @@ public:
 
     virtual AbstractDesktopWidget *defaultView() = 0;
 
+    virtual void setViewRect(const QRectF &rect) = 0;
+
     void setViewport(AbstractDesktopView *view);
 
-    AbstractDesktopView *viewport();
+    virtual AbstractDesktopView *viewport();
 
     virtual void revokeSession(const QString &key, const QString &value) = 0;
 

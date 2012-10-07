@@ -13,6 +13,7 @@ public:
     virtual ~AuthPlugin();
     PlexyDesk::AbstractDesktopWidget *defaultView();
     void revokeSession(const QString &key, const QString &value);
+    void setViewRect(const QRectF &rect);
 };
 
 #endif

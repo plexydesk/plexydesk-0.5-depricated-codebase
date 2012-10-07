@@ -45,6 +45,7 @@ public:
     QStringList visibleActions() const;
     void requestAction(const QString& actionName, const QVariantMap &args);
     void handleDropEvent(PlexyDesk::AbstractDesktopWidget *widget, QDropEvent *event);
+    void setViewRect(const QRectF &rect);
 
 private:
     PlexyDesk::ThemepackLoader *mThemePack;

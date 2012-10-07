@@ -42,6 +42,8 @@ public:
 
     void handleDropEvent(PlexyDesk::AbstractDesktopWidget *widget, QDropEvent *event);
 
+    void setViewRect(const QRectF &rect);
+
 private:
     PhotoWidget *mFrameParentitem;
     QString mImageSource;

@@ -41,6 +41,10 @@ void Clock::revokeSession(const QString &key, const QString &value)
 {
 }
 
+void Clock::setViewRect(const QRectF &rect)
+{
+}
+
 void Clock::onDataUpdated(const QVariantMap &data)
 {
     if (clock)
