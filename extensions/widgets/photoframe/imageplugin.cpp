@@ -61,3 +61,7 @@ void PhotoFrameController::handleDropEvent(PlexyDesk::AbstractDesktopWidget *wid
         }
     }
 }
+
+void PhotoFrameController::setViewRect(const QRectF &rect)
+{
+}

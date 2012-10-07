@@ -93,3 +93,7 @@ void DirectoryController::handleDropEvent(PlexyDesk::AbstractDesktopWidget *widg
         requestAction(ADD_DIR, args);
     }
 }
+
+void DirectoryController::setViewRect(const QRectF &rect)
+{
+}

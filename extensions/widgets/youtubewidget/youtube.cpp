@@ -37,3 +37,7 @@ PlexyDesk::AbstractDesktopWidget *YouTube::defaultView()
 void YouTube::revokeSession(const QString &key, const QString &value)
 {
 }
+
+void YouTube::setViewRect(const QRectF &rect)
+{
+}

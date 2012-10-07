@@ -36,3 +36,7 @@ PlexyDesk::AbstractDesktopWidget *AuthPlugin::defaultView()
 void AuthPlugin::revokeSession(const QString &key, const QString &value)
 {
 }
+
+void AuthPlugin::setViewRect(const QRectF &rect)
+{
+}

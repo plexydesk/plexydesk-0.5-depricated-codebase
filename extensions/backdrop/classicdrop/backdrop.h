@@ -53,6 +53,8 @@ public:
 
     void handleDropEvent(PlexyDesk::AbstractDesktopWidget *widget, QDropEvent *event);
 
+    void setViewRect(const QRectF &rect);
+
 public Q_SLOTS:
 
 private:
@@ -60,6 +62,7 @@ private:
     QGraphicsBlurEffect *mBlurEffect;
     PlexyDesk::ThemepackLoader *mThemePack;
     ClassicBackgroundRender *mBackgroundRender;
+    const QRectF mBackgroundRect;
 };
 
 #endif //PLEXY_CLASSIC_BACKDROP_H
