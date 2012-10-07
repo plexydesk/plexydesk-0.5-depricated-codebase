@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <widgets>
     <widget name="classicbackdrop">
-        <rect x="10" y="10" width="desktop-width" height="desktop-height"></rect>
+        <rect x="0" y="0" width="device-width" height="device-height"></rect>
     </widget>
     <widget name="plexyclock">
-        <rect x="10" y="10"></rect>
+        <rect x="80%" y="10%"></rect>
+    </widget>
+    <widget name="photoframe">
+        <rect x="65%" y="40%"></rect>
     </widget>
 </widgets>

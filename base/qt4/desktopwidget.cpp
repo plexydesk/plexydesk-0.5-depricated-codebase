@@ -304,7 +304,7 @@ void DesktopWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     d->mPressHoldTimer->stop();
     Q_EMIT clicked();
-    QGraphicsObject::mouseReleaseEvent(event);
+    AbstractDesktopWidget::mouseReleaseEvent(event);
 }
 
 void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)

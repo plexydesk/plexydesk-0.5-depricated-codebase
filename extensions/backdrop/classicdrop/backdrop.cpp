@@ -36,6 +36,7 @@ BackgroundController::BackgroundController(QObject *object)
     // read the theme name from settings
     mBackgroundRender = new ClassicBackgroundRender(QRectF(0.0, 0.0, 0.0, 0.0), 0,
                                                     QImage(QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->wallpaper())));
+    mBackgroundRender->setController(this);
 }
 
 BackgroundController::~BackgroundController()
@@ -82,6 +83,7 @@ void BackgroundController::handleDropEvent(PlexyDesk::AbstractDesktopWidget *wid
     ///TODO create a New Image Browser UI
     //for now just set the pixmap picture
 
+    qDebug() << Q_FUNC_INFO;
     if ( event->mimeData()->urls().count() >= 0 ) {
         const QString droppedFile = event->mimeData()->urls().value(0).toLocalFile();
 
@@ -99,8 +101,8 @@ void BackgroundController::handleDropEvent(PlexyDesk::AbstractDesktopWidget *wid
 
 void BackgroundController::setViewRect(const QRectF &rect)
 {
+    qDebug() << Q_FUNC_INFO << rect;
     if (mBackgroundRender) {
         mBackgroundRender->setContentRect(rect);
     }
 }
-

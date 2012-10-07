@@ -30,6 +30,8 @@ Clock::Clock(QObject *parent) : PlexyDesk::ControllerInterface (parent)
 
 Clock::~Clock()
 {
+    if (clock)
+        delete clock;
 }
 
 PlexyDesk::AbstractDesktopWidget *Clock::defaultView()
@@ -43,6 +45,8 @@ void Clock::revokeSession(const QString &key, const QString &value)
 
 void Clock::setViewRect(const QRectF &rect)
 {
+    if (clock)
+        clock->setPos(rect.x(), rect.y());
 }
 
 void Clock::onDataUpdated(const QVariantMap &data)

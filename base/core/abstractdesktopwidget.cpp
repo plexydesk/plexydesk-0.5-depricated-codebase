@@ -196,16 +196,6 @@ QString AbstractDesktopWidget::label() const
     return d->mName;
 }
 
-void AbstractDesktopWidget::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
-{
-    QGraphicsObject::hoverEnterEvent(event);
-}
-
-void AbstractDesktopWidget::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
-{
-    QGraphicsObject::mouseMoveEvent(event);
-}
-
 void AbstractDesktopWidget::setContentRect(const QRectF &rect)
 {
     d->mContentRect = rect;
