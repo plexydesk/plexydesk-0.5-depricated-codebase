@@ -60,6 +60,9 @@ public :
     float rotation() const;
     void setRotation(float angle);
 
+    float scaleFactorForWidth() const;
+    float scaleFactorForHeight() const;
+
     void setChildWidetVisibility(bool show);
 
     void setController(ControllerInterface *view_controller);

@@ -202,7 +202,7 @@ void DesktopWidget::paintRotatedView(QPainter *p, const QRectF &rect)
     p->save();
     //p->setOpacity(0.8);
     p->setRenderHints(QPainter::SmoothPixmapTransform);
-    p->drawPixmap(QRect(0, 0, rect.width(), rect.height()), d->mDefaultBackgroundPixmap);
+    p->drawPixmap(QRect(rect.x(), rect.y(), rect.width(), rect.height()), d->mDefaultBackgroundPixmap);
     p->restore();
 }
 
@@ -213,7 +213,7 @@ void DesktopWidget::paintFrontView(QPainter *p, const QRectF &rect)
     p->save();
     //p->setOpacity(0.8);
     p->setRenderHints(QPainter::SmoothPixmapTransform);
-    p->drawPixmap(QRect(0, 0, d->mDefaultBackgroundPixmap.width(), d->mDefaultBackgroundPixmap.height()), d->mDefaultBackgroundPixmap);
+    p->drawPixmap(QRect(rect.x() , rect.y() , d->mDefaultBackgroundPixmap.width() / scaleFactorForWidth(), d->mDefaultBackgroundPixmap.height() / scaleFactorForHeight()), d->mDefaultBackgroundPixmap);
     p->restore();
 }
 
