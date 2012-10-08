@@ -36,6 +36,9 @@ public:
 
     PlexyDesk::AbstractDesktopWidget::State widgetView(const QString &name);
 
+    QString loadSessionFromDisk() const;
+    void saveSessionToDisk(const QString &data);
+
     void setRect (const QRectF &rect);
 
 Q_SIGNALS:

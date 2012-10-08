@@ -18,6 +18,7 @@ public:
     ~PrivatePlexyDesktopView() {}
 
     PlexyDesk::ThemepackLoader *mThemeLoader;
+    bool mHasSession;
 };
 
 PlexyDesktopView::PlexyDesktopView(QGraphicsScene *parent_scene, QWidget *parent) :
@@ -25,12 +26,22 @@ PlexyDesktopView::PlexyDesktopView(QGraphicsScene *parent_scene, QWidget *parent
     d(new PrivatePlexyDesktopView)
 {
     d->mThemeLoader = new PlexyDesk::ThemepackLoader("default", this);
+    d->mHasSession = false;
 
-    QStringList widgets = d->mThemeLoader->desktopWidgets();
+    QString sessionData = d->mThemeLoader->loadSessionFromDisk();
 
-    Q_FOREACH(const QString &widget, widgets) {
-        addController(widget);
+    if (sessionData.isNull() || sessionData.isEmpty()) {
+        QStringList widgets = d->mThemeLoader->desktopWidgets();
+
+        Q_FOREACH(const QString &widget, widgets) {
+            addController(widget);
+        }
+    } else {
+      restoreViewFromSession(sessionData);
+      d->mHasSession = true;
     }
+
+    connect(this, SIGNAL(sessionUpdated(QString)), this, SLOT(onSessionUpdated(QString)));
 }
 
 PlexyDesktopView::~PlexyDesktopView()
@@ -40,13 +51,18 @@ PlexyDesktopView::~PlexyDesktopView()
 
 void PlexyDesktopView::layout()
 {
+    if (d->mHasSession)
+        return;
+
     Q_FOREACH(const QString &controllerName, currentControllers()) {
 
         QRectF rect = d->mThemeLoader->positionForWidget(controllerName, this);
-
-        PlexyDesk::ControllerInterface *controllerPtr = controllerByName(controllerName);
-        if (controllerPtr) {
-            controllerPtr->setViewRect(rect);
-        }
+        setControllerRect(controllerName, rect);
     }
+}
+
+void PlexyDesktopView::onSessionUpdated(const QString &data)
+{
+    qDebug() << Q_FUNC_INFO << data;
+    d->mThemeLoader->saveSessionToDisk(data);
 }

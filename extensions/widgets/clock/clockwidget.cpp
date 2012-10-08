@@ -38,7 +38,6 @@ ClockWidget::ClockWidget(const QRectF &rect)
 {
     setLabelName ("Clock");
     preRenderClockImages();
-    setCacheMode(QGraphicsItem::DeviceCoordinateCache);
 }
 
 void ClockWidget::preRenderClockImages()

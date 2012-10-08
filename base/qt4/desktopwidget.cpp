@@ -309,21 +309,26 @@ void DesktopWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+//    qDebug() << Q_FUNC_INFO << event->pos();
+//    qDebug() << Q_FUNC_INFO << boundingRect();
     if (event->buttons() == Qt::RightButton && (state() == VIEW || state() == ROTATED)) {
         this->setChildWidetVisibility(false);
         d->mPropertyAnimationForRotation->start();
+        QGraphicsItem::mousePressEvent(event);
         return;
     }
 
     if (d->mEditMode) {
         d->mPressHoldTimer->stop();
         Q_EMIT closed();
+        QGraphicsItem::mousePressEvent(event);
         return;
     }
 
     if (event->buttons() == Qt::LeftButton && state() == DOCKED) {
         d->mPressHoldTimer->start(3000);
         qDebug() << Q_FUNC_INFO << "Press start";
+        QGraphicsItem::mousePressEvent(event);
         return;
     }
     QGraphicsItem::mousePressEvent(event);

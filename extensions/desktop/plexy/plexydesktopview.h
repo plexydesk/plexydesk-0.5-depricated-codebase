@@ -13,6 +13,9 @@ public:
 
     void layout();
 
+public Q_SLOTS:
+    void onSessionUpdated(const QString &data);
+
 private:
     class PrivatePlexyDesktopView;
     PrivatePlexyDesktopView *const d;

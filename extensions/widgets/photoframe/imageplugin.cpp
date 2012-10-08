@@ -44,8 +44,9 @@ PlexyDesk::AbstractDesktopWidget *PhotoFrameController::defaultView()
    return mFrameParentitem;
 }
 
-void PhotoFrameController::revokeSession(const QString &key, const QString &value)
+void PhotoFrameController::revokeSession(const QVariantMap &args)
 {
+    mFrameParentitem->setContentImage(args["src"].toString());
 }
 
 void PhotoFrameController::handleDropEvent(PlexyDesk::AbstractDesktopWidget *widget, QDropEvent *event)
@@ -58,6 +59,10 @@ void PhotoFrameController::handleDropEvent(PlexyDesk::AbstractDesktopWidget *wid
 
         if ( !info.isDir() && !droppedPixmap.isNull() ) {
             mFrameParentitem->setContentImage(droppedPixmap);
+            if (viewport()) {
+                viewport()->sessionDataForController(controllerName(),"src", droppedFile);
+            } else
+                qDebug() << Q_FUNC_INFO << "Saving session Failed";
         }
     }
 }

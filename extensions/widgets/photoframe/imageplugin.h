@@ -38,11 +38,11 @@ public:
 
     PlexyDesk::AbstractDesktopWidget *defaultView();
 
-    void revokeSession(const QString &key, const QString &value);
+    virtual void revokeSession(const QVariantMap &args);
 
-    void handleDropEvent(PlexyDesk::AbstractDesktopWidget *widget, QDropEvent *event);
+    virtual void handleDropEvent(PlexyDesk::AbstractDesktopWidget *widget, QDropEvent *event);
 
-    void setViewRect(const QRectF &rect);
+    virtual void setViewRect(const QRectF &rect);
 
 private:
     PhotoWidget *mFrameParentitem;

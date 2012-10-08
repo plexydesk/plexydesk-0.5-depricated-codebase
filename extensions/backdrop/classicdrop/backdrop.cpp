@@ -59,8 +59,10 @@ PlexyDesk::AbstractDesktopWidget *BackgroundController::defaultView()
 
 }
 
-void BackgroundController::revokeSession(const QString &key, const QString &value)
+void BackgroundController::revokeSession(const QVariantMap &args)
 {
+    qDebug() << Q_FUNC_INFO << args;
+    mBackgroundRender->setBackgroundImage(args["background"].toString());
 }
 
 QStringList BackgroundController::visibleActions() const

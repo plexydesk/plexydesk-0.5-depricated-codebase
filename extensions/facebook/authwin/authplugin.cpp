@@ -33,7 +33,7 @@ PlexyDesk::AbstractDesktopWidget *AuthPlugin::defaultView()
     return new PlexyDesk::AuthWidget(QRectF(0, 0, 480, 320));
 }
 
-void AuthPlugin::revokeSession(const QString &key, const QString &value)
+void AuthPlugin::revokeSession(const QVariantMap &args)
 {
 }
 

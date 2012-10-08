@@ -261,6 +261,16 @@ void AbstractDesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsI
     }
 }
 
+void AbstractDesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    QGraphicsItem::mousePressEvent(event);
+}
+
+void AbstractDesktopWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    QGraphicsItem::mouseReleaseEvent(event);
+}
+
 void AbstractDesktopWidget::setRotation(float angle)
 {
     d->mAngle = angle;
@@ -278,7 +288,7 @@ void AbstractDesktopWidget::setRotation(float angle)
             setState(ROTATED);
         }
         resetMatrix();
-        setCacheMode(DeviceCoordinateCache);
+        //setCacheMode(DeviceCoordinateCache);
         d->mAngle = 0;
     }
 }

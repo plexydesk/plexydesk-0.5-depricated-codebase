@@ -37,7 +37,11 @@ class ThemepackLoader::ThemepackLoaderPrivate
 {
 public:
     ThemepackLoaderPrivate() {}
-    ~ThemepackLoaderPrivate() {}
+    ~ThemepackLoaderPrivate()
+    {
+        if (mXmlRawFile)
+            delete mXmlRawFile;
+    }
 
     QSettings *mSettings;
     QString mThemeCfgFile;
@@ -232,6 +236,49 @@ PlexyDesk::AbstractDesktopWidget::State ThemepackLoader::widgetView(const QStrin
     return default_state;
 }
 
+QString ThemepackLoader::loadSessionFromDisk() const
+{
+    QString homePath = QDir::homePath();
+    QString result;
+
+    homePath.append("/.plexydesk/session.xml");
+
+    QFileInfo info(homePath);
+
+    if (info.exists()) {
+        QFile sessionFile(homePath);
+
+        if (sessionFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+
+            while (!sessionFile.atEnd()) {
+                  QByteArray line = sessionFile.readLine();
+                  result.append(line);
+              }
+        }
+    }
+
+    return result;
+}
+
+void ThemepackLoader::saveSessionToDisk(const QString &data)
+{
+    QString homePath = QDir::toNativeSeparators(QDir::homePath() + "/.plexydesk/");
+    QFileInfo fileInfo(homePath);
+
+    if (!fileInfo.exists()) {
+        QDir::home().mkpath(homePath);
+    }
+
+    QFile file(QDir::toNativeSeparators(QDir::homePath() + "/.plexydesk/session.xml"));
+
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        return;
+
+    QTextStream out(&file);
+    out << data;
+
+    file.close();
+}
 
 void ThemepackLoader::setThemeName(const QString &name)
 {
