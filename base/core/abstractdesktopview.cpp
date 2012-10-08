@@ -66,7 +66,13 @@ class AbstractDesktopView::PrivateAbstractDesktopView
 {
 public:
     PrivateAbstractDesktopView() {}
-    ~PrivateAbstractDesktopView() {}
+    ~PrivateAbstractDesktopView()
+    {
+        if (mSessionTree)
+            delete mSessionTree;
+
+        mControllerMap.clear();
+    }
 
     QMap<QString, ControllerInterface*> mControllerMap;
     ControllerInterface *mDefaultViewController;
@@ -246,7 +252,66 @@ void AbstractDesktopView::addWidgetToView(AbstractDesktopWidget *widget)
 
 void AbstractDesktopView::sessionDataForController(const QString &controllerName, const QString &key, const QString &value)
 {
-    qDebug() << Q_FUNC_INFO << "::" << controllerName<<":" <<key << ":" << value;
+    QDomNodeList widgetNodeList = d->mSessionTree->documentElement().elementsByTagName("widget");
+
+    qDebug() << Q_FUNC_INFO << widgetNodeList.count();
+
+    for(int index = 0; index < widgetNodeList.count(); index++) {
+        QDomElement widgetElement = widgetNodeList.at(index).toElement();
+
+        qDebug() << Q_FUNC_INFO << widgetElement.attribute("controller");
+        if (widgetElement.attribute("controller") != controllerName)
+            continue;
+
+        if (widgetElement.hasChildNodes()) {
+            QDomElement argElement = widgetElement.firstChildElement("arg");
+
+            if (argElement.isNull()) {
+                QDomElement keyTag = d->mSessionTree->createElement("arg");
+                keyTag.setAttribute(key, value);
+                widgetElement.appendChild(keyTag);
+            } else
+                argElement.setAttribute(key, value);
+
+        }
+    }
+
+    qDebug() << Q_FUNC_INFO << d->mSessionTree->toString();
+}
+
+void AbstractDesktopView::restoreViewFromSession(const QString &sessionData)
+{
+    if (d->mSessionTree) {
+        QString errorMsg;
+        d->mSessionTree->setContent(sessionData, &errorMsg);
+        qDebug() << Q_FUNC_INFO <<  errorMsg;
+    }
+
+    QDomNodeList widgetNodeList = d->mSessionTree->documentElement().elementsByTagName("widget");
+
+    for(int index = 0; index < widgetNodeList.count(); index++) {
+        QDomElement widgetElement = widgetNodeList.at(index).toElement();
+
+        qDebug() << Q_FUNC_INFO << widgetElement.attribute("controller");
+        addController(widgetElement.attribute("controller"));
+
+        if (widgetElement.hasChildNodes()) {
+            QDomElement argElement = widgetElement.firstChildElement("arg");
+
+            if (!argElement.isNull()) {
+                QDomNamedNodeMap attrMap = argElement.attributes();
+                QVariantMap args;
+                for (int attrIndex = 0; attrIndex < attrMap.count(); attrIndex++) {
+                    QDomNode attributeNode = attrMap.item(attrIndex);
+                    QString key = attributeNode.toAttr().name();
+                    QString value = attributeNode.toAttr().value();
+                    args[key] = QVariant(value);
+                }
+                qDebug() << Q_FUNC_INFO << args;
+            }
+        }
+    }
+
 }
 
 }
