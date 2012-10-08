@@ -41,12 +41,16 @@ public:
     virtual bool setBackgroundController(const QString &controller_name);
 
     virtual void addController(const QString &controllerName);
+
     virtual QStringList currentControllers() const;
+
     virtual ControllerInterface *controllerByName(const QString &name);
 
     virtual void layout() = 0;
 
     virtual void sessionDataForController(const QString &controllerName, const QString &key, const QString &value);
+
+    virtual void restoreViewFromSession(const QString &sessionData);
 
 Q_SIGNALS:
     void closeApplication();
