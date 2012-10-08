@@ -44,6 +44,8 @@ public:
 
     virtual QStringList currentControllers() const;
 
+    virtual void setControllerRect(const QString &controllerName, const QRectF &rect);
+
     virtual ControllerInterface *controllerByName(const QString &name);
 
     virtual void layout() = 0;
@@ -54,6 +56,7 @@ public:
 
 Q_SIGNALS:
     void closeApplication();
+    void sessionUpdated(const QString &data);
 
 public Q_SLOTS:
     void addWidgetToView(AbstractDesktopWidget *widget);

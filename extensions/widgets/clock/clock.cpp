@@ -39,7 +39,7 @@ PlexyDesk::AbstractDesktopWidget *Clock::defaultView()
     return clock;
 }
 
-void Clock::revokeSession(const QString &key, const QString &value)
+void Clock::revokeSession(const QVariantMap &args)
 {
 }
 

@@ -34,7 +34,7 @@ public:
     Clock(QObject *parent);
     virtual ~Clock();
     PlexyDesk::AbstractDesktopWidget *defaultView();
-    void revokeSession(const QString &key, const QString &value);
+    void revokeSession(const QVariantMap &args);
     void setViewRect(const QRectF &rect);
 
 public Q_SLOTS:

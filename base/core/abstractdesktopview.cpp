@@ -178,21 +178,31 @@ void AbstractDesktopView::addController(const QString &controllerName)
 
     controller->setViewport(this);
     controller->setControllerName(controllerName);
-
-    QDomElement widget = d->mSessionTree->createElement("widget");
-    widget.setAttribute("controller", controllerName);
-    QDomElement geometry = d->mSessionTree->createElement("geometry");
-    geometry.setAttribute("x", defaultView->boundingRect().x());
-    geometry.setAttribute("y", defaultView->boundingRect().y());
-    widget.appendChild(geometry);
-    d->mRootElement.appendChild(widget);
-
-    qDebug() << Q_FUNC_INFO << d->mSessionTree->toString();
 }
 
 QStringList AbstractDesktopView::currentControllers() const
 {
     return d->mControllerMap.keys();
+}
+
+void AbstractDesktopView::setControllerRect(const QString &controllerName, const QRectF &rect)
+{
+    if (d->mControllerMap[controllerName]) {
+        d->mControllerMap[controllerName]->setViewRect(rect);
+    }
+
+    QDomElement widget = d->mSessionTree->createElement("widget");
+    widget.setAttribute("controller", controllerName);
+    QDomElement geometry = d->mSessionTree->createElement("geometry");
+    geometry.setAttribute("x", rect.x());
+    geometry.setAttribute("y", rect.y());
+    geometry.setAttribute("width", rect.width());
+    geometry.setAttribute("height", rect.height());
+    widget.appendChild(geometry);
+    d->mRootElement.appendChild(widget);
+
+    qDebug() << Q_FUNC_INFO << d->mSessionTree->toString();
+    Q_EMIT sessionUpdated(d->mSessionTree->toString());
 }
 
 ControllerInterface *AbstractDesktopView::controllerByName(const QString &name)
@@ -208,7 +218,6 @@ void AbstractDesktopView::dropEvent(QDropEvent *event)
         QList<QGraphicsItem *> items = scene()->items(event->pos());
 
         Q_FOREACH(QGraphicsItem *item, items) {
-            qDebug() << Q_FUNC_INFO << "INside";
 
             QGraphicsObject *itemObject = item->toGraphicsObject();
 
@@ -221,7 +230,7 @@ void AbstractDesktopView::dropEvent(QDropEvent *event)
             if (!widget || !widget->controller())
                 continue;
 
-            qDebug() << Q_FUNC_INFO;
+            qDebug() << Q_FUNC_INFO << "handle drop event";
 
             widget->controller()->handleDropEvent(widget, event);
             return;
@@ -276,7 +285,7 @@ void AbstractDesktopView::sessionDataForController(const QString &controllerName
         }
     }
 
-    qDebug() << Q_FUNC_INFO << d->mSessionTree->toString();
+    Q_EMIT sessionUpdated(d->mSessionTree->toString());
 }
 
 void AbstractDesktopView::restoreViewFromSession(const QString &sessionData)
@@ -292,8 +301,8 @@ void AbstractDesktopView::restoreViewFromSession(const QString &sessionData)
     for(int index = 0; index < widgetNodeList.count(); index++) {
         QDomElement widgetElement = widgetNodeList.at(index).toElement();
 
-        qDebug() << Q_FUNC_INFO << widgetElement.attribute("controller");
         addController(widgetElement.attribute("controller"));
+        ControllerInterface *iface = controllerByName(widgetElement.attribute("controller"));
 
         if (widgetElement.hasChildNodes()) {
             QDomElement argElement = widgetElement.firstChildElement("arg");
@@ -307,11 +316,31 @@ void AbstractDesktopView::restoreViewFromSession(const QString &sessionData)
                     QString value = attributeNode.toAttr().value();
                     args[key] = QVariant(value);
                 }
-                qDebug() << Q_FUNC_INFO << args;
+
+                if (iface) {
+                    iface->revokeSession(args);
+                }
             }
+
+            //restore geometry
+            QDomElement rectElement = widgetElement.firstChildElement("geometry");
+            if (!rectElement.isNull()) {
+                QDomAttr x = rectElement.attributeNode("x");
+                QDomAttr y = rectElement.attributeNode("y");
+
+                QDomAttr widthAttr = rectElement.attributeNode("width");
+                QDomAttr heightAttr = rectElement.attributeNode("height");
+
+                QRectF geometry (x.value().toFloat(), y.value().toFloat(), widthAttr.value().toFloat(), heightAttr.value().toFloat());
+
+                if(iface) {
+                    iface->setViewRect(geometry);
+                }
+
+            }
+
         }
     }
-
 }
 
 }
