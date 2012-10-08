@@ -36,6 +36,7 @@ public:
     Private() {
     }
     ~Private() {
+        mDict.clear();
     }
     Interface mPluginGroups;
     QString mPluginPrefix;
