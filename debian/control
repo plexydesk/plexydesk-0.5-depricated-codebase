@@ -5,6 +5,8 @@ Maintainer: PhobosK <phobosk@kbfx.net>
 Build-Depends:  debhelper (>= 5),
                 cdbs,
                 cmake,
+                bison,
+                flex,
                 libqt4-dev (>= 4.7.0),
                 libqt4-opengl-dev (>= 4.7.0),
                 libqtwebkit-dev,

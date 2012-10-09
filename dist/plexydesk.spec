@@ -100,6 +100,7 @@ Vendor:		PlexyDesk Team
 Source:		%{name}-%{version}.tar.bz2
 Requires:	shared-mime-info
 BuildRequires:	glibc-devel, cmake >= 2.6, automake, libtool
+BuildRequires:	bison, flex
 
 
 %description
@@ -186,6 +187,7 @@ if [ "$1" = "0" -a -x /usr/bin/update-menus ]; then /usr/bin/update-menus || tru
 
 * Mon Oct 08 2012 0.6.6
 
+ - Adds: flex and bison build requirements
  - New upstream version 0.6.6
 
 * Sun Jul 23 2011 0.6.0
