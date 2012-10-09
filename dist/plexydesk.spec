@@ -1,8 +1,8 @@
 # Change the values below as needed
 %define name plexydesk
-%define version 0.6.0
+%define version 0.6.6
 %define rpm_release 1
-%define debug_on 1
+%define debug_on 0
 
 
 
@@ -183,6 +183,14 @@ if [ "$1" = "0" -a -x /usr/bin/update-menus ]; then /usr/bin/update-menus || tru
 # You need to add new Changelog entries specific for the RPM here.
 # Do not add the Changelog for the PlexyDesk package here.
 %changelog
+
+* Mon Oct 08 2012 0.6.6
+
+ - DELETE ME - PUT HERE ONLY CHANGES CONCERNING THE RPM PACKAGES
+ - Fixes: PLEASE CHANGE ME
+ - Adds: PLEASE CHANGE ME
+ - Changes: PLEASE CHANGE ME
+ - New upstream version
 
 * Sun Jul 23 2011 0.6.0
  Initial rpm release

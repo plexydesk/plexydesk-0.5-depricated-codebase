@@ -100,6 +100,7 @@ AbstractDesktopView::AbstractDesktopView(QGraphicsScene *scene, QWidget *parent)
     setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
     setOptimizationFlag(QGraphicsView::DontAdjustForAntialiasing);
     setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
+    setFrameStyle(QFrame::NoFrame);
 }
 
 AbstractDesktopView::~AbstractDesktopView()
