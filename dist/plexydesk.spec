@@ -186,11 +186,7 @@ if [ "$1" = "0" -a -x /usr/bin/update-menus ]; then /usr/bin/update-menus || tru
 
 * Mon Oct 08 2012 0.6.6
 
- - DELETE ME - PUT HERE ONLY CHANGES CONCERNING THE RPM PACKAGES
- - Fixes: PLEASE CHANGE ME
- - Adds: PLEASE CHANGE ME
- - Changes: PLEASE CHANGE ME
- - New upstream version
+ - New upstream version 0.6.6
 
 * Sun Jul 23 2011 0.6.0
  Initial rpm release
