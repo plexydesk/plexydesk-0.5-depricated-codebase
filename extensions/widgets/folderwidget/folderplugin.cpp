@@ -96,4 +96,8 @@ void DirectoryController::handleDropEvent(PlexyDesk::AbstractDesktopWidget *widg
 
 void DirectoryController::setViewRect(const QRectF &rect)
 {
+    Q_FOREACH(IconWidgetView *view, mFolderViewList) {
+        if(view)
+            view->setPos(rect.x(), rect.y());
+    }
 }

@@ -30,6 +30,8 @@
 #include <QPalette>
 #include "facebookdata.h"
 #include "authwidget.h"
+#include <controllerinterface.h>
+#include <abstractdesktopview.h>
 
 namespace PlexyDesk {
 
@@ -42,7 +44,7 @@ AuthWidget::AuthWidget(const QRectF &rect) :
     mNtManager = new QNetworkAccessManager(this);
     mCookie = new QNetworkCookieJar(this);
     mNtManager->setCookieJar(mCookie);
-    QRect webrect = QRect(10.0, 10.0, rect.width()-65, rect.height()-5);
+    QRect webrect = QRect(10.0, 10.0, rect.width()-65, rect.height()-8);
     mView = new QWebViewItem(webrect, this);
     if (mView->page()) {
         mView->page()->setNetworkAccessManager(mNtManager);
@@ -64,6 +66,15 @@ AuthWidget::AuthWidget(const QRectF &rect) :
         connect(mReply, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
     }
     mProgressValue = 10;
+
+    enableDefaultBackground(false);
+
+    mShadowEffect = new QGraphicsDropShadowEffect(this);
+    mShadowEffect->setBlurRadius(32);
+    mShadowEffect->setXOffset(0);
+    mShadowEffect->setYOffset(0);
+    mShadowEffect->setColor(QColor(0.0, 0.0, 0.0));
+    this->setGraphicsEffect(mShadowEffect);
 }
 
 AuthWidget::~AuthWidget()
@@ -71,14 +82,13 @@ AuthWidget::~AuthWidget()
     delete mJsonHandle;
 }
 
-void AuthWidget::paintExtFace(QPainter *painter,
-     const QStyleOptionGraphicsItem *op, QWidget *)
+void AuthWidget::paintFrontView(QPainter *painter, const QRectF &r)
 {
-    QRect bannerRect(op->exposedRect.x(),
-         op->exposedRect.y(),
-         op->exposedRect.width(),
+    QRect bannerRect(r.x(),
+         r.y(),
+         r.width(),
          36);
-    painter->fillRect(op->exposedRect, QColor(255, 255, 255));
+    painter->fillRect(r, QColor(255, 255, 255));
     painter->fillRect(bannerRect, QColor(109, 132, 180));
     /* Painter settings */
     painter->setRenderHint(QPainter::Antialiasing, true);
@@ -112,11 +122,15 @@ void AuthWidget::paintExtFace(QPainter *painter,
         painter->drawLine(start, end);
         pen.setBrush(QColor(255, 255, 255));
         painter->setPen(pen);
-        QRect txtFrame(progressFrame.x(), 10, op->exposedRect.width(), 40);
+        QRect txtFrame(progressFrame.x(), 10, r.width(), 40);
         painter->drawText(txtFrame,
              QString("Loading Facebook : %1%").arg(mProgressValue));
     }
+
+    PlexyDesk::DesktopWidget::paintFrontView(painter, r);
 }
+
+
 void AuthWidget::paintExtDockFace(QPainter *painter,
      const QStyleOptionGraphicsItem *, QWidget *)
 {
@@ -145,7 +159,6 @@ void AuthWidget::onLoadeFinished(bool ok)
 
 void AuthWidget::onLoadProgress(int progress)
 {
-    qDebug() << Q_FUNC_INFO << progress;
     mProgressValue = progress;
     update();
 }
@@ -167,12 +180,16 @@ void AuthWidget::onUrlChanged(const QUrl &url)
         configState(AbstractDesktopWidget::DOCKED);
         this->setVisible(false);
         /* save the auth token */
-        PlexyDesk::Config *config = PlexyDesk::Config::getInstance();
-        QSettings *settings = config->coreSettings();
-        settings->beginGroup("facebook_plugin");
-        settings->setValue("access_token",
-             fburl.queryItemValue("access_token"));
-        settings->endGroup();
+//        PlexyDesk::Config *config = PlexyDesk::Config::getInstance();
+//        QSettings *settings = config->coreSettings();
+//        settings->beginGroup("facebook_plugin");
+//        settings->setValue("access_token",
+//             fburl.queryItemValue("access_token"));
+//        settings->endGroup();
+        if(controller() && controller()->viewport()) {
+            controller()->viewport()->sessionDataForController(controller()->controllerName(), "access_token", fburl.queryItemValue("access_token"));
+        }
+
     }
 }
 void AuthWidget::readConfig(QString &user,

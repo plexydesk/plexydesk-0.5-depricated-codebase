@@ -10,6 +10,9 @@
         <rect x="65%" y="40%"></rect>
     </widget>
     <widget name="folderwidget">
-        <rect x="10%" y="10%"></rect>
+        <rect x="2%" y="10%"></rect>
+    </widget>
+    <widget name="plexyauth">
+        <rect x="2%" y="60%"></rect>
     </widget>
 </widgets>

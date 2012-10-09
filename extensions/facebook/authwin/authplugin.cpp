@@ -16,21 +16,25 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#include "authwidget.h"
+
 #include "authplugin.h"
 #include <qwebviewitem.h>
 
 AuthPlugin::AuthPlugin(QObject *object)
 {
+     mWidget = new PlexyDesk::AuthWidget(QRectF(0, 0, 480, 320));
+     mWidget->setController(this);
 }
 
 AuthPlugin::~AuthPlugin()
 {
+    if (mWidget)
+        delete mWidget;
 }
 
 PlexyDesk::AbstractDesktopWidget *AuthPlugin::defaultView()
 {
-    return new PlexyDesk::AuthWidget(QRectF(0, 0, 480, 320));
+    return mWidget;
 }
 
 void AuthPlugin::revokeSession(const QVariantMap &args)
@@ -39,4 +43,6 @@ void AuthPlugin::revokeSession(const QVariantMap &args)
 
 void AuthPlugin::setViewRect(const QRectF &rect)
 {
+    if (mWidget)
+        mWidget->setPos(rect.x(), rect.y());
 }

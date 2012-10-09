@@ -3,6 +3,7 @@
 
 #include <plexy.h>
 #include <controllerinterface.h>
+#include "authwidget.h"
 
 class AuthPlugin : public PlexyDesk::ControllerInterface
 {
@@ -14,6 +15,9 @@ public:
     PlexyDesk::AbstractDesktopWidget *defaultView();
     void revokeSession(const QVariantMap &args);
     void setViewRect(const QRectF &rect);
+
+private:
+    PlexyDesk::AuthWidget *mWidget;
 };
 
 #endif

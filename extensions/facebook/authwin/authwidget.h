@@ -37,11 +37,14 @@ class AuthWidget : public PlexyDesk::DesktopWidget
 public:
     AuthWidget(const QRectF &rect);
     virtual ~AuthWidget();
+
     void readConfig(QString &user, QString &pass);
-    void paintExtFace(QPainter *painter,
-         const QStyleOptionGraphicsItem *item, QWidget *widget);
+
+    void paintFrontView(QPainter *painter, const QRectF &r);
+
     void paintExtDockFace(QPainter *painter,
          const QStyleOptionGraphicsItem *item, QWidget *widget);
+
 public Q_SLOTS:
     void data(QVariantMap &);
     void onDataReady();
@@ -50,6 +53,7 @@ public Q_SLOTS:
     void onLoadStarted();
     void onUrlChanged(const QUrl &url);
     void onReadyRead();
+
 private:
     QString tokenFromConfig() const;
     QWebViewItem *mView;
@@ -59,6 +63,8 @@ private:
     bool mLoggedIn;
     JsonHandler *mJsonHandle;
     QNetworkReply *mReply;
+    QGraphicsDropShadowEffect *mShadowEffect;
+
 };
 #endif
 }
