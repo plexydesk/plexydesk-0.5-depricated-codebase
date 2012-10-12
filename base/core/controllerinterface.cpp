@@ -38,7 +38,7 @@ AbstractDesktopView *ControllerInterface::viewport()
     return d->mViewport;
 }
 
-QStringList ControllerInterface::visibleActions() const
+QStringList ControllerInterface::actions() const
 {
     return QStringList();
 }

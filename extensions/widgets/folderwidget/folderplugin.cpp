@@ -54,7 +54,7 @@ void DirectoryController::revokeSession(const QVariantMap &args)
 {
 }
 
-QStringList DirectoryController::visibleActions() const
+QStringList DirectoryController::actions() const
 {
     QStringList actions;
     actions << ADD_DIR << CREATE_DIR;

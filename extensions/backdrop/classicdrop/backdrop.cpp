@@ -65,7 +65,7 @@ void BackgroundController::revokeSession(const QVariantMap &args)
     mBackgroundRender->setBackgroundImage(args["background"].toString());
 }
 
-QStringList BackgroundController::visibleActions() const
+QStringList BackgroundController::actions() const
 {
     QStringList actions;
     actions << QLatin1String ("Change Background");

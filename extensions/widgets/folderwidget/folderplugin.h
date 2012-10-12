@@ -42,7 +42,7 @@ public:
 
     void revokeSession(const QVariantMap &args);
 
-    QStringList visibleActions() const;
+    QStringList actions() const;
     void requestAction(const QString& actionName, const QVariantMap &args);
     void handleDropEvent(PlexyDesk::AbstractDesktopWidget *widget, QDropEvent *event);
     void setViewRect(const QRectF &rect);
