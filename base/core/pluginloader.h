@@ -33,21 +33,30 @@ public:
     typedef QHash <QString, AbstractPluginInterface *> Interface;
 
     PluginLoader();
+
     virtual ~PluginLoader();
 
     static PluginLoader *getInstanceWithPrefix(const QString &desktopPrefix, const QString &libPrefix);
+
     static PluginLoader *getInstance();
 
     QStringList listPlugins(const QString &types);
+
     QObject *instance(const QString &name);
+
     void scanForPlugins();
+
     void setPluginPrefix(const QString &path);
+
     void setPluginInfoPrefix(const QString &path);
+
     QString pluginInforPrefix() const;
+
     QString pluginPrefix() const;
 
 protected:
     void loadDesktop(const QString &path);
+
     void load(const QString &_interface, const QString &plugin);
 
 private:

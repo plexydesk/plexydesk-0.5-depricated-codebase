@@ -19,7 +19,6 @@
 #include <desktopwidget.h>
 
 #include "desktopviewiface.h"
-#include "desktopview.h"
 #include "desktopviewimpl.h"
 #include <QtPlugin>
 

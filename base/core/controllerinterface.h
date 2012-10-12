@@ -9,12 +9,11 @@ class QGraphicsItem;
 class QDropEvent;
 
 /*!
-
   \class PlexyDesk::ViewControllerPlugin
 
   \brief Base class for writing view plugins
 
-  \fn PlexyDesk::ViewControllerPlugin::visibleActions
+  \fn PlexyDesk::ViewControllerPlugin::actions
 
   \brief Actions supported by the plugin
 
@@ -36,6 +35,7 @@ class QDropEvent;
 
   \returns A list of action label supported by the widget  plugin
 */
+
 namespace PlexyDesk
 {
 class AbstractDesktopWidget;
@@ -59,7 +59,7 @@ public:
 
     virtual void revokeSession(const QVariantMap &args) = 0;
 
-    virtual QStringList visibleActions() const;
+    virtual QStringList actions() const;
 
     virtual void requestAction(const QString& actionName, const QVariantMap &args);
 
@@ -73,6 +73,7 @@ public:
 
 protected:
     virtual bool connectToDataSource(const QString &source);
+
 
 Q_SIGNALS:
     void actionComleted(bool, const QString &error);

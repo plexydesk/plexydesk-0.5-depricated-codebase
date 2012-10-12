@@ -35,7 +35,6 @@ SET(sourceFiles
     icon.cpp
     iconjob.cpp
     iconprovider.cpp
-#    plexyeventhandler.cpp
     desktopbaseui.cpp
     plexypanel.cpp
     ${extra_source}
