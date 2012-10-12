@@ -27,6 +27,7 @@
 #include <QNetworkCookieJar>
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include <QGraphicsBlurEffect>
 
 class QTimer;
 namespace PlexyDesk {
@@ -42,8 +43,7 @@ public:
 
     void paintFrontView(QPainter *painter, const QRectF &r);
 
-    void paintExtDockFace(QPainter *painter,
-         const QStyleOptionGraphicsItem *item, QWidget *widget);
+    void revokeSession();
 
 public Q_SLOTS:
     void data(QVariantMap &);
@@ -64,6 +64,8 @@ private:
     JsonHandler *mJsonHandle;
     QNetworkReply *mReply;
     QGraphicsDropShadowEffect *mShadowEffect;
+    QGraphicsBlurEffect *mBlurEffect;
+    QPropertyAnimation *mBlurAnimation;
 
 };
 #endif

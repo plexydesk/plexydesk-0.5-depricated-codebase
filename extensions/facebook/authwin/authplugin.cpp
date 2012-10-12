@@ -39,6 +39,8 @@ PlexyDesk::AbstractDesktopWidget *AuthPlugin::defaultView()
 
 void AuthPlugin::revokeSession(const QVariantMap &args)
 {
+    if(mWidget)
+        mWidget->revokeSession();
 }
 
 void AuthPlugin::setViewRect(const QRectF &rect)

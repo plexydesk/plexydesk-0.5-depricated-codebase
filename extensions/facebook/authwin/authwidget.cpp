@@ -75,6 +75,16 @@ AuthWidget::AuthWidget(const QRectF &rect) :
     mShadowEffect->setYOffset(0);
     mShadowEffect->setColor(QColor(0.0, 0.0, 0.0));
     this->setGraphicsEffect(mShadowEffect);
+
+    mBlurEffect = new QGraphicsBlurEffect(this);
+    //mBlurEffect->setBlurRadius(1.3);
+    mBlurEffect->setBlurHints(QGraphicsBlurEffect::QualityHint);
+
+    mBlurAnimation =  new QPropertyAnimation(mBlurEffect, "blurRadius",this);
+    mBlurAnimation->setDuration(300);
+    mBlurAnimation->setStartValue(5.3);
+    mBlurAnimation->setEndValue(1.3);
+    mView->setGraphicsEffect(mBlurEffect);
 }
 
 AuthWidget::~AuthWidget()
@@ -87,13 +97,17 @@ void AuthWidget::paintFrontView(QPainter *painter, const QRectF &r)
     QRect bannerRect(r.x(),
          r.y(),
          r.width(),
-         36);
-    painter->fillRect(r, QColor(255, 255, 255));
-    painter->fillRect(bannerRect, QColor(109, 132, 180));
+         34);
+
     /* Painter settings */
     painter->setRenderHint(QPainter::Antialiasing, true);
     painter->setRenderHint(QPainter::TextAntialiasing, true);
     painter->setRenderHint(QPainter::HighQualityAntialiasing, true);
+
+    QPainterPath backgroundPath;
+    backgroundPath.addRoundedRect(r, 8, 8);
+    painter->fillPath(backgroundPath, QColor(255, 255, 255));
+    painter->fillRect(bannerRect, QColor(109, 132, 180));
 
     /* progress bar */
     QRadialGradient gradient(50, 50, 50, 50, 50);
@@ -130,11 +144,8 @@ void AuthWidget::paintFrontView(QPainter *painter, const QRectF &r)
     PlexyDesk::DesktopWidget::paintFrontView(painter, r);
 }
 
-
-void AuthWidget::paintExtDockFace(QPainter *painter,
-     const QStyleOptionGraphicsItem *, QWidget *)
+void AuthWidget::revokeSession()
 {
-    mView->setVisible(false);
 }
 
 void AuthWidget::onDataReady()
@@ -146,6 +157,7 @@ void AuthWidget::onLoadeFinished(bool ok)
     if (ok) {
         mView->setVisible(true);
         update();
+        mBlurAnimation->start();
     } else {
         mView->setUrl(QUrl(QLatin1String("https://graph.facebook.com/oauth/authorize?client_" \
                      "id=170356722999159&redirect_uri=http://www.facebook.com/connect" \
@@ -153,6 +165,7 @@ void AuthWidget::onLoadeFinished(bool ok)
         mLoggedIn = false;
         update();
         mView->setVisible(true);
+
     }
     mProgressValue = 10;
 }
@@ -180,12 +193,7 @@ void AuthWidget::onUrlChanged(const QUrl &url)
         configState(AbstractDesktopWidget::DOCKED);
         this->setVisible(false);
         /* save the auth token */
-//        PlexyDesk::Config *config = PlexyDesk::Config::getInstance();
-//        QSettings *settings = config->coreSettings();
-//        settings->beginGroup("facebook_plugin");
-//        settings->setValue("access_token",
-//             fburl.queryItemValue("access_token"));
-//        settings->endGroup();
+
         if(controller() && controller()->viewport()) {
             controller()->viewport()->sessionDataForController(controller()->controllerName(), "access_token", fburl.queryItemValue("access_token"));
         }
