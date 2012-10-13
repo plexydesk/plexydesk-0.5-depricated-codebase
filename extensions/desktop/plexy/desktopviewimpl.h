@@ -34,7 +34,6 @@
 #include <themepackloader.h>
 #include <qmldesktopwidget.h>
 
-#include "desktopview.h"
 #include "plexydesktopview.h"
 #include "plexytray.h"
 
