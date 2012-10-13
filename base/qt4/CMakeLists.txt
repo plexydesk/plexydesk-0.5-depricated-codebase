@@ -18,6 +18,7 @@ SET(sourceFiles
     qmlsvgprovider.cpp
     qmlpixmapprovider.cpp
     plexyconfig.cpp
+    button.cpp
     )
 
 SET(headerFiles 
@@ -44,6 +45,7 @@ SET(headerFiles
     qmlsvgprovider.h
     qmlpixmapprovider.h
     plexyconfig.h
+    button.h
     )
 
 SET(MOC_SRCS
@@ -63,6 +65,7 @@ SET(MOC_SRCS
    qmlsvgprovider.h
    qmlpixmapprovider.h
    plexyconfig.h
+   button.h
    )
 
 # DBUS is working only under linux for now
