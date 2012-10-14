@@ -21,18 +21,15 @@
 
 #include <plexy.h>
 
-#include <abstractplugininterface.h>
-#include "pictureflow.h"
-#include "imageitem.h"
+#include <controllerplugininterface.h>
 
-
-class  Interface : public QObject, public PlexyDesk::AbstractPluginInterface
+class  Interface : public PlexyDesk::ControllerPluginInterface
 {
     Q_OBJECT
-    Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
+    Q_INTERFACES(PlexyDesk::ControllerPluginInterface)
 
 public :
-    QObject *instance();
+      QSharedPointer<PlexyDesk::ControllerInterface> controller();
 };
 
 #endif

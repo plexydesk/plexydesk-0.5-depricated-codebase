@@ -11,14 +11,13 @@ class ControllerInterface::PrivateViewControllerPlugin
 public:
     PrivateViewControllerPlugin() {}
     ~PrivateViewControllerPlugin() {}
-    DataSource *mDataSource;
+    QSharedPointer<DataSource> mDataSource;
     AbstractDesktopView *mViewport;
     QString mName;
 };
 
 ControllerInterface::ControllerInterface(QObject *parent) : QObject(parent), d(new PrivateViewControllerPlugin)
 {
-    d->mDataSource = 0;
     d->mViewport = 0;
 }
 
@@ -54,7 +53,7 @@ void ControllerInterface::handleDropEvent(AbstractDesktopWidget *widget, QDropEv
 
 DataSource *ControllerInterface::dataSource()
 {
-    return d->mDataSource;
+    return d->mDataSource.data();
 }
 
 void ControllerInterface::setControllerName(const QString &name)
@@ -69,13 +68,12 @@ QString ControllerInterface::controllerName() const
 
 bool ControllerInterface::connectToDataSource(const QString &source)
 {
-   d->mDataSource =
-           qobject_cast<PlexyDesk::DataSource*> (PluginLoader::getInstance()->instance(source));
+   d->mDataSource = PluginLoader::getInstance()->engine(source);
 
-   if (!d->mDataSource)
+   if (!d->mDataSource.data())
        return 0;
 
-   connect(d->mDataSource, SIGNAL(ready()), this, SLOT(onReady()));
+   connect(d->mDataSource.data(), SIGNAL(ready()), this, SLOT(onReady()));
 
    return true;
 }
@@ -83,7 +81,7 @@ bool ControllerInterface::connectToDataSource(const QString &source)
 void ControllerInterface::onReady()
 {
     if(d->mDataSource)
-       Q_EMIT data(d->mDataSource);
+        Q_EMIT data(d->mDataSource.data());
 }
 
 }

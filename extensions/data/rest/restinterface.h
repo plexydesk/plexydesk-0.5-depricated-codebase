@@ -21,19 +21,19 @@
 
 #include <QtCore>
 #include <plexy.h>
-#include <abstractplugininterface.h>
+#include <dataplugininterface.h>
 #include <QtNetwork>
 
-class RestInterface : public QObject, public PlexyDesk::AbstractPluginInterface
+class RestInterface : public PlexyDesk::DataPluginInterface
 {
     Q_OBJECT
-    Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
+    Q_INTERFACES(PlexyDesk::DataPluginInterface)
 
 public :
     virtual ~RestInterface() {}
 
     /* this will return a valid data plugin pointer*/
-    QObject *instance();
+    QSharedPointer<PlexyDesk::DataSource> model();
 
 };
 

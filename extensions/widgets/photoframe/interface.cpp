@@ -24,9 +24,12 @@
 #include "imageplugin.h"
 #include <abstractsource.h>
 
-QObject *Interface::instance()
+QSharedPointer<PlexyDesk::ControllerInterface> Interface::controller()
 {
-    return new PhotoFrameController();
+    QSharedPointer<PlexyDesk::ControllerInterface> obj =
+            QSharedPointer<PlexyDesk::ControllerInterface>(new PhotoFrameController(this), &QObject::deleteLater);
+
+    return obj;
 }
 
 Q_EXPORT_PLUGIN2(photoframe, Interface)

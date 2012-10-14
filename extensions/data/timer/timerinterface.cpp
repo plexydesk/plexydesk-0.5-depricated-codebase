@@ -21,12 +21,12 @@
 #include <desktopwidget.h>
 #include <plexyconfig.h>
 
-QObject *TimerInterface::instance()
+QSharedPointer<PlexyDesk::DataSource> TimerInterface::model()
 {
-    /* this is the plugin we are returning since plexy core
-       or other plugins will expect this pointer
-     */
-    return new TimerData();
+    QSharedPointer<PlexyDesk::DataSource> obj =
+            QSharedPointer<PlexyDesk::DataSource>(new TimerData(), &QObject::deleteLater);
+
+    return obj;
 }
 
 Q_EXPORT_PLUGIN2(timerengine, TimerInterface)

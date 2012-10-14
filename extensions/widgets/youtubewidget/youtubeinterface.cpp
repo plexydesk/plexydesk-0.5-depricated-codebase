@@ -8,9 +8,12 @@ YouTubeInterface::YouTubeInterface(QObject *object)
 {
 }
 
-QObject *YouTubeInterface::instance()
+QSharedPointer<PlexyDesk::ControllerInterface> YouTubeInterface::controller()
 {
-    return new YouTube(this);
+    QSharedPointer<PlexyDesk::ControllerInterface> obj =
+            QSharedPointer<PlexyDesk::ControllerInterface>(new YouTube(this), &QObject::deleteLater);
+
+    return obj;
 }
 
 Q_EXPORT_PLUGIN2(plexyyoutube, YouTubeInterface)

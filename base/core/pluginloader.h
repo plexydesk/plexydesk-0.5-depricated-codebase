@@ -22,6 +22,12 @@
 #include <abstractplugininterface.h>
 #include <plexy.h>
 #include <QHash>
+#include <QSharedPointer>
+
+#include <datasource.h>
+#include <controllerinterface.h>
+#include <desktopviewplugininterface.h>
+#include <desktopviewplugin.h>
 
 namespace PlexyDesk
 {
@@ -44,6 +50,12 @@ public:
 
     QObject *instance(const QString &name);
 
+    QSharedPointer<DataSource> engine(const QString &name);
+
+    QSharedPointer<ControllerInterface> controller(const QString &name);
+
+    QSharedPointer<DesktopViewPlugin> view(const QString &name);
+
     void scanForPlugins();
 
     void setPluginPrefix(const QString &path);
@@ -60,6 +72,9 @@ protected:
     void load(const QString &_interface, const QString &plugin);
 
 private:
+
+
+
     class Private;
     Private *const d;
 #ifdef Q_WS_WIN

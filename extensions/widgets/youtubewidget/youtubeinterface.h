@@ -3,17 +3,20 @@
 
 #include <plexy.h>
 
-#include <abstractplugininterface.h>
+#include <controllerplugininterface.h>
 
 
-class YouTubeInterface : public QObject, public PlexyDesk::AbstractPluginInterface
+class YouTubeInterface : public PlexyDesk::ControllerPluginInterface
 {
     Q_OBJECT
-    Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
+    Q_INTERFACES(PlexyDesk::ControllerPluginInterface)
 
 public :
-        YouTubeInterface(QObject *object = 0);
-        QObject *instance();
+    YouTubeInterface(QObject *object = 0);
+
+    QSharedPointer<PlexyDesk::ControllerInterface> controller();
+
+
 };
 
 #endif

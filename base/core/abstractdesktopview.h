@@ -46,7 +46,7 @@ public:
 
     virtual void setControllerRect(const QString &controllerName, const QRectF &rect);
 
-    virtual ControllerInterface *controllerByName(const QString &name);
+    virtual QSharedPointer<ControllerInterface> controllerByName(const QString &name);
 
     virtual void layout() = 0;
 

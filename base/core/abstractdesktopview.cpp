@@ -74,7 +74,7 @@ public:
         mControllerMap.clear();
     }
 
-    QMap<QString, ControllerInterface*> mControllerMap;
+    QMap<QString, QSharedPointer<ControllerInterface> > mControllerMap;
     ControllerInterface *mDefaultViewController;
     AbstractDesktopWidget *mBackgroundItem;
     QDomDocument *mSessionTree;
@@ -160,15 +160,15 @@ void AbstractDesktopView::addController(const QString &controllerName)
     if (d->mControllerMap.keys().contains(controllerName))
         return;
 
-    ControllerInterface *controller =
-            qobject_cast<PlexyDesk::ControllerInterface*> (PlexyDesk::PluginLoader::getInstance()->instance(controllerName));
+    QSharedPointer<ControllerInterface> controller =
+            (PlexyDesk::PluginLoader::getInstance()->controller(controllerName));
 
-    if (!controller) {
-        qWarning() << Q_FUNC_INFO << "Error loading extension";
+    if (!controller.data()) {
+        qWarning() << Q_FUNC_INFO << "Error loading extension" << controllerName;
         return;
     }
 
-    connect(controller, SIGNAL(spawnView(AbstractDesktopWidget*)), this, SLOT(addWidgetToView(AbstractDesktopWidget*)));
+    connect(controller.data(), SIGNAL(spawnView(AbstractDesktopWidget*)), this, SLOT(addWidgetToView(AbstractDesktopWidget*)));
 
     d->mControllerMap[controllerName] = controller;
     QGraphicsItem *defaultView = controller->defaultView();
@@ -206,7 +206,7 @@ void AbstractDesktopView::setControllerRect(const QString &controllerName, const
     Q_EMIT sessionUpdated(d->mSessionTree->toString());
 }
 
-ControllerInterface *AbstractDesktopView::controllerByName(const QString &name)
+QSharedPointer<ControllerInterface> AbstractDesktopView::controllerByName(const QString &name)
 {
     return d->mControllerMap[name];
 }
@@ -303,7 +303,7 @@ void AbstractDesktopView::restoreViewFromSession(const QString &sessionData)
         QDomElement widgetElement = widgetNodeList.at(index).toElement();
 
         addController(widgetElement.attribute("controller"));
-        ControllerInterface *iface = controllerByName(widgetElement.attribute("controller"));
+        QSharedPointer<ControllerInterface> iface = controllerByName(widgetElement.attribute("controller"));
 
         if (widgetElement.hasChildNodes()) {
             QDomElement argElement = widgetElement.firstChildElement("arg");

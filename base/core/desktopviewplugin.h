@@ -31,12 +31,12 @@ class QRectF;
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT DesktopViewPlugin : public AbstractSource
+class PLEXYDESK_EXPORT DesktopViewPlugin : public QObject
 {
     Q_OBJECT
 
 public:
-    DesktopViewPlugin(QObject *object = 0) : AbstractSource(object){}
+    DesktopViewPlugin(QObject *object = 0) : QObject(object){}
 
     virtual ~DesktopViewPlugin(){}
 

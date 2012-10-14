@@ -26,9 +26,13 @@ DesktopViewInterface::~DesktopViewInterface()
 {
 }
 
-QObject *DesktopViewInterface::instance()
+QSharedPointer<PlexyDesk::DesktopViewPlugin> DesktopViewInterface::view()
 {
-    return new DesktopViewPluginImpl(this);
+    QSharedPointer<PlexyDesk::DesktopViewPlugin> obj =
+            QSharedPointer<PlexyDesk::DesktopViewPlugin>(new DesktopViewPluginImpl(this), &QObject::deleteLater);
+
+    return obj;
 }
+
 
 Q_EXPORT_PLUGIN2(plexydesktopview, DesktopViewInterface)

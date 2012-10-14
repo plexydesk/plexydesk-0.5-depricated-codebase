@@ -52,6 +52,9 @@ SET(sourceFiles
     pluginloader.cpp
     pendingjob.cpp
     controllerinterface.cpp
+    controllerplugininterface.cpp
+    desktopviewplugininterface.cpp
+    dataplugininterface.cpp
     )
 
 SET(headerFiles
@@ -67,6 +70,9 @@ SET(headerFiles
     pendingjob.h
     desktopviewplugin.h
     controllerinterface.h
+    controllerplugininterface.h
+    desktopviewplugininterface.h
+    dataplugininterface.h
    )
 
 SET(MOC_SRCS
@@ -80,6 +86,9 @@ SET(MOC_SRCS
     pendingjob.h
     controllerinterface.h
     desktopviewplugin.h
+    controllerplugininterface.h
+    desktopviewplugininterface.h
+    dataplugininterface.h
    )
 
 QT4_WRAP_CPP(QT_MOC_SRCS ${MOC_SRCS})

@@ -22,9 +22,12 @@
 #include "interface.h"
 #include "folderplugin.h"
 
-QObject *Interface::instance()
+QSharedPointer<PlexyDesk::ControllerInterface> Interface::controller()
 {
-    return new DirectoryController();
+    QSharedPointer<PlexyDesk::ControllerInterface> obj =
+            QSharedPointer<PlexyDesk::ControllerInterface>(new DirectoryController(this), &QObject::deleteLater);
+
+    return obj;
 }
 
 Q_EXPORT_PLUGIN2(folderwidget, Interface)

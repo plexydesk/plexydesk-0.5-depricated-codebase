@@ -23,18 +23,16 @@
 #include <plexy.h>
 #include "clock.h"
 #include "clockwidget.h"
-#include <abstractplugininterface.h>
+#include <controllerinterface.h>
+#include <controllerplugininterface.h>
 
-class ClockInterface : public QObject, public PlexyDesk::AbstractPluginInterface
+class ClockInterface : public PlexyDesk::ControllerPluginInterface
 {
     Q_OBJECT
-    Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
+    Q_INTERFACES(PlexyDesk::ControllerPluginInterface)
 
 public :
-    QObject *instance()
-    {
-        return new Clock(this);
-    }
+    QSharedPointer<PlexyDesk::ControllerInterface> controller();
 
 private:
     Clock *mClock;

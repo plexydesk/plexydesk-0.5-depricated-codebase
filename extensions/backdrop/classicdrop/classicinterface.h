@@ -22,17 +22,19 @@
 #include <plexy.h>
 #include <pluginloader.h>
 #include <abstractplugininterface.h>
+#include <controllerplugininterface.h>
 
 
-class ClassicBackdrop : public QObject, public PlexyDesk::AbstractPluginInterface
+class ClassicBackdrop : public PlexyDesk::ControllerPluginInterface
 {
     Q_OBJECT
-    Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
+    Q_INTERFACES(PlexyDesk::ControllerPluginInterface)
 
 public:
-    ClassicBackdrop(QObject *object = 0);
+    ClassicBackdrop(QObject *parent = 0);
     virtual ~ClassicBackdrop();
-    virtual QObject *instance();
+
+    QSharedPointer<PlexyDesk::ControllerInterface> controller();
 };
 
 #endif

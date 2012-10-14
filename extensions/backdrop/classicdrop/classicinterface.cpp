@@ -22,7 +22,7 @@
 
 #include <QtPlugin>
 
-ClassicBackdrop::ClassicBackdrop(QObject * /*object*/)
+ClassicBackdrop::ClassicBackdrop(QObject * parent) : PlexyDesk::ControllerPluginInterface(parent)
 {
 }
 
@@ -30,10 +30,12 @@ ClassicBackdrop::~ClassicBackdrop()
 {
 }
 
-QObject *ClassicBackdrop::instance()
+QSharedPointer<PlexyDesk::ControllerInterface> ClassicBackdrop::controller()
 {
-    return new BackgroundController(this);
-}
+    QSharedPointer<PlexyDesk::ControllerInterface> obj =
+            QSharedPointer<PlexyDesk::ControllerInterface>(new BackgroundController(this), &QObject::deleteLater);
 
+    return obj;
+}
 
 Q_EXPORT_PLUGIN2(ClassicBackdrop, ClassicBackdrop)

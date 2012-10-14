@@ -16,22 +16,21 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#ifndef PLEXY_CLASSIC_BACKDROP_I
-#define PLEXY_CLASSIC_BACKDROP_I
+#ifndef PLEXY_DESKTOP_VIEW_I
+#define PLEXY_DESKTOP_VIEW_I
 
 #include <plexy.h>
 #include <pluginloader.h>
-#include <abstractplugininterface.h>
+#include <desktopviewplugininterface.h>
 
-
-class DesktopViewInterface : public QObject, public PlexyDesk::AbstractPluginInterface
+class DesktopViewInterface : public PlexyDesk::DesktopViewPluginInterface
 {
     Q_OBJECT
-    Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
+    Q_INTERFACES(PlexyDesk::DesktopViewPluginInterface)
 
 public:
     virtual ~DesktopViewInterface();
-    virtual QObject *instance();
+    QSharedPointer<PlexyDesk::DesktopViewPlugin> view();
 };
 
 #endif

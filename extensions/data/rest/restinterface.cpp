@@ -21,12 +21,12 @@
 #include <desktopwidget.h>
 #include <plexyconfig.h>
 
-QObject *RestInterface::instance()
+QSharedPointer<PlexyDesk::DataSource> RestInterface::model()
 {
-    /* this is the plugin we are returning since plexy core
-       or other plugins will expect this pointer
-     */
-    return new RestData();
+    QSharedPointer<PlexyDesk::DataSource> obj =
+            QSharedPointer<PlexyDesk::DataSource>(new RestData(), &QObject::deleteLater);
+
+    return obj;
 }
 
 Q_EXPORT_PLUGIN2(restengine, RestInterface)

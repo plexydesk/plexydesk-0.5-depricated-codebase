@@ -41,7 +41,7 @@ class DesktopBaseUi::DesktopBaseUiPrivate
     public:
         DesktopBaseUiPrivate () {}
         ~DesktopBaseUiPrivate () {}
-        DesktopViewPlugin *mViewPlugin;
+        QSharedPointer<DesktopViewPlugin> mViewPlugin;
         AbstractDesktopView *mDesktopView;
         QDesktopWidget *mDesktopWidget;
         QGraphicsScene *mScene;
@@ -72,9 +72,7 @@ DesktopBaseUi::~DesktopBaseUi()
 
 void DesktopBaseUi::setDesktopView(const QString &name)
 {
-    d->mViewPlugin =
-        static_cast<DesktopViewPlugin *>(
-                PluginLoader::getInstance()->instance(name));
+    d->mViewPlugin = PluginLoader::getInstance()->view(name);
     //FIX : handle changes
 }
 

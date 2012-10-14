@@ -25,6 +25,9 @@
 
 #include "pluginloader.h"
 #include "extensionfactory.h"
+#include "dataplugininterface.h"
+#include "controllerplugininterface.h"
+#include "desktopviewplugininterface.h"
 
 namespace PlexyDesk
 {
@@ -33,12 +36,24 @@ PluginLoader *PluginLoader::mInstance = 0;
 class PluginLoader::Private
 {
 public:
+    typedef QHash <QString, DataPluginInterface*> EnginePlugins;
+    typedef QHash <QString, ControllerPluginInterface *> ControllerPlugins;
+    typedef QHash <QString, DesktopViewPluginInterface *> DesktopViewPlugins;
+
     Private() {
     }
     ~Private() {
         mDict.clear();
     }
+
+    void addToDict(const QString &interface, const QString &pluginName);
+
     Interface mPluginGroups;
+
+    EnginePlugins mEngines;
+    ControllerPlugins mControllers;
+    DesktopViewPlugins mDesktopViews;
+
     QString mPluginPrefix;
     QString mPluginInfoPrefix;
     QHash<QString, QStringList> mDict;
@@ -87,11 +102,50 @@ QObject *PluginLoader::instance(const QString &name)
     }
 }
 
+QSharedPointer<DataSource> PluginLoader::engine(const QString &name)
+{
+    if (d->mEngines[name]) {
+        return d->mEngines[name]->model();
+    } else {
+        load("Engine", name);
+        if (d->mEngines[name]) {
+            return d->mEngines[name]->model();
+        }
+    }
+
+    return QSharedPointer<DataSource>();
+}
+
+QSharedPointer<ControllerInterface> PluginLoader::controller(const QString &name)
+{
+    if (d->mControllers[name]) {
+        return d->mControllers[name]->controller();
+    } else {
+        load("Widget", name);
+        if (d->mControllers[name]) {
+            return d->mControllers[name]->controller();
+        }
+    }
+
+    return QSharedPointer<ControllerInterface>();
+}
+
+QSharedPointer<DesktopViewPlugin> PluginLoader::view(const QString &name)
+{
+    if (d->mDesktopViews[name]) {
+        return d->mDesktopViews[name]->view();
+    } else {
+        load("DesktopView", name);
+        if (d->mDesktopViews[name]) {
+            return d->mDesktopViews[name]->view();
+        }
+    }
+
+    return QSharedPointer<DesktopViewPlugin>();
+}
+
 void PluginLoader::load(const QString &interface, const QString &pluginName)
 {
-    // plugin already loaded
-    if(d->mPluginGroups.find(pluginName) != d->mPluginGroups.end())
-        return;
 
 #ifdef Q_WS_MAC
     QPluginLoader loader (d->mPluginPrefix + QLatin1String("lib") + pluginName + QLatin1String(".dylib") );
@@ -105,26 +159,41 @@ void PluginLoader::load(const QString &interface, const QString &pluginName)
     QPluginLoader loader (d->mPluginPrefix + pluginName + ".dll" );
 #endif
 
-    QObject *plugin = loader.instance();
-    if (plugin) {
-        AbstractPluginInterface *Iface = 0;
-        Iface = qobject_cast<AbstractPluginInterface *> (plugin);
-        d->mPluginGroups[pluginName] = Iface;
+    if (interface.toLower() == "engine") {
+        QObject *plugin = loader.instance();
 
-        const QStringList dictKeys = d->mDict.keys();
-        if (!dictKeys.contains(interface)) {
-            QStringList list;
-            list << pluginName;
-            d->mDict[interface] = list;
-        } else {
-            QStringList list;
-            list = d->mDict[interface];
-            list << pluginName;
-            d->mDict[interface] = list;
+        if (plugin) {
+            DataPluginInterface *Iface = 0;
+            Iface = qobject_cast<DataPluginInterface *> (plugin);
+            d->mEngines[pluginName] = Iface;
+        }else
+            qWarning() << Q_FUNC_INFO << loader.errorString();
+    }
+
+    if (interface.toLower() == "widget")  {
+
+        QObject *plugin = loader.instance();
+
+        if (plugin) {
+            ControllerPluginInterface *Iface = 0;
+            Iface = qobject_cast<ControllerPluginInterface *> (plugin);
+            d->mControllers[pluginName] = Iface;
         }
+        else {
+            qWarning() << Q_FUNC_INFO << loader.errorString();
+        }
+    }
 
-    } else {
-        qWarning() << loader.errorString() << "Failed plugin: " << pluginName << endl;
+    if (interface.toLower() == "desktopview")  {
+
+        QObject *plugin = loader.instance();
+
+        if (plugin) {
+            DesktopViewPluginInterface *Iface = 0;
+            Iface = qobject_cast<DesktopViewPluginInterface *> (plugin);
+            d->mDesktopViews[pluginName] = Iface;
+       } else
+            qWarning() << Q_FUNC_INFO << loader.errorString();
     }
 }
 
@@ -170,8 +239,24 @@ void PluginLoader::loadDesktop(const QString &path)
 {
     QSettings desktopFile(path, QSettings::IniFormat, this);
     desktopFile.beginGroup("Desktop Entry");
-    load(desktopFile.value("Type").toString(), desktopFile.value("X-PLEXYDESK-Library").toString());
+    d->addToDict(desktopFile.value("Type").toString(), desktopFile.value("X-PLEXYDESK-Library").toString());
     desktopFile.endGroup();
+}
+
+void PluginLoader::Private::addToDict(const QString &interface, const QString &pluginName)
+{
+    const QStringList dictKeys = mDict.keys();
+    if (!dictKeys.contains(interface)) {
+        QStringList list;
+        list << pluginName;
+        mDict[interface] = list;
+    } else {
+        QStringList list;
+        list = mDict[interface];
+        list << pluginName;
+        mDict[interface] = list;
+    }
+
 }
 
 }

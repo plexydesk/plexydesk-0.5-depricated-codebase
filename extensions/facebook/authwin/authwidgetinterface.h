@@ -3,14 +3,20 @@
 
 #include <plexy.h>
 #include <abstractplugininterface.h>
+#include <controllerinterface.h>
+#include <controllerplugininterface.h>
 
-class PLEXYDESK_EXPORT AuthInterface : public QObject, public PlexyDesk::AbstractPluginInterface
+class PLEXYDESK_EXPORT AuthInterface : public PlexyDesk::ControllerPluginInterface
 {
     Q_OBJECT
-    Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
+    Q_INTERFACES(PlexyDesk::ControllerPluginInterface)
 
 public :
-   QObject *instance();
+    AuthInterface(QObject *parent = 0) : PlexyDesk::ControllerPluginInterface(parent) {}
+    virtual ~AuthInterface() {}
+
+    QSharedPointer<PlexyDesk::ControllerInterface> controller();
+
 };
 
 #endif

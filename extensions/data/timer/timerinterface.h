@@ -21,19 +21,19 @@
 
 #include <QtCore>
 #include <plexy.h>
-#include <abstractplugininterface.h>
+#include <dataplugininterface.h>
 #include <QtNetwork>
 
-class TimerInterface : public QObject, public PlexyDesk::AbstractPluginInterface
+class TimerInterface : public PlexyDesk::DataPluginInterface
 {
     Q_OBJECT
-    Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
+    Q_INTERFACES(PlexyDesk::DataPluginInterface)
 
 public :
     virtual ~TimerInterface() {}
 
     /* this will return a valid data plugin pointer*/
-    QObject *instance();
+    QSharedPointer<PlexyDesk::DataSource> model();
 
 };
 
