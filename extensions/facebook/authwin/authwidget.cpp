@@ -58,7 +58,6 @@ AuthWidget::AuthWidget(const QRectF &rect) :
                      "id=170356722999159&redirect_uri=http://www.facebook.com/connect" \
                      "/login_success.html&type=user_agent&display=popup&scope=manage_pages,read_stream&response_type=token")));
     } else {
-        this->configState(AbstractDesktopWidget::DOCKED);
         this->setVisible(false);
         QNetworkRequest request;
         request.setUrl(QUrl("https://graph.facebook.com/19292868552_118464504835613?access_token="+token));
