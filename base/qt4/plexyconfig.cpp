@@ -43,7 +43,9 @@ public:
 
     QSettings *mSettings;
     QHash<QString, QVariant> mData;
+#ifdef Q_WS_X11
     ConfigAdaptor *mConfigAdaptor;
+#endif
 };
 
 Config *Config::config = 0;
