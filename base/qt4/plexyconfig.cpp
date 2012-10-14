@@ -43,6 +43,7 @@ public:
 
     QSettings *mSettings;
     QHash<QString, QVariant> mData;
+    ConfigAdaptor *mConfigAdaptor;
 };
 
 Config *Config::config = 0;
@@ -114,7 +115,7 @@ Config::Config(const QString &organization,
 
 #ifdef Q_WS_X11
     // register with dbus
-    new ConfigAdaptor(this);
+    d->mConfigAdaptor = new ConfigAdaptor(this);
     QDBusConnection dbus = QDBusConnection::sessionBus();
     dbus.registerObject("/data", this);
     dbus.registerService("org.PlexyDesk.Config");

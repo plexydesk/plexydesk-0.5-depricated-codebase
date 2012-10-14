@@ -95,7 +95,7 @@ int main( int argc, char * *argv )
     // Set this to false if you need a "close to tray" functionality when systray exists
     QApplication::setQuitOnLastWindowClosed(true);
 
-    DesktopBaseUi * ui = new DesktopBaseUi();
+    DesktopBaseUi  ui;
 
     return app.exec();
 }
