@@ -31,9 +31,9 @@ int main(int argc, char **argv)
     qtApp.setApplicationName(QString(PLEXYNAME));
 
     //PlexyDesk Base Desktop View
-    DesktopBaseUi ui;
+    QSharedPointer<DesktopBaseUi> ui = QSharedPointer<DesktopBaseUi>(new DesktopBaseUi(), &QObject::deleteLater);
 
-    Q_FOREACH (QGraphicsView *child_desktop, ui.views()) {
+    Q_FOREACH (QGraphicsView *child_desktop, ui->views()) {
         NSView *_desktopView = reinterpret_cast<NSView *>(child_desktop->winId());
         [[_desktopView window] setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
         [[_desktopView window] setHasShadow:NO];
