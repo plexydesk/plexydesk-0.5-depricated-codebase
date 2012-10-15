@@ -21,6 +21,7 @@ public:
     }
 
     void paintNormalButton(QPainter *painter, const QStyleOptionGraphicsItem *option);
+
     void paintSunkenButton(QPainter *painter, const QStyleOptionGraphicsItem *option);
 
     ButtonState mState;
@@ -52,8 +53,8 @@ void Button::setLable(const QString &txt)
 void Button::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     switch(d->mState) {
-    case PrivateButton::NORMAL: d->paintNormalButton(painter, option) ; break;
-    case PrivateButton::PRESS: d->paintSunkenButton(painter, option) ; break;
+       case PrivateButton::NORMAL: d->paintNormalButton(painter, option) ; break;
+       case PrivateButton::PRESS: d->paintSunkenButton(painter, option) ; break;
     default:
         qDebug() << Q_FUNC_INFO << "Unknown Button State";
     }

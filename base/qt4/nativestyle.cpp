@@ -11,6 +11,7 @@ void NativeStyle::paintControlElement(Style::ControlElement element, const Style
 {
     switch(element) {
     case CE_PushButton : drawPushButton(feature, painter); break;
+    case CE_Frame : drawFrame(feature, painter); break;
     default:
         qWarning() << Q_FUNC_INFO << "Unknown Control Element";
     }
@@ -58,7 +59,29 @@ void NativeStyle::drawPushButton(const StyleFeatures &features, QPainter *painte
         painter->setPen(pen);
         painter->drawPath(backgroundPath);
     }
+}
 
+void NativeStyle::drawFrame(const StyleFeatures &features, QPainter *painter)
+{
+    QRectF rect = features.exposeRect;
+
+    /* Painter settings */
+    painter->setRenderHint(QPainter::Antialiasing, true);
+    painter->setRenderHint(QPainter::TextAntialiasing, true);
+    painter->setRenderHint(QPainter::HighQualityAntialiasing, true);
+
+    QPainterPath backgroundPath;
+    backgroundPath.addRoundedRect(rect, 4, 4);
+
+    QLinearGradient linearGrad(QPointF(0, 0), QPointF(0.0 , rect.height()));
+
+    linearGrad.setColorAt(1, QColor(189, 191, 196));
+    linearGrad.setColorAt(0, QColor(255, 255, 255));
+    //QColor(189, 191, 196)
+    painter->fillPath(backgroundPath, linearGrad);
+    QPen pen(QColor(98, 101, 108), 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    painter->setPen(pen);
+    painter->drawPath(backgroundPath);
 }
 
 void NativeStyle::drawPushButtonText(const StyleFeatures &features, const QString &text, QPainter *painter)
@@ -70,8 +93,6 @@ void NativeStyle::drawPushButtonText(const StyleFeatures &features, const QStrin
     QPen pen(QColor(255, 255, 255), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     painter->setPen(QColor(255, 255, 255));
     painter->drawText(features.exposeRect, Qt::AlignCenter, text);
-    qDebug() << Q_FUNC_INFO << text;
-
 }
 
 }

@@ -15,6 +15,7 @@
 
 #include <imagecache.h>
 #include <svgprovider.h>
+#include <nativestyle.h>
 
 namespace PlexyDesk
 {
@@ -47,7 +48,7 @@ public:
     QPropertyAnimation *mPropertyAnimationForRotation;
 
     QGraphicsDropShadowEffect *mShadowEffect;
-
+    Style *mStyle;
 };
 
 DesktopWidget::DesktopWidget(const QRectF &rect, QGraphicsObject *parent)
@@ -59,6 +60,9 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QGraphicsObject *parent)
     d->saveRect = rect;
     d->mWidgetState = VIEW;
     d->mHasDefaultBackground = false;
+    d->mStyle = 0;
+
+    setStyle(new NativeStyle(this));
 
     d->mPropertyAnimationForZoom = new QPropertyAnimation(this);
     d->mPropertyAnimationForZoom->setTargetObject(this);
@@ -90,7 +94,7 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QGraphicsObject *parent)
 
     //dropshadow
     d->mShadowEffect = new QGraphicsDropShadowEffect(this);
-    d->mShadowEffect->setBlurRadius(0);
+    d->mShadowEffect->setBlurRadius(16);
     d->mShadowEffect->setXOffset(0);
     d->mShadowEffect->setYOffset(0);
     d->mShadowEffect->setColor(QColor(0.0, 0.0, 0.0));
@@ -220,7 +224,6 @@ void DesktopWidget::paintRotatedView(QPainter *p, const QRectF &rect)
     }
 
     p->save();
-    //p->setOpacity(0.8);
     p->setRenderHints(QPainter::SmoothPixmapTransform);
     p->drawPixmap(QRect(rect.x(), rect.y(), rect.width(), rect.height()), d->mDefaultBackgroundPixmap);
     p->restore();
@@ -230,11 +233,18 @@ void DesktopWidget::paintFrontView(QPainter *p, const QRectF &rect)
 {
     if (!d->mDefaultBackground)
         return;
-    p->save();
-    //p->setOpacity(0.8);
-    p->setRenderHints(QPainter::SmoothPixmapTransform);
-    p->drawPixmap(QRect(rect.x() , rect.y() , d->mDefaultBackgroundPixmap.width() / scaleFactorForWidth(), d->mDefaultBackgroundPixmap.height() / scaleFactorForHeight()), d->mDefaultBackgroundPixmap);
-    p->restore();
+
+    if (!d->mStyle) {
+        p->save();
+        p->setRenderHints(QPainter::SmoothPixmapTransform);
+        p->drawPixmap(QRect(rect.x() , rect.y() , d->mDefaultBackgroundPixmap.width() / scaleFactorForWidth(), d->mDefaultBackgroundPixmap.height() / scaleFactorForHeight()), d->mDefaultBackgroundPixmap);
+        p->restore();
+    } else {
+        StyleFeatures feature;
+        feature.exposeRect = rect;
+        feature.state = StyleFeatures::SF_FrontView;
+        d->mStyle->paintControlElement(Style::CE_Frame, feature, p);
+    }
 }
 
 void DesktopWidget::paintDockView(QPainter *p, const QRectF &rect)
@@ -320,6 +330,11 @@ void DesktopWidget::configState(AbstractDesktopWidget::State s)
     }
 }
 
+void DesktopWidget::setStyle(Style *style)
+{
+    d->mStyle = style;
+}
+
 void DesktopWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     d->mPressHoldTimer->stop();
@@ -329,8 +344,6 @@ void DesktopWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-//    qDebug() << Q_FUNC_INFO << event->pos();
-//    qDebug() << Q_FUNC_INFO << boundingRect();
     if (event->buttons() == Qt::RightButton && (state() == VIEW || state() == ROTATED)) {
         this->setChildWidetVisibility(false);
         d->mPropertyAnimationForRotation->start();

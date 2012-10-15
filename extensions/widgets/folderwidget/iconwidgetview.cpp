@@ -38,7 +38,7 @@ IconWidgetView::IconWidgetView(const QRectF &rect, QGraphicsObject *parent) :
     d->mIconView->setAcceptDrops(true);
     d->mIconView->setDropIndicatorShown(false);
     ///hack until we have our own painting
-    d->mIconView->setStyleSheet(" border : 0 ; background-color: transparent; color : #ffffff");
+    d->mIconView->setStyleSheet(" border : 0 ; background-color: transparent; color : #000000");
 
     d->mWidgetProxy->setWidget(d->mIconView);
 
@@ -46,7 +46,7 @@ IconWidgetView::IconWidgetView(const QRectF &rect, QGraphicsObject *parent) :
     QRectF infoViewRect = QRectF(0.0,  0.0, rect.width(), 240);
 
     d->mInfoView = new PlexyDesk::DesktopWidget(infoViewRect, this);
-    d->mInfoView->setPos(QPointF(0.0, rect.height()));
+    d->mInfoView->setPos(QPointF(0.0, rect.height() + 16));
     QPointF infoViewPos = d->mInfoView->pos();
 
     d->mWidgetProxy->setPos(iconViewRect.x(), iconViewRect.y());

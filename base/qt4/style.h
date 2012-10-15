@@ -34,7 +34,9 @@ public:
     typedef enum {
         SF_None,
         SF_Raised,
-        SF_MouseOver
+        SF_MouseOver,
+        SF_FrontView,
+        SF_BackView
     } State;
 
     QRectF exposeRect;
@@ -54,7 +56,8 @@ public:
         CE_ToolBar,
         CE_LineEdit,
         CE_Seperator,
-        CE_ListItem
+        CE_ListItem,
+        CE_Frame
     } ControlElement;
 
     explicit Style(QObject *parent = 0);

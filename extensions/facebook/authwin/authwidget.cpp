@@ -143,6 +143,26 @@ void AuthWidget::paintFrontView(QPainter *painter, const QRectF &r)
     PlexyDesk::DesktopWidget::paintFrontView(painter, r);
 }
 
+void AuthWidget::paintDockView(QPainter *painter, const QRectF &rect)
+{
+    /* Painter settings */
+    painter->setRenderHint(QPainter::Antialiasing, true);
+    painter->setRenderHint(QPainter::TextAntialiasing, true);
+    painter->setRenderHint(QPainter::HighQualityAntialiasing, true);
+
+    QPainterPath backgroundPath;
+    backgroundPath.addRoundedRect(rect, 8, 8);
+
+    QLinearGradient linearGrad(QPointF(0, 0), QPointF(0.0 , rect.height()));
+    linearGrad.setColorAt(1, QColor(35, 112, 189));
+    linearGrad.setColorAt(0, QColor(50, 139, 222));
+    //QColor(189, 191, 196)
+    painter->fillPath(backgroundPath, linearGrad);
+    QPen pen(QColor(255, 255, 255), 4, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    painter->setPen(pen);
+    painter->drawPath(backgroundPath);
+}
+
 void AuthWidget::revokeSession()
 {
 }

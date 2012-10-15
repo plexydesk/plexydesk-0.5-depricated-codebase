@@ -37,7 +37,9 @@ public:
     virtual ~SvgProvider();
 
     QPixmap requestPixmap(const QString &id, QSize *size, const QSize &requestedSize);
+
     bool isCached(QString &filename)  const;
+
     void addToCached(QString &imgfile, QString &filename, QString &themename);
 
     QPixmap get(const QString &name, const QSize &size = QSize());

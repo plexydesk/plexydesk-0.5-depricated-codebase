@@ -5,6 +5,8 @@
 #include <plexyconfig.h>
 #include <abstractdesktopwidget.h>
 
+#include <style.h>
+
 namespace PlexyDesk
 {
 class PLEXYDESK_EXPORT DesktopWidget : public AbstractDesktopWidget
@@ -21,6 +23,8 @@ public:
     void enableShadow(bool enable);
 
     void configState(AbstractDesktopWidget::State s);
+
+    void setStyle(Style *style);
 
 
 public Q_SLOTS:

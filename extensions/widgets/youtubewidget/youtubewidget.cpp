@@ -46,7 +46,7 @@ YouTubeWidget::YouTubeWidget(const QRectF &rect) :
     setContentRect(rect);
 
     this->enableDefaultBackground(true);
-    this->enableShadow(false);
+    //this->enableShadow(false);
 
     mSearchButton->setLable("Search");
 }
@@ -73,7 +73,6 @@ void YouTubeWidget::buttonClicked()
 
 void YouTubeWidget::paintFrontView(QPainter *painter, const QRectF &rect)
 {
-
     /* Painter settings */
     painter->setRenderHint(QPainter::Antialiasing, true);
     painter->setRenderHint(QPainter::TextAntialiasing, true);

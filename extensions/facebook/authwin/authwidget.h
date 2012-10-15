@@ -43,6 +43,8 @@ public:
 
     void paintFrontView(QPainter *painter, const QRectF &r);
 
+    void paintDockView(QPainter *painter, const QRectF &rect);
+
     void revokeSession();
 
 public Q_SLOTS:
