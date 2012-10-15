@@ -18,6 +18,8 @@ SET(sourceFiles
     qmlsvgprovider.cpp
     qmlpixmapprovider.cpp
     plexyconfig.cpp
+    style.cpp
+    nativestyle.cpp
     button.cpp
     )
 
@@ -45,6 +47,8 @@ SET(headerFiles
     qmlsvgprovider.h
     qmlpixmapprovider.h
     plexyconfig.h
+    style.h
+    nativestyle.h
     button.h
     )
 
@@ -65,6 +69,8 @@ SET(MOC_SRCS
    qmlsvgprovider.h
    qmlpixmapprovider.h
    plexyconfig.h
+   nativestyle.h
+   style.h
    button.h
    )
 

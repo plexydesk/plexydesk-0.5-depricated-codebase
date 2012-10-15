@@ -1,7 +1,7 @@
 /*******************************************************************************
 * This file is part of PlexyDesk.
 *  Maintained by : Siraj Razick <siraj@kde.org>
-*  Authored By  : Lahiru Lakmal <llahiru@gmail.com>
+*  Authored By  :
 *
 *  PlexyDesk is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU Lesser General Public License as published by
@@ -16,31 +16,17 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#include "youtube.h"
-#include "youtubewidget.h"
 
-YouTube::YouTube(QObject *object)
-{
-    mWidget = new PlexyDesk::YouTubeWidget(QRectF(0, 0, 480, 320));
-    mWidget->setController(this);
-}
+#include "style.h"
 
-YouTube::~YouTube()
+namespace PlexyDesk {
+Style::Style(QObject *parent) :
+    QObject(parent)
 {
 }
 
-PlexyDesk::AbstractDesktopWidget *YouTube::defaultView()
-{
-
-    return mWidget;
-}
-
-void YouTube::revokeSession(const QVariantMap &args)
+Style::~Style()
 {
 }
 
-void YouTube::setViewRect(const QRectF &rect)
-{
-    if (mWidget)
-        mWidget->setPos(rect.x(), rect.y());
 }

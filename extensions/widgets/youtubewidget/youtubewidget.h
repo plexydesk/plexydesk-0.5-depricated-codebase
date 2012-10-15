@@ -28,6 +28,9 @@
 #include <scrollwidget.h>
 #include <QGraphicsTextItem>
 #include <datasource.h>
+#include <QGraphicsBlurEffect>
+
+#include <button.h>
 
 class QTimer;
 
@@ -45,9 +48,13 @@ public:
 
 public Q_SLOTS:
     void onDataReady();
+    void buttonClicked();
 
 Q_SIGNALS:
     void dataChanged();
+
+protected:
+    virtual void paintFrontView(QPainter *painter, const QRectF &rect);
 
 private:
 
@@ -69,6 +76,8 @@ private:
     QList<VideoEntity> mVideos;
     QMap<QString, QVariant> mVariantMap;
     QGraphicsTextItem *mView;
+
+    PlexyDesk::Button *mSearchButton;
 };
 
 } // namespace PlexyDesk

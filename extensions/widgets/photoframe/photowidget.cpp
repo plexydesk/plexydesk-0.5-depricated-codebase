@@ -5,12 +5,7 @@
 PhotoWidget::PhotoWidget(const QRectF &rect) :
     PlexyDesk::DesktopWidget(rect)
 {
-    mShadowEffect = new QGraphicsDropShadowEffect(this);
-    mShadowEffect->setBlurRadius(16);
-    mShadowEffect->setXOffset(0);
-    mShadowEffect->setYOffset(0);
-    mShadowEffect->setColor(QColor(0.0, 0.0, 0.0));
-    this->setGraphicsEffect(mShadowEffect);
+   enableShadow(true);
 }
 
 PhotoWidget::~PhotoWidget()

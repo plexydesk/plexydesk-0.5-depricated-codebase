@@ -3,6 +3,7 @@
 
 #include <plexy.h>
 #include <controllerinterface.h>
+#include "youtubewidget.h"
 
 class YouTube : public PlexyDesk::ControllerInterface
 {
@@ -14,6 +15,9 @@ public:
     PlexyDesk::AbstractDesktopWidget *defaultView();
     void revokeSession(const QVariantMap &args);
     void setViewRect(const QRectF &rect);
+
+private:
+    PlexyDesk::YouTubeWidget *mWidget;
 };
 
 #endif

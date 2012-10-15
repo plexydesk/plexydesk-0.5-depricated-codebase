@@ -29,35 +29,26 @@
 #include <QGraphicsSceneWheelEvent>
 #include <QStyleOptionGraphicsItem>
 
+#include <button.h>
+
 namespace PlexyDesk
 {
 
 YouTubeWidget::YouTubeWidget(const QRectF &rect) :
      ScrollWidget(rect)
 {
+    mSearchButton = new PlexyDesk::Button(this);
+    mSearchButton->show();
+    mSearchButton->setPos(rect.width() - 110 , rect.height() - 40);
+
+    connect(mSearchButton, SIGNAL(clicked()), this, SLOT(buttonClicked()));
+
     setContentRect(rect);
 
     this->enableDefaultBackground(true);
+    this->enableShadow(false);
 
-
-    utubeEngine = qobject_cast<PlexyDesk::DataSource *>(
-         PlexyDesk::PluginLoader::getInstance()->instance("restengine"));
-
-    QString account;
-    QString pass;
-    QVariantMap mMap;
-    mMap.insert("url", QUrl("http://doc.qt.nokia.com/4.2/qgraphicstextitem.html"));
-    mMap.insert("type", 1); //post
-    mMap.insert("user", account);
-    mMap.insert("pass", pass);
-    QVariant arg = QVariant(mMap);
-    utubeEngine->setArguments(arg);
-
-    if (utubeEngine) {
-        connect(utubeEngine, SIGNAL(ready()), this, SLOT(onDataReady()));
-    } else {
-        qDebug("DataSource Was Null");
-    }
+    mSearchButton->setLable("Search");
 }
 
 YouTubeWidget::~YouTubeWidget()
@@ -73,6 +64,34 @@ void YouTubeWidget::onDataReady()
 
     this->addWidget (mView);
     emit dataChanged();
+}
+
+void YouTubeWidget::buttonClicked()
+{
+    this->enableShadow(true);
+}
+
+void YouTubeWidget::paintFrontView(QPainter *painter, const QRectF &rect)
+{
+
+    /* Painter settings */
+    painter->setRenderHint(QPainter::Antialiasing, true);
+    painter->setRenderHint(QPainter::TextAntialiasing, true);
+    painter->setRenderHint(QPainter::HighQualityAntialiasing, true);
+
+    QPainterPath backgroundPath;
+    backgroundPath.addRoundedRect(rect, 3.5, 3.5);
+
+    QLinearGradient linearGrad(QPointF(0, 0), QPointF(0.0 , rect.height()));
+
+
+    linearGrad.setColorAt(1, QColor(189, 191, 196));
+    linearGrad.setColorAt(0, QColor(255, 255, 255));
+    //QColor(189, 191, 196)
+    painter->fillPath(backgroundPath, linearGrad);
+    QPen pen(QColor(98, 101, 108), 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    painter->setPen(pen);
+    painter->drawPath(backgroundPath);
 }
 
 } // namespace PlexyDesk

@@ -15,4 +15,8 @@
     <widget name="plexyauth">
         <rect x="2%" y="60%"></rect>
     </widget>
+    <widget name="plexyyoutube">
+        <rect x="40%" y="60%"></rect>
+    </widget>
+
 </widgets>

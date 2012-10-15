@@ -45,6 +45,9 @@ public:
 
     QPropertyAnimation *mPropertyAnimationForZoom;
     QPropertyAnimation *mPropertyAnimationForRotation;
+
+    QGraphicsDropShadowEffect *mShadowEffect;
+
 };
 
 DesktopWidget::DesktopWidget(const QRectF &rect, QGraphicsObject *parent)
@@ -84,6 +87,14 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QGraphicsObject *parent)
     //presshold
     d->mPressHoldTimer = new QTimer(this);
     connect(d->mPressHoldTimer, SIGNAL(timeout()), this, SLOT(pressHoldTimeOut()));
+
+    //dropshadow
+    d->mShadowEffect = new QGraphicsDropShadowEffect(this);
+    d->mShadowEffect->setBlurRadius(0);
+    d->mShadowEffect->setXOffset(0);
+    d->mShadowEffect->setYOffset(0);
+    d->mShadowEffect->setColor(QColor(0.0, 0.0, 0.0));
+    this->setGraphicsEffect(d->mShadowEffect);
 }
 
 DesktopWidget::~DesktopWidget()
@@ -97,7 +108,16 @@ void DesktopWidget::enableDefaultBackground(bool enable)
     if (!d->mHasDefaultBackground) {
         setDefaultImages();
     }
-     d->mDefaultBackground = enable;
+    d->mDefaultBackground = enable;
+}
+
+void DesktopWidget::enableShadow(bool enable)
+{
+    if(!enable) {
+        d->mShadowEffect->setBlurRadius(0);
+    } else {
+        d->mShadowEffect->setBlurRadius(16);
+    }
 }
 
 void DesktopWidget::setDefaultImages()
@@ -346,13 +366,13 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
         prepareGeometryChange();
         //TODO: Use Animation forward and back methods
         d->mPropertyAnimationForZoom->setPropertyName("rect");
-        d->mPropertyAnimationForZoom->setDuration(100);
+        d->mPropertyAnimationForZoom->setDuration(200);
         QRectF startRect ((contentRect().width() / 2) - (dockRect().width() / 2),
                         (contentRect().height() / 2) -(dockRect().height() /2),
                         dockRect().width(), dockRect().height());
         d->mPropertyAnimationForZoom->setStartValue(startRect);
         d->mPropertyAnimationForZoom->setEndValue(contentRect());
-        d->mPropertyAnimationForZoom->setEasingCurve (QEasingCurve::InBounce);
+        d->mPropertyAnimationForZoom->setEasingCurve (QEasingCurve::InQuart);
 
         d->mPropertyAnimationForZoom->start();
         setChildWidetVisibility(true);
@@ -367,7 +387,7 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
                         dockRect().width(), dockRect().height());
         d->mPropertyAnimationForZoom->setEndValue(endRect);
         d->mPropertyAnimationForZoom->setStartValue(contentRect());
-        d->mPropertyAnimationForZoom->setEasingCurve (QEasingCurve::OutBounce);
+        d->mPropertyAnimationForZoom->setEasingCurve (QEasingCurve::OutQuart);
         this->setVisible(true);
         d->mPropertyAnimationForZoom->start();
         setChildWidetVisibility(false);

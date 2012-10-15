@@ -13,10 +13,15 @@ class PLEXYDESK_EXPORT DesktopWidget : public AbstractDesktopWidget
 
 public:
     DesktopWidget(const QRectF &rect, QGraphicsObject *parent = 0);
+
     virtual ~DesktopWidget();
 
     void enableDefaultBackground(bool enable);
+
+    void enableShadow(bool enable);
+
     void configState(AbstractDesktopWidget::State s);
+
 
 public Q_SLOTS:
     void zoomDone();

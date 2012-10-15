@@ -5,6 +5,8 @@
 #include <QGraphicsScene>
 #include <QGraphicsObject>
 
+#include <style.h>
+
 namespace PlexyDesk {
 
 class Button : public QGraphicsObject
@@ -13,14 +15,20 @@ class Button : public QGraphicsObject
 public:
     explicit Button(QGraphicsObject *parent = 0);
 
-    ~Button();
+    virtual ~Button();
 
-    void setLable(const QString &txt);
+    virtual void setLable(const QString &txt);
 
-    QString label() const;
+    virtual QString label() const;
 
-    void setIcon(const QImage &img);
+    virtual void setIcon(const QImage &img);
 
+    virtual void setStyle(Style *style);
+
+    virtual QRectF boundingRect() const;
+
+Q_SIGNALS:
+    void clicked();
 
 protected:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);

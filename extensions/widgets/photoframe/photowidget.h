@@ -21,8 +21,6 @@ private:
     QPixmap mContentPixmap;
     QPixmap mFramePixmap;
     QPixmap mFrameContentPixmap;
-
-    QGraphicsDropShadowEffect *mShadowEffect;
 };
 
 #endif // PHOTOWIDGET_H
