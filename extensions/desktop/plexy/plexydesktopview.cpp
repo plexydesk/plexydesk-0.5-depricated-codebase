@@ -49,14 +49,14 @@ PlexyDesktopView::~PlexyDesktopView()
     delete d;
 }
 
-void PlexyDesktopView::layout()
+void PlexyDesktopView::layout(const QRectF &rect)
 {
     if (d->mHasSession)
         return;
 
     Q_FOREACH(const QString &controllerName, currentControllers()) {
 
-        QRectF rect = d->mThemeLoader->positionForWidget(controllerName, this);
+        QRectF rect = d->mThemeLoader->positionForWidget(controllerName, rect, this);
         setControllerRect(controllerName, rect);
     }
 }

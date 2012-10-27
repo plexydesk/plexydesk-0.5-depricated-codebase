@@ -85,7 +85,7 @@ void DesktopBaseUi::setup()
     QGraphicsScene *scene = new QGraphicsScene;
     d->mScene = scene;
 
-    for (int i = 0 ; i < d->mDesktopWidget->screenCount() ; i++ ) {        
+    for (int i = 0 ; i < d->mDesktopWidget->screenCount() ; i++ ) {
         QRect desktopScreenRect = d->mDesktopWidget->screenGeometry(i);
 #ifdef Q_WS_WIN
         // A 1px hack to make the widget fullscreen and not covering the toolbar on Win
@@ -140,7 +140,7 @@ void DesktopBaseUi::setup()
 #endif
         QApplication::desktop()->setParent(view);
 
-        view->layout();
+        view->layout(desktopScreenRect);
     }
 }
 

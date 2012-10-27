@@ -38,6 +38,8 @@ public:
 
     virtual void enableOpenGL(bool);
 
+    virtual void setDesktopRect(const QRectF &rect);
+
     virtual bool setBackgroundController(const QString &controller_name);
 
     virtual void addController(const QString &controllerName);
@@ -48,27 +50,35 @@ public:
 
     virtual QSharedPointer<ControllerInterface> controllerByName(const QString &name);
 
-    virtual void layout() = 0;
+    virtual void layout(const QRectF &rect) = 0;
 
     virtual void sessionDataForController(const QString &controllerName, const QString &key, const QString &value);
 
     virtual void restoreViewFromSession(const QString &sessionData);
 
 Q_SIGNALS:
+
     void closeApplication();
+
     void sessionUpdated(const QString &data);
 
 public Q_SLOTS:
+
     void addWidgetToView(AbstractDesktopWidget *widget);
 
 
 private:
+
     virtual void dropEvent(QDropEvent *event);
+
     virtual void dragEnterEvent(QDragEnterEvent *event);
+
     virtual void dragMoveEvent(QDragMoveEvent *event);
 
 private:
+
     class PrivateAbstractDesktopView;
+
     PrivateAbstractDesktopView *const d;
 };
 

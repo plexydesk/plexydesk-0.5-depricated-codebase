@@ -46,7 +46,7 @@ void  DesktopViewPluginImpl::setRect(const QRect &rect)
 {
 }
 
-void DesktopViewPluginImpl::layout()
+void DesktopViewPluginImpl::layout(int screen)
 {
 }
 

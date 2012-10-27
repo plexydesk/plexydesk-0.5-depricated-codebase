@@ -126,6 +126,10 @@ void AbstractDesktopView::enableOpenGL(bool state)
     }
 }
 
+void AbstractDesktopView::setDesktopRect(const QRectF &rect)
+{
+}
+
 bool AbstractDesktopView::setBackgroundController(const QString &controller_name)
 {
     //TODO: error handling

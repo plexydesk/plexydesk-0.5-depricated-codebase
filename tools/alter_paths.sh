@@ -6,6 +6,7 @@ macdeployqt ~/Applications/plexydesk.app/bin/plexydesk.app/
 for x in ~/Applications/plexydesk.app/bin/plexydesk.app/Contents/MacOS/plexydesk
 do
 install_name_tool -change libplexydeskcore.dylib  @executable_path/../Frameworks/libplexydeskcore.dylib $x
+install_name_tool -change libplexydeskuicore.dylib  @executable_path/../Frameworks/libplexydeskuicore.dylib $x
 install_name_tool -change libplexymime.dylib @executable_path/../Frameworks/libplexymime.dylib $x
 install_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore $x
 install_name_tool -change QtXmlPatterns.framework/Versions/4/QtXmlPatterns @executable_path/../Frameworks/QtXmlPatterns.framework/Versions/4/QtXmlPatterns $x
@@ -21,6 +22,7 @@ cp -v ~/Applications/plexydesk.app/lib/lib* ~/Applications/plexydesk.app/bin/ple
 for x in ~/Applications/plexydesk.app/bin/plexydesk.app/Contents/Frameworks/lib*
 do
 install_name_tool -change libplexydeskcore.dylib  @executable_path/../Frameworks/libplexydeskcore.dylib $x
+install_name_tool -change libplexydeskuicore.dylib  @executable_path/../Frameworks/libplexydeskuicore.dylib $x
 install_name_tool -change libplexymime.dylib @executable_path/../Frameworks/libplexymime.dylib $x
 install_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore $x
 install_name_tool -change QtXmlPatterns.framework/Versions/4/QtXmlPatterns @executable_path/../Frameworks/QtXmlPatterns.framework/Versions/4/QtXmlPatterns $x
@@ -35,6 +37,7 @@ done
 for x in ~/Applications/plexydesk.app/lib/plexyext/lib*
 do
 install_name_tool -change libplexydeskcore.dylib  @executable_path/../Frameworks/libplexydeskcore.dylib $x
+install_name_tool -change libplexydeskuicore.dylib  @executable_path/../Frameworks/libplexydeskuicore.dylib $x
 install_name_tool -change libplexymime.dylib @executable_path/../Frameworks/libplexymime.dylib $x
 install_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore $x
 install_name_tool -change QtXmlPatterns.framework/Versions/4/QtXmlPatterns @executable_path/../Frameworks/QtXmlPatterns.framework/Versions/4/QtXmlPatterns $x
@@ -54,6 +57,7 @@ cp -vr $QTDIR/imports/* ~/Applications/plexydesk.app/bin/plexydesk.app/Contents/
 for x in  ~/Applications/plexydesk.app/bin/plexydesk.app/Contents/imports/Qt/labs/FolderListModel/lib*
 do
 install_name_tool -change libplexydeskcore.dylib  @executable_path/../Frameworks/libplexydeskcore.dylib $x
+install_name_tool -change libplexydeskuicore.dylib  @executable_path/../Frameworks/libplexydeskuicore.dylib $x
 install_name_tool -change libplexymime.dylib @executable_path/../Frameworks/libplexymime.dylib $x
 install_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore $x
 install_name_tool -change QtXmlPatterns.framework/Versions/4/QtXmlPatterns @executable_path/../Frameworks/QtXmlPatterns.framework/Versions/4/QtXmlPatterns $x

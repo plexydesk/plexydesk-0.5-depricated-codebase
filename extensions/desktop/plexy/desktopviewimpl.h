@@ -50,7 +50,7 @@ public:
 
     void setRect (const QRect &rect);
 
-    void layout();
+    void layout(int screen);
 
 Q_SIGNALS:
     void dataChange();

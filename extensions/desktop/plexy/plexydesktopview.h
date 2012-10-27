@@ -11,7 +11,7 @@ public:
     explicit PlexyDesktopView(QGraphicsScene *parent_scene, QWidget *parent = 0);
     virtual ~PlexyDesktopView();
 
-    void layout();
+    void layout(const QRectF &rect);
 
 public Q_SLOTS:
     void onSessionUpdated(const QString &data);

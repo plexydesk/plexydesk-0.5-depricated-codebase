@@ -17,38 +17,48 @@ class PLEXYDESK_EXPORT ThemepackLoader : public QObject
 
 public:
     explicit ThemepackLoader(const QString &themeName, QObject *parent = 0);
+
     virtual ~ThemepackLoader();
 
     void setThemeName(const QString &name);
 
     QStringList desktopWidgets() const;
-    QRectF positionForWidget(const QString &name, PlexyDesk::AbstractDesktopView *view);
+
+    QRectF positionForWidget(const QString &name, const QRectF &screen_rect, PlexyDesk::AbstractDesktopView *view);
 
     QStringList widgets(const QString &type);
+
     QPoint widgetPos(const QString &name);
 
     QString hiddenQmlWidgets(const QString &name);
 
     QString wallpaper();
+
     QString qmlFilesFromTheme(const QString &themeName);
+
     QString qmlBackdropFromTheme();
+
     QVariant getProperty(const QString &themeName, const QString &prop);
 
     PlexyDesk::AbstractDesktopWidget::State widgetView(const QString &name);
 
     QString loadSessionFromDisk() const;
+
     void saveSessionToDisk(const QString &data);
 
     void setRect (const QRectF &rect);
 
 Q_SIGNALS:
+
     void ready();
 
 private:
     void scanThemepackPrefix();
+
     int toScreenValue(const QString &val, int max_distance);
 
     class ThemepackLoaderPrivate;
+
     ThemepackLoaderPrivate *const d;
 };
 

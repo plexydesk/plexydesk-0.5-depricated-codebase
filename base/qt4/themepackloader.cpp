@@ -312,7 +312,7 @@ QStringList ThemepackLoader::desktopWidgets() const
     return rv;
 }
 
-QRectF ThemepackLoader::positionForWidget(const QString &name, PlexyDesk::AbstractDesktopView *view)
+QRectF ThemepackLoader::positionForWidget(const QString &name, const QRectF &screen_rect,  PlexyDesk::AbstractDesktopView *view)
 {
     QDomNodeList widgetNodeList = d->mXmlDocumentRoot.documentElement().elementsByTagName("widget");
     QRectF rect;
@@ -343,32 +343,32 @@ QRectF ThemepackLoader::positionForWidget(const QString &name, PlexyDesk::Abstra
             float y_coord = 0.0f;
 
             if (widthString.contains("%")) {
-                width = toScreenValue(widthString, view->sceneRect().width());
+                width = toScreenValue(widthString, screen_rect.width());
             } else
                 x_coord = x.value().toFloat();
 
             if (heightString.contains("%")) {
-                height = toScreenValue(heightString, view->sceneRect().height());
+                height = toScreenValue(heightString, screen_rect.height());
             } else
                 y_coord = x.value().toFloat();
 
             if (x.value().contains("%")) {
-                x_coord = toScreenValue(x.value(), view->sceneRect().width());
+                x_coord = toScreenValue(x.value(), screen_rect.width());
             }
 
             if (y.value().contains("%")) {
-                y_coord = toScreenValue(y.value(), view->sceneRect().height());
+                y_coord = toScreenValue(y.value(), screen_rect.height());
             }
 
             if (widthString == "device-width") {
-                width = view->sceneRect().width();
+                width = screen_rect.width();
             }
 
             if (heightString == "device-height") {
-                height = view->sceneRect().height();
+                height = screen_rect.height();
             }
 
-            rect = QRectF( x_coord, y_coord, width, height);
+            rect = QRectF( x_coord + screen_rect.width(), y_coord + screen_rect.height(), width, height);
         }
     }
 
