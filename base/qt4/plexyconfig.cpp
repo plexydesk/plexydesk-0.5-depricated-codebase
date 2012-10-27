@@ -32,6 +32,10 @@
 #endif
 
 
+#ifdef Q_WS_MAC
+#include <CoreFoundation/CoreFoundation.h>
+#endif
+
 namespace PlexyDesk
 {
 
@@ -325,6 +329,16 @@ QString Config::plexydeskBasePath()
     }
 
     return basePath;
+#endif
+
+#ifdef Q_WS_MAC
+    CFURLRef appUrlRef = CFBundleCopyBundleURL(CFBundleGetMainBundle());
+    CFStringRef macPath = CFURLCopyFileSystemPath(appUrlRef, kCFURLPOSIXPathStyle);
+    const char *pathPtr = CFStringGetCStringPtr(macPath,CFStringGetSystemEncoding());
+    qDebug("Path = %s", pathPtr);
+    CFRelease(appUrlRef);
+    CFRelease(macPath);
+    return QLatin1String(pathPtr) + QString("/Contents/");
 #endif
 
     return QString();

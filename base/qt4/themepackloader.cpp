@@ -64,6 +64,7 @@ ThemepackLoader::ThemepackLoader(const QString &themeName, QObject *parent) :
 {
     d->mThemePackPath =
         QString("%1/%2").arg(PlexyDesk::Config::getInstance()->plexydeskBasePath()).arg("/share/plexy/themepack");
+    qDebug() << Q_FUNC_INFO << d->mThemePackPath;
     d->mThemeName = themeName;
     QDir mainConfig(QString("%1/%2/").arg(d->mThemePackPath).arg(themeName));
     d->mSettings = new QSettings(QDir::toNativeSeparators(
@@ -320,7 +321,7 @@ QRectF ThemepackLoader::positionForWidget(const QString &name, const QRectF &scr
     for(int index = 0; index < widgetNodeList.count(); index++) {
         QDomElement widgetElement = widgetNodeList.at(index).toElement();
 
-        qDebug() << Q_FUNC_INFO << widgetElement.attribute("name");
+        qDebug() << Q_FUNC_INFO << widgetElement.attribute("name") << "Input rect:" << screen_rect;
 
         if (widgetElement.attribute("name") != name)
             continue;
@@ -368,7 +369,8 @@ QRectF ThemepackLoader::positionForWidget(const QString &name, const QRectF &scr
                 height = screen_rect.height();
             }
 
-            rect = QRectF( x_coord + screen_rect.width(), y_coord + screen_rect.height(), width, height);
+            rect = QRectF( x_coord + screen_rect.x(), y_coord + screen_rect.y(), width, height);
+            qDebug() << Q_FUNC_INFO << rect;
         }
     }
 
