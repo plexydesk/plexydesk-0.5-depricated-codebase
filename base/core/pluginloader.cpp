@@ -167,7 +167,7 @@ void PluginLoader::load(const QString &interface, const QString &pluginName)
             Iface = qobject_cast<DataPluginInterface *> (plugin);
             d->mEngines[pluginName] = Iface;
         }else
-            qWarning() << Q_FUNC_INFO << loader.errorString();
+            qWarning() << Q_FUNC_INFO << ":" << interface << ":" << "pluginName" << loader.errorString();
     }
 
     if (interface.toLower() == "widget")  {

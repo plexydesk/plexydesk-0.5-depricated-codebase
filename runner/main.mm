@@ -20,12 +20,19 @@ int main(int argc, char **argv)
 
     NSLog(@"Start PlexyDesk :MacUI \n");
 
+    CFURLRef appUrlRef = CFBundleCopyBundleURL(CFBundleGetMainBundle());
+    CFStringRef macPath = CFURLCopyFileSystemPath(appUrlRef, kCFURLPOSIXPathStyle);
+    const char *pathPtr = CFStringGetCStringPtr(macPath,CFStringGetSystemEncoding());
+    qDebug("Path = %s", pathPtr);
+    CFRelease(appUrlRef);
+    CFRelease(macPath);
+
     PlexyDesk::PluginLoader *loader =
             PlexyDesk::PluginLoader::getInstanceWithPrefix(
-                QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->plexydeskBasePath()  + QLatin1String("/share/plexy/ext/groups/")),
-                QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->plexydeskBasePath() + QLatin1String("/lib/plexyext/")));
-    QString appIconPath = PlexyDesk::Config::getInstance()->plexydeskBasePath() +
-        "/share/plexy/plexydesk.png";
+                QDir::toNativeSeparators(QLatin1String(pathPtr)  + QLatin1String("/Contents/share/plexy/ext/groups/")),
+                QDir::toNativeSeparators(QLatin1String(pathPtr)  + QLatin1String("/Contents/lib/plexyext/")));
+    QString appIconPath =  QLatin1String(pathPtr) +
+        "/Contents/share/plexy/plexydesk.png";
     QIcon appIcon = QIcon(QDir::toNativeSeparators(appIconPath));
     qtApp.setWindowIcon(appIcon);
     qtApp.setApplicationName(QString(PLEXYNAME));
