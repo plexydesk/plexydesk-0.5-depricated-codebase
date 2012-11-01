@@ -302,20 +302,108 @@ QStringList ThemepackLoader::desktopWidgets() const
 
         QDomNode widgetEntries= widgetElement.firstChild();
 
-        while(!widgetEntries.isNull()) {
-            QDomElement subEntry = widgetEntries.toElement();
-            //QString tag = subEntry.tagName();
+//        while(!widgetEntries.isNull()) {
+//            QDomElement subEntry = widgetEntries.toElement();
+//            //QString tag = subEntry.tagName();
 
-            widgetEntries = widgetEntries.nextSibling();
-        }
+//            widgetEntries = widgetEntries.nextSibling();
+//        }
     }
 
     return rv;
 }
 
-QRectF ThemepackLoader::positionForWidget(const QString &name, const QRectF &screen_rect,  PlexyDesk::AbstractDesktopView *view)
+QString ThemepackLoader::desktopBackgroundController() const
+{
+    QString rv;
+    if (!d->mXmlDocumentRoot.hasChildNodes())
+        return rv;
+
+    QDomNodeList widgetNodeList = d->mXmlDocumentRoot.documentElement().elementsByTagName("background");
+
+    if (widgetNodeList.count() <= 0)
+        return rv;
+
+    QDomElement widgetElement = widgetNodeList.at(0).toElement();
+
+    rv = widgetElement.attribute("name");
+    return rv;
+}
+
+bool ThemepackLoader::queryMultiScreen(const QString &name)
+{
+    return false;
+}
+
+//TODO:
+// Refactor these two methods
+QRectF ThemepackLoader::positionForWidget(const QString &name, const QRectF &screen_rect)
 {
     QDomNodeList widgetNodeList = d->mXmlDocumentRoot.documentElement().elementsByTagName("widget");
+    QRectF rect;
+
+    for(int index = 0; index < widgetNodeList.count(); index++) {
+        QDomElement widgetElement = widgetNodeList.at(index).toElement();
+
+        qDebug() << Q_FUNC_INFO << widgetElement.attribute("name") << "Input rect:" << screen_rect;
+
+        if (widgetElement.attribute("name") != name)
+            continue;
+
+        if (widgetElement.hasChildNodes()) {
+            QDomElement rectElement = widgetElement.firstChildElement("rect");
+
+            QDomAttr x = rectElement.attributeNode("x");
+            QDomAttr y = rectElement.attributeNode("y");
+
+            QDomAttr widthAttr = rectElement.attributeNode("width");
+            QDomAttr heightAttr = rectElement.attributeNode("height");
+
+            QString widthString = widthAttr.value();
+            QString heightString = heightAttr.value();
+
+            float width = 0.0f;
+            float height = 0.0f;
+            float x_coord = 0.0f;
+            float y_coord = 0.0f;
+
+            if (widthString.contains("%")) {
+                width = toScreenValue(widthString, screen_rect.width());
+            } else
+                x_coord = x.value().toFloat();
+
+            if (heightString.contains("%")) {
+                height = toScreenValue(heightString, screen_rect.height());
+            } else
+                y_coord = x.value().toFloat();
+
+            if (x.value().contains("%")) {
+                x_coord = toScreenValue(x.value(), screen_rect.width());
+            }
+
+            if (y.value().contains("%")) {
+                y_coord = toScreenValue(y.value(), screen_rect.height());
+            }
+
+            if (widthString == "device-width") {
+                width = screen_rect.width();
+            }
+
+            if (heightString == "device-height") {
+                height = screen_rect.height();
+            }
+
+            rect = QRectF( x_coord + screen_rect.x(), y_coord + screen_rect.y(), width, height);
+            qDebug() << Q_FUNC_INFO << rect;
+        }
+    }
+
+    return rect;
+}
+
+QRectF ThemepackLoader::positionForBackground(const QString &name, const QRectF &screen_rect)
+{
+    QDomNodeList widgetNodeList = d->mXmlDocumentRoot.documentElement().elementsByTagName("background");
     QRectF rect;
 
     for(int index = 0; index < widgetNodeList.count(); index++) {

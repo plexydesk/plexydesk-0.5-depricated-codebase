@@ -30,6 +30,9 @@ PlexyDesktopView::PlexyDesktopView(QGraphicsScene *parent_scene, QWidget *parent
 
     QString sessionData = d->mThemeLoader->loadSessionFromDisk();
 
+    //add the background controller
+    setBackgroundController(d->mThemeLoader->desktopBackgroundController());
+
     if (sessionData.isNull() || sessionData.isEmpty()) {
         QStringList widgets = d->mThemeLoader->desktopWidgets();
 
@@ -53,7 +56,7 @@ void PlexyDesktopView::layout(const QRectF &screen_rect)
 {
     Q_FOREACH(const QString &controllerName, currentControllers()) {
         qDebug() << Q_FUNC_INFO << screen_rect;
-        QRectF rect = d->mThemeLoader->positionForWidget(controllerName, screen_rect, this);
+        QRectF rect = d->mThemeLoader->positionForWidget(controllerName, screen_rect);
         setControllerRect(controllerName, rect);
     }
 }

@@ -22,6 +22,7 @@ public Q_SLOTS:
     void screenResized(int screen);
 
 private:
+    void setup_single();
     void setup();
     class DesktopBaseUiPrivate;
     DesktopBaseUiPrivate *const d;

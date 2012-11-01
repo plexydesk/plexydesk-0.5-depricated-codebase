@@ -34,9 +34,6 @@ BackgroundController::BackgroundController(QObject *object)
 {
     // TODO: bug#112
     // read the theme name from settings
-    mBackgroundRender = new ClassicBackgroundRender(QRectF(0.0, 0.0, 0.0, 0.0), 0,
-                                                    QImage(QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->wallpaper())));
-    mBackgroundRender->setController(this);
 }
 
 BackgroundController::~BackgroundController()
@@ -48,21 +45,23 @@ BackgroundController::~BackgroundController()
     if (mBlurEffect) {
         delete mBlurEffect;
     }
-
-    if (mBackgroundRender)
-        delete mBackgroundRender;
 }
 
 PlexyDesk::AbstractDesktopWidget *BackgroundController::defaultView()
 {
-    return mBackgroundRender;
-
+    ClassicBackgroundRender * render = new ClassicBackgroundRender(QRectF(0.0, 0.0, 0.0, 0.0), 0,
+                                                    QImage(QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->wallpaper())));
+    render->setController(this);
+    mBackgroundRenderList.append(render);
+    return render;
 }
 
 void BackgroundController::revokeSession(const QVariantMap &args)
 {
     qDebug() << Q_FUNC_INFO << args;
-    mBackgroundRender->setBackgroundImage(args["background"].toString());
+    Q_FOREACH(ClassicBackgroundRender *render, mBackgroundRenderList) {
+        render->setBackgroundImage(args["background"].toString());
+    }
 }
 
 QStringList BackgroundController::actions() const
@@ -92,7 +91,12 @@ void BackgroundController::handleDropEvent(PlexyDesk::AbstractDesktopWidget *wid
         QFileInfo info(droppedFile);
 
         if ( !info.isDir()) {
-            mBackgroundRender->setBackgroundImage(droppedFile);
+            ClassicBackgroundRender *render =  qobject_cast<ClassicBackgroundRender *> (widget);
+            if (!render)
+                return;
+
+            render->setBackgroundImage(droppedFile);
+
             if (viewport()) {
                 viewport()->sessionDataForController(controllerName(),"background", droppedFile);
             } else
@@ -103,8 +107,4 @@ void BackgroundController::handleDropEvent(PlexyDesk::AbstractDesktopWidget *wid
 
 void BackgroundController::setViewRect(const QRectF &rect)
 {
-    qDebug() << Q_FUNC_INFO << rect;
-    if (mBackgroundRender) {
-        mBackgroundRender->setContentRect(rect);
-    }
 }

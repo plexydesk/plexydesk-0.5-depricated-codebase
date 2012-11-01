@@ -61,7 +61,7 @@ private:
     QPropertyAnimation *mBlurAnimation;
     QGraphicsBlurEffect *mBlurEffect;
     PlexyDesk::ThemepackLoader *mThemePack;
-    ClassicBackgroundRender *mBackgroundRender;
+    QList<ClassicBackgroundRender *> mBackgroundRenderList;
     const QRectF mBackgroundRect;
 };
 

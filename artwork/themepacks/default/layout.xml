@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <widgets>
-    <widget name="classicbackdrop">
+    <background name="classicbackdrop" multiscreen="true">
         <rect x="0" y="0" width="device-width" height="device-height"></rect>
-    </widget>
+    </background>
     <widget name="plexyclock">
         <rect x="80%" y="10%"></rect>
     </widget>

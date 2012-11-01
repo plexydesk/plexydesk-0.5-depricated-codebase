@@ -40,7 +40,7 @@ public:
 
     virtual void setDesktopRect(const QRectF &rect);
 
-    virtual bool setBackgroundController(const QString &controller_name);
+    virtual bool setBackgroundController(const QString &controllerName);
 
     virtual void addController(const QString &controllerName);
 

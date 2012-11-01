@@ -72,13 +72,18 @@ public:
             delete mSessionTree;
 
         mControllerMap.clear();
+
+        if (mDesktopWidget)
+            delete mDesktopWidget;
     }
 
     QMap<QString, QSharedPointer<ControllerInterface> > mControllerMap;
-    ControllerInterface *mDefaultViewController;
+    QSharedPointer<ControllerInterface> mDefaultViewController;
     AbstractDesktopWidget *mBackgroundItem;
     QDomDocument *mSessionTree;
     QDomElement mRootElement;
+    QDesktopWidget *mDesktopWidget;
+    QString mBackgroundControllerName;
 };
 
 AbstractDesktopView::AbstractDesktopView(QGraphicsScene *scene, QWidget *parent) :
@@ -89,7 +94,7 @@ AbstractDesktopView::AbstractDesktopView(QGraphicsScene *scene, QWidget *parent)
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setAlignment(Qt::AlignLeft | Qt::AlignTop);
 
-    d->mDefaultViewController = 0;
+    d->mDesktopWidget = new QDesktopWidget();
     d->mBackgroundItem = 0;
 
     d->mSessionTree = new QDomDocument("Session");
@@ -130,32 +135,35 @@ void AbstractDesktopView::setDesktopRect(const QRectF &rect)
 {
 }
 
-bool AbstractDesktopView::setBackgroundController(const QString &controller_name)
+bool AbstractDesktopView::setBackgroundController(const QString &controllerName)
 {
     //TODO: error handling
     // delete the current background source before setting a new one
 
-    if (d->mDefaultViewController)
-        return 0;
-
     d->mDefaultViewController =
-            qobject_cast<PlexyDesk::ControllerInterface*> (PlexyDesk::PluginLoader::getInstance()->instance(controller_name));
+            (PlexyDesk::PluginLoader::getInstance()->controller(controllerName));
 
-    if (!d->mDefaultViewController) {
-        qWarning() << Q_FUNC_INFO << "Error Loading " << controller_name << " Controller";
-        return 0;
+    d->mControllerMap[controllerName] = d->mDefaultViewController;
+
+    if (!d->mDefaultViewController.data()) {
+        qWarning() << Q_FUNC_INFO << "Error loading extension" << controllerName;
+        return false;
     }
 
-    d->mBackgroundItem = (AbstractDesktopWidget*) d->mDefaultViewController->defaultView();
-    d->mBackgroundItem->setContentRect(this->sceneRect());
-    d->mBackgroundItem->setRect(this->sceneRect());
+    for (int i = 0 ; i < d->mDesktopWidget->screenCount() ; i++) {
+        qDebug() << Q_FUNC_INFO << i;
+        d->mBackgroundItem = (AbstractDesktopWidget*) d->mDefaultViewController->defaultView();
 
-    scene()->addItem(d->mBackgroundItem);
+        scene()->addItem(d->mBackgroundItem);
 
-    d->mBackgroundItem->show();
-    d->mBackgroundItem->setZValue(-1);
+        d->mBackgroundItem->setContentRect(d->mDesktopWidget->screenGeometry(i));
 
-    d->mDefaultViewController->setViewport(this);
+        d->mBackgroundItem->show();
+        d->mBackgroundItem->setZValue(-1);
+
+        d->mDefaultViewController->setViewport(this);
+        d->mDefaultViewController->setControllerName(controllerName);
+    }
     return true;
 }
 
@@ -175,6 +183,7 @@ void AbstractDesktopView::addController(const QString &controllerName)
     connect(controller.data(), SIGNAL(spawnView(AbstractDesktopWidget*)), this, SLOT(addWidgetToView(AbstractDesktopWidget*)));
 
     d->mControllerMap[controllerName] = controller;
+
     QGraphicsItem *defaultView = controller->defaultView();
 
     scene()->addItem(defaultView);
@@ -187,7 +196,10 @@ void AbstractDesktopView::addController(const QString &controllerName)
 
 QStringList AbstractDesktopView::currentControllers() const
 {
-    return d->mControllerMap.keys();
+    QStringList rv = d->mControllerMap.keys();
+    rv.removeOne(d->mBackgroundControllerName);
+
+    return rv;
 }
 
 void AbstractDesktopView::setControllerRect(const QString &controllerName, const QRectF &rect)

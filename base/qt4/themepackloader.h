@@ -24,7 +24,13 @@ public:
 
     QStringList desktopWidgets() const;
 
-    QRectF positionForWidget(const QString &name, const QRectF &screen_rect, PlexyDesk::AbstractDesktopView *view);
+    QString desktopBackgroundController() const;
+
+    bool queryMultiScreen(const QString &name);
+
+    QRectF positionForWidget(const QString &name, const QRectF &screen_rect);
+
+    QRectF positionForBackground(const QString &name, const QRectF &screen_rect);
 
     QStringList widgets(const QString &type);
 

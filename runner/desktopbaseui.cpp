@@ -54,7 +54,7 @@ DesktopBaseUi::DesktopBaseUi(QWidget *parent) :
     d (new DesktopBaseUiPrivate)
 {
     setDesktopView(QLatin1String ("plexydesktopview"));
-    setup();
+    setup_single();
 
     connect (d->mDesktopWidget, SIGNAL(resized(int)), this, SLOT(screenResized(int)));
 }
@@ -74,6 +74,65 @@ void DesktopBaseUi::setDesktopView(const QString &name)
 {
     d->mViewPlugin = PluginLoader::getInstance()->view(name);
     //FIX : handle changes
+}
+
+void DesktopBaseUi::setup_single()
+{
+    d->mDesktopWidget = new QDesktopWidget ();
+    d->mConfig = PlexyDesk::Config::getInstance();
+
+    QGraphicsScene *scene = new QGraphicsScene;
+    d->mScene = scene;
+
+    if (!d->mViewPlugin) {
+        return;
+    }
+
+    QObject *viewPlugin = d->mViewPlugin->view(scene);
+    PlexyDesk::AbstractDesktopView *view = qobject_cast<PlexyDesk::AbstractDesktopView *> (viewPlugin);
+
+    if (!view) {
+        return;
+    }
+
+    view->resize(desktopRect().size());
+    view->move(desktopRect().x(),
+               desktopRect().y());
+
+    view->setSceneRect (desktopRect());
+
+    view->setDragMode(QGraphicsView::RubberBandDrag);
+
+#ifdef Q_WS_X11
+    NETWinInfo info(QX11Info::display(), view->winId(), QX11Info::appRootWindow(), NET::WMDesktop );
+    info.setDesktop(NETWinInfo::OnAllDesktops);
+    info.setWindowType(NET::Desktop);
+#endif
+
+    //view->showLayer(QLatin1String("Widgets"));
+    d->mViewList[0] = view;
+    QWidget *parentWidget = qobject_cast<QWidget*>(parent());
+    if(parentWidget) {
+        this->resize(view->size());
+        view->setParent(this);
+
+#ifdef Q_WS_MAC
+        //TODO: until we write our own NSView we do this for mac (issue : 169)
+        /*- (void)drawRect:(NSRect)rect {
+            [[NSColor clearColor] set];
+            NSRectFill(rect);
+          }
+       */
+        view->setStyleSheet("background-color: transparent;");
+#endif
+    }
+    view->show();
+#ifdef PLEXYNAME
+    view->setWindowTitle(QString(PLEXYNAME));
+#endif
+    QApplication::desktop()->setParent(view);
+
+    view->layout(desktopRect());
 }
 
 void DesktopBaseUi::setup()
