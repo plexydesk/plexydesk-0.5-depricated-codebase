@@ -78,7 +78,6 @@ public:
     }
 
     QMap<QString, QSharedPointer<ControllerInterface> > mControllerMap;
-    QSharedPointer<ControllerInterface> mDefaultViewController;
     AbstractDesktopWidget *mBackgroundItem;
     QDomDocument *mSessionTree;
     QDomElement mRootElement;
@@ -140,19 +139,19 @@ bool AbstractDesktopView::setBackgroundController(const QString &controllerName)
     //TODO: error handling
     // delete the current background source before setting a new one
 
-    d->mDefaultViewController =
+    QSharedPointer<ControllerInterface> controller =
             (PlexyDesk::PluginLoader::getInstance()->controller(controllerName));
 
-    d->mControllerMap[controllerName] = d->mDefaultViewController;
+    d->mControllerMap[controllerName] = controller;
 
-    if (!d->mDefaultViewController.data()) {
+    if (!controller.data()) {
         qWarning() << Q_FUNC_INFO << "Error loading extension" << controllerName;
         return false;
     }
 
     for (int i = 0 ; i < d->mDesktopWidget->screenCount() ; i++) {
         qDebug() << Q_FUNC_INFO << i;
-        d->mBackgroundItem = (AbstractDesktopWidget*) d->mDefaultViewController->defaultView();
+        d->mBackgroundItem = (AbstractDesktopWidget*) controller->defaultView();
 
         scene()->addItem(d->mBackgroundItem);
 
@@ -161,8 +160,8 @@ bool AbstractDesktopView::setBackgroundController(const QString &controllerName)
         d->mBackgroundItem->show();
         d->mBackgroundItem->setZValue(-1);
 
-        d->mDefaultViewController->setViewport(this);
-        d->mDefaultViewController->setControllerName(controllerName);
+        controller->setViewport(this);
+        controller->setControllerName(controllerName);
     }
     return true;
 }
@@ -268,7 +267,6 @@ void AbstractDesktopView::dragMoveEvent(QDragMoveEvent *event)
     event->accept();
 }
 
-
 void AbstractDesktopView::addWidgetToView(AbstractDesktopWidget *widget)
 {
     QGraphicsItem *item = (AbstractDesktopWidget*) widget;
@@ -353,9 +351,7 @@ void AbstractDesktopView::restoreViewFromSession(const QString &sessionData)
                 if(iface) {
                     iface->setViewRect(geometry);
                 }
-
             }
-
         }
     }
 }
