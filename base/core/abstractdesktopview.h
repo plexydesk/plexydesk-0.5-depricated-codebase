@@ -38,8 +38,6 @@ public:
 
     virtual void enableOpenGL(bool);
 
-    virtual void setDesktopRect(const QRectF &rect);
-
     virtual bool setBackgroundController(const QString &controllerName);
 
     virtual void addController(const QString &controllerName);
@@ -65,7 +63,6 @@ Q_SIGNALS:
 public Q_SLOTS:
 
     void addWidgetToView(AbstractDesktopWidget *widget);
-
 
 private:
 
