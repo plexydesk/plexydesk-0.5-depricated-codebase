@@ -91,11 +91,10 @@ void BackgroundController::handleDropEvent(PlexyDesk::AbstractDesktopWidget *wid
         QFileInfo info(droppedFile);
 
         if ( !info.isDir()) {
-            ClassicBackgroundRender *render =  qobject_cast<ClassicBackgroundRender *> (widget);
-            if (!render)
-                return;
 
-            render->setBackgroundImage(droppedFile);
+            Q_FOREACH(ClassicBackgroundRender *render, mBackgroundRenderList) {
+                render->setBackgroundImage(droppedFile);
+            }
 
             if (viewport()) {
                 viewport()->sessionDataForController(controllerName(),"background", droppedFile);
