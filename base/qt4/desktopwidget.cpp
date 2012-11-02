@@ -223,10 +223,17 @@ void DesktopWidget::paintRotatedView(QPainter *p, const QRectF &rect)
         return;
     }
 
-    p->save();
-    p->setRenderHints(QPainter::SmoothPixmapTransform);
-    p->drawPixmap(QRect(rect.x(), rect.y(), rect.width(), rect.height()), d->mDefaultBackgroundPixmap);
-    p->restore();
+    if (!d->mStyle) {
+        p->save();
+        p->setRenderHints(QPainter::SmoothPixmapTransform);
+        p->drawPixmap(QRect(rect.x() , rect.y() , d->mDefaultBackgroundPixmap.width() / scaleFactorForWidth(), d->mDefaultBackgroundPixmap.height() / scaleFactorForHeight()), d->mDefaultBackgroundPixmap);
+        p->restore();
+    } else {
+        StyleFeatures feature;
+        feature.exposeRect = rect;
+        feature.state = StyleFeatures::SF_FrontView;
+        d->mStyle->paintControlElement(Style::CE_Frame, feature, p);
+    }
 }
 
 void DesktopWidget::paintFrontView(QPainter *p, const QRectF &rect)
@@ -250,12 +257,23 @@ void DesktopWidget::paintFrontView(QPainter *p, const QRectF &rect)
 void DesktopWidget::paintDockView(QPainter *p, const QRectF &rect)
 {
     if (!d->mEditMode) {
-        if (d->mDefaultBackgroundPixmap.isNull())
-            setDefaultImages();
 
         p->save();
         p->setRenderHints(QPainter::SmoothPixmapTransform);
-        p->drawPixmap(QRect(rect.x(), rect.y(), rect.width(), rect.height()), d->mDefaultBackgroundPixmap);
+        ///p->drawPixmap(QRect(rect.x(), rect.y(), rect.width(), rect.height()), d->mDefaultBackgroundPixmap);
+
+        if (!d->mStyle) {
+            p->save();
+            p->setRenderHints(QPainter::SmoothPixmapTransform);
+            p->drawPixmap(QRect(rect.x() , rect.y() , d->mDefaultBackgroundPixmap.width() / scaleFactorForWidth(), d->mDefaultBackgroundPixmap.height() / scaleFactorForHeight()), d->mDefaultBackgroundPixmap);
+            p->restore();
+        } else {
+            StyleFeatures feature;
+            feature.exposeRect = rect;
+            feature.state = StyleFeatures::SF_FrontView;
+            d->mStyle->paintControlElement(Style::CE_Frame, feature, p);
+        }
+
         p->setPen(QColor(255, 255, 255));
         p->drawText(QRect(rect.x(), rect.y(), rect.width(), rect.height()), Qt::AlignCenter, label());
         p->restore();
