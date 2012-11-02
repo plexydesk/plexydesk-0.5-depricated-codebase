@@ -13,10 +13,10 @@
         <rect x="2%" y="10%"></rect>
     </widget>
     <widget name="plexyauth">
-        <rect x="2%" y="60%"></rect>
+        <rect x="2%" y="62%"></rect>
     </widget>
     <widget name="plexyyoutube">
-        <rect x="40%" y="60%"></rect>
+        <rect x="2%" y="47%"></rect>
     </widget>
 
 </widgets>

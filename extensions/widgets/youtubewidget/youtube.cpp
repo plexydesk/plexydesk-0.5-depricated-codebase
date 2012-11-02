@@ -21,7 +21,7 @@
 
 YouTube::YouTube(QObject *object)
 {
-    mWidget = new PlexyDesk::YouTubeWidget(QRectF(0, 0, 480, 320));
+    mWidget = new PlexyDesk::YouTubeWidget(QRectF(0, 0, 480, 100));
     mWidget->setController(this);
 }
 
