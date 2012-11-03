@@ -18,6 +18,7 @@ private:
     void drawPushButton(const StyleFeatures &features, QPainter *painter);
     void drawFrame(const StyleFeatures &features, QPainter *painter);
     void drawPushButtonText(const StyleFeatures &features, const QString &text, QPainter *painter);
+    void drawLineEdit(const StyleFeatures &features, QPainter *painter);
 };
 }
 

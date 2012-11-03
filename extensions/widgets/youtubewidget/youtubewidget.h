@@ -31,6 +31,7 @@
 #include <QGraphicsBlurEffect>
 
 #include <button.h>
+#include <lineedit.h>
 
 class QTimer;
 
@@ -78,6 +79,7 @@ private:
     QGraphicsTextItem *mView;
 
     PlexyDesk::Button *mSearchButton;
+    PlexyDesk::LineEdit *mLineEdit;
 };
 
 } // namespace PlexyDesk

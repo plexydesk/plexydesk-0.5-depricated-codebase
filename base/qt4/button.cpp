@@ -16,8 +16,6 @@ public:
 
     PrivateButton() {}
     ~PrivateButton() {
-        if (mRender)
-            delete mRender;
     }
 
     void paintNormalButton(QPainter *painter, const QStyleOptionGraphicsItem *option);
@@ -25,7 +23,6 @@ public:
     void paintSunkenButton(QPainter *painter, const QStyleOptionGraphicsItem *option);
 
     ButtonState mState;
-    SvgProvider *mRender;
     Style *mStyle;
     QString mLabel;
 
@@ -36,7 +33,6 @@ Button::Button(QGraphicsObject *parent) :
     d(new PrivateButton)
 {
    d->mState = PrivateButton::NORMAL;
-   d->mRender = new SvgProvider();
    d->mStyle = new NativeStyle(this);
 }
 
@@ -114,6 +110,7 @@ void Button::setIcon(const QImage &img)
 
 QString Button::label() const
 {
+    d->mLabel;
 }
 
 }

@@ -21,6 +21,7 @@ SET(sourceFiles
     style.cpp
     nativestyle.cpp
     button.cpp
+    lineedit.cpp
     )
 
 SET(headerFiles 
@@ -50,6 +51,7 @@ SET(headerFiles
     style.h
     nativestyle.h
     button.h
+    lineedit.h
     )
 
 SET(MOC_SRCS
@@ -72,6 +74,7 @@ SET(MOC_SRCS
    nativestyle.h
    style.h
    button.h
+   lineedit.h
    )
 
 # DBUS is working only under linux for now
