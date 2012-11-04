@@ -41,6 +41,9 @@ public:
 
     QRectF exposeRect;
     State state;
+
+    //Line Edit specific
+    int cursorLocation;
 };
 
 class Style : public QObject

@@ -22,6 +22,7 @@ void NativeStyle::paintControlElementText(Style::ControlElement element, const S
 {
     switch(element) {
     case CE_PushButton : drawPushButtonText(feature, text, painter); break;
+    case CE_LineEdit: drawLineEditText(feature, text, painter); break;
     default:
         qWarning() << Q_FUNC_INFO << "Unknown Control Element";
     }
@@ -114,9 +115,34 @@ void NativeStyle::drawLineEdit(const StyleFeatures &features, QPainter *painter)
     linearGrad.setColorAt(1, QColor(255, 255, 255));
 
     painter->fillPath(backgroundPath, linearGrad);
-    QPen pen(QColor(98, 101, 108), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    QPen pen;
+    if(features.state == StyleFeatures::SF_MouseOver) {
+        pen = QPen(QColor(98, 101, 208), 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    } else {
+        pen = QPen(QColor(98, 101, 108), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    }
     painter->setPen(pen);
     painter->drawPath(backgroundPath);
+}
+
+void NativeStyle::drawLineEditText(const StyleFeatures &features, const QString &text, QPainter *painter)
+{
+    /* Painter settings */
+    painter->setRenderHint(QPainter::Antialiasing, true);
+    painter->setRenderHint(QPainter::TextAntialiasing, true);
+    painter->setRenderHint(QPainter::HighQualityAntialiasing, true);
+    QPen pen(QColor(0, 0, 0), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+
+    QFont font = QFont("", 20);
+    QFontMetrics fontMetrics(font);
+    int width = fontMetrics.width(text.left(features.cursorLocation));
+
+    painter->setFont(font);
+    painter->setPen(pen);
+    painter->drawText(features.exposeRect, Qt::AlignLeft | Qt::AlignVCenter, text);
+    pen = QPen(QColor(98, 101, 108), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    painter->setPen(pen);
+    painter->drawLine(QPoint(width, 4), QPoint(width,features.exposeRect.height() - 4));
 }
 
 }
