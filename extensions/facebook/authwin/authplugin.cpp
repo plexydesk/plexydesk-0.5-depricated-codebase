@@ -20,10 +20,19 @@
 #include "authplugin.h"
 #include <qwebviewitem.h>
 
-AuthPlugin::AuthPlugin(QObject *object)
+AuthPlugin::AuthPlugin(QObject *object) : PlexyDesk::ControllerInterface (object)
 {
      mWidget = new PlexyDesk::AuthWidget(QRectF(0, 0, 480, 320));
      mWidget->setController(this);
+     mWidget->setVisible(false);
+
+     mContactUI = new FacebookContactUI(QRectF(0.0, 0.0, 488.0, 320.0));
+     mContactUI->setController(this);
+     mContactUI->setVisible(true);
+
+     if (connectToDataSource("facebookengine")) {
+         connect(dataSource(), SIGNAL(sourceUpdated(QVariantMap)), this, SLOT(onDataUpdated(QVariantMap)));
+     }
 }
 
 AuthPlugin::~AuthPlugin()
@@ -34,17 +43,76 @@ AuthPlugin::~AuthPlugin()
 
 PlexyDesk::AbstractDesktopWidget *AuthPlugin::defaultView()
 {
-    return mWidget;
+    return mContactUI;
 }
 
 void AuthPlugin::revokeSession(const QVariantMap &args)
 {
-    if(mWidget)
-        mWidget->revokeSession();
+    QString token = args["access_token"].toString();
+
+    if (token.isNull() || token.isEmpty()) {
+        requestFacebookSession();
+        return;
+    }
+    mWidget->setVisible(false);
+
+    PlexyDesk::DataSource *fbSource = dataSource();
+    QVariantMap request;
+    QVariant arg;
+    request["command"] = QVariant("friends");
+    request["token"] = args["access_token"];
+    arg = request;
+
+    if (fbSource)
+        fbSource->setArguments(arg);
 }
 
 void AuthPlugin::setViewRect(const QRectF &rect)
 {
     if (mWidget)
         mWidget->setPos(rect.x(), rect.y());
+
+    if (mContactUI)
+        mContactUI->setPos(rect.x(), rect.y());
+}
+
+void AuthPlugin::firstRun()
+{
+    requestFacebookSession();
+}
+
+void AuthPlugin::onDataUpdated(const QVariantMap &map)
+{
+    QString command = map["command"].toString();
+
+    if (command == "login") {
+        QString key = map["token"].toString();
+
+        if (key.isEmpty() || key.isNull()) {
+            //request login UI
+            if (mWidget) {
+                Q_EMIT spawnView(mWidget);
+                mWidget->setVisible(true);
+                mWidget->createAuthDialog();
+            }
+        }
+    }
+
+    if (command == "friends") {
+        qDebug() << map.keys();
+        mContactUI->setFacebookContactData(map["data"].toHash());
+    }
+}
+
+void AuthPlugin::requestFacebookSession()
+{
+    PlexyDesk::DataSource *fbSource = dataSource();
+
+    QVariantMap request;
+    QVariant arg;
+    request["command"] = QVariant("login");
+    arg = request;
+
+    if (fbSource)
+        fbSource->setArguments(arg);
 }

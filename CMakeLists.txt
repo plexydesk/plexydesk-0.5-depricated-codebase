@@ -189,6 +189,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/base/qt4
     ${CMAKE_SOURCE_DIR}/base/core
     ${CMAKE_BINARY_DIR}/base/core
+    ${CMAKE_SOURCE_DIR}/3rdparty/json-cpp/json
     ${CMAKE_SOURCE_DIR}/base/qt4/shaders
     ${CMAKE_BINARY_DIR}/base/qt4/shaders
     ${CMAKE_SOURCE_DIR}/runner
@@ -255,6 +256,7 @@ ADD_SUBDIRECTORY(extensions/widgets/clock)
 ADD_SUBDIRECTORY(extensions/widgets/photoframe)
 ADD_SUBDIRECTORY(extensions/widgets/folderwidget)
 ADD_SUBDIRECTORY(extensions/facebook/authwin)
+ADD_SUBDIRECTORY(extensions/data/facebook)
 ADD_SUBDIRECTORY(extensions/backdrop/classicdrop)
 ADD_SUBDIRECTORY(extensions/widgets/youtubewidget)
 ADD_SUBDIRECTORY(runner)

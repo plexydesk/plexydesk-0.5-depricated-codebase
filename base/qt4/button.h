@@ -17,7 +17,7 @@ public:
 
     virtual ~Button();
 
-    virtual void setLable(const QString &txt);
+    virtual void setLabel(const QString &txt);
 
     virtual QString label() const;
 

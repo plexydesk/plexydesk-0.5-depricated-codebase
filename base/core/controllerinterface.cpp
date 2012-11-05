@@ -37,6 +37,10 @@ AbstractDesktopView *ControllerInterface::viewport()
     return d->mViewport;
 }
 
+void ControllerInterface::firstRun()
+{
+}
+
 QStringList ControllerInterface::actions() const
 {
     return QStringList();

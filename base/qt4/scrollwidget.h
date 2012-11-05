@@ -16,6 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef PLEXYDESK_SCROLL_WIDGET_H
+#define PLEXYDESK_SCROLL_WIDGET_H
 #include <plexy.h>
 #include <config.h>
 #include <desktopwidget.h>
@@ -43,3 +45,5 @@ private:
    Private *const d;
 };
 }
+
+#endif

@@ -58,6 +58,7 @@ public:
     virtual AbstractDesktopView *viewport();
 
     virtual void revokeSession(const QVariantMap &args) = 0;
+    virtual void firstRun();
 
     virtual QStringList actions() const;
 

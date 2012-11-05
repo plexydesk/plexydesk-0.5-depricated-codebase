@@ -47,6 +47,11 @@ public:
 
     void revokeSession();
 
+    void createAuthDialog();
+
+Q_SIGNALS:
+    void facebookToken(const QString &token);
+
 public Q_SLOTS:
     void data(QVariantMap &);
     void onDataReady();
@@ -57,7 +62,9 @@ public Q_SLOTS:
     void onReadyRead();
 
 private:
+
     QString tokenFromConfig() const;
+
     QWebViewItem *mView;
     int mProgressValue;
     QNetworkAccessManager *mNtManager;

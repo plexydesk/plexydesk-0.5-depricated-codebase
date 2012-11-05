@@ -13,6 +13,7 @@ void NativeStyle::paintControlElement(Style::ControlElement element, const Style
     case CE_PushButton : drawPushButton(feature, painter); break;
     case CE_Frame : drawFrame(feature, painter); break;
     case CE_LineEdit: drawLineEdit(feature, painter); break;
+    case CE_Seperator: drawSeperatorLine(feature, painter); break;
     default:
         qWarning() << Q_FUNC_INFO << "Unknown Control Element";
     }
@@ -143,6 +144,18 @@ void NativeStyle::drawLineEditText(const StyleFeatures &features, const QString 
     pen = QPen(QColor(98, 101, 108), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     painter->setPen(pen);
     painter->drawLine(QPoint(width, 4), QPoint(width,features.exposeRect.height() - 4));
+}
+
+void NativeStyle::drawSeperatorLine(const StyleFeatures &features, QPainter *painter)
+{
+    QPen pen = QPen(QColor(243, 243, 243), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    painter->setPen(pen);
+    painter->drawLine(QPoint(features.exposeRect.x(), features.exposeRect.y()),
+                      QPoint(features.exposeRect.width(), features.exposeRect.height()));
+    pen = QPen(QColor(198, 198, 198), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    painter->setPen(pen);
+    painter->drawLine(QPoint(features.exposeRect.x() + 1, features.exposeRect.y() + 1),
+                      QPoint(features.exposeRect.width() + 1, features.exposeRect.height() + 1));
 }
 
 }

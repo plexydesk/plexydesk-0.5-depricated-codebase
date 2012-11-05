@@ -38,13 +38,18 @@ namespace PlexyDesk {
 AuthWidget::AuthWidget(const QRectF &rect) :
     PlexyDesk::DesktopWidget(rect)
 {
+}
+
+void AuthWidget::createAuthDialog()
+{
+    enableDefaultBackground(false);
     mJsonHandle = new JsonHandler();
     const QString token = tokenFromConfig();
     mLoggedIn = false;
     mNtManager = new QNetworkAccessManager(this);
     mCookie = new QNetworkCookieJar(this);
     mNtManager->setCookieJar(mCookie);
-    QRect webrect = QRect(10.0, 10.0, rect.width()-65, rect.height()-8);
+    QRect webrect = QRect(10.0, 10.0, boundingRect().width()-65, boundingRect().height()-8);
     mView = new QWebViewItem(webrect, this);
     if (mView->page()) {
         mView->page()->setNetworkAccessManager(mNtManager);
@@ -65,8 +70,7 @@ AuthWidget::AuthWidget(const QRectF &rect) :
         connect(mReply, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
     }
     mProgressValue = 10;
-
-    enableDefaultBackground(false);
+    //enableDefaultBackground(false);
 
     mShadowEffect = new QGraphicsDropShadowEffect(this);
     mShadowEffect->setBlurRadius(32);
@@ -85,6 +89,7 @@ AuthWidget::AuthWidget(const QRectF &rect) :
     mBlurAnimation->setEndValue(1.3);
     mView->setGraphicsEffect(mBlurEffect);
 }
+
 
 AuthWidget::~AuthWidget()
 {
@@ -209,13 +214,19 @@ void AuthWidget::onUrlChanged(const QUrl &url)
     QUrl fburl(stringUrl);
     qDebug() <<  fburl.queryItemValue("access_token");
     if (not fburl.queryItemValue("access_token").isEmpty()) {
-        configState(AbstractDesktopWidget::DOCKED);
+        //configState(AbstractDesktopWidget::DOCKED);
         this->setVisible(false);
         /* save the auth token */
 
         if(controller() && controller()->viewport()) {
             controller()->viewport()->sessionDataForController(controller()->controllerName(), "access_token", fburl.queryItemValue("access_token"));
+            Q_EMIT facebookToken(fburl.queryItemValue("access_token"));
         }
+
+        if (mView) {
+            mView->setVisible(false);
+        }
+
 
     }
 }

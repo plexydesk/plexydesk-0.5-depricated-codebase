@@ -40,6 +40,7 @@ IconWidgetView::IconWidgetView(const QRectF &rect, QGraphicsObject *parent) :
     ///hack until we have our own painting
     d->mIconView->setStyleSheet(" border : 0 ; background-color: transparent; color : #000000");
 
+
     d->mWidgetProxy->setWidget(d->mIconView);
 
     QRectF iconViewRect = QRectF(12.0, 12.0, rect.width() - 24.0, rect.height() - 24.0);
@@ -49,7 +50,7 @@ IconWidgetView::IconWidgetView(const QRectF &rect, QGraphicsObject *parent) :
     d->mInfoView->setPos(QPointF(0.0, rect.height() + 16));
     QPointF infoViewPos = d->mInfoView->pos();
 
-    d->mWidgetProxy->setPos(iconViewRect.x(), iconViewRect.y());
+    d->mWidgetProxy->setPos(4.0, 28.0);
     d->mWidgetProxy->resize(iconViewRect.size());
 
     d->mFileSystemModel = new QFileSystemModel(d->mIconView);

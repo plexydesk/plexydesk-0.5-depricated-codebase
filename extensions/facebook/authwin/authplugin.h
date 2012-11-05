@@ -4,6 +4,7 @@
 #include <plexy.h>
 #include <controllerinterface.h>
 #include "authwidget.h"
+#include "facebookcontactui.h"
 
 class AuthPlugin : public PlexyDesk::ControllerInterface
 {
@@ -11,15 +12,25 @@ class AuthPlugin : public PlexyDesk::ControllerInterface
 
 public:
     AuthPlugin(QObject *object = 0);
+
     virtual ~AuthPlugin();
+
     PlexyDesk::AbstractDesktopWidget *defaultView();
 
     void revokeSession(const QVariantMap &args);
 
     void setViewRect(const QRectF &rect);
 
+    void firstRun();
+
+public Q_SLOTS:
+    void onDataUpdated(const QVariantMap &map);
+
+protected:
+    void requestFacebookSession();
 private:
     PlexyDesk::AuthWidget *mWidget;
+    FacebookContactUI *mContactUI;
 };
 
 #endif

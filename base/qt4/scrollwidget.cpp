@@ -67,12 +67,15 @@ void ScrollWidget::scrollBy(int x, int y)
 {
     if (d->mChildItem) {
         //resetric to viewport
+        qDebug() << Q_FUNC_INFO << d->mChildItem->boundingRect();
         int y_pos = d->mChildItem->y() + y;
         int view_height = this->boundingRect().height();
         int y_max = (-1) * (d->mChildItem->boundingRect().height() - view_height);
 
-        if (y_pos < 0 && y_pos > y_max)
+        if (y_pos < (this->y()) && y_pos > y_max)
             d->mChildItem->setPos(d->mChildItem->x() + x, d->mChildItem->y() + y);
+        else if ( !(y_pos < (this->y())) )
+            d->mChildItem->setPos(d->mChildItem->x() + x, this->y());
     }
 }
 

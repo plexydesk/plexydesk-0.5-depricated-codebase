@@ -38,6 +38,9 @@ PlexyDesktopView::PlexyDesktopView(QGraphicsScene *parent_scene, QWidget *parent
 
         Q_FOREACH(const QString &widget, widgets) {
             addController(widget);
+            QSharedPointer<PlexyDesk::ControllerInterface> controller = controllerByName(widget);
+            if (controller.data())
+                controller->firstRun();
         }
     } else {
       restoreViewFromSession(sessionData);

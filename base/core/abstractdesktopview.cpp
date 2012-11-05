@@ -109,7 +109,7 @@ AbstractDesktopView::AbstractDesktopView(QGraphicsScene *scene, QWidget *parent)
 
 AbstractDesktopView::~AbstractDesktopView()
 {
-    qDebug() << Q_FUNC_INFO;
+    //qDebug() << Q_FUNC_INFO;
     delete d;
 }
 
@@ -146,7 +146,7 @@ bool AbstractDesktopView::setBackgroundController(const QString &controllerName)
     }
 
     for (int i = 0 ; i < d->mDesktopWidget->screenCount() ; i++) {
-        qDebug() << Q_FUNC_INFO << i;
+        //qDebug() << Q_FUNC_INFO << i;
         d->mBackgroundItem = (AbstractDesktopWidget*) controller->defaultView();
 
         scene()->addItem(d->mBackgroundItem);
@@ -213,7 +213,7 @@ void AbstractDesktopView::setControllerRect(const QString &controllerName, const
     widget.appendChild(geometry);
     d->mRootElement.appendChild(widget);
 
-    qDebug() << Q_FUNC_INFO << d->mSessionTree->toString();
+    //qDebug() << Q_FUNC_INFO << d->mSessionTree->toString();
     Q_EMIT sessionUpdated(d->mSessionTree->toString());
 }
 
@@ -224,7 +224,7 @@ QSharedPointer<ControllerInterface> AbstractDesktopView::controllerByName(const 
 
 void AbstractDesktopView::dropEvent(QDropEvent *event)
 {
-    qDebug() << Q_FUNC_INFO;
+    //qDebug() << Q_FUNC_INFO;
     if (this->scene()) {
         qDebug() << Q_FUNC_INFO;
         QList<QGraphicsItem *> items = scene()->items(event->pos());

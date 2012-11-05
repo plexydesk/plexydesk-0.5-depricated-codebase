@@ -41,7 +41,7 @@ Button::~Button()
     delete d;
 }
 
-void Button::setLable(const QString &txt)
+void Button::setLabel(const QString &txt)
 {
     d->mLabel = txt;
 }

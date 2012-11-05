@@ -2,19 +2,28 @@ SET(sourceFiles
     authplugin.cpp
     authwidgetinterface.cpp
     authwidget.cpp
+    facebookcontactui.cpp
+    contactlist.cpp
+    contactlistitem.cpp
     )
 
 SET(headerFiles
     authplugin.h
     authwidgetinterface.h
     authwidget.h
-    )
+    facebookcontactui.h
+    contactlist.h
+    contactlistitem.h
+)
 
 SET(QTMOC_SRCS
     authplugin.h
     authwidgetinterface.h
     authwidget.h
-    )
+    facebookcontactui.h
+    contactlist.h
+    contactlistitem.h
+)
 
 QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})
 

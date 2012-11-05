@@ -39,8 +39,7 @@ public:
 RestData::RestData(QObject * /*object*/) : d(new Private)
 {
     d->manager = new QNetworkAccessManager(this);
-    connect(d->manager, SIGNAL(finished(QNetworkReply *)),
-     this, SLOT(replyFinished(QNetworkReply *)));
+    connect(d->manager, SIGNAL(finished(QNetworkReply *)), this, SLOT(replyFinished(QNetworkReply *)));
     connect(d->manager, SIGNAL(authenticationRequired(QNetworkReply *, QAuthenticator *)), this,
      SLOT(handleAuth(QNetworkReply *, QAuthenticator *)));
 }
