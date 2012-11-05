@@ -1,12 +1,13 @@
 SET (sourceFiles
      facebooksession.cpp
      facebookdatainterface.cpp
+     facebookuserinfo.cpp
     )
 
-SET(headerFiles facebooksession.h facebookdatainterface.h
+SET(headerFiles facebooksession.h facebookdatainterface.h facebookuserinfo.h
     )
 
-SET (QTMOC_SRCS facebooksession.h facebookdatainterface.h
+SET (QTMOC_SRCS facebooksession.h facebookdatainterface.h facebookuserinfo.h
     )
 
 QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})

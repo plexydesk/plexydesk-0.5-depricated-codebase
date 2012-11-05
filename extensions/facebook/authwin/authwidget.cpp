@@ -226,10 +226,9 @@ void AuthWidget::onUrlChanged(const QUrl &url)
         if (mView) {
             mView->setVisible(false);
         }
-
-
     }
 }
+
 void AuthWidget::readConfig(QString &user,
      QString &pass)
 {

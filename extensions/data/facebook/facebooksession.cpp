@@ -4,6 +4,7 @@
 #include <QNetworkReply>
 
 #include <json.h>
+#include "facebookuserinfo.h"
 
 class FacebookSession::Private {
 public:
@@ -12,6 +13,7 @@ public:
 
     QNetworkAccessManager *manager;
     QVariantMap data;
+    QString mToken;
 };
 
 FacebookSession::FacebookSession(QObject *parent) :
@@ -65,8 +67,10 @@ void FacebookSession::setArguments(QVariant &args)
             d->data = response;
             qDebug() << Q_FUNC_INFO << "No key found";
             Q_EMIT sourceUpdated(response);
+            return;
         }
 
+        d->mToken = key;
         QUrl url ("https://graph.facebook.com/me/friends?access_token=" + key);
         QNetworkReply *reply = d->manager->get(QNetworkRequest(url));
 
@@ -106,10 +110,10 @@ void FacebookSession::onFriendListReady()
 
                 Q_FOREACH(const QString &key, hash.keys()) {
                     response[key] = QVariant(hash[key]);
-
+                    FacebookUserInfo *info = new FacebookUserInfo(d->manager, hash[key].toString(), d->mToken, this);
                 }
 
-                //Q_EMIT sourceUpdated(response);
+                Q_EMIT sourceUpdated(response);
             }
         }
     }
