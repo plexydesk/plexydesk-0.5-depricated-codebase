@@ -1,0 +1,6 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Facebook Session Data Engine
+Type=Engine
+Comment=Handle Facebok services
+X-PLEXYDESK-Library=facebookengine
