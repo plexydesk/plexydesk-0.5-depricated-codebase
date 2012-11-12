@@ -25,6 +25,7 @@ public:
 
 public Q_SLOTS:
     void onDataUpdated(const QVariantMap &map);
+    void onFacebookToken(const QString &token);
 
 protected:
     void requestFacebookSession();

@@ -14,6 +14,10 @@ public:
 
     void addContact(const QString &contactName, const QPixmap &pixmap = QPixmap());
 
+public Q_SLOTS:
+    void clear();
+    void filter(const QString &filterString);
+
 private:
     class PrivateContactList;
     PrivateContactList *const d;

@@ -11,6 +11,7 @@ public:
     explicit FacebookContactUI(const QRectF &rect);
 
     void setFacebookContactData(QHash<QString, QVariant> data);
+    void addContact(const QVariantMap &data);
 
 private:
     class PrivateFacebookContactUI;

@@ -44,4 +44,5 @@ void PendingJob::setFinished(bool status, QString &error, const QString &message
     d->message = message;
     emit finished();
 }
+
 }

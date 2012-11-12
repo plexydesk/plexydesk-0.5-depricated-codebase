@@ -25,6 +25,7 @@ public:
 
 Q_SIGNALS:
     void clicked();
+    void text(const QString &text);
 
 protected:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
@@ -39,7 +40,7 @@ protected:
 private:
     class PrivateLineEdit;
     PrivateLineEdit *const d;
-    
+
 };
 
 }

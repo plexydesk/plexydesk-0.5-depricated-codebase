@@ -14,17 +14,16 @@ public:
     QNetworkAccessManager *manager;
     QVariantMap data;
     QString mToken;
+    int mContactCount;
 };
 
 FacebookSession::FacebookSession(QObject *parent) :
     PlexyDesk::DataSource(parent),
     d (new Private)
 {
+    d->mContactCount = 0;
+
     d->manager = new QNetworkAccessManager(this);
-    connect(d->manager, SIGNAL(finished(QNetworkReply *)),
-     this, SLOT(onFinished(QNetworkReply *)));
-    connect(d->manager, SIGNAL(authenticationRequired(QNetworkReply *, QAuthenticator *)), this,
-     SLOT(handleAuth(QNetworkReply *, QAuthenticator *)));
 }
 
 QVariantMap FacebookSession::readAll()
@@ -86,35 +85,39 @@ void FacebookSession::onFriendListReady()
 
         if (reply) {
             QString data = reply->readAll();
-            //qDebug() << data;
             Json::Value root;
             Json::Reader jsonReader;
-
             bool parsingSuccessful = jsonReader.parse(data.toStdString(), root);
-            QVariantHash hash;
 
             if (parsingSuccessful) {
-                qDebug() << Q_FUNC_INFO << "Parsing success";
-
+                if (root.isMember("error")) {
+                    qDebug() << data;
+                    QVariantMap errorData;
+                    errorData["command"] = QVariant("login");
+                    errorData["token"] = QVariant("");
+                    Q_EMIT sourceUpdated(errorData);
+                    return;
+                }
                 const Json::Value data_list = root["data"];
 
                 for ( int index = 0; index < data_list.size(); ++index) {
-                    const char *friendName = data_list[index]["name"].asCString();
                     const char *friendID = data_list[index]["id"].asCString();
-                    hash[QString(friendName)] = QVariant(QString(friendID));
+                    FacebookUserInfo *info = new FacebookUserInfo(d->manager, QString(friendID), d->mToken, this);
+                    connect(info, SIGNAL(finished(FacebookUserInfo*)), this, SLOT(onUserInfoReady(FacebookUserInfo*)));
                 }
-
-                QVariantMap response;
-                response["command"] = QVariant("friends");
-                response["data"] = hash;
-
-                Q_FOREACH(const QString &key, hash.keys()) {
-                    response[key] = QVariant(hash[key]);
-                    FacebookUserInfo *info = new FacebookUserInfo(d->manager, hash[key].toString(), d->mToken, this);
-                }
-
-                Q_EMIT sourceUpdated(response);
             }
         }
     }
+}
+
+void FacebookSession::onUserInfoReady(FacebookUserInfo *job)
+{
+    FacebookUserInfo *user = job;
+
+    if (user)
+       Q_EMIT sourceUpdated(user->userInfo());
+    else
+        qDebug() << Q_FUNC_INFO << "Failed converating data";
+
+    delete job;
 }

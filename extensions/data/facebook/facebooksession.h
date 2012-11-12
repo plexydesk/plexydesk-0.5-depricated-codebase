@@ -5,7 +5,8 @@
 #include <QtCore>
 #include <plexy.h>
 #include <datasource.h>
-
+#include <pendingjob.h>
+#include "facebookuserinfo.h"
 
 class FacebookSession : public PlexyDesk::DataSource
 {
@@ -16,8 +17,9 @@ public:
     virtual QVariantMap readAll();
 
 public Q_SLOTS:
-    virtual void setArguments(QVariant &args);
-    virtual void onFriendListReady();
+    void setArguments(QVariant &args);
+    void onFriendListReady();
+    void onUserInfoReady(FacebookUserInfo *job);
 
 private:
     class Private;

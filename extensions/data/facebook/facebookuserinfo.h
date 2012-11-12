@@ -5,6 +5,7 @@
 #include <pendingjob.h>
 
 #include <QNetworkAccessManager>
+#include <QVariantMap>
 
 class FacebookUserInfo : public PlexyDesk::PendingJob
 {
@@ -12,9 +13,14 @@ class FacebookUserInfo : public PlexyDesk::PendingJob
 public:
     explicit FacebookUserInfo(QNetworkAccessManager *manager, const QString &facebookID, const QString &facebookToken, QObject *parent = 0);
     virtual ~FacebookUserInfo();
+    QVariantMap userInfo() const;
 
 public Q_SLOTS:
     void onUserInfoReady();
+    void onAvatarImageReady();
+
+Q_SIGNALS:
+    void finished(FacebookUserInfo *);
 
 private:
     class PrivateFacebookUserInfo;

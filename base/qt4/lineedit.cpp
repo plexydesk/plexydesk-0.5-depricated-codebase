@@ -123,6 +123,7 @@ void LineEdit::keyPressEvent(QKeyEvent *event)
         d->mText.remove(d->mKeyCursorLeftLoc - 1, 1);
         if (d->mKeyCursorLeftLoc != 0)
             d->mKeyCursorLeftLoc--;
+        Q_EMIT text(d->mText);
         update();
         return;
     } else if (event->key() == Qt::Key_Left) {
@@ -139,6 +140,7 @@ void LineEdit::keyPressEvent(QKeyEvent *event)
     }
     d->mText.insert(d->mKeyCursorLeftLoc, event->text());
     d->mKeyCursorLeftLoc++;
+    Q_EMIT text(d->mText);
     update();
 }
 

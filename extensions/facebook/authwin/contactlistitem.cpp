@@ -9,6 +9,7 @@ public:
 
     PlexyDesk::Style *mStyle;
     QString mName;
+    QPixmap mPixmap;
 
 };
 
@@ -34,6 +35,16 @@ void ContactListItem::setName(const QString &name)
     d->mName = name;
 }
 
+QString ContactListItem::name() const
+{
+    return d->mName;
+}
+
+void ContactListItem::setPixmap(const QPixmap &pixmap)
+{
+    d->mPixmap = pixmap;
+}
+
 void ContactListItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     PlexyDesk::StyleFeatures feature;
@@ -53,6 +64,8 @@ void ContactListItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
 
     feature.exposeRect = QRectF(4.0,0.0, option->exposedRect.width(), 1.0);
     d->mStyle->paintControlElement(PlexyDesk::Style::CE_Seperator, feature, painter);
+
+    painter->drawPixmap(2, 2, d->mPixmap.width(), d->mPixmap.height(), d->mPixmap);
 }
 
 void ContactListItem::mousePressEvent(QGraphicsSceneMouseEvent *event)

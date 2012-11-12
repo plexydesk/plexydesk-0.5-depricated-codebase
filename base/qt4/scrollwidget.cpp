@@ -89,4 +89,17 @@ void ScrollWidget::wheelEvent(QGraphicsSceneWheelEvent *event)
     event->accept();
 }
 
+void ScrollWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+}
+
+void ScrollWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+}
+
+void ScrollWidget::dragMoveEvent(QGraphicsSceneDragDropEvent *event)
+{
+    qDebug() << Q_FUNC_INFO;
+}
+
 } // namespace PlexyDesk

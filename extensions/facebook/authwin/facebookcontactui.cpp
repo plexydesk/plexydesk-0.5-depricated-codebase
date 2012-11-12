@@ -35,6 +35,8 @@ FacebookContactUI::FacebookContactUI(const QRectF &rect) :
     d->mSearchButton->show();
     d->mSearchButton->setLabel(tr("Search"));
     d->mSearchButton->setPos(d->mSearchBox->boundingRect().width(), rect.height() - 48);
+
+    connect(d->mSearchBox, SIGNAL(text(QString)), d->mScrollView, SLOT(filter(QString)));
 }
 
 void FacebookContactUI::setFacebookContactData(QHash<QString, QVariant> data)
@@ -44,4 +46,9 @@ void FacebookContactUI::setFacebookContactData(QHash<QString, QVariant> data)
    Q_FOREACH(const QString &name, data.keys()) {
        d->mScrollView->addContact(name);
    }
+}
+
+void FacebookContactUI::addContact(const QVariantMap &data)
+{
+    d->mScrollView->addContact(data["name"].toString(), data["picture"].value<QPixmap>());
 }

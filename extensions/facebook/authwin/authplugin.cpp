@@ -26,6 +26,8 @@ AuthPlugin::AuthPlugin(QObject *object) : PlexyDesk::ControllerInterface (object
      mWidget->setController(this);
      mWidget->setVisible(false);
 
+     connect(mWidget, SIGNAL(facebookToken(QString)), this, SLOT(onFacebookToken(QString)));
+
      mContactUI = new FacebookContactUI(QRectF(0.0, 0.0, 488.0, 320.0));
      mContactUI->setController(this);
      mContactUI->setVisible(true);
@@ -102,6 +104,23 @@ void AuthPlugin::onDataUpdated(const QVariantMap &map)
         qDebug() << map.keys();
         mContactUI->setFacebookContactData(map["data"].toHash());
     }
+
+    if (command == "userinfo") {
+        mContactUI->addContact(map);
+    }
+}
+
+void AuthPlugin::onFacebookToken(const QString &token)
+{
+    PlexyDesk::DataSource *fbSource = dataSource();
+    QVariantMap request;
+    QVariant arg;
+    request["command"] = QVariant("friends");
+    request["token"] = token;
+    arg = request;
+
+    if (fbSource)
+        fbSource->setArguments(arg);
 }
 
 void AuthPlugin::requestFacebookSession()

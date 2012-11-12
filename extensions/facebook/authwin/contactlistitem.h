@@ -14,6 +14,8 @@ public:
 
     virtual QRectF boundingRect() const;
     void setName(const QString &name);
+    QString name() const;
+    void setPixmap(const QPixmap &pixmap);
 
 protected:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);

@@ -24,6 +24,7 @@ public:
     void setFinished(bool status, QString &error, const QString &message);
 Q_SIGNALS:
     void finished();
+    void finished(PendingJob *);
 protected:
     PendingJob(QObject *parent);
 private:
