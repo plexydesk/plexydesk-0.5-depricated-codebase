@@ -14,7 +14,9 @@ public:
 
     virtual QRectF boundingRect() const;
     void setName(const QString &name);
+    void setStatusMessage(const QString &status);
     QString name() const;
+    QString statusMessage() const;
     void setPixmap(const QPixmap &pixmap);
 
 protected:

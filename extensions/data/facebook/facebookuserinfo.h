@@ -18,6 +18,7 @@ public:
 public Q_SLOTS:
     void onUserInfoReady();
     void onAvatarImageReady();
+    void onStatusMessageReady();
 
 Q_SIGNALS:
     void finished(FacebookUserInfo *);

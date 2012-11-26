@@ -4,6 +4,7 @@
 #include <QNetworkReply>
 #include <QImage>
 #include <QPixmap>
+#include <QTimer>
 #include <QDebug>
 #include <json.h>
 
@@ -27,9 +28,7 @@ FacebookUserInfo::FacebookUserInfo(QNetworkAccessManager *manager, const QString
     d->mFacebookID = facebookID;
     d->mToken = facebookToken;
     d->data["command"] = QString("userinfo");
-
     d->manager = manager;
-
 
     QUrl url (QString("https://graph.facebook.com/%1?fields=name,picture&access_token=%2").arg(d->mFacebookID, d->mToken));
     QNetworkReply *reply = d->manager->get(QNetworkRequest(url));
@@ -39,6 +38,9 @@ FacebookUserInfo::FacebookUserInfo(QNetworkAccessManager *manager, const QString
 
 FacebookUserInfo::~FacebookUserInfo()
 {
+    qDebug() << Q_FUNC_INFO;
+
+    d->data.clear();
     delete d;
 }
 
@@ -70,8 +72,6 @@ void FacebookUserInfo::onUserInfoReady()
                 QNetworkReply *reply = d->manager->get(QNetworkRequest(url));
 
                 connect(reply, SIGNAL(finished()), this, SLOT(onAvatarImageReady()));
-
-
             }
         }
     }
@@ -103,7 +103,38 @@ void FacebookUserInfo::onAvatarImageReady()
                 qDebug() << Q_FUNC_INFO << "Null Image data from : " << reply->url() << " : was finished ?" << reply->isFinished();
             } else {
                 d->data["picture"] = QVariant(pixmap);
-                Q_EMIT finished(this);
+                /* fetch Status message */
+                QUrl url (QString("https://graph.facebook.com/%1/statuses?fields=message&limit=1&access_token=%2").arg(d->mFacebookID, d->mToken));
+                QNetworkReply *reply = d->manager->get(QNetworkRequest(url));
+
+                connect(reply, SIGNAL(finished()), this, SLOT(onStatusMessageReady()));
+            }
+        }
+
+        reply->deleteLater();
+    }
+}
+
+void FacebookUserInfo::onStatusMessageReady()
+{
+    if (sender()) {
+        QNetworkReply *reply = qobject_cast<QNetworkReply*> (sender());
+
+        if (reply) {
+            QString data = reply->readAll() ;
+            //qDebug() << Q_FUNC_INFO << data << endl;
+            Json::Value root;
+            Json::Reader jsonReader;
+
+            bool parsingSuccessful = jsonReader.parse(data.toStdString(), root);
+
+            if (parsingSuccessful && !root["data"].isNull()) {
+                const Json::Value data_list = root["data"][0];
+                QString message = data_list["message"].asCString();
+                if (d->data["message"] != message) {
+                    d->data["message"] = message;
+                    Q_EMIT finished (this);
+                }
             }
         }
 

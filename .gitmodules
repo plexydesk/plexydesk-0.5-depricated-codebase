@@ -1,0 +1,3 @@
+[submodule "3rdparty/qimageblitz"]
+	path = 3rdparty/qimageblitz
+	url = git://github.com/siraj/qimageblitz.git

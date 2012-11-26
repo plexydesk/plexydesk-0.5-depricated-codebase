@@ -12,7 +12,7 @@ public:
     ContactList(const QRectF &rect, QGraphicsObject *parent = 0);
     virtual ~ContactList();
 
-    void addContact(const QString &contactName, const QPixmap &pixmap = QPixmap());
+    void addContact(const QString &contactName, const QString &statusMessage = QString(), const QPixmap &pixmap = QPixmap());
 
 public Q_SLOTS:
     void clear();

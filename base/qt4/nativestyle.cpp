@@ -82,7 +82,7 @@ void NativeStyle::drawFrame(const StyleFeatures &features, QPainter *painter)
     linearGrad.setColorAt(0, QColor(255, 255, 255));
     //QColor(189, 191, 196)
     painter->fillPath(backgroundPath, linearGrad);
-    QPen pen(QColor(98, 101, 108), 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    QPen pen(QColor(98, 101, 108), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     painter->setPen(pen);
     painter->drawPath(backgroundPath);
 }

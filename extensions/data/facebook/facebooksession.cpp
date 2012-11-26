@@ -119,5 +119,5 @@ void FacebookSession::onUserInfoReady(FacebookUserInfo *job)
     else
         qDebug() << Q_FUNC_INFO << "Failed converating data";
 
-    delete job;
+    delete user;
 }

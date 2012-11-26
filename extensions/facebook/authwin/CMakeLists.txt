@@ -37,6 +37,7 @@ SET(libs
     ${OPENGL_LIBRARIES}
     ${QT_QTCORE_LIBRARY}
     ${QT_QTOPENGL_LIBRARY}
+    qimageblitz
     )
 
 ADD_LIBRARY(plexyauth SHARED ${sourceFiles} ${QT_MOC_SRCS})

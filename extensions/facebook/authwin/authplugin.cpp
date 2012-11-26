@@ -108,6 +108,7 @@ void AuthPlugin::onDataUpdated(const QVariantMap &map)
     if (command == "userinfo") {
         mContactUI->addContact(map);
     }
+
 }
 
 void AuthPlugin::onFacebookToken(const QString &token)

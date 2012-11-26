@@ -25,17 +25,30 @@ ContactList::ContactList(const QRectF &rect, QGraphicsObject *parent) :
 
 ContactList::~ContactList()
 {
+    qDebug() << Q_FUNC_INFO;
+    qDeleteAll(d->mContacts);
     delete d;
 }
 
-void ContactList::addContact(const QString &contactName, const QPixmap &pixmap)
+void ContactList::addContact(const QString &contactName, const QString &statusMessage, const QPixmap &pixmap)
 {
+     Q_FOREACH(ContactListItem *contact, d->mContacts) {
+         if (contact->name() != contactName)
+             continue;
+
+         contact->setName(contactName);
+         contact->setStatusMessage(statusMessage);
+         contact->setPixmap(pixmap);
+         return;
+     }
+
     ContactListItem *contact = new ContactListItem(d->mFrame);
     contact->setName(contactName);
     contact->setPixmap(pixmap);
+    contact->setStatusMessage(statusMessage);
     contact->setPos(0.0, d->mFrame->contentRect().height());
     d->mFrame->setContentRect(QRectF(0.0, boundingRect().y(),
-                                     contact->boundingRect().width(),
+                                     boundingRect().width(),
                                      d->mFrame->contentRect().height() + contact->boundingRect().height()));
     d->mContacts.append(contact);
 }
@@ -44,9 +57,8 @@ void ContactList::clear()
 {
     Q_FOREACH(ContactListItem *contact, d->mContacts) {
         contact->hide();
-        //contact->setVisible(false);
         d->mFrame->setContentRect(QRectF(0.0, boundingRect().y(),
-                                         contact->boundingRect().width(),
+                                         boundingRect().width(),
                                          d->mFrame->contentRect().height() - contact->boundingRect().height()));
     }
 
@@ -54,10 +66,7 @@ void ContactList::clear()
 
 void ContactList::filter(const QString &filterString)
 {
-    //qDebug() << Q_FUNC_INFO << filterString;
     clear();
-
-    qDebug() << Q_FUNC_INFO << "------";
     Q_FOREACH(ContactListItem *contact, d->mContacts) {
 
         if (contact->name().toLower().contains(filterString)) {
@@ -77,11 +86,10 @@ void ContactList::filter(const QString &filterString)
             contact->show();
 
             d->mFrame->setContentRect(QRectF(0.0, boundingRect().y(),
-                                             contact->boundingRect().width(),
+                                             boundingRect().width(),
                                              frameHeight));
             qDebug() << Q_FUNC_INFO << contact->pos() << ":" << contact->isVisible() << ":" << contact->boundingRect();
             qDebug() << Q_FUNC_INFO << d->mFrame->contentRect();
         }
     }
-    qDebug() << Q_FUNC_INFO << "+++";
 }
