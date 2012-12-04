@@ -23,6 +23,8 @@ public:
 
     virtual QRectF boundingRect() const;
 
+    virtual void setSize (const QSizeF &size);
+
 Q_SIGNALS:
     void clicked();
     void text(const QString &text);

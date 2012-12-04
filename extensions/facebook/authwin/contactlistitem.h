@@ -2,8 +2,10 @@
 #define CONTACTLISTITEM_H
 
 #include <QGraphicsObject>
+#include <QGraphicsSceneMouseEvent>
 #include <plexy.h>
 #include <style.h>
+
 
 class ContactListItem : public QGraphicsObject
 {
@@ -15,9 +17,17 @@ public:
     virtual QRectF boundingRect() const;
     void setName(const QString &name);
     void setStatusMessage(const QString &status);
+    void setID(const QString &id);
     QString name() const;
+    QString id();
     QString statusMessage() const;
     void setPixmap(const QPixmap &pixmap);
+
+Q_SIGNALS:
+    void clicked(ContactListItem *item);
+
+public Q_SLOTS:
+    void onClicked();
 
 protected:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);

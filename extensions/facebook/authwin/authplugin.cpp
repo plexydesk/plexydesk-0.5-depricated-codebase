@@ -18,19 +18,23 @@
 *******************************************************************************/
 
 #include "authplugin.h"
+#include "facebookcontactcard.h"
 #include <qwebviewitem.h>
 
 AuthPlugin::AuthPlugin(QObject *object) : PlexyDesk::ControllerInterface (object)
 {
      mWidget = new PlexyDesk::AuthWidget(QRectF(0, 0, 480, 320));
      mWidget->setController(this);
-     mWidget->setVisible(false);
+     mWidget->setVisible(true);
 
      connect(mWidget, SIGNAL(facebookToken(QString)), this, SLOT(onFacebookToken(QString)));
+
 
      mContactUI = new FacebookContactUI(QRectF(0.0, 0.0, 488.0, 320.0));
      mContactUI->setController(this);
      mContactUI->setVisible(true);
+
+     connect(mContactUI, SIGNAL(addContactCard(QString)), this, SLOT(onAddContactCard(QString)));
 
      if (connectToDataSource("facebookengine")) {
          connect(dataSource(), SIGNAL(sourceUpdated(QVariantMap)), this, SLOT(onDataUpdated(QVariantMap)));
@@ -50,6 +54,7 @@ PlexyDesk::AbstractDesktopWidget *AuthPlugin::defaultView()
 
 void AuthPlugin::revokeSession(const QVariantMap &args)
 {
+    qDebug() << Q_FUNC_INFO << args;
     QString token = args["access_token"].toString();
 
     if (token.isNull() || token.isEmpty()) {
@@ -63,6 +68,7 @@ void AuthPlugin::revokeSession(const QVariantMap &args)
     QVariant arg;
     request["command"] = QVariant("friends");
     request["token"] = args["access_token"];
+    mToken = token;
     arg = request;
 
     if (fbSource)
@@ -80,11 +86,13 @@ void AuthPlugin::setViewRect(const QRectF &rect)
 
 void AuthPlugin::firstRun()
 {
+    qDebug() << Q_FUNC_INFO ;
     requestFacebookSession();
 }
 
 void AuthPlugin::onDataUpdated(const QVariantMap &map)
 {
+    qDebug() << Q_FUNC_INFO ;
     QString command = map["command"].toString();
 
     if (command == "login") {
@@ -119,13 +127,24 @@ void AuthPlugin::onFacebookToken(const QString &token)
     request["command"] = QVariant("friends");
     request["token"] = token;
     arg = request;
+    mToken = token;
 
     if (fbSource)
         fbSource->setArguments(arg);
 }
 
+void AuthPlugin::onAddContactCard(const QString &id)
+{
+    qDebug() << Q_FUNC_INFO << id;
+    FacebookContactCard *contactCard = new FacebookContactCard(QRectF(0.0, 0.0, 320, 480), 0);
+    contactCard->setPos(50, 50);
+    contactCard->setDataSource(id, mToken, dataSource());
+    Q_EMIT spawnView(contactCard);
+}
+
 void AuthPlugin::requestFacebookSession()
 {
+    qDebug() << Q_FUNC_INFO ;
     PlexyDesk::DataSource *fbSource = dataSource();
 
     QVariantMap request;

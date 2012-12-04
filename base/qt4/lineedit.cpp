@@ -29,6 +29,7 @@ public:
     QString mText;
     int mLastKey;
     int mKeyCursorLeftLoc;
+    QSizeF mSize;
 };
 
 LineEdit::LineEdit(QGraphicsObject *parent) :
@@ -63,7 +64,13 @@ void LineEdit::setStyle(Style *style)
 
 QRectF LineEdit::boundingRect() const
 {
-    return QRectF(0.0, 0.0, 362, 30);
+    return QRectF(0.0, 0.0, d->mSize.width(), d->mSize.height());
+}
+
+void LineEdit::setSize(const QSizeF &size)
+{
+    d->mSize = size;
+    update();
 }
 
 void LineEdit::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

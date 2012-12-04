@@ -4,6 +4,8 @@
 #include <plexy.h>
 #include <desktopwidget.h>
 
+#include "facebookcontactcard.h"
+
 class FacebookContactUI : public PlexyDesk::DesktopWidget
 {
     Q_OBJECT
@@ -12,7 +14,14 @@ public:
     virtual ~FacebookContactUI();
 
     void setFacebookContactData(QHash<QString, QVariant> data);
+
     void addContact(const QVariantMap &data);
+
+Q_SIGNALS:
+    void addContactCard(QString);
+
+public Q_SLOTS:
+    void onViewClicked(QString);
 
 private:
     class PrivateFacebookContactUI;

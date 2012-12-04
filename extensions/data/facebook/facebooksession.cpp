@@ -75,6 +75,30 @@ void FacebookSession::setArguments(QVariant &args)
 
         connect(reply, SIGNAL(finished()), this, SLOT(onFriendListReady()));
     }
+
+    if (command == "user") {
+        QString key = param["token"].toString();
+
+        if (key.isEmpty() || key.isNull())  {
+            //Notify the client about the missing key.
+            QVariantMap response;
+            response["command"] = QVariant("login");
+            response["token"] = QVariant("");
+            d->data = response;
+            qDebug() << Q_FUNC_INFO << "No key found";
+            Q_EMIT sourceUpdated(response);
+            return;
+        }
+
+        QString id = param["id"].toString();
+
+        //picture.type(small) | picture.type(large);
+        QUrl url (QString("https://graph.facebook.com/%1/?fields=cover,first_name,last_name,picture,picture.type(normal)&limit=1&access_token=%2").arg(id, key));
+        QNetworkReply *reply = d->manager->get(QNetworkRequest(url));
+
+        connect(reply, SIGNAL(finished()), this, SLOT(onContactInfoReady()));
+    }
+
 }
 
 void FacebookSession::onFriendListReady()
@@ -121,3 +145,34 @@ void FacebookSession::onUserInfoReady(FacebookUserInfo *job)
 
     delete user;
 }
+
+void FacebookSession::onContactInfoReady()
+{
+    if (sender()) {
+        QNetworkReply *reply = qobject_cast<QNetworkReply*> (sender());
+
+        if (reply) {
+            QString data = reply->readAll();
+            Json::Value root;
+            Json::Reader jsonReader;
+
+            bool parsingSuccessful = jsonReader.parse(data.toStdString(), root);
+
+            if (parsingSuccessful) {
+
+                QVariantMap response;
+                response["command"] = QVariant("userdata");
+                response["token"] = d->mToken;
+                response["first_name"] = root["first_name"].asCString();
+                response["last_name"] = root["last_name"].asCString();
+                response["id"] = root["id"].asCString();
+                response["picture"] = root["picture"]["data"]["url"].asCString();
+                response["cover"] = root["cover"]["source"].asCString();
+
+
+                Q_EMIT sourceUpdated(response);
+            }
+        }
+    }
+}
+

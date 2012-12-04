@@ -2,19 +2,25 @@
 #include <nativestyle.h>
 #include <QStyleOptionGraphicsItem>
 #include <blitz/qimageblitz.h>
+#include <QDebug>
+
+#include <button.h>
 
 class ContactListItem::PrivateContactListItem {
 public:
     PrivateContactListItem() {}
     ~PrivateContactListItem() {}
 
-    QImage genShadowImage(const QRect &rect, const QPainterPath &path, const QPixmap &pixmap);
+    QPixmap genShadowImage(const QRect &rect, const QPainterPath &path, const QPixmap &pixmap);
 
     PlexyDesk::Style *mStyle;
     QString mName;
     QString mStatusMessage;
     QPixmap mPixmap;
+    QString mID;
+    QPixmap mAvatar;
 
+    PlexyDesk::Button *mButton;
 };
 
 ContactListItem::ContactListItem(QGraphicsObject *parent) :
@@ -22,6 +28,16 @@ ContactListItem::ContactListItem(QGraphicsObject *parent) :
     d(new PrivateContactListItem)
 {
     d->mStyle = new PlexyDesk::NativeStyle(this);
+    d->mButton = new PlexyDesk::Button(this);
+    d->mButton->setLabel(tr("Add"));
+    d->mButton->setPos((boundingRect().width() - d->mButton->boundingRect().width()) - 10,
+                       (boundingRect().height() / 2) - (d->mButton->boundingRect().height() / 2) );
+    d->mButton->show();
+
+    d->mButton->setCacheMode(QGraphicsItem::ItemCoordinateCache);
+
+    connect (d->mButton, SIGNAL(clicked()), this, SLOT(onClicked()));
+    setCacheMode(QGraphicsItem::DeviceCoordinateCache);
 }
 
 ContactListItem::~ContactListItem()
@@ -46,9 +62,19 @@ void ContactListItem::setStatusMessage(const QString &status)
     update();
 }
 
+void ContactListItem::setID(const QString &id)
+{
+    d->mID = id;
+}
+
 QString ContactListItem::name() const
 {
     return d->mName;
+}
+
+QString ContactListItem::id()
+{
+    return d->mID;
 }
 
 QString ContactListItem::statusMessage() const
@@ -69,14 +95,7 @@ void ContactListItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     feature.state = PlexyDesk::StyleFeatures::SF_FrontView;
 
     d->mStyle->paintControlElement(PlexyDesk::Style::CE_Frame, feature, painter);
-
-    painter->setRenderHint(QPainter::Antialiasing, true);
-    painter->setRenderHint(QPainter::TextAntialiasing, true);
-    painter->setRenderHint(QPainter::HighQualityAntialiasing, true);
     QPen pen(QColor(0, 0, 0), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
-
-//    feature.exposeRect = QRectF(4.0,0.0, option->exposedRect.width(), 1.0);
-//    d->mStyle->paintControlElement(PlexyDesk::Style::CE_Seperator, feature, painter);
 
     QPainterPath shadowPath;
     float offset = 8.0;
@@ -85,9 +104,12 @@ void ContactListItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     float avatarHeight = (option->exposedRect.height() -  (2 * offset));
     float avatarWidth = avatarHeight;
 
+    if (d->mAvatar.isNull()) {
+        d->mAvatar = d->genShadowImage(QRect(0, 0, avatarWidth, avatarHeight), shadowPath, d->mPixmap);
+    }
+
     shadowPath.addRoundedRect(QRectF (0.0, 0.0, avatarWidth , avatarHeight), radius, radius);
-    painter->drawImage(QRectF(offset, offset, avatarWidth,  avatarHeight),
-                       d->genShadowImage(QRect(0, 0, avatarWidth, avatarHeight), shadowPath, d->mPixmap));
+    painter->drawPixmap(QRect(offset, offset, avatarWidth,  avatarHeight), d->mAvatar);
 
     QFont font = QFont("", 16);
     QFontMetrics matrix (font);
@@ -119,12 +141,14 @@ void ContactListItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void ContactListItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    qDebug() << Q_FUNC_INFO ;
+    event->accept();
+    Q_EMIT clicked(this);
 }
 
-
-QImage ContactListItem::PrivateContactListItem::genShadowImage(const QRect &rect, const QPainterPath &path, const QPixmap &pixmap)
+QPixmap ContactListItem::PrivateContactListItem::genShadowImage(const QRect &rect, const QPainterPath &path, const QPixmap &pixmap)
 {
-    QImage canvasSource (rect.size(), QImage::Format_ARGB32_Premultiplied);
+    QPixmap canvasSource (rect.size());
 
     QPainter painter;
     painter.begin(&canvasSource);
@@ -148,6 +172,11 @@ QImage ContactListItem::PrivateContactListItem::genShadowImage(const QRect &rect
     painter.drawEllipse(1, - (rect.height() / 2), rect.width() * 2, (rect.height()) - 2);
     painter.end();
 
-    //return Blitz::gaussianBlur(canvasSource, 1, 1);
     return canvasSource;
+}
+
+
+void ContactListItem::onClicked()
+{
+    Q_EMIT clicked (this);
 }

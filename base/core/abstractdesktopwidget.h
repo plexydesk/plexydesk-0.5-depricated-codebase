@@ -94,6 +94,7 @@ public :
     // TODO: move these out from here
     void setEditMode(const bool &mode);
     bool editMode() const;
+    void setState(State s);
 
 Q_SIGNALS:
     void closed();
@@ -110,8 +111,6 @@ protected:
 
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
-
-    void setState(State s);
 private:
     class PrivateAbstractDesktopWidget;
     PrivateAbstractDesktopWidget *const d;

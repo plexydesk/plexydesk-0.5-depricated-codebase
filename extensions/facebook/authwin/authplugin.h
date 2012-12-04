@@ -26,12 +26,14 @@ public:
 public Q_SLOTS:
     void onDataUpdated(const QVariantMap &map);
     void onFacebookToken(const QString &token);
+    void onAddContactCard(const QString &id);
 
 protected:
     void requestFacebookSession();
 private:
     PlexyDesk::AuthWidget *mWidget;
     FacebookContactUI *mContactUI;
+    QString mToken;
 };
 
 #endif

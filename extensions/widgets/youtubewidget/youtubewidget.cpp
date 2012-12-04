@@ -52,6 +52,7 @@ YouTubeWidget::YouTubeWidget(const QRectF &rect) :
 
     mLineEdit = new PlexyDesk::LineEdit(this);
     mLineEdit->show();
+    mLineEdit->setSize(QSizeF(rect.width() - mSearchButton->boundingRect().width(), 30));
     mLineEdit->setPos(10 , rect.height() - 40);
 
 }

@@ -36,6 +36,7 @@ ScrollWidget::ScrollWidget(const QRectF &rect, QGraphicsObject *parent)
     : DesktopWidget(rect,parent), d (new Private)
 {
     d->mChildItem = 0;
+    setCacheMode(QGraphicsItem::ItemCoordinateCache);
 }
 
 ScrollWidget::~ScrollWidget()
@@ -67,7 +68,6 @@ void ScrollWidget::scrollBy(int x, int y)
 {
     if (d->mChildItem) {
         //resetric to viewport
-        qDebug() << Q_FUNC_INFO << d->mChildItem->boundingRect();
         int y_pos = d->mChildItem->y() + y;
         int view_height = this->boundingRect().height();
         int y_max = (-1) * (d->mChildItem->boundingRect().height() - view_height);

@@ -20,6 +20,7 @@ public Q_SLOTS:
     void setArguments(QVariant &args);
     void onFriendListReady();
     void onUserInfoReady(FacebookUserInfo *job);
+    void onContactInfoReady();
 
 private:
     class Private;

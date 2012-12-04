@@ -122,7 +122,6 @@ void FacebookUserInfo::onStatusMessageReady()
 
         if (reply) {
             QString data = reply->readAll() ;
-            //qDebug() << Q_FUNC_INFO << data << endl;
             Json::Value root;
             Json::Reader jsonReader;
 

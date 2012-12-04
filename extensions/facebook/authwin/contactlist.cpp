@@ -30,7 +30,7 @@ ContactList::~ContactList()
     delete d;
 }
 
-void ContactList::addContact(const QString &contactName, const QString &statusMessage, const QPixmap &pixmap)
+void ContactList::addContact(const QString &id, const QString &contactName, const QString &statusMessage, const QPixmap &pixmap)
 {
      Q_FOREACH(ContactListItem *contact, d->mContacts) {
          if (contact->name() != contactName)
@@ -46,11 +46,14 @@ void ContactList::addContact(const QString &contactName, const QString &statusMe
     contact->setName(contactName);
     contact->setPixmap(pixmap);
     contact->setStatusMessage(statusMessage);
+    contact->setID(id);
     contact->setPos(0.0, d->mFrame->contentRect().height());
     d->mFrame->setContentRect(QRectF(0.0, boundingRect().y(),
                                      boundingRect().width(),
                                      d->mFrame->contentRect().height() + contact->boundingRect().height()));
     d->mContacts.append(contact);
+
+    connect (contact, SIGNAL(clicked(ContactListItem*)), this, SLOT(onItemClicked(ContactListItem*)));
 }
 
 void ContactList::clear()
@@ -92,4 +95,10 @@ void ContactList::filter(const QString &filterString)
             qDebug() << Q_FUNC_INFO << d->mFrame->contentRect();
         }
     }
+}
+
+void ContactList::onItemClicked(ContactListItem *item)
+{
+    qDebug() << Q_FUNC_INFO << item->id();
+    Q_EMIT clicked(item->id());
 }

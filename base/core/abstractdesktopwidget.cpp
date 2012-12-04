@@ -238,6 +238,7 @@ AbstractDesktopWidget::State AbstractDesktopWidget::state()
 void AbstractDesktopWidget::setState(AbstractDesktopWidget::State s)
 {
     d->mWidgetState = s;
+    show();
     Q_EMIT stateChanged();
 }
 

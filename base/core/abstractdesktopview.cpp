@@ -102,8 +102,8 @@ AbstractDesktopView::AbstractDesktopView(QGraphicsScene *scene, QWidget *parent)
     d->mSessionTree->appendChild(d->mRootElement);
 
     setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
-    setOptimizationFlag(QGraphicsView::DontAdjustForAntialiasing);
-    setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
+    //setOptimizationFlag(QGraphicsView::DontAdjustForAntialiasing);
+    //setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
     setFrameStyle(QFrame::NoFrame);
 }
 
@@ -119,8 +119,6 @@ void AbstractDesktopView::enableOpenGL(bool state)
         setViewport(new QGLWidget(QGLFormat(
                         QGL::DoubleBuffer )));
         setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
-        setOptimizationFlag(QGraphicsView::DontAdjustForAntialiasing);
-        setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
     } else {
         setViewport(new QWidget);
         setCacheMode(QGraphicsView::CacheNone);

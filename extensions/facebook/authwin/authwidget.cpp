@@ -59,6 +59,7 @@ void AuthWidget::createAuthDialog()
     connect(mView, SIGNAL(loadStarted()), this, SLOT(onLoadStarted()));
     connect(mView, SIGNAL(urlChanged(const QUrl &)), this, SLOT(onUrlChanged(const QUrl &)));
     if (token.isEmpty()) {
+        qDebug() << "Show UI";
         mView->setUrl(QUrl(QLatin1String("https://graph.facebook.com/oauth/authorize?client_" \
                      "id=170356722999159&redirect_uri=http://www.facebook.com/connect" \
                      "/login_success.html&type=user_agent&display=popup&scope=manage_pages,read_stream&response_type=token")));

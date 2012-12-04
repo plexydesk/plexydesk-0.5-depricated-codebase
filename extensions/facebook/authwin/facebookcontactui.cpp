@@ -28,15 +28,14 @@ FacebookContactUI::FacebookContactUI(const QRectF &rect) :
     d->mScrollView->enableShadow(false);
 
     d->mSearchBox = new PlexyDesk::LineEdit(this);
+    d->mSearchBox->setSize (QSizeF(rect.width() - 80, 32));
     d->mSearchBox->show();
     d->mSearchBox->setPos(24 , rect.height() - 48);
 
-    d->mSearchButton = new PlexyDesk::Button(this);
-    d->mSearchButton->show();
-    d->mSearchButton->setLabel(tr("Search"));
-    d->mSearchButton->setPos(d->mSearchBox->boundingRect().width(), rect.height() - 48);
-
     connect(d->mSearchBox, SIGNAL(text(QString)), d->mScrollView, SLOT(filter(QString)));
+    connect(d->mScrollView, SIGNAL(clicked(QString)), this, SLOT(onViewClicked(QString)));
+
+    setCacheMode(QGraphicsItem::ItemCoordinateCache);
 }
 
 FacebookContactUI::~FacebookContactUI()
@@ -50,11 +49,17 @@ void FacebookContactUI::setFacebookContactData(QHash<QString, QVariant> data)
    d->mData = data;
 
    Q_FOREACH(const QString &name, data.keys()) {
-       d->mScrollView->addContact(name);
+      // d->mScrollView->addContact(name);
    }
 }
 
 void FacebookContactUI::addContact(const QVariantMap &data)
 {
-    d->mScrollView->addContact(data["name"].toString(), data["message"].toString(), data["picture"].value<QPixmap>());
+    d->mScrollView->addContact(data["id"].toString(), data["name"].toString(), data["message"].toString(), data["picture"].value<QPixmap>());
+}
+
+void FacebookContactUI::onViewClicked(QString id)
+{
+    qDebug() << Q_FUNC_INFO << id;
+    Q_EMIT addContactCard(id);
 }

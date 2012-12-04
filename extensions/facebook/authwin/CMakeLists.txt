@@ -5,6 +5,7 @@ SET(sourceFiles
     facebookcontactui.cpp
     contactlist.cpp
     contactlistitem.cpp
+    facebookcontactcard.cpp
     )
 
 SET(headerFiles
@@ -14,6 +15,7 @@ SET(headerFiles
     facebookcontactui.h
     contactlist.h
     contactlistitem.h
+    facebookcontactcard.h
 )
 
 SET(QTMOC_SRCS
@@ -23,6 +25,7 @@ SET(QTMOC_SRCS
     facebookcontactui.h
     contactlist.h
     contactlistitem.h
+    facebookcontactcard.h
 )
 
 QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})

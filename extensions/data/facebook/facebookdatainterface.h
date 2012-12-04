@@ -10,12 +10,11 @@ class FacebookDataInterface : public PlexyDesk::DataPluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::DataPluginInterface)
+
 public:
     explicit FacebookDataInterface(QObject *parent = 0);
 
     QSharedPointer<PlexyDesk::DataSource> model();
-
-
 };
 
 #endif // FACEBOOKDATAINTERFACE_H
