@@ -49,7 +49,7 @@ void AuthWidget::createAuthDialog()
     mNtManager = new QNetworkAccessManager(this);
     mCookie = new QNetworkCookieJar(this);
     mNtManager->setCookieJar(mCookie);
-    QRect webrect = QRect(10.0, 10.0, boundingRect().width()-65, boundingRect().height()-8);
+    QRect webrect = QRect(10,0.0, boundingRect().width(), boundingRect().height() + 100);
     mView = new QWebViewItem(webrect, this);
     if (mView->page()) {
         mView->page()->setNetworkAccessManager(mNtManager);
@@ -62,7 +62,7 @@ void AuthWidget::createAuthDialog()
         qDebug() << "Show UI";
         mView->setUrl(QUrl(QLatin1String("https://graph.facebook.com/oauth/authorize?client_" \
                      "id=170356722999159&redirect_uri=http://www.facebook.com/connect" \
-                     "/login_success.html&type=user_agent&display=popup&scope=manage_pages,read_stream&response_type=token")));
+                     "/login_success.html&type=user_agent&scope=read_stream,friends_location,friends_hometown&display=touch&response_type=token")));
     } else {
         this->setVisible(false);
         QNetworkRequest request;
@@ -186,12 +186,18 @@ void AuthWidget::onLoadeFinished(bool ok)
     } else {
         mView->setUrl(QUrl(QLatin1String("https://graph.facebook.com/oauth/authorize?client_" \
                      "id=170356722999159&redirect_uri=http://www.facebook.com/connect" \
-                     "/login_success.html&type=user_agent&display=popup")));
+                     "/login_success.html&type=user_agent&display=touch")));
         mLoggedIn = false;
         update();
         mView->setVisible(true);
 
     }
+
+    QRectF rect = QRectF(contentRect().x(), contentRect().y(), mView->page()->viewportSize().width(),
+                         mView->page()->viewportSize().height());
+    qDebug() << Q_FUNC_INFO << rect;
+    mView->setRect(rect);
+    setContentRect(rect);
     mProgressValue = 10;
 }
 
@@ -245,11 +251,10 @@ void AuthWidget::onReadyRead()
     JsonData result = mJsonHandle->property(mReply->readAll(), "data");
     if (result.type() == JsonData::Error) {
         this->setVisible(true);
-        configState(AbstractDesktopWidget::VIEW);
         mView->setVisible(false);
         mView->setUrl(QUrl(QLatin1String("https://graph.facebook.com/oauth/authorize?client_" \
                      "id=170356722999159&redirect_uri=http://www.facebook.com/connect" \
-                     "/login_success.html&type=user_agent&display=popup")));
+                     "/login_success.html&type=user_agent&display=touch")));
 
     }
 }

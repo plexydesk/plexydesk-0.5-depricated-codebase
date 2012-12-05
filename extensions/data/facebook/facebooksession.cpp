@@ -93,7 +93,7 @@ void FacebookSession::setArguments(QVariant &args)
         QString id = param["id"].toString();
 
         //picture.type(small) | picture.type(large);
-        QUrl url (QString("https://graph.facebook.com/%1/?fields=cover,first_name,last_name,picture,picture.type(normal)&limit=1&access_token=%2").arg(id, key));
+        QUrl url (QString("https://graph.facebook.com/%1/?fields=cover,hometown,location,first_name,last_name,picture,picture.type(normal)&limit=1&access_token=%2").arg(id, key));
         QNetworkReply *reply = d->manager->get(QNetworkRequest(url));
 
         connect(reply, SIGNAL(finished()), this, SLOT(onContactInfoReady()));
@@ -158,6 +158,7 @@ void FacebookSession::onContactInfoReady()
 
             bool parsingSuccessful = jsonReader.parse(data.toStdString(), root);
 
+            qDebug() << Q_FUNC_INFO << data;
             if (parsingSuccessful) {
 
                 QVariantMap response;
@@ -166,6 +167,8 @@ void FacebookSession::onContactInfoReady()
                 response["first_name"] = root["first_name"].asCString();
                 response["last_name"] = root["last_name"].asCString();
                 response["id"] = root["id"].asCString();
+                response["hometown"] = root["hometown"]["name"].asCString();
+                response["location"] = root["location"]["name"].asCString();
                 response["picture"] = root["picture"]["data"]["url"].asCString();
                 response["cover"] = root["cover"]["source"].asCString();
 

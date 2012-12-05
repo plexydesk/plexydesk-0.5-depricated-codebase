@@ -86,7 +86,6 @@ public:
 QWebViewItem::QWebViewItem(const QRectF &rect, QGraphicsItem *parent)
     : QGraphicsRectItem(rect, parent)
 {
-    qDebug() << Q_FUNC_INFO << rect;
     d = new QWebViewItemPrivate(this);
     d->opacity = 1.0;
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
