@@ -246,7 +246,9 @@ IF(WIN32)
 ENDIF(WIN32)
 
 # *** ALL PLATFORMS ***
+IF (APPLE)
 ADD_SUBDIRECTORY(3rdparty/qimageblitz)
+ENDIF (APPLE)
 ADD_SUBDIRECTORY(3rdparty/mime)
 ADD_SUBDIRECTORY(3rdparty/json-cpp/)
 ADD_SUBDIRECTORY(3rdparty/qplexymime)

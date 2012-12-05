@@ -30,6 +30,12 @@ SET(QTMOC_SRCS
 
 QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})
 
+if (QIMAGE_BLITZ_FOUND)
+   INCLUDE_DIRECTORIES(${QIMAGE_BLITZ_INCLUDE_DIR}/qimageblitz/)
+   message (${QIMAGE_BLITZ_INCLUDE_DIR})
+   set(optional_libs ${QIMAGE_BLITZ_LIBRARY})
+ENDIF (QIMAGE_BLITZ_FOUND)
+
 SET(sourceFiles
     ${sourceFiles}
     ${headerFiles}
@@ -41,6 +47,7 @@ SET(libs
     ${QT_QTCORE_LIBRARY}
     ${QT_QTOPENGL_LIBRARY}
     qimageblitz
+    ${optional_libs}
     )
 
 ADD_LIBRARY(plexyauth SHARED ${sourceFiles} ${QT_MOC_SRCS})
