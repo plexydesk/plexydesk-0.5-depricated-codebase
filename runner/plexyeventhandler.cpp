@@ -20,17 +20,17 @@
 #include <QDebug>
 #include <QApplication>
 
-#include "desktopview.h"
+//#include "desktopview.h"
 #include "plexyeventhandler.h"
 
 #ifdef Q_WS_WIN
 // Keep that if we want other native direct manipulations on Windows
-//#include <windows.h>
+#include <windows.h>
 #endif
 
 bool PlexyEventHandler::eventFilter(QObject *obj, QEvent *event)
 {
-    DesktopView *mainwidget = qobject_cast<DesktopView *>(obj);
+    //DesktopView *mainwidget = qobject_cast<DesktopView *>(obj);
 
 /*
     QApplication *qapplication = qobject_cast<QApplication *>(obj);
@@ -43,7 +43,7 @@ bool PlexyEventHandler::eventFilter(QObject *obj, QEvent *event)
            qDebug()<< obj->objectName() << "...." << event->type();
     }
 */
-
+/*
     if (event->type() == QEvent::WindowActivate) {
         if (mainwidget != 0){
 #ifdef Q_WS_WIN
@@ -68,6 +68,6 @@ bool PlexyEventHandler::eventFilter(QObject *obj, QEvent *event)
         return true;
     }
 
-
+*/
     return QObject::eventFilter(obj, event);
 }

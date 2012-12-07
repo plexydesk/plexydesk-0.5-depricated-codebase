@@ -7,10 +7,12 @@
 #include <abstractdesktopwidget.h>
 #include <abstractdesktopview.h>
 
+#include "plexydeskuicore_global.h"
+
 namespace PlexyDesk
 {
 
-class PLEXYDESK_EXPORT ThemepackLoader : public QObject
+class PLEXYDESKUICORE_EXPORT ThemepackLoader : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString themeName READ QString WRITE setThemeName)

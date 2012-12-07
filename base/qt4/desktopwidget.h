@@ -7,9 +7,11 @@
 
 #include <style.h>
 
+#include "plexydeskuicore_global.h"
+
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT DesktopWidget : public AbstractDesktopWidget
+class PLEXYDESKUICORE_EXPORT DesktopWidget : public AbstractDesktopWidget
 {
     Q_OBJECT
 

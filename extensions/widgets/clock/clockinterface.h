@@ -26,7 +26,7 @@
 #include <controllerinterface.h>
 #include <controllerplugininterface.h>
 
-class ClockInterface : public PlexyDesk::ControllerPluginInterface
+class ClockInterface : public QObject, public PlexyDesk::ControllerPluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::ControllerPluginInterface)

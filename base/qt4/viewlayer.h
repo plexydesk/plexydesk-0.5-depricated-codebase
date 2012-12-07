@@ -6,9 +6,11 @@
 #include <abstractdesktopwidget.h>
 #include <plexy.h>
 
+#include "plexydeskuicore_global.h"
+
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT ViewLayer : public QObject
+class PLEXYDESKUICORE_EXPORT ViewLayer : public QObject
 {
     Q_OBJECT
 public:

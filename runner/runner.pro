@@ -1,10 +1,3 @@
-top_srcdir  = ..
-srcdir      = runner
-
-! include( ../common.pri ) {
-    error( Couldn\'t find the common.pri file! )
-}
-
 TEMPLATE = app
 
 QT += core gui opengl declarative network xml xmlpatterns
@@ -12,28 +5,26 @@ QT += core gui opengl declarative network xml xmlpatterns
 # TODO:
 #RC_FILE = $$top_srcdir/dist/windows/plexydesk.rc
 
-DESTDIR = $${top_destdirbin}
+DESTDIR = $${OUT_PWD}/../build/bin
+win32:!wince*:DLLDESTDIR = $${OUT_PWD}/../../build/bin
 
-INCLUDEPATH += $${top_srcdir}/base/qt4 $${top_srcdir}/base/qt4/shaders $${top_srcdir}/3rdparty/qplexymime
+INCLUDEPATH += $${OUT_PWD}/.. ../base/qt4 ../base/qt4/shaders ../3rdparty/qplexymime \
+    ../base/core
 
-SOURCES += desktopbaseui.cpp \
-           desktopview.cpp \
-           icon.cpp \
-           iconjob.cpp \
-           iconprovider.cpp \
-           main.cpp \
-           plexyeventhandler.cpp \
-           plexypanel.cpp \
-           plexytray.cpp
+SOURCES += plexypanel.cpp \
+    plexyeventhandler.cpp \
+    main.cpp \
+    iconprovider.cpp \
+    iconjob.cpp \
+    icon.cpp \
+    desktopbaseui.cpp
 
-HEADERS += desktopbaseui.h \
-           desktopview.h \
-           icon.h \
-           iconjob.h \
-           iconprovider.h \
-           plexyeventhandler.h \
-           plexypanel.h \
-           plexytray.h
+HEADERS += plexypanel.h \
+    plexyeventhandler.h \
+    iconprovider.h \
+    iconjob.h \
+    icon.h \
+    desktopbaseui.h
 
 unix:!macx {
     SOURCES += plexywindow.cpp
@@ -42,9 +33,7 @@ unix:!macx {
             XAtoms.h
 }
 
-LIBS += -lplexymime -lplexyshaders -lplexydeskcore
+LIBS += -L./../build/lib -lplexymime -lplexyshaders -lplexydeskcore -lplexydeskuicore
 
 TARGET = plexydesk
 
-target.path = $${top_destdirbin}
-INSTALLS += target

@@ -6,7 +6,7 @@
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT AbstractSource : public QObject
+class PLEXYDESKCORE_EXPORT AbstractSource : public QObject
 {
     Q_OBJECT
 

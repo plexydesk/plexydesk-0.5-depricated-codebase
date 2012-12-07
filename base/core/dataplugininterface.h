@@ -9,12 +9,11 @@
 #include <datasource.h>
 
 namespace PlexyDesk {
-class DataPluginInterface : public QObject
+class DataPluginInterface
 {
-    Q_OBJECT
-
 public:
-    DataPluginInterface(QObject *parent = 0);
+    DataPluginInterface() {};
+    virtual ~DataPluginInterface() {}
     virtual QSharedPointer<DataSource> model() = 0;
 };
 

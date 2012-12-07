@@ -25,7 +25,7 @@
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT SocialInterface : public QObject, public AbstractPluginInterface
+class PLEXYDESKUICORE_EXPORT SocialInterface : public QObject, public AbstractPluginInterface
 {
     Q_OBJECT
 public:

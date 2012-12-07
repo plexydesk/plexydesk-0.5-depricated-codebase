@@ -46,7 +46,7 @@ void Button::setLabel(const QString &txt)
     d->mLabel = txt;
 }
 
-void Button::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void Button::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget * /*widget*/)
 {
     switch(d->mState) {
        case PrivateButton::NORMAL: d->paintNormalButton(painter, option) ; break;
@@ -56,13 +56,13 @@ void Button::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
     }
 }
 
-void Button::mousePressEvent(QGraphicsSceneMouseEvent *event)
+void Button::mousePressEvent(QGraphicsSceneMouseEvent * /*event*/)
 {
     d->mState = PrivateButton::PRESS;
     update();
 }
 
-void Button::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+void Button::mouseReleaseEvent(QGraphicsSceneMouseEvent * /*event*/)
 {
     d->mState = PrivateButton::NORMAL;
     update();
@@ -104,13 +104,13 @@ QRectF Button::boundingRect() const
     return QRectF(0.0, 0.0, 100, 30);
 }
 
-void Button::setIcon(const QImage &img)
+void Button::setIcon(const QImage & /*img*/)
 {
 }
 
 QString Button::label() const
 {
-    d->mLabel;
+    return d->mLabel;
 }
 
 }

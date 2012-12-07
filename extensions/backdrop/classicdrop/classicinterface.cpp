@@ -22,7 +22,7 @@
 
 #include <QtPlugin>
 
-ClassicBackdrop::ClassicBackdrop(QObject * parent) : PlexyDesk::ControllerPluginInterface(parent)
+ClassicBackdrop::ClassicBackdrop(QObject * /*parent*/) : PlexyDesk::ControllerPluginInterface()
 {
 }
 

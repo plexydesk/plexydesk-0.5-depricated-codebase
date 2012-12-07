@@ -30,7 +30,7 @@ namespace PlexyDesk
 
 class ControllerInterface;
 
-class PLEXYDESK_EXPORT AbstractDesktopWidget : public QGraphicsObject
+class PLEXYDESKCORE_EXPORT AbstractDesktopWidget : public QGraphicsObject
 {
     Q_OBJECT
     Q_ENUMS(State)

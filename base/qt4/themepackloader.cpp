@@ -23,8 +23,8 @@
 #include <QDir>
 #include <QRect>
 #include <QDebug>
-#include <QDomDocument>
-#include <QDomNamedNodeMap>
+#include <QtXml/QDomDocument>
+#include <QtXml/QDomNamedNodeMap>
 
 #include <plexyconfig.h>
 
@@ -330,7 +330,7 @@ QString ThemepackLoader::desktopBackgroundController() const
     return rv;
 }
 
-bool ThemepackLoader::queryMultiScreen(const QString &name)
+bool ThemepackLoader::queryMultiScreen(const QString & /*name*/)
 {
     return false;
 }

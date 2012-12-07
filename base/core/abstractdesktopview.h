@@ -27,7 +27,7 @@
 namespace PlexyDesk
 {
 
-class PLEXYDESK_EXPORT AbstractDesktopView : public QGraphicsView
+class PLEXYDESKCORE_EXPORT AbstractDesktopView : public QGraphicsView
 {
     Q_OBJECT
 

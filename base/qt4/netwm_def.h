@@ -46,6 +46,8 @@
 
 #include <plexy.h>
 
+#include "plexydeskuicore_global.h"
+
 /**
    Simple point class for NET classes.
 
@@ -255,7 +257,7 @@ struct NETStrut {
    @see http://www.freedesktop.org/standards/wm-spec/
  **/
 
-class PLEXYDESK_EXPORT NET
+class PLEXYDESKUICORE_EXPORT NET
 {
 public:
     /**

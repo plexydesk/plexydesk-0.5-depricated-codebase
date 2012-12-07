@@ -34,7 +34,7 @@ public:
 };
 
 
-QmlDesktopWidget::QmlDesktopWidget(const QRectF &rect, QWidget *widget, QGraphicsObject *parent) :
+QmlDesktopWidget::QmlDesktopWidget(const QRectF &rect, QWidget * /*widget*/, QGraphicsObject *parent) :
     DesktopWidget(rect, parent),
     d(new PrivateQmlDesktopWidget)
 {

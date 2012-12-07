@@ -24,8 +24,7 @@
 #include <abstractplugininterface.h>
 #include <controllerplugininterface.h>
 
-
-class ClassicBackdrop : public PlexyDesk::ControllerPluginInterface
+class ClassicBackdrop : public QObject, public PlexyDesk::ControllerPluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::ControllerPluginInterface)

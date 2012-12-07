@@ -1,19 +1,12 @@
-top_srcdir  = ../../..
-srcdir      = restengine
-
-!include( $$top_srcdir/common.pri ) {
-    error( Couldn\'t find the common.pri file! )
-}
-
 TEMPLATE = lib
 
 QT += core network declarative opengl
 
-LIBS += -lplexyshaders -lplexydeskcore
+LIBS += -L$${OUT_PWD}/../../../build/lib -lplexyshaders -lplexydeskcore -lplexydeskuicore
 
-DESTDIR = $$plexyext
+DESTDIR = $${OUT_PWD}/../../../build/lib/plexyext
 
-INCLUDEPATH += $$top_srcdir/base/qt4 $$top_srcdir/base/shaders
+INCLUDEPATH += $${OUT_PWD}/../../../ ../../../base/qt4 ../../../base/shaders ../../../base/core
 
 CONFIG += qt
 
@@ -26,9 +19,9 @@ HEADERS = rest.h \
 TARGET = restengine
 
 desktop_files.files = rest.desktop
-desktop_files.path = $$sharedir/plexy/ext/groups
+desktop_files.path = $${OUT_PWD}/../../../build/lib/plexy/ext/groups
 
 INSTALLS += desktop_files
 
-target.path = $$plexyext
+target.path = $${OUT_PWD}/../../../build/lib/plexyext
 INSTALLS += target

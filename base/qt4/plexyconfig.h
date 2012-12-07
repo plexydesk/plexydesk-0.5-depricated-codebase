@@ -27,9 +27,11 @@
 #include <plexy.h>
 #include <imagecache.h>
 
+#include "plexydeskuicore_global.h"
+
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT Config : public QObject
+class PLEXYDESKUICORE_EXPORT Config : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString wallpaper READ wallpaper WRITE setWallpaper NOTIFY wallpaperChanged)

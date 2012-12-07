@@ -51,6 +51,8 @@
 #include <X11/Xutil.h>
 #include <X11/Xatom.h>
 
+#include "plexydeskuicore_global.h"
+
 #include "netwm_def.h"
 
 // forward declaration
@@ -72,7 +74,7 @@ template <class Z> class NETRArray;
    @see KWin
  **/
 
-class PLEXYDESK_EXPORT NETRootInfo : public NET
+class PLEXYDESKUICORE_EXPORT NETRootInfo : public NET
 {
 public:
     /**

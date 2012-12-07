@@ -41,7 +41,7 @@ namespace PlexyDesk
 class AbstractDesktopWidget;
 class AbstractDesktopView;
 
-class PLEXYDESK_EXPORT ControllerInterface : public QObject
+class PLEXYDESKCORE_EXPORT ControllerInterface : public QObject
 {
     Q_OBJECT
 

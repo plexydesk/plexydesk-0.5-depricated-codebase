@@ -13,19 +13,19 @@ void ClassicBackgroundRender::setBackgroundImage(const QString &path)
     update();
 }
 
-void ClassicBackgroundRender::paintRotatedView(QPainter *painter, const QRectF &rect)
+void ClassicBackgroundRender::paintRotatedView(QPainter * /*painter*/, const QRectF & /*rect*/)
 {
 }
 
-void ClassicBackgroundRender::paintFrontView(QPainter *painter, const QRectF &rect)
+void ClassicBackgroundRender::paintFrontView(QPainter *painter, const QRectF & /*rect*/)
 {
     painter->drawImage(contentRect(), mBackgroundImage);
 }
 
-void ClassicBackgroundRender::paintDockView(QPainter *painter, const QRectF &rect)
+void ClassicBackgroundRender::paintDockView(QPainter * /*painter*/, const QRectF & /*rect*/)
 {
 }
 
-void ClassicBackgroundRender::paintEditMode(QPainter *painter, const QRectF &rect)
+void ClassicBackgroundRender::paintEditMode(QPainter * /*painter*/, const QRectF & /*rect*/)
 {
 }

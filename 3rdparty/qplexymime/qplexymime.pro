@@ -1,19 +1,13 @@
-top_srcdir  = ../..
-srcdir      = qplexymime
-
-! include( $${top_srcdir}/common.pri ) {
-    error( Couldn\'t find the common.pri file! )
-}
-
 TEMPLATE = lib
 
 QT += core declarative network xml xmlpatterns
 
 DEFINES += plexymime_EXPORTS
 
-INCLUDEPATH += $${top_srcdir}/base/qt4
+DESTDIR = $${OUT_PWD}/../../build/lib
+INCLUDEPATH += ../../base/qt4 ../../base/core
 
-win32:!wince*:DLLDESTDIR = $${top_destdirbin}
+win32:!wince*:DLLDESTDIR = $${OUT_PWD}/../../build/bin
 
 CONFIG += qt
 
@@ -23,15 +17,13 @@ HEADERS = qplexymime.h
 
 RESOURCES = qplexymime.qrc
 
-DESTDIR = $${top_destdirlib}
-
 TARGET = plexymime
 
-LIBS += -lplexyshaders -lplexydeskcore
+LIBS += -L./../../build/lib -lplexyshaders -lplexydeskuicore
 
 FREEDESKTOPXML = freedesktop.org.xml \
                 mimetypes
 
 freedesktop.files = $$FREEDESKTOPXML
-freedesktop.path = $${sharedir}/plexy/mime/
+freedesktop.path = $${OUT_PWD}/../../build/share/plexy/mime/
 INSTALLS += freedesktop

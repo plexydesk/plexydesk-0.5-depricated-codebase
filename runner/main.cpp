@@ -68,7 +68,9 @@ int main( int argc, char * *argv )
 #endif
 
 #ifdef Q_WS_WIN
-    loader->setPluginPrefix(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() + "/lib/plexyext/"));		
+    loader = PlexyDesk::PluginLoader::getInstanceWithPrefix(QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->plexydeskBasePath() + QLatin1String("/lib/plexy/ext/groups/")),
+        QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->plexydeskBasePath() +
+        QLatin1String("/lib/plexyext/")));
 #endif
 
 

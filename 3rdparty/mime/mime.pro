@@ -1,30 +1,24 @@
-top_srcdir  = ../..
-srcdir      = mime
-
-! include( $${top_srcdir}/common.pri ) {
-    error( Couldn\'t find the common.pri file! )
-}
-
 TEMPLATE = lib
 
 QT += core declarative network xml
 
 DEFINES += mimetype_EXPORTS
 
-INCLUDEPATH += $$top_srcdir/base/qt4
+INCLUDEPATH += ../../base/qt4 ../../base/core
 
 CONFIG += qt
 
-win32:!wince*:DLLDESTDIR = $${top_destdirbin}
+DESTDIR = $${OUT_PWD}/../../build/lib
+win32:!wince*:DLLDESTDIR = $${OUT_PWD}../../build/bin
 
 SOURCES = freedesktopmime.cpp
 
 HEADERS = freedesktopmime.h \
         mime_globals.h
 
-LIBS += -lplexyshaders -lplexydeskcore
+LIBS += -L./../../build/lib -lplexyshaders -lplexydeskcore -lplexydeskuicore
 
 TARGET = mimetype
 
-target.path = $${top_destdirlib}
+target.path = $${OUT_PWD}/../../build/lib
 INSTALLS += target

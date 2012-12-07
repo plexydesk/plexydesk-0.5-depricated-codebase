@@ -24,12 +24,13 @@
 #include <dataplugininterface.h>
 #include <QtNetwork>
 
-class RestInterface : public PlexyDesk::DataPluginInterface
+class RestInterface : public QObject, public PlexyDesk::DataPluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::DataPluginInterface)
 
 public :
+    RestInterface() {}
     virtual ~RestInterface() {}
 
     /* this will return a valid data plugin pointer*/

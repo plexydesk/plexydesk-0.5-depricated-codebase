@@ -1,17 +1,10 @@
-top_srcdir  = ../..
-srcdir      = fbjson
-
-!include( $$top_srcdir/common.pri ) {
-    error( Couldn\'t find the common.pri file! )
-}
-
 TEMPLATE = lib
 
 QT += core script
 
-DESTDIR = $$top_destdirlib
+DESTDIR = $${OUT_PWD}/../../../build/lib
 
-INCLUDEPATH += $$top_srcdir/base/qt4 $$top_srcdir/base/shaders
+INCLUDEPATH += ../../../base/qt4 ../../../base/shaders
 
 CONFIG += qt
 
@@ -23,5 +16,5 @@ HEADERS = json_global.h \
 		jsonhandler.h
 
 TARGET = plexyjson
-target.path = $$top_destdirlib
+target.path = $${OUT_PWD}/../../../build/lib
 INSTALLS += target

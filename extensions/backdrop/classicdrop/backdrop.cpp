@@ -72,14 +72,14 @@ QStringList BackgroundController::actions() const
     return actions;
 }
 
-void BackgroundController::requestAction(const QString &actionName, const QVariantMap &args)
+void BackgroundController::requestAction(const QString &actionName, const QVariantMap & /*args*/)
 {
     if (actionName == "Change Background") {
         //TODO change background
     }
 }
 
-void BackgroundController::handleDropEvent(PlexyDesk::AbstractDesktopWidget *widget, QDropEvent *event)
+void BackgroundController::handleDropEvent(PlexyDesk::AbstractDesktopWidget * /*widget*/, QDropEvent *event)
 {
     ///TODO create a New Image Browser UI
     //for now just set the pixmap picture
@@ -104,6 +104,6 @@ void BackgroundController::handleDropEvent(PlexyDesk::AbstractDesktopWidget *wid
     }
 }
 
-void BackgroundController::setViewRect(const QRectF &rect)
+void BackgroundController::setViewRect(const QRectF & /*rect*/)
 {
 }

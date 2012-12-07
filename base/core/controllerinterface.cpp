@@ -46,12 +46,12 @@ QStringList ControllerInterface::actions() const
     return QStringList();
 }
 
-void ControllerInterface::requestAction(const QString &actionName, const QVariantMap &args)
+void ControllerInterface::requestAction(const QString & /*actionName*/, const QVariantMap & /*args*/)
 {
     Q_EMIT actionComleted(false, QString("Invalid Action"));
 }
 
-void ControllerInterface::handleDropEvent(AbstractDesktopWidget *widget, QDropEvent *event)
+void ControllerInterface::handleDropEvent(AbstractDesktopWidget * /*widget*/, QDropEvent * /*event*/)
 {
 }
 

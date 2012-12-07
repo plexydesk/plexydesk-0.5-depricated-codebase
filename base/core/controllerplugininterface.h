@@ -10,13 +10,11 @@
 
 namespace PlexyDesk {
 
-class ControllerPluginInterface : public QObject
+class ControllerPluginInterface
 {
-    Q_OBJECT
-
 public:
-    ControllerPluginInterface(QObject *parent = 0);
-    ~ControllerPluginInterface();
+    ControllerPluginInterface() {}
+    virtual ~ControllerPluginInterface() {};
 
     virtual QSharedPointer<ControllerInterface> controller() = 0;
 };

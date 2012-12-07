@@ -28,12 +28,14 @@
 #include <GL/glu.h>
 #endif
 
+#include "plexydeskuicore_global.h"
+
 class QPixmap;
 class QString;
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT BaseRender : public QGLWidget
+class PLEXYDESKUICORE_EXPORT BaseRender : public QGLWidget
 {
     Q_OBJECT
 public:

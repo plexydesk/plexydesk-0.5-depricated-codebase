@@ -23,7 +23,7 @@
 
 #include <controllerplugininterface.h>
 
-class  Interface : public PlexyDesk::ControllerPluginInterface
+class  Interface : public QObject, public PlexyDesk::ControllerPluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::ControllerPluginInterface)

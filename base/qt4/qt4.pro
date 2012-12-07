@@ -1,66 +1,61 @@
-top_srcdir  = ../..
-srcdir = plexydeskcore
-
-! include( $${top_srcdir}/common.pri ) {
-    error( Couldn\'t find the common.pri file! )
-}
-
 TEMPLATE = lib
 
-QT += core gui opengl declarative network svg
+QT += core gui opengl declarative network svg xml
 
-INCLUDEPATH += $${IN_PWD}/shaders
+INCLUDEPATH += $${OUT_PWD}/../../ shaders ../core
 
-DEFINES += plexydeskcore_EXPORTS
+DEFINES += plexydeskuicore_EXPORTS
 
-win32:!wince*:DLLDESTDIR = $${top_destdirbin}
+DESTDIR = $${OUT_PWD}/../../build/lib
+win32:!wince*:DLLDESTDIR = $${OUT_PWD}/../../build/bin
 
 CONFIG += qt
 
-SOURCES = abstractplugininterface.cpp \
-		backdropinterface.cpp \
-		backdropplugin.cpp \
-		baserender.cpp \
-		desktopwidget.cpp \
-		extensionfactory.cpp \
-		imagecache.cpp \
-		netwm.cpp \
-		pendingjob.cpp \
-		plexyconfig.cpp \
-		pluginloader.cpp \
-                svgprovider.cpp \
-		themepackloader.cpp \
-                viewlayer.cpp
+SOURCES = viewlayer.cpp \
+        themepackloader.cpp \
+        svgprovider.cpp \
+        style.cpp \
+        scrollwidget.cpp \
+        qmlsvgprovider.cpp \
+        qmlpixmapprovider.cpp \
+        qmldesktopwidget.cpp \
+        plexyqmlglue.cpp \
+        plexyconfig.cpp \
+        nativestyle.cpp \
+        lineedit.cpp \
+        imagecache.cpp \
+        extensionfactory.cpp \
+        desktopwidget.cpp \
+        button.cpp \
+        baserender.cpp
 
-HEADERS = abstractplugininterface.h \
-		backdropinterface.h \
-		backdropplugin.h \
-		baseplugin.h \
-		baserender.h \
-		datainterface.h \
-		dataplugin.h \
-		debug.h \
-		desktopwidget.h \
-		extensionfactory.h \
-		imagecache.h \
-		netwm.h \
-		netwm_def.h \
-		netwm_p.h \
-		pendingjob.h \
-		plexy.h \
-		plexyconfig.h \
-		pluginloader.h \
-		socialinterface.h \
-		socialplugin.h \
-                svgprovider.h \
-		themepackloader.h \
-		viewlayer.h \
-		widgetinterface.h \
-		widgetplugin.h
+HEADERS = viewlayer.h \
+        themepackloader.h \
+        svgprovider.h \
+        style.h \
+        socialplugin.h \
+        socialinterface.h \
+        scrollwidget.h \
+        qmlsvgprovider.h \
+        qmlpixmapprovider.h \
+        qmldesktopwidget.h \
+        plexyqmlglue.h \
+        plexyconfig.h \
+        nativestyle.h \
+        lineedit.h \
+        imagecache.h \
+        extensionfactory.h \
+        desktopwidget.h \
+        button.h \
+        baserender.h \
+        plexydeskuicore_global.h
 
-LIBS += -lplexyshaders
+unix:SOURCES += netwm.cpp
+unix:HEADERS += netwm_p.h \
+        netwm_def.h \
+        netwm.h \
 
-TARGET = plexydeskcore
+LIBS += -L./../../build/lib -lplexyshaders -lplexydeskcore
 
-target.path = $${top_destdirlib}
-INSTALLS += target
+TARGET = plexydeskuicore
+

@@ -27,10 +27,11 @@
 #include <plexy.h>
 #include <plexyconfig.h>
 
+#include "plexydeskuicore_global.h"
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT SvgProvider
+class PLEXYDESKUICORE_EXPORT SvgProvider
 {
 public:
     SvgProvider();

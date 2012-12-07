@@ -25,11 +25,11 @@
 namespace PlexyDesk
 {
 
-class ImagePileWidget : public AbstractDesktopWidget
+class ImagePileWidget : public DesktopWidget
 {
     Q_OBJECT
 public:
-    ImagePileWidget(const QRectF &rect, QWidget *embeddedWidget = 0);
+    ImagePileWidget(const QRectF &rect, QGraphicsObject *embeddedWidget = 0);
     virtual ~ImagePileWidget();
     void paintExtFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
     void paintExtDockFace(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);

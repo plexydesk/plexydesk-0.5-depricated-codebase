@@ -27,10 +27,11 @@
 #include <plexy.h>
 #include <plexyconfig.h>
 
+#include "plexydeskuicore_global.h"
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT ImageCache : public QObject
+class PLEXYDESKUICORE_EXPORT ImageCache : public QObject
 {
     Q_OBJECT
 

@@ -11,19 +11,14 @@ ApplicationMainVersion = "0.6.0"
 ApplicationDate = "2011-08-03"
 ResourcesDir = "share/plexy/themepack/default/resources"
 
+CONFIG += ordered autogen_precompile_source warn_on
+
 SUBDIRS += base 3rdparty
 
-CONFIG += ordered
 SUBDIRS += runner extensions modules artwork
 
-top_srcdir  = .\
-
-! include( $${top_srcdir}/common.pri ) {
-    error( Couldn\'t find the common.pri file! )
-}
-
-BUILD_DIR = $${top_outdir}
-CONFIG_H = $${BUILD_DIR}/config.h
+BUILD_DIR = $${OUT_PWD}/build/
+CONFIG_H = $${OUT_PWD}/config.h
 
 unix {
 #    QMAKE_CXXFLAGS += -fPIC -fvisibility=default -fvisibility-inlines-hidden
@@ -89,7 +84,7 @@ unix {
 }
 
 win32 {
-    QT_COPY_TO   = $${top_destdirbin}/
+    QT_COPY_TO   = $${OUT_PWD}/build/bin/
     QT_COPY_TO   = $$replace(QT_COPY_TO,/,\\)
     QT_COPY_FROM = $${QTDIR}\\bin
 
@@ -128,19 +123,11 @@ win32 {
     }
 }
 
-CONFIG(release, debug|release) {
-    build_postfix = release
-}
-
-CONFIG(debug, debug|release) {
-    build_postfix = debug
-}
-
 unix {
-    system(mkdir -p $${OUT_PWD}/build/plexydesk-ready-build/qt4/imports)
+    system(mkdir -p $${OUT_PWD}/build/qt4/imports)
 }
 
-qtconf.path = $${OUT_PWD}/build/plexydesk-ready-build/bin
+qtconf.path = $${OUT_PWD}/build/bin
 qtconf.file = $${qtconf.path}/qt.conf
 
 unix {
@@ -172,7 +159,7 @@ system(echo Plugins = lib >> $${qtconf.file})
 
 # imports
 imports.directory = $$[QT_INSTALL_IMPORTS]/*
-imports.to = $${qtimports}
+imports.to = $${OUT_PWD}/build/qt4/imports
 win32 {
     imports.directory = $$replace(imports.directory,/,\\)
     imports.to = $$replace(imports.to,/,\\)

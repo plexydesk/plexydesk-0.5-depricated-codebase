@@ -146,7 +146,7 @@ QSharedPointer<DesktopViewPlugin> PluginLoader::view(const QString &name)
 
 void PluginLoader::load(const QString &interface, const QString &pluginName)
 {
-
+    qDebug() << pluginName;
 #ifdef Q_WS_MAC
     QPluginLoader loader (d->mPluginPrefix + QLatin1String("lib") + pluginName + QLatin1String(".dylib") );
 #endif

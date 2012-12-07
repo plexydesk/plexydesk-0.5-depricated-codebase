@@ -31,7 +31,7 @@
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT PluginLoader : public QObject
+class PLEXYDESKCORE_EXPORT PluginLoader : public QObject
 {
     Q_OBJECT
 

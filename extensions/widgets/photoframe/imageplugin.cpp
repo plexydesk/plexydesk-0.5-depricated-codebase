@@ -49,7 +49,7 @@ void PhotoFrameController::revokeSession(const QVariantMap &args)
     mFrameParentitem->setContentImage(args["src"].toString());
 }
 
-void PhotoFrameController::handleDropEvent(PlexyDesk::AbstractDesktopWidget *widget, QDropEvent *event)
+void PhotoFrameController::handleDropEvent(PlexyDesk::AbstractDesktopWidget * /*widget*/, QDropEvent *event)
 {
     if ( event->mimeData()->urls().count() >= 0 ) {
         const QString droppedFile = event->mimeData()->urls().value(0).toLocalFile();

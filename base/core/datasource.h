@@ -80,7 +80,7 @@
 namespace PlexyDesk
 {
 
-class PLEXYDESK_EXPORT DataSource : public QObject
+class PLEXYDESKCORE_EXPORT DataSource : public QObject
 {
     Q_OBJECT
 

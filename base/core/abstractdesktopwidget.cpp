@@ -242,7 +242,7 @@ void AbstractDesktopWidget::setState(AbstractDesktopWidget::State s)
     Q_EMIT stateChanged();
 }
 
-void AbstractDesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void AbstractDesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget * /*widget*/)
 {
     if (!painter->isActive())
         return;

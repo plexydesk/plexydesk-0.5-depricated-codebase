@@ -73,7 +73,7 @@ void LineEdit::setSize(const QSizeF &size)
     update();
 }
 
-void LineEdit::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void LineEdit::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget * /*widget*/)
 {
     switch(d->mState) {
        case PrivateLineEdit::NORMAL: d->paintNormalEdit(painter, option) ; break;
@@ -85,13 +85,16 @@ void LineEdit::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
 void LineEdit::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    QGraphicsItem::mousePressEvent(event);
     event->accept();
-    d->mState = PrivateLineEdit::FOCUSED    ;
+    d->mState = PrivateLineEdit::FOCUSED;
     update();
 }
 
 void LineEdit::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    qDebug() << Q_FUNC_INFO << event->pos();
+    QGraphicsItem::mouseReleaseEvent(event);
 }
 
 void LineEdit::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -99,6 +102,7 @@ void LineEdit::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     setCursor(Qt::IBeamCursor);
     d->mState = PrivateLineEdit::FOCUSED;
     update();
+    QGraphicsItem::mouseMoveEvent(event);
 }
 
 void LineEdit::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
@@ -107,6 +111,7 @@ void LineEdit::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
     grabKeyboard();
     d->mState = PrivateLineEdit::FOCUSED;
     update();
+    QGraphicsItem::hoverEnterEvent(event);
 }
 
 void LineEdit::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
@@ -115,6 +120,7 @@ void LineEdit::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
     d->mState = PrivateLineEdit::NORMAL;
     setCursor(Qt::ArrowCursor);
     update();
+    QGraphicsItem::hoverLeaveEvent(event);
 }
 
 void LineEdit::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
@@ -122,6 +128,7 @@ void LineEdit::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
     setCursor(Qt::IBeamCursor);
     d->mState = PrivateLineEdit::FOCUSED;
     update();
+    QGraphicsItem::hoverMoveEvent(event);
 }
 
 void LineEdit::keyPressEvent(QKeyEvent *event)

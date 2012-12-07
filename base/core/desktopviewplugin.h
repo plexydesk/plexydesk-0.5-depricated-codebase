@@ -31,7 +31,7 @@ class QRectF;
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT DesktopViewPlugin : public QObject
+class PLEXYDESKCORE_EXPORT DesktopViewPlugin : public QObject
 {
     Q_OBJECT
 

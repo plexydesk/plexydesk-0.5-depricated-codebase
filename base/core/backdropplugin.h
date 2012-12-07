@@ -30,7 +30,7 @@ class QRectF;
 
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT BackgroundSource : public AbstractSource
+class PLEXYDESKCORE_EXPORT BackgroundSource : public AbstractSource
 {
     Q_OBJECT
 

@@ -25,7 +25,7 @@
 namespace PlexyDesk
 {
 
-class PLEXYDESK_EXPORT AbstractPluginInterface
+class PLEXYDESKCORE_EXPORT AbstractPluginInterface
 {
 
 public:

@@ -24,10 +24,12 @@
 #include <plexy.h>
 #include <pluginloader.h>
 
+#include "plexydeskuicore_global.h"
+
 namespace PlexyDesk
 {
 template <class T>
-class PLEXYDESK_EXPORT ExtensionProducer
+class PLEXYDESKUICORE_EXPORT ExtensionProducer
 {
 public:
     T *instance(const QString &name, QObject *obj) {

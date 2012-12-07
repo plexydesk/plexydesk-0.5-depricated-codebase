@@ -150,7 +150,7 @@ bool SvgProvider::isCached(QString &filename) const
     return true;
 }
 
-bool SvgProvider::drawSvg(QPainter *p, QRectF rect, const QString &file, const QString &elementId)
+bool SvgProvider::drawSvg(QPainter *p, QRectF rect, const QString &/*file*/, const QString &elementId)
 {
     if (d->render.isValid()) {
         d->render.render(p, elementId, rect);

@@ -1,38 +1,33 @@
-top_srcdir  = ../../..
-srcdir      = photoframe_widget
-
-!include( $$top_srcdir/common.pri ) {
-    error( Couldn\'t find the common.pri file! )
-}
-
 TEMPLATE = lib
 
 QT += core declarative network opengl
 
 DEFINES += plexyphotoframe_EXPORTS
 
-DESTDIR = $$plexyext
+DESTDIR = $${OUT_PWD}/../../../build/lib/plexyext
 
-INCLUDEPATH += $$top_srcdir/base/qt4 $$top_srcdir/base/shaders
+INCLUDEPATH += ../../../base/qt4 ../../../base/shaders ../../../base/core
 
 CONFIG += qt
 
 SOURCES = imageitem.cpp \
 		imageplugin.cpp \
 		interface.cpp \
-		pictureflow.cpp
+		pictureflow.cpp \
+                photowidget.cpp
 
 HEADERS = imageitem.h \
 		imageplugin.h \
 		interface.h \
-		pictureflow.h
+		pictureflow.h \
+                photowidget.h
 
-LIBS += -lplexyshaders -lplexydeskcore
+LIBS += -L$${OUT_PWD}/../../../build/lib -lplexyshaders -lplexydeskcore -lplexydeskuicore
 
 TARGET = photoframe
 
 desktop_files.files = photoframe.desktop
-desktop_files.path = $$sharedir/plexy/ext/groups
+desktop_files.path = $${OUT_PWD}/../../../build/lib/plexy/ext/groups
 
 SKIN_FILES = img/bg-about.jpg \
 			img/bg-content.gif \
@@ -58,10 +53,10 @@ SKIN_FILES = img/bg-about.jpg \
 			img/submit.gif
 
 photoframe_skin_files.files = $$SKIN_FILES
-photoframe_skin_files.path = $$sharedir/plexy/skins/default/flick
+photoframe_skin_files.path = $${OUT_PWD}/../../../build/plexy/skins/default/flick
 
 INSTALLS += photoframe_skin_files
 INSTALLS += desktop_files
 
-target.path = $${plexyext}
+target.path = $${OUT_PWD}/../../../build/lib/plexyext
 INSTALLS += target

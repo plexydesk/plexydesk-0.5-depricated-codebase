@@ -5,9 +5,11 @@
 #include <config.h>
 #include <plexy.h>
 
+#include "plexydeskuicore_global.h"
+
 namespace PlexyDesk
 {
-class PLEXYDESK_EXPORT SocialPlugin : public AbstractSource
+class PLEXYDESKUICORE_EXPORT SocialPlugin : public AbstractSource
 {
     Q_OBJECT
 public:
