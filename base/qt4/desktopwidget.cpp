@@ -357,6 +357,7 @@ void DesktopWidget::setStyle(Style *style)
 
 void DesktopWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    qDebug() << Q_FUNC_INFO << event->pos();
     d->mPressHoldTimer->stop();
     Q_EMIT clicked();
     QGraphicsItem::mouseReleaseEvent(event);
@@ -364,6 +365,7 @@ void DesktopWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    qDebug() << Q_FUNC_INFO << event->pos();
     if (event->buttons() == Qt::RightButton && (state() == VIEW || state() == ROTATED)) {
         this->setChildWidetVisibility(false);
         d->mPropertyAnimationForRotation->start();
@@ -425,6 +427,6 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
         d->mPropertyAnimationForZoom->start();
         setChildWidetVisibility(false);
     }
-    QGraphicsItem::mouseDoubleClickEvent(event);
+    //QGraphicsItem::mouseDoubleClickEvent(event);
 }
 }
