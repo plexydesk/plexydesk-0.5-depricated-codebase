@@ -174,6 +174,20 @@ QImage FacebookContactCard::PrivateFacebookContactCard::genShadowImage(const QRe
 
     QPen pen(QColor(0, 0, 0), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     painter.drawEllipse(rect);
+
+    const qreal rad = (rect.width() / 2 ) + 1;
+
+    QRadialGradient gr(rad, rad, rad, 3 * rad / 5, 3 * rad / 5);
+    gr.setColorAt(0.0, QColor(255, 255, 255, 191));
+    gr.setColorAt(0.2, QColor(255, 255, 127, 191));
+    gr.setColorAt(0.9, QColor(150, 150, 200, 63));
+    gr.setColorAt(0.95, QColor(0, 0, 0, 127));
+    gr.setColorAt(1, QColor(0, 0, 0, 0));
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setBrush(gr);
+    painter.setPen(Qt::NoPen);
+    painter.drawEllipse(rect);
+
     return canvasSource;
 }
 
