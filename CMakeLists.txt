@@ -216,7 +216,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/panel
     ${CMAKE_SOURCE_DIR}/dist/windows
     ${CMAKE_BINARY_DIR}/dist/windows
-    ${CMAKE_SOURCE_DIR}/3rdparty/qimageblitz
+    ${CMAKE_SOURCE_DIR}/3rdparty/qimageblitz/blitz/
     ${QT_INCLUDE_DIR}
     )
 
