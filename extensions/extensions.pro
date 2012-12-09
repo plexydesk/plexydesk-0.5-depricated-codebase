@@ -1,3 +1,3 @@
 TEMPLATE = subdirs
 
-SUBDIRS = widgets backdrop data
+SUBDIRS += desktop widgets backdrop data

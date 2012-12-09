@@ -11,11 +11,9 @@ ApplicationMainVersion = "0.6.0"
 ApplicationDate = "2011-08-03"
 ResourcesDir = "share/plexy/themepack/default/resources"
 
-CONFIG += ordered autogen_precompile_source warn_on
+CONFIG += ordered autogen_precompile_source warn_on debug
 
-SUBDIRS += base 3rdparty
-
-SUBDIRS += runner extensions modules artwork
+SUBDIRS += base 3rdparty runner extensions modules artwork
 
 BUILD_DIR = $${OUT_PWD}/build/
 CONFIG_H = $${OUT_PWD}/config.h

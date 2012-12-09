@@ -84,7 +84,7 @@ themepack.welcome.images.files = $$THEMEPACK.WELCOME.IMAGES
 themepack.welcome.images.path = $${OUT_PWD}/../../../build/share/plexy/themepack/default/resources
 INSTALLS += themepack.welcome.images
 
-THEMEPACK.MAIN = main.cfg
-themepack.main.files = $$THEMEPACK.MAIN
+THEMEPACK.MAIN = main.cfg layout.xml
+themepack.main.files += $$THEMEPACK.MAIN
 themepack.main.path = $${OUT_PWD}/../../../build/share/plexy/themepack/default
 INSTALLS += themepack.main

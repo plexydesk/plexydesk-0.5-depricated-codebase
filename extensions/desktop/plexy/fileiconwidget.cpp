@@ -9,6 +9,6 @@ FileIconWidget::~FileIconWidget()
 {
 }
 
-void FileIconWidget::setType(FileIconWidget::FileType type)
+void FileIconWidget::setType(FileIconWidget::FileType /*type*/)
 {
 }

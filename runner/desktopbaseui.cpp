@@ -39,7 +39,8 @@ using namespace PlexyDesk;
 class DesktopBaseUi::DesktopBaseUiPrivate
 {
     public:
-        DesktopBaseUiPrivate () {}
+    DesktopBaseUiPrivate () : mViewPlugin(NULL), mDesktopView(NULL), mDesktopWidget(NULL),
+        mScene(NULL), mConfig(NULL) {}
         ~DesktopBaseUiPrivate () {}
         QSharedPointer<DesktopViewPlugin> mViewPlugin;
         AbstractDesktopView *mDesktopView;

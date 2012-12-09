@@ -1,3 +1,3 @@
 TEMPLATE = subdirs
 
-SUBDIRS = qplexymime mime webitem
+SUBDIRS += qplexymime mime webitem

@@ -23,7 +23,7 @@
 #include <pluginloader.h>
 #include <desktopviewplugininterface.h>
 
-class DesktopViewInterface : public PlexyDesk::DesktopViewPluginInterface
+class DesktopViewInterface : public QObject, public PlexyDesk::DesktopViewPluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::DesktopViewPluginInterface)

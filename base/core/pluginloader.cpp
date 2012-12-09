@@ -70,6 +70,7 @@ PluginLoader::~PluginLoader()
 
 PluginLoader *PluginLoader::getInstanceWithPrefix(const QString &desktopPrefix, const QString &libPrefix)
 {
+    qDebug() << "FOO" << desktopPrefix << libPrefix;
     if (!mInstance) {
         mInstance = new PluginLoader();
         qDebug() << Q_FUNC_INFO ;
@@ -146,7 +147,7 @@ QSharedPointer<DesktopViewPlugin> PluginLoader::view(const QString &name)
 
 void PluginLoader::load(const QString &interface, const QString &pluginName)
 {
-    qDebug() << pluginName;
+    qDebug() << "Loading:" << d->mPluginPrefix + pluginName;
 #ifdef Q_WS_MAC
     QPluginLoader loader (d->mPluginPrefix + QLatin1String("lib") + pluginName + QLatin1String(".dylib") );
 #endif

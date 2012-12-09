@@ -1,3 +1,5 @@
 TEMPLATE = subdirs
 
-SUBDIRS = qt4/shaders core qt4
+CONFIG += ordered
+
+SUBDIRS += qt4/shaders core qt4

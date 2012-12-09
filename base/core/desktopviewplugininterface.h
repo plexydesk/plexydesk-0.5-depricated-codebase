@@ -11,12 +11,11 @@
 
 namespace PlexyDesk {
 
-class DesktopViewPluginInterface : public QObject
+class DesktopViewPluginInterface
 {
-    Q_OBJECT
-
 public:
-    DesktopViewPluginInterface(QObject *parent = 0);
+    DesktopViewPluginInterface() {}
+    virtual ~DesktopViewPluginInterface() {}
 
     virtual QSharedPointer<DesktopViewPlugin> view() = 0;
 };

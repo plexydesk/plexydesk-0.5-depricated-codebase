@@ -41,9 +41,9 @@ OTHER_FILES = qmldir
 TARGETPATH = Qt/labs/shaders
 
 qmlfiles.files = qmldir
-qmlfiles.path = $${OUT_PWD}/../../../build/qtimports/$$TARGETPATH
+qmlfiles.path = $${OUT_PWD}/../../../build/qt4/imports/$$TARGETPATH
 
 INSTALLS += qmlfiles
 
-target.path = $${OUT_PWD}/../../../build/qtimports/$$TARGETPATH
+target.path = $${OUT_PWD}/../../../build/qt4/imports/$$TARGETPATH
 INSTALLS += target

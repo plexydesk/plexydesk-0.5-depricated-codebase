@@ -1,3 +1,3 @@
 TEMPLATE = subdirs
 
-SUBDIRS = classicdrop
+SUBDIRS += classicdrop

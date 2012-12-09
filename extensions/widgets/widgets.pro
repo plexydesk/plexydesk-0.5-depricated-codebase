@@ -1,3 +1,3 @@
 TEMPLATE = subdirs
 
-SUBDIRS = clock photoframe
+SUBDIRS += clock photoframe

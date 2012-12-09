@@ -63,10 +63,15 @@ ThemepackLoader::ThemepackLoader(const QString &themeName, QObject *parent) :
     QObject(parent), d (new ThemepackLoaderPrivate)
 {
     d->mThemePackPath =
-        QString("%1/%2").arg(PlexyDesk::Config::getInstance()->plexydeskBasePath()).arg("/share/plexy/themepack");
+        QDir::toNativeSeparators(
+                QString("%1/%2")
+                .arg(PlexyDesk::Config::getInstance()->plexydeskBasePath())
+                .arg("/share/plexy/themepack")
+        );
+
     qDebug() << Q_FUNC_INFO << d->mThemePackPath;
     d->mThemeName = themeName;
-    QDir mainConfig(QString("%1/%2/").arg(d->mThemePackPath).arg(themeName));
+    QDir mainConfig(QDir::toNativeSeparators(QString("%1/%2/").arg(d->mThemePackPath).arg(themeName)));
     d->mSettings = new QSettings(QDir::toNativeSeparators(
                                  mainConfig.absoluteFilePath("main.cfg")),
                              QSettings::IniFormat, this);

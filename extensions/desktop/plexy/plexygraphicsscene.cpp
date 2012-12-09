@@ -5,7 +5,7 @@ PlexyGraphicsScene::PlexyGraphicsScene(QObject *parent) :
 {
 }
 
-void PlexyGraphicsScene::dropEvent(QDropEvent *event)
+void PlexyGraphicsScene::dropEvent(QDropEvent * /*event*/)
 {
     qDebug() << Q_FUNC_INFO;
 }
