@@ -24,7 +24,7 @@
 #include <dataplugininterface.h>
 #include <QtNetwork>
 
-class TimerInterface : public PlexyDesk::DataPluginInterface
+class TimerInterface : public QObject, public PlexyDesk::DataPluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::DataPluginInterface)

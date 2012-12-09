@@ -2,7 +2,7 @@
 #include "facebooksession.h"
 
 FacebookDataInterface::FacebookDataInterface(QObject *parent) :
-    PlexyDesk::DataPluginInterface(parent)
+    PlexyDesk::DataPluginInterface()
 {
 }
 

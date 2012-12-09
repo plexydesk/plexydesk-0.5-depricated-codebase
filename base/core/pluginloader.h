@@ -80,7 +80,7 @@ private:
 #ifdef Q_WS_WIN
     static PluginLoader *mInstance;
 #else
-    static PLEXYDESK_EXPORT PluginLoader *mInstance;
+    static PLEXYDESKCORE_EXPORT PluginLoader *mInstance;
 #endif
 };
 

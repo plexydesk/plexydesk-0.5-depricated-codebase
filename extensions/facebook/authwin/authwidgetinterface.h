@@ -6,13 +6,13 @@
 #include <controllerinterface.h>
 #include <controllerplugininterface.h>
 
-class PLEXYDESK_EXPORT AuthInterface : public PlexyDesk::ControllerPluginInterface
+class AuthInterface : public QObject, public PlexyDesk::ControllerPluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::ControllerPluginInterface)
 
 public :
-    AuthInterface(QObject *parent = 0) : PlexyDesk::ControllerPluginInterface(parent) {}
+    AuthInterface(QObject *parent = 0) : PlexyDesk::ControllerPluginInterface() {}
     virtual ~AuthInterface() {}
 
     QSharedPointer<PlexyDesk::ControllerInterface> controller();

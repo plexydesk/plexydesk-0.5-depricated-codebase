@@ -6,7 +6,7 @@
 #include <dataplugininterface.h>
 #include <QtNetwork>
 
-class FacebookDataInterface : public PlexyDesk::DataPluginInterface
+class FacebookDataInterface : public QObject, public PlexyDesk::DataPluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::DataPluginInterface)

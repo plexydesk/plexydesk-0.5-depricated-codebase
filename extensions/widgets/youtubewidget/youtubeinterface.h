@@ -6,7 +6,7 @@
 #include <controllerplugininterface.h>
 
 
-class YouTubeInterface : public PlexyDesk::ControllerPluginInterface
+class YouTubeInterface : public QObject, public PlexyDesk::ControllerPluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::ControllerPluginInterface)
