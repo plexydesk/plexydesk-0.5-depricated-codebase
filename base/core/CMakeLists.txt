@@ -52,9 +52,6 @@ SET(sourceFiles
     pluginloader.cpp
     pendingjob.cpp
     controllerinterface.cpp
-    #controllerplugininterface.cpp
-    # desktopviewplugininterface.cpp
-    #dataplugininterface.cpp
     )
 
 SET(headerFiles
