@@ -155,6 +155,7 @@ void FacebookSession::onContactInfoReady()
             QString data = reply->readAll();
             Json::Value root;
             Json::Reader jsonReader;
+            qDebug() << Q_FUNC_INFO << data;
 
             bool parsingSuccessful = jsonReader.parse(data.toStdString(), root);
 
@@ -172,6 +173,9 @@ void FacebookSession::onContactInfoReady()
                 response["picture"] = root["picture"]["data"]["url"].asCString();
                 response["cover"] = root["cover"]["source"].asCString();
 
+                if (root["cover"].isMember("offset_y")) {
+                    response["cover_offset"] = root["cover"]["offset_y"].asInt();
+                }
 
                 Q_EMIT sourceUpdated(response);
             }

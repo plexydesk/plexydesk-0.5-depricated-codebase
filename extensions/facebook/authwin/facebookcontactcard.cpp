@@ -2,6 +2,8 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QGraphicsPixmapItem>
+#include <style.h>
+#include <nativestyle.h>
 
 class FacebookContactCard::PrivateFacebookContactCard
 {
@@ -22,8 +24,10 @@ public:
     QPixmap mCoverPicture;
     QNetworkAccessManager *mNtManager;
     QString mID;
+    int mCoverOffset;
     // ui
     QGraphicsPixmapItem *mUiPixmap;
+    PlexyDesk::Style *mStyle;
 };
 
 FacebookContactCard::FacebookContactCard(const QRectF &rect, QGraphicsObject *parent) :
@@ -32,10 +36,13 @@ FacebookContactCard::FacebookContactCard(const QRectF &rect, QGraphicsObject *pa
     d->mDataSource  = 0;
     d->mNtManager = new QNetworkAccessManager(this);
     d->mUiPixmap = 0;
+    d->mStyle = new PlexyDesk::NativeStyle(this);
+    setDockRect(QRect(rect.x(), rect.y(), 72, 72));
 }
 
 FacebookContactCard::~FacebookContactCard()
 {
+    delete d;
 }
 
 void FacebookContactCard::setDataSource(const QString &id, const QString &token, PlexyDesk::DataSource *dataSource)
@@ -63,6 +70,7 @@ void FacebookContactCard::onDataUpdated(QVariantMap map)
         d->mPicture = map["picture"].toString();
         d->mHomeTown = map["hometown"].toString();
         d->mLocation = map["location"].toString();
+        d->mCoverOffset = map["cover_offset"].toInt();
 
         QUrl url (map["cover"].toString());
         QNetworkReply *reply = d->mNtManager->get(QNetworkRequest(url));
@@ -169,11 +177,8 @@ QImage FacebookContactCard::PrivateFacebookContactCard::genShadowImage(const QRe
     painter.fillPath(path, QColor (220, 220, 220));
 
 
-    painter.drawPixmap(QRect(0.0, 0.0, rect.width(), rect.height()), pixmap,
+    painter.drawPixmap(QRect(rect.x(), rect.y(), rect.width(), rect.height()), pixmap,
                        QRect(0.0, 0.0, rect.width(), rect.height()));
-
-    //QPen pen(QColor(0, 0, 0), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
-    //painter.drawEllipse(rect);
 
     const qreal rad = (rect.width() / 2 ) + 1;
 
@@ -194,6 +199,7 @@ QImage FacebookContactCard::PrivateFacebookContactCard::genShadowImage(const QRe
 
 void FacebookContactCard::paintFrontView(QPainter *painter, const QRectF &rect)
 {
+
     QRectF pixmapRect = d->mCoverPicture.rect();
 
     /* Draw background */
@@ -203,15 +209,21 @@ void FacebookContactCard::paintFrontView(QPainter *painter, const QRectF &rect)
     painter->fillPath(parentPath, QColor(255, 255, 255));
 
     /*calculate the new height for the content rect width */
-    float pixmapHeight = (pixmapRect.height() / pixmapRect.width() ) * contentRect().width();
-    pixmapRect.setHeight(pixmapHeight);
+    float pixmapHeight = (pixmapRect.height() / pixmapRect.width()) * contentRect().width();
+    float coverYOffset = 0;
+
+    if (d->mCoverOffset > 0) {
+        coverYOffset = (pixmapRect.height() / pixmapRect.width()) * d->mCoverOffset;
+    }
+
+    pixmapRect.setHeight(pixmapHeight - d->mCoverOffset);
     pixmapRect.setWidth(contentRect().width());
-    painter->drawPixmap(QRectF(rect.x(), rect.y(), rect.width(), pixmapRect.height()), d->mCoverPicture,
-                        QRectF(pixmapRect.x(), pixmapRect.y(), d->mCoverPicture.width(), d->mCoverPicture.height()));
+    painter->drawPixmap(QRectF(rect.x(), rect.y(), rect.width(), 128), d->mCoverPicture,
+                        QRectF(0.0, coverYOffset, d->mCoverPicture.width(), d->mCoverPicture.height() - d->mCoverOffset));
 
     /* Draw Avatar */
     QPainterPath shadowPath;
-    float offset = pixmapRect.height() - 60;
+    float offset = 128 - 60;
     float radius = 6.0;
     float avatarHeight =  d->mUserPicture.width();
     float avatarWidth = d->mUserPicture.width();
@@ -238,41 +250,60 @@ void FacebookContactCard::paintFrontView(QPainter *painter, const QRectF &rect)
 
     painter->restore();
 
-    //shadowPath.addoundedRect(QRectF (0.0, 0.0, avatarWidth , avatarHeight), radius, radius);
     shadowPath.addEllipse(QRectF(0.0, 0.0, avatarWidth, avatarHeight));
     painter->drawImage(QRectF(10, offset, avatarWidth, avatarHeight),
                        d->genShadowImage(QRect(0, 0, avatarWidth, avatarHeight), shadowPath, d->mUserPicture));
 
-    QRectF detailBackgroundRect = QRectF(avatarWidth + 12, pixmapRect.height(), rect.width() - avatarWidth + 12, rect.height());
-    painter->fillRect(detailBackgroundRect, QColor(245, 245, 245));
+    QRectF detailBackgroundRect = QRectF(avatarWidth + 12, 128, rect.width() - avatarWidth + 12, rect.height());
+    painter->fillRect(detailBackgroundRect, QColor(220, 220, 220));
 
     /* Draw Text */
     QPen pen(QColor(77, 77, 77), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
-    QFont font = QFont ("", 16);
-    painter->setFont(font);
-    painter->setPen(pen);
 
+    PlexyDesk::StyleFeatures feature;
+    feature.state = PlexyDesk::StyleFeatures::SF_Raised;
+    feature.fontColor = QColor(77, 77, 77);
+    feature.fontPen = pen;
     int padding = 10;
     QRectF nameRect =
             QRectF(detailBackgroundRect.x() + padding, detailBackgroundRect.y() + padding, detailBackgroundRect.width(), 100);
-
-    painter->drawText(nameRect,  Qt::AlignLeft, d->mFirstName + " " + d->mLastName);
-
     QRectF hometownRect =
             QRectF(detailBackgroundRect.x() + padding, detailBackgroundRect.y() + padding + 20, detailBackgroundRect.width(), 100);
 
-    font = QFont ("", 10);
-    painter->setFont(font);
-    painter->drawText(hometownRect,  Qt::AlignLeft, d->mLocation);
+    if(d->mStyle) {
+        feature.font = QFont ("", 16);
+        feature.exposeRect = nameRect;
+        d->mStyle->paintControlElementText(PlexyDesk::Style::CE_Label, feature, d->mFirstName + " " + d->mLastName, painter);
 
+        feature.font = QFont ("", 10);
+        feature.exposeRect = hometownRect;
+        d->mStyle->paintControlElementText(PlexyDesk::Style::CE_Label, feature, tr("Lives in") + "  " + d->mLocation, painter);
+    }
 }
 
 void FacebookContactCard::paintDockView(QPainter *painter, const QRectF &rect)
 {
+    PlexyDesk::DesktopWidget::paintDockView(painter, rect);
 
-    PlexyDesk::DesktopWidget::paintFrontView(painter, rect);
-    QPainterPath parentPath = painter->clipPath();
-    painter->drawPixmap(rect.x(), rect.y(), rect.width(), rect.height(), d->mUserPicture);
+    /* Draw Avatar */
+    float avatarHeight =  d->mUserPicture.width();
+    float avatarWidth = d->mUserPicture.width();
 
-    painter->setClipPath(parentPath);
+    if (d->mUserPicture.width() > d->mUserPicture.height()) {
+        avatarWidth = d->mUserPicture.height();
+        avatarHeight = d->mUserPicture.height();
+    }
+
+    if (d->mUserPicture.width() < d->mUserPicture.height())  {
+        avatarWidth = d->mUserPicture.width();
+        avatarHeight = d->mUserPicture.width();
+    }
+
+    painter->setRenderHint(QPainter::Antialiasing, true);
+    painter->setRenderHint(QPainter::TextAntialiasing, true);
+    painter->setRenderHint(QPainter::HighQualityAntialiasing, true);
+
+    painter->drawPixmap(QRect(rect.x() + 2, rect.y() + 2, rect.width() - 4  , rect.height() - 4), d->mUserPicture,
+                        QRect(0, 0, dockRect().width() - 4  , dockRect().height() - 4));
+
 }

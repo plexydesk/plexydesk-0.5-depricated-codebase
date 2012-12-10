@@ -102,3 +102,10 @@ void ContactList::onItemClicked(ContactListItem *item)
     qDebug() << Q_FUNC_INFO << item->id();
     Q_EMIT clicked(item->id());
 }
+
+void ContactList::paintFrontView(QPainter *painter, const QRectF &rect)
+{
+    QPainterPath backgroundPath;
+    backgroundPath.addRect(rect);
+    painter->fillPath(backgroundPath, QColor(235, 235, 235));
+}

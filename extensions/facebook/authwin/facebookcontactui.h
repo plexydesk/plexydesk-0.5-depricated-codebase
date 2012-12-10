@@ -24,6 +24,9 @@ public Q_SLOTS:
     void onViewClicked(QString);
 
 private:
+        virtual void paintFrontView(QPainter *painter, const QRectF &rect);
+
+private:
     class PrivateFacebookContactUI;
     PrivateFacebookContactUI *const d;
 };

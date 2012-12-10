@@ -21,16 +21,17 @@ FacebookContactUI::FacebookContactUI(const QRectF &rect) :
 {
     enableDefaultBackground(true);
 
-    QRectF scrollRect = QRect(0.0, 24.0, rect.width(), rect.height() - 90);
+    QRectF scrollRect = QRect(0.0, 24.0, rect.width(), rect.height() - 80);
     d->mScrollView = new ContactList(scrollRect, this);
     d->mScrollView->setVisible(true);
     d->mScrollView->enableDefaultBackground(false);
     d->mScrollView->enableShadow(false);
+//    d->mScrollView->hide();
 
     d->mSearchBox = new PlexyDesk::LineEdit(this);
-    d->mSearchBox->setSize (QSizeF(rect.width() - 80, 32));
+    d->mSearchBox->setSize (QSizeF(rect.width() - 40, 32));
     d->mSearchBox->show();
-    d->mSearchBox->setPos(24 , rect.height() - 48);
+    d->mSearchBox->setPos( (rect.width() / 2) - (d->mSearchBox->boundingRect().width() / 2) , rect.height() - 45);
 
     connect(d->mSearchBox, SIGNAL(text(QString)), d->mScrollView, SLOT(filter(QString)));
     connect(d->mScrollView, SIGNAL(clicked(QString)), this, SLOT(onViewClicked(QString)));
@@ -62,4 +63,34 @@ void FacebookContactUI::onViewClicked(QString id)
 {
     qDebug() << Q_FUNC_INFO << id;
     Q_EMIT addContactCard(id);
+}
+
+void FacebookContactUI::paintFrontView(QPainter *painter, const QRectF &rect)
+{
+    QPainterPath backgroundPath;
+    backgroundPath.addRoundedRect(rect, 6.0, 6.0);
+
+    painter->fillPath(backgroundPath, QColor(235, 235, 235));
+
+    if (d->mSearchBox) {
+        QRectF searchBoxRect = QRectF (0.0, d->mScrollView->boundingRect().height() + 28,
+                                       rect.width(), rect.height());
+
+        QRectF searchBoxLineRect = QRectF (0.0, d->mScrollView->boundingRect().height() + 29,
+                                       rect.width(), rect.height());
+
+        QPen pen = QPen(QColor(220, 220, 220), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+        painter->setPen(pen);
+
+        QLinearGradient linearGrad(searchBoxRect.topRight(), searchBoxRect.bottomRight());
+
+        linearGrad.setColorAt(1, QColor(0, 0, 0));
+        linearGrad.setColorAt(0, QColor(115, 115, 115));
+
+        painter->fillRect(searchBoxRect, linearGrad);
+        painter->drawLine(searchBoxRect.topRight(), searchBoxRect.topLeft());
+        pen = QPen(QColor(88, 88, 88), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+        painter->setPen(pen);
+        painter->drawLine(searchBoxLineRect.topRight(), searchBoxLineRect.topLeft());
+    }
 }

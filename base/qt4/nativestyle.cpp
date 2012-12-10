@@ -24,6 +24,7 @@ void NativeStyle::paintControlElementText(Style::ControlElement element, const S
     switch(element) {
     case CE_PushButton : drawPushButtonText(feature, text, painter); break;
     case CE_LineEdit: drawLineEditText(feature, text, painter); break;
+    case CE_Label: drawLabelEditText(feature, text, painter); break;
     default:
         qWarning() << Q_FUNC_INFO << "Unknown Control Element";
     }
@@ -146,13 +147,36 @@ void NativeStyle::drawLineEditText(const StyleFeatures &features, const QString 
     painter->drawLine(QPoint(width, 4), QPoint(width,features.exposeRect.height() - 4));
 }
 
+void NativeStyle::drawLabelEditText(const StyleFeatures &features, const QString &text, QPainter *painter)
+{
+    QPen pen;
+
+    /* Painter settings */
+    painter->setRenderHint(QPainter::Antialiasing, true);
+    painter->setRenderHint(QPainter::TextAntialiasing, true);
+    painter->setRenderHint(QPainter::HighQualityAntialiasing, true);
+
+    painter->setFont(features.font);
+
+    pen = QPen(QColor (255, 255, 255), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    painter->setPen(pen);
+    painter->drawText(features.exposeRect.adjusted(1, 1, 1, 1), features.fontFlags, text);
+
+    painter->setOpacity(0.8);
+
+    pen = QPen(features.fontColor, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    painter->setPen(pen);
+    painter->drawText(features.exposeRect, features.fontFlags, text);
+}
+
+
 void NativeStyle::drawSeperatorLine(const StyleFeatures &features, QPainter *painter)
 {
-    QPen pen = QPen(QColor(243, 243, 243), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    QPen pen = QPen(QColor(217, 217, 217), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     painter->setPen(pen);
     painter->drawLine(QPoint(features.exposeRect.x(), features.exposeRect.y()),
                       QPoint(features.exposeRect.width(), features.exposeRect.height()));
-    pen = QPen(QColor(198, 198, 198), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    pen = QPen(QColor(255, 255, 255), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     painter->setPen(pen);
     painter->drawLine(QPoint(features.exposeRect.x() + 1, features.exposeRect.y() + 1),
                       QPoint(features.exposeRect.width() + 1, features.exposeRect.height() + 1));

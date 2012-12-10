@@ -30,8 +30,10 @@ ContactListItem::ContactListItem(QGraphicsObject *parent) :
     d->mStyle = new PlexyDesk::NativeStyle(this);
     d->mButton = new PlexyDesk::Button(this);
     d->mButton->setLabel(tr("Add"));
+    d->mButton->setSize (QSize (65, 20));
     d->mButton->setPos((boundingRect().width() - d->mButton->boundingRect().width()) - 10,
                        (boundingRect().height() / 2) - (d->mButton->boundingRect().height() / 2) );
+
     d->mButton->show();
 
     d->mButton->setCacheMode(QGraphicsItem::ItemCoordinateCache);
@@ -47,7 +49,7 @@ ContactListItem::~ContactListItem()
 
 QRectF ContactListItem::boundingRect() const
 {
-    return QRectF(4.0, 0.0, 480, 60);
+    return QRectF(4.0, 0.0, 480, 48);
 }
 
 void ContactListItem::setName(const QString &name)
@@ -91,11 +93,14 @@ void ContactListItem::setPixmap(const QPixmap &pixmap)
 void ContactListItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     PlexyDesk::StyleFeatures feature;
-    feature.exposeRect = option->exposedRect;
+    feature.exposeRect = QRectF(option->exposedRect.bottomRight().x() - 2, option->exposedRect.bottomRight().y() -2,
+                                option->exposedRect.bottomLeft().x() - 2 , option->exposedRect.bottomLeft().y() - 2);
     feature.state = PlexyDesk::StyleFeatures::SF_FrontView;
 
-    d->mStyle->paintControlElement(PlexyDesk::Style::CE_Frame, feature, painter);
-    QPen pen(QColor(0, 0, 0), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    d->mStyle->paintControlElement(PlexyDesk::Style::CE_Seperator, feature, painter);
+
+    QPen pen(QColor(88, 88, 88), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    QPen shadowPen(QColor(255, 255, 255), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
     QPainterPath shadowPath;
     float offset = 8.0;
@@ -114,25 +119,37 @@ void ContactListItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     QFont font = QFont("", 16);
     QFontMetrics matrix (font);
     float nameHeight = matrix.height();
-    float statusLabelHeight = (option->exposedRect.height() / 2) - (nameHeight / 2);
+   // float statusLabelHeight = (option->exposedRect.height() / 2) - (nameHeight / 2);
     painter->setFont(font);
+    QRectF nameRect = QRectF ((offset + avatarWidth + 10), option->exposedRect.center().y() - (nameHeight / 2),
+                              option->exposedRect.width(), option->exposedRect.height() / 2);
+
+
+    painter->setPen(shadowPen);
+    painter->drawText(nameRect.adjusted(1, 1, 1, 1), Qt::AlignVCenter, d->mName);
+    painter->setOpacity(0.9);
     painter->setPen(pen);
-    QRectF nameRect = QRectF ((offset + avatarWidth + 10), 4.0, option->exposedRect.width(), option->exposedRect.height() / 2);
     painter->drawText(nameRect, Qt::AlignVCenter, d->mName);
 
-    font = QFont ("", 12);
-    QFontMetrics statusMetrix (font);
-    nameHeight = statusMetrix.height();
-    statusLabelHeight = (option->exposedRect.height() / 2) - (nameHeight / 2);
-    painter->setFont(font);
-    painter->setPen(pen);
-    nameRect = QRectF ((offset + avatarWidth + 10), nameRect.height() + 4.0, option->exposedRect.width(), option->exposedRect.height() / 2);
-    QString statusText = statusMessage();
-    if (statusText.size() > 70) {
-        statusText.truncate(70);
-        statusText += "...";
-    }
-    painter->drawText(nameRect, Qt::AlignVCenter, statusText);
+//    font = QFont ("", 12);
+//    QFontMetrics statusMetrix (font);
+//    nameHeight = statusMetrix.height();
+//    statusLabelHeight = (option->exposedRect.height() / 2) - (nameHeight / 2);
+//    painter->setFont(font);
+//    painter->setPen(pen);
+//    nameRect = QRectF ((offset + avatarWidth + 10), nameRect.height() + 4.0, option->exposedRect.width(), option->exposedRect.height() / 2);
+//    QString statusText = statusMessage();
+//    if (statusText.size() > 65) {
+//        statusText.truncate(65);
+//        statusText += "...";
+//    }
+
+//    painter->setPen(shadowPen);
+//    painter->drawText(nameRect.adjusted(2, 2, 2, 2), Qt::AlignVCenter, statusText);
+
+//    painter->setPen(pen);
+//    painter->drawText(nameRect, Qt::AlignVCenter, statusText);
+
 }
 
 void ContactListItem::mousePressEvent(QGraphicsSceneMouseEvent *event)

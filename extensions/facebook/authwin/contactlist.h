@@ -23,6 +23,9 @@ public Q_SLOTS:
     void filter(const QString &filterString);
     void onItemClicked(ContactListItem *item);
 
+protected:
+    virtual void paintFrontView(QPainter *painter, const QRectF &rect);
+
 private:
     class PrivateContactList;
     PrivateContactList *const d;

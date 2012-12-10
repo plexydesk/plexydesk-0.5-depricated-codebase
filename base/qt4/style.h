@@ -44,6 +44,11 @@ public:
 
     //Line Edit specific
     int cursorLocation;
+    QFont font;
+    QColor fontColor;
+    int fontSize;
+    QPen fontPen;
+    int fontFlags;
 };
 
 class Style : public QObject

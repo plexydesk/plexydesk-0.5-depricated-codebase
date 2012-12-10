@@ -247,12 +247,13 @@ void DesktopWidget::paintFrontView(QPainter *p, const QRectF &rect)
         p->drawPixmap(QRect(rect.x() , rect.y() , d->mDefaultBackgroundPixmap.width() / scaleFactorForWidth(), d->mDefaultBackgroundPixmap.height() / scaleFactorForHeight()), d->mDefaultBackgroundPixmap);
         p->restore();
     } else {
+//TODO: add a method to enable/disable
         StyleFeatures feature;
         feature.exposeRect = rect;
         feature.state = StyleFeatures::SF_FrontView;
         d->mStyle->paintControlElement(Style::CE_Frame, feature, p);
-        feature.exposeRect = QRect(5.0, 24.0, rect.width() - 10, 24.0);
-        d->mStyle->paintControlElement(Style::CE_Seperator, feature, p);
+//        feature.exposeRect = QRect(5.0, 24.0, rect.width() - 10, 24.0);
+//        d->mStyle->paintControlElement(Style::CE_Seperator, feature, p);
     }
 }
 

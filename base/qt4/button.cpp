@@ -25,7 +25,7 @@ public:
     ButtonState mState;
     Style *mStyle;
     QString mLabel;
-
+    QSize mSize;
 };
 
 Button::Button(QGraphicsObject *parent) :
@@ -33,6 +33,7 @@ Button::Button(QGraphicsObject *parent) :
     d(new PrivateButton)
 {
    d->mState = PrivateButton::NORMAL;
+   d->mSize = QSize (100, 30);
    d->mStyle = new NativeStyle(this);
 }
 
@@ -101,7 +102,12 @@ void Button::setStyle(Style *style)
 
 QRectF Button::boundingRect() const
 {
-    return QRectF(0.0, 0.0, 100, 30);
+    return QRectF(0.0, 0.0, d->mSize.width(), d->mSize.height());
+}
+
+void Button::setSize(const QSize &size)
+{
+    d->mSize = size;
 }
 
 void Button::setIcon(const QImage & /*img*/)
