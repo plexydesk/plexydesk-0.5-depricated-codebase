@@ -216,7 +216,6 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/panel
     ${CMAKE_SOURCE_DIR}/dist/windows
     ${CMAKE_BINARY_DIR}/dist/windows
-    ${CMAKE_SOURCE_DIR}/3rdparty/qimageblitz/blitz/
     ${QT_INCLUDE_DIR}
     )
 
@@ -246,9 +245,6 @@ IF(WIN32)
 ENDIF(WIN32)
 
 # *** ALL PLATFORMS ***
-IF (APPLE)
-ADD_SUBDIRECTORY(3rdparty/qimageblitz)
-ENDIF (APPLE)
 ADD_SUBDIRECTORY(3rdparty/mime)
 ADD_SUBDIRECTORY(3rdparty/json-cpp/)
 ADD_SUBDIRECTORY(3rdparty/qplexymime)
