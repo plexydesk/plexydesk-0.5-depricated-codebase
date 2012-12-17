@@ -116,7 +116,7 @@ void ContactListItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     shadowPath.addRoundedRect(QRectF (0.0, 0.0, avatarWidth , avatarHeight), radius, radius);
     painter->drawPixmap(QRect(offset, offset, avatarWidth,  avatarHeight), d->mAvatar);
 
-    QFont font = QFont("", 16);
+    QFont font = QFont("Georgia", 14);
     QFontMetrics matrix (font);
     float nameHeight = matrix.height();
    // float statusLabelHeight = (option->exposedRect.height() / 2) - (nameHeight / 2);
@@ -130,25 +130,6 @@ void ContactListItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     painter->setOpacity(0.9);
     painter->setPen(pen);
     painter->drawText(nameRect, Qt::AlignVCenter, d->mName);
-
-//    font = QFont ("", 12);
-//    QFontMetrics statusMetrix (font);
-//    nameHeight = statusMetrix.height();
-//    statusLabelHeight = (option->exposedRect.height() / 2) - (nameHeight / 2);
-//    painter->setFont(font);
-//    painter->setPen(pen);
-//    nameRect = QRectF ((offset + avatarWidth + 10), nameRect.height() + 4.0, option->exposedRect.width(), option->exposedRect.height() / 2);
-//    QString statusText = statusMessage();
-//    if (statusText.size() > 65) {
-//        statusText.truncate(65);
-//        statusText += "...";
-//    }
-
-//    painter->setPen(shadowPen);
-//    painter->drawText(nameRect.adjusted(2, 2, 2, 2), Qt::AlignVCenter, statusText);
-
-//    painter->setPen(pen);
-//    painter->drawText(nameRect, Qt::AlignVCenter, statusText);
 
 }
 

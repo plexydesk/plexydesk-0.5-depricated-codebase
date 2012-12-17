@@ -84,8 +84,8 @@ void FacebookContactUI::paintFrontView(QPainter *painter, const QRectF &rect)
 
         QLinearGradient linearGrad(searchBoxRect.topRight(), searchBoxRect.bottomRight());
 
-        linearGrad.setColorAt(1, QColor(0, 0, 0));
-        linearGrad.setColorAt(0, QColor(115, 115, 115));
+        linearGrad.setColorAt(0, QColor(111, 111, 111));
+        linearGrad.setColorAt(1, QColor(105, 105, 105));
 
         painter->fillRect(searchBoxRect, linearGrad);
         painter->drawLine(searchBoxRect.topRight(), searchBoxRect.topLeft());

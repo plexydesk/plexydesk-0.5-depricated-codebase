@@ -272,11 +272,11 @@ void FacebookContactCard::paintFrontView(QPainter *painter, const QRectF &rect)
             QRectF(detailBackgroundRect.x() + padding, detailBackgroundRect.y() + padding + 20, detailBackgroundRect.width(), 100);
 
     if(d->mStyle) {
-        feature.font = QFont ("Helvetica", 16);
+        feature.font = QFont ("Georgia", 16);
         feature.exposeRect = nameRect;
-        d->mStyle->paintControlElementText(PlexyDesk::Style::CE_Label, feature, d->mFirstName + " " + d->mLastName, painter);
+        d->mStyle->paintControlElementText(PlexyDesk::Style::CE_Label, feature, tr(d->mFirstName.toUtf8()) + " " + tr(d->mLastName.toUtf8()), painter);
 
-        feature.font = QFont ("Helvetica", 10);
+        feature.font = QFont ("Georgia", 10);
         feature.exposeRect = hometownRect;
         d->mStyle->paintControlElementText(PlexyDesk::Style::CE_Label, feature, tr("Lives in") + "  " + d->mLocation, painter);
     }
