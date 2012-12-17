@@ -1,31 +1,31 @@
 SET(sourceFiles
     authplugin.cpp
     authwidgetinterface.cpp
-    authwidget.cpp
     facebookcontactui.cpp
     contactlist.cpp
     contactlistitem.cpp
     facebookcontactcard.cpp
+    facebookauthenticationwidget.cpp
     )
 
 SET(headerFiles
     authplugin.h
     authwidgetinterface.h
-    authwidget.h
     facebookcontactui.h
     contactlist.h
     contactlistitem.h
     facebookcontactcard.h
+    facebookauthenticationwidget.h
 )
 
 SET(QTMOC_SRCS
     authplugin.h
     authwidgetinterface.h
-    authwidget.h
     facebookcontactui.h
     contactlist.h
     contactlistitem.h
     facebookcontactcard.h
+    facebookauthenticationwidget.h
 )
 
 QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})

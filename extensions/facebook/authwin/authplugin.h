@@ -3,8 +3,8 @@
 
 #include <plexy.h>
 #include <controllerinterface.h>
-#include "authwidget.h"
 #include "facebookcontactui.h"
+#include "facebookauthenticationwidget.h"
 
 class AuthPlugin : public PlexyDesk::ControllerInterface
 {
@@ -31,7 +31,7 @@ public Q_SLOTS:
 protected:
     void requestFacebookSession();
 private:
-    PlexyDesk::AuthWidget *mWidget;
+    FacebookAuthenticationWidget *mWidget;
     FacebookContactUI *mContactUI;
     QString mToken;
 };

@@ -20,10 +20,11 @@
 #include "authplugin.h"
 #include "facebookcontactcard.h"
 #include <qwebviewitem.h>
+#include "facebookauthenticationwidget.h"
 
 AuthPlugin::AuthPlugin(QObject *object) : PlexyDesk::ControllerInterface (object)
 {
-     mWidget = new PlexyDesk::AuthWidget(QRectF(0, 0, 480, 320));
+     mWidget = new FacebookAuthenticationWidget(QRectF(0, 0, 480, 320));
      mWidget->setController(this);
      mWidget->setVisible(true);
 
@@ -103,7 +104,7 @@ void AuthPlugin::onDataUpdated(const QVariantMap &map)
             if (mWidget) {
                 Q_EMIT spawnView(mWidget);
                 mWidget->setVisible(true);
-                mWidget->createAuthDialog();
+                //mWidget->createAuthDialog();
             }
         }
     }
