@@ -54,15 +54,13 @@ public:
 
     virtual void restoreViewFromSession(const QString &sessionData);
 
+    virtual void addWidgetToView(AbstractDesktopWidget *widget);
+
 Q_SIGNALS:
 
     void closeApplication();
 
     void sessionUpdated(const QString &data);
-
-public Q_SLOTS:
-
-    void addWidgetToView(AbstractDesktopWidget *widget);
 
 private:
 

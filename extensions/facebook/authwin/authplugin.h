@@ -23,6 +23,8 @@ public:
 
     void firstRun();
 
+    void handleViewport();
+
 public Q_SLOTS:
     void onDataUpdated(const QVariantMap &map);
     void onFacebookToken(const QString &token);

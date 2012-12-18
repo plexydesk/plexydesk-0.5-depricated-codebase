@@ -173,7 +173,7 @@ void AbstractDesktopView::addController(const QString &controllerName)
         return;
     }
 
-    connect(controller.data(), SIGNAL(spawnView(AbstractDesktopWidget*)), this, SLOT(addWidgetToView(AbstractDesktopWidget*)));
+    //connect(controller.data(), SIGNAL(spawnView(AbstractDesktopWidget*)), this, SLOT(addWidgetToView(AbstractDesktopWidget*)));
 
     d->mControllerMap[controllerName] = controller;
 
@@ -263,6 +263,7 @@ void AbstractDesktopView::dragMoveEvent(QDragMoveEvent *event)
 
 void AbstractDesktopView::addWidgetToView(AbstractDesktopWidget *widget)
 {
+    qDebug() << Q_FUNC_INFO << "Adding widget";
     QGraphicsItem *item = (AbstractDesktopWidget*) widget;
     scene()->addItem(item);
     item->show();

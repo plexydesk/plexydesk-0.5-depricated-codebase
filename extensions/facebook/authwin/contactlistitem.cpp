@@ -1,7 +1,6 @@
 #include "contactlistitem.h"
 #include <nativestyle.h>
 #include <QStyleOptionGraphicsItem>
-#include <qimageblitz.h>
 #include <QDebug>
 
 #include <button.h>

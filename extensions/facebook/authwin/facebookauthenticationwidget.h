@@ -25,7 +25,6 @@ Q_SIGNALS:
 private:
     class PrivateFacebookAuthenticationWidget;
     PrivateFacebookAuthenticationWidget *const d;
-
 };
 
 #endif // FACEBOOKAUTHENTICATIONWIDGET_H

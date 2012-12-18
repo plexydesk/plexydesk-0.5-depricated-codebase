@@ -46,7 +46,6 @@ SET(libs
     ${OPENGL_LIBRARIES}
     ${QT_QTCORE_LIBRARY}
     ${QT_QTOPENGL_LIBRARY}
-    qimageblitz
     ${optional_libs}
     )
 

@@ -30,11 +30,17 @@ void ControllerInterface::setViewport(AbstractDesktopView *view)
 {
     qDebug() << Q_FUNC_INFO ;
     d->mViewport = view;
+
+    handleViewport();
 }
 
 AbstractDesktopView *ControllerInterface::viewport()
 {
     return d->mViewport;
+}
+
+void ControllerInterface::handleViewport()
+{
 }
 
 void ControllerInterface::firstRun()

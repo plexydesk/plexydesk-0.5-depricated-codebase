@@ -21,6 +21,7 @@
 #include "facebookcontactcard.h"
 #include <qwebviewitem.h>
 #include "facebookauthenticationwidget.h"
+#include <abstractdesktopview.h>
 
 AuthPlugin::AuthPlugin(QObject *object) : PlexyDesk::ControllerInterface (object)
 {
@@ -91,9 +92,14 @@ void AuthPlugin::firstRun()
     requestFacebookSession();
 }
 
+void AuthPlugin::handleViewport()
+{
+    requestFacebookSession();
+}
+
 void AuthPlugin::onDataUpdated(const QVariantMap &map)
 {
-    qDebug() << Q_FUNC_INFO ;
+    qDebug() << Q_FUNC_INFO << map;
     QString command = map["command"].toString();
 
     if (command == "login") {
@@ -102,9 +108,9 @@ void AuthPlugin::onDataUpdated(const QVariantMap &map)
         if (key.isEmpty() || key.isNull()) {
             //request login UI
             if (mWidget) {
-                Q_EMIT spawnView(mWidget);
-                mWidget->setVisible(true);
-                //mWidget->createAuthDialog();
+                qDebug() << Q_FUNC_INFO << "emit";
+                if (viewport())
+                    viewport()->addWidgetToView(mWidget);
             }
         }
     }
@@ -117,7 +123,6 @@ void AuthPlugin::onDataUpdated(const QVariantMap &map)
     if (command == "userinfo") {
         mContactUI->addContact(map);
     }
-
 }
 
 void AuthPlugin::onFacebookToken(const QString &token)
@@ -140,7 +145,9 @@ void AuthPlugin::onAddContactCard(const QString &id)
     FacebookContactCard *contactCard = new FacebookContactCard(QRectF(0.0, 0.0, 320, 480), 0);
     contactCard->setPos(50, 50);
     contactCard->setDataSource(id, mToken, dataSource());
-    Q_EMIT spawnView(contactCard);
+
+    if (viewport())
+        viewport()->addWidgetToView(contactCard);
 }
 
 void AuthPlugin::requestFacebookSession()

@@ -11,7 +11,6 @@ public:
 
     QGraphicsWebView *mWebView;
     QString mPermissions;
-
 };
 
 FacebookAuthenticationWidget::FacebookAuthenticationWidget(const QRectF &rect, QGraphicsObject *parent) :
@@ -48,26 +47,22 @@ QString FacebookAuthenticationWidget::permissions() const
 void FacebookAuthenticationWidget::addPermissions(const QString &perm)
 {
     d->mPermissions += "," + perm ;
-    qDebug() << Q_FUNC_INFO << d->mPermissions;
 }
 
 void FacebookAuthenticationWidget::onLoadFinished(bool ok)
 {
-    qDebug() << Q_FUNC_INFO << d->mWebView->geometry();
     this->setContentRect(d->mWebView->geometry());
 }
 
 void FacebookAuthenticationWidget::onUrlChanged(const QUrl &url)
 {
-    qDebug() << Q_FUNC_INFO << url;
     QString stringUrl = url.toString().replace("#", "?");
     QUrl fburl(stringUrl);
-    qDebug() <<  fburl.queryItemValue("access_token");
+
     if (not fburl.queryItemValue("access_token").isEmpty()) {
-
         this->setVisible(false);
-        /* save the auth token */
 
+        /* save the auth token */
         if(controller() && controller()->viewport()) {
             controller()->viewport()->sessionDataForController(controller()->controllerName(), "access_token", fburl.queryItemValue("access_token"));
             Q_EMIT facebookToken(fburl.queryItemValue("access_token"));
