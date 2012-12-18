@@ -108,7 +108,6 @@ void AuthPlugin::onDataUpdated(const QVariantMap &map)
         if (key.isEmpty() || key.isNull()) {
             //request login UI
             if (mWidget) {
-                qDebug() << Q_FUNC_INFO << "emit";
                 if (viewport())
                     viewport()->addWidgetToView(mWidget);
             }
@@ -141,7 +140,6 @@ void AuthPlugin::onFacebookToken(const QString &token)
 
 void AuthPlugin::onAddContactCard(const QString &id)
 {
-    qDebug() << Q_FUNC_INFO << id;
     FacebookContactCard *contactCard = new FacebookContactCard(QRectF(0.0, 0.0, 320, 480), 0);
     contactCard->setPos(50, 50);
     contactCard->setDataSource(id, mToken, dataSource());

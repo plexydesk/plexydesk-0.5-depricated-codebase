@@ -64,7 +64,6 @@ void FacebookContactCard::setDataSource(const QString &id, const QString &token,
 void FacebookContactCard::onDataUpdated(QVariantMap map)
 {
     if (map["command"] == "userdata" && map["id"] == d->mID) {
-        qDebug() << Q_FUNC_INFO << map["first_name"];
         d->mFirstName = map["first_name"].toString();
         d->mLastName = map["last_name"].toString();
         d->mPicture = map["picture"].toString();
@@ -78,7 +77,6 @@ void FacebookContactCard::onDataUpdated(QVariantMap map)
         connect(reply, SIGNAL(finished()), this, SLOT(onCoverReady()));
 
         setLabelName(d->mFirstName);
-
     }
 }
 
@@ -87,13 +85,12 @@ void FacebookContactCard::onCoverReady()
     if (sender()) {
         QNetworkReply *reply = qobject_cast<QNetworkReply*> (sender());
 
-
         if (reply) {
 
             if (reply->error() != QNetworkReply::NoError) {
-                  qDebug() << "Error in" << reply->url() << ":" << reply->errorString();
-                  return;
-              }
+                qDebug() << "Error in" << reply->url() << ":" << reply->errorString();
+                return;
+            }
 
             QString header = reply->header(QNetworkRequest::ContentTypeHeader).toString();
 
@@ -126,13 +123,12 @@ void FacebookContactCard::onAvatarReady()
     if (sender()) {
         QNetworkReply *reply = qobject_cast<QNetworkReply*> (sender());
 
-
         if (reply) {
 
             if (reply->error() != QNetworkReply::NoError) {
-                  qDebug() << "Error in" << reply->url() << ":" << reply->errorString();
-                  return;
-              }
+                qDebug() << "Error in" << reply->url() << ":" << reply->errorString();
+                return;
+            }
 
             QString header = reply->header(QNetworkRequest::ContentTypeHeader).toString();
 
