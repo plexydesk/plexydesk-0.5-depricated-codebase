@@ -1,6 +1,7 @@
 #include "facebookmessagedialog.h"
 #include <button.h>
 #include <lineedit.h>
+#include <texteditor.h>
 
 class FacebookMessageDialog::PrivateFacebookMessageDialog
 {
@@ -10,7 +11,7 @@ public:
 
     QString mMessage;
     PlexyDesk::Button *mSearchButton;
-    PlexyDesk::LineEdit *mLineEdit;
+    PlexyDesk::TextEditor *mEditor;
 };
 
 FacebookMessageDialog::FacebookMessageDialog(const QRectF &rect, QGraphicsObject *parent) :
@@ -27,10 +28,9 @@ FacebookMessageDialog::FacebookMessageDialog(const QRectF &rect, QGraphicsObject
 
     d->mSearchButton->setLabel(tr("Post"));
 
-    d->mLineEdit = new PlexyDesk::LineEdit(this);
-    d->mLineEdit->show();
-    d->mLineEdit->setSize(QSizeF(rect.width() - (d->mSearchButton->boundingRect().width() ), 30));
-    d->mLineEdit->setPos(10 , rect.height() - 40);
+    d->mEditor = new PlexyDesk::TextEditor(rect.adjusted(0, 0, -20, -54), this);
+    d->mEditor->show();
+    d->mEditor->setPos(10, 10);
 }
 
 FacebookMessageDialog::~FacebookMessageDialog()
@@ -45,11 +45,10 @@ QString FacebookMessageDialog::message() const
 
 void FacebookMessageDialog::onClicked()
 {
-    if (!d->mLineEdit)
-        return ;
+    d->mMessage = d->mEditor->text();
 
-    d->mMessage = d->mLineEdit->text();
     Q_EMIT messageRequested();
 
+    d->mEditor->setText("");
     this->hide();
 }

@@ -75,7 +75,7 @@ void DirectoryController::requestAction(const QString &actionName, const QVarian
         view->setDirectoryPath(args["path"].toString());
         view->setController(this);
         mFolderViewList.append(view);
-        Q_EMIT spawnView(view);
+        this->viewport()->addWidgetToView(view);
     }
 }
 

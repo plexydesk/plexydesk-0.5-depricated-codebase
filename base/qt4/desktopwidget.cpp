@@ -49,6 +49,7 @@ public:
 
     QGraphicsDropShadowEffect *mShadowEffect;
     Style *mStyle;
+    QString mWindowTitle;
 };
 
 DesktopWidget::DesktopWidget(const QRectF &rect, QGraphicsObject *parent)
@@ -351,6 +352,11 @@ void DesktopWidget::configState(AbstractDesktopWidget::State s)
 void DesktopWidget::setStyle(Style *style)
 {
     d->mStyle = style;
+}
+
+void DesktopWidget::setWindowTitle(const QString &title)
+{
+    d->mWindowTitle = title;
 }
 
 void DesktopWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)

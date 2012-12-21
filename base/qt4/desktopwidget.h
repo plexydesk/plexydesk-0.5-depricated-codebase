@@ -28,6 +28,8 @@ public:
 
     void setStyle(Style *style);
 
+    void setWindowTitle(const QString &title);
+
 
 public Q_SLOTS:
     void zoomDone();

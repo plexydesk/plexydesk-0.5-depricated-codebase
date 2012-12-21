@@ -48,5 +48,9 @@ int main(int argc, char **argv)
         [[_desktopView window] makeKeyAndOrderFront:_desktopView];
     }
 
+    //hack for mac
+    //TODO: Fix this!
+    qtApp.setStyleSheet(QString("QScrollBar:vertical{ border: 2px solid grey; background: #32CC99; height: 15px; margin: 0px 20px 0 20px; }"));
+
     return qtApp.exec();
 }
