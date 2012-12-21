@@ -22,9 +22,10 @@ SET(sourceFiles
     nativestyle.cpp
     button.cpp
     lineedit.cpp
+    webkitwebview.cpp
     )
 
-SET(headerFiles 
+SET(headerFiles
     baserender.h
     extensionfactory.h
     netwm.h
@@ -52,6 +53,7 @@ SET(headerFiles
     nativestyle.h
     button.h
     lineedit.h
+    webkitwebview.h
     )
 
 SET(MOC_SRCS
@@ -75,6 +77,7 @@ SET(MOC_SRCS
    style.h
    button.h
    lineedit.h
+   webkitwebview.h
    )
 
 # DBUS is working only under linux for now
@@ -117,6 +120,7 @@ SET(libs
     ${QT_QTNETWORK_LIBRARY}
     ${QT_QTDECLARATIVE_LIBRARY}
     ${QT_QTXML_LIBRARY}
+    ${QT_QTWEBKIT_LIBRARY}
     ${PLEXY_CORE_LIBRARY}
     )
 
