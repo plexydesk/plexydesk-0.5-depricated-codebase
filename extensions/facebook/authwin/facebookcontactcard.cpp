@@ -4,6 +4,472 @@
 #include <QGraphicsPixmapItem>
 #include <style.h>
 #include <nativestyle.h>
+#include <abstractdesktopview.h>
+#include <button.h>
+#include "facebookcontactcardbutton.h"
+#include "facebookmessagedialog.h"
+#include <controllerinterface.h>
+
+//
+// Stack Blur Algorithm by Mario Klingemann <mario@quasimondo.com>
+void fastblur(QImage &img, int radius)
+{
+    if (radius < 1) {
+        return;
+    }
+
+    QRgb *pix = (QRgb*)img.bits();
+    int w   = img.width();
+    int h   = img.height();
+    int wm  = w-1;
+    int hm  = h-1;
+    int wh  = w*h;
+    int div = radius+radius+1;
+
+    int *r = new int[wh];
+    int *g = new int[wh];
+    int *b = new int[wh];
+    int rsum, gsum, bsum, x, y, i, p, yp, yi, yw;
+    int *vmin = new int[qMax(w,h)];
+
+    int divsum = (div+1)>>1;
+    divsum *= divsum;
+    int *dv = new int[256*divsum];
+    for (i=0; i < 256*divsum; ++i) {
+        dv[i] = (i/divsum);
+    }
+
+    yw = yi = 0;
+
+    int **stack = new int*[div];
+    for(int i = 0; i < div; ++i) {
+        stack[i] = new int[3];
+    }
+
+
+    int stackpointer;
+    int stackstart;
+    int *sir;
+    int rbs;
+    int r1 = radius+1;
+    int routsum,goutsum,boutsum;
+    int rinsum,ginsum,binsum;
+
+    for (y = 0; y < h; ++y){
+        rinsum = ginsum = binsum = routsum = goutsum
+               = boutsum = rsum = gsum = bsum = 0;
+        for(i =- radius; i <= radius; ++i) {
+            p = pix[yi+qMin(wm,qMax(i,0))];
+            sir = stack[i+radius];
+            sir[0] = (p & 0xff0000)>>16;
+            sir[1] = (p & 0x00ff00)>>8;
+            sir[2] = (p & 0x0000ff);
+            rbs = r1-abs(i);
+            rsum += sir[0]*rbs;
+            gsum += sir[1]*rbs;
+            bsum += sir[2]*rbs;
+            if (i > 0){
+                rinsum += sir[0];
+                ginsum += sir[1];
+                binsum += sir[2];
+            } else {
+                routsum += sir[0];
+                goutsum += sir[1];
+                boutsum += sir[2];
+            }
+        }
+        stackpointer = radius;
+
+        for (x=0; x < w; ++x) {
+
+            r[yi] = dv[rsum];
+            g[yi] = dv[gsum];
+            b[yi] = dv[bsum];
+
+            rsum -= routsum;
+            gsum -= goutsum;
+            bsum -= boutsum;
+
+            stackstart = stackpointer-radius+div;
+            sir = stack[stackstart%div];
+
+            routsum -= sir[0];
+            goutsum -= sir[1];
+            boutsum -= sir[2];
+
+            if (y == 0) {
+                vmin[x] = qMin(x+radius+1,wm);
+            }
+            p = pix[yw+vmin[x]];
+
+            sir[0] = (p & 0xff0000)>>16;
+            sir[1] = (p & 0x00ff00)>>8;
+            sir[2] = (p & 0x0000ff);
+
+            rinsum += sir[0];
+            ginsum += sir[1];
+            binsum += sir[2];
+
+            rsum += rinsum;
+            gsum += ginsum;
+            bsum += binsum;
+
+            stackpointer = (stackpointer+1)%div;
+            sir = stack[(stackpointer)%div];
+
+            routsum += sir[0];
+            goutsum += sir[1];
+            boutsum += sir[2];
+
+            rinsum -= sir[0];
+            ginsum -= sir[1];
+            binsum -= sir[2];
+
+            ++yi;
+        }
+        yw += w;
+    }
+    for (x=0; x < w; ++x){
+        rinsum = ginsum = binsum = routsum = goutsum
+               = boutsum = rsum = gsum = bsum=0;
+        yp =- radius*w;
+        for(i=-radius; i <= radius; ++i) {
+            yi=qMax(0,yp)+x;
+
+            sir = stack[i+radius];
+
+            sir[0] = r[yi];
+            sir[1] = g[yi];
+            sir[2] = b[yi];
+
+            rbs = r1-abs(i);
+
+            rsum += r[yi]*rbs;
+            gsum += g[yi]*rbs;
+            bsum += b[yi]*rbs;
+
+            if (i > 0) {
+                rinsum += sir[0];
+                ginsum += sir[1];
+                binsum += sir[2];
+            } else {
+                routsum += sir[0];
+                goutsum += sir[1];
+                boutsum += sir[2];
+            }
+
+            if (i < hm){
+                yp += w;
+            }
+        }
+
+        yi = x;
+        stackpointer = radius;
+
+        for (y=0; y < h; ++y){
+            pix[yi] = 0xff000000 | (dv[rsum]<<16) | (dv[gsum]<<8) | dv[bsum];
+
+            rsum -= routsum;
+            gsum -= goutsum;
+            bsum -= boutsum;
+
+            stackstart = stackpointer-radius+div;
+            sir = stack[stackstart%div];
+
+            routsum -= sir[0];
+            goutsum -= sir[1];
+            boutsum -= sir[2];
+
+            if (x==0){
+                vmin[y] = qMin(y+r1,hm)*w;
+            }
+            p = x+vmin[y];
+
+            sir[0] = r[p];
+            sir[1] = g[p];
+            sir[2] = b[p];
+
+            rinsum += sir[0];
+            ginsum += sir[1];
+            binsum += sir[2];
+
+            rsum += rinsum;
+            gsum += ginsum;
+            bsum += binsum;
+
+            stackpointer = (stackpointer+1)%div;
+            sir = stack[stackpointer];
+
+            routsum += sir[0];
+            goutsum += sir[1];
+            boutsum += sir[2];
+
+            rinsum -= sir[0];
+            ginsum -= sir[1];
+            binsum -= sir[2];
+
+            yi += w;
+        }
+    }
+    delete [] r;
+    delete [] g;
+    delete [] b;
+    delete [] vmin;
+    delete [] dv;
+
+    for(int i = 0; i < div; ++i) {
+        delete [] stack[i];
+    }
+    delete [] stack;
+}
+
+
+
+// Stack Blur Algorithm by Mario Klingemann <mario@quasimondo.com>
+void fastbluralpha(QImage &img, int radius)
+{
+    if (radius < 1) {
+        return;
+    }
+
+    QRgb *pix = (QRgb*)img.bits();
+    int w   = img.width();
+    int h   = img.height();
+    int wm  = w-1;
+    int hm  = h-1;
+    int wh  = w*h;
+    int div = radius+radius+1;
+
+    int *r = new int[wh];
+    int *g = new int[wh];
+    int *b = new int[wh];
+    int *a = new int[wh];
+    int rsum, gsum, bsum, asum, x, y, i, yp, yi, yw;
+    QRgb p;
+    int *vmin = new int[qMax(w,h)];
+
+    int divsum = (div+1)>>1;
+    divsum *= divsum;
+    int *dv = new int[256*divsum];
+    for (i=0; i < 256*divsum; ++i) {
+        dv[i] = (i/divsum);
+    }
+
+    yw = yi = 0;
+
+    int **stack = new int*[div];
+    for(int i = 0; i < div; ++i) {
+        stack[i] = new int[4];
+    }
+
+
+    int stackpointer;
+    int stackstart;
+    int *sir;
+    int rbs;
+    int r1 = radius+1;
+    int routsum, goutsum, boutsum, aoutsum;
+    int rinsum, ginsum, binsum, ainsum;
+
+    for (y = 0; y < h; ++y){
+        rinsum = ginsum = binsum = ainsum
+               = routsum = goutsum = boutsum = aoutsum
+               = rsum = gsum = bsum = asum = 0;
+        for(i =- radius; i <= radius; ++i) {
+            p = pix[yi+qMin(wm,qMax(i,0))];
+            sir = stack[i+radius];
+            sir[0] = qRed(p);
+            sir[1] = qGreen(p);
+            sir[2] = qBlue(p);
+            sir[3] = qAlpha(p);
+
+            rbs = r1-abs(i);
+            rsum += sir[0]*rbs;
+            gsum += sir[1]*rbs;
+            bsum += sir[2]*rbs;
+            asum += sir[3]*rbs;
+
+            if (i > 0){
+                rinsum += sir[0];
+                ginsum += sir[1];
+                binsum += sir[2];
+                ainsum += sir[3];
+            } else {
+                routsum += sir[0];
+                goutsum += sir[1];
+                boutsum += sir[2];
+                aoutsum += sir[3];
+            }
+        }
+        stackpointer = radius;
+
+        for (x=0; x < w; ++x) {
+
+            r[yi] = dv[rsum];
+            g[yi] = dv[gsum];
+            b[yi] = dv[bsum];
+            a[yi] = dv[asum];
+
+            rsum -= routsum;
+            gsum -= goutsum;
+            bsum -= boutsum;
+            asum -= aoutsum;
+
+            stackstart = stackpointer-radius+div;
+            sir = stack[stackstart%div];
+
+            routsum -= sir[0];
+            goutsum -= sir[1];
+            boutsum -= sir[2];
+            aoutsum -= sir[3];
+
+            if (y == 0) {
+                vmin[x] = qMin(x+radius+1,wm);
+            }
+            p = pix[yw+vmin[x]];
+
+            sir[0] = qRed(p);
+            sir[1] = qGreen(p);
+            sir[2] = qBlue(p);
+            sir[3] = qAlpha(p);
+
+            rinsum += sir[0];
+            ginsum += sir[1];
+            binsum += sir[2];
+            ainsum += sir[3];
+
+            rsum += rinsum;
+            gsum += ginsum;
+            bsum += binsum;
+            asum += ainsum;
+
+            stackpointer = (stackpointer+1)%div;
+            sir = stack[(stackpointer)%div];
+
+            routsum += sir[0];
+            goutsum += sir[1];
+            boutsum += sir[2];
+            aoutsum += sir[3];
+
+            rinsum -= sir[0];
+            ginsum -= sir[1];
+            binsum -= sir[2];
+            ainsum -= sir[3];
+
+            ++yi;
+        }
+        yw += w;
+    }
+    for (x=0; x < w; ++x){
+        rinsum = ginsum = binsum = ainsum
+               = routsum = goutsum = boutsum = aoutsum
+               = rsum = gsum = bsum = asum = 0;
+
+        yp =- radius * w;
+
+        for(i=-radius; i <= radius; ++i) {
+            yi=qMax(0,yp)+x;
+
+            sir = stack[i+radius];
+
+            sir[0] = r[yi];
+            sir[1] = g[yi];
+            sir[2] = b[yi];
+            sir[3] = a[yi];
+
+            rbs = r1-abs(i);
+
+            rsum += r[yi]*rbs;
+            gsum += g[yi]*rbs;
+            bsum += b[yi]*rbs;
+            asum += a[yi]*rbs;
+
+            if (i > 0) {
+                rinsum += sir[0];
+                ginsum += sir[1];
+                binsum += sir[2];
+                ainsum += sir[3];
+            } else {
+                routsum += sir[0];
+                goutsum += sir[1];
+                boutsum += sir[2];
+                aoutsum += sir[3];
+            }
+
+            if (i < hm){
+                yp += w;
+            }
+        }
+
+        yi = x;
+        stackpointer = radius;
+
+        for (y=0; y < h; ++y){
+            pix[yi] = qRgba(dv[rsum], dv[gsum], dv[bsum], dv[asum]);
+
+            rsum -= routsum;
+            gsum -= goutsum;
+            bsum -= boutsum;
+            asum -= aoutsum;
+
+            stackstart = stackpointer-radius+div;
+            sir = stack[stackstart%div];
+
+            routsum -= sir[0];
+            goutsum -= sir[1];
+            boutsum -= sir[2];
+            aoutsum -= sir[3];
+
+            if (x==0){
+                vmin[y] = qMin(y+r1,hm)*w;
+            }
+            p = x+vmin[y];
+
+            sir[0] = r[p];
+            sir[1] = g[p];
+            sir[2] = b[p];
+            sir[3] = a[p];
+
+            rinsum += sir[0];
+            ginsum += sir[1];
+            binsum += sir[2];
+            ainsum += sir[3];
+
+            rsum += rinsum;
+            gsum += ginsum;
+            bsum += binsum;
+            asum += ainsum;
+
+            stackpointer = (stackpointer+1)%div;
+            sir = stack[stackpointer];
+
+            routsum += sir[0];
+            goutsum += sir[1];
+            boutsum += sir[2];
+            aoutsum += sir[3];
+
+            rinsum -= sir[0];
+            ginsum -= sir[1];
+            binsum -= sir[2];
+            ainsum -= sir[3];
+
+            yi += w;
+        }
+    }
+    delete [] r;
+    delete [] g;
+    delete [] b;
+    delete [] a;
+    delete [] vmin;
+    delete [] dv;
+
+    for(int i = 0; i < div; ++i) {
+        delete [] stack[i];
+    }
+    delete [] stack;
+}
+
+//
 
 class FacebookContactCard::PrivateFacebookContactCard
 {
@@ -22,12 +488,16 @@ public:
     QString mLocation;
     QPixmap mUserPicture;
     QPixmap mCoverPicture;
+    QString mStatusMessage;
     QNetworkAccessManager *mNtManager;
     QString mID;
+    QString mToken;
     int mCoverOffset;
     // ui
     QGraphicsPixmapItem *mUiPixmap;
     PlexyDesk::Style *mStyle;
+    FacebookContactCardButton *mWallPostButton;
+    FacebookMessageDialog *mPostDialog;
 };
 
 FacebookContactCard::FacebookContactCard(const QRectF &rect, QGraphicsObject *parent) :
@@ -38,6 +508,14 @@ FacebookContactCard::FacebookContactCard(const QRectF &rect, QGraphicsObject *pa
     d->mUiPixmap = 0;
     d->mStyle = new PlexyDesk::NativeStyle(this);
     setDockRect(QRect(rect.x(), rect.y(), 72, 72));
+    d->mWallPostButton = new FacebookContactCardButton(this);
+    d->mWallPostButton->show();
+    d->mWallPostButton->setLabel(tr("Send Wall Post"));
+    d->mPostDialog = new FacebookMessageDialog(QRect(rect.x(), rect.y(), rect.width(), 200));
+    d->mPostDialog->hide();
+
+    connect(d->mWallPostButton,  SIGNAL(clicked()), this, SLOT(onWallPostClicked()));
+    connect(d->mPostDialog, SIGNAL(messageRequested()), this, SLOT(onMessageRestested()));
 }
 
 FacebookContactCard::~FacebookContactCard()
@@ -49,6 +527,7 @@ void FacebookContactCard::setDataSource(const QString &id, const QString &token,
 {
     if (dataSource) {
         connect(dataSource, SIGNAL(sourceUpdated(QVariantMap)), this, SLOT(onDataUpdated(QVariantMap)));
+        d->mDataSource = dataSource;
 
         QVariantMap request;
         QVariant arg;
@@ -57,6 +536,7 @@ void FacebookContactCard::setDataSource(const QString &id, const QString &token,
         request["token"] = token;
         arg = request;
         d->mID = id;
+        d->mToken = token;
         dataSource->setArguments(arg);
     }
 }
@@ -71,17 +551,32 @@ void FacebookContactCard::onDataUpdated(QVariantMap map)
         d->mLocation = map["location"].toString();
         d->mCoverOffset = map["cover_offset"].toInt();
 
+        this->requestStatusMessage();
+
         QUrl url (map["cover"].toString());
         QNetworkReply *reply = d->mNtManager->get(QNetworkRequest(url));
 
         connect(reply, SIGNAL(finished()), this, SLOT(onCoverReady()));
 
         setLabelName(d->mFirstName);
+        QString buttonLabel = "Write on " + d->mFirstName + "'s Wall";
+        d->mWallPostButton->setLabel(buttonLabel);
+    }
+}
+
+void FacebookContactCard::onStatusUpdated(QVariantMap map)
+{
+    if (map["command"].toString() == "status" && map["id"].toString() == d->mID) {
+        d->mStatusMessage = map["message"].toString();
+        update();
     }
 }
 
 void FacebookContactCard::onCoverReady()
 {
+    QNetworkReply *reply_img = d->mNtManager->get(QNetworkRequest(QUrl(d->mPicture)));
+    connect(reply_img, SIGNAL(finished()), this, SLOT(onAvatarReady()));
+
     if (sender()) {
         QNetworkReply *reply = qobject_cast<QNetworkReply*> (sender());
 
@@ -96,21 +591,18 @@ void FacebookContactCard::onCoverReady()
 
             const QByteArray data = reply->readAll();
             int bufferSize = reply->bytesAvailable();
-
             QPixmap pixmap;
-            pixmap.loadFromData(data);
+
+            QImage img;
+            img.loadFromData(data);
+            fastbluralpha(img, 18.0);
+            pixmap = QPixmap::fromImage(img);
 
             if(pixmap.isNull()) {
                 qDebug() << Q_FUNC_INFO << "Null Image data from : " << reply->url() << " : was finished ?" << reply->isFinished();
             } else {
                 d->mCoverPicture = pixmap;
                 update();
-                qDebug() << Q_FUNC_INFO << "cover";
-                qDebug() << Q_FUNC_INFO << d->mPicture;
-
-                QNetworkReply *reply_img = d->mNtManager->get(QNetworkRequest(QUrl(d->mPicture)));
-
-                connect(reply_img, SIGNAL(finished()), this, SLOT(onAvatarReady()));
             }
         }
 
@@ -148,6 +640,36 @@ void FacebookContactCard::onAvatarReady()
         }
 
         reply->deleteLater();
+    }
+}
+
+void FacebookContactCard::onWallPostClicked()
+{
+    qDebug() << Q_FUNC_INFO ;
+
+    if (this->controller() && this->controller()->viewport() && d->mPostDialog) {
+        this->controller()->viewport()->addWidgetToView(d->mPostDialog);
+
+        d->mPostDialog->setPos(d->mWallPostButton->pos().x(), d->mWallPostButton->pos().y());
+    }
+}
+
+void FacebookContactCard::onMessageRestested()
+{
+    if (d->mPostDialog) {
+        qDebug() << Q_FUNC_INFO << d->mPostDialog->message();
+
+        QVariantMap request;
+        QVariant arg;
+
+        request["command"] = QVariant("wallpost");
+        request["id"] = d->mID;
+        request["token"] = d->mToken;
+        request["message"] = d->mPostDialog->message();
+
+        arg = request;
+
+        d->mDataSource->setArguments(arg);
     }
 }
 
@@ -214,6 +736,7 @@ void FacebookContactCard::paintFrontView(QPainter *painter, const QRectF &rect)
 
     pixmapRect.setHeight(pixmapHeight - d->mCoverOffset);
     pixmapRect.setWidth(contentRect().width());
+    painter->fillRect (QRectF(rect.x(), rect.y(), rect.width(), 128), QColor(65, 53, 50));
     painter->drawPixmap(QRectF(rect.x(), rect.y(), rect.width(), 128), d->mCoverPicture,
                         QRectF(0.0, coverYOffset, d->mCoverPicture.width(), d->mCoverPicture.height() - d->mCoverOffset));
 
@@ -251,7 +774,7 @@ void FacebookContactCard::paintFrontView(QPainter *painter, const QRectF &rect)
                        d->genShadowImage(QRect(0, 0, avatarWidth, avatarHeight), shadowPath, d->mUserPicture));
 
     QRectF detailBackgroundRect = QRectF(avatarWidth + 12, 128, rect.width() - avatarWidth + 12, rect.height());
-    painter->fillRect(detailBackgroundRect, QColor(220, 220, 220));
+    painter->fillRect(detailBackgroundRect, QColor(245, 245, 245));
 
     /* Draw Text */
     QPen pen(QColor(77, 77, 77), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
@@ -266,6 +789,8 @@ void FacebookContactCard::paintFrontView(QPainter *painter, const QRectF &rect)
             QRectF(detailBackgroundRect.x() + padding, detailBackgroundRect.y() + padding, detailBackgroundRect.width(), 100);
     QRectF hometownRect =
             QRectF(detailBackgroundRect.x() + padding, detailBackgroundRect.y() + padding + 20, detailBackgroundRect.width(), 100);
+    QRectF statusMessageRect =
+            QRectF(detailBackgroundRect.x(), 10, detailBackgroundRect.width() - 30, 118);
 
     if(d->mStyle) {
         feature.font = QFont ("Georgia", 16);
@@ -275,6 +800,23 @@ void FacebookContactCard::paintFrontView(QPainter *painter, const QRectF &rect)
         feature.font = QFont ("Georgia", 10);
         feature.exposeRect = hometownRect;
         d->mStyle->paintControlElementText(PlexyDesk::Style::CE_Label, feature, tr("Lives in") + "  " + d->mLocation, painter);
+
+        if (!d->mStatusMessage.isEmpty()) {
+            feature.font = QFont ("Georgia", 11, QFont::Bold, false);
+            feature.exposeRect = statusMessageRect;
+            feature.fontColor = QColor(110, 110, 110);
+            feature.fontPen = pen;
+            feature.fontFlags = Qt::AlignLeft | Qt::TextWordWrap;
+            d->mStyle->paintControlElementText(PlexyDesk::Style::CE_Label, feature, "\"" +d->mStatusMessage + "\"", painter);
+        }
+
+    }
+
+    if (d->mWallPostButton) {
+        QRectF wallpostButtonRect =
+                QRectF(detailBackgroundRect.x() + padding, detailBackgroundRect.y() + padding + 40, detailBackgroundRect.width() - 40, 24);
+        d->mWallPostButton->setSize(QSize(wallpostButtonRect.width(), wallpostButtonRect.height()));
+        d->mWallPostButton->setPos(wallpostButtonRect.topLeft());
     }
 }
 
@@ -303,4 +845,21 @@ void FacebookContactCard::paintDockView(QPainter *painter, const QRectF &rect)
     painter->drawPixmap(QRect(rect.x() + 2, rect.y() + 2, rect.width() - 4  , rect.height() - 4), d->mUserPicture,
                         QRect(0, 0, dockRect().width() - 4  , dockRect().height() - 4));
 
+}
+
+void FacebookContactCard::requestStatusMessage()
+{
+    if (d->mDataSource) {
+        QVariantMap request;
+        QVariant arg;
+
+        request["command"] = QVariant("status");
+        request["id"] = d->mID;
+        request["token"] = d->mToken;
+
+        arg = request;
+
+        connect(d->mDataSource, SIGNAL(sourceUpdated(QVariantMap)), this, SLOT(onStatusUpdated(QVariantMap)));
+        d->mDataSource->setArguments(arg);
+    }
 }

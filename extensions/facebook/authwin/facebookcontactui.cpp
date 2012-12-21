@@ -26,12 +26,12 @@ FacebookContactUI::FacebookContactUI(const QRectF &rect) :
     d->mScrollView->setVisible(true);
     d->mScrollView->enableDefaultBackground(false);
     d->mScrollView->enableShadow(false);
-//    d->mScrollView->hide();
 
     d->mSearchBox = new PlexyDesk::LineEdit(this);
     d->mSearchBox->setSize (QSizeF(rect.width() - 40, 32));
     d->mSearchBox->show();
-    d->mSearchBox->setPos( (rect.width() / 2) - (d->mSearchBox->boundingRect().width() / 2) , rect.height() - 45);
+    d->mSearchBox->setPos( (rect.width() / 2) - (d->mSearchBox->boundingRect().width() / 2) ,
+                           38 + d->mScrollView->boundingRect().height() );
 
     connect(d->mSearchBox, SIGNAL(text(QString)), d->mScrollView, SLOT(filter(QString)));
     connect(d->mScrollView, SIGNAL(clicked(QString)), this, SLOT(onViewClicked(QString)));
@@ -73,10 +73,10 @@ void FacebookContactUI::paintFrontView(QPainter *painter, const QRectF &rect)
     painter->fillPath(backgroundPath, QColor(235, 235, 235));
 
     if (d->mSearchBox) {
-        QRectF searchBoxRect = QRectF (0.0, d->mScrollView->boundingRect().height() + 28,
+        QRectF searchBoxRect = QRectF (0.0, d->mScrollView->contentRect().height() + 28,
                                        rect.width(), rect.height());
 
-        QRectF searchBoxLineRect = QRectF (0.0, d->mScrollView->boundingRect().height() + 29,
+        QRectF searchBoxLineRect = QRectF (0.0, d->mScrollView->contentRect().height() + 29,
                                        rect.width(), rect.height());
 
         QPen pen = QPen(QColor(220, 220, 220), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
@@ -84,8 +84,8 @@ void FacebookContactUI::paintFrontView(QPainter *painter, const QRectF &rect)
 
         QLinearGradient linearGrad(searchBoxRect.topRight(), searchBoxRect.bottomRight());
 
-        linearGrad.setColorAt(0, QColor(111, 111, 111));
-        linearGrad.setColorAt(1, QColor(105, 105, 105));
+        linearGrad.setColorAt(0, QColor(93, 103, 114));
+        linearGrad.setColorAt(1, QColor(66, 77, 88));
 
         painter->fillRect(searchBoxRect, linearGrad);
         painter->drawLine(searchBoxRect.topRight(), searchBoxRect.topLeft());

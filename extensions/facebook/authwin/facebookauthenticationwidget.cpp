@@ -26,6 +26,7 @@ FacebookAuthenticationWidget::FacebookAuthenticationWidget(const QRectF &rect, Q
     d->mPermissions =
             QString("https://graph.facebook.com/oauth/authorize?client_id=170356722999159&redirect_uri=http://www.facebook.com/connect/login_success.html&type=user_agent&display=popup&response_type=token&scope=read_stream");
     addPermissions("friends_location");
+    addPermissions("publish_stream");
     addPermissions("friends_hometown");
 
     connect(d->mWebView, SIGNAL(loadFinished(bool)), this, SLOT(onLoadFinished(bool)));

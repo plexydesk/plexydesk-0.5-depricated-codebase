@@ -21,6 +21,8 @@ public Q_SLOTS:
     void onFriendListReady();
     void onUserInfoReady(FacebookUserInfo *job);
     void onContactInfoReady();
+    void onStatusReady();
+    void onFeedPublished();
 
 private:
     class Private;

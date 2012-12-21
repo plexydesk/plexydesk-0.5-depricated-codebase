@@ -143,6 +143,7 @@ void AuthPlugin::onAddContactCard(const QString &id)
     FacebookContactCard *contactCard = new FacebookContactCard(QRectF(0.0, 0.0, 320, 480), 0);
     contactCard->setPos(50, 50);
     contactCard->setDataSource(id, mToken, dataSource());
+    contactCard->setController(this);
 
     if (viewport())
         viewport()->addWidgetToView(contactCard);

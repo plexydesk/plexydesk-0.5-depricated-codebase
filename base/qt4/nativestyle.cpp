@@ -43,23 +43,15 @@ void NativeStyle::drawPushButton(const StyleFeatures &features, QPainter *painte
     QPainterPath backgroundPath;
     backgroundPath.addRoundedRect(rect, 3.5, 3.5);
 
-    QLinearGradient linearGrad(QPointF(0, 0), QPointF(0.0 , rect.height()));
-
     if(features.state == StyleFeatures::SF_Raised) {
-        linearGrad.setColorAt(0, QColor(35, 112, 189));
-        linearGrad.setColorAt(1, QColor(50, 139, 222));
-        //QColor(189, 191, 196)
-        painter->fillPath(backgroundPath, linearGrad);
-        QPen pen(QColor(56, 86, 122), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+        painter->fillPath(backgroundPath, features.buttonGradiantRaised);
+        QPen pen(features.buttonBorderGradient, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
         painter->setPen(pen);
         painter->drawPath(backgroundPath);
     }
     else {
-        linearGrad.setColorAt(1, QColor(35, 112, 189));
-        linearGrad.setColorAt(0, QColor(50, 139, 222));
-        //QColor(189, 191, 196)
-        painter->fillPath(backgroundPath, linearGrad);
-        QPen pen(QColor(56, 86, 122), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+        painter->fillPath(backgroundPath, features.buttonGradiantMouseOver);
+        QPen pen(features.buttonBorderGradient, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
         painter->setPen(pen);
         painter->drawPath(backgroundPath);
     }
@@ -94,8 +86,14 @@ void NativeStyle::drawPushButtonText(const StyleFeatures &features, const QStrin
     painter->setRenderHint(QPainter::Antialiasing, true);
     painter->setRenderHint(QPainter::TextAntialiasing, true);
     painter->setRenderHint(QPainter::HighQualityAntialiasing, true);
-    QPen pen(QColor(255, 255, 255), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
-    painter->setPen(QColor(255, 255, 255));
+    QPen pen;
+
+    pen = QPen(QColor (111, 111, 111), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    painter->setPen(pen);
+    painter->drawText(features.exposeRect.adjusted(-1, -1, -1, -1), Qt::AlignCenter, text);
+
+    pen = QPen(features.fontColor, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    painter->setPen(pen);
     painter->drawText(features.exposeRect, Qt::AlignCenter, text);
 }
 
@@ -119,7 +117,7 @@ void NativeStyle::drawLineEdit(const StyleFeatures &features, QPainter *painter)
     painter->fillPath(backgroundPath, linearGrad);
     QPen pen;
     if(features.state == StyleFeatures::SF_MouseOver) {
-        pen = QPen(QColor(98, 101, 208), 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+        pen = QPen(QColor(98, 101, 208), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     } else {
         pen = QPen(QColor(98, 101, 108), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     }
@@ -133,18 +131,24 @@ void NativeStyle::drawLineEditText(const StyleFeatures &features, const QString 
     painter->setRenderHint(QPainter::Antialiasing, true);
     painter->setRenderHint(QPainter::TextAntialiasing, true);
     painter->setRenderHint(QPainter::HighQualityAntialiasing, true);
-    QPen pen(QColor(0, 0, 0), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    QPen pen;// () pen(QColor(0, 0, 0), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
-    QFont font = QFont("", 20);
+    pen = QPen(QColor(255, 255, 255), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    QFont font = QFont("", 18);
     QFontMetrics fontMetrics(font);
     int width = fontMetrics.width(text.left(features.cursorLocation));
 
     painter->setFont(font);
     painter->setPen(pen);
-    painter->drawText(features.exposeRect, Qt::AlignLeft | Qt::AlignVCenter, text);
+    painter->drawText(features.exposeRect.adjusted(11.0, 1.0, 1.0, 1.0), Qt::AlignLeft | Qt::AlignVCenter, text);
+
+    pen = QPen(QColor(0, 0, 0), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    painter->setPen(pen);
+    painter->drawText(features.exposeRect.adjusted(10.0, 0.0, 0.0, 0.0), Qt::AlignLeft | Qt::AlignVCenter, text);
+
     pen = QPen(QColor(98, 101, 108), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     painter->setPen(pen);
-    painter->drawLine(QPoint(width, 4), QPoint(width,features.exposeRect.height() - 4));
+    painter->drawLine(QPoint(width + 11, 4), QPoint(width + 11,features.exposeRect.height() - 4));
 }
 
 void NativeStyle::drawLabelEditText(const StyleFeatures &features, const QString &text, QPainter *painter)

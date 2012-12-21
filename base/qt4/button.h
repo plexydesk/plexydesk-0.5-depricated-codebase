@@ -24,11 +24,11 @@ public:
     virtual void setIcon(const QImage &img);
 
     virtual void setStyle(Style *style);
+    virtual Style *style();
 
     virtual QRectF boundingRect() const;
 
     virtual void setSize (const QSize &size);
-
 
 Q_SIGNALS:
     void clicked();
@@ -37,6 +37,9 @@ protected:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+
+    virtual void paintNormalButton(QPainter *painter, const QStyleOptionGraphicsItem *option);
+    virtual void paintSunkenButton(QPainter *painter, const QStyleOptionGraphicsItem *option);
 
 private:
     class PrivateButton;

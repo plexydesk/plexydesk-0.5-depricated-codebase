@@ -247,13 +247,10 @@ void DesktopWidget::paintFrontView(QPainter *p, const QRectF &rect)
         p->drawPixmap(QRect(rect.x() , rect.y() , d->mDefaultBackgroundPixmap.width() / scaleFactorForWidth(), d->mDefaultBackgroundPixmap.height() / scaleFactorForHeight()), d->mDefaultBackgroundPixmap);
         p->restore();
     } else {
-//TODO: add a method to enable/disable
         StyleFeatures feature;
         feature.exposeRect = rect;
         feature.state = StyleFeatures::SF_FrontView;
         d->mStyle->paintControlElement(Style::CE_Frame, feature, p);
-//        feature.exposeRect = QRect(5.0, 24.0, rect.width() - 10, 24.0);
-//        d->mStyle->paintControlElement(Style::CE_Seperator, feature, p);
     }
 }
 
@@ -358,36 +355,35 @@ void DesktopWidget::setStyle(Style *style)
 
 void DesktopWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    QGraphicsItem::mouseReleaseEvent(event);
     qDebug() << Q_FUNC_INFO << event->pos();
     d->mPressHoldTimer->stop();
     Q_EMIT clicked();
-    QGraphicsItem::mouseReleaseEvent(event);
 }
 
 void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    qDebug() << Q_FUNC_INFO << event->pos();
+    QGraphicsItem::mousePressEvent(event);
     if (event->buttons() == Qt::RightButton && (state() == VIEW || state() == ROTATED)) {
         this->setChildWidetVisibility(false);
         d->mPropertyAnimationForRotation->start();
-        QGraphicsItem::mousePressEvent(event);
+        //QGraphicsItem::mousePressEvent(event);
         return;
     }
 
     if (d->mEditMode) {
         d->mPressHoldTimer->stop();
         Q_EMIT closed();
-        QGraphicsItem::mousePressEvent(event);
+        //QGraphicsItem::mousePressEvent(event);
         return;
     }
 
     if (event->buttons() == Qt::LeftButton && state() == DOCKED) {
         d->mPressHoldTimer->start(3000);
         qDebug() << Q_FUNC_INFO << "Press start";
-        QGraphicsItem::mousePressEvent(event);
+        //QGraphicsItem::mousePressEvent(event);
         return;
     }
-    QGraphicsItem::mousePressEvent(event);
 }
 void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
@@ -428,6 +424,6 @@ void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
         d->mPropertyAnimationForZoom->start();
         setChildWidetVisibility(false);
     }
-    //QGraphicsItem::mouseDoubleClickEvent(event);
+    QGraphicsItem::mouseDoubleClickEvent(event);
 }
 }

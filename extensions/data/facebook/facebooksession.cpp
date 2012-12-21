@@ -99,6 +99,61 @@ void FacebookSession::setArguments(QVariant &args)
         connect(reply, SIGNAL(finished()), this, SLOT(onContactInfoReady()));
     }
 
+    if (command == "status") {
+        QString key = param["token"].toString();
+
+        if (key.isEmpty() || key.isNull())  {
+            //Notify the client about the missing key.
+            QVariantMap response;
+            response["command"] = QVariant("login");
+            response["token"] = QVariant("");
+            d->data = response;
+            qDebug() << Q_FUNC_INFO << "No key found";
+            Q_EMIT sourceUpdated(response);
+            return;
+        }
+
+        QString id = param["id"].toString();
+        QUrl url (QString("https://graph.facebook.com/%1/statuses?fields=message,from&limit=1&access_token=%2").arg(id, key));
+        QNetworkReply *reply = d->manager->get(QNetworkRequest(url));
+
+        connect(reply, SIGNAL(finished()), this, SLOT(onStatusReady()));
+    }
+
+    if (command == "wallpost") {
+        QString key = param["token"].toString();
+
+        if (key.isEmpty() || key.isNull())  {
+            //Notify the client about the missing key.
+            QVariantMap response;
+            response["command"] = QVariant("login");
+            response["token"] = QVariant("");
+            d->data = response;
+            qDebug() << Q_FUNC_INFO << "No key found";
+            Q_EMIT sourceUpdated(response);
+            return;
+        }
+
+       QString id = param["id"].toString();
+//        QUrl url (QString("https://graph.facebook.com/%1/statuses?fields=message,from&limit=1&access_token=%2").arg(id, key));
+//        QNetworkReply *reply = d->manager->get(QNetworkRequest(url));
+
+//        connect(reply, SIGNAL(finished()), this, SLOT(onStatusReady()));
+        QNetworkRequest request;
+        request.setUrl(QString("https://graph.facebook.com/%1/feed/").arg(id));
+        request.setHeader(QNetworkRequest::ContentTypeHeader, "multipart/form-data");
+
+        QByteArray postData;
+        postData.append(QString("message=%1&").arg(param["message"].toString()));
+        postData.append("name=plexydesk&");
+        postData.append(QString("access_token=%1").arg(key));
+
+        QNetworkReply *reply = d->manager->post(request, postData);
+
+        connect(reply, SIGNAL(finished()), this, SLOT(onFeedPublished()));
+
+    }
+
 }
 
 void FacebookSession::onFriendListReady()
@@ -159,9 +214,7 @@ void FacebookSession::onContactInfoReady()
 
             bool parsingSuccessful = jsonReader.parse(data.toStdString(), root);
 
-            qDebug() << Q_FUNC_INFO << data;
             if (parsingSuccessful) {
-
                 QVariantMap response;
                 response["command"] = QVariant("userdata");
                 response["token"] = d->mToken;
@@ -179,6 +232,51 @@ void FacebookSession::onContactInfoReady()
 
                 Q_EMIT sourceUpdated(response);
             }
+        }
+        reply->deleteLater();
+    }
+}
+
+void FacebookSession::onStatusReady()
+{
+    if (sender()) {
+        QNetworkReply *reply = qobject_cast<QNetworkReply*> (sender());
+
+        if (reply) {
+            QString data = reply->readAll() ;
+            Json::Value root;
+            Json::Reader jsonReader;
+             qDebug() << Q_FUNC_INFO << data;
+
+            bool parsingSuccessful = jsonReader.parse(data.toStdString(), root);
+
+            if (parsingSuccessful && !root["data"].isNull()) {
+                const Json::Value data_list = root["data"][0];
+                QString message = data_list["message"].asCString();
+
+                QVariantMap response;
+                response["command"] = QVariant("status");
+                response["message"] = message;
+                response["id"] = data_list["from"]["id"].asCString();
+
+                Q_EMIT sourceUpdated(response);
+            }
+        }
+
+        reply->deleteLater();
+    }
+}
+
+void FacebookSession::onFeedPublished()
+{
+    if (sender()) {
+        QNetworkReply *reply = qobject_cast<QNetworkReply*> (sender());
+
+        if (reply) {
+            QString data = reply->readAll() ;
+            qDebug() << Q_FUNC_INFO << data;
+
+            reply->deleteLater();
         }
     }
 }

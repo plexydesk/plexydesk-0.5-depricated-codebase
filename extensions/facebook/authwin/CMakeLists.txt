@@ -6,6 +6,8 @@ SET(sourceFiles
     contactlistitem.cpp
     facebookcontactcard.cpp
     facebookauthenticationwidget.cpp
+    facebookmessagedialog.cpp
+    facebookcontactcardbutton.cpp
     )
 
 SET(headerFiles
@@ -16,6 +18,8 @@ SET(headerFiles
     contactlistitem.h
     facebookcontactcard.h
     facebookauthenticationwidget.h
+    facebookmessagedialog.h
+    facebookcontactcardbutton.h
 )
 
 SET(QTMOC_SRCS
@@ -26,6 +30,8 @@ SET(QTMOC_SRCS
     contactlistitem.h
     facebookcontactcard.h
     facebookauthenticationwidget.h
+    facebookmessagedialog.h
+    facebookcontactcardbutton.h
 )
 
 QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})

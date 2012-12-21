@@ -49,6 +49,9 @@ public:
     int fontSize;
     QPen fontPen;
     int fontFlags;
+    QGradient buttonGradiantRaised;
+    QGradient buttonGradiantMouseOver;
+    QGradient buttonBorderGradient;
 };
 
 class Style : public QObject

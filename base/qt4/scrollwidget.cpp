@@ -96,7 +96,7 @@ void ScrollWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void ScrollWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    QGraphicsItem::mouseReleaseEvent (event);
+    QGraphicsItem::mouseReleaseEvent(event);
 }
 
 void ScrollWidget::dragMoveEvent(QGraphicsSceneDragDropEvent * /*event*/)

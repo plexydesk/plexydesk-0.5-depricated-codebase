@@ -129,7 +129,6 @@ void ContactListItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     painter->setOpacity(0.9);
     painter->setPen(pen);
     painter->drawText(nameRect, Qt::AlignVCenter, d->mName);
-
 }
 
 void ContactListItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
