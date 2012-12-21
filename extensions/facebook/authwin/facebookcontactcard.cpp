@@ -650,7 +650,7 @@ void FacebookContactCard::onWallPostClicked()
     if (this->controller() && this->controller()->viewport() && d->mPostDialog) {
         this->controller()->viewport()->addWidgetToView(d->mPostDialog);
 
-        d->mPostDialog->setPos(d->mWallPostButton->pos().x(), d->mWallPostButton->pos().y());
+        d->mPostDialog->setPos(this->mapToScene(d->mWallPostButton->pos()));
     }
 }
 
@@ -717,7 +717,6 @@ QImage FacebookContactCard::PrivateFacebookContactCard::genShadowImage(const QRe
 
 void FacebookContactCard::paintFrontView(QPainter *painter, const QRectF &rect)
 {
-
     QRectF pixmapRect = d->mCoverPicture.rect();
 
     /* Draw background */
@@ -743,7 +742,7 @@ void FacebookContactCard::paintFrontView(QPainter *painter, const QRectF &rect)
     /* Draw Avatar */
     QPainterPath shadowPath;
     float offset = 128 - 60;
-    float radius = 6.0;
+
     float avatarHeight =  d->mUserPicture.width();
     float avatarWidth = d->mUserPicture.width();
 
