@@ -36,7 +36,6 @@ SET(sourceFiles
     iconjob.cpp
     iconprovider.cpp
     desktopbaseui.cpp
-    plexypanel.cpp
     ${extra_source}
     )
 
@@ -65,7 +64,6 @@ SET(QTMOC_SRCS
     iconprovider.h
 #    plexyeventhandler.h
     desktopbaseui.h
-    plexypanel.h
     ${extra_headers}
     )
 
