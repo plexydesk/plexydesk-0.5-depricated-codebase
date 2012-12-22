@@ -24,6 +24,7 @@ SET(sourceFiles
     lineedit.cpp
     webkitwebview.cpp
     texteditor.cpp
+    windowbutton.cpp
     )
 
 SET(headerFiles
@@ -56,6 +57,7 @@ SET(headerFiles
     lineedit.h
     webkitwebview.h
     texteditor.h
+    windowbutton.h
     )
 
 SET(MOC_SRCS
@@ -81,6 +83,7 @@ SET(MOC_SRCS
    lineedit.h
    webkitwebview.h
    texteditor.h
+   windowbutton.h
    )
 
 # DBUS is working only under linux for now

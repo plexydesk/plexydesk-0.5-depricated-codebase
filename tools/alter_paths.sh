@@ -1,6 +1,6 @@
 #before you run the script run make install, then run macdeply 
 rm -rf ~/Applications/plexydesk.app/
-make install
+make  -j 4 install
 macdeployqt ~/Applications/plexydesk.app/bin/plexydesk.app/
 
 for x in ~/Applications/plexydesk.app/bin/plexydesk.app/Contents/MacOS/plexydesk

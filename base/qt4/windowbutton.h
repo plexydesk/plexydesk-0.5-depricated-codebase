@@ -16,39 +16,37 @@
 *  You should have received a copy of the GNU General Public License
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
-#ifndef PLEXY_WIDGET_CLOCK_H
-#define PLEXY_WIDGET_CLOCK_H
+
+#ifndef WINDOWBUTTON_H
+#define WINDOWBUTTON_H
 
 #include <plexy.h>
-#include <controllerinterface.h>
-#include <datasource.h>
-#include <QTimer>
-#include "clockwidget.h"
+#include <button.h>
 
-
-class Clock : public PlexyDesk::ControllerInterface
+namespace PlexyDesk
+{
+class WindowButton : public PlexyDesk::Button
 {
     Q_OBJECT
-
 public:
-    Clock(QObject *parent);
-    virtual ~Clock();
+    typedef enum {
+        CLOSE,
+        ZOOM,
+        MINIMIZE
+    } WindowButtonType;
 
-    PlexyDesk::AbstractDesktopWidget *defaultView();
+    explicit WindowButton(QGraphicsObject *parent = 0);
+    ~WindowButton();
 
-    void revokeSession(const QVariantMap &args);
+    void setButtonType(WindowButtonType type);
 
-    void setViewRect(const QRectF &rect);
-
-    bool disconnectFromDataSource();
-
-public Q_SLOTS:
-    void onDataUpdated(const QVariantMap &data);
+protected:
+    void paintNormalButton(QPainter *painter, const QStyleOptionGraphicsItem *option);
+    void paintSunkenButton(QPainter *painter, const QStyleOptionGraphicsItem *option);
 
 private:
-    QTimer *mTimer;
-    ClockWidget *clock;
+    class PrivateWindowButton;
+    PrivateWindowButton *const d;
 };
-
-
-#endif
+} // PlexyDesk
+#endif // WINDOWBUTTON_H

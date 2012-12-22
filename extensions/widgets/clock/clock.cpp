@@ -22,6 +22,7 @@
 Clock::Clock(QObject *parent) : PlexyDesk::ControllerInterface (parent)
 {
     clock = new ClockWidget(QRectF(0, 0, 210, 210));
+    clock->setController(this);
 
     if (connectToDataSource("timerengine")) {
         connect(dataSource(), SIGNAL(sourceUpdated(QVariantMap)), this, SLOT(onDataUpdated(QVariantMap)));
@@ -32,6 +33,7 @@ Clock::~Clock()
 {
     if (clock)
         delete clock;
+
 }
 
 PlexyDesk::AbstractDesktopWidget *Clock::defaultView()
@@ -47,6 +49,15 @@ void Clock::setViewRect(const QRectF &rect)
 {
     if (clock)
         clock->setPos(rect.x(), rect.y());
+}
+
+bool Clock::disconnectFromDataSource()
+{
+    disconnect(dataSource(), SIGNAL(sourceUpdated(QVariantMap)));
+    delete clock;
+    clock = 0;
+
+    return TRUE;
 }
 
 void Clock::onDataUpdated(const QVariantMap &data)

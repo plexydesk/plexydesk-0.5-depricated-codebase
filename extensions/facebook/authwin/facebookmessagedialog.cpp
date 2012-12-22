@@ -28,9 +28,9 @@ FacebookMessageDialog::FacebookMessageDialog(const QRectF &rect, QGraphicsObject
 
     d->mSearchButton->setLabel(tr("Post"));
 
-    d->mEditor = new PlexyDesk::TextEditor(rect.adjusted(0, 0, -20, -54), this);
+    d->mEditor = new PlexyDesk::TextEditor(rect.adjusted(0, 0, -15, -64), this);
     d->mEditor->show();
-    d->mEditor->setPos(10, 10);
+    d->mEditor->setPos(10, 25);
 }
 
 FacebookMessageDialog::~FacebookMessageDialog()

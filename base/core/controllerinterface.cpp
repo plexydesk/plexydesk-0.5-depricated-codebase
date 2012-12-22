@@ -88,6 +88,12 @@ bool ControllerInterface::connectToDataSource(const QString &source)
    return true;
 }
 
+bool ControllerInterface::disconnectFromDataSource()
+{
+    //disconnect(d->mDataSource.data(), SIGNAL(sourceUpdated(QVariantMap)));
+    return false;
+}
+
 void ControllerInterface::onReady()
 {
     if(d->mDataSource)

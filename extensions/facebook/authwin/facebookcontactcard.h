@@ -22,6 +22,7 @@ public Q_SLOTS:
 
     void onWallPostClicked();
     void onMessageRestested();
+    void onWidgetClosed(PlexyDesk::AbstractDesktopWidget*);
 
 private:
     virtual void paintFrontView(QPainter *painter, const QRectF &rect);

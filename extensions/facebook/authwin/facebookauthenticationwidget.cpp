@@ -73,4 +73,5 @@ void FacebookAuthenticationWidget::onUrlChanged(const QUrl &url)
             d->mWebView->setVisible(false);
         }
     }
+
 }

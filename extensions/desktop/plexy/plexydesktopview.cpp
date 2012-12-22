@@ -69,3 +69,10 @@ void PlexyDesktopView::onSessionUpdated(const QString &data)
     qDebug() << Q_FUNC_INFO << data;
     d->mThemeLoader->saveSessionToDisk(data);
 }
+
+void PlexyDesktopView::onWidgetClosed(PlexyDesk::AbstractDesktopWidget *widget)
+{
+    qDebug() << Q_FUNC_INFO;
+    PlexyDesk::AbstractDesktopView::onWidgetClosed(widget);
+}
+

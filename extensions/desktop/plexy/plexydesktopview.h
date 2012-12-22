@@ -15,6 +15,7 @@ public:
 
 public Q_SLOTS:
     void onSessionUpdated(const QString &data);
+    void onWidgetClosed(PlexyDesk::AbstractDesktopWidget*);
 
 private:
     class PrivatePlexyDesktopView;

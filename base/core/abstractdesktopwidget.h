@@ -97,7 +97,7 @@ public :
     void setState(State s);
 
 Q_SIGNALS:
-    void closed();
+    void closed(PlexyDesk::AbstractDesktopWidget *widget);
     void rectChanged();
     void stateChanged();
 

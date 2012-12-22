@@ -146,6 +146,7 @@ AbstractDesktopWidget::AbstractDesktopWidget(const QRectF &rect, QGraphicsObject
 
 AbstractDesktopWidget::~AbstractDesktopWidget()
 {
+    qDebug() << Q_FUNC_INFO;
     delete d;
 }
 

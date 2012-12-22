@@ -102,8 +102,6 @@ AbstractDesktopView::AbstractDesktopView(QGraphicsScene *scene, QWidget *parent)
     d->mSessionTree->appendChild(d->mRootElement);
 
     setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
-    //setOptimizationFlag(QGraphicsView::DontAdjustForAntialiasing);
-    //setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
     setFrameStyle(QFrame::NoFrame);
 }
 
@@ -177,9 +175,14 @@ void AbstractDesktopView::addController(const QString &controllerName)
 
     d->mControllerMap[controllerName] = controller;
 
-    QGraphicsItem *defaultView = controller->defaultView();
+    AbstractDesktopWidget *defaultView = controller->defaultView();
+    QGraphicsItem *viewItem = qobject_cast<QGraphicsItem*>(defaultView);
+    if (!viewItem)
+        return;
 
-    scene()->addItem(defaultView);
+    scene()->addItem(viewItem);
+
+    connect(defaultView, SIGNAL(closed(PlexyDesk::AbstractDesktopWidget*)), this, SLOT(onWidgetClosed(PlexyDesk::AbstractDesktopWidget*)));
 
     defaultView->show();
 
@@ -264,6 +267,7 @@ void AbstractDesktopView::dragMoveEvent(QDragMoveEvent *event)
 void AbstractDesktopView::addWidgetToView(AbstractDesktopWidget *widget)
 {
     qDebug() << Q_FUNC_INFO << "Adding widget";
+    connect(widget, SIGNAL(closed(PlexyDesk::AbstractDesktopWidget*)), this, SLOT(onWidgetClosed(PlexyDesk::AbstractDesktopWidget*)));
     QGraphicsItem *item = (AbstractDesktopWidget*) widget;
     scene()->addItem(item);
     item->show();
@@ -348,6 +352,22 @@ void AbstractDesktopView::restoreViewFromSession(const QString &sessionData)
                 }
             }
         }
+    }
+}
+
+void AbstractDesktopView::onWidgetClosed(AbstractDesktopWidget *widget)
+{
+    qDebug() << Q_FUNC_INFO;
+    if (scene()) {
+        bool deleted = 0;
+
+        if (widget->controller()) {
+           deleted = widget->controller()->disconnectFromDataSource();
+           qDebug() << Q_FUNC_INFO << deleted;
+        }
+
+        if (!deleted)
+            delete widget;
     }
 }
 

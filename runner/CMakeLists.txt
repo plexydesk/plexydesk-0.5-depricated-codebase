@@ -54,7 +54,6 @@ SET(headerFiles
     iconprovider.h
 #    plexyeventhandler.h
     desktopbaseui.h
-    plexypanel.h
     ${extra_headers}
     )
 

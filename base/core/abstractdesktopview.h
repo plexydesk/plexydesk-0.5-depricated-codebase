@@ -62,6 +62,9 @@ Q_SIGNALS:
 
     void sessionUpdated(const QString &data);
 
+public:
+    virtual void onWidgetClosed(PlexyDesk::AbstractDesktopWidget *);
+
 private:
 
     virtual void dropEvent(QDropEvent *event);

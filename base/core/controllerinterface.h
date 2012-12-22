@@ -74,6 +74,8 @@ public:
 
     virtual QString controllerName() const;
 
+    virtual bool disconnectFromDataSource();
+
 protected:
     virtual bool connectToDataSource(const QString &source);
 

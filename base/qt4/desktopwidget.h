@@ -36,6 +36,7 @@ public Q_SLOTS:
     void propertyAnimationForZoomDone();
     void propertyAnimationForRotationDone();
     void pressHoldTimeOut();
+    void windowCloseButtonClicked();
 
 Q_SIGNALS:
     void clicked();

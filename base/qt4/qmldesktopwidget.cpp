@@ -106,7 +106,7 @@ void QmlDesktopWidget::onQuit()
     d->mQmlChild->hide();
     scene()->removeItem(d->mQmlChild);
     d->mQmlChild->setParentItem(0);
-    Q_EMIT closed();
+    Q_EMIT closed(this);
 }
 
 void QmlDesktopWidget::onStateChanged()

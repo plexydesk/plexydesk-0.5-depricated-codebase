@@ -16,6 +16,7 @@
 #include <imagecache.h>
 #include <svgprovider.h>
 #include <nativestyle.h>
+#include <windowbutton.h>
 
 namespace PlexyDesk
 {
@@ -50,6 +51,7 @@ public:
     QGraphicsDropShadowEffect *mShadowEffect;
     Style *mStyle;
     QString mWindowTitle;
+    WindowButton *mCloseButton;
 };
 
 DesktopWidget::DesktopWidget(const QRectF &rect, QGraphicsObject *parent)
@@ -100,10 +102,18 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QGraphicsObject *parent)
     d->mShadowEffect->setYOffset(0);
     d->mShadowEffect->setColor(QColor(0.0, 0.0, 0.0));
     this->setGraphicsEffect(d->mShadowEffect);
+
+    //window buttons
+    d->mCloseButton = new WindowButton(this);
+    d->mCloseButton->show();
+    d->mCloseButton->setSize(QSize(12, 12));
+    d->mCloseButton->setPos(rect.x() + 10, rect.y() + 6);
+    connect(d->mCloseButton, SIGNAL(clicked()), this, SLOT(windowCloseButtonClicked()));
 }
 
 DesktopWidget::~DesktopWidget()
 {
+    qDebug() << Q_FUNC_INFO;
     delete d;
 }
 
@@ -111,7 +121,10 @@ void DesktopWidget::enableDefaultBackground(bool enable)
 {
 
     if (!d->mHasDefaultBackground) {
-        setDefaultImages();
+        //setDefaultImages();
+    }
+    if (!enable) {
+        d->mCloseButton->hide();
     }
     d->mDefaultBackground = enable;
 }
@@ -299,6 +312,14 @@ void DesktopWidget::pressHoldTimeOut()
     update();
 }
 
+void DesktopWidget::windowCloseButtonClicked()
+{
+    qDebug() << Q_FUNC_INFO;
+    this->hide();
+
+    Q_EMIT closed(this);
+}
+
 void DesktopWidget::zoomDone()
 {
     prepareGeometryChange();
@@ -379,7 +400,7 @@ void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
     if (d->mEditMode) {
         d->mPressHoldTimer->stop();
-        Q_EMIT closed();
+        Q_EMIT closed(this);
         //QGraphicsItem::mousePressEvent(event);
         return;
     }

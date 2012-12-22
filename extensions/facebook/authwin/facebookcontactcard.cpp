@@ -476,7 +476,9 @@ class FacebookContactCard::PrivateFacebookContactCard
 public:
 
     PrivateFacebookContactCard(){}
-    ~PrivateFacebookContactCard(){}
+    ~PrivateFacebookContactCard()
+    {
+    }
 
     QImage genShadowImage(const QRect &rect, const QPainterPath &path, const QPixmap &pixmap);
 
@@ -516,10 +518,12 @@ FacebookContactCard::FacebookContactCard(const QRectF &rect, QGraphicsObject *pa
 
     connect(d->mWallPostButton,  SIGNAL(clicked()), this, SLOT(onWallPostClicked()));
     connect(d->mPostDialog, SIGNAL(messageRequested()), this, SLOT(onMessageRestested()));
+    connect(d->mPostDialog, SIGNAL(closed(PlexyDesk::AbstractDesktopWidget*)), this, SLOT(onWidgetClosed(PlexyDesk::AbstractDesktopWidget*)));
 }
 
 FacebookContactCard::~FacebookContactCard()
 {
+    qDebug() << Q_FUNC_INFO;
     delete d;
 }
 
@@ -671,6 +675,14 @@ void FacebookContactCard::onMessageRestested()
 
         d->mDataSource->setArguments(arg);
     }
+}
+
+void FacebookContactCard::onWidgetClosed(PlexyDesk::AbstractDesktopWidget *)
+{
+    d->mPostDialog = new FacebookMessageDialog(QRect(boundingRect().x(), boundingRect().y(), boundingRect().width(), 200));
+    d->mPostDialog->hide();
+    connect(d->mPostDialog, SIGNAL(messageRequested()), this, SLOT(onMessageRestested()));
+    connect(d->mPostDialog, SIGNAL(closed(PlexyDesk::AbstractDesktopWidget*)), this, SLOT(onWidgetClosed(PlexyDesk::AbstractDesktopWidget*)));
 }
 
 QImage FacebookContactCard::PrivateFacebookContactCard::genShadowImage(const QRect &rect, const QPainterPath &path, const QPixmap &pixmap)
