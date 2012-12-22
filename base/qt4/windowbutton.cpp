@@ -66,13 +66,6 @@ void WindowButton::paintNormalButton(QPainter *painter, const QStyleOptionGraphi
     background.addEllipse(rect);
     painter->fillPath(background, QColor(58, 113, 227));
 
-//    QPen pen = QPen(QColor (111, 111, 111), 4, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
-
-//    painter->setPen(pen);
-//    painter->setRenderHint(QPainter::Antialiasing, true);
-//    painter->drawLine(rect.topLeft(), rect.bottomRight());
-//    painter->drawLine(rect.topRight(), rect.bottomLeft());
-
     painter->setBrush(gr);
     painter->setPen(Qt::NoPen);
     painter->setOpacity(0.9);

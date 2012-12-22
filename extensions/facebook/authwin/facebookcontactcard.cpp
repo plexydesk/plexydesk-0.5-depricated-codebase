@@ -833,7 +833,7 @@ void FacebookContactCard::paintFrontView(QPainter *painter, const QRectF &rect)
 
 void FacebookContactCard::paintDockView(QPainter *painter, const QRectF &rect)
 {
-    PlexyDesk::DesktopWidget::paintDockView(painter, rect);
+    //PlexyDesk::DesktopWidget::paintDockView(painter, rect);
 
     /* Draw Avatar */
     float avatarHeight =  d->mUserPicture.width();
@@ -849,13 +849,25 @@ void FacebookContactCard::paintDockView(QPainter *painter, const QRectF &rect)
         avatarHeight = d->mUserPicture.width();
     }
 
+    QPainterPath mainPath;
+    mainPath.addRoundRect(rect, 8.0);
+
     painter->setRenderHint(QPainter::Antialiasing, true);
     painter->setRenderHint(QPainter::TextAntialiasing, true);
     painter->setRenderHint(QPainter::HighQualityAntialiasing, true);
 
-    painter->drawPixmap(QRect(rect.x() + 2, rect.y() + 2, rect.width() - 4  , rect.height() - 4), d->mUserPicture,
+
+    painter->setClipPath(mainPath);
+    painter->drawPixmap(QRect(rect.x(), rect.y(), rect.width(), rect.height()), d->mUserPicture,
                         QRect(0, 0, dockRect().width() - 4  , dockRect().height() - 4));
 
+    QPainterPath framePath;
+    framePath.addRoundRect(rect.adjusted(1.0, 1.0, -1.0 , -1.0), 8.0);
+    QPen pen = QPen(QColor (245, 245, 245), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    painter->setPen(pen);
+    painter->setOpacity(0.8);
+    painter->drawPath(framePath);
+    //painter->fillPath(framePath, QColor(255, 255, 255));
 }
 
 void FacebookContactCard::requestStatusMessage()
