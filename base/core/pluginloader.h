@@ -52,7 +52,9 @@ public:
 
     QSharedPointer<DataSource> engine(const QString &name);
 
-    QSharedPointer<ControllerInterface> controller(const QString &name);
+    ControllerPtr controller(const QString &name);
+
+    QString controllerName(const QString &key) const;
 
     QSharedPointer<DesktopViewPlugin> view(const QString &name);
 

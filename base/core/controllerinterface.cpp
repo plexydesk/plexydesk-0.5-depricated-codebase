@@ -88,7 +88,7 @@ bool ControllerInterface::connectToDataSource(const QString &source)
    return true;
 }
 
-bool ControllerInterface::disconnectFromDataSource()
+bool ControllerInterface::disconnectFromDataSource(AbstractDesktopWidget *widget)
 {
     //disconnect(d->mDataSource.data(), SIGNAL(sourceUpdated(QVariantMap)));
     return false;

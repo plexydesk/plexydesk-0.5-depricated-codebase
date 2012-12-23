@@ -2,6 +2,8 @@
 #define PLEXYDESKTOPVIEW_H
 
 #include <QGraphicsView>
+#include <QAction>
+
 #include <abstractdesktopview.h>
 
 class PlexyDesktopView : public PlexyDesk::AbstractDesktopView
@@ -13,9 +15,15 @@ public:
 
     void layout(const QRectF &rect);
 
+    void createActions();
+
 public Q_SLOTS:
     void onSessionUpdated(const QString &data);
     void onWidgetClosed(PlexyDesk::AbstractDesktopWidget*);
+    void onTriggered(QAction *action);
+
+protected:
+    virtual void contextMenuEvent(QContextMenuEvent *event);
 
 private:
     class PrivatePlexyDesktopView;

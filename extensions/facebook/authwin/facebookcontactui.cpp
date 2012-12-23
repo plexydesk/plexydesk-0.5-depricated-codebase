@@ -56,7 +56,8 @@ void FacebookContactUI::setFacebookContactData(QHash<QString, QVariant> data)
 
 void FacebookContactUI::addContact(const QVariantMap &data)
 {
-    d->mScrollView->addContact(data["id"].toString(), data["name"].toString(), data["message"].toString(), data["picture"].value<QPixmap>());
+    if (d->mScrollView)
+        d->mScrollView->addContact(data["id"].toString(), data["name"].toString(), data["message"].toString(), data["picture"].value<QPixmap>());
 }
 
 void FacebookContactUI::onViewClicked(QString id)

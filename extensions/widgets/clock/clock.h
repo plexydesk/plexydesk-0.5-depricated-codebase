@@ -40,7 +40,11 @@ public:
 
     void setViewRect(const QRectF &rect);
 
-    bool disconnectFromDataSource();
+    bool disconnectFromDataSource(PlexyDesk::AbstractDesktopWidget *widget);
+
+    QStringList actions() const;
+
+    void requestAction(const QString& actionName, const QVariantMap &args);
 
 public Q_SLOTS:
     void onDataUpdated(const QVariantMap &data);
@@ -48,6 +52,7 @@ public Q_SLOTS:
 private:
     QTimer *mTimer;
     ClockWidget *clock;
+    QList<ClockWidget *> mClocks;
 };
 
 

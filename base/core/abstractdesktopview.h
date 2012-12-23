@@ -44,6 +44,8 @@ public:
 
     virtual QStringList currentControllers() const;
 
+    virtual ControllerPtr controller(const QString &name);
+
     virtual void setControllerRect(const QString &controllerName, const QRectF &rect);
 
     virtual QSharedPointer<ControllerInterface> controllerByName(const QString &name);

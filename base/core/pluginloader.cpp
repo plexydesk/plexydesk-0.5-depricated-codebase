@@ -57,6 +57,7 @@ public:
     QString mPluginPrefix;
     QString mPluginInfoPrefix;
     QHash<QString, QStringList> mDict;
+    QHash<QString, QString> mPluginNames;
 };
 
 PluginLoader::PluginLoader() : d(new Private)
@@ -117,7 +118,7 @@ QSharedPointer<DataSource> PluginLoader::engine(const QString &name)
     return QSharedPointer<DataSource>();
 }
 
-QSharedPointer<ControllerInterface> PluginLoader::controller(const QString &name)
+ControllerPtr PluginLoader::controller(const QString &name)
 {
     if (d->mControllers[name]) {
         return d->mControllers[name]->controller();
@@ -129,6 +130,11 @@ QSharedPointer<ControllerInterface> PluginLoader::controller(const QString &name
     }
 
     return QSharedPointer<ControllerInterface>();
+}
+
+QString PluginLoader::controllerName(const QString &key) const
+{
+    return d->mPluginNames[key];
 }
 
 QSharedPointer<DesktopViewPlugin> PluginLoader::view(const QString &name)
@@ -241,6 +247,7 @@ void PluginLoader::loadDesktop(const QString &path)
     QSettings desktopFile(path, QSettings::IniFormat, this);
     desktopFile.beginGroup("Desktop Entry");
     d->addToDict(desktopFile.value("Type").toString(), desktopFile.value("X-PLEXYDESK-Library").toString());
+    d->mPluginNames[desktopFile.value("X-PLEXYDESK-Library").toString()] = desktopFile.value("Name").toString();
     desktopFile.endGroup();
 }
 
@@ -257,7 +264,6 @@ void PluginLoader::Private::addToDict(const QString &interface, const QString &p
         list << pluginName;
         mDict[interface] = list;
     }
-
 }
 
 }

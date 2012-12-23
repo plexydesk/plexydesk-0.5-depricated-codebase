@@ -25,6 +25,14 @@ public:
 
     void handleViewport();
 
+    QStringList actions() const;
+
+    void requestAction(const QString& actionName, const QVariantMap &args);
+
+    bool disconnectFromDataSource(PlexyDesk::AbstractDesktopWidget *widget);
+
+    void requestFriendsList(QString token, const QVariantMap &args);
+
 public Q_SLOTS:
     void onDataUpdated(const QVariantMap &map);
     void onFacebookToken(const QString &token);

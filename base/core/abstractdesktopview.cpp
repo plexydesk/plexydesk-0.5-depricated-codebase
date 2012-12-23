@@ -77,7 +77,7 @@ public:
             delete mDesktopWidget;
     }
 
-    QMap<QString, QSharedPointer<ControllerInterface> > mControllerMap;
+    QMap<QString, ControllerPtr > mControllerMap;
     AbstractDesktopWidget *mBackgroundItem;
     QDomDocument *mSessionTree;
     QDomElement mRootElement;
@@ -198,6 +198,11 @@ QStringList AbstractDesktopView::currentControllers() const
     return rv;
 }
 
+ControllerPtr AbstractDesktopView::controller(const QString &name)
+{
+    return d->mControllerMap[name];
+}
+
 void AbstractDesktopView::setControllerRect(const QString &controllerName, const QRectF &rect)
 {
     if (d->mControllerMap[controllerName]) {
@@ -270,6 +275,7 @@ void AbstractDesktopView::addWidgetToView(AbstractDesktopWidget *widget)
     connect(widget, SIGNAL(closed(PlexyDesk::AbstractDesktopWidget*)), this, SLOT(onWidgetClosed(PlexyDesk::AbstractDesktopWidget*)));
     QGraphicsItem *item = (AbstractDesktopWidget*) widget;
     scene()->addItem(item);
+    item->setPos(QCursor::pos());
     item->show();
 }
 
@@ -362,7 +368,7 @@ void AbstractDesktopView::onWidgetClosed(AbstractDesktopWidget *widget)
         bool deleted = 0;
 
         if (widget->controller()) {
-           deleted = widget->controller()->disconnectFromDataSource();
+           deleted = widget->controller()->disconnectFromDataSource(widget);
            qDebug() << Q_FUNC_INFO << deleted;
         }
 

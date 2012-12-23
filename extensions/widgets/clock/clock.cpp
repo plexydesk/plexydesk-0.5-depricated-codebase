@@ -18,6 +18,8 @@
 *******************************************************************************/
 #include "clock.h"
 #include "clockwidget.h"
+#include <abstractdesktopview.h>
+#include <controllerinterface.h>
 
 Clock::Clock(QObject *parent) : PlexyDesk::ControllerInterface (parent)
 {
@@ -51,17 +53,58 @@ void Clock::setViewRect(const QRectF &rect)
         clock->setPos(rect.x(), rect.y());
 }
 
-bool Clock::disconnectFromDataSource()
+bool Clock::disconnectFromDataSource(PlexyDesk::AbstractDesktopWidget *widget)
 {
     disconnect(dataSource(), SIGNAL(sourceUpdated(QVariantMap)));
-    delete clock;
-    clock = 0;
+    int index = 0;
+
+    if (widget == clock) {
+        delete clock;
+        clock = 0;
+        return TRUE;
+    }
+
+    Q_FOREACH (ClockWidget *_clock, mClocks) {
+        if (_clock && _clock == widget) {
+            mClocks.removeAt(index);
+            delete _clock;
+            _clock = 0;
+            return TRUE;
+        }
+
+        index++;
+    }
 
     return TRUE;
+}
+
+QStringList Clock::actions() const
+{
+    QStringList actionList;
+    actionList << "Add Clock";
+
+    return actionList;
+}
+
+void Clock::requestAction(const QString &actionName, const QVariantMap &args)
+{
+    if (actionName == "Add Clock") {
+        ClockWidget *clock_widget = new ClockWidget(QRectF(0, 0, 210, 210));
+        clock_widget->setController(this);
+        mClocks.append(clock_widget);
+        if(viewport()) {
+            viewport()->addWidgetToView(clock_widget);
+        }
+    }
 }
 
 void Clock::onDataUpdated(const QVariantMap &data)
 {
     if (clock)
         clock->updateTime(data);
+
+    Q_FOREACH (ClockWidget *_clock, mClocks) {
+        if (_clock)
+            _clock->updateTime(data);
+    }
 }

@@ -1,9 +1,11 @@
-
 #ifndef PLEXY_VIEW_CONTROLLER_PLUGIN_H
 #define PLEXY_VIEW_CONTROLLER_PLUGIN_H
 
+#include <QSharedPointer>
+
 #include <datasource.h>
 #include <plexy.h>
+
 
 class QGraphicsItem;
 class QDropEvent;
@@ -47,6 +49,7 @@ class PLEXYDESKCORE_EXPORT ControllerInterface : public QObject
 
 public:
     ControllerInterface(QObject *parent = 0);
+
     virtual ~ControllerInterface();
 
     virtual AbstractDesktopWidget *defaultView() = 0;
@@ -60,6 +63,7 @@ public:
     virtual void handleViewport();
 
     virtual void revokeSession(const QVariantMap &args) = 0;
+
     virtual void firstRun();
 
     virtual QStringList actions() const;
@@ -70,20 +74,22 @@ public:
 
     virtual DataSource *dataSource();
 
+    virtual bool disconnectFromDataSource(AbstractDesktopWidget *widget);
+
     virtual void setControllerName(const QString &name);
 
     virtual QString controllerName() const;
 
-    virtual bool disconnectFromDataSource();
-
 protected:
     virtual bool connectToDataSource(const QString &source);
 
-
 Q_SIGNALS:
     void actionComleted(bool, const QString &error);
+
     void data(const DataSource *source);
+
     void spawnView(AbstractDesktopWidget *widget);
+
     void commitSessionData(const QString &key, const QString &value);
 
 private Q_SLOTS:
@@ -93,5 +99,7 @@ private:
     class PrivateViewControllerPlugin;
     PrivateViewControllerPlugin *const d;
 };
+
+typedef QSharedPointer<ControllerInterface> ControllerPtr;
 }
 #endif

@@ -54,6 +54,20 @@ PlexyDesk::AbstractDesktopWidget *AuthPlugin::defaultView()
     return mContactUI;
 }
 
+void AuthPlugin::requestFriendsList(QString token, const QVariantMap &args)
+{
+    PlexyDesk::DataSource *fbSource = dataSource();
+    QVariantMap request;
+    QVariant arg;
+    request["command"] = QVariant("friends");
+    request["token"] = token;
+    mToken = token;
+    arg = request;
+
+    if (fbSource)
+        fbSource->setArguments(arg);
+}
+
 void AuthPlugin::revokeSession(const QVariantMap &args)
 {
     qDebug() << Q_FUNC_INFO << args;
@@ -65,16 +79,7 @@ void AuthPlugin::revokeSession(const QVariantMap &args)
     }
     mWidget->setVisible(false);
 
-    PlexyDesk::DataSource *fbSource = dataSource();
-    QVariantMap request;
-    QVariant arg;
-    request["command"] = QVariant("friends");
-    request["token"] = args["access_token"];
-    mToken = token;
-    arg = request;
-
-    if (fbSource)
-        fbSource->setArguments(arg);
+    requestFriendsList(token, args);
 }
 
 void AuthPlugin::setViewRect(const QRectF &rect)
@@ -97,6 +102,46 @@ void AuthPlugin::handleViewport()
     requestFacebookSession();
 }
 
+QStringList AuthPlugin::actions() const
+{
+    QStringList rv;
+    rv << "Friends Browser" << "Feed Wall";
+
+    return rv;
+}
+
+void AuthPlugin::requestAction(const QString &actionName, const QVariantMap &args)
+{
+    if (actionName == "Friends Browser") {
+        if (mContactUI) {
+            mContactUI->show();
+        } else {
+            mContactUI = new FacebookContactUI(QRectF(0.0, 0.0, 488.0, 320.0));
+            mContactUI->setController(this);
+            mContactUI->setVisible(true);
+
+            connect(mContactUI, SIGNAL(addContactCard(QString)), this, SLOT(onAddContactCard(QString)));
+
+            if (viewport()) {
+                viewport()->addWidgetToView(mContactUI);
+                requestFriendsList(mToken, args);
+            }
+        }
+    }
+}
+
+bool AuthPlugin::disconnectFromDataSource(PlexyDesk::AbstractDesktopWidget *widget)
+{
+    if (widget == mContactUI) {
+        delete widget;
+        mContactUI = 0;
+        return true;
+    }
+
+    return false;
+}
+
+
 void AuthPlugin::onDataUpdated(const QVariantMap &map)
 {
     qDebug() << Q_FUNC_INFO << map;
@@ -116,11 +161,13 @@ void AuthPlugin::onDataUpdated(const QVariantMap &map)
 
     if (command == "friends") {
         qDebug() << map.keys();
-        mContactUI->setFacebookContactData(map["data"].toHash());
+        if (mContactUI)
+            mContactUI->setFacebookContactData(map["data"].toHash());
     }
 
     if (command == "userinfo") {
-        mContactUI->addContact(map);
+        if (mContactUI)
+            mContactUI->addContact(map);
     }
 }
 
