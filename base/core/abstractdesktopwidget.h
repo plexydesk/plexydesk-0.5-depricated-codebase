@@ -70,27 +70,12 @@ public :
 
     void setLabelName(const QString &name);
 
-     /**
-     * \brief Returns the label text
-     * \retuns the label name
-     */
     QString label() const;
 
-     /**
-     *\brief Widget state
-     * returns Retuns the state of the widget
-     */
+    QString widgetID() const;
+
     State state();
 
-    /**
-     * \breif Changes the widget mode
-     * \param mode True to put the widget in edit mode
-     * and False if you want to change back to normal mode
-     *
-     * When you put the widget in edit mode it will go into
-     * dock mode but if you click on the widget it will emit
-     * the close signal
-     */
     // TODO: move these out from here
     void setEditMode(const bool &mode);
     bool editMode() const;
@@ -100,6 +85,7 @@ Q_SIGNALS:
     void closed(PlexyDesk::AbstractDesktopWidget *widget);
     void rectChanged();
     void stateChanged();
+    void itemMoved(const QPointF &pos, const QString &widgetId);
 
 protected:
 
@@ -109,7 +95,7 @@ protected:
     virtual void paintDockView(QPainter *painter, const QRectF &rect) = 0;
     virtual void paintEditMode(QPainter *painter, const QRectF &rect) = 0;
 
-    virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    //virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 private:
     class PrivateAbstractDesktopWidget;

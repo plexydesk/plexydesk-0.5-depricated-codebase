@@ -28,6 +28,7 @@ AuthPlugin::AuthPlugin(QObject *object) : PlexyDesk::ControllerInterface (object
      mWidget = new FacebookAuthenticationWidget(QRectF(0, 0, 480, 320));
      mWidget->setController(this);
      mWidget->setVisible(true);
+     mWidget->setLabelName("Web Auth");
 
      connect(mWidget, SIGNAL(facebookToken(QString)), this, SLOT(onFacebookToken(QString)));
 
@@ -35,6 +36,7 @@ AuthPlugin::AuthPlugin(QObject *object) : PlexyDesk::ControllerInterface (object
      mContactUI = new FacebookContactUI(QRectF(0.0, 0.0, 488.0, 320.0));
      mContactUI->setController(this);
      mContactUI->setVisible(true);
+     mContactUI->setLabelName("Contacts");
 
      connect(mContactUI, SIGNAL(addContactCard(QString)), this, SLOT(onAddContactCard(QString)));
 
@@ -70,7 +72,6 @@ void AuthPlugin::requestFriendsList(QString token, const QVariantMap &args)
 
 void AuthPlugin::revokeSession(const QVariantMap &args)
 {
-    qDebug() << Q_FUNC_INFO << args;
     QString token = args["access_token"].toString();
 
     if (token.isNull() || token.isEmpty()) {
@@ -80,6 +81,18 @@ void AuthPlugin::revokeSession(const QVariantMap &args)
     mWidget->setVisible(false);
 
     requestFriendsList(token, args);
+    if (!args["contact"].toString().isEmpty()) {
+
+        mContacts = args["contact"].toString().split(',');
+
+        if (mContacts.count() <= 0) {
+            onAddContactCard(args["contact"].toString());
+        }
+
+        Q_FOREACH (const QString &id, args["contact"].toString().split(',')) {
+            onAddContactCard (id);
+        }
+    }
 }
 
 void AuthPlugin::setViewRect(const QRectF &rect)
@@ -93,7 +106,6 @@ void AuthPlugin::setViewRect(const QRectF &rect)
 
 void AuthPlugin::firstRun()
 {
-    qDebug() << Q_FUNC_INFO ;
     requestFacebookSession();
 }
 
@@ -144,7 +156,6 @@ bool AuthPlugin::disconnectFromDataSource(PlexyDesk::AbstractDesktopWidget *widg
 
 void AuthPlugin::onDataUpdated(const QVariantMap &map)
 {
-    qDebug() << Q_FUNC_INFO << map;
     QString command = map["command"].toString();
 
     if (command == "login") {
@@ -160,7 +171,6 @@ void AuthPlugin::onDataUpdated(const QVariantMap &map)
     }
 
     if (command == "friends") {
-        qDebug() << map.keys();
         if (mContactUI)
             mContactUI->setFacebookContactData(map["data"].toHash());
     }
@@ -191,14 +201,22 @@ void AuthPlugin::onAddContactCard(const QString &id)
     contactCard->setPos(50, 50);
     contactCard->setDataSource(id, mToken, dataSource());
     contactCard->setController(this);
+    contactCard->setLabelName(id);
+
+    if (!mContacts.contains(id)) {
+        mContacts.append(id);
+    }
 
     if (viewport())
         viewport()->addWidgetToView(contactCard);
+
+    if (viewport()) {
+        viewport()->sessionDataForController(controllerName(),"contact", mContacts.join(","));
+    }
 }
 
 void AuthPlugin::requestFacebookSession()
 {
-    qDebug() << Q_FUNC_INFO ;
     PlexyDesk::DataSource *fbSource = dataSource();
 
     QVariantMap request;

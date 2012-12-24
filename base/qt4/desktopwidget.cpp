@@ -382,18 +382,18 @@ void DesktopWidget::setWindowTitle(const QString &title)
 
 void DesktopWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    QGraphicsItem::mouseReleaseEvent(event);
     qDebug() << Q_FUNC_INFO << event->pos();
     d->mPressHoldTimer->stop();
     Q_EMIT clicked();
+    AbstractDesktopWidget::mouseReleaseEvent(event);
 }
 
 void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    QGraphicsItem::mousePressEvent(event);
     if (event->buttons() == Qt::RightButton && (state() == VIEW || state() == ROTATED)) {
         this->setChildWidetVisibility(false);
         d->mPropertyAnimationForRotation->start();
+        AbstractDesktopWidget::mousePressEvent(event);
         //QGraphicsItem::mousePressEvent(event);
         return;
     }
@@ -408,9 +408,11 @@ void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
     if (event->buttons() == Qt::LeftButton && state() == DOCKED) {
         d->mPressHoldTimer->start(3000);
         qDebug() << Q_FUNC_INFO << "Press start";
+        AbstractDesktopWidget::mousePressEvent(event);
         //QGraphicsItem::mousePressEvent(event);
         return;
     }
+    AbstractDesktopWidget::mousePressEvent(event);
 }
 void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {

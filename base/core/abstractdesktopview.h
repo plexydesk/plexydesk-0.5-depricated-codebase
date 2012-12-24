@@ -58,6 +58,8 @@ public:
 
     virtual void addWidgetToView(AbstractDesktopWidget *widget);
 
+    virtual void saveItemLocationToSession(const QString &controllerName, const QPointF &pos, const QString &widgetId);
+
 Q_SIGNALS:
 
     void closeApplication();

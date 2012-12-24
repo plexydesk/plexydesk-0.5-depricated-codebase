@@ -562,7 +562,7 @@ void FacebookContactCard::onDataUpdated(QVariantMap map)
 
         connect(reply, SIGNAL(finished()), this, SLOT(onCoverReady()));
 
-        setLabelName(d->mFirstName);
+        setLabelName(d->mID);
         QString buttonLabel = "Write on " + d->mFirstName + "'s Wall";
         d->mWallPostButton->setLabel(buttonLabel);
     }
@@ -639,7 +639,6 @@ void FacebookContactCard::onAvatarReady()
             } else {
                 d->mUserPicture = pixmap;
                 update();
-                qDebug() << Q_FUNC_INFO << "avatar";
             }
         }
 
@@ -649,8 +648,6 @@ void FacebookContactCard::onAvatarReady()
 
 void FacebookContactCard::onWallPostClicked()
 {
-    qDebug() << Q_FUNC_INFO ;
-
     if (this->controller() && this->controller()->viewport() && d->mPostDialog) {
         this->controller()->viewport()->addWidgetToView(d->mPostDialog);
 
@@ -661,8 +658,6 @@ void FacebookContactCard::onWallPostClicked()
 void FacebookContactCard::onMessageRestested()
 {
     if (d->mPostDialog) {
-        qDebug() << Q_FUNC_INFO << d->mPostDialog->message();
-
         QVariantMap request;
         QVariant arg;
 

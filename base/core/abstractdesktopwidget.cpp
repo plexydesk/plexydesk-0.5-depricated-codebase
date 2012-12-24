@@ -28,6 +28,7 @@
 
 #include "controllerinterface.h"
 #include "abstractdesktopwidget.h"
+#include "abstractdesktopview.h"
 
 /**
  * \class PlexyDesk::AbstractDesktopWidget
@@ -140,6 +141,7 @@ AbstractDesktopWidget::AbstractDesktopWidget(const QRectF &rect, QGraphicsObject
 
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
     setFlag(QGraphicsItem::ItemIsMovable, true);
+    setFlag(QGraphicsItem::ItemIsFocusable, true);
     setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
     setAcceptsHoverEvents(true);
 }
@@ -243,9 +245,20 @@ void AbstractDesktopWidget::setState(AbstractDesktopWidget::State s)
     Q_EMIT stateChanged();
 }
 
+QString AbstractDesktopWidget::widgetID() const
+{
+    QString rv;
+
+    rv = QString(QCryptographicHash::hash((label().toLatin1()),QCryptographicHash::Md5).toHex());
+
+    return rv;
+}
+
 void AbstractDesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget * /*widget*/)
 {
     if (!painter->isActive())
+        return;
+    if (isObscured())
         return;
 
     painter->setOpacity(d->mOpacity);
@@ -263,13 +276,12 @@ void AbstractDesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsI
     }
 }
 
-void AbstractDesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
-    QGraphicsItem::mousePressEvent(event);
-}
-
 void AbstractDesktopWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    if (controller() && controller()->viewport()) {
+        controller()->viewport()->saveItemLocationToSession(controller()->controllerName(), pos(), this->widgetID());
+    }
+
     QGraphicsItem::mouseReleaseEvent(event);
 }
 

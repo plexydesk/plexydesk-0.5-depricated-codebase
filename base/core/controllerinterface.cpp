@@ -28,9 +28,7 @@ ControllerInterface::~ControllerInterface()
 
 void ControllerInterface::setViewport(AbstractDesktopView *view)
 {
-    qDebug() << Q_FUNC_INFO ;
     d->mViewport = view;
-
     handleViewport();
 }
 

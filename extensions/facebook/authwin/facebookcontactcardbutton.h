@@ -10,8 +10,8 @@ public:
     explicit FacebookContactCardButton(QGraphicsObject *parent = 0);
 
 protected:
-    void paintNormalButton(QPainter *painter, const QStyleOptionGraphicsItem *option);
-    void paintSunkenButton(QPainter *painter, const QStyleOptionGraphicsItem *option);
+    virtual void paintNormalButton(QPainter *painter, const QStyleOptionGraphicsItem *option);
+    virtual void paintSunkenButton(QPainter *painter, const QStyleOptionGraphicsItem *option);
 };
 
 #endif // FACEBOOKCONTACTCARDBUTTON_H

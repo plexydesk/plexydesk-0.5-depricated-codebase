@@ -69,7 +69,6 @@ ThemepackLoader::ThemepackLoader(const QString &themeName, QObject *parent) :
                 .arg("/share/plexy/themepack")
         );
 
-    qDebug() << Q_FUNC_INFO << d->mThemePackPath;
     d->mThemeName = themeName;
     QDir mainConfig(QDir::toNativeSeparators(QString("%1/%2/").arg(d->mThemePackPath).arg(themeName)));
     d->mSettings = new QSettings(QDir::toNativeSeparators(
@@ -203,16 +202,12 @@ QPoint ThemepackLoader::widgetPos(const QString &name)
     QRegExp rx("(\\d+)");
     rx.indexIn(x_value, 0);
 
-    qDebug() << Q_FUNC_INFO << "Parsed Value: " << rx.cap(1);
     x = rx.cap(1).toUInt();
     x = (screenRect.width()/100) * x;
-
 
     rx.indexIn(y_value, 0);
     y = rx.cap(1).toUInt();
     y = (screenRect.height()/100) * y;
-
-    qDebug() << Q_FUNC_INFO << x << ": " << y;
 
     d->mSettings->endGroup();
 
@@ -350,8 +345,6 @@ QRectF ThemepackLoader::positionForWidget(const QString &name, const QRectF &scr
     for(int index = 0; index < widgetNodeList.count(); index++) {
         QDomElement widgetElement = widgetNodeList.at(index).toElement();
 
-        qDebug() << Q_FUNC_INFO << widgetElement.attribute("name") << "Input rect:" << screen_rect;
-
         if (widgetElement.attribute("name") != name)
             continue;
 
@@ -399,7 +392,6 @@ QRectF ThemepackLoader::positionForWidget(const QString &name, const QRectF &scr
             }
 
             rect = QRectF( x_coord + screen_rect.x(), y_coord + screen_rect.y(), width, height);
-            qDebug() << Q_FUNC_INFO << rect;
         }
     }
 
@@ -414,8 +406,6 @@ QRectF ThemepackLoader::positionForBackground(const QString &name, const QRectF 
     for(int index = 0; index < widgetNodeList.count(); index++) {
         QDomElement widgetElement = widgetNodeList.at(index).toElement();
 
-        qDebug() << Q_FUNC_INFO << widgetElement.attribute("name") << "Input rect:" << screen_rect;
-
         if (widgetElement.attribute("name") != name)
             continue;
 
@@ -463,7 +453,6 @@ QRectF ThemepackLoader::positionForBackground(const QString &name, const QRectF 
             }
 
             rect = QRectF( x_coord + screen_rect.x(), y_coord + screen_rect.y(), width, height);
-            qDebug() << Q_FUNC_INFO << rect;
         }
     }
 

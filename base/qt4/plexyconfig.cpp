@@ -126,8 +126,6 @@ Config::Config(const QString &organization,
     dbus.registerObject("/data", this);
     dbus.registerService("org.PlexyDesk.Config");
 #endif
-
-    qDebug() << Q_FUNC_INFO << d->mData;
 }
 
 Config::~Config()
@@ -148,8 +146,6 @@ void Config::read()
     d->mData["iconTheme"] = d->mSettings->value("iconTheme");
     d->mData["openGL"] = d->mSettings->value("openGL");
     d->mData["themepack"] = d->mSettings->value("themepack");
-
-    qDebug()  << Q_FUNC_INFO << "Read: " << d->mData;
 }
 
 void Config::writeToFile()
@@ -171,7 +167,6 @@ void Config::writeToFile()
 
 void Config::setWallpaper(const QString &str)
 {
-    qDebug() << Q_FUNC_INFO << str;
     d->mData["CurrentWallpaper"] = QVariant(str);
     d->mSettings->setValue("CurrentWallpaper",
             d->mData["CurrentWallpaper"].toString());
@@ -180,7 +175,6 @@ void Config::setWallpaper(const QString &str)
 
 void Config::setWallpaperMode(const QString &str)
 {
-    qDebug() << Q_FUNC_INFO << str;
     d->mData["CurrentWallpaperMode"] = QVariant(str);
     d->mSettings->setValue("CurrentWallpaperMode",
             d->mData["CurrentWallpaperMode"].toString());
@@ -189,7 +183,6 @@ void Config::setWallpaperMode(const QString &str)
 
 void Config::setPhoto(const QString &str)
 {
-    qDebug() << Q_FUNC_INFO << str;
     d->mData["photo"] = QVariant(str);
     d->mSettings->setValue("photo",
             d->mData["photo"].toString());
@@ -335,7 +328,6 @@ QString Config::plexydeskBasePath()
     CFURLRef appUrlRef = CFBundleCopyBundleURL(CFBundleGetMainBundle());
     CFStringRef macPath = CFURLCopyFileSystemPath(appUrlRef, kCFURLPOSIXPathStyle);
     const char *pathPtr = CFStringGetCStringPtr(macPath,CFStringGetSystemEncoding());
-    qDebug("Path = %s", pathPtr);
     CFRelease(appUrlRef);
     CFRelease(macPath);
     return QLatin1String(pathPtr) + QString("/Contents/");

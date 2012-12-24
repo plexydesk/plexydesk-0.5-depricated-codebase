@@ -85,7 +85,7 @@ void LineEdit::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
 void LineEdit::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    QGraphicsItem::mousePressEvent(event);
+    QGraphicsObject::mousePressEvent(event);
     event->accept();
     d->mState = PrivateLineEdit::FOCUSED;
     update();
@@ -94,7 +94,7 @@ void LineEdit::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void LineEdit::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     qDebug() << Q_FUNC_INFO << event->pos();
-    QGraphicsItem::mouseReleaseEvent(event);
+    QGraphicsObject::mouseReleaseEvent(event);
 }
 
 void LineEdit::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -102,7 +102,7 @@ void LineEdit::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     setCursor(Qt::IBeamCursor);
     d->mState = PrivateLineEdit::FOCUSED;
     update();
-    QGraphicsItem::mouseMoveEvent(event);
+    QGraphicsObject::mouseMoveEvent(event);
 }
 
 void LineEdit::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
@@ -120,7 +120,7 @@ void LineEdit::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
     d->mState = PrivateLineEdit::NORMAL;
     setCursor(Qt::ArrowCursor);
     update();
-    QGraphicsItem::hoverLeaveEvent(event);
+    QGraphicsObject::hoverLeaveEvent(event);
 }
 
 void LineEdit::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
@@ -128,7 +128,7 @@ void LineEdit::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
     setCursor(Qt::IBeamCursor);
     d->mState = PrivateLineEdit::FOCUSED;
     update();
-    QGraphicsItem::hoverMoveEvent(event);
+    QGraphicsObject::hoverMoveEvent(event);
 }
 
 void LineEdit::keyPressEvent(QKeyEvent *event)

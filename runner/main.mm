@@ -31,6 +31,7 @@ int main(int argc, char **argv)
             PlexyDesk::PluginLoader::getInstanceWithPrefix(
                 QDir::toNativeSeparators(QLatin1String(pathPtr)  + QLatin1String("/Contents/share/plexy/ext/groups/")),
                 QDir::toNativeSeparators(QLatin1String(pathPtr)  + QLatin1String("/Contents/lib/plexyext/")));
+
     QString appIconPath =  QLatin1String(pathPtr) +
         "/Contents/share/plexy/plexydesk.png";
     QIcon appIcon = QIcon(QDir::toNativeSeparators(appIconPath));
@@ -45,7 +46,7 @@ int main(int argc, char **argv)
         [[_desktopView window] setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
         [[_desktopView window] setHasShadow:NO];
         [[_desktopView window] setLevel:kCGDesktopIconWindowLevel + 1];
-        [[_desktopView window] makeKeyAndOrderFront:_desktopView];
+        //[[_desktopView window] makeKeyAndOrderFront:_desktopView];
     }
 
     //hack for mac

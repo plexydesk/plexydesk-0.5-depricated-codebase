@@ -61,8 +61,10 @@ PlexyDesktopView::~PlexyDesktopView()
 
 void PlexyDesktopView::layout(const QRectF &screen_rect)
 {
+    if (d->mHasSession)
+        return;
+
     Q_FOREACH(const QString &controllerName, currentControllers()) {
-        qDebug() << Q_FUNC_INFO << screen_rect;
         QRectF rect = d->mThemeLoader->positionForWidget(controllerName, screen_rect);
         setControllerRect(controllerName, rect);
     }
@@ -74,7 +76,6 @@ void PlexyDesktopView::createActions()
         QMenu *submenu = 0;
         if (controller(controllerName)) {
             PlexyDesk::ControllerPtr contr = controller(controllerName);
-            qDebug() << Q_FUNC_INFO << contr->actions();
             submenu = new QMenu(this);
             connect(submenu, SIGNAL(triggered(QAction*)), this, SLOT(onTriggered(QAction *)));
             Q_FOREACH(const QString &action, contr->actions()) {
@@ -97,7 +98,6 @@ void PlexyDesktopView::createActions()
 
 void PlexyDesktopView::onSessionUpdated(const QString &data)
 {
-    qDebug() << Q_FUNC_INFO << data;
     d->mThemeLoader->saveSessionToDisk(data);
 }
 
@@ -109,8 +109,6 @@ void PlexyDesktopView::onWidgetClosed(PlexyDesk::AbstractDesktopWidget *widget)
 
 void PlexyDesktopView::onTriggered(QAction *action)
 {
-    qDebug() << Q_FUNC_INFO << action->text() << ":" << action->data().toString();
-
     QString controllerName = action->data().toString();
     QString actionName = action->text();
 
@@ -129,4 +127,3 @@ void PlexyDesktopView::contextMenuEvent(QContextMenuEvent *event)
         d->mMenu->popup(event->globalPos());
     }
 }
-

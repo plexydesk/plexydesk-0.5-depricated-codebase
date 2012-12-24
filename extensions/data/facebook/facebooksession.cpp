@@ -33,7 +33,6 @@ QVariantMap FacebookSession::readAll()
 
 void FacebookSession::setArguments(QVariant &args)
 {
-    qDebug() << Q_FUNC_INFO << args;
     QVariantMap param = args.toMap();
 
     QString command = param["command"].toString();
@@ -170,7 +169,6 @@ void FacebookSession::onFriendListReady()
 
             if (parsingSuccessful) {
                 if (root.isMember("error")) {
-                    qDebug() << data;
                     QVariantMap errorData;
                     errorData["command"] = QVariant("login");
                     errorData["token"] = QVariant("");
@@ -210,7 +208,6 @@ void FacebookSession::onContactInfoReady()
             QString data = reply->readAll();
             Json::Value root;
             Json::Reader jsonReader;
-            qDebug() << Q_FUNC_INFO << data;
 
             bool parsingSuccessful = jsonReader.parse(data.toStdString(), root);
 
@@ -246,8 +243,6 @@ void FacebookSession::onStatusReady()
             QString data = reply->readAll() ;
             Json::Value root;
             Json::Reader jsonReader;
-             qDebug() << Q_FUNC_INFO << data;
-
             bool parsingSuccessful = jsonReader.parse(data.toStdString(), root);
 
             if (parsingSuccessful && !root["data"].isNull()) {
@@ -273,8 +268,7 @@ void FacebookSession::onFeedPublished()
         QNetworkReply *reply = qobject_cast<QNetworkReply*> (sender());
 
         if (reply) {
-            QString data = reply->readAll() ;
-            qDebug() << Q_FUNC_INFO << data;
+            //QString data = reply->readAll() ;
 
             reply->deleteLater();
         }

@@ -38,8 +38,6 @@ FacebookUserInfo::FacebookUserInfo(QNetworkAccessManager *manager, const QString
 
 FacebookUserInfo::~FacebookUserInfo()
 {
-    qDebug() << Q_FUNC_INFO;
-
     d->data.clear();
     delete d;
 }

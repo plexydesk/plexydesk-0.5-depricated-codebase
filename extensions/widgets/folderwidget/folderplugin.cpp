@@ -35,6 +35,7 @@ DirectoryController::DirectoryController(QObject *object) :
    view->enableDefaultBackground(true);
    view->setDirectoryPath(QDir::homePath() + QLatin1String("/Desktop/"));
    view->setController(this);
+   view->setLabelName("Desktop");
    mFolderViewList.append(view);
 }
 
@@ -74,6 +75,7 @@ void DirectoryController::requestAction(const QString &actionName, const QVarian
         view->enableDefaultBackground(true);
         view->setDirectoryPath(args["path"].toString());
         view->setController(this);
+        view->setLabelName(args["path"].toString());
         mFolderViewList.append(view);
         this->viewport()->addWidgetToView(view);
     }

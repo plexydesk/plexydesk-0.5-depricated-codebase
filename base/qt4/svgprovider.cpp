@@ -117,7 +117,6 @@ QPixmap SvgProvider::get(const QString &name, const QSize &render_size)
         QRectF elementBounds = d->render.boundsOnElement(itemList.value(1));
         size.setWidth(elementBounds.width());
         size.setHeight(elementBounds.height());
-        qDebug() << Q_FUNC_INFO << elementBounds;
     } else
         size = render_size;
 

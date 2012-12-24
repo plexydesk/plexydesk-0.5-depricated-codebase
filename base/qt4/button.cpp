@@ -2,6 +2,7 @@
 
 #include <svgprovider.h>
 #include <nativestyle.h>
+#include <abstractdesktopwidget.h>
 
 namespace PlexyDesk {
 
@@ -31,6 +32,12 @@ Button::Button(QGraphicsObject *parent) :
    d->mState = PrivateButton::NORMAL;
    d->mSize = QSize (100, 30);
    d->mStyle = new NativeStyle(this);
+
+   setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
+   setFlag(QGraphicsItem::ItemIsMovable, false);
+   setFlag(QGraphicsItem::ItemIsFocusable, true);
+   setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
+   setAcceptsHoverEvents(true);
 }
 
 Button::~Button()
@@ -53,17 +60,21 @@ void Button::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
     }
 }
 
-void Button::mousePressEvent(QGraphicsSceneMouseEvent * /*event*/)
+void Button::mousePressEvent(QGraphicsSceneMouseEvent * event)
 {
     d->mState = PrivateButton::PRESS;
     update();
+    event->accept();
+    //QGraphicsItem::mousePressEvent(event);
 }
 
-void Button::mouseReleaseEvent(QGraphicsSceneMouseEvent * /*event*/)
+void Button::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
 {
+
     d->mState = PrivateButton::NORMAL;
     update();
     Q_EMIT clicked();
+    //QGraphicsItem::mouseReleaseEvent(event);
 }
 
 void Button::paintNormalButton(QPainter *painter, const QStyleOptionGraphicsItem *option)

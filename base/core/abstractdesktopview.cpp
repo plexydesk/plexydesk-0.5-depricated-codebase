@@ -103,6 +103,12 @@ AbstractDesktopView::AbstractDesktopView(QGraphicsScene *scene, QWidget *parent)
 
     setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
     setFrameStyle(QFrame::NoFrame);
+    scene->setStickyFocus(false);
+    scene->setItemIndexMethod(QGraphicsScene::NoIndex);
+    setFocusPolicy(Qt::StrongFocus);
+    if(viewport()) {
+        viewport()->setFocusPolicy(Qt::StrongFocus);
+    }
 }
 
 AbstractDesktopView::~AbstractDesktopView()
@@ -154,6 +160,10 @@ bool AbstractDesktopView::setBackgroundController(const QString &controllerName)
 
         controller->setViewport(this);
         controller->setControllerName(controllerName);
+
+        if(scene()) {
+            scene()->setFocusItem(d->mBackgroundItem, Qt::MouseFocusReason);
+        }
     }
     return true;
 }
@@ -188,6 +198,10 @@ void AbstractDesktopView::addController(const QString &controllerName)
 
     controller->setViewport(this);
     controller->setControllerName(controllerName);
+
+    if (scene()) {
+        scene()->setFocusItem(d->mBackgroundItem, Qt::MouseFocusReason);
+    }
 }
 
 QStringList AbstractDesktopView::currentControllers() const
@@ -219,7 +233,6 @@ void AbstractDesktopView::setControllerRect(const QString &controllerName, const
     widget.appendChild(geometry);
     d->mRootElement.appendChild(widget);
 
-    //qDebug() << Q_FUNC_INFO << d->mSessionTree->toString();
     Q_EMIT sessionUpdated(d->mSessionTree->toString());
 }
 
@@ -232,7 +245,6 @@ void AbstractDesktopView::dropEvent(QDropEvent *event)
 {
     //qDebug() << Q_FUNC_INFO;
     if (this->scene()) {
-        qDebug() << Q_FUNC_INFO;
         QList<QGraphicsItem *> items = scene()->items(event->pos());
 
         Q_FOREACH(QGraphicsItem *item, items) {
@@ -262,6 +274,7 @@ void AbstractDesktopView::dropEvent(QDropEvent *event)
 void AbstractDesktopView::dragEnterEvent(QDragEnterEvent *event)
 {
     event->accept();
+
 }
 
 void AbstractDesktopView::dragMoveEvent(QDragMoveEvent *event)
@@ -271,7 +284,6 @@ void AbstractDesktopView::dragMoveEvent(QDragMoveEvent *event)
 
 void AbstractDesktopView::addWidgetToView(AbstractDesktopWidget *widget)
 {
-    qDebug() << Q_FUNC_INFO << "Adding widget";
     connect(widget, SIGNAL(closed(PlexyDesk::AbstractDesktopWidget*)), this, SLOT(onWidgetClosed(PlexyDesk::AbstractDesktopWidget*)));
     QGraphicsItem *item = (AbstractDesktopWidget*) widget;
     scene()->addItem(item);
@@ -279,16 +291,72 @@ void AbstractDesktopView::addWidgetToView(AbstractDesktopWidget *widget)
     item->show();
 }
 
-void AbstractDesktopView::sessionDataForController(const QString &controllerName, const QString &key, const QString &value)
+void AbstractDesktopView::saveItemLocationToSession(const QString &controllerName, const QPointF &pos, const QString &widgetId)
 {
     QDomNodeList widgetNodeList = d->mSessionTree->documentElement().elementsByTagName("widget");
-
-    qDebug() << Q_FUNC_INFO << widgetNodeList.count();
 
     for(int index = 0; index < widgetNodeList.count(); index++) {
         QDomElement widgetElement = widgetNodeList.at(index).toElement();
 
-        qDebug() << Q_FUNC_INFO << widgetElement.attribute("controller");
+        if (widgetElement.attribute("controller") == controllerName) {
+            QDomNodeList locationElementList = widgetElement.elementsByTagName("location");
+
+            if (locationElementList.count() <= 0 ) {
+                QDomElement widget = d->mSessionTree->createElement("location");
+                widget.setAttribute("id", widgetId);
+                QDomElement geometry = d->mSessionTree->createElement("geometry");
+                geometry.setAttribute("x", pos.x());
+                geometry.setAttribute("y", pos.y());
+                widget.appendChild(geometry);
+                widgetElement.appendChild(widget);
+                break;
+            }
+
+            bool locationTagFound = false;
+            for(int index = 0; index < locationElementList.count(); index++) {
+                QDomElement locationElement = locationElementList.at(index).toElement();
+
+                if (locationElement.hasChildNodes() && locationElement.attribute("id") == widgetId) {
+                    locationTagFound = true;
+                    QDomElement geoElement = locationElement.firstChildElement("geometry");
+
+                    if (!geoElement.isNull()) {
+                        geoElement.setAttribute("x", pos.x());
+                        geoElement.setAttribute("y", pos.y());
+                    } else
+                        qDebug() << Q_FUNC_INFO << "Error :" << "Missing geometry tag";
+
+                    break;
+                }
+            }
+
+            // No tag with matching id was found so we add a new location tag to the controller
+            if (!locationTagFound) {
+                QDomElement widget = d->mSessionTree->createElement("location");
+                widget.setAttribute("id", widgetId);
+                QDomElement geometry = d->mSessionTree->createElement("geometry");
+                geometry.setAttribute("x", pos.x());
+                geometry.setAttribute("y", pos.y());
+                widget.appendChild(geometry);
+                widgetElement.appendChild(widget);
+            }
+
+        } else
+            continue;
+
+    }
+
+    //qDebug() << Q_FUNC_INFO << d->mSessionTree->toString();
+    Q_EMIT sessionUpdated(d->mSessionTree->toString());
+}
+
+void AbstractDesktopView::sessionDataForController(const QString &controllerName, const QString &key, const QString &value)
+{
+    QDomNodeList widgetNodeList = d->mSessionTree->documentElement().elementsByTagName("widget");
+
+    for(int index = 0; index < widgetNodeList.count(); index++) {
+        QDomElement widgetElement = widgetNodeList.at(index).toElement();
+
         if (widgetElement.attribute("controller") != controllerName)
             continue;
 
@@ -301,7 +369,6 @@ void AbstractDesktopView::sessionDataForController(const QString &controllerName
                 widgetElement.appendChild(keyTag);
             } else
                 argElement.setAttribute(key, value);
-
         }
     }
 
@@ -342,7 +409,6 @@ void AbstractDesktopView::restoreViewFromSession(const QString &sessionData)
                 }
             }
 
-            //restore geometry
             QDomElement rectElement = widgetElement.firstChildElement("geometry");
             if (!rectElement.isNull()) {
                 QDomAttr x = rectElement.attributeNode("x");
@@ -357,8 +423,54 @@ void AbstractDesktopView::restoreViewFromSession(const QString &sessionData)
                     iface->setViewRect(geometry);
                 }
             }
+
+            //restore location for child widgets
+            QDomNodeList locationElementList = widgetElement.elementsByTagName("location");
+
+            for(int index = 0; index < locationElementList.count(); index++) {
+                QDomElement locationElement = locationElementList.at(index).toElement();
+
+                if(locationElement.isNull())
+                    continue;
+
+                if (this->scene()) {
+                    QList<QGraphicsItem *> items = scene()->items();
+
+                    Q_FOREACH(QGraphicsItem *item, items) {
+
+                        QGraphicsObject *itemObject = item->toGraphicsObject();
+
+                        if (!itemObject) {
+                            continue;
+                        }
+
+                        AbstractDesktopWidget *widget = qobject_cast<AbstractDesktopWidget*> (itemObject);
+
+                        if (!widget || !widget->controller())
+                            continue;
+
+                        if (locationElement.attribute("id") == widget->widgetID()) {
+                            QDomElement geoElement = locationElement.firstChildElement("geometry");
+                            QPointF widgetPos = QPoint(geoElement.attribute("x").toInt(), geoElement.attribute("y").toInt());
+                            widget->setPos(widgetPos);
+                        }
+                    }
+                }
+            }
         }
     }
+
+
+    //retore widget locations
+    QDomNodeList widgetLocations = d->mSessionTree->documentElement().elementsByTagName("locations");
+
+    for(int index = 0; index < widgetLocations.count(); index++) {
+        QDomElement locationElement = widgetNodeList.at(index).toElement();
+        //qDebug() << Q_FUNC_INFO << locationElemen;
+    }
+
+
+
 }
 
 void AbstractDesktopView::onWidgetClosed(AbstractDesktopWidget *widget)

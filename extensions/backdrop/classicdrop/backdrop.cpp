@@ -52,6 +52,7 @@ PlexyDesk::AbstractDesktopWidget *BackgroundController::defaultView()
     ClassicBackgroundRender * render = new ClassicBackgroundRender(QRectF(0.0, 0.0, 0.0, 0.0), 0,
                                                     QImage(QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->wallpaper())));
     render->setController(this);
+    render->setLabelName("classic Backdrop");
     mBackgroundRenderList.append(render);
     return render;
 }

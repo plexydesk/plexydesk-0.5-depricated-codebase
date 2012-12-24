@@ -44,6 +44,7 @@ private:
     FacebookAuthenticationWidget *mWidget;
     FacebookContactUI *mContactUI;
     QString mToken;
+    QStringList mContacts;
 };
 
 #endif
