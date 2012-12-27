@@ -32,9 +32,6 @@ ENDIF(NOT APPLE)
 
 ########### Source files ###############
 SET(sourceFiles
-    icon.cpp
-    iconjob.cpp
-    iconprovider.cpp
     desktopbaseui.cpp
     ${extra_source}
     )
@@ -49,19 +46,11 @@ IF (NOT APPLE)
 ENDIF(NOT APPLE)
 
 SET(headerFiles
-    icon.h
-    iconjob.h
-    iconprovider.h
-#    plexyeventhandler.h
     desktopbaseui.h
     ${extra_headers}
     )
 
 SET(QTMOC_SRCS
-    icon.h
-    iconjob.h
-    iconprovider.h
-#    plexyeventhandler.h
     desktopbaseui.h
     ${extra_headers}
     )

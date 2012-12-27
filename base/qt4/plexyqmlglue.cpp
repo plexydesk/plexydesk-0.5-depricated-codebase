@@ -11,8 +11,6 @@
 #include <qmlsvgprovider.h>
 #include <qmlpixmapprovider.h>
 
-#include <shadereffectitem.h>
-
 namespace PlexyDesk
 {
 
@@ -34,8 +32,6 @@ QDeclarativeEngine *PlexyQmlGlue::qmlEngine()
 
 QDeclarativeEngine *PlexyQmlGlue::newQmlEngine()
 {
-        qmlRegisterType<ShaderEffectItem>("Qt.labs.shaders", 1, 0, "ShaderEffectItem");
-        qmlRegisterType<ShaderEffectSource>("Qt.labs.shaders", 1, 0, "ShaderEffectSource");
         engine = new QDeclarativeEngine;
         engine->addImportPath(QDir::toNativeSeparators(
                     Config::getInstance()->plexydeskBasePath() + "/" + PLEXYQTIMPORTSDIR + "/"));

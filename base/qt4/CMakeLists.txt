@@ -4,11 +4,6 @@ SET(sourceFiles
     netwm.cpp
     themepackloader.cpp
     viewlayer.cpp
-    shaders/shadereffect.cpp
-    shaders/shadereffectbuffer.cpp
-    shaders/shadereffectitem.cpp
-    shaders/shadereffectsource.cpp
-    shaders/scenegraph/qsggeometry.cpp
     qmldesktopwidget.cpp
     desktopwidget.cpp
     scrollwidget.cpp
@@ -37,11 +32,6 @@ SET(headerFiles
     socialplugin.h
     themepackloader.h
     viewlayer.h
-    shaders/shadereffect.h
-    shaders/shadereffectbuffer.h
-    shaders/shadereffectitem.h
-    shaders/shadereffectsource.h
-    shaders/scenegraph/qsggeometry.h
     qmldesktopwidget.h
     desktopwidget.h
     scrollwidget.h
@@ -66,9 +56,6 @@ SET(MOC_SRCS
    socialplugin.h
    themepackloader.h
    viewlayer.h
-   shaders/shadereffect.h
-   shaders/shadereffectitem.h
-   shaders/shadereffectsource.h
    qmldesktopwidget.h
    desktopwidget.h
    scrollwidget.h

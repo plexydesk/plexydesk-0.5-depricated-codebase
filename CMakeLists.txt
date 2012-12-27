@@ -189,31 +189,10 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/base/qt4
     ${CMAKE_SOURCE_DIR}/base/core
     ${CMAKE_BINARY_DIR}/base/core
-    ${CMAKE_SOURCE_DIR}/3rdparty/json-cpp/json
-    ${CMAKE_SOURCE_DIR}/base/qt4/shaders
-    ${CMAKE_BINARY_DIR}/base/qt4/shaders
     ${CMAKE_SOURCE_DIR}/runner
     ${CMAKE_BINARY_DIR}/runner
-    ${CMAKE_SOURCE_DIR}/modules/libplexyirc
-    ${CMAKE_BINARY_DIR}/modules/libplexyirc
-    ${CMAKE_SOURCE_DIR}/modules/fbjson
-    ${CMAKE_BINARY_DIR}/modules/fbjson
-    ${CMAKE_SOURCE_DIR}/3rdparty/mime
     ${CMAKE_SOURCE_DIR}/3rdparty/json-cpp
     ${CMAKE_SOURCE_DIR}/3rdparty/json-cpp/json/
-    ${CMAKE_BINARY_DIR}/3rdparty/mime
-    ${CMAKE_SOURCE_DIR}/3rdparty/qplexymime
-    ${CMAKE_BINARY_DIR}/3rdparty/qplexymime
-    ${CMAKE_SOURCE_DIR}/3rdparty/webitem
-    ${CMAKE_BINARY_DIR}/3rdparty/webitem
-    ${CMAKE_SOURCE_DIR}/3rdparty/webitem/lib
-    ${CMAKE_BINARY_DIR}/3rdparty/webitem/lib
-    ${CMAKE_SOURCE_DIR}/social
-    ${CMAKE_BINARY_DIR}/social
-    ${CMAKE_SOURCE_DIR}/social/libs/service
-    ${CMAKE_BINARY_DIR}/social/libs/service
-    ${CMAKE_SOURCE_DIR}/panel
-    ${CMAKE_BINARY_DIR}/panel
     ${CMAKE_SOURCE_DIR}/dist/windows
     ${CMAKE_BINARY_DIR}/dist/windows
     ${QT_INCLUDE_DIR}
@@ -247,9 +226,6 @@ ENDIF(WIN32)
 # *** ALL PLATFORMS ***
 ADD_SUBDIRECTORY(3rdparty/mime)
 ADD_SUBDIRECTORY(3rdparty/json-cpp/)
-ADD_SUBDIRECTORY(3rdparty/qplexymime)
-#ADD_SUBDIRECTORY(3rdparty/qt/folderlistmodel)
-ADD_SUBDIRECTORY(3rdparty/webitem)
 ADD_SUBDIRECTORY(base/qt4)
 ADD_SUBDIRECTORY(base/core)
 ADD_SUBDIRECTORY(extensions/widgets/clock)
@@ -260,7 +236,6 @@ ADD_SUBDIRECTORY(extensions/data/facebook)
 ADD_SUBDIRECTORY(extensions/backdrop/classicdrop)
 ADD_SUBDIRECTORY(extensions/widgets/youtubewidget)
 ADD_SUBDIRECTORY(runner)
-ADD_SUBDIRECTORY(modules/fbjson)
 
 if (APPLE)
 ADD_SUBDIRECTORY(extensions/backdrop/mac_background)

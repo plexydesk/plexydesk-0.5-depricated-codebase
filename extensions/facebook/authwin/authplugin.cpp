@@ -19,7 +19,6 @@
 
 #include "authplugin.h"
 #include "facebookcontactcard.h"
-#include <qwebviewitem.h>
 #include "facebookauthenticationwidget.h"
 #include <abstractdesktopview.h>
 

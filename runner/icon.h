@@ -22,7 +22,6 @@
 #include <pendingjob.h>
 #include <plexy.h>
 #include <plexyconfig.h>
-#include <qplexymime.h>
 
 #include <QGraphicsRectItem>
 #include <QGraphicsSceneMouseEvent>
