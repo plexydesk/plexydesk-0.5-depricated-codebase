@@ -4,9 +4,11 @@
 #include <QObject>
 #include <plexy.h>
 
+#include "plexydeskuicore_global.h"
+
 namespace PlexyDesk {
 
-class PLEXYDESK_EXPORT SocialAccessManager : public QObject
+class PLEXYDESKUICORE_EXPORT SocialAccessManager : public QObject
 {
     Q_OBJECT
 public:

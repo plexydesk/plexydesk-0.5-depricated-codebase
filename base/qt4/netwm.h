@@ -798,7 +798,7 @@ private:
    use it instead of NETRootInfo and override also the added virtual methods.
    @since 3.2
  */
-class PLEXYDESK_EXPORT NETRootInfo2
+class PLEXYDESKUICORE_EXPORT NETRootInfo2
     : public NETRootInfo
 {
 public:
@@ -889,7 +889,7 @@ protected:
    use it instead of NETRootInfo and override also the added virtual methods.
    @since 3.3
  */
-class PLEXYDESK_EXPORT NETRootInfo3
+class PLEXYDESKUICORE_EXPORT NETRootInfo3
     : public NETRootInfo2
 {
 public:
@@ -951,7 +951,7 @@ protected:
    use it instead of NETRootInfo and override also the added virtual methods.
    @since 3.5
  */
-class PLEXYDESK_EXPORT NETRootInfo4
+class PLEXYDESKUICORE_EXPORT NETRootInfo4
     : public NETRootInfo3
 {
 public:
@@ -990,7 +990,7 @@ protected:
    @see http://www.freedesktop.org/standards/wm-spec/
  **/
 
-class PLEXYDESK_EXPORT NETWinInfo : public NET
+class PLEXYDESKUICORE_EXPORT NETWinInfo : public NET
 {
 public:
     /**
