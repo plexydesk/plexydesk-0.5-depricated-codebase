@@ -76,7 +76,6 @@ ENDIF(WIN32)
 
 IF(UNIX)
     SET(libs
-        ${extra_libs}
         )
 ENDIF(UNIX)
 

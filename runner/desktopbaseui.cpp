@@ -29,9 +29,8 @@
 #include <abstractdesktopview.h>
 #include <desktopviewplugin.h>
 
-#if defined(Q_WS_X11) // && defined(Q_WS_MAC) ??
+#if defined(Q_OS_LINUX) // && defined(Q_WS_MAC) ??
 #include <X11/Xlib.h>
-#include <QX11Info>
 #include <netwm.h>
 #endif
 
@@ -105,11 +104,11 @@ void DesktopBaseUi::setup()
 
     view->setDragMode(QGraphicsView::RubberBandDrag);
 
-#ifdef Q_WS_X11
-    NETWinInfo info(QX11Info::display(), view->winId(), QX11Info::appRootWindow(), NET::WMDesktop );
-    info.setDesktop(NETWinInfo::OnAllDesktops);
-    info.setWindowType(NET::Desktop);
-#endif
+//#ifdef Q_OS_LINUX
+//    NETWinInfo info(QX11Info::display(), view->winId(), QX11Info::appRootWindow(), NET::WMDesktop );
+//    info.setDesktop(NETWinInfo::OnAllDesktops);
+//    info.setWindowType(NET::Desktop);
+//#endif
 
     //view->showLayer(QLatin1String("Widgets"));
     d->mViewList[0] = view;

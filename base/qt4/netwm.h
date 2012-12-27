@@ -45,6 +45,15 @@
 #ifndef   __net_wm_h
 #define   __net_wm_h
 
+#include <qglobal.h>
+
+#include "plexydeskuicore_global.h"
+
+
+#ifdef Q_OS_LINUX
+#define Q_WS_X11 Q_OS_LINUX
+#endif
+
 #ifdef Q_WS_X11
 #include <plexy.h>
 #include <X11/Xlib.h>

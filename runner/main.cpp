@@ -33,27 +33,29 @@
 #include <debug.h>
 
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>
 
+#include <QApplication>
 #include <X11/Xlib.h>
-#include <QX11Info>
+//#include <QX11Info>
 
 #include <netwm.h>
 #endif
 
 int main( int argc, char * *argv )
 {
-    QApplication::setGraphicsSystem(QLatin1String("raster"));
+//#ifndef Q_WS_MAC
+//    QApplication::setGraphicsSystem(QLatin1String("raster"));
+//#endif
+//    QByteArray debug_settings = qgetenv("PLEXYDESK_CONSOLE_DEBUG").toLower();
 
-    QByteArray debug_settings = qgetenv("PLEXYDESK_CONSOLE_DEBUG").toLower();
-
-    if (debug_settings != "enable" && debug_settings != "true" && debug_settings != "1" ) {
-       qInstallMsgHandler(plexyWindowsLogger);
-    }
+//    if (debug_settings != "enable" && debug_settings != "true" && debug_settings != "1" ) {
+//       qInstallMsgHandler(plexyWindowsLogger);
+//    }
 
     QApplication app(argc, argv);
 

@@ -153,7 +153,7 @@ void PluginLoader::load(const QString &interface, const QString &pluginName)
     QPluginLoader loader (d->mPluginPrefix + QLatin1String("lib") + pluginName + QLatin1String(".dylib") );
 #endif
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
     QPluginLoader loader (d->mPluginPrefix + QLatin1String("lib") + pluginName + ".so" );
 #endif
 
