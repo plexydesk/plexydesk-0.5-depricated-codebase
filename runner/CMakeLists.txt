@@ -109,8 +109,6 @@ ENDIF(MSVC)
 
 TARGET_LINK_LIBRARIES(${APPLICATION_EXE_NAME}
     ${PLEXY_UI_CORE_LIBRARY}
-    plexymime
-    ${libs}
     ${MAC_LIBS}
     )
 

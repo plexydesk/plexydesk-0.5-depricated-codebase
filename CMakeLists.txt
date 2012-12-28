@@ -201,9 +201,9 @@ INCLUDE_DIRECTORIES(
 IF (NOT APPLE)
     IF (UNIX)
         # *** LINUX ONLY ***
-        ADD_SUBDIRECTORY(panel)
-        ADD_SUBDIRECTORY(social)
-        ADD_SUBDIRECTORY(social/accountsmanager)
+        #ADD_SUBDIRECTORY(panel)
+        #ADD_SUBDIRECTORY(social)
+        #ADD_SUBDIRECTORY(social/accountsmanager)
 
         # UI widgets
         #ADD_SUBDIRECTORY(extensions/widgets/cpu)
