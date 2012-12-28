@@ -21,11 +21,9 @@
 #ifndef SVG_PROVIDER_H
 #define SVG_PROVIDER_H
 
-#include <QtCore>
-#include <QtGui>
-
 #include <plexy.h>
 #include <plexyconfig.h>
+#include <QtDeclarative/QDeclarativeImageProvider>
 
 #include "plexydeskuicore_global.h"
 

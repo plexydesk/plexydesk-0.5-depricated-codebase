@@ -15,5 +15,3 @@ QSharedPointer<PlexyDesk::ControllerInterface> YouTubeInterface::controller()
 
     return obj;
 }
-
-Q_EXPORT_PLUGIN2(plexyyoutube, YouTubeInterface)

@@ -22,7 +22,7 @@ SET(QTMOC_SRCS
     qplexymime.h
     )
 
-QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})
+ QT_WRAP_CPP(QT_MOC_SRCS Test ${QTMOC_SRCS})
 
 SET(sourceFiles
     ${sourceFiles}

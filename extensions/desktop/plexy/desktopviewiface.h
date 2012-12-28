@@ -27,6 +27,7 @@ class DesktopViewInterface : public QObject, public PlexyDesk::DesktopViewPlugin
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::DesktopViewPluginInterface)
+    Q_PLUGIN_METADATA(IID "org.qt-project.desktopview")
 
 public:
     virtual ~DesktopViewInterface();

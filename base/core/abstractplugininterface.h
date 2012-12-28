@@ -20,7 +20,7 @@
 #define PLEXY_BASE_PLUGIN_h
 
 #include <plexy.h>
-#include <QObject>
+#include <QtCore/QObject>
 
 namespace PlexyDesk
 {

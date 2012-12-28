@@ -17,7 +17,7 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 #include <qmldesktopwidget.h>
-#include <QDeclarativeComponent>
+#include <QtDeclarative/QDeclarativeComponent>
 #include <plexyqmlglue.h>
 
 namespace PlexyDesk

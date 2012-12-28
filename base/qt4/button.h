@@ -2,14 +2,16 @@
 #define UI_BUTTON_H
 
 #include <plexy.h>
-#include <QGraphicsScene>
-#include <QGraphicsObject>
+#include <QtWidgets/QGraphicsScene>
+#include <QtWidgets/QGraphicsObject>
 
 #include <style.h>
 
+#include "plexydeskuicore_global.h"
+
 namespace PlexyDesk {
 
-class Button : public QGraphicsObject
+class PLEXYDESKUICORE_EXPORT Button : public QGraphicsObject
 {
     Q_OBJECT
 public:

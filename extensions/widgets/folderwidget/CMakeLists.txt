@@ -19,25 +19,19 @@ SET(QTMOC_SRCS
     iconwidgetview.h
     )
 
-QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})
+QT5_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})
 
 SET(sourceFiles
     ${sourceFiles}
     ${headerFiles}
     )
 
-SET(libs
-    ${QT_QTGUI_LIBRARY}
-    ${OPENGL_LIBRARIES}
-    ${QT_QTCORE_LIBRARY}
-    ${QT_QTOPENGL_LIBRARY}
-    )
-
 ADD_LIBRARY(folderwidget SHARED ${sourceFiles} ${QT_MOC_SRCS})
+
+QT5_USE_MODULES(folderwidget Widgets Xml OpenGL Core WebKitWidgets Svg Declarative)
 
 TARGET_LINK_LIBRARIES(folderwidget
     ${PLEXY_UI_CORE_LIBRARY}
-    ${libs}
     )
 
 INSTALL(TARGETS folderwidget DESTINATION ${CMAKE_INSTALL_LIBDIR}/plexyext)

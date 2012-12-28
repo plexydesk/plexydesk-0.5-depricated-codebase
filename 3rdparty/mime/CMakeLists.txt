@@ -17,7 +17,7 @@ SET(MOC_SRCS
     freedesktopmime.h
     )
 
-QT4_WRAP_CPP(QT_MOC_SRCS ${MOC_SRCS})
+QT5_WRAP_CPP(QT_MOC_SRCS ${MOC_SRCS})
 
 SET(sourceFiles
     ${sourceFiles}

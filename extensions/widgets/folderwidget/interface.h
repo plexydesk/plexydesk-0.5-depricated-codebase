@@ -27,6 +27,7 @@ class  Interface : public QObject, public PlexyDesk::ControllerPluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::ControllerPluginInterface)
+    Q_PLUGIN_METADATA(IID "org.qt-project.folderwidget")
 
 public :
       QSharedPointer<PlexyDesk::ControllerInterface> controller();

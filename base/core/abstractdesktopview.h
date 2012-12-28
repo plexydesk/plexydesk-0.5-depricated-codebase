@@ -75,10 +75,6 @@ private:
 
     virtual void dropEvent(QDropEvent *event);
 
-    virtual void dragEnterEvent(QDragEnterEvent *event);
-
-    virtual void dragMoveEvent(QDragMoveEvent *event);
-
 private:
 
     class PrivateAbstractDesktopView;

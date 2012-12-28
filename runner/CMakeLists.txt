@@ -55,7 +55,7 @@ SET(QTMOC_SRCS
     ${extra_headers}
     )
 
-QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})
+QT5_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})
 
 SET(sourceFiles
     ${sourceFiles}
@@ -76,9 +76,6 @@ ENDIF(WIN32)
 
 IF(UNIX)
     SET(libs
-        ${QT_QTGUI_LIBRARY}
-        ${QT_QTCORE_LIBRARY}
-        ${QT_QTOPENGL_LIBRARY}
         ${extra_libs}
         )
 ENDIF(UNIX)
@@ -112,6 +109,8 @@ TARGET_LINK_LIBRARIES(${APPLICATION_EXE_NAME}
     ${OPENGL_LIBRARIES}
     ${MAC_LIBS}
     )
+
+QT5_USE_MODULES(${APPLICATION_EXE_NAME} Widgets Xml OpenGL Core WebKitWidgets Svg Declarative)
 
 ########### Install files ###############
 INSTALL(TARGETS plexydesk DESTINATION bin)

@@ -2,6 +2,8 @@
 
 #include <QGraphicsItem>
 #include <QGraphicsScene>
+#include <QMenu>
+#include <QContextMenuEvent>
 
 #include <datasource.h>
 #include <pluginloader.h>
@@ -51,6 +53,9 @@ PlexyDesktopView::PlexyDesktopView(QGraphicsScene *parent_scene, QWidget *parent
     this->createActions();
 
     connect(this, SIGNAL(sessionUpdated(QString)), this, SLOT(onSessionUpdated(QString)));
+    if (scene()) {
+        qDebug() << Q_FUNC_INFO << scene()->items().count();
+    }
 }
 
 PlexyDesktopView::~PlexyDesktopView()

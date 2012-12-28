@@ -30,6 +30,7 @@ class ClockInterface : public QObject, public PlexyDesk::ControllerPluginInterfa
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::ControllerPluginInterface)
+    Q_PLUGIN_METADATA(IID "org.qt-project.clock")
 
 public :
     QSharedPointer<PlexyDesk::ControllerInterface> controller();

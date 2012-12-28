@@ -1,17 +1,19 @@
 #include "desktopwidget.h"
 
-#include <QCoreApplication>
-#include <QGraphicsObject>
-#include <QGraphicsScene>
-#include <QGraphicsSceneMouseEvent>
-#include <QStyleOptionGraphicsItem>
-#include <QGraphicsProxyWidget>
-#include <QPainter>
-#include <QTimeLine>
-#include <QTimer>
-#include <QDir>
-#include <QDeclarativeEngine>
-#include <QDeclarativeComponent>
+#include <QtCore/QCoreApplication>
+#include <QtWidgets/QGraphicsObject>
+#include <QtWidgets/QGraphicsScene>
+#include <QtWidgets/QGraphicsSceneMouseEvent>
+#include <QtWidgets/QStyleOptionGraphicsItem>
+#include <QtWidgets/QGraphicsProxyWidget>
+#include <QtGui/QPainter>
+#include <QtCore/QTimeLine>
+#include <QtCore/QTimer>
+#include <QtCore/QDir>
+#include <QtDeclarative/QDeclarativeEngine>
+#include <QtDeclarative/QDeclarativeComponent>
+#include <QtCore/QPropertyAnimation>
+#include <QtWidgets/QGraphicsDropShadowEffect>
 
 #include <imagecache.h>
 #include <svgprovider.h>
@@ -93,7 +95,7 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QGraphicsObject *parent)
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
-    setAcceptsHoverEvents(true);
+    setAcceptHoverEvents(true);
 
     //presshold
     d->mPressHoldTimer = new QTimer(this);
@@ -414,7 +416,6 @@ void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
         this->setChildWidetVisibility(false);
         d->mPropertyAnimationForRotation->start();
         AbstractDesktopWidget::mousePressEvent(event);
-        //QGraphicsItem::mousePressEvent(event);
         return;
     }
 
@@ -429,7 +430,6 @@ void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
         d->mPressHoldTimer->start(3000);
         qDebug() << Q_FUNC_INFO << "Press start";
         AbstractDesktopWidget::mousePressEvent(event);
-        //QGraphicsItem::mousePressEvent(event);
         return;
     }
     AbstractDesktopWidget::mousePressEvent(event);

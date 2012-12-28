@@ -21,8 +21,8 @@
 #ifndef IMAGE_CACHE_H
 #define IMAGE_CACHE_H
 
-#include <QtCore>
-#include <QtGui>
+#include <QtCore/QObject>
+#include <QtGui/QPainter>
 
 #include <plexy.h>
 #include <plexyconfig.h>

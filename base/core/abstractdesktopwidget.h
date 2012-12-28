@@ -21,9 +21,8 @@
 #define PLEXY_DESKTOP_WIDGET_H
 
 #include <plexy.h>
-#include <QtGui>
-
-class QGraphicsObject;
+#include <QtWidgets/QGraphicsObject>
+#include <QtWidgets/QGraphicsView>
 
 namespace PlexyDesk
 {
@@ -95,7 +94,7 @@ protected:
     virtual void paintDockView(QPainter *painter, const QRectF &rect) = 0;
     virtual void paintEditMode(QPainter *painter, const QRectF &rect) = 0;
 
-    //virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 private:
     class PrivateAbstractDesktopWidget;

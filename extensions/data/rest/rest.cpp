@@ -68,7 +68,7 @@ void RestData::setArguments(QVariant arg)
     if (type == GET) {
         d->manager->get(QNetworkRequest(url));
     } else if (type == POST) {
-        d->manager->post(QNetworkRequest(url), par.toAscii());
+        d->manager->post(QNetworkRequest(url), par.toLatin1());
     }
 }
 

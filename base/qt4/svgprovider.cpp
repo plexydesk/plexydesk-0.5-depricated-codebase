@@ -18,9 +18,10 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
-#include <QSvgRenderer>
-#include <QtDebug>
-#include <QObject>
+#include <QtSvg/QSvgRenderer>
+#include <QtCore/QtDebug>
+#include <QtCore/QObject>
+#include <QtCore/QDir>
 
 #include <svgprovider.h>
 

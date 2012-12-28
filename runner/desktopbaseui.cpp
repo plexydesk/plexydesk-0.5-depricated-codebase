@@ -21,6 +21,7 @@
 
 #include <QDebug>
 #include <QDesktopWidget>
+#include <QApplication>
 
 #include <config.h>
 #include <plexyconfig.h>
@@ -117,7 +118,7 @@ void DesktopBaseUi::setup()
         this->resize(view->size());
         view->setParent(this);
 
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
         //TODO: until we write our own NSView we do this for mac (issue : 169)
         /*- (void)drawRect:(NSRect)rect {
             [[NSColor clearColor] set];

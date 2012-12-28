@@ -13,16 +13,11 @@ SET (QTMOC_SRCS
     restinterface.h
     )
 
-QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})
+QT5_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})
 
 SET(sourceFiles
     ${sourceFiles}
     ${headerFiles}
-    )
-
-SET(libs
-    ${QT_QTCORE_LIBRARY}
-    ${QT_QTNETWORK_LIBRARY}
     )
 
 ADD_LIBRARY(restengine SHARED ${sourceFiles} ${QT_MOC_SRCS})
@@ -37,8 +32,9 @@ ENDIF(MINGW)
 
 TARGET_LINK_LIBRARIES(restengine
     ${PLEXY_CORE_LIBRARY}
-    ${libs}
     )
+
+QT5_USE_MODULES(restengine Widgets Xml OpenGL Core WebKitWidgets Svg Declarative)
 
 INSTALL(TARGETS restengine DESTINATION ${CMAKE_INSTALL_LIBDIR}/plexyext)
 INSTALL(FILES rest.desktop DESTINATION share/plexy/ext/groups)

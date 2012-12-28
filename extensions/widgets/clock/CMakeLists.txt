@@ -18,7 +18,7 @@ SET(QTMOC_SRCS
     clockinterface.h
     )
 
-QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})
+QT5_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})
 
 SET(sourceFiles
     ${clocksourceFiles}
@@ -42,6 +42,7 @@ ENDIF(MINGW)
 TARGET_LINK_LIBRARIES(plexyclock
     ${libs}
     )
+QT5_USE_MODULES(plexyclock Widgets Xml OpenGL Core WebKitWidgets Svg Declarative)
 
 INSTALL(TARGETS plexyclock DESTINATION ${CMAKE_INSTALL_LIBDIR}/plexyext)
 INSTALL(FILES clock.desktop DESTINATION share/plexy/ext/groups)

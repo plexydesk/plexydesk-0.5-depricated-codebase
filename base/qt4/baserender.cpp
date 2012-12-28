@@ -17,10 +17,8 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
-#include <QPaintEvent>
-#include <QPainter>
 #include <QtCore/QtGlobal>
-#include <QtOpenGL>
+#include <QtOpenGL/QtOpenGL>
 
 #include "baserender.h"
 

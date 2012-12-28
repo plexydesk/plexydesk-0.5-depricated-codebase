@@ -3,8 +3,8 @@
 
 #include <plexy.h>
 
-#include <QSharedPointer>
-#include <QObject>
+#include <QtCore/QSharedPointer>
+#include <QtCore/QObject>
 
 #include <controllerinterface.h>
 

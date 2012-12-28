@@ -21,6 +21,8 @@
 #include <QPixmapCache>
 #include <QDeclarativeContext>
 #include <abstractdesktopview.h>
+#include <QDropEvent>
+#include <QMimeData>
 
 #include <QtDebug>
 
@@ -53,6 +55,7 @@ PlexyDesk::AbstractDesktopWidget *BackgroundController::defaultView()
                                                     QImage(QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->wallpaper())));
     render->setController(this);
     render->setLabelName("classic Backdrop");
+
     mBackgroundRenderList.append(render);
     return render;
 }

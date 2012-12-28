@@ -30,5 +30,3 @@ QSharedPointer<PlexyDesk::ControllerInterface> Interface::controller()
 
     return obj;
 }
-
-Q_EXPORT_PLUGIN2(photoframe, Interface)

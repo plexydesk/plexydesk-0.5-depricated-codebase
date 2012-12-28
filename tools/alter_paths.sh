@@ -8,13 +8,13 @@ do
 install_name_tool -change libplexydeskcore.dylib  @executable_path/../Frameworks/libplexydeskcore.dylib $x
 install_name_tool -change libplexydeskuicore.dylib  @executable_path/../Frameworks/libplexydeskuicore.dylib $x
 install_name_tool -change libplexymime.dylib @executable_path/../Frameworks/libplexymime.dylib $x
-install_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore $x
-install_name_tool -change QtXmlPatterns.framework/Versions/4/QtXmlPatterns @executable_path/../Frameworks/QtXmlPatterns.framework/Versions/4/QtXmlPatterns $x
-install_name_tool -change QtGui.framework/Versions/4/QtGui @executable_path/../Frameworks/QtGui.framework/Versions/4/QtGui $x
-install_name_tool -change QtOpenGL.framework/Versions/4/QtOpenGL  @executable_path/../Frameworks/QtOpenGL.framework/Versions/4/QtOpenGL $x
-install_name_tool -change QtSvg.framework/Versions/4/QtSvg @executable_path/../Frameworks/QtSvg.framework/Versions/4/QtSvg $x
-install_name_tool -change QtNetwork.framework/Versions/4/QtNetwork @executable_path/../Frameworks/QtNetwork.framework/Versions/4/QtNetwork $x
-install_name_tool -change QtDeclarative.framework/Versions/4/QtDeclarative @executable_path/../Frameworks/QtDeclarative.framework/Versions/4/QtDeclarative $x
+install_name_tool -change QtCore.framework/Versions/5/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/5/QtCore $x
+install_name_tool -change QtXmlPatterns.framework/Versions/5/QtXmlPatterns @executable_path/../Frameworks/QtXmlPatterns.framework/Versions/5/QtXmlPatterns $x
+install_name_tool -change QtGui.framework/Versions/5/QtGui @executable_path/../Frameworks/QtGui.framework/Versions/5/QtGui $x
+install_name_tool -change QtOpenGL.framework/Versions/5/QtOpenGL  @executable_path/../Frameworks/QtOpenGL.framework/Versions/5/QtOpenGL $x
+install_name_tool -change QtSvg.framework/Versions/5/QtSvg @executable_path/../Frameworks/QtSvg.framework/Versions/5/QtSvg $x
+install_name_tool -change QtNetwork.framework/Versions/5/QtNetwork @executable_path/../Frameworks/QtNetwork.framework/Versions/5/QtNetwork $x
+install_name_tool -change QtDeclarative.framework/Versions/5/QtDeclarative @executable_path/../Frameworks/QtDeclarative.framework/Versions/5/QtDeclarative $x
 done
 
 cp -v ~/Applications/plexydesk.app/lib/lib* ~/Applications/plexydesk.app/bin/plexydesk.app/Contents/Frameworks/
@@ -24,13 +24,13 @@ do
 install_name_tool -change libplexydeskcore.dylib  @executable_path/../Frameworks/libplexydeskcore.dylib $x
 install_name_tool -change libplexydeskuicore.dylib  @executable_path/../Frameworks/libplexydeskuicore.dylib $x
 install_name_tool -change libplexymime.dylib @executable_path/../Frameworks/libplexymime.dylib $x
-install_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore $x
-install_name_tool -change QtXmlPatterns.framework/Versions/4/QtXmlPatterns @executable_path/../Frameworks/QtXmlPatterns.framework/Versions/4/QtXmlPatterns $x
-install_name_tool -change QtGui.framework/Versions/4/QtGui @executable_path/../Frameworks/QtGui.framework/Versions/4/QtGui $x
-install_name_tool -change QtOpenGL.framework/Versions/4/QtOpenGL  @executable_path/../Frameworks/QtOpenGL.framework/Versions/4/QtOpenGL $x
-install_name_tool -change QtSvg.framework/Versions/4/QtSvg @executable_path/../Frameworks/QtSvg.framework/Versions/4/QtSvg $x
-install_name_tool -change QtNetwork.framework/Versions/4/QtNetwork @executable_path/../Frameworks/QtNetwork.framework/Versions/4/QtNetwork $x
-install_name_tool -change QtDeclarative.framework/Versions/4/QtDeclarative @executable_path/../Frameworks/QtDeclarative.framework/Versions/4/QtDeclarative $x
+install_name_tool -change QtCore.framework/Versions/5/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/5/QtCore $x
+install_name_tool -change QtXmlPatterns.framework/Versions/5/QtXmlPatterns @executable_path/../Frameworks/QtXmlPatterns.framework/Versions/5/QtXmlPatterns $x
+install_name_tool -change QtGui.framework/Versions/5/QtGui @executable_path/../Frameworks/QtGui.framework/Versions/5/QtGui $x
+install_name_tool -change QtOpenGL.framework/Versions/5/QtOpenGL  @executable_path/../Frameworks/QtOpenGL.framework/Versions/5/QtOpenGL $x
+install_name_tool -change QtSvg.framework/Versions/5/QtSvg @executable_path/../Frameworks/QtSvg.framework/Versions/5/QtSvg $x
+install_name_tool -change QtNetwork.framework/Versions/5/QtNetwork @executable_path/../Frameworks/QtNetwork.framework/Versions/5/QtNetwork $x
+install_name_tool -change QtDeclarative.framework/Versions/5/QtDeclarative @executable_path/../Frameworks/QtDeclarative.framework/Versions/5/QtDeclarative $x
 done
 
 
@@ -39,13 +39,13 @@ do
 install_name_tool -change libplexydeskcore.dylib  @executable_path/../Frameworks/libplexydeskcore.dylib $x
 install_name_tool -change libplexydeskuicore.dylib  @executable_path/../Frameworks/libplexydeskuicore.dylib $x
 install_name_tool -change libplexymime.dylib @executable_path/../Frameworks/libplexymime.dylib $x
-install_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore $x
-install_name_tool -change QtXmlPatterns.framework/Versions/4/QtXmlPatterns @executable_path/../Frameworks/QtXmlPatterns.framework/Versions/4/QtXmlPatterns $x
-install_name_tool -change QtGui.framework/Versions/4/QtGui @executable_path/../Frameworks/QtGui.framework/Versions/4/QtGui $x
-install_name_tool -change QtOpenGL.framework/Versions/4/QtOpenGL  @executable_path/../Frameworks/QtOpenGL.framework/Versions/4/QtOpenGL $x
-install_name_tool -change QtSvg.framework/Versions/4/QtSvg @executable_path/../Frameworks/QtSvg.framework/Versions/4/QtSvg $x
-install_name_tool -change QtNetwork.framework/Versions/4/QtNetwork @executable_path/../Frameworks/QtNetwork.framework/Versions/4/QtNetwork $x
-install_name_tool -change QtDeclarative.framework/Versions/4/QtDeclarative @executable_path/../Frameworks/QtDeclarative.framework/Versions/4/QtDeclarative $x
+install_name_tool -change QtCore.framework/Versions/5/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/5/QtCore $x
+install_name_tool -change QtXmlPatterns.framework/Versions/5/QtXmlPatterns @executable_path/../Frameworks/QtXmlPatterns.framework/Versions/5/QtXmlPatterns $x
+install_name_tool -change QtGui.framework/Versions/5/QtGui @executable_path/../Frameworks/QtGui.framework/Versions/5/QtGui $x
+install_name_tool -change QtOpenGL.framework/Versions/5/QtOpenGL  @executable_path/../Frameworks/QtOpenGL.framework/Versions/5/QtOpenGL $x
+install_name_tool -change QtSvg.framework/Versions/5/QtSvg @executable_path/../Frameworks/QtSvg.framework/Versions/5/QtSvg $x
+install_name_tool -change QtNetwork.framework/Versions/5/QtNetwork @executable_path/../Frameworks/QtNetwork.framework/Versions/5/QtNetwork $x
+install_name_tool -change QtDeclarative.framework/Versions/5/QtDeclarative @executable_path/../Frameworks/QtDeclarative.framework/Versions/5/QtDeclarative $x
 done
 
 
@@ -59,14 +59,14 @@ do
 install_name_tool -change libplexydeskcore.dylib  @executable_path/../Frameworks/libplexydeskcore.dylib $x
 install_name_tool -change libplexydeskuicore.dylib  @executable_path/../Frameworks/libplexydeskuicore.dylib $x
 install_name_tool -change libplexymime.dylib @executable_path/../Frameworks/libplexymime.dylib $x
-install_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore $x
-install_name_tool -change QtXmlPatterns.framework/Versions/4/QtXmlPatterns @executable_path/../Frameworks/QtXmlPatterns.framework/Versions/4/QtXmlPatterns $x
-install_name_tool -change QtGui.framework/Versions/4/QtGui @executable_path/../Frameworks/QtGui.framework/Versions/4/QtGui $x
-install_name_tool -change QtOpenGL.framework/Versions/4/QtOpenGL  @executable_path/../Frameworks/QtOpenGL.framework/Versions/4/QtOpenGL $x
-install_name_tool -change QtSvg.framework/Versions/4/QtSvg @executable_path/../Frameworks/QtSvg.framework/Versions/4/QtSvg $x
-install_name_tool -change QtNetwork.framework/Versions/4/QtNetwork @executable_path/../Frameworks/QtNetwork.framework/Versions/4/QtNetwork $x
-install_name_tool -change QtDeclarative.framework/Versions/4/QtDeclarative @executable_path/../Frameworks/QtDeclarative.framework/Versions/4/QtDeclarative $x
-install_name_tool -change QtSql.framework/Versions/4/QtSql @executable_path/../Frameworks/QtDeclarative.framework/Versions/4/QtDeclarative $x
+install_name_tool -change QtCore.framework/Versions/5/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/5/QtCore $x
+install_name_tool -change QtXmlPatterns.framework/Versions/5/QtXmlPatterns @executable_path/../Frameworks/QtXmlPatterns.framework/Versions/5/QtXmlPatterns $x
+install_name_tool -change QtGui.framework/Versions/5/QtGui @executable_path/../Frameworks/QtGui.framework/Versions/5/QtGui $x
+install_name_tool -change QtOpenGL.framework/Versions/5/QtOpenGL  @executable_path/../Frameworks/QtOpenGL.framework/Versions/5/QtOpenGL $x
+install_name_tool -change QtSvg.framework/Versions/5/QtSvg @executable_path/../Frameworks/QtSvg.framework/Versions/5/QtSvg $x
+install_name_tool -change QtNetwork.framework/Versions/5/QtNetwork @executable_path/../Frameworks/QtNetwork.framework/Versions/5/QtNetwork $x
+install_name_tool -change QtDeclarative.framework/Versions/5/QtDeclarative @executable_path/../Frameworks/QtDeclarative.framework/Versions/5/QtDeclarative $x
+install_name_tool -change QtSql.framework/Versions/5/QtSql @executable_path/../Frameworks/QtDeclarative.framework/Versions/5/QtDeclarative $x
 done
 
 mv ~/Applications/plexydesk.app/bin/plexydesk.app/Contents ~/Applications/plexydesk.app/

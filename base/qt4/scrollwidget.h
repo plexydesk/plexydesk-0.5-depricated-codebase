@@ -22,8 +22,8 @@
 #include <config.h>
 #include <desktopwidget.h>
 
-#include <QGraphicsItem>
-#include <QGraphicsObject>
+#include <QtWidgets/QGraphicsItem>
+#include <QtWidgets/QGraphicsObject>
 
 namespace PlexyDesk
 {
@@ -40,7 +40,6 @@ public:
 
 private:
    virtual void wheelEvent (QGraphicsSceneWheelEvent * event);
-   virtual void dragMoveEvent(QGraphicsSceneDragDropEvent *event);
 
    class Private;
    Private *const d;

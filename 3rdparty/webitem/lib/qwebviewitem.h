@@ -28,9 +28,7 @@
 
 #include <qwebkitglobal.h>
 #include <qwebpage.h>
-#include <QtGui/qwidget.h>
-#include <QtGui/qicon.h>
-#include <QtGui/qgraphicsview.h>
+#include <QtWidgets/QWidget>
 #include <QGraphicsRectItem>
 #include <QGraphicsRectItem>
 #include <QGraphicsSceneMouseEvent>

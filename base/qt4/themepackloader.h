@@ -1,9 +1,9 @@
 #ifndef THEMEPACKLOADER_H
 #define THEMEPACKLOADER_H
 
-#include <QObject>
-#include <QSettings>
-#include <QPoint>
+#include <QtCore/QObject>
+#include <QtCore/QSettings>
+#include <QtCore/QPoint>
 #include <abstractdesktopwidget.h>
 #include <abstractdesktopview.h>
 

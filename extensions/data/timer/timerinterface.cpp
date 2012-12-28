@@ -28,5 +28,3 @@ QSharedPointer<PlexyDesk::DataSource> TimerInterface::model()
 
     return obj;
 }
-
-Q_EXPORT_PLUGIN2(timerengine, TimerInterface)

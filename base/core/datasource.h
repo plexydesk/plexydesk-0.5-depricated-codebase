@@ -21,9 +21,9 @@
 #define PLEXY_DATA_PLUGIN_H
 
 #include <plexy.h>
-#include <QObject>
-#include <QVariantMap>
-#include <QStringList>
+#include <QtCore/QObject>
+#include <QtCore/QVariantMap>
+#include <QtCore/QStringList>
 
 /*!
    \class PlexyDesk::DataSource

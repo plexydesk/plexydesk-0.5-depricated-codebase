@@ -22,9 +22,9 @@
 
 #include <plexy.h>
 
-#include <QObject>
-#include <QPainter>
-#include <QRectF>
+#include <QtCore/QObject>
+#include <QtGui/QPainter>
+#include <QtCore/QRectF>
 
 namespace PlexyDesk {
 

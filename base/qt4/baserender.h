@@ -21,7 +21,7 @@
 
 #include <plexy.h>
 
-#include <QGLWidget>
+#include <QtOpenGL/QGLWidget>
 
 #ifdef Q_WS_X11
 #include <GL/gl.h>

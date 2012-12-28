@@ -10,6 +10,7 @@ class YouTubeInterface : public QObject, public PlexyDesk::ControllerPluginInter
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::ControllerPluginInterface)
+    Q_PLUGIN_METADATA(IID "org.qt-project.youtubewidget")
 
 public :
     YouTubeInterface(QObject *object = 0);

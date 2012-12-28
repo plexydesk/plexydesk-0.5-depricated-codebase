@@ -13,15 +13,11 @@ SET (QTMOC_SRCS
     timerinterface.h
     )
 
-QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})
+QT5_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})
 
 SET(sourceFiles
     ${sourceFiles}
     ${headerFiles}
-    )
-
-SET(libs
-    ${QT_QTCORE_LIBRARY}
     )
 
 ADD_LIBRARY(timerengine SHARED ${sourceFiles} ${QT_MOC_SRCS})
@@ -36,8 +32,9 @@ ENDIF(MINGW)
 
 TARGET_LINK_LIBRARIES(timerengine
     ${PLEXY_CORE_LIBRARY}
-    ${libs}
     )
+
+QT5_USE_MODULES(timerengine Widgets Xml OpenGL Core WebKitWidgets Svg Declarative)
 
 INSTALL(TARGETS timerengine DESTINATION ${CMAKE_INSTALL_LIBDIR}/plexyext)
 INSTALL(FILES timer.desktop DESTINATION share/plexy/ext/groups)

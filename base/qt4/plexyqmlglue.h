@@ -1,8 +1,9 @@
 #ifndef PLEXYQMLGLUE_H
 #define PLEXYQMLGLUE_H
 
-#include <QSharedDataPointer>
-#include <QDeclarativeEngine>
+#include <QtCore/QSharedDataPointer>
+#include <QtCore/QDir>
+#include <QtDeclarative/QDeclarativeEngine>
 
 namespace PlexyDesk
 {

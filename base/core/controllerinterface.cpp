@@ -1,7 +1,6 @@
 #include <controllerinterface.h>
 #include <pluginloader.h>
-#include <QDropEvent>
-#include <QDebug>
+#include <QtCore/QDebug>
 
 namespace PlexyDesk
 {

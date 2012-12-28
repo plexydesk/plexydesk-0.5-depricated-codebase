@@ -19,10 +19,9 @@
 
 #include <config.h>
 
-#include <QStringList>
-#include <QDir>
-#include <QRect>
-#include <QDebug>
+#include <QtCore/QStringList>
+#include <QtCore/QDir>
+#include <QtCore/QDebug>
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomNamedNodeMap>
 

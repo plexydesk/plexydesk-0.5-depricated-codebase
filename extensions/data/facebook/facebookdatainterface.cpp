@@ -14,4 +14,3 @@ QSharedPointer<PlexyDesk::DataSource> FacebookDataInterface::model()
     return obj;
 }
 
-Q_EXPORT_PLUGIN2(facebookengine, FacebookDataInterface)

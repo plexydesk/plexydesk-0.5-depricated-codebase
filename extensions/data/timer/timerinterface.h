@@ -28,6 +28,7 @@ class TimerInterface : public QObject, public PlexyDesk::DataPluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::DataPluginInterface)
+    Q_PLUGIN_METADATA(IID "org.qt-project.timerengine")
 
 public :
     virtual ~TimerInterface() {}

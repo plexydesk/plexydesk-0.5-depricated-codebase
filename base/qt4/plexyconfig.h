@@ -20,9 +20,9 @@
 #ifndef PLEXY_CONIFG_LINUX_QT_H
 #define PLEXY_CONIFG_LINUX_QT_H
 
-#include <QSettings>
-#include <QNetworkProxy>
-#include <QStringList>
+#include <QtCore/QSettings>
+#include <QtNetwork/QNetworkProxy>
+#include <QtCore/QStringList>
 
 #include <plexy.h>
 #include <imagecache.h>

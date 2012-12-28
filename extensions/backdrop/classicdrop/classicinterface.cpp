@@ -37,5 +37,3 @@ QSharedPointer<PlexyDesk::ControllerInterface> ClassicBackdrop::controller()
 
     return obj;
 }
-
-Q_EXPORT_PLUGIN2(ClassicBackdrop, ClassicBackdrop)

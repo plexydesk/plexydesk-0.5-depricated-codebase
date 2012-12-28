@@ -10,4 +10,3 @@ QSharedPointer<PlexyDesk::ControllerInterface> AuthInterface::controller()
     return obj;
 }
 
-Q_EXPORT_PLUGIN2(plexyauth, AuthInterface)

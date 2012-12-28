@@ -1,11 +1,10 @@
 #ifndef PLEXY_VIEW_CONTROLLER_PLUGIN_H
 #define PLEXY_VIEW_CONTROLLER_PLUGIN_H
 
-#include <QSharedPointer>
+#include <plexy.h>
+#include <QtCore/QSharedPointer>
 
 #include <datasource.h>
-#include <plexy.h>
-
 
 class QGraphicsItem;
 class QDropEvent;

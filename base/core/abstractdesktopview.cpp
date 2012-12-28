@@ -17,17 +17,19 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
+#ifndef PLEXYCORE_STANDALONE
 #include <config.h>
+#endif
 
-#include <QDir>
-#include <QtDebug>
-#include <QGLWidget>
-#include <QFutureWatcher>
-#include <QSharedPointer>
-#include <QPropertyAnimation>
+#include <QtCore/QDir>
+#include <QtCore/QtDebug>
+#include <QtCore/QSharedPointer>
+#include <QtCore/QPropertyAnimation>
 #include <QGraphicsGridLayout>
 #include <QGraphicsDropShadowEffect>
+#include <QDesktopWidget>
 #include <QDomDocument>
+#include <QGLWidget>
 
 #include <abstractdesktopwidget.h>
 #include <controllerinterface.h>
@@ -88,7 +90,7 @@ public:
 AbstractDesktopView::AbstractDesktopView(QGraphicsScene *scene, QWidget *parent) :
     QGraphicsView(scene, parent), d(new PrivateAbstractDesktopView)
 {
-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnBottomHint);
+    setWindowFlags(Qt::FramelessWindowHint);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setAlignment(Qt::AlignLeft | Qt::AlignTop);
@@ -103,12 +105,8 @@ AbstractDesktopView::AbstractDesktopView(QGraphicsScene *scene, QWidget *parent)
 
     setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
     setFrameStyle(QFrame::NoFrame);
-    scene->setStickyFocus(false);
+    setInteractive(true);
     scene->setItemIndexMethod(QGraphicsScene::NoIndex);
-    setFocusPolicy(Qt::StrongFocus);
-    if(viewport()) {
-        viewport()->setFocusPolicy(Qt::StrongFocus);
-    }
 }
 
 AbstractDesktopView::~AbstractDesktopView()
@@ -147,7 +145,7 @@ bool AbstractDesktopView::setBackgroundController(const QString &controllerName)
     }
 
     for (int i = 0 ; i < d->mDesktopWidget->screenCount() ; i++) {
-        //qDebug() << Q_FUNC_INFO << i;
+        qDebug() << Q_FUNC_INFO << i;
         d->mBackgroundItem = (AbstractDesktopWidget*) controller->defaultView();
 
         scene()->addItem(d->mBackgroundItem);
@@ -159,10 +157,6 @@ bool AbstractDesktopView::setBackgroundController(const QString &controllerName)
 
         controller->setViewport(this);
         controller->setControllerName(controllerName);
-
-        if(scene()) {
-            scene()->setFocusItem(d->mBackgroundItem, Qt::MouseFocusReason);
-        }
     }
     return true;
 }
@@ -196,8 +190,8 @@ void AbstractDesktopView::addController(const QString &controllerName, bool firs
     controller->setViewport(this);
     controller->setControllerName(controllerName);
 
-    if (scene()) {
-        scene()->setFocusItem(d->mBackgroundItem, Qt::MouseFocusReason);
+    if (d->mBackgroundItem) {
+        defaultView->setParentItem(d->mBackgroundItem);
     }
 
     qDebug() << Q_FUNC_INFO << firstRun;
@@ -267,17 +261,6 @@ void AbstractDesktopView::dropEvent(QDropEvent *event)
 
     scene()->update(this->sceneRect());
     event->acceptProposedAction();
-}
-
-void AbstractDesktopView::dragEnterEvent(QDragEnterEvent *event)
-{
-    event->accept();
-
-}
-
-void AbstractDesktopView::dragMoveEvent(QDragMoveEvent *event)
-{
-    event->accept();
 }
 
 void AbstractDesktopView::addWidgetToView(AbstractDesktopWidget *widget)

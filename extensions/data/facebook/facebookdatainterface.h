@@ -10,6 +10,7 @@ class FacebookDataInterface : public QObject, public PlexyDesk::DataPluginInterf
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::DataPluginInterface)
+    Q_PLUGIN_METADATA(IID "org.qt-project.facebookData")
 
 public:
     explicit FacebookDataInterface(QObject *parent = 0);

@@ -19,13 +19,14 @@
 
 #include <config.h>
 
-#include <QCoreApplication>
-#include <QDir>
-#include <QHash>
-#include <QtDebug>
+#include <QtCore/QCoreApplication>
+#include <QtCore/QDir>
+#include <QtCore/QHash>
+#include <QtCore/QtDebug>
 #include "plexyconfig.h"
 #include <abstractdesktopwidget.h>
-#include <QCoreApplication>
+#include <QtCore/QCoreApplication>
+#include <QtWidgets/QDesktopWidget>
 
 #ifdef Q_WS_MAC
 #include <CoreFoundation/CoreFoundation.h>

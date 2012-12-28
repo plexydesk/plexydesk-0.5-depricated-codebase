@@ -12,7 +12,7 @@ SET(QTMOC_TEST_SRCS
     testjson.h
     )
 
-QT4_WRAP_CPP(QT_MOC_SRCS_TEST ${QTMOC_TEST_SRCS})
+ QT5_WRAP_CPP(QT_MOC_SRCS_TEST ${QTMOC_TEST_SRCS})
 
 SET(sourceFiles
     ${sourceFiles}

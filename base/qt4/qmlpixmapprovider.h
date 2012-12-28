@@ -1,7 +1,7 @@
 #ifndef QMLPIXMAPPROVIDER_H
 #define QMLPIXMAPPROVIDER_H
 
-#include <QDeclarativeImageProvider>
+#include <QtDeclarative/QDeclarativeImageProvider>
 
 class QmlPixmapProvider : public QDeclarativeImageProvider
 {

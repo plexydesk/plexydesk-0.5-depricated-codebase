@@ -19,10 +19,10 @@
 #ifndef PLUGIN_LOADER_H
 #define PLUGIN_LOADER_H
 
-#include <abstractplugininterface.h>
 #include <plexy.h>
-#include <QHash>
-#include <QSharedPointer>
+#include <abstractplugininterface.h>
+#include <QtCore/QHash>
+#include <QtCore/QSharedPointer>
 
 #include <datasource.h>
 #include <controllerinterface.h>

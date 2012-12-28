@@ -49,8 +49,6 @@
 #ifndef __PLEXY_EXPORTS
 #define __PLEXY_EXPORTS
 
-#include <QtCore/QtGlobal>
-
 #ifdef Q_CC_MSVC
 #define __PRETTY_FUNCTION__ QString("%1 %2 %3 %4 %4").arg(__FILE__).arg(__LINE__).arg(__FUNCTION__).arg(__FUNCDNAME__).arg(__FUNCSIG__)
 #endif

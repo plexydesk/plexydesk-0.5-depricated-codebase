@@ -1,5 +1,9 @@
 #include "facebookauthenticationwidget.h"
+
 #include <QGraphicsWebView>
+#include <QUrl>
+#include <QUrlQuery>
+
 #include <controllerinterface.h>
 #include <abstractdesktopview.h>
 
@@ -58,7 +62,9 @@ void FacebookAuthenticationWidget::onLoadFinished(bool ok)
 void FacebookAuthenticationWidget::onUrlChanged(const QUrl &url)
 {
     QString stringUrl = url.toString().replace("#", "?");
-    QUrl fburl(stringUrl);
+    qDebug() << stringUrl;
+    QUrl newUrl (stringUrl);
+    QUrlQuery fburl(newUrl);
 
     if (not fburl.queryItemValue("access_token").isEmpty()) {
         this->setVisible(false);

@@ -61,7 +61,7 @@ bool Clock::deleteWidget(PlexyDesk::AbstractDesktopWidget *widget)
     if (widget == clock) {
         delete clock;
         clock = 0;
-        return TRUE;
+        return 1;
     }
 
     Q_FOREACH (ClockWidget *_clock, mClocks) {
@@ -69,13 +69,13 @@ bool Clock::deleteWidget(PlexyDesk::AbstractDesktopWidget *widget)
             mClocks.removeAt(index);
             delete _clock;
             _clock = 0;
-            return TRUE;
+            return 1;
         }
 
         index++;
     }
 
-    return TRUE;
+    return 1;
 }
 
 QStringList Clock::actions() const

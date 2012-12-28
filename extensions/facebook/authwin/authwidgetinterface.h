@@ -10,6 +10,7 @@ class AuthInterface : public QObject, public PlexyDesk::ControllerPluginInterfac
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::ControllerPluginInterface)
+    Q_PLUGIN_METADATA(IID "org.qt-project.FacebookPlugin")
 
 public :
     AuthInterface(QObject *parent = 0) : PlexyDesk::ControllerPluginInterface() {}

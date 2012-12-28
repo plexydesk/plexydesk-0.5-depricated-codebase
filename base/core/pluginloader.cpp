@@ -17,14 +17,12 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
-#include <QDir>
-#include <QPluginLoader>
-#include <QSettings>
-#include <QStringList>
-#include <QDebug>
+#include <QtCore/QDir>
+#include <QtCore/QPluginLoader>
+#include <QtCore/QDebug>
+#include <QtCore/QSettings>
 
 #include "pluginloader.h"
-#include "extensionfactory.h"
 #include "dataplugininterface.h"
 #include "controllerplugininterface.h"
 #include "desktopviewplugininterface.h"
@@ -151,7 +149,7 @@ QSharedPointer<DesktopViewPlugin> PluginLoader::view(const QString &name)
 
 void PluginLoader::load(const QString &interface, const QString &pluginName)
 {
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
     QPluginLoader loader (d->mPluginPrefix + QLatin1String("lib") + pluginName + QLatin1String(".dylib") );
 #endif
 

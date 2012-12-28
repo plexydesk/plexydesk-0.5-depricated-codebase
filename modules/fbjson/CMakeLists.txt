@@ -20,7 +20,7 @@ SET(sourceFiles
     )
 
 
-QT4_WRAP_CPP(QT_MOC_SRCS ${headerFiles})
+QT5_WRAP_CPP(QT_MOC_SRCS ${headerFiles})
 
 ADD_LIBRARY(plexyjson SHARED ${sourceFiles} ${QT_MOC_SRCS})
 
@@ -33,15 +33,8 @@ IF(MINGW)
 ENDIF(MINGW)
 
 TARGET_LINK_LIBRARIES(plexyjson
-    ${QT_QTSCRIPT_LIBRARY}
-    ${QT_QTWEBKIT_LIBRARY}
-    ${QT_QTGUI_LIBRARY}
-    ${QT_QTCORE_LIBRARY}
-    ${QT_QTSVG_LIBRARY}
-    ${QT_QTNETWORK_LIBRARY}
     ${PLEXY_UI_CORE_LIBRARY}
     )
 
 INSTALL(TARGETS plexyjson DESTINATION ${CMAKE_INSTALL_LIBDIR})
-
-ADD_SUBDIRECTORY (test) 
+QT5_USE_MODULES(plexyjson Widgets Xml OpenGL Core WebKitWidgets Svg Declarative)

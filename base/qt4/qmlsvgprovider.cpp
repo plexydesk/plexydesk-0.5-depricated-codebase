@@ -1,6 +1,6 @@
 #include "qmlsvgprovider.h"
 
-#include <QDeclarativeImageProvider>
+#include <QtDeclarative/QDeclarativeImageProvider>
 
 #include <svgprovider.h>
 

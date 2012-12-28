@@ -21,6 +21,9 @@
 #include <pluginloader.h>
 #include <desktopwidget.h>
 #include <QDeclarativeContext>
+#include <QDir>
+#include <QDropEvent>
+#include <QMimeData>
 
 #define ADD_DIR "addDirectory"
 #define CREATE_DIR "createDirectory"

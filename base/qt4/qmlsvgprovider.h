@@ -1,7 +1,7 @@
 #ifndef QMLSVGPROVIDER_H
 #define QMLSVGPROVIDER_H
 
-#include <QDeclarativeImageProvider>
+#include <QtDeclarative/QDeclarativeImageProvider>
 
 class QmlSvgProvider : public QDeclarativeImageProvider
 {

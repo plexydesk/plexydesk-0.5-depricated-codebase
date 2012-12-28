@@ -3,7 +3,8 @@
 
 #import <Cocoa/Cocoa.h>
 #include <QtGui/QtGui>
-#include <QtGui/qmacnativewidget_mac.h>
+#include <QtWidgets/QMacNativeWidget>
+#include <QApplication>
 #include <QtCore>
 #include <QIcon>
 
@@ -32,11 +33,11 @@ int main(int argc, char **argv)
                 QDir::toNativeSeparators(QLatin1String(pathPtr)  + QLatin1String("/Contents/share/plexy/ext/groups/")),
                 QDir::toNativeSeparators(QLatin1String(pathPtr)  + QLatin1String("/Contents/lib/plexyext/")));
 
-    QString appIconPath =  QLatin1String(pathPtr) +
-        "/Contents/share/plexy/plexydesk.png";
-    QIcon appIcon = QIcon(QDir::toNativeSeparators(appIconPath));
-    qtApp.setWindowIcon(appIcon);
-    qtApp.setApplicationName(QString(PLEXYNAME));
+    //QString appIconPath =  QLatin1String(pathPtr) +
+     //   "/Contents/share/plexy/plexydesk.png";
+    //QIcon appIcon = QIcon(QDir::toNativeSeparators(appIconPath));
+    //qtApp.setWindowIcon(appIcon);
+    //qtApp.setApplicationName(QString(PLEXYNAME));
 
     //PlexyDesk Base Desktop View
     QSharedPointer<DesktopBaseUi> ui = QSharedPointer<DesktopBaseUi>(new DesktopBaseUi(), &QObject::deleteLater);
@@ -46,7 +47,7 @@ int main(int argc, char **argv)
         [[_desktopView window] setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
         [[_desktopView window] setHasShadow:NO];
         [[_desktopView window] setLevel:kCGDesktopIconWindowLevel + 1];
-        //[[_desktopView window] makeKeyAndOrderFront:_desktopView];
+        [[_desktopView window] makeKeyAndOrderFront:_desktopView];
     }
 
     //hack for mac

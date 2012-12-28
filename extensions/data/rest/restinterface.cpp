@@ -28,5 +28,3 @@ QSharedPointer<PlexyDesk::DataSource> RestInterface::model()
 
     return obj;
 }
-
-Q_EXPORT_PLUGIN2(restengine, RestInterface)

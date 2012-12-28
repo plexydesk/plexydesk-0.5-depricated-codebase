@@ -17,8 +17,6 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
-#include <QtPlugin>
-
 #include "interface.h"
 #include "folderplugin.h"
 
@@ -30,4 +28,3 @@ QSharedPointer<PlexyDesk::ControllerInterface> Interface::controller()
     return obj;
 }
 
-Q_EXPORT_PLUGIN2(folderwidget, Interface)

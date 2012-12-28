@@ -13,18 +13,11 @@ SET(QTMOC_SRCS
     macbginterface.h
     )
 
-QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})
+QT5_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})
 
 SET(sourceFiles
     ${sourceFiles}
     ${headerFiles}
-    )
-
-SET(libs
-    ${QT_QTGUI_LIBRARY}
-    ${OPENGL_LIBRARIES}
-    ${QT_QTCORE_LIBRARY}
-    ${QT_QTOPENGL_LIBRARY}
     )
 
 ADD_LIBRARY(mac_background SHARED ${sourceFiles} ${QT_MOC_SRCS})
@@ -39,8 +32,8 @@ ENDIF(MINGW)
 
 TARGET_LINK_LIBRARIES(mac_background
     ${PLEXY_UI_CORE_LIBRARY}
-    ${libs}
     )
+QT5_USE_MODULES(mac_background Widgets Xml OpenGL Core WebKitWidgets Svg Declarative)
 
 INSTALL(TARGETS mac_background DESTINATION ${CMAKE_INSTALL_LIBDIR}/plexyext)
 INSTALL(FILES macdesktop.desktop DESTINATION share/plexy/ext/groups)

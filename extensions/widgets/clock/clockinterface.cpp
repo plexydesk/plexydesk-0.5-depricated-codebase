@@ -9,4 +9,4 @@ QSharedPointer<PlexyDesk::ControllerInterface> ClockInterface::controller()
     return obj;
 }
 
-Q_EXPORT_PLUGIN2(plexyclock, ClockInterface)
+//Q_EXPORT_PLUGIN2(plexyclock, ClockInterface)

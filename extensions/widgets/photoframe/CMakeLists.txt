@@ -18,25 +18,19 @@ SET(QTMOC_SRCS
     photowidget.h
     )
 
-QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})
+QT5_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})
 
 SET(sourceFiles
     ${sourceFiles}
     ${headerFiles}
     )
 
-SET(libs
-    ${QT_QTGUI_LIBRARY}
-    ${OPENGL_LIBRARIES}
-    ${QT_QTCORE_LIBRARY}
-    ${QT_QTOPENGL_LIBRARY}
-    )
-
 ADD_LIBRARY(photoframe SHARED ${sourceFiles} ${QT_MOC_SRCS})
+
+QT5_USE_MODULES(photoframe Widgets Xml OpenGL Core WebKitWidgets Svg Declarative)
 
 TARGET_LINK_LIBRARIES(photoframe
     ${PLEXY_UI_CORE_LIBRARY}
-    ${libs}
     )
 
 INSTALL(TARGETS photoframe DESTINATION ${CMAKE_INSTALL_LIBDIR}/plexyext)

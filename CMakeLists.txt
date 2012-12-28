@@ -7,12 +7,16 @@ PROJECT(PlexyDesktop)
 
 # Project variables that need to be defined manually
 SET(LIB_MAJOR 0)
-SET(LIB_MINOR 6)
-SET(LIB_RELEASE 6)
-SET(APPLICATION_INTERNAL_VERSION 20121008)
-SET(APPLICATION_DATE 2012-10-08)
+SET(LIB_MINOR 7)
+SET(LIB_RELEASE 0)
+
+SET(APPLICATION_INTERNAL_VERSION 20120101)
+SET(APPLICATION_DATE 2013-01-01)
+
 SET(APPLICATION_EXE_NAME plexydesk)
+
 SET(PLEXY_UI_CORE_LIBRARY plexydeskuicore)
+
 SET(PLEXY_CORE_LIBRARY plexydeskcore)
 
 
@@ -21,21 +25,27 @@ SET(APPLICATION_NAME "${PROJECT_NAME}")
 SET(APPLICATION_MAIN_VERSION "${LIB_MAJOR}.${LIB_MINOR}.${LIB_RELEASE}")
 SET(RESOURCES_DEST_DIR share/plexy/themepack/default/resources)
 
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8.9)
 CMAKE_POLICY(SET CMP0003 OLD)
 
 SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmakemodules)
 
 # Needed/optional packages definitions
-FIND_PACKAGE(Qt4 4.7.0 COMPONENTS QtCore QtGui QtOpenGL QtXml QtDeclarative QtSql QtSvg REQUIRED)
-FIND_PACKAGE(FFMPEG) #optional
-FIND_PACKAGE(OpenCV) #optional
-FIND_PACKAGE(QImageBlitz REQUIRED)
-FIND_PACKAGE(OpenGL)
-
+#FIND_PACKAGE(Qt5 5.0.0  COMPONENTS QtWidgets QtCore QtGui QtOpenGL QtXml QtDeclarative QtSql QtSvg REQUIRED)
+FIND_PACKAGE(Qt5Core REQUIRED)
+FIND_PACKAGE(Qt5Widgets REQUIRED)
+FIND_PACKAGE(Qt5Xml REQUIRED)
+FIND_PACKAGE(Qt5Gui REQUIRED)
+FIND_PACKAGE(Qt5OpenGL REQUIRED)
+FIND_PACKAGE(Qt5Declarative REQUIRED)
+FIND_PACKAGE(Qt5WebKitWidgets REQUIRED)
+FIND_PACKAGE(Qt5Svg REQUIRED)
+FIND_PACKAGE(Qt5Script REQUIRED)
 FIND_PACKAGE(BISON REQUIRED)
 FIND_PACKAGE(FLEX REQUIRED)
 
+set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS})
+set(CMAKE_CXX_FLAGS "-fPIC")
 
 # Global variable CMAKE_BUILD_TYPE handling
 # None (CMAKE_C_FLAGS or CMAKE_CXX_FLAGS used)
@@ -78,30 +88,7 @@ ENDIF(WIN32)
 INCLUDE(PkgConfigGetVar)
 INCLUDE(GNUInstallDirs)
 
-# *** QT vars handling ***
-# This will cause cmake to include and link against the OpenGL module.
-# Set all flags first and then use the QT_USE_FILE to set everything.
-# Note that QT_USE_FILE also sets QT_DEFINITIONS
-SET(QT_USE_OPENGL TRUE)
-SET(QT_USE_QTMAIN TRUE)
-#SET(QT_USE_QTMULTIMEDIA TRUE)
-SET(QT_USE_QTNETWORK TRUE)
-SET(QT_USE_QTXML TRUE)
-SET(QT_USE_QTSVG TRUE)
-SET(QT_USE_QTSQL TRUE)
-SET(QT_USE_QTTEST TRUE)
-IF (NOT WIN32)
-   IF (NOT APPLE)
-SET(QT_USE_QTDBUS TRUE)
-   ENDIF (NOT APPLE)
-ENDIF (NOT WIN32)
-SET(QT_USE_QTWEBKIT TRUE)
-SET(QT_USE_QTXMLPATTERNS TRUE)
-SET(QT_USE_QTSCRIPT TRUE)
-SET(QT_USE_QTDECLARATIVE TRUE)
-INCLUDE(${QT_USE_FILE})
-
-SET(QT_IMPORTS_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/qt4/imports)
+SET(QT_IMPORTS_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/qt5/imports)
 
 # On Windows we use a predefined QT_IMPORTS_INSTALL_DIR
 IF (NOT WIN32)
@@ -109,7 +96,7 @@ IF (NOT WIN32)
 # Workaround for platforms that do not provide it (Ubuntu)
 IF(NOT QT_IMPORTS_DIR)
     MESSAGE("QT_IMPORTS_DIR not present...\nUsing a built in one: ${CMAKE_INSTALL_FULL_LIBDIR}/qt4/imports")
-    SET(QT_IMPORTS_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/qt4/imports)
+    SET(QT_IMPORTS_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/qt5/imports)
 ELSE(NOT QT_IMPORTS_DIR)
     # Making QT_IMPORTS_INSTALL_DIR relative. This is a dirty hack but should work
     STRING(REGEX REPLACE "^/usr/" "" QT_IMPORTS_INSTALL_DIR "${QT_IMPORTS_DIR}")
@@ -203,27 +190,6 @@ INCLUDE_DIRECTORIES(
     ${QT_INCLUDE_DIR}
     )
 
-IF (NOT APPLE)
-    IF (UNIX)
-        # *** LINUX ONLY ***
-        #ADD_SUBDIRECTORY(panel)
-        #ADD_SUBDIRECTORY(social)
-        #ADD_SUBDIRECTORY(social/accountsmanager)
-
-        # UI widgets
-        #ADD_SUBDIRECTORY(extensions/widgets/cpu)
-
-        # Data plugins
-        # ************
-    ENDIF (UNIX)
-
-    IF(NOT WIN32)
-        IF(FFMPEG_FOUND)
-#            ADD_SUBDIRECTORY(extensions/data/videoengine)
-        ENDIF(FFMPEG_FOUND)
-    ENDIF(NOT WIN32)
-ENDIF (NOT APPLE)
-
 IF(WIN32)
     ADD_SUBDIRECTORY(dist/windows)
 ENDIF(WIN32)
@@ -239,7 +205,7 @@ ADD_SUBDIRECTORY(3rdparty/json-cpp/)
 ENDIF(NOT QNX)
 
 # *** ALL PLATFORMS ***
-ADD_SUBDIRECTORY(3rdparty/mime)
+ADD_SUBDIRECTORY(3rdparty/json-cpp/)
 ADD_SUBDIRECTORY(base/qt4)
 ADD_SUBDIRECTORY(base/core)
 ADD_SUBDIRECTORY(extensions/widgets/clock)
@@ -258,17 +224,13 @@ ADD_SUBDIRECTORY(extensions/desktop/plexy)
 
 # *** UI widgets - ALL PLATFORMS ***
 # Youtube is diabled ListView is now at extensions/widgets
-#ADD_SUBDIRECTORY(extensions/widgets/youtubewidget)
 
 # *** Data plugins - ALL PLATFORMS ***
 ADD_SUBDIRECTORY(extensions/data/rest)
 ADD_SUBDIRECTORY(extensions/data/timer)
-# Youtube is diabled ListView is now at extensions/widgets
-#ADD_SUBDIRECTORY(extensions/data/utube)
 
 # *** Themes and themepacks - ALL PLATFORMS ***
 ADD_SUBDIRECTORY(artwork)
-
 
 # *** Removed from building - ALL PLATFORMS ***
 #ADD_SUBDIRECTORY(3rdparty/cair)

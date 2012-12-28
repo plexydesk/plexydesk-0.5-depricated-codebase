@@ -28,6 +28,7 @@ class ClassicBackdrop : public QObject, public PlexyDesk::ControllerPluginInterf
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::ControllerPluginInterface)
+    Q_PLUGIN_METADATA(IID "org.qt-project.classicbackground")
 
 public:
     ClassicBackdrop(QObject *parent = 0);

@@ -28,6 +28,7 @@ class MacBackgroundPlugin : public QObject, public PlexyDesk::AbstractPluginInte
 {
     Q_OBJECT
     Q_INTERFACES(PlexyDesk::AbstractPluginInterface)
+    Q_PLUGIN_METADATA(IID "org.qt-project.macbackground")
 
 public:
     MacBackgroundPlugin(QObject *object = 0);

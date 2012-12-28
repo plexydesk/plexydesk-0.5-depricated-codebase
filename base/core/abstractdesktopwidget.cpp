@@ -17,14 +17,14 @@
 *  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
 *******************************************************************************/
 
-#include <QCoreApplication>
-#include <QGraphicsObject>
-#include <QGraphicsScene>
-#include <QGraphicsSceneMouseEvent>
-#include <QStyleOptionGraphicsItem>
-#include <QGraphicsProxyWidget>
-#include <QPainter>
-#include <QtDebug>
+#include <QtCore/QCoreApplication>
+#include <QtCore/QtDebug>
+#include <QtCore/QCryptographicHash>
+#include <QtCore/QDir>
+#include <QtWidgets/QStyleOptionGraphicsItem>
+#include <QtWidgets/QGraphicsObject>
+#include <QtWidgets/QGraphicsScene>
+#include <QtWidgets/QGraphicsSceneMouseEvent>
 
 #include "controllerinterface.h"
 #include "abstractdesktopwidget.h"
@@ -141,9 +141,10 @@ AbstractDesktopWidget::AbstractDesktopWidget(const QRectF &rect, QGraphicsObject
 
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
     setFlag(QGraphicsItem::ItemIsMovable, true);
-    setFlag(QGraphicsItem::ItemIsFocusable, true);
-    setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
-    setAcceptsHoverEvents(true);
+    setFlag(QGraphicsItem::ItemIsFocusable, false);
+    setFlag(QGraphicsItem::ItemIsSelectable, false);
+    setAcceptHoverEvents(true);
+    setAcceptDrops(true);
 }
 
 AbstractDesktopWidget::~AbstractDesktopWidget()
@@ -276,13 +277,20 @@ void AbstractDesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsI
     }
 }
 
+void AbstractDesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+     qDebug() << Q_FUNC_INFO << event->pos();
+    QGraphicsObject::mousePressEvent(event);
+}
+
 void AbstractDesktopWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+     qDebug() << Q_FUNC_INFO << event->pos();
     if (controller() && controller()->viewport()) {
         controller()->viewport()->saveItemLocationToSession(controller()->controllerName(), pos(), this->widgetID());
     }
 
-    QGraphicsItem::mouseReleaseEvent(event);
+    QGraphicsObject::mouseReleaseEvent(event);
 }
 
 void AbstractDesktopWidget::setRotation(float angle)

@@ -20,7 +20,11 @@
 #include "imageplugin.h"
 #include <pluginloader.h>
 #include <desktopwidget.h>
+
 #include <QDeclarativeContext>
+#include <QDropEvent>
+#include <QMimeData>
+#include <QFileInfo>
 
 PhotoFrameController::PhotoFrameController(QObject * /*object*/) :
     mFrameParentitem(0)

@@ -43,7 +43,7 @@
 
 //#define NETWMDEBUG
 
-#include <qwidget.h>
+#include <QtWidgets/QWidget>
 #ifdef Q_WS_X11 //FIXME
 
 #include "netwm.h"

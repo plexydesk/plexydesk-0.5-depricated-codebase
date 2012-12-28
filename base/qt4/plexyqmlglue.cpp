@@ -1,10 +1,10 @@
 #include "plexyqmlglue.h"
 
 #include <config.h>
-#include <QSharedData>
-#include <QDir>
-#include <QDeclarativeContext>
-#include <QDeclarativeComponent>
+#include <QtCore/QSharedData>
+#include <QtCore/QDir>
+#include <QtDeclarative/QDeclarativeImageProvider>
+#include <QtDeclarative/QDeclarativeContext>
 
 #include <plexyconfig.h>
 #include <svgprovider.h>

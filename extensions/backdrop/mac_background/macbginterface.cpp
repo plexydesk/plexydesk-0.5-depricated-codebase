@@ -34,6 +34,3 @@ QObject *MacBackgroundPlugin::instance()
 {
     return new MacBackgroundSource(this);
 }
-
-
-Q_EXPORT_PLUGIN2(MacBackgroundPlugin, MacBackgroundPlugin)
