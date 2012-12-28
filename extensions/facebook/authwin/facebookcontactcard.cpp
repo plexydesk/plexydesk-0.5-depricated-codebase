@@ -545,6 +545,11 @@ void FacebookContactCard::setDataSource(const QString &id, const QString &token,
     }
 }
 
+QString FacebookContactCard::facebookId() const
+{
+    return d->mID;
+}
+
 void FacebookContactCard::onDataUpdated(QVariantMap map)
 {
     if (map["command"] == "userdata" && map["id"] == d->mID) {

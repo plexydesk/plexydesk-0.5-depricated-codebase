@@ -14,6 +14,8 @@ public:
 
     void setDataSource(const QString &id, const QString &token, PlexyDesk::DataSource *dataSource);
 
+    QString facebookId() const;
+
 public Q_SLOTS:
     void onDataUpdated(QVariantMap);
     void onStatusUpdated(QVariantMap);

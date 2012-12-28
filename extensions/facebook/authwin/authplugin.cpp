@@ -148,6 +148,17 @@ bool AuthPlugin::deleteWidget(PlexyDesk::AbstractDesktopWidget *widget)
         return true;
     }
 
+    FacebookContactCard *card = qobject_cast<FacebookContactCard *> (widget);
+
+    if (card) {
+        QString id = card->facebookId();
+
+        mContacts.removeAll(id);
+
+        if (viewport()) {
+            viewport()->sessionDataForController(controllerName(),"contact", mContacts.join(","));
+        }
+    }
     return false;
 }
 
