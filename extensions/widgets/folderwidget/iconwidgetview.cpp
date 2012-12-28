@@ -49,6 +49,9 @@ IconWidgetView::IconWidgetView(const QRectF &rect, QGraphicsObject *parent) :
     d->mInfoView = new PlexyDesk::DesktopWidget(infoViewRect, this);
     d->mInfoView->setPos(QPointF(0.0, rect.height() + 16));
     QPointF infoViewPos = d->mInfoView->pos();
+    d->mInfoView->enableDockMode(false);
+    d->mInfoView->enableWindowMode(false);
+    d->mInfoView->setFlag(QGraphicsItem::ItemIsMovable, false);
 
     d->mWidgetProxy->setPos(4.0, 28.0);
     d->mWidgetProxy->resize(iconViewRect.size());

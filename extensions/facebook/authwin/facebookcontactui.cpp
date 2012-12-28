@@ -27,6 +27,9 @@ FacebookContactUI::FacebookContactUI(const QRectF &rect) :
     d->mScrollView->enableDefaultBackground(false);
     d->mScrollView->enableShadow(false);
     d->mScrollView->setLabelName("Contacts");
+    d->mScrollView->setFlag(QGraphicsItem::ItemIsMovable, false);
+    d->mScrollView->enableDockMode(false);
+    d->mScrollView->enableWindowMode(false);
 
     d->mSearchBox = new PlexyDesk::LineEdit(this);
     d->mSearchBox->setSize (QSizeF(rect.width() - 40, 32));

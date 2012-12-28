@@ -24,6 +24,10 @@ public:
 
     void enableShadow(bool enable);
 
+    void enableDockMode(bool enable = true);
+
+    void enableWindowMode(bool enable = true);
+
     void configState(AbstractDesktopWidget::State s);
 
     void setStyle(Style *style);

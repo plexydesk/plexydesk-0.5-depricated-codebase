@@ -40,6 +40,8 @@ public:
     QPointF clickPos;
     bool mDefaultBackground;
     bool mHasDefaultBackground;
+    bool mDockMode;
+    bool mWindowMode;
     bool mEditMode;
 
     // image cache
@@ -64,6 +66,8 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QGraphicsObject *parent)
     d->mWidgetState = VIEW;
     d->mHasDefaultBackground = false;
     d->mStyle = 0;
+    d->mDockMode = true;
+    d->mWindowMode = true;
 
     setStyle(new NativeStyle(this));
 
@@ -135,6 +139,22 @@ void DesktopWidget::enableShadow(bool enable)
         d->mShadowEffect->setBlurRadius(0);
     } else {
         d->mShadowEffect->setBlurRadius(16);
+    }
+}
+
+void DesktopWidget::enableDockMode(bool enable)
+{
+    d->mDockMode = enable;
+}
+
+void DesktopWidget::enableWindowMode(bool enable)
+{
+    d->mWindowMode = enable;
+
+    if (enable && d->mCloseButton) {
+        d->mCloseButton->show();
+    } else if (d->mCloseButton) {
+        d->mCloseButton->hide();
     }
 }
 
@@ -416,6 +436,11 @@ void DesktopWidget::mousePressEvent(QGraphicsSceneMouseEvent *event)
 }
 void DesktopWidget::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
+    if (!d->mDockMode) {
+        QGraphicsItem::mouseDoubleClickEvent(event);
+        return;
+    }
+
     if (event->buttons() != Qt::LeftButton) {
         /* We will let the widgets decide what to do with
            left clicks
