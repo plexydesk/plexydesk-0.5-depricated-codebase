@@ -558,7 +558,6 @@ void AbstractDesktopView::restoreViewFromSession(const QString &sessionData, boo
             }
         }
     }
-
 }
 
 void AbstractDesktopView::onWidgetClosed(AbstractDesktopWidget *widget)
