@@ -40,7 +40,7 @@ public:
 
     virtual bool setBackgroundController(const QString &controllerName);
 
-    virtual void addController(const QString &controllerName);
+    virtual void addController(const QString &controllerName, bool firstRun = 0);
 
     virtual QStringList currentControllers() const;
 
@@ -54,11 +54,13 @@ public:
 
     virtual void sessionDataForController(const QString &controllerName, const QString &key, const QString &value);
 
-    virtual void restoreViewFromSession(const QString &sessionData);
+    virtual void restoreViewFromSession(const QString &sessionData, bool firstRun = 0);
 
     virtual void addWidgetToView(AbstractDesktopWidget *widget);
 
     virtual void saveItemLocationToSession(const QString &controllerName, const QPointF &pos, const QString &widgetId);
+
+    virtual void saveItemStateToSession(const QString &controllerName, const QString &widgetId, bool state);
 
 Q_SIGNALS:
 

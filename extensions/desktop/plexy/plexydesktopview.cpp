@@ -43,7 +43,7 @@ PlexyDesktopView::PlexyDesktopView(QGraphicsScene *parent_scene, QWidget *parent
                 controller->firstRun();
         }
     } else {
-      restoreViewFromSession(sessionData);
+      restoreViewFromSession(sessionData, 1);
       d->mHasSession = true;
     }
 

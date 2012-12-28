@@ -167,7 +167,7 @@ bool AbstractDesktopView::setBackgroundController(const QString &controllerName)
     return true;
 }
 
-void AbstractDesktopView::addController(const QString &controllerName)
+void AbstractDesktopView::addController(const QString &controllerName, bool firstRun)
 {
     if (d->mControllerMap.keys().contains(controllerName))
         return;
@@ -199,6 +199,10 @@ void AbstractDesktopView::addController(const QString &controllerName)
     if (scene()) {
         scene()->setFocusItem(d->mBackgroundItem, Qt::MouseFocusReason);
     }
+
+    qDebug() << Q_FUNC_INFO << firstRun;
+    if (!firstRun)
+        saveItemStateToSession(controller->controllerName(), defaultView->widgetID(), 0);
 }
 
 QStringList AbstractDesktopView::currentControllers() const
@@ -283,6 +287,9 @@ void AbstractDesktopView::addWidgetToView(AbstractDesktopWidget *widget)
     scene()->addItem(item);
     item->setPos(QCursor::pos());
     item->show();
+
+    if (widget->controller())
+    saveItemStateToSession(widget->controller()->controllerName(), widget->widgetID(), 0);
 }
 
 void AbstractDesktopView::saveItemLocationToSession(const QString &controllerName, const QPointF &pos, const QString &widgetId)
@@ -343,6 +350,51 @@ void AbstractDesktopView::saveItemLocationToSession(const QString &controllerNam
     Q_EMIT sessionUpdated(d->mSessionTree->toString());
 }
 
+void AbstractDesktopView::saveItemStateToSession(const QString &controllerName, const QString &widgetId, bool state)
+{
+    QDomNodeList widgetNodeList = d->mSessionTree->documentElement().elementsByTagName("widget");
+
+    for(int index = 0; index < widgetNodeList.count(); index++) {
+        QDomElement widgetElement = widgetNodeList.at(index).toElement();
+
+        if (widgetElement.attribute("controller") == controllerName) {
+            QDomNodeList locationElementList = widgetElement.elementsByTagName("state");
+
+            if (locationElementList.count() <= 0 ) {
+                QDomElement widget = d->mSessionTree->createElement("state");
+                widget.setAttribute("id", widgetId);
+                widget.setAttribute("state", state);
+                widgetElement.appendChild(widget);
+                break;
+            }
+
+            bool locationTagFound = false;
+            for(int index = 0; index < locationElementList.count(); index++) {
+                QDomElement locationElement = locationElementList.at(index).toElement();
+
+                if (locationElement.attribute("id") == widgetId) {
+                    locationTagFound = true;
+                    locationElement.setAttribute("state", state);
+                    break;
+                }
+            }
+
+            // No tag with matching id was found so we add a new location tag to the controller
+            if (!locationTagFound) {
+                QDomElement widget = d->mSessionTree->createElement("state");
+                widget.setAttribute("id", widgetId);
+                widget.setAttribute("state", state);
+                widgetElement.appendChild(widget);
+            }
+
+        } else
+            continue;
+
+    }
+
+    Q_EMIT sessionUpdated(d->mSessionTree->toString());
+}
+
 void AbstractDesktopView::sessionDataForController(const QString &controllerName, const QString &key, const QString &value)
 {
     QDomNodeList widgetNodeList = d->mSessionTree->documentElement().elementsByTagName("widget");
@@ -368,7 +420,7 @@ void AbstractDesktopView::sessionDataForController(const QString &controllerName
     Q_EMIT sessionUpdated(d->mSessionTree->toString());
 }
 
-void AbstractDesktopView::restoreViewFromSession(const QString &sessionData)
+void AbstractDesktopView::restoreViewFromSession(const QString &sessionData, bool firstRun)
 {
     if (d->mSessionTree) {
         QString errorMsg;
@@ -381,7 +433,7 @@ void AbstractDesktopView::restoreViewFromSession(const QString &sessionData)
     for(int index = 0; index < widgetNodeList.count(); index++) {
         QDomElement widgetElement = widgetNodeList.at(index).toElement();
 
-        addController(widgetElement.attribute("controller"));
+        addController(widgetElement.attribute("controller"), firstRun);
         QSharedPointer<ControllerInterface> iface = controllerByName(widgetElement.attribute("controller"));
 
         if (widgetElement.hasChildNodes()) {
@@ -450,6 +502,57 @@ void AbstractDesktopView::restoreViewFromSession(const QString &sessionData)
                     }
                 }
             }
+
+            //restore deleted widgets
+            QDomNodeList stateElements = widgetElement.elementsByTagName("state");
+
+            for(int index = 0; index < stateElements.count(); index++) {
+                QDomElement stateElement = stateElements.at(index).toElement();
+
+                if(stateElement.isNull())
+                    continue;
+
+                if (this->scene()) {
+                    QList<QGraphicsItem *> items = scene()->items();
+                    QList<AbstractDesktopWidget*> itemsToDelete;
+
+                    Q_FOREACH(QGraphicsItem *item, items) {
+
+                        if (!item)
+                            continue;
+
+                        QGraphicsObject *itemObject = item->toGraphicsObject();
+
+                        if (!itemObject) {
+                            continue;
+                        }
+
+                        AbstractDesktopWidget *widget = qobject_cast<AbstractDesktopWidget*> (itemObject);
+
+                        if (!widget || !widget->controller())
+                            continue;
+
+                        if (stateElement.attribute("id") == widget->widgetID()) {
+                            bool state = stateElement.attribute("state").toInt();
+                            if (state) {
+                                widget->hide();
+                                scene()->removeItem(item);
+                                itemsToDelete.append(widget);
+                            }
+                        }
+                    }
+                    //delete items
+                    int count = itemsToDelete.count();
+                    for (int i = 0; i < count; i++) {
+                        AbstractDesktopWidget *widget = itemsToDelete.at(i);
+                        if(widget) {
+                            onWidgetClosed(widget);
+                        }
+                    }
+
+                    itemsToDelete.clear();
+                }
+            }
         }
     }
 
@@ -461,7 +564,11 @@ void AbstractDesktopView::onWidgetClosed(AbstractDesktopWidget *widget)
         bool deleted = 0;
 
         if (widget->controller()) {
+           QString widgetId = widget->widgetID();
+           QString controllerName = widget->controller()->controllerName();
            deleted = widget->controller()->deleteWidget(widget);
+          /* if the plugin didn't delete it, we are going to delete it anyways, so always pass TRUE to saveItemStateToSession */
+           saveItemStateToSession(controllerName, widgetId, 1);
         }
 
         if (!deleted)
