@@ -29,7 +29,7 @@ public:
 
     void requestAction(const QString& actionName, const QVariantMap &args);
 
-    bool disconnectFromDataSource(PlexyDesk::AbstractDesktopWidget *widget);
+    bool deleteWidget(PlexyDesk::AbstractDesktopWidget *widget);
 
     void requestFriendsList(QString token, const QVariantMap &args);
 

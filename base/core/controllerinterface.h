@@ -74,7 +74,7 @@ public:
 
     virtual DataSource *dataSource();
 
-    virtual bool disconnectFromDataSource(AbstractDesktopWidget *widget);
+    virtual bool deleteWidget(AbstractDesktopWidget *widget);
 
     virtual void setControllerName(const QString &name);
 

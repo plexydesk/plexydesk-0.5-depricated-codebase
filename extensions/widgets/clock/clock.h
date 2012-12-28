@@ -40,7 +40,7 @@ public:
 
     void setViewRect(const QRectF &rect);
 
-    bool disconnectFromDataSource(PlexyDesk::AbstractDesktopWidget *widget);
+    bool deleteWidget(PlexyDesk::AbstractDesktopWidget *widget);
 
     QStringList actions() const;
 

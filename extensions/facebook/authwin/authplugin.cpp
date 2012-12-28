@@ -31,7 +31,6 @@ AuthPlugin::AuthPlugin(QObject *object) : PlexyDesk::ControllerInterface (object
 
      connect(mWidget, SIGNAL(facebookToken(QString)), this, SLOT(onFacebookToken(QString)));
 
-
      mContactUI = new FacebookContactUI(QRectF(0.0, 0.0, 488.0, 320.0));
      mContactUI->setController(this);
      mContactUI->setVisible(true);
@@ -141,7 +140,7 @@ void AuthPlugin::requestAction(const QString &actionName, const QVariantMap &arg
     }
 }
 
-bool AuthPlugin::disconnectFromDataSource(PlexyDesk::AbstractDesktopWidget *widget)
+bool AuthPlugin::deleteWidget(PlexyDesk::AbstractDesktopWidget *widget)
 {
     if (widget == mContactUI) {
         delete widget;

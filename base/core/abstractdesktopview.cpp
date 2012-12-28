@@ -480,7 +480,7 @@ void AbstractDesktopView::onWidgetClosed(AbstractDesktopWidget *widget)
         bool deleted = 0;
 
         if (widget->controller()) {
-           deleted = widget->controller()->disconnectFromDataSource(widget);
+           deleted = widget->controller()->deleteWidget(widget);
            qDebug() << Q_FUNC_INFO << deleted;
         }
 

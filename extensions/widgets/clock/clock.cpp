@@ -53,7 +53,7 @@ void Clock::setViewRect(const QRectF &rect)
         clock->setPos(rect.x(), rect.y());
 }
 
-bool Clock::disconnectFromDataSource(PlexyDesk::AbstractDesktopWidget *widget)
+bool Clock::deleteWidget(PlexyDesk::AbstractDesktopWidget *widget)
 {
     disconnect(dataSource(), SIGNAL(sourceUpdated(QVariantMap)));
     int index = 0;
