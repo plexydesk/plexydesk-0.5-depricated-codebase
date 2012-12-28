@@ -113,7 +113,6 @@ AbstractDesktopView::AbstractDesktopView(QGraphicsScene *scene, QWidget *parent)
 
 AbstractDesktopView::~AbstractDesktopView()
 {
-    //qDebug() << Q_FUNC_INFO;
     delete d;
 }
 
@@ -181,8 +180,6 @@ void AbstractDesktopView::addController(const QString &controllerName)
         return;
     }
 
-    //connect(controller.data(), SIGNAL(spawnView(AbstractDesktopWidget*)), this, SLOT(addWidgetToView(AbstractDesktopWidget*)));
-
     d->mControllerMap[controllerName] = controller;
 
     AbstractDesktopWidget *defaultView = controller->defaultView();
@@ -243,7 +240,6 @@ QSharedPointer<ControllerInterface> AbstractDesktopView::controllerByName(const 
 
 void AbstractDesktopView::dropEvent(QDropEvent *event)
 {
-    //qDebug() << Q_FUNC_INFO;
     if (this->scene()) {
         QList<QGraphicsItem *> items = scene()->items(event->pos());
 
@@ -259,8 +255,6 @@ void AbstractDesktopView::dropEvent(QDropEvent *event)
 
             if (!widget || !widget->controller())
                 continue;
-
-            qDebug() << Q_FUNC_INFO << "handle drop event";
 
             widget->controller()->handleDropEvent(widget, event);
             return;
@@ -346,7 +340,6 @@ void AbstractDesktopView::saveItemLocationToSession(const QString &controllerNam
 
     }
 
-    //qDebug() << Q_FUNC_INFO << d->mSessionTree->toString();
     Q_EMIT sessionUpdated(d->mSessionTree->toString());
 }
 
@@ -460,28 +453,15 @@ void AbstractDesktopView::restoreViewFromSession(const QString &sessionData)
         }
     }
 
-
-    //retore widget locations
-    QDomNodeList widgetLocations = d->mSessionTree->documentElement().elementsByTagName("locations");
-
-    for(int index = 0; index < widgetLocations.count(); index++) {
-        QDomElement locationElement = widgetNodeList.at(index).toElement();
-        //qDebug() << Q_FUNC_INFO << locationElemen;
-    }
-
-
-
 }
 
 void AbstractDesktopView::onWidgetClosed(AbstractDesktopWidget *widget)
 {
-    qDebug() << Q_FUNC_INFO;
     if (scene()) {
         bool deleted = 0;
 
         if (widget->controller()) {
            deleted = widget->controller()->deleteWidget(widget);
-           qDebug() << Q_FUNC_INFO << deleted;
         }
 
         if (!deleted)
