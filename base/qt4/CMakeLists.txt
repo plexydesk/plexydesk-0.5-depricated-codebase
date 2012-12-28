@@ -106,6 +106,7 @@ SET(sourceFiles
     )
 
 SET(libs
+    ${OPENGL_LIBRARIES}
     ${PLEXY_CORE_LIBRARY}
     )
 
