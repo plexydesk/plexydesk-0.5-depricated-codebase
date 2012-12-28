@@ -131,7 +131,6 @@ void DesktopBaseUi::setup()
 #ifdef PLEXYNAME
     view->setWindowTitle(QString(PLEXYNAME));
 #endif
-    QApplication::desktop()->setParent(view);
 
     view->layout(desktopRect());
 }
