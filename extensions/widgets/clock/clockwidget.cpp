@@ -72,6 +72,7 @@ ClockWidget::~ClockWidget()
 
 void ClockWidget::paintFrontView(QPainter *p, const QRectF &r)
 {
+    p->setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing | QPainter::HighQualityAntialiasing);
     p->setCompositionMode(QPainter::CompositionMode_Source);
     p->fillRect(r, Qt::transparent);
     p->setBackgroundMode(Qt::TransparentMode);
@@ -140,7 +141,7 @@ void ClockWidget::paintDockView(QPainter *p, const QRectF &rect)
 
 void ClockWidget::paintRotatedView(QPainter *p, const QRectF &r)
 {
-    p->setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing | QPainter::HighQualityAntialiasing);;
+    p->setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing | QPainter::HighQualityAntialiasing);
     p->setCompositionMode(QPainter::CompositionMode_Source);
     p->fillRect(r, Qt::transparent);
     p->setCompositionMode(QPainter::CompositionMode_SourceOver);
