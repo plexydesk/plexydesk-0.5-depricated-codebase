@@ -21,8 +21,6 @@
 #define PLEXY_DESKTOP_PLUGIN_H
 
 #include <plexy.h>
-
-#include <abstractsource.h>
 #include <abstractdesktopview.h>
 
 class QPainter;

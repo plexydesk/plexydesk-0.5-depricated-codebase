@@ -5,7 +5,6 @@
 
 #include <datasource.h>
 #include <pluginloader.h>
-#include <backdropplugin.h>
 #include <themepackloader.h>
 
 #include "fileiconwidget.h"

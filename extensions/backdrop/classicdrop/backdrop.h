@@ -30,7 +30,6 @@
 #include <QGraphicsBlurEffect>
 
 #include <plexy.h>
-#include <backdropplugin.h>
 #include <themepackloader.h>
 #include <qmldesktopwidget.h>
 #include <controllerinterface.h>
