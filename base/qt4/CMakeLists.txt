@@ -28,8 +28,6 @@ SET(headerFiles
     netwm.h
     netwm_def.h
     netwm_p.h
-    socialinterface.h
-    socialplugin.h
     themepackloader.h
     viewlayer.h
     qmldesktopwidget.h
@@ -52,8 +50,6 @@ SET(headerFiles
 
 SET(MOC_SRCS
    baserender.h
-   socialinterface.h
-   socialplugin.h
    themepackloader.h
    viewlayer.h
    qmldesktopwidget.h

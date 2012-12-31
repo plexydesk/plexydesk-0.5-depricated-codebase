@@ -1,1 +1,0 @@
-#include "backdropplugin.h"

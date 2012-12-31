@@ -237,9 +237,9 @@ ADD_SUBDIRECTORY(extensions/backdrop/classicdrop)
 ADD_SUBDIRECTORY(extensions/widgets/youtubewidget)
 ADD_SUBDIRECTORY(runner)
 
-if (APPLE)
-ADD_SUBDIRECTORY(extensions/backdrop/mac_background)
-endif (APPLE)
+#if (APPLE)
+#ADD_SUBDIRECTORY(extensions/backdrop/mac_background)
+#endif (APPLE)
 
 # *** Desktop UI Plugins ***
 ADD_SUBDIRECTORY(extensions/desktop/plexy)

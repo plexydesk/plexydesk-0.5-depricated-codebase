@@ -47,8 +47,6 @@ SET(sourceFiles
     abstractplugininterface.cpp
     abstractdesktopwidget.cpp
     abstractdesktopview.cpp
-    backdropplugin.cpp
-    abstractsource.h
     pluginloader.cpp
     pendingjob.cpp
     controllerinterface.cpp
@@ -57,8 +55,6 @@ SET(sourceFiles
 SET(headerFiles
     abstractplugininterface.h
     abstractdesktopwidget.h
-    backdropplugin.h
-    abstractsource.h
     plexy.h
     debug.h
     datasource.h
@@ -75,8 +71,6 @@ SET(headerFiles
 SET(MOC_SRCS
     abstractplugininterface.h
     abstractdesktopwidget.h
-    backdropplugin.h
-    abstractsource.h
     datasource.h
     pluginloader.h
     abstractdesktopview.h

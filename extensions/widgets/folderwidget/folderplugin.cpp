@@ -83,8 +83,6 @@ void DirectoryController::requestAction(const QString &actionName, const QVarian
 
 void DirectoryController::handleDropEvent(PlexyDesk::AbstractDesktopWidget *widget, QDropEvent *event)
 {
-    qDebug() << Q_FUNC_INFO;
-
     const QString droppedFile = event->mimeData()->urls().value(0).toLocalFile();
     QFileInfo fileInfo (droppedFile);
 
