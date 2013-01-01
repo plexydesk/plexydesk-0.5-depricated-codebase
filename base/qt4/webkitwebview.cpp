@@ -18,11 +18,13 @@ WebKitWebView::WebKitWebView(const QRectF &rect, QGraphicsObject *parent) :
     PlexyDesk::DesktopWidget(rect, parent),
     d(new PrivateWebKitWebView)
 {
+    setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
     d->mView = new QGraphicsWebView (this);
     d->mView->resize (rect.size());
     d->mView->setResizesToContents(false);
     d->mView->setGeometry(rect);
     d->mView->show();
+    d->mView->setPos(0.0, 24.0);
 
     if (d->mView->page() && d->mView->page()->mainFrame()) {
         connect(d->mView->page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()), this, SLOT(addJavaScriptObject()));
