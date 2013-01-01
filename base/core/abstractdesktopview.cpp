@@ -282,6 +282,9 @@ void AbstractDesktopView::dragMoveEvent(QDragMoveEvent *event)
 
 void AbstractDesktopView::addWidgetToView(AbstractDesktopWidget *widget)
 {
+    if (!widget)
+        return;
+
     connect(widget, SIGNAL(closed(PlexyDesk::AbstractDesktopWidget*)), this, SLOT(onWidgetClosed(PlexyDesk::AbstractDesktopWidget*)));
     QGraphicsItem *item = (AbstractDesktopWidget*) widget;
     scene()->addItem(item);
