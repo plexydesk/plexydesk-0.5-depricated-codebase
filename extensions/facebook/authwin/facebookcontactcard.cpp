@@ -9,6 +9,8 @@
 #include "facebookcontactcardbutton.h"
 #include "facebookmessagedialog.h"
 #include <controllerinterface.h>
+#include <webkitwebview.h>
+#include <plexyconfig.h>
 
 //
 // Stack Blur Algorithm by Mario Klingemann <mario@quasimondo.com>
@@ -500,6 +502,11 @@ public:
     PlexyDesk::Style *mStyle;
     FacebookContactCardButton *mWallPostButton;
     FacebookMessageDialog *mPostDialog;
+
+    //feed
+    PlexyDesk::WebKitWebView *mFeedWall;
+    FacebookContactCardButton *mFeedButton;
+
 };
 
 FacebookContactCard::FacebookContactCard(const QRectF &rect, QGraphicsObject *parent) :
@@ -508,6 +515,7 @@ FacebookContactCard::FacebookContactCard(const QRectF &rect, QGraphicsObject *pa
     d->mDataSource  = 0;
     d->mNtManager = new QNetworkAccessManager(this);
     d->mUiPixmap = 0;
+    d->mFeedWall = 0;
     d->mStyle = new PlexyDesk::NativeStyle(this);
     setDockRect(QRect(rect.x(), rect.y(), 72, 72));
     d->mWallPostButton = new FacebookContactCardButton(this);
@@ -516,7 +524,13 @@ FacebookContactCard::FacebookContactCard(const QRectF &rect, QGraphicsObject *pa
     d->mPostDialog = new FacebookMessageDialog(QRect(rect.x(), rect.y(), rect.width(), 200));
     d->mPostDialog->hide();
 
-    connect(d->mWallPostButton,  SIGNAL(clicked()), this, SLOT(onWallPostClicked()));
+    //feed
+    d->mFeedButton = new FacebookContactCardButton(this);
+    d->mFeedButton->show();
+    d->mFeedButton->setLabel(tr("View Feed"));
+
+    connect(d->mWallPostButton, SIGNAL(clicked()), this, SLOT(onWallPostClicked()));
+    connect(d->mFeedButton, SIGNAL(clicked()), this, SLOT(feedClicked()));
     connect(d->mPostDialog, SIGNAL(messageRequested()), this, SLOT(onMessageRestested()));
     connect(d->mPostDialog, SIGNAL(closed(PlexyDesk::AbstractDesktopWidget*)), this, SLOT(onWidgetClosed(PlexyDesk::AbstractDesktopWidget*)));
 }
@@ -542,6 +556,24 @@ void FacebookContactCard::setDataSource(const QString &id, const QString &token,
         d->mID = id;
         d->mToken = token;
         dataSource->setArguments(arg);
+
+        if (!d->mFeedWall) {
+            d->mFeedWall = new PlexyDesk::WebKitWebView(boundingRect(), 0);
+            d->mFeedWall->injectQObject("FacebookEngine", d->mDataSource);
+
+            if (controller()) {
+                controller()->viewport()->addWidgetToView(d->mFeedWall);
+            }
+            d->mFeedWall->hide();
+
+            connect(d->mFeedWall, SIGNAL(closed(PlexyDesk::AbstractDesktopWidget*)), this, SLOT(onFeedClosed(PlexyDesk::AbstractDesktopWidget*)));
+
+            QString prefix = PlexyDesk::Config::getInstance()->plexydeskBasePath();
+
+            QUrl url ("file://" + prefix + "/" + "share/plexy/facebook/ui/data/" + "index.html");
+
+            d->mFeedWall->setUrl(url);
+        }
     }
 }
 
@@ -569,7 +601,9 @@ void FacebookContactCard::onDataUpdated(QVariantMap map)
 
         setLabelName(d->mID);
         QString buttonLabel = "Write on " + d->mFirstName + "'s Wall";
+        QString buttonLabel2 = d->mFirstName + "'s Feed";
         d->mWallPostButton->setLabel(buttonLabel);
+        d->mFeedButton->setLabel(buttonLabel2);
     }
 }
 
@@ -660,6 +694,34 @@ void FacebookContactCard::onWallPostClicked()
     }
 }
 
+void FacebookContactCard::feedClicked()
+{
+    qDebug() << Q_FUNC_INFO;
+
+    if (d->mFeedWall) {
+        if (controller()) {
+            controller()->viewport()->addWidgetToView(d->mFeedWall);
+        }
+        d->mFeedWall->show();
+    } else {
+        d->mFeedWall = new PlexyDesk::WebKitWebView(boundingRect(), 0);
+        d->mFeedWall->injectQObject("FacebookEngine", d->mDataSource);
+        connect(d->mFeedWall, SIGNAL(closed(PlexyDesk::AbstractDesktopWidget*)), this, SLOT(onFeedClosed(PlexyDesk::AbstractDesktopWidget*)));
+
+        if (controller()) {
+            controller()->viewport()->addWidgetToView(d->mFeedWall);
+        }
+
+
+        QString prefix = PlexyDesk::Config::getInstance()->plexydeskBasePath();
+
+        QUrl url ("file://" + prefix + "/" + "share/plexy/facebook/ui/data/" + "index.html");
+
+        qDebug() << Q_FUNC_INFO << url;
+        d->mFeedWall->setUrl(url);
+    }
+}
+
 void FacebookContactCard::onMessageRestested()
 {
     if (d->mPostDialog) {
@@ -683,6 +745,12 @@ void FacebookContactCard::onWidgetClosed(PlexyDesk::AbstractDesktopWidget *)
     d->mPostDialog->hide();
     connect(d->mPostDialog, SIGNAL(messageRequested()), this, SLOT(onMessageRestested()));
     connect(d->mPostDialog, SIGNAL(closed(PlexyDesk::AbstractDesktopWidget*)), this, SLOT(onWidgetClosed(PlexyDesk::AbstractDesktopWidget*)));
+}
+
+void FacebookContactCard::onFeedClosed(PlexyDesk::AbstractDesktopWidget *)
+{
+    qDebug() << Q_FUNC_INFO ;
+    d->mFeedWall = 0;
 }
 
 QImage FacebookContactCard::PrivateFacebookContactCard::genShadowImage(const QRect &rect, const QPainterPath &path, const QPixmap &pixmap)
@@ -828,6 +896,13 @@ void FacebookContactCard::paintFrontView(QPainter *painter, const QRectF &rect)
                 QRectF(detailBackgroundRect.x() + padding, detailBackgroundRect.y() + padding + 40, detailBackgroundRect.width() - 40, 24);
         d->mWallPostButton->setSize(QSize(wallpostButtonRect.width(), wallpostButtonRect.height()));
         d->mWallPostButton->setPos(wallpostButtonRect.topLeft());
+    }
+
+    if (d->mFeedButton) {
+        QRectF wallpostButtonRect =
+                QRectF(detailBackgroundRect.x() + padding, detailBackgroundRect.y() + padding + 80, detailBackgroundRect.width() - 40, 24);
+        d->mFeedButton->setSize(QSize(wallpostButtonRect.width(), wallpostButtonRect.height()));
+        d->mFeedButton->setPos(wallpostButtonRect.topLeft());
     }
 }
 

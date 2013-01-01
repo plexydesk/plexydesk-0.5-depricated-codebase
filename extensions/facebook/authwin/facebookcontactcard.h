@@ -23,8 +23,10 @@ public Q_SLOTS:
     void onAvatarReady();
 
     void onWallPostClicked();
+    void feedClicked();
     void onMessageRestested();
     void onWidgetClosed(PlexyDesk::AbstractDesktopWidget*);
+    void onFeedClosed(PlexyDesk::AbstractDesktopWidget*);
 
 private:
     virtual void paintFrontView(QPainter *painter, const QRectF &rect);

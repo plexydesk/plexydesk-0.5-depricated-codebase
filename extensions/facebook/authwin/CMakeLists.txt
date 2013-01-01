@@ -64,3 +64,5 @@ TARGET_LINK_LIBRARIES(plexyauth
 
 INSTALL(TARGETS plexyauth DESTINATION ${CMAKE_INSTALL_LIBDIR}/plexyext)
 INSTALL(FILES authwidget.desktop DESTINATION share/plexy/ext/groups)
+
+ADD_SUBDIRECTORY(data)
