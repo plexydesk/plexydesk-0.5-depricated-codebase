@@ -40,6 +40,7 @@ public:
 
 private:
    virtual void wheelEvent (QGraphicsSceneWheelEvent * event);
+   virtual void dragMoveEvent(QGraphicsSceneDragDropEvent *event);
 
    class Private;
    Private *const d;
