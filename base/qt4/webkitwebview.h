@@ -13,7 +13,12 @@ public:
     WebKitWebView(const QRectF &rect, QGraphicsObject *parent = 0);
     virtual ~WebKitWebView();
 
+    virtual void setUrl(const QUrl &url);
+    virtual void injectQObject(const QString &objectName, QObject *object);
 
+
+public Q_SLOTS:
+    void addJavaScriptObject();
 
 private:
     class PrivateWebKitWebView;
