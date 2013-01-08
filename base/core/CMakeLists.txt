@@ -50,6 +50,7 @@ SET(sourceFiles
     pluginloader.cpp
     pendingjob.cpp
     controllerinterface.cpp
+    datasource.cpp
     )
 
 SET(headerFiles

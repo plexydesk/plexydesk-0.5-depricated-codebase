@@ -17,7 +17,7 @@ public:
     virtual QVariantMap readAll();
 
 public Q_SLOTS:
-    void setArguments(QVariant &args);
+    void setArguments(QVariant args);
     void onFriendListReady();
     void onUserInfoReady(FacebookUserInfo *job);
     void onContactInfoReady();

@@ -14,7 +14,11 @@ public:
 
     void setDataSource(const QString &id, const QString &token, PlexyDesk::DataSource *dataSource);
 
-    QString facebookId() const;
+    Q_INVOKABLE QString facebookId() const;
+
+    Q_INVOKABLE QPixmap userImage() const;
+
+    Q_INVOKABLE QPixmap coverImage() const;
 
 public Q_SLOTS:
     void onDataUpdated(QVariantMap);

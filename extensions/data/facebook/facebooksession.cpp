@@ -31,7 +31,7 @@ QVariantMap FacebookSession::readAll()
     return d->data;
 }
 
-void FacebookSession::setArguments(QVariant &args)
+void FacebookSession::setArguments(QVariant args)
 {
     QVariantMap param = args.toMap();
 
@@ -69,6 +69,7 @@ void FacebookSession::setArguments(QVariant &args)
         }
 
         d->mToken = key;
+        addSetting("token", key);
         QUrl url ("https://graph.facebook.com/me/friends?access_token=" + key);
         QNetworkReply *reply = d->manager->get(QNetworkRequest(url));
 

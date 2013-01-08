@@ -1,6 +1,8 @@
 #include "webkitwebview.h"
 #include <QObject>
 #include <QWebFrame>
+#include <QWebInspector>
+
 
 namespace PlexyDesk {
 
@@ -25,6 +27,15 @@ WebKitWebView::WebKitWebView(const QRectF &rect, QGraphicsObject *parent) :
     d->mView->setGeometry(rect);
     d->mView->show();
     d->mView->setPos(0.0, 24.0);
+    d->mView->setRenderHints(QPainter::Antialiasing | QPainter::HighQualityAntialiasing);
+
+    QWebSettings *settings = d->mView->page()->settings();
+    settings->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
+
+    QWebInspector *inspector = new QWebInspector;
+    inspector->setPage(d->mView->page());
+    inspector->show();
+
 
     if (d->mView->page() && d->mView->page()->mainFrame()) {
         connect(d->mView->page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()), this, SLOT(addJavaScriptObject()));

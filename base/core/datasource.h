@@ -85,21 +85,29 @@ class PLEXYDESKCORE_EXPORT DataSource : public QObject
     Q_OBJECT
 
 public:
-    DataSource(QObject *object = 0) : QObject(object){
-    }
+    DataSource(QObject *object = 0);
 
-    virtual ~DataSource() {
-    }
+    virtual ~DataSource();
 
-    virtual QVariantMap readAll() = 0;
+    Q_INVOKABLE virtual QVariantMap readAll() = 0;
+
+    Q_INVOKABLE virtual QVariant settings(const QString &key) const;
+
+    Q_INVOKABLE virtual void addSetting(const QString &key, const QVariant &value);
+
+    Q_INVOKABLE virtual void requestData(QVariant args);
 
 public Q_SLOTS:
-    virtual void setArguments(QVariant &args) = 0;
+    virtual void setArguments(QVariant args) = 0;
 
 Q_SIGNALS:
     void ready();
 
     void sourceUpdated(const QVariantMap &sourceUpdated);
+
+private:
+    class PrivateDataSource;
+    PrivateDataSource *const d;
 };
 
 }

@@ -163,6 +163,11 @@ void PluginLoader::load(const QString &interface, const QString &pluginName)
     QPluginLoader loader (d->mPluginPrefix + pluginName + ".dll" );
 #endif
 
+#ifdef Q_WS_QPA
+    QPluginLoader loader (d->mPluginPrefix + pluginName + ".dll" );
+#endif
+
+
     if (interface.toLower() == "engine") {
         QObject *plugin = loader.instance();
 

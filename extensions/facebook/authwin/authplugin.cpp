@@ -76,6 +76,11 @@ void AuthPlugin::revokeSession(const QVariantMap &args)
         requestFacebookSession();
         return;
     }
+
+    if (dataSource()) {
+        dataSource()->addSetting("token", token);
+    }
+
     mWidget->setVisible(false);
 
     requestFriendsList(token, args);

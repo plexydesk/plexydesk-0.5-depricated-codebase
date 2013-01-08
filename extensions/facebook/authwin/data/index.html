@@ -1,9 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
 <!-- Copyright (c) PlexyPlanet.org -->
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+    <head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
      <title>Facebook Feed Wall</title>
-  <body>
-    <h1>Facebook Feed Wall</h1>
+
+     <script>
+     
+     function onDataReady(data)
+     {
+        if (data["command"] == "userfeed") {
+            //document.write(data["command"] + " <br>");
+        }
+     }
+     
+     function start()
+     {
+         if (FacebookEngine) {
+             var args = {};
+             args["test"] = "Name";
+             args["test2"] = 10293;
+             var userImage = ContactCard.userImage();
+             
+             FacebookEngine.requestData(args);
+             FacebookEngine.sourceUpdated.connect(onDataReady);
+             
+             if (userImage != null)
+                 userImage.assignToHTMLImageElement(document.getElementById("userPicture0"));
+         }
+     }       
+     </script>
+
+  <body onLoad="start();">
+    <div>
+       <img class="circle" id="userPicture0"></img>
+    </div>
   </body>
 </html>

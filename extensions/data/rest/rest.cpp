@@ -54,7 +54,7 @@ RestData::~RestData()
     delete d;
 }
 
-void RestData::setArguments(QVariant &arg)
+void RestData::setArguments(QVariant arg)
 {
     qDebug() << Q_FUNC_INFO << arg;
     QVariantMap param = arg.toMap();

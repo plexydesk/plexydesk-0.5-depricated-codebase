@@ -45,7 +45,7 @@ TimerData::~TimerData()
     delete d;
 }
 
-void TimerData::setArguments(QVariant &arg)
+void TimerData::setArguments(QVariant arg)
 {
 }
 

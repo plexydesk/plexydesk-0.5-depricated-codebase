@@ -560,6 +560,7 @@ void FacebookContactCard::setDataSource(const QString &id, const QString &token,
         if (!d->mFeedWall) {
             d->mFeedWall = new PlexyDesk::WebKitWebView(boundingRect(), 0);
             d->mFeedWall->injectQObject("FacebookEngine", d->mDataSource);
+            d->mFeedWall->injectQObject("ContactCard", this);
 
             if (controller()) {
                 controller()->viewport()->addWidgetToView(d->mFeedWall);
@@ -580,6 +581,16 @@ void FacebookContactCard::setDataSource(const QString &id, const QString &token,
 QString FacebookContactCard::facebookId() const
 {
     return d->mID;
+}
+
+QPixmap FacebookContactCard::userImage() const
+{
+   return d->mUserPicture;
+}
+
+QPixmap FacebookContactCard::coverImage() const
+{
+    return d->mCoverPicture;
 }
 
 void FacebookContactCard::onDataUpdated(QVariantMap map)
@@ -706,6 +717,7 @@ void FacebookContactCard::feedClicked()
     } else {
         d->mFeedWall = new PlexyDesk::WebKitWebView(boundingRect(), 0);
         d->mFeedWall->injectQObject("FacebookEngine", d->mDataSource);
+        d->mFeedWall->injectQObject("ContactCard", this);
         connect(d->mFeedWall, SIGNAL(closed(PlexyDesk::AbstractDesktopWidget*)), this, SLOT(onFeedClosed(PlexyDesk::AbstractDesktopWidget*)));
 
         if (controller()) {

@@ -38,7 +38,7 @@ public:
     void timerEvent ( QTimerEvent *event);
 
 public Q_SLOTS:
-    void setArguments(QVariant &sourceUpdated);
+    void setArguments(QVariant sourceUpdated);
 
 private:
     class Private;

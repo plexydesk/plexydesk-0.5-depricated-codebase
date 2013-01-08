@@ -36,7 +36,7 @@ public:
     QVariantMap readAll();
 
 public Q_SLOTS:
-    void setArguments(QVariant &sourceUpdated);
+    void setArguments(QVariant sourceUpdated);
     void replyFinished(QNetworkReply *reply);
     void handleAuth(QNetworkReply *, QAuthenticator *);
 
