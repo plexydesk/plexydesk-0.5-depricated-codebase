@@ -63,9 +63,6 @@ SET(MOC_SRCS
    desktopwidget.h
    scrollwidget.h
    imagecache.h
-   svgprovider.h
-   qmlsvgprovider.h
-   qmlpixmapprovider.h
    plexyconfig.h
    nativestyle.h
    style.h

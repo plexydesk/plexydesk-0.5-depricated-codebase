@@ -70,7 +70,6 @@ SET(headerFiles
    )
 
 SET(MOC_SRCS
-    abstractplugininterface.h
     abstractdesktopwidget.h
     datasource.h
     pluginloader.h
@@ -78,9 +77,6 @@ SET(MOC_SRCS
     pendingjob.h
     controllerinterface.h
     desktopviewplugin.h
-    controllerplugininterface.h
-    desktopviewplugininterface.h
-    dataplugininterface.h
    )
 
 QT4_WRAP_CPP(QT_MOC_SRCS ${MOC_SRCS})
