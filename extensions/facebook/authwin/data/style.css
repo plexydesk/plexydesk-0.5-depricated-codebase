@@ -2,5 +2,14 @@
 height: 64px;
 width: 64px;
 border-radius: 360px;
-border : 2px solid #000000;
+-webkit-box-shadow: 0 0 5px #888;
+}
+
+.bubble {
+margin-top: 10px;
+background-color: rgba(230, 230, 240, 1);
+widths : 80 %;
+left : 10%;
+-webkit-box-shadow: 0 0 5px #888;
+-webkit-border-radius: 4px;
 }
