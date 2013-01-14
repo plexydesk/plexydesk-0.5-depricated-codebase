@@ -1,7 +1,11 @@
+body {
+background: #eeeeee;
+}
+
 .circle {
 height: 64px;
 width: 64px;
-border-radius: 360px;
+border-radius: 6px;
 -webkit-box-shadow: 0 0 5px #888;
 float: left;
 margin-top : 20px;;
@@ -17,6 +21,7 @@ height : 100px;
 -webkit-border-radius: 4px;
 color: #888888;
 text-shadow: 0px 1px 1px #fff;
+font-size : 10pt;
 }
 
 .bubble p{
