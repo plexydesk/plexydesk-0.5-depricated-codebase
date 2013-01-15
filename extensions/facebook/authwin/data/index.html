@@ -1,16 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<?xml version="1.0" encoding="utf-8"?>
+<!-- CopyLeft (c) PlexyPlanet.org -->
 
-<!-- Copyright (c) PlexyPlanet.org -->
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link href="style.css" rel="stylesheet" type="text/css" />
 
-    <head>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    </head>
-     <title>Facebook Feed Wall</title>
-
-     <script>
-     
+    <title>Facebook Feed Wall</title>
+    <script>
      function onDataReady(data)
      {
         if (data["command"] == "userfeed") {
@@ -20,6 +16,8 @@
      
      function start()
      {
+         window.onresize = bubbleResized;
+         
          if (FacebookEngine) {
              var args = {};
              args["test"] = "Name";
@@ -32,30 +30,78 @@
              if (userImage != null)
                  userImage.assignToHTMLImageElement(document.getElementById("userPicture0"));
          }
-     }       
-     </script>
+     }
 
-  <body onLoad="start();">
-    <div class="bubble">
-       <img class="circle" id="userPicture0" src="http://www.theipadguide.com/images/facebook50x50.jpg"></img>
-       <p class="bubbletext"> Wow </p>
-    </div>
-    
-    <div class="bubble">
-       <img class="circle" id="userPicture0" src="http://www.theipadguide.com/images/facebook50x50.jpg"></img>
-       <p class="bubbletext">You are wasting your time trying to show us the quality of those 4K TV sets through your web streamed video!</p>
-    </div>
-    
-    <div class="bubble">
-       <img class="circle" id="userPicture0" src="http://www.theipadguide.com/images/facebook50x50.jpg"></img>
-       <p class="bubbletext">One of the best ways to discover your local community is to join a Weekly CS Meeting.</p>
-    </div>
+    function bubbleResized ()
+    {
+       var items = document.getElementsByClassName ("bubble");
 
-    <div class="bubble">
-       <img class="circle" id="userPicture0" src="http://www.theipadguide.com/images/facebook50x50.jpg"></img>
-       <p class="bubbletext">One of the best ways to discover your local community is to join a Weekly CS Meeting.</p>
-    </div>
+       for (i = 0 ; i < items.length ; i++) {
+           var textNode = document.getElementById ("content_" + i);
+           var imgNode = document.getElementById("img_" + i);
+           if (textNode) {
+               console.log (textNode.clientHeight);
+               var height = 100;
+               height += textNode.clientHeight;
+                    
+               if (imgNode) {
+                   console.log ("img Node" + imgNode.height);
+                   height += imgNode.clientHeight;
+                }
+                items[i].style.height =  height + "px";
+            }
+       }
+    }
 
+    function onImageLoadResize()
+    {
+       console.log("Image loaded");
+       bubbleResized();
+    }
+    function addFeedItem (id, text, img)
+    {
+       var content = "<div class=\"bubble\" onresize=\"bubbleResized()\" >" +
+                     "<img class=\"circle\" id=\"userPicture0\" src=\"http://www.theipadguide.com/images/facebook50x50.jpg\"></img>"  +
+                     "<p class=\"bubbletext\"  id=\"content_" + id + "\">" +
+                     text +
+                     "</p>" +
+                     "<div style=\"margin-top:120px;\"> <img id=\"img_"+ id +"\" onload=\"onImageLoadResize();\" class=\"imagedropshadow\" src=\""+ img +"\"></img></div>"  +
+                     "</div>";
+
+       var parent = document.getElementById ("feed_parent");
+
+       if (parent) {
+           parent.innerHTML += content;
+
+           var items = document.getElementsByClassName ("bubble");
+           
+
+           for (i = 0 ; i < items.length ; i++) {
+                var textNode = document.getElementById ("content_" + id);
+                var imgNode = document.getElementById("img_" + id);
+                items[i].style.opacity = "1.0";
+           
+                if (textNode) {
+                    console.log (textNode.clientHeight);
+                    var height = 100;
+                    height += textNode.clientHeight;
+                    
+                    if (imgNode) {
+                        height += imgNode.clientHeight;
+                    }
+                    items[i].style.height =  height + "px";
+                }
+           }
+       }
+    }
     
-  </body>
+    </script>
+</head>
+
+<body onload="start();">
+    <section id="feed_parent">
+      <script>
+      </script>
+    </section>
+</body>
 </html>

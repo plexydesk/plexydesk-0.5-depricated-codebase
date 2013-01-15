@@ -40,6 +40,11 @@ WebKitWebView::WebKitWebView(const QRectF &rect, QGraphicsObject *parent) :
     if (d->mView->page() && d->mView->page()->mainFrame()) {
         connect(d->mView->page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()), this, SLOT(addJavaScriptObject()));
     }
+
+    QPalette palette;
+    palette.setBrush(QPalette::Base, Qt::transparent);
+    d->mView->page()->setPalette(palette);
+    d->mView->setAttribute(Qt::WA_OpaquePaintEvent, false);
 }
 
 WebKitWebView::~WebKitWebView()
