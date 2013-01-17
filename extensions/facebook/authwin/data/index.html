@@ -10,7 +10,10 @@
      function onDataReady(data)
      {
         if (data["command"] == "userfeed") {
-            //document.write(data["command"] + " <br>");
+            //document.write(data["rawdata"] + " <br>");
+            var obj = JSON.parse(data["rawdata"]);
+            document.write ("Data:" + obj.id);
+            document.write ("feed:" + obj.feed.data[0].message);
         }
      }
      
@@ -20,16 +23,19 @@
          
          if (FacebookEngine) {
              var args = {};
-             args["test"] = "Name";
-             args["test2"] = 10293;
+             args["command"] = "wallpost";
+             args["token"] = ContactCard.token();
+             args["id"] = ContactCard.facebookId();
              var userImage = ContactCard.userImage();
              
              FacebookEngine.requestData(args);
              FacebookEngine.sourceUpdated.connect(onDataReady);
              
-             if (userImage != null)
-                 userImage.assignToHTMLImageElement(document.getElementById("userPicture0"));
+             //if (userImage != null)
+                 //userImage.assignToHTMLImageElement(document.getElementById("userPicture0"));
          }
+
+       
      }
 
     function bubbleResized ()

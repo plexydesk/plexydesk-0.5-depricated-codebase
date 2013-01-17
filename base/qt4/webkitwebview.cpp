@@ -32,10 +32,11 @@ WebKitWebView::WebKitWebView(const QRectF &rect, QGraphicsObject *parent) :
     QWebSettings *settings = d->mView->page()->settings();
     settings->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
 
+#if 1
     QWebInspector *inspector = new QWebInspector;
     inspector->setPage(d->mView->page());
     inspector->show();
-
+#endif
 
     if (d->mView->page() && d->mView->page()->mainFrame()) {
         connect(d->mView->page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()), this, SLOT(addJavaScriptObject()));

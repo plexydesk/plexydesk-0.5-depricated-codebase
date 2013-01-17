@@ -134,26 +134,13 @@ void FacebookSession::setArguments(QVariant args)
             return;
         }
 
-       QString id = param["id"].toString();
-//        QUrl url (QString("https://graph.facebook.com/%1/statuses?fields=message,from&limit=1&access_token=%2").arg(id, key));
-//        QNetworkReply *reply = d->manager->get(QNetworkRequest(url));
+        QString id = param["id"].toString();
 
-//        connect(reply, SIGNAL(finished()), this, SLOT(onStatusReady()));
-        QNetworkRequest request;
-        request.setUrl(QString("https://graph.facebook.com/%1/feed/").arg(id));
-        request.setHeader(QNetworkRequest::ContentTypeHeader, "multipart/form-data");
+        QUrl url (QString("https://graph.facebook.com/%1/?fields=feed&access_token=%2").arg(id, key));
+        QNetworkReply *reply = d->manager->get(QNetworkRequest(url));
 
-        QByteArray postData;
-        postData.append(QString("message=%1&").arg(param["message"].toString()));
-        postData.append("name=plexydesk&");
-        postData.append(QString("access_token=%1").arg(key));
-
-        QNetworkReply *reply = d->manager->post(request, postData);
-
-        connect(reply, SIGNAL(finished()), this, SLOT(onFeedPublished()));
-
+        connect(reply, SIGNAL(finished()), this, SLOT(onFeedReady()));
     }
-
 }
 
 void FacebookSession::onFriendListReady()
@@ -269,7 +256,29 @@ void FacebookSession::onFeedPublished()
         QNetworkReply *reply = qobject_cast<QNetworkReply*> (sender());
 
         if (reply) {
-            //QString data = reply->readAll() ;
+            QString data = reply->readAll() ;
+
+            qDebug() << Q_FUNC_INFO << data;
+
+            reply->deleteLater();
+        }
+    }
+}
+
+void FacebookSession::onFeedReady()
+{
+    if (sender()) {
+        QNetworkReply *reply = qobject_cast<QNetworkReply*> (sender());
+
+        if (reply) {
+            QString data = reply->readAll() ;
+
+            qDebug() << Q_FUNC_INFO << data;
+
+            QVariantMap response;
+            response["command"] = QVariant("userfeed");
+            response["rawdata"] = data;
+            Q_EMIT sourceUpdated(response);
 
             reply->deleteLater();
         }

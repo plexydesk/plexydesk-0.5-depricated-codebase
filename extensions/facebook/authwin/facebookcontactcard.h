@@ -20,6 +20,8 @@ public:
 
     Q_INVOKABLE QPixmap coverImage() const;
 
+    Q_INVOKABLE QString token() const;
+
 public Q_SLOTS:
     void onDataUpdated(QVariantMap);
     void onStatusUpdated(QVariantMap);
@@ -41,8 +43,6 @@ private:
 
     class PrivateFacebookContactCard;
     PrivateFacebookContactCard *const d;
-
-
 };
 
 #endif // FACEBOOKCONTACTCARD_H

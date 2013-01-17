@@ -593,6 +593,11 @@ QPixmap FacebookContactCard::coverImage() const
     return d->mCoverPicture;
 }
 
+QString FacebookContactCard::token() const
+{
+    return d->mToken;
+}
+
 void FacebookContactCard::onDataUpdated(QVariantMap map)
 {
     if (map["command"] == "userdata" && map["id"] == d->mID) {

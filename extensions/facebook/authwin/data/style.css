@@ -1,61 +1,60 @@
-body {
-background: #eeeeee;
+body
+{
+	background:#eee;
 }
 
-.circle {
-opacity : 1.0;
-height: 64px;
-width: 64px;
-border-radius: 6px;
--webkit-box-shadow: 0 0 5px #888;
-float: left;
-margin-top : 20px;;
-margin-left : 10px;
+.circle
+{
+	-webkit-box-shadow:0 0 5px #888;
+	border-radius:6px;
+	float:left;
+	height:64px;
+	margin-left:10px;
+	margin-top:20px;
+	opacity:1.0;
+	width:64px;
 }
 
-.bubble {
-opacity : 1.0;
-margin-top: 5px;
-background-color: #ffffff;
-width : 98%;
-overflow: auto;
--webkit-box-shadow: 0 0 5px #888;
--webkit-border-radius: 4px;
-color: #888888;
-text-shadow: 0px 0px 0px #fff;
-font-size : 10pt;
-border-left: solid 6px #608489;
-color: #222;
-text-shadow: 0px 0px 0px #555;
-color: #424242;
-font-family: "Adobe Caslon Pro", "Hoefler Text", Georgia, Garamond, Times, serif;
-letter-spacing:0.1em;
-margin: 40px auto;
-text-transform: lowercase;
-line-height: 145%;
-font-size: 10pt;
-font-variant: small-caps;
-opacity : 0;
--webkit-transition: opacity 1s linear;
+.bubble
+{
+	-webkit-border-radius:4px;
+	-webkit-box-shadow:0 0 5px #888;
+	-webkit-transition:opacity 1s linear;
+	background-color:#fff;
+	border-left:solid 6px #608489;
+	color:#424242;
+	font-family:"Adobe Caslon Pro", "Hoefler Text", Georgia, Garamond, Times, serif;
+	font-size:10pt;
+	font-variant:small-caps;
+	letter-spacing:.1em;
+	line-height:145%;
+	margin:40px auto;
+	opacity:0;
+	overflow:auto;
+	text-shadow:0 0 0 #555;
+	text-transform:lowercase;
+	width:98%;
 }
 
-.bubble p{
-opacity : 1.0;
-margin-top : 20px;
-margin-left : 100px;
-width:60%;
-position: absolute;
-overflow: hidden;
-text-overflow: ellipsis;
+.bubble p
+{
+	margin-left:100px;
+	margin-top:20px;
+	opacity:1.0;
+	overflow:hidden;
+	position:absolute;
+	text-overflow:ellipsis;
+	width:60%;
 }
 
-.imagedropshadow {
-padding:10px;
-margin:10px;
-align:center;
-border-color: #eeeeee;
-border-radius: 6px;
--webkit-box-shadow: 0 0 5px #888;
-width:85%;
+.imagedropshadow
+{
+	-webkit-box-shadow:0 0 5px #888;
+	align:center;
+	border-color:#eee;
+	border-radius:6px;
+	height:10px;
+	margin:10px;
+	padding:10px;
+	width:85%;
 }
-

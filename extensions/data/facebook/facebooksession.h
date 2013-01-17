@@ -23,6 +23,7 @@ public Q_SLOTS:
     void onContactInfoReady();
     void onStatusReady();
     void onFeedPublished();
+    void onFeedReady();
 
 private:
     class Private;
