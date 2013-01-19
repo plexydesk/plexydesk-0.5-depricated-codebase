@@ -1,5 +1,4 @@
 SET(sourceFiles
-    baserender.cpp
     extensionfactory.cpp
     netwm.cpp
     themepackloader.cpp
@@ -23,7 +22,6 @@ SET(sourceFiles
     )
 
 SET(headerFiles
-    baserender.h
     extensionfactory.h
     netwm.h
     netwm_def.h
@@ -49,7 +47,6 @@ SET(headerFiles
     )
 
 SET(MOC_SRCS
-   baserender.h
    themepackloader.h
    viewlayer.h
    qmldesktopwidget.h
@@ -70,14 +67,13 @@ SET(MOC_SRCS
    )
 
 # DBUS is working only under linux for now
-IF (NOT APPLE)
-    IF (UNIX)
-        QT4_ADD_DBUS_ADAPTOR(dbus_SRCS org.plexydesk.Config.xml
-                             ${CMAKE_SOURCE_DIR}/base/qt4/plexyconfig.h PlexyDesk::Config)
-        SET (DBUS_LIB ${QT_QTDBUS_LIBRARY})
-    ENDIF(UNIX)
-ENDIF (NOT APPLE)
-
+#IF (NOT APPLE)
+#    IF (UNIX)
+#        QT4_ADD_DBUS_ADAPTOR(dbus_SRCS org.plexydesk.Config.xml
+#                             ${CMAKE_SOURCE_DIR}/base/qt4/plexyconfig.h PlexyDesk::Config)
+#        SET (DBUS_LIB ${QT_QTDBUS_LIBRARY})
+#    ENDIF(UNIX)
+#ENDIF (NOT APPLE)
 
 #Locate cococa framework on mac
 IF (APPLE)
