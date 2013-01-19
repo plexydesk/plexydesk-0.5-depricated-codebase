@@ -11,31 +11,57 @@
      {
         if (data["command"] == "userfeed") {
             //document.write(data["rawdata"] + " <br>");
-            var obj = JSON.parse(data["rawdata"]);
-            document.write ("Data:" + obj.id);
-            document.write ("feed:" + obj.feed.data[0].message);
+            var object = JSON.parse(data["rawdata"]);
+            var length = object.feed.data.length;
+            
+            for (var i = 0; i < object.feed.data.length ; i++) {
+
+              var message = object.feed.data[i].message;
+              var picture = object.feed.data[i].picture;
+              //var commentCount = object.feed.data[i].comments.count;
+              //var commentMessage = object.feed.data[i].comments.data.message;
+              
+              //document.write ("Comment :" + commentMessage);
+              //document.write ("Comment Count:" + commentCount);
+              //document.write ("Message : " + message);
+              addFeedItem (i, message, picture);
+              
+            }
         }
      }
      
-     function start()
+     function checkUpdate()
      {
-         window.onresize = bubbleResized;
+       if (FacebookEngine) {
+         console.log ("update");
          
-         if (FacebookEngine) {
-             var args = {};
+         var parent = document.getElementById ("feed_parent");
+         
+         if (parent) {
+             while (parent.firstChild) {
+               parent.removeChild(parent.firstChild);
+             }
+         }
+
+         var args = {};
              args["command"] = "wallpost";
              args["token"] = ContactCard.token();
              args["id"] = ContactCard.facebookId();
              var userImage = ContactCard.userImage();
              
              FacebookEngine.requestData(args);
-             FacebookEngine.sourceUpdated.connect(onDataReady);
-             
-             //if (userImage != null)
-                 //userImage.assignToHTMLImageElement(document.getElementById("userPicture0"));
-         }
-
-       
+       }
+     }
+     
+     function start()
+     {
+         window.onresize = bubbleResized;
+         
+         if (FacebookEngine)
+           FacebookEngine.sourceUpdated.connect(onDataReady);
+                      
+         checkUpdate();
+         setInterval('checkUpdate()', 10000)  
      }
 
     function bubbleResized ()
@@ -45,16 +71,17 @@
        for (i = 0 ; i < items.length ; i++) {
            var textNode = document.getElementById ("content_" + i);
            var imgNode = document.getElementById("img_" + i);
+           
            if (textNode) {
-               console.log (textNode.clientHeight);
                var height = 100;
                height += textNode.clientHeight;
                     
                if (imgNode) {
-                   console.log ("img Node" + imgNode.height);
                    height += imgNode.clientHeight;
-                }
-                items[i].style.height =  height + "px";
+               }
+            
+                console.log ("Image Resized:" + height);
+               items[i].style.height =  height + "px";
             }
        }
     }
@@ -69,10 +96,13 @@
        var content = "<div class=\"bubble\" onresize=\"bubbleResized()\" >" +
                      "<img class=\"circle\" id=\"userPicture0\" src=\"http://www.theipadguide.com/images/facebook50x50.jpg\"></img>"  +
                      "<p class=\"bubbletext\"  id=\"content_" + id + "\">" +
-                     text +
-                     "</p>" +
-                     "<div style=\"margin-top:120px;\"> <img id=\"img_"+ id +"\" onload=\"onImageLoadResize();\" class=\"imagedropshadow\" src=\""+ img +"\"></img></div>"  +
-                     "</div>";
+                     text;
+                     
+       if (img) {
+         content += "<div style=\"margin-top:10px;\"> <img id=\"img_"+ id +"\" onload=\"onImageLoadResize();\" class=\"imagedropshadow\" src=\""+ img +"\"></img></div>";
+       }
+       
+       content += "</p></div>";
 
        var parent = document.getElementById ("feed_parent");
 
@@ -83,8 +113,9 @@
            
 
            for (i = 0 ; i < items.length ; i++) {
-                var textNode = document.getElementById ("content_" + id);
-                var imgNode = document.getElementById("img_" + id);
+                var textNode = document.getElementById ("content_" + i);
+                console.log (textNode);
+                var imgNode = document.getElementById("img_" + i);
                 items[i].style.opacity = "1.0";
            
                 if (textNode) {

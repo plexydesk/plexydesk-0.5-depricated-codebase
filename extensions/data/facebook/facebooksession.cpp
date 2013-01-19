@@ -136,7 +136,7 @@ void FacebookSession::setArguments(QVariant args)
 
         QString id = param["id"].toString();
 
-        QUrl url (QString("https://graph.facebook.com/%1/?fields=feed&access_token=%2").arg(id, key));
+        QUrl url (QString("https://graph.facebook.com/%1/?fields=feed,picture.type(normal)&access_token=%2").arg(id, key));
         QNetworkReply *reply = d->manager->get(QNetworkRequest(url));
 
         connect(reply, SIGNAL(finished()), this, SLOT(onFeedReady()));
