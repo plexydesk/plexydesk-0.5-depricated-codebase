@@ -1,3 +1,13 @@
+if (NOT COMPILE_FOR MATCHES "qnx")
+ set (extra_headers
+      webkitwebview.cpp
+     )
+
+ set (extra_files
+      webkitwebview.h
+     )
+endif (NOT COMPILE_FOR MATCHES "qnx")
+
 SET(sourceFiles
     extensionfactory.cpp
     netwm.cpp
@@ -16,9 +26,8 @@ SET(sourceFiles
     nativestyle.cpp
     button.cpp
     lineedit.cpp
-    webkitwebview.cpp
     texteditor.cpp
-    windowbutton.cpp
+    ${extra_files}
     )
 
 SET(headerFiles
@@ -41,9 +50,9 @@ SET(headerFiles
     nativestyle.h
     button.h
     lineedit.h
-    webkitwebview.h
     texteditor.h
     windowbutton.h
+   ${extra_headers}
     )
 
 SET(MOC_SRCS
@@ -61,9 +70,9 @@ SET(MOC_SRCS
    style.h
    button.h
    lineedit.h
-   webkitwebview.h
    texteditor.h
    windowbutton.h
+   ${extra_headers}
    )
 
 # DBUS is working only under linux for now

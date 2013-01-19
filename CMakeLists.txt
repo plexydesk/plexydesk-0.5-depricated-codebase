@@ -36,6 +36,7 @@ FIND_PACKAGE(OpenGL)
 FIND_PACKAGE(BISON REQUIRED)
 FIND_PACKAGE(FLEX REQUIRED)
 
+
 # Global variable CMAKE_BUILD_TYPE handling
 # None (CMAKE_C_FLAGS or CMAKE_CXX_FLAGS used)
 # Debug (CMAKE_C_FLAGS_DEBUG or CMAKE_CXX_FLAGS_DEBUG)
@@ -223,16 +224,19 @@ IF(WIN32)
     ADD_SUBDIRECTORY(dist/windows)
 ENDIF(WIN32)
 
+if (NOT COMPILE_FOR MATCHES "qnx")
+ADD_SUBDIRECTORY(extensions/data/facebook)
+ADD_SUBDIRECTORY(extensions/facebook/authwin)
+ADD_SUBDIRECTORY(3rdparty/json-cpp/)
+endif (NOT COMPILE_FOR  MATCHES "qnx")
+
 # *** ALL PLATFORMS ***
 ADD_SUBDIRECTORY(3rdparty/mime)
-ADD_SUBDIRECTORY(3rdparty/json-cpp/)
 ADD_SUBDIRECTORY(base/qt4)
 ADD_SUBDIRECTORY(base/core)
 ADD_SUBDIRECTORY(extensions/widgets/clock)
 ADD_SUBDIRECTORY(extensions/widgets/photoframe)
 ADD_SUBDIRECTORY(extensions/widgets/folderwidget)
-ADD_SUBDIRECTORY(extensions/facebook/authwin)
-ADD_SUBDIRECTORY(extensions/data/facebook)
 ADD_SUBDIRECTORY(extensions/backdrop/classicdrop)
 ADD_SUBDIRECTORY(extensions/widgets/youtubewidget)
 ADD_SUBDIRECTORY(runner)
