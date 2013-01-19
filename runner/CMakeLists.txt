@@ -3,6 +3,11 @@ IF(CMAKE_BUILD_TYPE MATCHES ".*Deb.*")
 #    ADD_SUBDIRECTORY(test)
 ENDIF(CMAKE_BUILD_TYPE MATCHES ".*Deb.*")
 
+if (COMPILE_FOR MATCHES "qnx")
+   set (QNX_LIBS stdc++)
+endif (COMPILE_FOR MATCHES "qnx")
+
+
 
 IF (NOT APPLE)
     IF(UNIX)
@@ -111,6 +116,7 @@ TARGET_LINK_LIBRARIES(${APPLICATION_EXE_NAME}
     ${PLEXY_UI_CORE_LIBRARY}
     ${OPENGL_LIBRARIES}
     ${MAC_LIBS}
+    ${QNX_LIBS}
     )
 
 ########### Install files ###############

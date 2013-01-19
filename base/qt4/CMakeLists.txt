@@ -27,6 +27,7 @@ SET(sourceFiles
     button.cpp
     lineedit.cpp
     texteditor.cpp
+    windowbutton.cpp
     ${extra_files}
     )
 

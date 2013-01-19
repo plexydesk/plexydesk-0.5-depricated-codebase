@@ -3,7 +3,6 @@
 
 #include <plexy.h>
 #include <desktopwidget.h>
-#include <QGraphicsWebView>
 
 namespace PlexyDesk {
 
