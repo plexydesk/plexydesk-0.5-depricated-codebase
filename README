@@ -118,6 +118,18 @@ Building On Windows:
 Please follow the instructions on http://www.plexyplanet.org/win_build
 
 
+Building On Blackberry 10 SDK:
+==============================
+
+You need to download the blackberry 10 NDK from the blackberry developer portal. (currently this is free).
+after insalling the SDK excute the following commands to compile plexydesk for blackberry 10.
+
+- source ~/bbndk/bbndk-env.sh
+- cmake -DCMAKE_TOOLCHAIN_FILE=../tools/Toolchain-QNX-6.4.1.cmake -DCMAKE_INSALL_PREFIX=~/bbroot/plexydesk
+- make -j 8
+- make install : when the install finishes you will find the compiled binaries in ~/bbroot/plexydesk
+- now you can create a bar file and upload it to your devce.
+
 
 Debugging of PlexyDesk
 ======================
