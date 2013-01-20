@@ -27,11 +27,6 @@
 #include <abstractdesktopwidget.h>
 #include <QCoreApplication>
 
-#ifdef Q_WS_X11
-#include <configadaptor.h>
-#endif
-
-
 #ifdef Q_WS_MAC
 #include <CoreFoundation/CoreFoundation.h>
 #endif
@@ -47,9 +42,6 @@ public:
 
     QSettings *mSettings;
     QHash<QString, QVariant> mData;
-#ifdef Q_WS_X11
-    ConfigAdaptor *mConfigAdaptor;
-#endif
 };
 
 Config *Config::config = 0;
@@ -118,14 +110,6 @@ Config::Config(const QString &organization,
     }
 
     writeToFile();
-
-#ifdef Q_WS_X11
-    // register with dbus
-    d->mConfigAdaptor = new ConfigAdaptor(this);
-    QDBusConnection dbus = QDBusConnection::sessionBus();
-    dbus.registerObject("/data", this);
-    dbus.registerService("org.PlexyDesk.Config");
-#endif
 }
 
 Config::~Config()
