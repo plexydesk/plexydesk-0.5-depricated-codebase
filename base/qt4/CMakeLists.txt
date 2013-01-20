@@ -1,11 +1,12 @@
 if (NOT COMPILE_FOR MATCHES "qnx")
  set (extra_headers
-      webkitwebview.cpp
+      webkitwebview.h
      )
 
  set (extra_files
-      webkitwebview.h
+      webkitwebview.cpp
      )
+
 endif (NOT COMPILE_FOR MATCHES "qnx")
 
 SET(sourceFiles
