@@ -47,9 +47,8 @@
 
 int main( int argc, char * *argv )
 {
-#ifndef Q_WS_MAC
     QApplication::setGraphicsSystem(QLatin1String("raster"));
-#endif
+
     QByteArray debug_settings = qgetenv("PLEXYDESK_CONSOLE_DEBUG").toLower();
 
     if (debug_settings != "enable" && debug_settings != "true" && debug_settings != "1" ) {
@@ -60,19 +59,11 @@ int main( int argc, char * *argv )
 
     PlexyDesk::PluginLoader *loader = 0;
 
-#ifdef Q_WS_X11
     loader =
-        PlexyDesk::PluginLoader::getInstanceWithPrefix(QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->plexydeskBasePath() + QLatin1String("/share/plexy/ext/groups/")),
+        PlexyDesk::PluginLoader::getInstanceWithPrefix(QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->plexydeskBasePath() +
+            QLatin1String("/share/plexy/ext/groups/")),
                 QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->plexydeskBasePath() +
                     QLatin1String("/lib/plexyext/")));
-#endif
-
-#ifdef Q_WS_WIN
-    loader = PlexyDesk::PluginLoader::getInstanceWithPrefix(QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->plexydeskBasePath() + QLatin1String("/lib/plexy/ext/groups/")),
-        QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->plexydeskBasePath() +
-        QLatin1String("/lib/plexyext/")));
-#endif
-
 
     QString appIconPath = PlexyDesk::Config::getInstance()->plexydeskBasePath() +
         "/share/plexy/plexydesk.png";
@@ -86,15 +77,6 @@ int main( int argc, char * *argv )
     app.addLibraryPath(QDir::toNativeSeparators(pluginPath));
 #endif
 
-#ifdef Q_WS_MAC
-    PlexyDesk::Config::getInstance()->setOpenGL(true);
-#endif
-
-#ifdef Q_WS_MAC
-    loader->setPluginPrefix(QDir::toNativeSeparators(Config::getInstance()->plexydeskBasePath() + "/lib/plexyext/lib"));		
-#endif
-    //loader->scanDisk();
-    // Set this to false if you need a "close to tray" functionality when systray exists
     QApplication::setQuitOnLastWindowClosed(true);
 
     DesktopBaseUi  ui;
