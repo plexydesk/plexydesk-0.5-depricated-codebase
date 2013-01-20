@@ -1,4 +1,4 @@
-if (NOT COMPILE_FOR MATCHES "qnx")
+IF (NOT QNX)
  set (extra_headers
       webkitwebview.h
      )
@@ -6,8 +6,7 @@ if (NOT COMPILE_FOR MATCHES "qnx")
  set (extra_files
       webkitwebview.cpp
      )
-
-endif (NOT COMPILE_FOR MATCHES "qnx")
+ENDIF (NOT QNX)
 
 SET(sourceFiles
     extensionfactory.cpp

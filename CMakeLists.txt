@@ -224,11 +224,15 @@ IF(WIN32)
     ADD_SUBDIRECTORY(dist/windows)
 ENDIF(WIN32)
 
-if (NOT COMPILE_FOR MATCHES "qnx")
+if (CMAKE_SYSTEM_NAME MATCHES "QNX")
+   set (QNX 1)
+endif (CMAKE_SYSTEM_NAME MATCHES "QNX")
+
+if (NOT QNX)
 ADD_SUBDIRECTORY(extensions/data/facebook)
 ADD_SUBDIRECTORY(extensions/facebook/authwin)
 ADD_SUBDIRECTORY(3rdparty/json-cpp/)
-endif (NOT COMPILE_FOR  MATCHES "qnx")
+ENDIF(NOT QNX)
 
 # *** ALL PLATFORMS ***
 ADD_SUBDIRECTORY(3rdparty/mime)
