@@ -164,7 +164,7 @@ void PluginLoader::load(const QString &interface, const QString &pluginName)
 #endif
 
 #ifdef Q_WS_QPA
-    QPluginLoader loader (d->mPluginPrefix + pluginName + ".dll" );
+    QPluginLoader loader (d->mPluginPrefix + QLatin1String("lib") + pluginName + ".so" );
 #endif
 
 
