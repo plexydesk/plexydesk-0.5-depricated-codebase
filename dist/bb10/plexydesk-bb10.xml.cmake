@@ -13,6 +13,7 @@
         <env value="app/native/qml" var="QML2_IMPORT_PATH"/>
         <env value="app/native/plugins:/usr/lib/qt4/plugins" var="QT_PLUGIN_PATH"/>
         <env value="app/native/lib:/usr/lib/qt4/lib/" var="LD_LIBRARY_PATH"/>
+        <env value="true" var="PLEXYDESK_CONSOLE_DEBUG"/>
         <arg>-platform</arg>
         <arg>blackberry</arg>
         <action system="true">run_native</action>
