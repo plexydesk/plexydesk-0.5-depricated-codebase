@@ -263,6 +263,7 @@ ADD_SUBDIRECTORY(extensions/desktop/plexy)
 # *** Data plugins - ALL PLATFORMS ***
 ADD_SUBDIRECTORY(extensions/data/rest)
 ADD_SUBDIRECTORY(extensions/data/timer)
+ADD_SUBDIRECTORY(extensions/data/bbconn)
 # Youtube is diabled ListView is now at extensions/widgets
 #ADD_SUBDIRECTORY(extensions/data/utube)
 
