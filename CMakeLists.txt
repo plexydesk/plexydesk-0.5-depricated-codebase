@@ -206,7 +206,6 @@ ADD_SUBDIRECTORY(3rdparty/json-cpp/)
 ENDIF(NOT QNX)
 
 # *** ALL PLATFORMS ***
-ADD_SUBDIRECTORY(3rdparty/json-cpp/)
 ADD_SUBDIRECTORY(base/qt4)
 ADD_SUBDIRECTORY(base/core)
 ADD_SUBDIRECTORY(extensions/widgets/clock)
