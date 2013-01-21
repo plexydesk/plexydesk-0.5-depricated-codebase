@@ -136,6 +136,10 @@ ENDIF(WIN32)
 
 CONFIGURE_FILE(config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h )
 
+#blackberry 10 sdk
+CONFIGURE_FILE(dist/bb10/plexydesk-bb10.xml.cmake ${CMAKE_CURRENT_BINARY_DIR}/plexydesk-bb10.xml)
+CONFIGURE_FILE(dist/bb10/plexydesk-create-package.sh.cmake ${CMAKE_CURRENT_BINARY_DIR}/plexydesk-create-package.sh)
+
 #doxygen
 find_package (Doxygen)
 CONFIGURE_FILE(plexydesk.Doxyfile.cmake ${CMAKE_CURRENT_BINARY_DIR}/plexydesk.Doxyfile )
@@ -269,3 +273,12 @@ ADD_SUBDIRECTORY(artwork)
 # *** Removed from building - ALL PLATFORMS ***
 #ADD_SUBDIRECTORY(3rdparty/cair)
 #ADD_SUBDIRECTORY(extensions/widgets/demowidget)
+
+#post build
+
+If (QNX)
+add_custom_target (package sh ${CMAKE_CURRENT_BINARY_DIR}/plexydesk-create-package.sh
+      WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}
+      COMMENT "Create Package for Blackberry 10" VERBATIM
+      )
+endif (QNX)
