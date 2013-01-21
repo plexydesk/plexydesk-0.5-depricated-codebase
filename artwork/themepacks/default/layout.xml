@@ -18,5 +18,9 @@
     <widget name="plexyyoutube">
         <rect x="2%" y="47%"></rect>
     </widget>
+    <widget name="mobilemon">
+        <rect x="80%" y="30%"></rect>
+    </widget>
+
 
 </widgets>

@@ -50,7 +50,7 @@ static const char SeparatorToken = ' ';
 Connection::Connection(QObject *parent)
     : QTcpSocket(parent)
 {
-    greetingMessage = tr("undefined");
+    greetingMessage = tr("0009098");
     username = tr("unknown");
     state = WaitingForGreeting;
     currentDataType = Undefined;
@@ -264,6 +264,9 @@ void Connection::processData()
         break;
     case Pong:
         pongTime.restart();
+        break;
+    case Greeting:
+        qDebug() << Q_FUNC_INFO << QString::fromUtf8(buffer);
         break;
     default:
         break;
