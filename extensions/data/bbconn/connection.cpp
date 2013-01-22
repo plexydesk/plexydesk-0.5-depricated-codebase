@@ -70,7 +70,6 @@ Connection::Connection(QObject *parent)
 
 Connection::~Connection()
 {
-
 }
 
 QString Connection::name() const
@@ -98,6 +97,9 @@ void Connection::approveClient(bool policy)
     qDebug() << Q_FUNC_INFO << "Client Approval: " << policy;
 
     isApproved = policy;
+
+    if (isApproved)
+        sendMessage("localhost:90");
 }
 
 void Connection::timerEvent(QTimerEvent *timerEvent)

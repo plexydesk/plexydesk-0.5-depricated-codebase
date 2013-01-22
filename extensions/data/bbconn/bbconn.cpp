@@ -124,8 +124,7 @@ void BBConnData::onGreet(const QString &token, Connection *conn)
 {
     qDebug() << Q_FUNC_INFO << "-----" << token;
 
-    const QString hash = encrypt(token);
-    bool approval = d->mToken == hash;
+    bool approval = (token == d->mToken);
     d->mClient->approveGreeting(conn, approval);
 }
 
