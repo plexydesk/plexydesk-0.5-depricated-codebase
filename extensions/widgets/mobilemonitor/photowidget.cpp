@@ -2,15 +2,55 @@
 
 #include <svgprovider.h>
 
+#include <button.h>
+
+class PhotoWidget::PrivatePhotoWidget
+{
+public:
+    PrivatePhotoWidget() {}
+    ~PrivatePhotoWidget() {}
+
+    QGraphicsProxyWidget *mProxyWidget;
+    QLineEdit *mEditor;
+    PlexyDesk::Button *mButton;
+};
+
 PhotoWidget::PhotoWidget(const QRectF &rect) :
-    PlexyDesk::DesktopWidget(rect)
+    PlexyDesk::DesktopWidget(rect), d (new PrivatePhotoWidget)
 {
    enableShadow(true);
    setLabelName("bbwidget");
+
+   d->mProxyWidget = new QGraphicsProxyWidget(this);
+   d->mEditor = new QLineEdit(0);
+   d->mEditor->setStyleSheet("font: 30px; background-color:qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffffff, stop: 1 #E5EAEE); border : 0");
+
+   d->mProxyWidget->setWidget(d->mEditor);
+
+   QSizeF size = rect.size();
+
+   size.setHeight(rect.height() / 2);
+
+   d->mProxyWidget->resize(size);
+   d->mProxyWidget->setMinimumSize(size);
+
+   d->mProxyWidget->show();
+   d->mEditor->move(0.0, 0.0);
+   d->mProxyWidget->setPos(0.0, 24.0);
+
+   d->mButton = new PlexyDesk::Button(this);
+
+   d->mButton->setLabel("Authorize Clients");
+   d->mButton->show();
+   d->mButton->setPos (24.0, d->mEditor->height() + 28);
+   d->mButton->setSize(QSize(rect.width() - 48, rect.height() - (d->mEditor->size().height() + 28)));
+
+   connect (d->mButton, SIGNAL(clicked()), this, SLOT(onClicked()));
 }
 
 PhotoWidget::~PhotoWidget()
 {
+    delete d;
 }
 
 void PhotoWidget::setContentImage(const QPixmap &pixmap)
@@ -59,4 +99,12 @@ void PhotoWidget::paintFrontView(QPainter *painter, const QRectF &rect)
 void PhotoWidget::paintDockView(QPainter *painter, const QRectF &rect)
 {
     PlexyDesk::DesktopWidget::paintDockView(painter, rect);
+}
+
+
+void PhotoWidget::onClicked()
+{
+    if (d->mEditor) {
+        Q_EMIT approvedToken (d->mEditor->text());
+    }
 }

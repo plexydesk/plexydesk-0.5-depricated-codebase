@@ -160,6 +160,7 @@ void PeerManager::updateAddresses()
 {
     broadcastAddresses.clear();
     ipAddresses.clear();
+
     foreach (QNetworkInterface interface, QNetworkInterface::allInterfaces()) {
         foreach (QNetworkAddressEntry entry, interface.addressEntries()) {
             QHostAddress broadcastAddress = entry.broadcast();

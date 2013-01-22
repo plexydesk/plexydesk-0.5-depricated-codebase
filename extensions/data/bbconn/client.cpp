@@ -44,8 +44,9 @@
 #include "connection.h"
 #include "peermanager.h"
 
-Client::Client()
+Client::Client(const QString &token)
 {
+    qDebug() << Q_FUNC_INFO << "Create Client";
     peerManager = new PeerManager(this);
     peerManager->setServerPort(server.serverPort());
     peerManager->startBroadcasting();
@@ -54,6 +55,8 @@ Client::Client()
                      this, SLOT(newConnection(Connection*)));
     QObject::connect(&server, SIGNAL(newConnection(Connection*)),
                      this, SLOT(newConnection(Connection*)));
+
+    mToken = token;
 }
 
 void Client::sendMessage(const QString &message)
@@ -82,6 +85,10 @@ bool Client::hasConnection(const QHostAddress &senderIp, int senderPort) const
 
     QList<Connection *> connections = peers.values(senderIp);
     foreach (Connection *connection, connections) {
+
+        if (!connection)
+            continue;
+
         if (connection->peerPort() == senderPort)
             return true;
     }
@@ -89,14 +96,25 @@ bool Client::hasConnection(const QHostAddress &senderIp, int senderPort) const
     return false;
 }
 
+void Client::approveGreeting(Connection *connection, bool policy)
+{
+    if (connection) {
+        //approve;
+        connection->approveClient(policy);
+    }
+
+}
+
 void Client::newConnection(Connection *connection)
 {
-    connection->setGreetingMessage(peerManager->userName());
+    connection->setGreetingMessage(mToken);
 
     connect(connection, SIGNAL(error(QAbstractSocket::SocketError)),
             this, SLOT(connectionError(QAbstractSocket::SocketError)));
     connect(connection, SIGNAL(disconnected()), this, SLOT(disconnected()));
     connect(connection, SIGNAL(readyForUse()), this, SLOT(readyForUse()));
+    connect(connection, SIGNAL(greet(QString, Connection *)),
+            this, SIGNAL(greet(QString, Connection *)));
 }
 
 void Client::readyForUse()

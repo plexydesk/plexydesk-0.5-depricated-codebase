@@ -39,9 +39,11 @@ MobileMonController::~MobileMonController()
 PlexyDesk::AbstractDesktopWidget *MobileMonController::defaultView()
 {
    if (mFrameParentitem == NULL) {
-       mFrameParentitem = new PhotoWidget(QRectF(0.0, 0.0, 320.0, 240.0));
+       mFrameParentitem = new PhotoWidget(QRectF(0.0, 0.0, 320.0, 140.0));
        mFrameParentitem->enableDefaultBackground(true);
        mFrameParentitem->setController(this);
+
+       connect (mFrameParentitem, SIGNAL(approvedToken(QString)), this, SLOT(setApprovedToken(QString)));
    }
 
    return mFrameParentitem;
@@ -74,4 +76,20 @@ void MobileMonController::setViewRect(const QRectF &rect)
 {
     if (mFrameParentitem)
         mFrameParentitem->setPos(rect.x(), rect.y());
+}
+
+void MobileMonController::setApprovedToken(const QString &token)
+{
+    if (dataSource()) {
+        PlexyDesk::DataSource *source = dataSource();
+
+        QVariant arg;
+        QVariantMap dataMap;
+
+        dataMap["key"] = token;
+
+        arg.setValue(dataMap);
+
+        source->setArguments(arg);
+    }
 }

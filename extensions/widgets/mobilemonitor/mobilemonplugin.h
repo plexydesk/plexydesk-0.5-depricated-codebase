@@ -43,6 +43,9 @@ public:
 
     virtual void setViewRect(const QRectF &rect);
 
+public Q_SLOTS:
+    void setApprovedToken(const QString &token);
+
 private:
     PhotoWidget *mFrameParentitem;
     QString mImageSource;

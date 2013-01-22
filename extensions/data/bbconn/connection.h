@@ -68,14 +68,17 @@ public:
     };
 
     Connection(QObject *parent = 0);
+    virtual ~Connection();
 
     QString name() const;
     void setGreetingMessage(const QString &message);
     bool sendMessage(const QString &message);
+    void approveClient(bool policy);
 
 signals:
     void readyForUse();
     void newMessage(const QString &from, const QString &message);
+    void greet(const QString &token, Connection *);
 
 protected:
     void timerEvent(QTimerEvent *timerEvent);
@@ -102,6 +105,7 @@ private:
     int numBytesForCurrentDataType;
     int transferTimerId;
     bool isGreetingMessageSent;
+    bool isApproved;
 };
 
 #endif

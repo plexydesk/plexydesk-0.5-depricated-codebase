@@ -59,11 +59,18 @@ Connection::Connection(QObject *parent)
     isGreetingMessageSent = false;
     pingTimer.setInterval(PingInterval);
 
+    isApproved = false;
+
     QObject::connect(this, SIGNAL(readyRead()), this, SLOT(processReadyRead()));
     QObject::connect(this, SIGNAL(disconnected()), &pingTimer, SLOT(stop()));
     QObject::connect(&pingTimer, SIGNAL(timeout()), this, SLOT(sendPing()));
     QObject::connect(this, SIGNAL(connected()),
                      this, SLOT(sendGreetingMessage()));
+}
+
+Connection::~Connection()
+{
+
 }
 
 QString Connection::name() const
@@ -84,6 +91,13 @@ bool Connection::sendMessage(const QString &message)
     QByteArray msg = message.toUtf8();
     QByteArray data = "MESSAGE " + QByteArray::number(msg.size()) + ' ' + msg;
     return write(data) == data.size();
+}
+
+void Connection::approveClient(bool policy)
+{
+    qDebug() << Q_FUNC_INFO << "Client Approval: " << policy;
+
+    isApproved = policy;
 }
 
 void Connection::timerEvent(QTimerEvent *timerEvent)
@@ -117,16 +131,21 @@ void Connection::processReadyRead()
             return;
         }
 
+        qDebug() << Q_FUNC_INFO << buffer;
+
         username = QString(buffer) + '@' + peerAddress().toString() + ':'
                    + QString::number(peerPort());
         currentDataType = Undefined;
         numBytesForCurrentDataType = 0;
-        buffer.clear();
+        //buffer.clear();
 
         if (!isValid()) {
             abort();
             return;
         }
+
+        Q_EMIT greet(QString(buffer), this);
+        buffer.clear();;
 
         if (!isGreetingMessageSent)
             sendGreetingMessage();
@@ -134,7 +153,7 @@ void Connection::processReadyRead()
         pingTimer.start();
         pongTime.start();
         state = ReadyForUse;
-        emit readyForUse();
+        Q_EMIT readyForUse();
     }
 
     do {
@@ -160,6 +179,7 @@ void Connection::sendPing()
 
 void Connection::sendGreetingMessage()
 {
+    qDebug() << Q_FUNC_INFO;
     QByteArray greeting = greetingMessage.toUtf8();
     QByteArray data = "GREETING " + QByteArray::number(greeting.size()) + ' ' + greeting;
     if (write(data) == data.size())
@@ -209,6 +229,8 @@ bool Connection::readProtocolHeader()
         return false;
     }
 
+    qDebug() << Q_FUNC_INFO << buffer;
+
     if (buffer == "PING ") {
         currentDataType = Ping;
     } else if (buffer == "PONG ") {
@@ -217,6 +239,7 @@ bool Connection::readProtocolHeader()
         currentDataType = PlainText;
     } else if (buffer == "GREETING ") {
         currentDataType = Greeting;
+        qDebug() << Q_FUNC_INFO << "Got Greet";
     } else {
         currentDataType = Undefined;
         abort();
@@ -249,6 +272,7 @@ bool Connection::hasEnoughData()
 
 void Connection::processData()
 {
+    qDebug() << Q_FUNC_INFO;
     buffer = read(numBytesForCurrentDataType);
     if (buffer.size() != numBytesForCurrentDataType) {
         abort();
@@ -257,16 +281,14 @@ void Connection::processData()
 
     switch (currentDataType) {
     case PlainText:
-        emit newMessage(username, QString::fromUtf8(buffer));
+        if (isApproved)
+          emit newMessage(username, QString::fromUtf8(buffer));
         break;
     case Ping:
         write("PONG 1 p");
         break;
     case Pong:
         pongTime.restart();
-        break;
-    case Greeting:
-        qDebug() << Q_FUNC_INFO << QString::fromUtf8(buffer);
         break;
     default:
         break;

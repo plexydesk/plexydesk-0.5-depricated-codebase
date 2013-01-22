@@ -46,6 +46,7 @@
 #include <QHostAddress>
 
 #include "server.h"
+#include "connection.h"
 
 class PeerManager;
 
@@ -54,16 +55,18 @@ class Client : public QObject
     Q_OBJECT
 
 public:
-    Client();
+    Client(const QString &token);
 
     void sendMessage(const QString &message);
     QString nickName() const;
     bool hasConnection(const QHostAddress &senderIp, int senderPort = -1) const;
+    void approveGreeting(Connection *connection, bool policy = false);
 
 signals:
     void newMessage(const QString &from, const QString &message);
     void newParticipant(const QString &nick);
     void participantLeft(const QString &nick);
+    void greet(const QString &token, Connection *connection);
 
 private slots:
     void newConnection(Connection *connection);
@@ -77,6 +80,7 @@ private:
     PeerManager *peerManager;
     Server server;
     QMultiHash<QHostAddress, Connection *> peers;
+    QString mToken;
 };
 
 #endif
