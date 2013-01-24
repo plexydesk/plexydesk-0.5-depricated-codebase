@@ -5,6 +5,7 @@ SET (sourceFiles
     connection.cpp
     peermanager.cpp
     client.cpp
+    sslserver.cpp
     )
 
 SET(headerFiles
@@ -14,6 +15,7 @@ SET(headerFiles
     connection.h
     peermanager.h
     client.h
+    sslserver.h
     )
 
 SET (QTMOC_SRCS
@@ -23,6 +25,7 @@ SET (QTMOC_SRCS
     connection.h
     peermanager.h
     client.h
+    sslserver.h
     )
 
 QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})

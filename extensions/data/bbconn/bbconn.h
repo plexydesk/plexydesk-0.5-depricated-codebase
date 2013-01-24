@@ -41,12 +41,21 @@ public:
 
     void startService(const QString &token);
     QString encrypt(const QString &token) const;
+
 public Q_SLOTS:
     void setArguments(QVariant sourceUpdated);
     void onNewMessage(const QString &from, const QString &message);
     void newParticipant(const QString &nick);
     void participantLeft(const QString &nick);
     void onGreet(const QString &token, Connection *conn);
+
+    // Slots to receive signals from sockets
+    void acceptConnection();
+    void handshakeComplete();
+    void sslErrors(const QList<QSslError> &errors);
+    void receiveMessage();
+    void connectionClosed();
+    void connectionFailure();
 
 private:
     class Private;
