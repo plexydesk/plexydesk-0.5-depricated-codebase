@@ -42,6 +42,9 @@ public:
     QString mToken;
     SslServer mServer;
     QList<QSslSocket *> mSocketList;
+
+    QString mCert;
+    QString mPrivatekey;
 };
 
 void BBConnData::startService(const QString &token)
@@ -140,6 +143,23 @@ void BBConnData::onGreet(const QString &token, Connection *conn)
     }
 }
 
+void BBConnData::loadKeys()
+{
+    QString homePath = QDir::homePath();
+    QString result;
+
+    QString cert = homePath + QLatin1String("/.plexydesk/plexydesk-server.crt");
+    QString privateKey = homePath + QLatin1String("/.plexydesk/plexydesk-private-key.rsa");
+
+    QFileInfo certInfo(cert);
+    QFileInfo privateKeyInfo(privateKey);
+
+    if (certInfo.exists() && privateKeyInfo.exists()) {
+        d->mCert = cert;
+        d->mPrivatekey = privateKey;
+    }
+}
+
 void BBConnData::acceptConnection()
 {
     qDebug() << Q_FUNC_INFO;
@@ -157,8 +177,10 @@ void BBConnData::acceptConnection()
 
     QString key, certificate;
 
-    socket->setPrivateKey(key);
-    socket->setLocalCertificate(certificate);
+    loadKeys();
+
+    socket->setPrivateKey(d->mPrivatekey);
+    socket->setLocalCertificate(d->mCert);
 
     socket->setPeerVerifyMode(QSslSocket::QueryPeer);
     socket->startServerEncryption();
@@ -179,6 +201,7 @@ void BBConnData::sslErrors(const QList<QSslError> &errors)
     QSslSocket *socket = dynamic_cast<QSslSocket *>(sender());
 
     QString errorStrings;
+
     foreach (QSslError error, errors)
     {
       errorStrings += error.errorString();

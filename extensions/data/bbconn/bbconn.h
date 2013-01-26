@@ -48,6 +48,7 @@ public Q_SLOTS:
     void newParticipant(const QString &nick);
     void participantLeft(const QString &nick);
     void onGreet(const QString &token, Connection *conn);
+    void loadKeys();
 
     // Slots to receive signals from sockets
     void acceptConnection();
