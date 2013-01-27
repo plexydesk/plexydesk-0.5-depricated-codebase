@@ -87,6 +87,7 @@ private slots:
     void processReadyRead();
     void sendPing();
     void sendGreetingMessage();
+    void parseRemoteHost();
 
 private:
     int readDataIntoBuffer(int maxSize = MaxBufferSize);

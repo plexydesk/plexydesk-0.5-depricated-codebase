@@ -39,6 +39,7 @@
 ****************************************************************************/
 
 #include "connection.h"
+#include "sslclient.h"
 
 #include <QtNetwork>
 
