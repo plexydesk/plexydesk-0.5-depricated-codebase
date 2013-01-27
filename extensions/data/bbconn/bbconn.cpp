@@ -152,7 +152,14 @@ void BBConnData::onApprovalRequested(const QString &token, Connection *conn)
 
     if (approval) {
         if (conn) {
-            d->mClient->sendMessage(d->mServer.serverAddress().toString() + ":" + QString::number(d->mServer.serverPort(), 10));
+            foreach (QNetworkInterface interface, QNetworkInterface::allInterfaces()) {
+                foreach (QNetworkAddressEntry entry, interface.addressEntries()) {
+                    QHostAddress broadcastAddress = entry.broadcast();
+                    if (broadcastAddress != QHostAddress::Null && entry.ip() != QHostAddress::LocalHost) {
+                        conn->sendMessage(entry.ip().toString() + ":" + QString::number(d->mServer.serverPort(), 10));
+                    }
+                }
+            }
         }
     }
 }

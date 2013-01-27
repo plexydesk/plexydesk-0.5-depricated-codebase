@@ -85,6 +85,8 @@ void Connection::setGreetingMessage(const QString &message)
 
 bool Connection::sendMessage(const QString &message)
 {
+    qDebug() << Q_FUNC_INFO << message;
+
     if (message.isEmpty())
         return false;
 
@@ -228,8 +230,6 @@ bool Connection::readProtocolHeader()
         return false;
     }
 
-    qDebug() << Q_FUNC_INFO << buffer;
-
     if (buffer == "PING ") {
         currentDataType = Ping;
     } else if (buffer == "PONG ") {
@@ -238,7 +238,6 @@ bool Connection::readProtocolHeader()
         currentDataType = PlainText;
     } else if (buffer == "GREETING ") {
         currentDataType = Greeting;
-        qDebug() << Q_FUNC_INFO << "Got Greet";
     } else {
         currentDataType = Undefined;
         abort();
@@ -271,7 +270,6 @@ bool Connection::hasEnoughData()
 
 void Connection::processData()
 {
-    qDebug() << Q_FUNC_INFO;
     buffer = read(numBytesForCurrentDataType);
     if (buffer.size() != numBytesForCurrentDataType) {
         abort();
