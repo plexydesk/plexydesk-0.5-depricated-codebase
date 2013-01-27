@@ -25,6 +25,7 @@
 #include "connection.h"
 #include "client.h"
 #include "sslserver.h"
+#include "sslclient.h"
 
 class BBConnData::Private
 {
@@ -45,6 +46,8 @@ public:
 
     QString mCert;
     QString mPrivatekey;
+    QList<SSLClient *> mSSLClientList;
+
 };
 
 void BBConnData::startService(const QString &token)
@@ -68,7 +71,7 @@ void BBConnData::startService(const QString &token)
             this, SLOT(participantLeft(QString)));
 
     connect(d->mClient, SIGNAL(greet(QString, Connection *)),
-            this, SLOT(onGreet(QString, Connection *)));
+            this, SLOT(onApprovalRequested(QString, Connection *)));
 }
 
 BBConnData::BBConnData(QObject *object) : PlexyDesk::DataSource(object), d(new Private)
@@ -101,7 +104,18 @@ void BBConnData::setArguments(QVariant arg)
 
 void BBConnData::onNewMessage(const QString &from, const QString &message)
 {
-    qDebug() << "from: " << from << "Message: " << message;
+    QStringList hostInfo = message.split(":");
+
+    qDebug() << Q_FUNC_INFO << hostInfo;
+
+    if (hostInfo.count() != 2)
+        return;
+
+    SSLClient *client = new SSLClient (this);
+
+    d->mSSLClientList.append(client);
+
+    client->connectToHost(hostInfo[0], hostInfo[1]);
 }
 
 void BBConnData::newParticipant(const QString &nick)
@@ -130,16 +144,16 @@ QString BBConnData::encrypt(const QString &token) const
     return QString(hash.result().toHex());
 }
 
-void BBConnData::onGreet(const QString &token, Connection *conn)
+void BBConnData::onApprovalRequested(const QString &token, Connection *conn)
 {
-    qDebug() << Q_FUNC_INFO << "-----" << token;
-
     bool approval = (token == d->mToken);
 
     d->mClient->approveGreeting(conn, approval);
 
     if (approval) {
-
+        if (conn) {
+            d->mClient->sendMessage(d->mServer.serverAddress().toString() + ":" + QString::number(d->mServer.serverPort(), 10));
+        }
     }
 }
 

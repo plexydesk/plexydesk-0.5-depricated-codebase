@@ -15,6 +15,13 @@ SSLClient::SSLClient(QObject *parent) :
             this, SLOT(socketError()));
 }
 
+bool SSLClient::connectToHost(const QString &host, const QString &port)
+{
+    socket.connectToHost(host, port.toLong());
+
+    return true;
+}
+
 void SSLClient::connectedToServer()
 {
     qDebug() << Q_FUNC_INFO;
