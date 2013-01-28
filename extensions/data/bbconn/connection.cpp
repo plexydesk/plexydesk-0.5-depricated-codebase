@@ -85,8 +85,6 @@ void Connection::setGreetingMessage(const QString &message)
 
 bool Connection::sendMessage(const QString &message)
 {
-    qDebug() << Q_FUNC_INFO << message;
-
     if (message.isEmpty())
         return false;
 
@@ -97,7 +95,6 @@ bool Connection::sendMessage(const QString &message)
 
 void Connection::approveClient(bool policy)
 {
-    qDebug() << Q_FUNC_INFO << "Client Approval: " << policy;
     isApproved = policy;
 }
 
@@ -132,20 +129,18 @@ void Connection::processReadyRead()
             return;
         }
 
-        qDebug() << Q_FUNC_INFO << buffer;
-
         username = QString(buffer) + '@' + peerAddress().toString() + ':'
                    + QString::number(peerPort());
         currentDataType = Undefined;
         numBytesForCurrentDataType = 0;
-        //buffer.clear();
 
         if (!isValid()) {
+            buffer.clear();
             abort();
             return;
         }
 
-        Q_EMIT greet(QString(buffer), this);
+        QString _buffer = QString(buffer);
         buffer.clear();;
 
         if (!isGreetingMessageSent)
@@ -154,6 +149,7 @@ void Connection::processReadyRead()
         pingTimer.start();
         pongTime.start();
         state = ReadyForUse;
+        Q_EMIT greet(_buffer, this);
         Q_EMIT readyForUse();
     }
 
@@ -180,7 +176,6 @@ void Connection::sendPing()
 
 void Connection::sendGreetingMessage()
 {
-    qDebug() << Q_FUNC_INFO;
     QByteArray greeting = greetingMessage.toUtf8();
     QByteArray data = "GREETING " + QByteArray::number(greeting.size()) + ' ' + greeting;
     if (write(data) == data.size())
@@ -279,7 +274,7 @@ void Connection::processData()
     switch (currentDataType) {
     case PlainText:
         if (isApproved)
-          emit newMessage(username, QString::fromUtf8(buffer));
+          emit newMessage(peerAddress().toString(), QString::fromUtf8(buffer));
         break;
     case Ping:
         write("PONG 1 p");

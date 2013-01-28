@@ -36,6 +36,9 @@ public:
     ~Private() {
         if (mClient)
             delete mClient;
+
+        mSocketList.clear();
+        mSSLClientList.clear();
     }
 
     QTimer *mBBConn;
@@ -56,10 +59,6 @@ void BBConnData::startService(const QString &token)
         return;
 
     d->mClient = new Client(token);
-    d->mServer.listen(QHostAddress::Any, 32234);
-
-    connect(&d->mServer, SIGNAL(newConnection()),
-            this, SLOT(acceptConnection()));
 
     connect(d->mClient, SIGNAL(newMessage(QString,QString)),
             this, SLOT(onNewMessage(QString,QString)));
@@ -72,11 +71,17 @@ void BBConnData::startService(const QString &token)
 
     connect(d->mClient, SIGNAL(greet(QString, Connection *)),
             this, SLOT(onApprovalRequested(QString, Connection *)));
+
 }
 
 BBConnData::BBConnData(QObject *object) : PlexyDesk::DataSource(object), d(new Private)
 {
     d->mClient = 0;
+
+    d->mServer.listen(QHostAddress::Any, 32234);
+
+    connect(&d->mServer, SIGNAL(newConnection()),
+            this, SLOT(acceptConnection()));
 }
 
 void BBConnData::init()
@@ -115,7 +120,7 @@ void BBConnData::onNewMessage(const QString &from, const QString &message)
 
     d->mSSLClientList.append(client);
 
-    client->connectToHost(hostInfo[0], hostInfo[1]);
+    client->connectToHost(from, hostInfo[1]);
 }
 
 void BBConnData::newParticipant(const QString &nick)
@@ -152,14 +157,8 @@ void BBConnData::onApprovalRequested(const QString &token, Connection *conn)
 
     if (approval) {
         if (conn) {
-            foreach (QNetworkInterface interface, QNetworkInterface::allInterfaces()) {
-                foreach (QNetworkAddressEntry entry, interface.addressEntries()) {
-                    QHostAddress broadcastAddress = entry.broadcast();
-                    if (broadcastAddress != QHostAddress::Null && entry.ip() != QHostAddress::LocalHost) {
-                        conn->sendMessage(entry.ip().toString() + ":" + QString::number(d->mServer.serverPort(), 10));
-                    }
-                }
-            }
+            conn->sendMessage(
+                        QString()+ ":" + QString::number(d->mServer.serverPort(), 10));
         }
     }
 }
@@ -183,10 +182,7 @@ void BBConnData::loadKeys()
 
 void BBConnData::acceptConnection()
 {
-    qDebug() << Q_FUNC_INFO;
-
     QSslSocket *socket = dynamic_cast<QSslSocket *>(d->mServer.nextPendingConnection());
-
 
     // QSslSocket emits the encrypted() signal after the encrypted connection is established
     connect(socket, SIGNAL(encrypted()), this, SLOT(handshakeComplete()));
@@ -203,7 +199,7 @@ void BBConnData::acceptConnection()
     socket->setPrivateKey(d->mPrivatekey);
     socket->setLocalCertificate(d->mCert);
 
-    socket->setPeerVerifyMode(QSslSocket::QueryPeer);
+    socket->setPeerVerifyMode(QSslSocket::VerifyNone);
     socket->startServerEncryption();
 }
 
@@ -229,6 +225,10 @@ void BBConnData::sslErrors(const QList<QSslError> &errors)
       if (error != errors.last())
       {
         errorStrings += ';';
+      }
+
+      if (error.error() == QSslError::SelfSignedCertificate) {
+          socket->ignoreSslErrors();
       }
     }
 

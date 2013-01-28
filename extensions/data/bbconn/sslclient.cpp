@@ -1,4 +1,6 @@
 #include "sslclient.h"
+#include <QMessageBox>
+#include <QHostAddress>
 
 SSLClient::SSLClient(QObject *parent) :
     QObject(parent)
@@ -17,7 +19,7 @@ SSLClient::SSLClient(QObject *parent) :
 
 bool SSLClient::connectToHost(const QString &host, const QString &port)
 {
-    socket.connectToHost(host, port.toLong());
+    socket.connectToHostEncrypted(host, port.toLong(), host);
 
     return true;
 }
@@ -29,7 +31,19 @@ void SSLClient::connectedToServer()
 
 void SSLClient::sslErrors(const QList<QSslError> &errors)
 {
-    qDebug() << Q_FUNC_INFO;
+    Q_FOREACH (QSslError error, errors) {
+        if (error.error() == QSslError::SelfSignedCertificate) {
+            QMessageBox::StandardButton result =
+                    QMessageBox::question(0,"SSL Error",
+                                          QString("PlexyDesk is trying to connect to %1 with a Self Signed Certificate, Approve ?").
+                                          arg(socket.peerAddress().toString()),
+                                          QMessageBox::Yes | QMessageBox::No);
+
+            if (result == QMessageBox::Yes)
+                socket.ignoreSslErrors();
+            return;
+        }
+    }
 }
 
 void SSLClient::receiveMessage()
@@ -44,5 +58,6 @@ void SSLClient::connectionClosed()
 
 void SSLClient::socketError()
 {
-    qDebug() << Q_FUNC_INFO;
+    qDebug() << Q_FUNC_INFO << socket.errorString();
+    socket.close();
 }

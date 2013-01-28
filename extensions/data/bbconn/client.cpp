@@ -107,6 +107,7 @@ void Client::approveGreeting(Connection *connection, bool policy)
 
 void Client::newConnection(Connection *connection)
 {
+    qDebug() << Q_FUNC_INFO;
     connection->setGreetingMessage(mToken);
 
     connect(connection, SIGNAL(error(QAbstractSocket::SocketError)),
