@@ -36,6 +36,15 @@ FIND_PACKAGE(OpenGL)
 FIND_PACKAGE(BISON REQUIRED)
 FIND_PACKAGE(FLEX REQUIRED)
 
+if (CMAKE_SYSTEM_NAME MATCHES "QNX")
+   set (QNX 1)
+endif (CMAKE_SYSTEM_NAME MATCHES "QNX")
+
+IF (QNX)
+FIND_PACKAGE (BBSystem REQUIRED)
+FIND_PACKAGE (BBCascades REQUIRED)
+ENDIF (QNX)
+
 
 # Global variable CMAKE_BUILD_TYPE handling
 # None (CMAKE_C_FLAGS or CMAKE_CXX_FLAGS used)
@@ -228,9 +237,6 @@ IF(WIN32)
     ADD_SUBDIRECTORY(dist/windows)
 ENDIF(WIN32)
 
-if (CMAKE_SYSTEM_NAME MATCHES "QNX")
-   set (QNX 1)
-endif (CMAKE_SYSTEM_NAME MATCHES "QNX")
 
 if (NOT QNX)
 ADD_SUBDIRECTORY(extensions/data/facebook)
@@ -242,20 +248,21 @@ ENDIF(NOT QNX)
 ADD_SUBDIRECTORY(3rdparty/mime)
 ADD_SUBDIRECTORY(base/qt4)
 ADD_SUBDIRECTORY(base/core)
+ADD_SUBDIRECTORY(runner)
+
 ADD_SUBDIRECTORY(extensions/widgets/clock)
 ADD_SUBDIRECTORY(extensions/widgets/photoframe)
 ADD_SUBDIRECTORY(extensions/widgets/folderwidget)
 ADD_SUBDIRECTORY(extensions/backdrop/classicdrop)
 ADD_SUBDIRECTORY(extensions/widgets/youtubewidget)
 ADD_SUBDIRECTORY(extensions/widgets/mobilemonitor)
-ADD_SUBDIRECTORY(runner)
 
 #if (APPLE)
 #ADD_SUBDIRECTORY(extensions/backdrop/mac_background)
 #endif (APPLE)
 
 # *** Desktop UI Plugins ***
-ADD_SUBDIRECTORY(extensions/desktop/plexy)
+#ADD_SUBDIRECTORY(extensions/desktop/plexy)
 
 # *** UI widgets - ALL PLATFORMS ***
 # Youtube is diabled ListView is now at extensions/widgets

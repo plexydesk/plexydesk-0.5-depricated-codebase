@@ -45,18 +45,27 @@
 #include <netwm.h>
 #endif
 
-int main( int argc, char * *argv )
-{
-    QApplication::setGraphicsSystem(QLatin1String("raster"));
+#ifdef Q_WS_QPA
+#include <bb/cascades/AbstractPane>
+#include <bb/cascades/Application>
+#include <bb/system/SystemDialog>
+using namespace bb::cascades;
+using ::bb::cascades::Application;
 
+#endif
+
+
+Q_DECL_EXPORT int main( int argc, char *argv[])
+{
+#ifndef Q_WS_QPA
+    QApplication::setGraphicsSystem(QLatin1String("raster"));
     QByteArray debug_settings = qgetenv("PLEXYDESK_CONSOLE_DEBUG").toLower();
 
     if (debug_settings != "enable" && debug_settings != "true" && debug_settings != "1" ) {
        qInstallMsgHandler(plexyWindowsLogger);
     }
-
+#endif
     QApplication app(argc, argv);
-
     PlexyDesk::PluginLoader *loader = 0;
 
     loader =
@@ -65,20 +74,21 @@ int main( int argc, char * *argv )
                 QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->plexydeskBasePath() +
                     QLatin1String("/lib/plexyext/")));
 
+#ifndef Q_WS_QPA
     QString appIconPath = PlexyDesk::Config::getInstance()->plexydeskBasePath() +
         "/share/plexy/plexydesk.png";
     QIcon appIcon = QIcon(QDir::toNativeSeparators(appIconPath));
     app.setWindowIcon(appIcon);
     app.setApplicationName(QString(PLEXYNAME));
+    QApplication::setQuitOnLastWindowClosed(true);
+#endif
 
 #ifdef Q_WS_WIN
     QString pluginPath = PlexyDesk::Config::getInstance()->plexydeskBasePath()
         + "/lib/qt4/plugins/imageformats";
     app.addLibraryPath(QDir::toNativeSeparators(pluginPath));
 #endif
-
-    QApplication::setQuitOnLastWindowClosed(true);
-
+  
     DesktopBaseUi  ui;
 
     return app.exec();

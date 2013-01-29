@@ -45,6 +45,10 @@ IF (NOT APPLE)
     SET(mainFiles main.cpp)
 ENDIF(NOT APPLE)
 
+IF (QNX)
+    SET(mainFiles main_bb10.cpp)
+ENDIF (QNX)
+
 SET(headerFiles
     desktopbaseui.h
     ${extra_headers}
@@ -111,6 +115,8 @@ TARGET_LINK_LIBRARIES(${APPLICATION_EXE_NAME}
     ${PLEXY_UI_CORE_LIBRARY}
     ${OPENGL_LIBRARIES}
     ${MAC_LIBS}
+    ${BBCASCADES_LIBRARY}
+    ${BBSYSTEM_LIBRARY}
     )
 
 ########### Install files ###############
