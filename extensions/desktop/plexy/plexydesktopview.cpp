@@ -6,6 +6,7 @@
 #include <datasource.h>
 #include <pluginloader.h>
 #include <themepackloader.h>
+#include <button.h>
 
 #include "fileiconwidget.h"
 
@@ -18,6 +19,8 @@ public:
     PlexyDesk::ThemepackLoader *mThemeLoader;
     bool mHasSession;
     QMenu *mMenu;
+
+    PlexyDesk::DesktopWidget *mParentWidget;
 };
 
 PlexyDesktopView::PlexyDesktopView(QGraphicsScene *parent_scene, QWidget *parent) :
@@ -47,7 +50,6 @@ PlexyDesktopView::PlexyDesktopView(QGraphicsScene *parent_scene, QWidget *parent
     }
 
     d->mMenu = new QMenu (this);
-
     this->createActions();
 
     connect(this, SIGNAL(sessionUpdated(QString)), this, SLOT(onSessionUpdated(QString)));
@@ -60,6 +62,9 @@ PlexyDesktopView::~PlexyDesktopView()
 
 void PlexyDesktopView::layout(const QRectF &screen_rect)
 {
+#ifdef Q_WS_QPA
+    this->createMobileActions();
+#endif
     if (d->mHasSession)
         return;
 
@@ -95,6 +100,40 @@ void PlexyDesktopView::createActions()
     }
 }
 
+void PlexyDesktopView::createMobileActions()
+{
+    QRect rect (0.0, 0.0, this->width(), 128);
+    d->mParentWidget = new PlexyDesk::DesktopWidget(rect, 0);
+    d->mParentWidget->setLabelName("Navigation Menu");
+    d->mParentWidget->enableWindowMode(false);
+
+    addWidgetToView(d->mParentWidget);
+    d->mParentWidget->show();
+    //TODO: Calculate the Z value;
+    d->mParentWidget->setZValue(1000);
+    d->mParentWidget->setFlag(QGraphicsItem::ItemIsMovable, false);
+
+    float layoutWidth = 10.0;
+    Q_FOREACH(const QString &controllerName, currentControllers()) {
+
+        if (controller(controllerName)) {
+            PlexyDesk::ControllerPtr contr = controller(controllerName);
+
+            Q_FOREACH(const QString &action, contr->actions()) {
+
+                PlexyDesk::Button *button = new PlexyDesk::Button(d->mParentWidget);
+                button->setLabel(action);
+                button->show();
+                button->setSize(QSize(200,108));
+                button->setPos(layoutWidth, 10.0);
+                layoutWidth += 10.0 + button->boundingRect().width();
+            }
+        }
+    }
+
+    d->mParentWidget->setPos(0.0, this->height() - d->mParentWidget->boundingRect().height());
+}
+
 void PlexyDesktopView::onSessionUpdated(const QString &data)
 {
     d->mThemeLoader->saveSessionToDisk(data);
@@ -102,7 +141,6 @@ void PlexyDesktopView::onSessionUpdated(const QString &data)
 
 void PlexyDesktopView::onWidgetClosed(PlexyDesk::AbstractDesktopWidget *widget)
 {
-    qDebug() << Q_FUNC_INFO;
     PlexyDesk::AbstractDesktopView::onWidgetClosed(widget);
 }
 

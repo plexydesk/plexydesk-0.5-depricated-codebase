@@ -262,7 +262,7 @@ ADD_SUBDIRECTORY(extensions/widgets/mobilemonitor)
 #endif (APPLE)
 
 # *** Desktop UI Plugins ***
-#ADD_SUBDIRECTORY(extensions/desktop/plexy)
+ADD_SUBDIRECTORY(extensions/desktop/plexy)
 
 # *** UI widgets - ALL PLATFORMS ***
 # Youtube is diabled ListView is now at extensions/widgets

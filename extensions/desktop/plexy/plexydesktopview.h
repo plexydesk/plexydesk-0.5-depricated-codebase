@@ -16,6 +16,8 @@ public:
     void layout(const QRectF &rect);
 
     void createActions();
+    void createMobileActions();
+
 
 public Q_SLOTS:
     void onSessionUpdated(const QString &data);
