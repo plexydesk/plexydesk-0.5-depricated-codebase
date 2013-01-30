@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widgets>
+    <background name="classicbackdrop" multiscreen="true">
+        <rect x="0" y="0" width="device-width" height="device-height"></rect>
+    </background>
+
+    <widget name="mobilemon">
+        <rect x="1%" y="1%"></rect>
+    </widget>
+
+</widgets>

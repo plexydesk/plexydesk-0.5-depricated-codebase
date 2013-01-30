@@ -1,3 +1,11 @@
 ADD_SUBDIRECTORY(icons)
+
+IF (QNX) 
+ADD_SUBDIRECTORY(themepacks/bb10)
+ENDIF (QNX)
+
+IF (NOT QNX)
 ADD_SUBDIRECTORY(themepacks/default)
+ENDIF (NOT QNX)
+
 ADD_SUBDIRECTORY(widgets/base-widget)

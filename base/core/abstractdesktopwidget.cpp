@@ -143,6 +143,7 @@ AbstractDesktopWidget::AbstractDesktopWidget(const QRectF &rect, QGraphicsObject
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemIsFocusable, true);
     setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
+    setAcceptTouchEvents(true);
     setAcceptsHoverEvents(true);
 }
 

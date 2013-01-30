@@ -89,6 +89,7 @@ AbstractDesktopView::AbstractDesktopView(QGraphicsScene *scene, QWidget *parent)
     QGraphicsView(scene, parent), d(new PrivateAbstractDesktopView)
 {
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnBottomHint);
+    setAttribute(Qt::WA_AcceptTouchEvents);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setAlignment(Qt::AlignLeft | Qt::AlignTop);
