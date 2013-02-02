@@ -110,7 +110,11 @@ DesktopWidget::DesktopWidget(const QRectF &rect, QGraphicsObject *parent)
     //window buttons
     d->mCloseButton = new WindowButton(this);
     d->mCloseButton->show();
+#ifdef Q_WS_QPA
+    d->mCloseButton->setSize(QSize(48, 48));
+#else
     d->mCloseButton->setSize(QSize(12, 12));
+#endif
     d->mCloseButton->setPos(rect.x() + 10, rect.y() + 6);
     connect(d->mCloseButton, SIGNAL(clicked()), this, SLOT(windowCloseButtonClicked()));
 }
