@@ -68,7 +68,10 @@ void BackgroundController::revokeSession(const QVariantMap &args)
 QStringList BackgroundController::actions() const
 {
     QStringList actions;
+
+#ifndef Q_WS_QPA
     actions << QLatin1String ("Change Background");
+#endif
 
     return actions;
 }
