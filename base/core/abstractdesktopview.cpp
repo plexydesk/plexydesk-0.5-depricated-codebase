@@ -192,7 +192,9 @@ void AbstractDesktopView::addController(const QString &controllerName, bool firs
 
     connect(defaultView, SIGNAL(closed(PlexyDesk::AbstractDesktopWidget*)), this, SLOT(onWidgetClosed(PlexyDesk::AbstractDesktopWidget*)));
 
+#ifndef Q_WS_QPA
     defaultView->show();
+#endif
 
     controller->setViewport(this);
     controller->setControllerName(controllerName);
@@ -559,7 +561,6 @@ void AbstractDesktopView::restoreViewFromSession(const QString &sessionData, boo
             }
         }
     }
-
 }
 
 void AbstractDesktopView::onWidgetClosed(AbstractDesktopWidget *widget)
