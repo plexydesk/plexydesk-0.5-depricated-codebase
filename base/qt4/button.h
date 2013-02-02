@@ -30,6 +30,10 @@ public:
 
     virtual void setSize (const QSize &size);
 
+    void setActionData(const QVariant &data);
+
+    QVariant actionData() const;
+
 Q_SIGNALS:
     void clicked();
 

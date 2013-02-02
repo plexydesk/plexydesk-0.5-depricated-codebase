@@ -23,6 +23,8 @@ public:
     Style *mStyle;
     QString mLabel;
     QSize mSize;
+
+    QVariant mData;
 };
 
 Button::Button(QGraphicsObject *parent) :
@@ -144,6 +146,16 @@ QRectF Button::boundingRect() const
 void Button::setSize(const QSize &size)
 {
     d->mSize = size;
+}
+
+void Button::setActionData(const QVariant &data)
+{
+    d->mData = data;
+}
+
+QVariant Button::actionData() const
+{
+    return d->mData;
 }
 
 void Button::setIcon(const QImage & /*img*/)
