@@ -5,12 +5,12 @@
 #include <desktopwidget.h>
 #include <QGraphicsDropShadowEffect>
 
-class PhotoWidget : public PlexyDesk::DesktopWidget
+class PingAuthWidget : public PlexyDesk::DesktopWidget
 {
     Q_OBJECT
 public:
-    explicit PhotoWidget(const QRectF &rect);
-    virtual ~PhotoWidget();
+    explicit PingAuthWidget(const QRectF &rect);
+    virtual ~PingAuthWidget();
     void setContentImage(const QPixmap &pixmap);
 
 Q_SIGNALS:

@@ -4,7 +4,7 @@
 
 #include <button.h>
 
-class PhotoWidget::PrivatePhotoWidget
+class PingAuthWidget::PrivatePhotoWidget
 {
 public:
     PrivatePhotoWidget() {}
@@ -13,47 +13,65 @@ public:
     QGraphicsProxyWidget *mProxyWidget;
     QLineEdit *mEditor;
     PlexyDesk::Button *mButton;
+    PlexyDesk::Button *mCancelButton;
 };
 
-PhotoWidget::PhotoWidget(const QRectF &rect) :
+PingAuthWidget::PingAuthWidget(const QRectF &rect) :
     PlexyDesk::DesktopWidget(rect), d (new PrivatePhotoWidget)
 {
    enableShadow(true);
+   enableWindowMode(false);
    setLabelName("bbwidget");
 
    d->mProxyWidget = new QGraphicsProxyWidget(this);
    d->mEditor = new QLineEdit(0);
-   d->mEditor->setStyleSheet("font: 30px; background-color:qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffffff, stop: 1 #E5EAEE); border : 0");
+   d->mEditor->setStyleSheet("font: 60px; background-color:qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffffff, stop: 1 #E5EAEE); border : 0");
 
    d->mProxyWidget->setWidget(d->mEditor);
 
    QSizeF size = rect.size();
 
-   size.setHeight(rect.height() / 2);
+   size.setHeight(105);
+   size.setWidth(rect.width() - 10);
 
    d->mProxyWidget->resize(size);
    d->mProxyWidget->setMinimumSize(size);
 
    d->mProxyWidget->show();
    d->mEditor->move(0.0, 0.0);
-   d->mProxyWidget->setPos(0.0, 24.0);
+   d->mProxyWidget->setPos(5.0, 10.0);
+
+   float padding = 220;
+   float margine = 10;
 
    d->mButton = new PlexyDesk::Button(this);
 
-   d->mButton->setLabel("Authorize Clients");
+   d->mButton->setLabel("Set Pin");
    d->mButton->show();
-   d->mButton->setPos (24.0, d->mEditor->height() + 28);
-   d->mButton->setSize(QSize(rect.width() - 48, rect.height() - (d->mEditor->size().height() + 28)));
+   d->mButton->setPos (padding, d->mEditor->height() + 22);
+   d->mButton->setSize(QSize(200, 108));
 
    connect (d->mButton, SIGNAL(clicked()), this, SLOT(onClicked()));
+
+
+   d->mCancelButton = new PlexyDesk::Button(this);
+
+   d->mCancelButton->setLabel("Cancel");
+   d->mCancelButton->show();
+   d->mCancelButton->setPos ((padding)  + margine + d->mButton->boundingRect().width(),
+                             d->mEditor->height() + 22);
+   d->mCancelButton->setSize(QSize(200, 108));
+
+   connect(d->mCancelButton, SIGNAL(clicked()), this, SLOT(windowCloseButtonClicked()));
+
 }
 
-PhotoWidget::~PhotoWidget()
+PingAuthWidget::~PingAuthWidget()
 {
     delete d;
 }
 
-void PhotoWidget::setContentImage(const QPixmap &pixmap)
+void PingAuthWidget::setContentImage(const QPixmap &pixmap)
 {
     mContentPixmap = pixmap;
     QRectF pixmapRect = pixmap.rect();
@@ -67,12 +85,12 @@ void PhotoWidget::setContentImage(const QPixmap &pixmap)
     update();
 }
 
-void PhotoWidget::paintRotatedView(QPainter *painter, const QRectF &rect)
+void PingAuthWidget::paintRotatedView(QPainter *painter, const QRectF &rect)
 {
     PlexyDesk::DesktopWidget::paintRotatedView(painter, rect);
 }
 
-void PhotoWidget::paintFrontView(QPainter *painter, const QRectF &rect)
+void PingAuthWidget::paintFrontView(QPainter *painter, const QRectF &rect)
 {
     painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
     painter->setRenderHint(QPainter::Antialiasing);
@@ -96,13 +114,13 @@ void PhotoWidget::paintFrontView(QPainter *painter, const QRectF &rect)
     }
 }
 
-void PhotoWidget::paintDockView(QPainter *painter, const QRectF &rect)
+void PingAuthWidget::paintDockView(QPainter *painter, const QRectF &rect)
 {
     PlexyDesk::DesktopWidget::paintDockView(painter, rect);
 }
 
 
-void PhotoWidget::onClicked()
+void PingAuthWidget::onClicked()
 {
     if (d->mEditor) {
         Q_EMIT approvedToken (d->mEditor->text());

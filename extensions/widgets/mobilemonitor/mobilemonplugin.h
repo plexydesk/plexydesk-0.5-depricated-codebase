@@ -43,12 +43,19 @@ public:
 
     virtual void setViewRect(const QRectF &rect);
 
+    QStringList actions() const;
+
+    void requestAction(const QString& actionName, const QVariantMap &args);
+
+    bool deleteWidget(PlexyDesk::AbstractDesktopWidget *widget);
+
 public Q_SLOTS:
     void setApprovedToken(const QString &token);
 
 private:
-    PhotoWidget *mFrameParentitem;
+    PingAuthWidget *mFrameParentitem;
     QString mImageSource;
+    QList<PingAuthWidget *> mPinWidgets;
 };
 
 #endif

@@ -34,14 +34,17 @@ MobileMonController::~MobileMonController()
 {
     if (mFrameParentitem)
         delete mFrameParentitem;
+
+    qDeleteAll(mPinWidgets);
 }
 
 PlexyDesk::AbstractDesktopWidget *MobileMonController::defaultView()
 {
    if (mFrameParentitem == NULL) {
-       mFrameParentitem = new PhotoWidget(QRectF(0.0, 0.0, 320.0, 140.0));
+       mFrameParentitem = new PingAuthWidget(QRectF(0.0, 0.0, 640.0, 240.0));
        mFrameParentitem->enableDefaultBackground(true);
        mFrameParentitem->setController(this);
+       mFrameParentitem->setLabelName("Ping Widget");
 
        connect (mFrameParentitem, SIGNAL(approvedToken(QString)), this, SLOT(setApprovedToken(QString)));
    }
@@ -76,6 +79,53 @@ void MobileMonController::setViewRect(const QRectF &rect)
 {
     if (mFrameParentitem)
         mFrameParentitem->setPos(rect.x(), rect.y());
+    else {
+        mFrameParentitem = new PingAuthWidget(QRectF(0.0, 0.0, 640.0, 240.0));
+        mFrameParentitem->enableDefaultBackground(true);
+        mFrameParentitem->setController(this);
+
+        connect (mFrameParentitem, SIGNAL(approvedToken(QString)), this, SLOT(setApprovedToken(QString)));
+    }
+}
+
+QStringList MobileMonController::actions() const
+{
+    QStringList rv;
+
+    rv << "Sync";
+    rv << "Add Note";
+    rv << "Set Pin";
+
+    return rv;
+}
+
+void MobileMonController::requestAction(const QString &actionName, const QVariantMap &args)
+{
+    if (actionName == "Set Pin") {
+        PingAuthWidget *pingWidget = new PingAuthWidget(QRectF(0.0, 0.0, 640.0, 240.0));
+        pingWidget->setController(this);
+        pingWidget->setLabelName("Ping Widget");
+
+        if(viewport()) {
+            viewport()->scene()->addItem(pingWidget);
+            pingWidget->show();
+        }
+
+        connect (pingWidget, SIGNAL(approvedToken(QString)), this, SLOT(setApprovedToken(QString)));
+        mPinWidgets.append(pingWidget);
+
+        float xpos = 0.0;
+
+        if (viewport()) {
+            xpos = (viewport()->width() - pingWidget->boundingRect().width()) / 2;
+        }
+        pingWidget->setPos(xpos, 10.0);
+    }
+}
+
+bool MobileMonController::deleteWidget(PlexyDesk::AbstractDesktopWidget *widget)
+{
+    return FALSE;
 }
 
 void MobileMonController::setApprovedToken(const QString &token)
