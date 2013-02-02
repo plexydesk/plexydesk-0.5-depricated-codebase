@@ -123,10 +123,13 @@ void PlexyDesktopView::createMobileActions()
 
                 PlexyDesk::Button *button = new PlexyDesk::Button(d->mParentWidget);
                 button->setLabel(action);
+                const QVariant data = controllerName;
+                button->setActionData(data);
                 button->show();
-                button->setSize(QSize(200,108));
+                button->setSize(QSize(242,108));
                 button->setPos(layoutWidth, 10.0);
                 layoutWidth += 10.0 + button->boundingRect().width();
+                connect(button, SIGNAL(clicked()), this, SLOT(onButtonClicked()));
             }
         }
     }
@@ -153,6 +156,22 @@ void PlexyDesktopView::onTriggered(QAction *action)
         PlexyDesk::ControllerPtr contr = controller(controllerName);
         QVariantMap map;
         contr->requestAction(actionName, map);
+    }
+}
+
+void PlexyDesktopView::onButtonClicked()
+{
+    PlexyDesk::Button *button = qobject_cast<PlexyDesk::Button *>(sender());
+
+    if (button) {
+        QString controllerName = button->actionData().toString();
+        QString action = button->label();
+
+        if (controller(controllerName)) {
+            PlexyDesk::ControllerPtr contr = controller(controllerName);
+            QVariantMap map;
+            contr->requestAction(action, map);
+        }
     }
 }
 

@@ -23,6 +23,7 @@ public Q_SLOTS:
     void onSessionUpdated(const QString &data);
     void onWidgetClosed(PlexyDesk::AbstractDesktopWidget*);
     void onTriggered(QAction *action);
+    void onButtonClicked();
 
 protected:
     virtual void contextMenuEvent(QContextMenuEvent *event);
