@@ -23,8 +23,8 @@
 
 #include <abstractplugininterface.h>
 #include <controllerinterface.h>
-
 #include <themepackloader.h>
+
 #include "photowidget.h"
 
 class MobileMonController : public PlexyDesk::ControllerInterface
@@ -56,6 +56,7 @@ private:
     PingAuthWidget *mFrameParentitem;
     QString mImageSource;
     QList<PingAuthWidget *> mPinWidgets;
+
 };
 
 #endif

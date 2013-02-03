@@ -2,18 +2,21 @@ SET(sourceFiles
     interface.cpp
     mobilemonplugin.cpp
     photowidget.cpp
+    notebookbase.cpp
     )
 
 SET(headerFiles
     interface.h
     mobilemonplugin.h
     photowidget.h
+    notebookbase.h
     )
 
 SET(QTMOC_SRCS
     interface.h
     mobilemonplugin.h
     photowidget.h
+    notebookbase.h
     )
 
 QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})
