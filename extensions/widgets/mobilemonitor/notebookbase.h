@@ -10,11 +10,12 @@ class NoteBookBase : public PlexyDesk::ScrollWidget
 public:
     NoteBookBase(const QRectF &rect, QGraphicsObject *parent = 0);
     virtual ~NoteBookBase();
-    
-signals:
-    
-public slots:
-    
+
+    void addNote(const QString &title, const QString &content);
+
+private:
+    class PrivateNoteBase;
+    PrivateNoteBase *const d;
 };
 
 #endif // NOTEBOOKBASE_H

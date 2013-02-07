@@ -26,6 +26,7 @@
 #include <themepackloader.h>
 
 #include "photowidget.h"
+#include "notebookbase.h"
 
 class MobileMonController : public PlexyDesk::ControllerInterface
 {
@@ -56,6 +57,7 @@ private:
     PingAuthWidget *mFrameParentitem;
     QString mImageSource;
     QList<PingAuthWidget *> mPinWidgets;
+    NoteBookBase *mNoteBase;
 
 };
 
