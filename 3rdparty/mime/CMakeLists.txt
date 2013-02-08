@@ -1,9 +1,3 @@
-# Check if we use any Debug in the final release and if so compile the tests
-IF(CMAKE_BUILD_TYPE MATCHES ".*Deb.*")
-    ADD_SUBDIRECTORY(test)
-ENDIF(CMAKE_BUILD_TYPE MATCHES ".*Deb.*")
-
-
 SET (sourceFiles
     freedesktopmime.cpp
     )
