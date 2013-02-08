@@ -14,6 +14,8 @@ public:
     void addNote(const QString &title, const QString &content);
 
 private:
+    void createNavBar();
+
     class PrivateNoteBase;
     PrivateNoteBase *const d;
 };

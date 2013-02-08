@@ -120,7 +120,6 @@ void PlexyDesktopView::createMobileActions()
             PlexyDesk::ControllerPtr contr = controller(controllerName);
 
             Q_FOREACH(const QString &action, contr->actions()) {
-
                 PlexyDesk::Button *button = new PlexyDesk::Button(d->mParentWidget);
                 button->setLabel(action);
                 const QVariant data = controllerName;

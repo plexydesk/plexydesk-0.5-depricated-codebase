@@ -188,7 +188,8 @@ void AbstractDesktopView::addController(const QString &controllerName, bool firs
     if (!viewItem)
         return;
 
-    scene()->addItem(viewItem);
+    if (scene())
+       scene()->addItem(viewItem);
 
     connect(defaultView, SIGNAL(closed(PlexyDesk::AbstractDesktopWidget*)), this, SLOT(onWidgetClosed(PlexyDesk::AbstractDesktopWidget*)));
 

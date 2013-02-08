@@ -23,7 +23,8 @@
 #include <QDeclarativeContext>
 
 MobileMonController::MobileMonController(QObject * /*object*/) :
-    mFrameParentitem(0)
+    mFrameParentitem(0),
+    mNoteBase(0)
 {
     if (connectToDataSource("bbconnengine")) {
         connect(dataSource(), SIGNAL(sourceUpdated(QVariantMap)), this, SLOT(onDataUpdated(QVariantMap)));
@@ -49,7 +50,16 @@ PlexyDesk::AbstractDesktopWidget *MobileMonController::defaultView()
        connect (mFrameParentitem, SIGNAL(approvedToken(QString)), this, SLOT(setApprovedToken(QString)));
    }
 
-   return mFrameParentitem;
+
+   if (mNoteBase == NULL) {
+       QRectF widgetRect = QRectF(0.0, 0.0, 640.0, 800.0);
+       mNoteBase = new NoteBookBase(widgetRect);
+       mNoteBase->setController(this);
+       mNoteBase->setLabelName("Note Pad");
+   }
+
+
+   return mNoteBase;
 }
 
 void MobileMonController::revokeSession(const QVariantMap &args)
@@ -120,6 +130,10 @@ void MobileMonController::requestAction(const QString &actionName, const QVarian
             xpos = (viewport()->width() - pingWidget->boundingRect().width()) / 2;
         }
         pingWidget->setPos(xpos, 10.0);
+    }
+
+    if (actionName == "Add Note" && mNoteBase) {
+        mNoteBase->addNote("Title", "Add a Note here");
     }
 }
 
