@@ -38,7 +38,7 @@ using ::bb::cascades::Application;
 
 Q_DECL_EXPORT int main( int argc, char *argv[])
 {
-    QApplication app(argc, argv);
+    Application app(argc, argv);
 
     PlexyDesk::PluginLoader *loader = 0;
     loader =
@@ -47,7 +47,5 @@ Q_DECL_EXPORT int main( int argc, char *argv[])
                 QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->plexydeskBasePath() +
                     QLatin1String("/lib/plexyext/")));
 
-     DesktopBaseUi  ui;
-  
-    return app.exec();
+    return Application::exec();
 }
