@@ -75,7 +75,12 @@ Config::Config(const QString &organization,
 #endif
     read();
     QString suffix="4x3";
-    QSize desktopSize = QDesktopWidget().screenGeometry().size();
+    QSize desktopSize;
+
+#ifndef Q_WS_QPA
+    desktopSize = QDesktopWidget().screenGeometry().size();
+#endif
+
     float screenRatio = float(desktopSize.width())/float(desktopSize.height());
     if (screenRatio > 1.333) {
         suffix="16x9";
