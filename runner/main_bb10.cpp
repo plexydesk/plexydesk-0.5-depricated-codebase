@@ -29,8 +29,10 @@
 
 #ifdef Q_WS_QPA
 #include <bb/cascades/AbstractPane>
-#include <bb/cascades/Application>
 #include <bb/system/SystemDialog>
+
+#include "bbmobileui.h"
+
 using namespace bb::cascades;
 using ::bb::cascades::Application;
 #endif
@@ -38,7 +40,7 @@ using ::bb::cascades::Application;
 
 Q_DECL_EXPORT int main( int argc, char *argv[])
 {
-    Application app(argc, argv);
+    BBMobileUi app(argc, argv);
 
     PlexyDesk::PluginLoader *loader = 0;
     loader =
@@ -47,5 +49,5 @@ Q_DECL_EXPORT int main( int argc, char *argv[])
                 QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->plexydeskBasePath() +
                     QLatin1String("/lib/plexyext/")));
 
-    return Application::exec();
+    return BBMobileUi::exec();
 }

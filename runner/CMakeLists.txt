@@ -46,7 +46,7 @@ IF (NOT APPLE)
 ENDIF(NOT APPLE)
 
 IF (QNX)
-    SET(mainFiles main_bb10.cpp)
+    SET(mainFiles main_bb10.cpp bbmobileui.cpp)
 ENDIF (QNX)
 
 SET(headerFiles
@@ -58,6 +58,10 @@ SET(QTMOC_SRCS
     desktopbaseui.h
     ${extra_headers}
     )
+
+IF(QNX)
+   SET (QTMOC_SRCS ${QTMOC_SRCS} bbmobileui.h)
+ENDIF(QNX)
 
 QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})
 
