@@ -183,8 +183,13 @@ void AbstractDesktopView::addController(const QString &controllerName, bool firs
 
     d->mControllerMap[controllerName] = controller;
 
-    AbstractDesktopWidget *defaultView = controller->defaultView();
+    AbstractDesktopWidget *defaultView = qobject_cast<AbstractDesktopWidget*>(controller->defaultView());
+
+    if (!defaultView)
+        return;
+
     QGraphicsItem *viewItem = qobject_cast<QGraphicsItem*>(defaultView);
+
     if (!viewItem)
         return;
 
@@ -580,6 +585,10 @@ void AbstractDesktopView::onWidgetClosed(AbstractDesktopWidget *widget)
         if (!deleted)
             delete widget;
     }
+}
+
+void AbstractDesktopView::addDesktopController(const QString &controllerName, bool firstRun)
+{
 }
 
 }

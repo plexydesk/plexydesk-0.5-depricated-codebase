@@ -77,7 +77,12 @@ void DirectoryController::requestAction(const QString &actionName, const QVarian
         view->setController(this);
         view->setLabelName(args["path"].toString());
         mFolderViewList.append(view);
-        this->viewport()->addWidgetToView(view);
+
+        if (viewport()) {
+            PlexyDesk::AbstractDesktopView *desktopview = qobject_cast<PlexyDesk::AbstractDesktopView*> (viewport());
+            if (desktopview)
+                desktopview->addWidgetToView(view);
+        }
     }
 }
 

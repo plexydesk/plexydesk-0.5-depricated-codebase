@@ -49,5 +49,7 @@ Q_DECL_EXPORT int main( int argc, char *argv[])
                 QDir::toNativeSeparators(PlexyDesk::Config::getInstance()->plexydeskBasePath() +
                     QLatin1String("/lib/plexyext/")));
 
+    app.setupUI();
+
     return BBMobileUi::exec();
 }

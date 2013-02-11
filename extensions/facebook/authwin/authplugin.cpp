@@ -138,7 +138,13 @@ void AuthPlugin::requestAction(const QString &actionName, const QVariantMap &arg
             connect(mContactUI, SIGNAL(addContactCard(QString)), this, SLOT(onAddContactCard(QString)));
 
             if (viewport()) {
-                viewport()->addWidgetToView(mContactUI);
+                PlexyDesk::AbstractDesktopView *view =
+                    qobject_cast<PlexyDesk::AbstractDesktopView*>(viewport());
+
+                if (view) {
+                    view->addWidgetToView(mContactUI);
+                }
+
                 requestFriendsList(mToken, args);
             }
         }
@@ -161,7 +167,11 @@ bool AuthPlugin::deleteWidget(PlexyDesk::AbstractDesktopWidget *widget)
         mContacts.removeAll(id);
 
         if (viewport()) {
-            viewport()->sessionDataForController(controllerName(),"contact", mContacts.join(","));
+            PlexyDesk::AbstractDesktopView *view =
+                    qobject_cast<PlexyDesk::AbstractDesktopView*>(viewport());
+
+            if (view)
+                view->sessionDataForController(controllerName(),"contact", mContacts.join(","));
         }
     }
     return false;
@@ -178,8 +188,12 @@ void AuthPlugin::onDataUpdated(const QVariantMap &map)
         if (key.isEmpty() || key.isNull()) {
             //request login UI
             if (mWidget) {
-                if (viewport())
-                    viewport()->addWidgetToView(mWidget);
+                if (viewport()) {
+                    PlexyDesk::AbstractDesktopView *view =
+                        qobject_cast<PlexyDesk::AbstractDesktopView*>(viewport());
+                    if (view)
+                        view->addWidgetToView(mWidget);
+                }
             }
         }
     }
@@ -221,11 +235,13 @@ void AuthPlugin::onAddContactCard(const QString &id)
         mContacts.append(id);
     }
 
-    if (viewport())
-        viewport()->addWidgetToView(contactCard);
-
     if (viewport()) {
-        viewport()->sessionDataForController(controllerName(),"contact", mContacts.join(","));
+        PlexyDesk::AbstractDesktopView *view =
+                    qobject_cast<PlexyDesk::AbstractDesktopView*>(viewport());
+        if (view) {
+            view->addWidgetToView(contactCard);
+            view->sessionDataForController(controllerName(),"contact", mContacts.join(","));
+        }
     }
 }
 

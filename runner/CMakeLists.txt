@@ -131,6 +131,7 @@ TARGET_LINK_LIBRARIES(${APPLICATION_EXE_NAME}
     ${MAC_LIBS}
     ${BBCASCADES_LIBRARY}
     ${BBSYSTEM_LIBRARY}
+    ${BBPIM_LIBRARY}
     )
 
 ########### Install files ###############

@@ -21,4 +21,6 @@
         <asset path="lib">lib</asset>
         <asset path="share">share</asset>
         <asset path="theme">theme</asset>
+        <permission system="true">run_native</permission>
+        <permission>access_pimdomain_notebooks</permission>
 </qnx>

@@ -563,7 +563,10 @@ void FacebookContactCard::setDataSource(const QString &id, const QString &token,
             d->mFeedWall->injectQObject("ContactCard", this);
 
             if (controller()) {
-                controller()->viewport()->addWidgetToView(d->mFeedWall);
+                PlexyDesk::AbstractDesktopView *view = qobject_cast<PlexyDesk::AbstractDesktopView*>(controller()->viewport());
+
+                if (view)
+                    view->addWidgetToView(d->mFeedWall);
             }
             d->mFeedWall->hide();
 
@@ -699,7 +702,10 @@ void FacebookContactCard::onAvatarReady()
 void FacebookContactCard::onWallPostClicked()
 {
     if (this->controller() && this->controller()->viewport() && d->mPostDialog) {
-        this->controller()->viewport()->addWidgetToView(d->mPostDialog);
+
+       PlexyDesk::AbstractDesktopView *view = qobject_cast<PlexyDesk::AbstractDesktopView*>(controller()->viewport());
+       if (view)
+           view->addWidgetToView(d->mPostDialog);
 
         d->mPostDialog->setPos(this->mapToScene(d->mWallPostButton->pos()));
     }
@@ -711,7 +717,9 @@ void FacebookContactCard::feedClicked()
 
     if (d->mFeedWall) {
         if (controller()) {
-            controller()->viewport()->addWidgetToView(d->mFeedWall);
+            PlexyDesk::AbstractDesktopView *view = qobject_cast<PlexyDesk::AbstractDesktopView*>(controller()->viewport());
+            if (view)
+               view->addWidgetToView(d->mFeedWall);
         }
         d->mFeedWall->show();
     } else {
@@ -721,7 +729,9 @@ void FacebookContactCard::feedClicked()
         connect(d->mFeedWall, SIGNAL(closed(PlexyDesk::AbstractDesktopWidget*)), this, SLOT(onFeedClosed(PlexyDesk::AbstractDesktopWidget*)));
 
         if (controller()) {
-            controller()->viewport()->addWidgetToView(d->mFeedWall);
+            PlexyDesk::AbstractDesktopView *view = qobject_cast<PlexyDesk::AbstractDesktopView*>(controller()->viewport());
+            if (view)
+                view->addWidgetToView(d->mFeedWall);
         }
 
 

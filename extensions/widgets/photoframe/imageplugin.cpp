@@ -59,8 +59,11 @@ void PhotoFrameController::handleDropEvent(PlexyDesk::AbstractDesktopWidget * /*
 
         if ( !info.isDir() && !droppedPixmap.isNull() ) {
             mFrameParentitem->setContentImage(droppedPixmap);
+
             if (viewport()) {
-                viewport()->sessionDataForController(controllerName(),"src", droppedFile);
+                PlexyDesk::AbstractDesktopView *view = qobject_cast<PlexyDesk::AbstractDesktopView*>(viewport());
+                if (view)
+                    view->sessionDataForController(controllerName(),"src", droppedFile);
             } else
                 qDebug() << Q_FUNC_INFO << "Saving session Failed";
         }

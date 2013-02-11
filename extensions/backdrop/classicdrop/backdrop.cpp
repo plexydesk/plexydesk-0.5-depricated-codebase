@@ -101,7 +101,9 @@ void BackgroundController::handleDropEvent(PlexyDesk::AbstractDesktopWidget * /*
             }
 
             if (viewport()) {
-                viewport()->sessionDataForController(controllerName(),"background", droppedFile);
+                PlexyDesk::AbstractDesktopView *view = qobject_cast<PlexyDesk::AbstractDesktopView*>(viewport());
+                if (view)
+                    view->sessionDataForController(controllerName(),"background", droppedFile);
             } else
                 qDebug() << Q_FUNC_INFO << viewport();
         }

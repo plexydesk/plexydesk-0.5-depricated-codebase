@@ -52,13 +52,13 @@ public:
 
     virtual ~ControllerInterface();
 
-    virtual AbstractDesktopWidget *defaultView() = 0;
+    virtual QObject *defaultView() = 0;
 
     virtual void setViewRect(const QRectF &rect) = 0;
 
-    void setViewport(AbstractDesktopView *view);
+    void setViewport(QObject *view);
 
-    virtual AbstractDesktopView *viewport();
+    virtual QObject *viewport();
 
     virtual void handleViewport();
 

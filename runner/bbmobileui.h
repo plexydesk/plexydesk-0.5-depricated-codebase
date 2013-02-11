@@ -15,8 +15,10 @@ public:
     BBMobileUi(int &argc, char **argv);
     ~BBMobileUi();
 
-private:
     void setupUI();
+
+private:
+    void addController(const QString &controllerName);
 
     class BBMobileUiPrivate;
     BBMobileUiPrivate *const d;

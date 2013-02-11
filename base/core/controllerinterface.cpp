@@ -12,7 +12,7 @@ public:
     PrivateViewControllerPlugin() {}
     ~PrivateViewControllerPlugin() {}
     QSharedPointer<DataSource> mDataSource;
-    AbstractDesktopView *mViewport;
+    QObject *mViewport;
     QString mName;
 };
 
@@ -26,13 +26,13 @@ ControllerInterface::~ControllerInterface()
     delete d;
 }
 
-void ControllerInterface::setViewport(AbstractDesktopView *view)
+void ControllerInterface::setViewport(QObject *view)
 {
     d->mViewport = view;
     handleViewport();
 }
 
-AbstractDesktopView *ControllerInterface::viewport()
+QObject *ControllerInterface::viewport()
 {
     return d->mViewport;
 }

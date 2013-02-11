@@ -34,5 +34,4 @@ QSharedPointer<PlexyDesk::DesktopViewPlugin> DesktopViewInterface::view()
     return obj;
 }
 
-
 Q_EXPORT_PLUGIN2(plexydesktopview, DesktopViewInterface)

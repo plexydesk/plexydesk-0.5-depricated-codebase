@@ -22,9 +22,22 @@
 #include <desktopwidget.h>
 #include <QDeclarativeContext>
 
+#ifdef Q_WS_QPA
+#include <bb/cascades/NavigationPane>
+#endif
+
+
+class MobileMonController::MobileMonControllerPrivate
+{
+public:
+    MobileMonControllerPrivate(){};
+    ~MobileMonControllerPrivate() {}
+};
+
 MobileMonController::MobileMonController(QObject * /*object*/) :
     mFrameParentitem(0),
-    mNoteBase(0)
+    mNoteBase(0),
+    d (new MobileMonControllerPrivate)
 {
     if (connectToDataSource("bbconnengine")) {
         connect(dataSource(), SIGNAL(sourceUpdated(QVariantMap)), this, SLOT(onDataUpdated(QVariantMap)));
@@ -37,10 +50,16 @@ MobileMonController::~MobileMonController()
         delete mFrameParentitem;
 
     qDeleteAll(mPinWidgets);
+
+    delete d;
 }
 
-PlexyDesk::AbstractDesktopWidget *MobileMonController::defaultView()
+QObject *MobileMonController::defaultView()
 {
+#ifdef Q_WS_QPA
+       return NULL;
+#endif
+
    if (mFrameParentitem == NULL) {
        mFrameParentitem = new PingAuthWidget(QRectF(0.0, 0.0, 640.0, 240.0));
        mFrameParentitem->enableDefaultBackground(true);
@@ -57,7 +76,6 @@ PlexyDesk::AbstractDesktopWidget *MobileMonController::defaultView()
        mNoteBase->setController(this);
        mNoteBase->setLabelName("Note Pad");
    }
-
 
    return mNoteBase;
 }
@@ -77,8 +95,11 @@ void MobileMonController::handleDropEvent(PlexyDesk::AbstractDesktopWidget * /*w
 
         if ( !info.isDir() && !droppedPixmap.isNull() ) {
             mFrameParentitem->setContentImage(droppedPixmap);
+
             if (viewport()) {
-                viewport()->sessionDataForController(controllerName(),"src", droppedFile);
+                PlexyDesk::AbstractDesktopView *view = qobject_cast<PlexyDesk::AbstractDesktopView*>(viewport());
+                if (view)
+                    view->sessionDataForController(controllerName(),"src", droppedFile);
             } else
                 qDebug() << Q_FUNC_INFO << "Saving session Failed";
         }
@@ -117,7 +138,10 @@ void MobileMonController::requestAction(const QString &actionName, const QVarian
         pingWidget->setLabelName("Ping Widget");
 
         if(viewport()) {
-            viewport()->scene()->addItem(pingWidget);
+            PlexyDesk::AbstractDesktopView *view = qobject_cast<PlexyDesk::AbstractDesktopView*>(viewport());
+
+            if (view)
+                view->scene()->addItem(pingWidget);
             pingWidget->show();
         }
 
@@ -127,7 +151,9 @@ void MobileMonController::requestAction(const QString &actionName, const QVarian
         float xpos = 0.0;
 
         if (viewport()) {
-            xpos = (viewport()->width() - pingWidget->boundingRect().width()) / 2;
+            PlexyDesk::AbstractDesktopView *view = qobject_cast<PlexyDesk::AbstractDesktopView*>(viewport());
+            if (view)
+            xpos = (view->width() - pingWidget->boundingRect().width()) / 2;
         }
         pingWidget->setPos(xpos, 10.0);
     }

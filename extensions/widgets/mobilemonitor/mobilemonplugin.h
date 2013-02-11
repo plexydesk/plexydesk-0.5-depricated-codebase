@@ -36,7 +36,7 @@ public:
     MobileMonController(QObject *object = 0);
     virtual ~MobileMonController();
 
-    PlexyDesk::AbstractDesktopWidget *defaultView();
+    QObject *defaultView();
 
     virtual void revokeSession(const QVariantMap &args);
 
@@ -54,11 +54,13 @@ public Q_SLOTS:
     void setApprovedToken(const QString &token);
 
 private:
+    class MobileMonControllerPrivate;
+    MobileMonControllerPrivate *const d;
+
     PingAuthWidget *mFrameParentitem;
     QString mImageSource;
     QList<PingAuthWidget *> mPinWidgets;
     NoteBookBase *mNoteBase;
-
 };
 
 #endif

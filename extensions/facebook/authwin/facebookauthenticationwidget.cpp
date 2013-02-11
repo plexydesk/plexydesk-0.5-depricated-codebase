@@ -65,7 +65,12 @@ void FacebookAuthenticationWidget::onUrlChanged(const QUrl &url)
 
         /* save the auth token */
         if(controller() && controller()->viewport()) {
-            controller()->viewport()->sessionDataForController(controller()->controllerName(), "access_token", fburl.queryItemValue("access_token"));
+            PlexyDesk::AbstractDesktopView *view = qobject_cast<PlexyDesk::AbstractDesktopView*>
+                (controller()->viewport());
+
+            if (view)
+                view->sessionDataForController(controller()->controllerName(), "access_token", fburl.queryItemValue("access_token"));
+
             Q_EMIT facebookToken(fburl.queryItemValue("access_token"));
         }
 

@@ -1,9 +1,16 @@
+
+IF(QNX)
+SET(bbsource blackberryplugin.cpp)
+SET(bbheaders blackberryplugin.h)
+ENDIF(QNX)
+
 SET(sourceFiles
     interface.cpp
     mobilemonplugin.cpp
     photowidget.cpp
     notebookbase.cpp
     note.cpp
+    ${bbsource}
     )
 
 SET(headerFiles
@@ -12,6 +19,7 @@ SET(headerFiles
     photowidget.h
     notebookbase.h
     note.h
+    ${bbheaders}
     )
 
 SET(QTMOC_SRCS
@@ -20,6 +28,7 @@ SET(QTMOC_SRCS
     photowidget.h
     notebookbase.h
     note.h
+    ${bbheaders}
     )
 
 QT4_WRAP_CPP(QT_MOC_SRCS ${QTMOC_SRCS})

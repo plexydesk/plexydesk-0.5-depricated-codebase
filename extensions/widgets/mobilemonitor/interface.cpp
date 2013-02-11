@@ -23,12 +23,22 @@
 #include "mobilemonplugin.h"
 #include "mobilemonplugin.h"
 
+#ifdef Q_WS_QPA
+#include "blackberryplugin.h"
+#endif
+
 QSharedPointer<PlexyDesk::ControllerInterface> MobileMonInterface::controller()
 {
+#ifdef Q_WS_QPA
+    QSharedPointer<PlexyDesk::ControllerInterface> obj =
+            QSharedPointer<PlexyDesk::ControllerInterface>(new BlackBerryPlugin(this), &QObject::deleteLater);
+    return obj;
+#else
     QSharedPointer<PlexyDesk::ControllerInterface> obj =
             QSharedPointer<PlexyDesk::ControllerInterface>(new MobileMonController(this), &QObject::deleteLater);
 
     return obj;
+#endif
 }
 
 Q_EXPORT_PLUGIN2(mobilemon, MobileMonInterface)

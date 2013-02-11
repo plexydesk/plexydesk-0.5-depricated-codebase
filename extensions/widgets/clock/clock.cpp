@@ -92,8 +92,11 @@ void Clock::requestAction(const QString &actionName, const QVariantMap &args)
         ClockWidget *clock_widget = new ClockWidget(QRectF(0, 0, 210, 210));
         clock_widget->setController(this);
         mClocks.append(clock_widget);
+
         if(viewport()) {
-            viewport()->addWidgetToView(clock_widget);
+            PlexyDesk::AbstractDesktopView *view = qobject_cast<PlexyDesk::AbstractDesktopView*>(viewport());
+            if (view)
+              view->addWidgetToView(clock_widget);
         }
     }
 }

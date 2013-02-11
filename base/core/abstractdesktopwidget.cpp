@@ -280,7 +280,9 @@ void AbstractDesktopWidget::paint(QPainter *painter, const QStyleOptionGraphicsI
 void AbstractDesktopWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     if (controller() && controller()->viewport()) {
-        controller()->viewport()->saveItemLocationToSession(controller()->controllerName(), pos(), this->widgetID());
+        AbstractDesktopView *view = qobject_cast<AbstractDesktopView*>(controller()->viewport());
+        if (view)
+          view->saveItemLocationToSession(controller()->controllerName(), pos(), this->widgetID());
     }
 
     QGraphicsItem::mouseReleaseEvent(event);

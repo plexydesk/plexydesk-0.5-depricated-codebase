@@ -73,6 +73,7 @@ public:
 
 private:
 
+    void addDesktopController(const QString &controllerName, bool firstRun = 0);
     virtual void dropEvent(QDropEvent *event);
 
     virtual void dragEnterEvent(QDragEnterEvent *event);
