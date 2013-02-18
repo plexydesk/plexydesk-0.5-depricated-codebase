@@ -1,87 +1,192 @@
-<!doctype html>
-<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
-<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
-  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
-  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script type="text/javascript" src="javascripts/script.js"></script>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
-  <title>Plexydesk</title>
-  <meta name="description" content="A Qt Desktop customizer.">
+    <title>Plexydesk by plexydesk</title>
+  </head>
 
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-
-</head>
-
-<body>
-
-  <div class="wrapper">
+  <body>
     <header>
-      <h1 class="title">Plexydesk</h1>
+      <div class="inner">
+        <h1>Plexydesk</h1>
+        <h2>A Qt Desktop customizer.</h2>
+        <a href="https://github.com/plexydesk/plexydesk" class="button"><small>View project on</small>GitHub</a>
+      </div>
     </header>
-    <div id="container">
-      <p class="tagline">A Qt Desktop customizer.</p>
-      <div id="main" role="main">
-        <div class="download-bar">
-        <div class="inner">
-          <a href="https://github.com/plexydesk/plexydesk/tarball/master" class="download-button tar"><span>Download</span></a>
-          <a href="https://github.com/plexydesk/plexydesk/zipball/master" class="download-button zip"><span>Download</span></a>
-          <a href="https://github.com/plexydesk/plexydesk" class="code">View Plexydesk on GitHub</a>
-        </div>
-        <span class="blc"></span><span class="trc"></span>
-        </div>
-        <article class="markdown-body">
-          <h3>Welcome to GitHub Pages.</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>Getting PlexyDesk source files:</h1>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+<p>You can get PlexyDesk sources via two methods:</p>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<h2>METHOD 1:</h2>
 
-<h3>Designer Templates</h3>
+<ol>
+<li>Go to a folder of your choice where you will build PlexyDesk.
+For example /tmp/plexy</li>
+<li>git clone <a href="mailto:git@github.com">git@github.com</a>:plexydesk/plexydesk.git</li>
+<li>cd plexydesk</li>
+</ol><h2>METHOD 2:</h2>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<ol>
+<li>Go to a folder of your choice where you will build PlexyDesk.
+For example /tmp/plexy</li>
+<li>Get the source tarball from our download page - <a href="http://www.plexyplanet.org/download#source">http://www.plexyplanet.org/download#source</a>
+</li>
+<li>tar xjvf plexydesk-X.X.X.tar.bz2
+where X.X.X is the version number of PlexyDesk</li>
+<li>cd plexydesk-X.X.X
+where X.X.X is the version number of PlexyDesk</li>
+</ol><p>Both methods will lead you in the sources root folder.
+Next continue with building depending on what you are after.</p>
 
-<h3>Rather Drive Stick?</h3>
+<p>NOTE: Have in mind that the best way to install PlexyDesk is using your distribution
+      native package system. PlexyDesk now supports building packages for these
+      distributions (see howto do it below):
+      - Mandriva
+      - openSuSE
+      - Fedora
+      - PCLinuxOS*
+      - Ubuntu
+      - Debian and its derivatives</p>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<p>PCLinuxOS support for building its native packages is dropped now (though the code
+that supports the rpm build will remain intact). At present PlexyDesk is known to
+build and work on the 2011.6 version of pclos.
+To find more info on the possible solutions you have, please visit our homepage:
+<a href="http://www.plexyplanet.org/pclos">http://www.plexyplanet.org/pclos</a></p>
 
-<h3>Authors and Contributors</h3>
+<h1>Building On Linux (debug mode):</h1>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p>This is valid for all distributions.
+From sources root folder do:</p>
 
-<h3>Support or Contact</h3>
+<p>mkdir build
+cd build
+cmake ../ -DCMAKE_INSTALL_PREFIX:STRING=/usr -DCMAKE_BUILD_TYPE:STRING=Debug -DCMAKE_VERBOSE_MAKEFILE:BOOL=true -DCMAKE_CXX_FLAGS_DEBUG:STRING="-g -O0"
+make
+sudo make install</p>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-        </article>
+<h1>Building On Linux (release mode):</h1>
+
+<p>This is valid for all distributions.
+From sources root folder do:</p>
+
+<p>mkdir build
+cd build
+cmake ../ -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
+make
+sudo make install</p>
+
+<h1>Building a Debian/Ubuntu package on Linux:</h1>
+
+<p>This can be done if your distribution is a Debian derivative.
+From sources root folder do:</p>
+
+<p>dist/make_dist_deb.sh</p>
+
+<p>and follow the instructions.
+When the plexydesk_X.X.X_YYYY.deb is ready you may install it using the deb standard
+command:</p>
+
+<p>dpkg -i INSTALLERS/deb/plexydesk_X.X.X_YYYY.deb</p>
+
+<p>NOTE: If some of the dependencies are not satisfied, use your package manager to install
+them first and then do the "dpkg -i plexydesk_X.X.X_YYYY.deb" again.</p>
+
+<h1>Building an RPM package on Linux:</h1>
+
+<p>This can be done if your distribution is an RPM distribution. Currently PlexyDesk
+supports building RPMs for these distributions:</p>
+
+<ul>
+<li>Mandriva</li>
+<li>openSuSE</li>
+<li>Fedora</li>
+<li>Ubuntu</li>
+<li>Debian and its derivatives</li>
+</ul><p>If you know for sure that your distribution is an RPM one, but it is not in the above
+list, please try this method first and it may work due to the included support
+even of unknown RPM distros.</p>
+
+<p>First be sure you have already installed the rpm-build package.
+Next from sources root folder do:</p>
+
+<p>dist/make_dist_rpm.sh</p>
+
+<p>and follow the instructions.
+When the plexydesk-X.X.X-YYYYYYY.rpm is ready you may install it using the rpm standard
+command:</p>
+
+<p>rpm -ivp INSTALLERS/rpm/plexydesk-X.X.X-YYYYYYY.rpm</p>
+
+<p>NOTE: If some of the dependencies are not satisfied, use your package manager to install
+them first and then do the "rpm -ivp plexydesk-X.X.X-YYYYYYY.rpm" again.</p>
+
+<h1>Building On Windows:</h1>
+
+<p>Please follow the instructions on <a href="http://www.plexyplanet.org/win_build">http://www.plexyplanet.org/win_build</a></p>
+
+<h1>Building On Blackberry 10 SDK:</h1>
+
+<p>You need to download the blackberry 10 NDK from the blackberry developer portal. (currently this is free).
+after insalling the SDK excute the following commands to compile plexydesk for blackberry 10.</p>
+
+<ul>
+<li>source ~/bbndk/bbndk-env.sh</li>
+<li>cmake -DCMAKE_TOOLCHAIN_FILE=../tools/Toolchain-QNX-6.4.1.cmake -DCMAKE_INSALL_PREFIX=~/bbroot/plexydesk</li>
+<li>make -j 8</li>
+<li>make install : when the install finishes you will find the compiled binaries in ~/bbroot/plexydesk</li>
+<li>now you can create a bar file and upload it to your devce.</li>
+</ul><h1>Debugging of PlexyDesk</h1>
+
+<p>If you need a debug output from PlexyDesk, you have two methods:</p>
+
+<h2>METHOD 1:</h2>
+
+<p>PlexyDesk if built in Debugging Mode, will create a log file in your temp folder
+(depending on your platform) that will be named plexydesk_log_DATE-TIME.txt
+You can see the output in this file.</p>
+
+<h2>METHOD 2:</h2>
+
+<p>You may debug PlexyDesk (only if built in Debugging Mode) by starting it in console
+(any platform) and using the environment variable: PLEXYDESK_CONSOLE_DEBUG.
+Set it to "enable", "true" or 1 (all are case insensitive). For Windows for example
+do it by issuing this command on the command line of your Command prompt:
+SET PLEXYDESK_CONSOLE_DEBUG=true</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/plexydesk/plexydesk/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/plexydesk/plexydesk/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/plexydesk/plexydesk"></a> is maintained by <a href="https://github.com/plexydesk">plexydesk</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
       </div>
     </div>
-    <footer>
-      <div class="owner">
-      <p><a href="https://github.com/plexydesk" class="avatar"><img src="https://secure.gravatar.com/avatar/3d6977f2ba07a69296a65ab0d9e50926?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="48" height="48"/></a> <a href="https://github.com/plexydesk">plexydesk</a> maintains <a href="https://github.com/plexydesk/plexydesk">Plexydesk</a></p>
-
-
-      </div>
-      <div class="creds">
-        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br/>theme by <a href="http://twitter.com/jonrohan/">Jon Rohan</a></small>
-      </div>
-    </footer>
-  </div>
-  <div class="current-section">
-    <a href="#top">Scroll to top</a>
-    <a href="https://github.com/plexydesk/plexydesk/tarball/master" class="tar">tar</a><a href="https://github.com/plexydesk/plexydesk/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
-    <p class="name"></p>
-  </div>
 
   
-</body>
+  </body>
 </html>
