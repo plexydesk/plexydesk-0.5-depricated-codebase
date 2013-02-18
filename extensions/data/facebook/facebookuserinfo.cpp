@@ -127,14 +127,17 @@ void FacebookUserInfo::onStatusMessageReady()
 
             if (parsingSuccessful && !root["data"].isNull()) {
                 const Json::Value data_list = root["data"][0];
-                QString message = data_list["message"].asCString();
-                if (d->data["message"] != message) {
-                    d->data["message"] = message;
-                    Q_EMIT finished (this);
+                if (data_list["message"].type() == Json::stringValue) {
+                    QString message = data_list["message"].asCString();
+                    if (d->data["message"] != message) {
+                        d->data["message"] = message;
+
+                    }
                 }
             }
         }
 
+        Q_EMIT finished (this);
         reply->deleteLater();
     }
 }

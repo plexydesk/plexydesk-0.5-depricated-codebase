@@ -248,6 +248,7 @@ void FacebookSession::onStatusReady()
 
             if (parsingSuccessful && !root["data"].isNull()) {
                 const Json::Value data_list = root["data"][0];
+                if (data_list["message"].type() == Json::stringValue) {
                 QString message = data_list["message"].asCString();
 
                 QVariantMap response;
@@ -256,6 +257,7 @@ void FacebookSession::onStatusReady()
                 response["id"] = data_list["from"]["id"].asCString();
 
                 Q_EMIT sourceUpdated(response);
+                }
             }
         }
 
