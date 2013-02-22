@@ -21,6 +21,7 @@
 #include <QTimer>
 #include <controllerinterface.h>
 #include <QCryptographicHash>
+#include <QDomDocument>
 
 #include "connection.h"
 #include "client.h"
@@ -104,6 +105,12 @@ void BBConnData::setArguments(QVariant arg)
            d->mToken = encrypt(map["key"].toString());
            startService(d->mToken);
         }
+    }
+
+    if (map["type"].toString() == "save_note") {
+        //save the note
+        QString data = mapToXml(map);
+        qDebug() << Q_FUNC_INFO << data;
     }
 }
 
@@ -250,6 +257,16 @@ void BBConnData::connectionClosed()
 void BBConnData::connectionFailure()
 {
     qDebug() << Q_FUNC_INFO;
+}
+
+QString BBConnData::mapToXml(QVariantMap map) const
+{
+    QDomDocument *mSessionTree = new QDomDocument("notes");
+    mSessionTree->appendChild(mSessionTree->createProcessingInstruction("xml", "version=\"1.0\" encoding=\"utf-8\""));
+    QDomElement mRootElement = mSessionTree->createElement("note");
+    mSessionTree->appendChild(mRootElement);
+
+    return mSessionTree->toString();
 }
 
 QVariantMap BBConnData::readAll()

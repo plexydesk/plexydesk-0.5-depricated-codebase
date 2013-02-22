@@ -40,6 +40,7 @@ SET(sourceFiles
 
 SET(libs
     ${QT_QTCORE_LIBRARY}
+    ${QT_QTXML_LIBRARY}
     )
 
 ADD_LIBRARY(bbconnengine SHARED ${sourceFiles} ${QT_MOC_SRCS})

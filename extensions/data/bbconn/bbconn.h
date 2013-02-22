@@ -58,6 +58,10 @@ public Q_SLOTS:
     void connectionClosed();
     void connectionFailure();
 
+    //data storage
+
+    QString mapToXml(QVariantMap map) const;
+
 private:
     class Private;
     Private *const d;
